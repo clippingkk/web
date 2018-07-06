@@ -1,0 +1,50 @@
+.container {
+    margin-top: 5rem;
+}
+
+.h2 {
+    text-align: center;
+    font-weight: 200;
+    font-size: 72px;
+    margin: 0 0 5rem 0;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+}
+.feature {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5rem;
+    transition: background-color .35s;
+}
+
+.feature:hover {
+    background-color: #eee;
+}
+
+.feat-img {
+}
+
+.img {
+    box-shadow: 0 0 .5rem #888;
+    width: 38.6266rem;
+    height: 30rem;
+}
+
+.describes {
+    color: black;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 200;
+}
+
+.sub {
+    font-size: 18px;
+    font-weight: 200;
+}
+
