@@ -12,7 +12,7 @@ class Hero extends React.PureComponent {
             <h4 className={styles.subTitle}>
               A new Vision to read
             </h4>
-            <a href="javascript:;" className={styles.downloadBtn}>Download now</a>
+            <a href="https://www.microsoft.com/store/apps/9NMPMXC5X2CM" target="_blank" className={styles.downloadBtn}>Download now</a>
           </div>
         </div>
     )
