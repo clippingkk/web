@@ -1,12 +1,33 @@
 {
-    "presets": [["es2015", { "modules": false}], "react", "stage-0"],
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": false,
+                "targets": {
+                    "chrome": "58",
+                    "ie": "11"
+                },
+                "useBuiltIns": "entry"
+            }
+        ],
+        "@babel/preset-react"
+    ],
     "plugins": [
-        "transform-decorators-legacy",
+        [
+            "@babel/plugin-proposal-decorators",
+            {
+                "decoratorsBeforeExport": true
+            }
+        ],
+        "@babel/plugin-proposal-class-properties",
         "react-hot-loader/babel"
     ],
     "env": {
         "test": {
-            "presets": ["es2015"]
+            "presets": [
+                "es2015"
+            ]
         }
     }
 }
