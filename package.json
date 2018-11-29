@@ -9,7 +9,8 @@
     "prod:dll": "cross-env NODE_ENV=production webpack -p --config scripts/webpack.dll.config.js",
     "prod": "cross-env NODE_ENV=production webpack -p --config scripts/webpack.prod.config.js",
     "mock": "json-server mock/db.js --routes mock/routes.json --port 9000",
-    "build": "npm run prod:dll && npm run prod",
+    "zip": "bestzip dist.zip dist/*",
+    "build": "npm run prod:dll && npm run prod && npm run zip",
     "test": "cross-env NODE_ENV=test ava --verbose"
   },
   "repository": {
@@ -41,6 +42,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "bestzip": "^2.1.1",
     "connect-history-api-fallback": "^1.5.0",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.11",
@@ -69,6 +71,9 @@
     "react": "16",
     "react-dom": "16",
     "react-hot-loader": "^4.3.3",
+    "react-markdown": "^4.0.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-transition-group": "^2.2.1",
     "webpack-bundle-analyzer": "^2.9.1",
     "whatwg-fetch": "^2.0.3"

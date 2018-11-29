@@ -9,7 +9,8 @@ const vendors = [
   'react-dom',
   // 'redux',
   // 'react-redux',
-  // 'react-router',
+  'react-router',
+  'react-router-dom',
   // 'react-router-redux',
   // 'immutable',
   // 'redux-thunk'
