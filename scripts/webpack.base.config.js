@@ -11,7 +11,7 @@ const config = {
   target: 'web',
   entry: [
     'whatwg-fetch',
-    './src/App.jsx'
+    './src/App.tsx'
   ],
   output: {
     path: path.resolve(__dirname, '..', 'dist'),
@@ -23,6 +23,16 @@ const config = {
       test: /.jsx?$/,
       exclude: [path.resolve(__dirname, '..', 'node_modules')],
       use: ['babel-loader']
+    }, {
+      test: /.tsx$/,
+      exclude: [path.resolve(__dirname, '..', 'node_modules')],
+      use: [{
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          experimentalWatchApi: true,
+        }
+      }]
     }, {
       test: /.styl$/,
       exclude: /node_modules/,
@@ -124,7 +134,7 @@ const config = {
     },
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.styl']
+    extensions: ['.js', '.jsx', '.tsx']
   }
 }
 

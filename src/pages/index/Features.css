@@ -16,9 +16,13 @@
 .feature {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 5rem;
     transition: background-color .35s;
+}
+
+.feature:nth-of-type(2n + 1) {
+    flex-direction: row-reverse;
 }
 
 .feature:hover {
@@ -31,7 +35,7 @@
 .img {
     box-shadow: 0 0 .5rem #888;
     width: 38.6266rem;
-    height: 30rem;
+    /* height: 30rem; */
 }
 
 .describes {
@@ -48,3 +52,18 @@
     font-weight: 200;
 }
 
+@media (max-width: 768px) {
+    .feature {
+        padding: 0;
+        flex-direction: column !important;
+    }
+
+    .img {
+        width: 30rem;
+    }
+
+    .describes {
+        padding: 0 5rem;
+    }
+
+}

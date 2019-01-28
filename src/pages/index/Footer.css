@@ -10,3 +10,9 @@
     text-decoration: none;
     color: #000;
 }
+
+@media (max-width: 768px) {
+    .footer {
+        margin-top: 5rem;
+    }
+}

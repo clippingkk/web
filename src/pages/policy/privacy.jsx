@@ -12,7 +12,6 @@ class PrivacyPolicy extends React.PureComponent {
         <h1>Privacy Policy</h1>
         <p>Effective date: October 07, 2018</p>
 
-
         <p>ClippingKK ("us", "we", or "our") operates the  website and the ClippingKK mobile application (the "Service").</p>
 
         <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data. Our Privacy Policy  for ClippingKK is managed through <a href="https://www.freeprivacypolicy.com/free-privacy-policy-generator.php">Free Privacy Policy</a>.</p>

@@ -15,6 +15,7 @@ const vendors = [
   // 'immutable',
   // 'redux-thunk'
   'react-transition-group',
+  'fastclick'
 ]
 
 const config = {

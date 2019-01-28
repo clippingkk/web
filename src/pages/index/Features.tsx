@@ -1,6 +1,5 @@
 import React from 'react'
-
-import styles from './Features.css'
+const styles = require('./Features.css')
 
 const feats = [{
   img: 'https://github.com/AnnatarHe/kindle-viewer/raw/master/assets/index-page.jpg',
@@ -9,11 +8,15 @@ const feats = [{
 }, {
   img: 'https://github.com/AnnatarHe/kindle-viewer/raw/master/assets/list-clips.jpg',
   title: 'Modern',
-  sub: 'Build with Windows 10 UWP, modern visual for modern you.'
+  sub: 'Build in Windows 10 UWP, modern visual for modern you.'
 }, {
   img: 'https://github.com/AnnatarHe/kindle-viewer/raw/master/assets/detail-clip.jpg',
   title: 'Powerful',
   sub: 'Drop your clips file and everything should be fine.'
+}, {
+  img: 'https://github.com/clippingkk/clippingkk-mobile/raw/master/docs/flutter_01.png',
+  title: 'Multi-Platforms',
+  sub: '目前提供 Windows, iOS, Android 版本。移动版本即将发布。'
 }]
 
 class Features extends React.PureComponent {

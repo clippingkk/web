@@ -762,10 +762,35 @@
     "@shellscape/koa-send" "^4.1.0"
     debug "^2.6.8"
 
+"@types/fastclick@^1.0.28":
+  version "1.0.28"
+  resolved "http://registry.npm.taobao.org/@types/fastclick/download/@types/fastclick-1.0.28.tgz#db4b3f6f079235324b264338e229f9cdd98a6c4e"
+  integrity sha1-20s/bweSNTJLJkM44in5zdmKbE4=
+
 "@types/node@*":
   version "10.12.10"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-10.12.10.tgz#4fa76e6598b7de3f0cb6ec3abacc4f59e5b3a2ce"
   integrity sha1-T6duZZi33j8Mtuw6usxPWeWzos4=
+
+"@types/prop-types@*":
+  version "15.5.8"
+  resolved "http://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.5.8.tgz#8ae4e0ea205fe95c3901a5a1df7f66495e3a56ce"
+  integrity sha1-iuTg6iBf6Vw5AaWh339mSV46Vs4=
+
+"@types/react-dom@^16.0.11":
+  version "16.0.11"
+  resolved "http://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.0.11.tgz#bd10ccb0d9260343f4b9a49d4f7a8330a5c1f081"
+  integrity sha1-vRDMsNkmA0P0uaSdT3qDMKXB8IE=
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@^16.7.21":
+  version "16.7.21"
+  resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.7.21.tgz#17e45871a2502e33b12b63279f44e1c02a4632fc"
+  integrity sha1-F+RYcaJQLjOxK2Mnn0ThwCpGMvw=
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
 
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
@@ -3210,6 +3235,11 @@ cssstyle@^1.0.0:
   dependencies:
     cssom "0.3.x"
 
+csstype@^2.2.0:
+  version "2.6.1"
+  resolved "http://registry.npm.taobao.org/csstype/download/csstype-2.6.1.tgz#4cfbf637a577497036ebcd7e32647ef19a0b8076"
+  integrity sha1-TPv2N6V3SXA2681+MmR+8ZoLgHY=
+
 currently-unhandled@^0.4.1:
   version "0.4.1"
   resolved "http://registry.npm.taobao.org/currently-unhandled/download/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -3603,7 +3633,7 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-enhanced-resolve@^4.1.0:
+enhanced-resolve@^4.0.0, enhanced-resolve@^4.1.0:
   version "4.1.0"
   resolved "http://registry.npm.taobao.org/enhanced-resolve/download/enhanced-resolve-4.1.0.tgz#41c7e0bfdfe74ac1ffe1e57ad6a5c6c9f3742a7f"
   integrity sha1-Qcfgv9/nSsH/4eV61qXGyfN0Kn8=
@@ -4047,6 +4077,11 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "http://registry.npm.taobao.org/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+
+fastclick@^1.0.6:
+  version "1.0.6"
+  resolved "http://registry.npm.taobao.org/fastclick/download/fastclick-1.0.6.tgz#161625b27b1a5806405936bda9a2c1926d06be6a"
+  integrity sha1-FhYlsnsaWAZAWTa9qaLBkm0Gvmo=
 
 fastparse@^1.1.1:
   version "1.1.2"
@@ -8374,7 +8409,7 @@ semver-diff@^2.0.0:
   dependencies:
     semver "^5.0.3"
 
-"semver@2 || 3 || 4 || 5", semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
+"semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
   version "5.6.0"
   resolved "http://registry.npm.taobao.org/semver/download/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   integrity sha1-fnQlb7qknHWqfHogXMInmcrIAAQ=
@@ -9153,6 +9188,17 @@ tryer@^1.0.0:
   resolved "http://registry.npm.taobao.org/tryer/download/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha1-8shUBoALmw90yfdGW4HqrSQSUvg=
 
+ts-loader@^5.3.3:
+  version "5.3.3"
+  resolved "http://registry.npm.taobao.org/ts-loader/download/ts-loader-5.3.3.tgz#8b4af042e773132d86b3c99ef0acf3b4d325f473"
+  integrity sha1-i0rwQudzEy2Gs8me8KzztNMl9HM=
+  dependencies:
+    chalk "^2.3.0"
+    enhanced-resolve "^4.0.0"
+    loader-utils "^1.0.2"
+    micromatch "^3.1.4"
+    semver "^5.0.1"
+
 tslib@^1.9.0:
   version "1.9.3"
   resolved "http://registry.npm.taobao.org/tslib/download/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
@@ -9194,6 +9240,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@^3.2.4:
+  version "3.2.4"
+  resolved "http://registry.npm.taobao.org/typescript/download/typescript-3.2.4.tgz#c585cb952912263d915b462726ce244ba510ef3d"
+  integrity sha1-xYXLlSkSJj2RW0YnJs4kS6UQ7z0=
 
 uglify-js@3.4.x:
   version "3.4.9"
