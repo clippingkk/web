@@ -6,6 +6,7 @@ import styles from './Root.css'
 
 import IndexPage from './pages/index/index'
 import PrivacyPolicy from './pages/policy/privacy'
+import ReleasePage from './pages/release/release'
 
 const Root = () => {
     return (
@@ -14,6 +15,7 @@ const Root = () => {
           <Switch>
             <Route exact path="/" component={IndexPage}/>
             <Route exact path="/policy/privacy" component={PrivacyPolicy} />
+            <Route exact path="/release/:platform" component={ReleasePage} />
           </Switch>
         </BrowserRouter>
       </div>
