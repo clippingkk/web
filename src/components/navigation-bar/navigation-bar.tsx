@@ -33,8 +33,8 @@ class NavigationBar extends React.PureComponent<any, any> {
             className={styles.logo}
           />
           <ul className={styles.menuUl}>
-            {leftMenu.map(item => (
-              <li className={styles.menuItem}>
+            {leftMenu.map((item, index) => (
+              <li className={styles.menuItem} key={index}>
                 <Link to={item.dest(this.props.dest)}>
                   <FontAwesomeIcon icon={item.icon as any} color="#ffffff" size="2x" />
                 </Link>
