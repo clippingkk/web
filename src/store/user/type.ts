@@ -15,7 +15,8 @@ export type UserState = {
 
 export interface IUserAction {
   type: typeof AUTH_LOGIN,
-  payload: UserState
+  profile: UserContent,
+  token: string
 }
 
 

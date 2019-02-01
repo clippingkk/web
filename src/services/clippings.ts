@@ -19,13 +19,10 @@ interface IHttpClippingItem extends IBaseClippingItem {
     createdAt: number
 }
 
-interface IHttpClippingsResponse {
-    data: IHttpClippingItem[]
-}
-
-export async function getClippings(offset: number): Promise<IClippingItem[]> {
-    const response = await (request(`/clippings?take=20`) as Promise<IHttpClippingsResponse>)
-    const list = response.data.map(item => ({ ...item, createdAt: new Date(item.createdAt)} as IClippingItem))
+export async function getClippings(userid: number, offset: number): Promise<IClippingItem[]> {
+    const response = await (request(`/clippings/clippings/${userid}?take=20&from=${offset}`) as Promise<IHttpClippingItem[]>)
+    console.log(response)
+    const list = response.map(item => ({ ...item, createdAt: new Date(item.createdAt)} as IClippingItem))
 
     return list
 }

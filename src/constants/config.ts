@@ -1,3 +1,3 @@
-
-
-export const API_HOST = 'https://api.clippingkk.annatarhe.com/api'
+export const API_HOST = process.env.NODE_ENV === 'production' ?
+  'https://api.clippingkk.annatarhe.com/api' :
+  '/api'

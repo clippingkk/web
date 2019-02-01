@@ -2,16 +2,18 @@ import React from 'react'
 import { getClippings, IClippingItem } from '../../services/clippings'
 const styles = require('./home.css')
 
-
-type homeState = {
+type THomeState = {
   list: IClippingItem[]
   hasMore: boolean
   offset: number
   loading: boolean
 }
 
-class HomePage extends React.PureComponent<any, homeState> {
+type THomeProp = {
+  userid: number
+}
 
+class HomePage extends React.PureComponent<THomeProp, THomeState> {
   state = {
     list: [],
     hasMore: true,
@@ -29,7 +31,7 @@ class HomePage extends React.PureComponent<any, homeState> {
     }
     this.setState({ loading: true })
     try {
-      const list = await getClippings(this.state.offset)
+      const list = await getClippings(this.props.userid, this.state.offset)
       if (list.length < 20) {
         this.setState({ hasMore: false })
       }
@@ -46,8 +48,8 @@ class HomePage extends React.PureComponent<any, homeState> {
 
   render() {
     return (
-      <section>
-        auth
+      <section className={styles.home}>
+        home
       </section>
     )
   }

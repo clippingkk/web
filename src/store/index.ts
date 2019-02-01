@@ -15,7 +15,6 @@ const store = createStore(
   )
 )
 
-
 saga.run(rootSaga)
 
 export default store

@@ -1,8 +1,6 @@
 import React from 'react'
-import { hot } from 'react-hot-loader'
+import { hot } from 'react-hot-loader/root'
 import { Router } from '@reach/router'
-import { Provider } from 'react-redux'
-import store from './store/index'
 import styles from './Root.css'
 
 import IndexPage from './pages/index/index'
@@ -13,23 +11,24 @@ import AuthPage from './pages/auth/auth';
 import HomePage from './pages/home/home';
 import UploaderPage from './pages/uploader/uploader';
 
-const Root = () => {
+@hot
+class Root extends React.Component {
+  render() {
     return (
-      <Provider store={store}>
-        <div className={styles.container}>
-          <Router>
-            <IndexPage path="/"/>
-            <PrivacyPolicy path="/policy/privacy" />
-            <ReleasePage path="/release/:platform" />
-            <AuthPage path="/auth" />
-            <DashContainer path="dash">
-              <HomePage path="home" />
-              <UploaderPage path="upload" />
-            </DashContainer>
-          </Router>
-        </div>
-      </Provider>
+      <div className={styles.container}>
+        <Router>
+          <IndexPage path="/" />
+          <PrivacyPolicy path="/policy/privacy" />
+          <ReleasePage path="/release/:platform" />
+          <AuthPage path="/auth" />
+          <DashContainer path="dash/:userid">
+            <HomePage path="home" />
+            <UploaderPage path="upload" />
+          </DashContainer>
+        </Router>
+      </div>
     )
+  }
 }
 
-export default hot(module)(Root)
+export default Root

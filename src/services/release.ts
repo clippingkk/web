@@ -15,4 +15,5 @@ export interface IVersionListResponse extends IBaseResponseData {
 
 export function getVersions(platform: string): Promise<IVersionListResponse> {
     return request(`/version/${platform}?take=5`) as Promise<IVersionListResponse>
+
 }

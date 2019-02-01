@@ -1,4 +1,43 @@
-.navigation-bar {
-    width: 100%;
-    filter: blur(10px);
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: linear-gradient(45deg, #2196f3e6, #2176f3f6);
+  padding: 1rem 0;
+  box-shadow: 0 1rem 1rem #888;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.menu-ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item {
+  margin-right: 1rem;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+.settings {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.setting {
+  margin-right: 1rem;
+
 }

@@ -6,9 +6,7 @@ function Container({ children }: any) {
   return (
     <section className={styles.container}>
       <NavigationBar />
-      <main>
-        {children}
-      </main>
+      {children}
     </section>
   )
 }

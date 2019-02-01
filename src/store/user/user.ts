@@ -13,7 +13,10 @@ const initState: UserState = {
 function userReducer(state = initState, action: IUserAction): UserState {
   switch (action.type) {
     case AUTH_LOGIN:
-      return action.payload
+      return {
+        profile: action.profile,
+        token: action.token
+      }
     default:
       return state
   }

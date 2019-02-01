@@ -2,6 +2,7 @@ import React from 'react'
 import Card from '../../components/card/card'
 import { connect } from 'react-redux';
 import { toLogin } from '../../store/user/type'
+import { hot } from 'react-hot-loader';
 const styles = require('./auth.css')
 
 // @ts-ignore
@@ -15,7 +16,6 @@ class AuthPage extends React.PureComponent<any, any> {
   private auth = (e: React.FormEvent) => {
     e.preventDefault()
     this.props.login(this.state.email, this.state.pwd)
-    console.log('auth')
   }
 
   render() {
@@ -23,7 +23,6 @@ class AuthPage extends React.PureComponent<any, any> {
       <section className={styles.auth}>
         <Card>
           <h2>Auth</h2>
-
           <hr />
 
           <form className={styles.form} onSubmit={this.auth}>
