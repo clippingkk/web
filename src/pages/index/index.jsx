@@ -1,7 +1,7 @@
 import React from 'react'
 import Hero from './Hero'
 import Features from './Features'
-import Footer from './Footer'
+import Footer from '../../components/footer/Footer'
 import styles from './index.css'
 
 class IndexPage extends React.PureComponent {

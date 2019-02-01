@@ -10,6 +10,7 @@ interface IBaseClippingItem {
   bookId: string
   dataId: string
   seq: number
+  updatedAt: string
 }
 
 export interface IClippingItem extends IBaseClippingItem {
@@ -22,7 +23,6 @@ interface IHttpClippingItem extends IBaseClippingItem {
 
 export async function getClippings(userid: number, offset: number): Promise<IClippingItem[]> {
   const response = await (request(`/clippings/clippings/${userid}?take=20&from=${offset}`) as Promise<IHttpClippingItem[]>)
-  console.log(response)
   const list = response.map(item => ({ ...item, createdAt: new Date(item.createdAt) } as IClippingItem))
 
   return list

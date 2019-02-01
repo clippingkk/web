@@ -2,6 +2,8 @@ import { takeLatest, call } from "@redux-saga/core/effects"
 import { log } from '../../utils/sentry'
 import { EXTRA_AND_UPLOAD_FILE_TO_SERVER, TClippingsFile } from "./type"
 import { create } from "../../services/clippings";
+import swal from "sweetalert";
+import { navigate } from "@reach/router";
 
 export type TClippingItem = {
   title: string
@@ -45,7 +47,7 @@ function parseData(file: string): TClippingItem[] {
         break
       case 0:
         const title = lines[i].split(' ')[0]
-        item.title = title
+        item.title = title.trim()
         break
       case 1:
         const matched = lines[i].match(/Location\ (\d+-\d+) | Added on (.*)/g)
@@ -55,19 +57,18 @@ function parseData(file: string): TClippingItem[] {
           item.createdAt = new Date().toISOString()
           break
         }
-        item.pageAt = matched[0]
+        item.pageAt = matched[0].trim()
         item.createdAt = new Date(matched[1]).toISOString()
         break
       case 2:
         // space line
         break
       case 3:
-        item.content = lines[i]
+        item.content = lines[i].trim()
         break
     }
   }
-
-  return result
+  return result.filter(item => item.content !== "")
 }
 
 function* extraAndUpload(action: TClippingsFile) {
@@ -90,6 +91,19 @@ function* extraAndUpload(action: TClippingsFile) {
       yield call(create, chunkedData[i])
     }
   } catch (e) {
-    console.error(e)
+    return yield call(swal, {
+      title: 'Oops',
+      text: '哎呀呀，上传失败了，重试一下。实在不行联系程序员吧',
+      icon: 'error'
+    })
   }
+
+  yield call(swal, {
+    title: 'Yes!',
+    text: '牛逼！你上传完成了！',
+    icon: 'success'
+  })
+  const uid = sessionStorage.getItem("uid")
+  return yield call(navigate, `/dash/${uid}/home`)
+
 }

@@ -1,16 +1,19 @@
 import React from 'react'
 const styles = require('./card.css')
 
-class Card extends React.PureComponent {
+type cardProps = {
+  className?: string
+}
+
+class Card extends React.PureComponent<cardProps> {
   render() {
+    const cls = `${styles.card} ${this.props.className || ''}`
     return (
-      <section className={styles.card}>
+      <section className={cls}>
         { this.props.children }
       </section>
     )
-
   }
-
 }
 
 export default Card

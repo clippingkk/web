@@ -18,6 +18,7 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
     console.log(response)
 
     sessionStorage.setItem('token', response.token)
+    sessionStorage.setItem('uid', response.profile.id.toString())
     yield put({ type: AUTH_LOGIN, ...response })
 
     console.log('name', response.profile.name)

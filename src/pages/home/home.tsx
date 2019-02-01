@@ -1,5 +1,6 @@
 import React from 'react'
 import { getClippings, IClippingItem } from '../../services/clippings'
+import Card from '../../components/card/card';
 const styles = require('./home.css')
 
 type THomeState = {
@@ -14,6 +15,11 @@ type THomeProp = {
 }
 
 class HomePage extends React.PureComponent<THomeProp, THomeState> {
+  // @ts-ignore
+  private loadMoreDom: HTMLSpanElement
+  // @ts-ignore
+  private loadMoreObserver: IntersectionObserver
+
   state = {
     list: [],
     hasMore: true,
@@ -23,6 +29,15 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
 
   componentDidMount() {
     this.loadMore()
+
+    this.loadMoreObserver = new IntersectionObserver(() => {
+      this.loadMore()
+    })
+    this.loadMoreObserver.observe(this.loadMoreDom)
+  }
+
+  componentWillUnmount() {
+    this.loadMoreObserver.disconnect()
   }
 
   async loadMore() {
@@ -49,7 +64,24 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
   render() {
     return (
       <section className={styles.home}>
-        home
+        <header className={styles.header}>
+          <h2 className={styles.title}>我的书籍</h2>
+        </header>
+
+        <div className={styles.clippings}>
+          {this.state.list.map((item: IClippingItem) => (
+            <Card className={styles.clipping} key={item.id}>
+              <h3 className={styles.bookTitle}>{item.title}</h3>
+              <hr />
+              <p className={styles.bookContent}>{item.content}</p>
+
+            </Card>
+          ))}
+        </div>
+
+        <footer className={styles.footer}>
+          <span className={styles.tip} ref={loadMoreDom => this.loadMoreDom = loadMoreDom as HTMLSpanElement}>{this.state.hasMore ? 'loading' : '没有更多了...'}</span>
+        </footer>
       </section>
     )
   }
