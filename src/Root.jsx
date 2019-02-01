@@ -1,24 +1,34 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
-import { BrowserRouter } from 'react-router-dom';
-import { Route, Switch } from 'react-router'
+import { Router } from '@reach/router'
+import { Provider } from 'react-redux'
+import store from './store/index'
 import styles from './Root.css'
 
 import IndexPage from './pages/index/index'
 import PrivacyPolicy from './pages/policy/privacy'
+import DashContainer from './components/dashboard-container/container'
 import ReleasePage from './pages/release/release'
+import AuthPage from './pages/auth/auth';
+import HomePage from './pages/home/home';
+import UploaderPage from './pages/uploader/uploader';
 
 const Root = () => {
     return (
-      <div className={styles.container}>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={IndexPage}/>
-            <Route exact path="/policy/privacy" component={PrivacyPolicy} />
-            <Route exact path="/release/:platform" component={ReleasePage} />
-          </Switch>
-        </BrowserRouter>
-      </div>
+      <Provider store={store}>
+        <div className={styles.container}>
+          <Router>
+            <IndexPage path="/"/>
+            <PrivacyPolicy path="/policy/privacy" />
+            <ReleasePage path="/release/:platform" />
+            <AuthPage path="/auth" />
+            <DashContainer path="dash">
+              <HomePage path="home" />
+              <UploaderPage path="upload" />
+            </DashContainer>
+          </Router>
+        </div>
+      </Provider>
     )
 }
 

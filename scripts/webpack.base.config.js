@@ -6,6 +6,8 @@ const poststylus = require('poststylus')
 const values = require('postcss-modules-values')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
+const __DEV__ = process.env.NODE_ENV !== 'production'
+
 const config = {
   mode: process.env.NODE_ENV,
   target: 'web',
@@ -24,7 +26,7 @@ const config = {
       exclude: [path.resolve(__dirname, '..', 'node_modules')],
       use: ['babel-loader']
     }, {
-      test: /.tsx$/,
+      test: /.tsx?$/,
       exclude: [path.resolve(__dirname, '..', 'node_modules')],
       use: [{
         loader: 'ts-loader',
@@ -37,13 +39,15 @@ const config = {
       test: /.styl$/,
       exclude: /node_modules/,
       use: [
-        MiniCssExtractPlugin.loader, 'css-loader', 'stylus-loader'
+        __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
+        'css-loader',
+        'stylus-loader'
       ],
     }, {
       test: /.css$/,
       exclude: /node_modules/,
       use: [
-        MiniCssExtractPlugin.loader,
+        __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
         'css-loader?modules=true&camelCase=true&localIdentName=[name]_[local]-[hash:base64]&sourceMap=true',
         'postcss-loader'
       ]
@@ -134,12 +138,12 @@ const config = {
     },
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.tsx']
+    extensions: ['.js', '.jsx', '.tsx', '.ts']
   }
 }
 
 // your chunks name here
-const dllRefs = ['vendor']
+const dllRefs = ['vendor', 'reacts']
 dllRefs.forEach(x => {
   config.plugins.push(
     new webpack.DllReferencePlugin({
