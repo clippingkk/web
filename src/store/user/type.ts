@@ -8,7 +8,7 @@ export type UserContent = {
     avatar: string
 }
 
-export type UserState = {
+export type TUserState = {
   profile: UserContent,
   token: string
 }

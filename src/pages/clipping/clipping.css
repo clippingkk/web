@@ -1,0 +1,75 @@
+@value colors: '../../styles/variables.css';
+@value primary-text-color, blur-background from colors;
+.clipping {
+  min-height: 100%;
+}
+
+.main {
+  display: flex;
+  margin-top: 10rem;
+  padding: 0 5rem;
+}
+
+.main-card {
+  flex: 3;
+  color: primary-text-color;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  margin: .5rem 0;
+}
+
+.author {
+  font-weight: lighter;
+  font-size: 16px;
+  margin: 1rem 0;
+}
+
+.hr {
+  background-color: primary-text-color;
+}
+
+.content {
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.addons {
+  flex: 1;
+}
+
+.action-list {
+  list-style: none;
+  padding: 0;
+}
+
+.action {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.action:last-child {
+  margin-bottom: 0;
+}
+
+.action-btn {
+  border: none;
+  padding: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  background-color: blur-background;
+  margin: 0;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  background-color: #fff;
+}
+
+.action-btn:focus {
+  outline: 0;
+}

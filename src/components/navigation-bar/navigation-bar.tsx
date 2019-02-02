@@ -19,13 +19,19 @@ const leftMenu = [{
   dest: (id: number) => `/dash/${id}/home`
 }]
 
+function mapStoreToState({ user, app }: any) {
+  return {
+    id: user.profile.id,
+    name: user.profile.name,
+  }
+}
 
 // @ts-ignore
-@connect(({ user })=> ({ id: user.profile.id, name: user.profile.name }))
+@connect(mapStoreToState)
 class NavigationBar extends React.PureComponent<any, any> {
   render() {
     return (
-      <nav className={styles.navbar}>
+      <nav className={styles.navbar} >
         <div className={styles.menu}>
           <img 
             src="https://via.placeholder.com/100/#2196f3e6?Text=clippingkk"
@@ -36,7 +42,7 @@ class NavigationBar extends React.PureComponent<any, any> {
             {leftMenu.map((item, index) => (
               <li className={styles.menuItem} key={index}>
                 <Link to={item.dest(this.props.dest)}>
-                  <FontAwesomeIcon icon={item.icon as any} color="#ffffff" size="2x" />
+                  <FontAwesomeIcon icon={item.icon as any} color="#000" size="2x" />
                 </Link>
               </li>
             ))}
@@ -44,10 +50,10 @@ class NavigationBar extends React.PureComponent<any, any> {
         </div>
         <ul className={styles.settings}>
           <li className={styles.setting}>
-              <FontAwesomeIcon icon="cog" color="#ffffff" size="2x" />
+              <FontAwesomeIcon icon="cog" color="#000" size="2x" />
           </li>
           <li className={styles.setting}>
-              <FontAwesomeIcon icon="sign-out-alt" color="#ffffff" size="2x" />
+              <FontAwesomeIcon icon="sign-out-alt" color="#000" size="2x" />
           </li>
         </ul>
       </nav>

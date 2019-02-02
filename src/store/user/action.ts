@@ -1,7 +1,7 @@
 import { call, takeEvery, put } from "@redux-saga/core/effects";
 import { navigate } from '@reach/router'
 import * as authAPI from '../../services/auth'
-import { AUTH_LOGIN_ACTION, UserState, AUTH_LOGIN } from "./type";
+import { AUTH_LOGIN_ACTION, TUserState, AUTH_LOGIN } from "./type";
 import swal from 'sweetalert'
 
 type TLoginAction = {
@@ -14,14 +14,11 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
   console.log(action)
   const { email, pwd } = action
   try {
-    const response: UserState = yield call(authAPI.login, email, pwd)
-    console.log(response)
+    const response: TUserState = yield call(authAPI.login, email, pwd)
 
     sessionStorage.setItem('token', response.token)
     sessionStorage.setItem('uid', response.profile.id.toString())
     yield put({ type: AUTH_LOGIN, ...response })
-
-    console.log('name', response.profile.name)
 
     yield call(swal, {
       title: '哇，登陆了',

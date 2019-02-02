@@ -1,8 +1,9 @@
 import { API_HOST } from '../constants/config'
+import swal from 'sweetalert';
 
 export interface IBaseResponseData {
   status: Number
-  msg: String
+  msg: string
   data: any
 }
 
@@ -16,12 +17,21 @@ export async function request(url: string, options: RequestInit = {}): Promise<a
   options.credentials = 'include'
   options.mode = 'cors'
 
-  const response: IBaseResponseData = await fetch(API_HOST + url, options).then(res => res.json())
-  if (response.status !== 200) {
-    // TODO: show error msg
-    console.log(response.msg)
-    return Promise.reject(response.msg)
-  }
+  try {
+    const response: IBaseResponseData = await fetch(API_HOST + url, options).then(res => res.json())
+    if (response.status !== 200) {
+      throw new Error(response.msg)
+    }
 
-  return response.data
+    return response.data
+
+  } catch (e) {
+      console.log(e.toString())
+      swal({
+        title: 'Oops',
+        text: '吊了... 请求挂了... 一会儿再试试',
+        icon: 'info'
+      })
+      return Promise.reject(e)
+  }
 }

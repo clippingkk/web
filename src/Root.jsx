@@ -10,6 +10,7 @@ import ReleasePage from './pages/release/release'
 import AuthPage from './pages/auth/auth';
 import HomePage from './pages/home/home';
 import UploaderPage from './pages/uploader/uploader';
+import ClippingPage from './pages/clipping/clipping';
 
 @hot
 class Root extends React.Component {
@@ -24,6 +25,7 @@ class Root extends React.Component {
           <DashContainer path="dash/:userid">
             <HomePage path="home" />
             <UploaderPage path="upload" />
+            <ClippingPage path="/clippings/:clippingid" />
           </DashContainer>
         </Router>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { getClippings, IClippingItem } from '../../services/clippings'
 import Card from '../../components/card/card';
+import { Link } from '@reach/router';
 const styles = require('./home.css')
 
 type THomeState = {
@@ -70,12 +71,13 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
 
         <div className={styles.clippings}>
           {this.state.list.map((item: IClippingItem) => (
-            <Card className={styles.clipping} key={item.id}>
-              <h3 className={styles.bookTitle}>{item.title}</h3>
-              <hr />
-              <p className={styles.bookContent}>{item.content}</p>
-
-            </Card>
+            <Link to={`/dash/${this.props.userid}/clippings/${item.id}`} key={item.id}>
+              <Card className={styles.clipping}>
+                <h3 className={styles.bookTitle}>{item.title}</h3>
+                <hr />
+                <p className={styles.bookContent}>{item.content}</p>
+              </Card>
+            </Link>
           ))}
         </div>
 

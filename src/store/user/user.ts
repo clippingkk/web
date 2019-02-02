@@ -1,6 +1,6 @@
-import { AUTH_LOGIN, IUserAction, UserState } from './type'
+import { AUTH_LOGIN, IUserAction, TUserState } from './type'
 
-const initState: UserState = {
+const initState: TUserState = {
   profile: {
     id: 0,
     name: '',
@@ -10,7 +10,7 @@ const initState: UserState = {
   token: ''
 }
 
-function userReducer(state = initState, action: IUserAction): UserState {
+function userReducer(state = initState, action: IUserAction): TUserState {
   switch (action.type) {
     case AUTH_LOGIN:
       return {
