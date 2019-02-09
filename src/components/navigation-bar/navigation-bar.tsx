@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux';
 const styles = require('./navigation-bar.css')
 
-
 const leftMenu = [{
   icon: 'book',
   dest: (id: number) => `/dash/${id}/home`
@@ -41,7 +40,7 @@ class NavigationBar extends React.PureComponent<any, any> {
           <ul className={styles.menuUl}>
             {leftMenu.map((item, index) => (
               <li className={styles.menuItem} key={index}>
-                <Link to={item.dest(this.props.dest)}>
+                <Link to={item.dest(this.props.id)}>
                   <FontAwesomeIcon icon={item.icon as any} color="#000" size="2x" />
                 </Link>
               </li>

@@ -27,12 +27,10 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
     })
 
     yield call(navigate, `/dash/${response.profile.id}/home`)
-
   } catch (e) {
-    console.error(e)
     swal({
       title: "Oops",
-      text: e,
+      text: e.toString(),
       icon: 'error'
     })
   }

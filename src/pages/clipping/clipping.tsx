@@ -4,6 +4,7 @@ import { changeBackground } from '../../store/app/type';
 import { connect } from 'react-redux'
 import Card from '../../components/card/card'
 import Dialog from '../../components/dialog/dialog'
+import Preview from '../../components/preview/preview'
 const styles = require('./clipping.css')
 
 type TClippingPageProp = {
@@ -42,7 +43,8 @@ class ClippingPage extends React.PureComponent<TClippingPageProp, TClippingPageS
 
     this.setState({ book, clipping })
     // this.props.changeBackground(book.image)
-    this.props.changeBackground('https://cdn.annatarhe.com/athena/jike/FgGx0e6uGeaid26uWDydQ5FJ6Otd.jpg-copyrightDB.webp')
+    // this.props.changeBackground('https://cdn.annatarhe.com/athena/jike/FgGx0e6uGeaid26uWDydQ5FJ6Otd.jpg-copyrightDB.webp')
+    this.props.changeBackground('https://wx2.sinaimg.cn/mw1024/77ba321fly1ffhu39h0njj20zk0qo0yr.jpg')
   }
 
   onCancel = () => {
@@ -63,7 +65,6 @@ class ClippingPage extends React.PureComponent<TClippingPageProp, TClippingPageS
   render() {
     return (
       <div className={styles.clipping}>
-
         <div className={styles.main}>
           <Card className={styles.mainCard}>
             <h1 className={styles.title}>{this.state.clipping.title}</h1>
@@ -71,13 +72,20 @@ class ClippingPage extends React.PureComponent<TClippingPageProp, TClippingPageS
             <hr className={styles.hr} />
             <p className={styles.content}>{this.state.clipping.content}</p>
           </Card>
+          {/** 再加一个作者简介 */}
           <Card className={styles.addons}>
             <ul className={styles.actionList}>
               <li className={styles.action}>
                 <button className={styles.actionBtn} onClick={this.toggleDialog}>图片分享</button>
               </li>
               <li className={styles.action}>
-                <a href={this.state.book.url} target="_blank" className={styles.actionBtn}>豆瓣读书</a>
+                <a
+                  href={`https://book.douban.com/subject/${this.state.book.doubanId}`}
+                  target="_blank"
+                  className={styles.actionBtn}
+                >
+                  豆瓣读书
+                </a>
               </li>
               <li className={styles.action}>
                 <p className={styles.actionBtn}>评论 (开发中)</p>
@@ -86,14 +94,15 @@ class ClippingPage extends React.PureComponent<TClippingPageProp, TClippingPageS
           </Card>
         </div>
 
-        {this.state.dialogVisible && (
-          <Dialog
+        {this.state.dialogVisible && this.state.clipping.content && (
+          <Preview
             onCancel={this.onCancel}
             onOk={this.onOk}
-            title="图片预览"
-          >
-            <div> lalalla</div>
-          </Dialog>
+            background={this.state.book.image}
+            bookTitle={this.state.book.title}
+            content={this.state.clipping.content}
+            author={this.state.book.author}
+          />
         )}
       </div>
     )

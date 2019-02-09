@@ -1,0 +1,27 @@
+.preview {
+
+  display: flex;
+}
+
+.preview-image {
+  /* width: 270px;
+  height: 480px; */
+  height: 640px;
+  width: 360px;
+}
+
+.footer {
+
+  color: #fff;
+  margin-left: 1rem;
+  border-left: 1px solid #fff;
+}
+
+.action {
+  margin-left: 1rem;
+}
+
+.download {
+  color: #fff;
+  font-size: 20px;
+}

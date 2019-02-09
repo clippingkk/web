@@ -20,9 +20,12 @@ type TContainerProps = {
 class Container extends React.PureComponent<TContainerProps> {
   render() {
     const { background, children } = this.props
+    const containerStyle = background && background !== '' ? {
+      backgroundImage: `url(${background})`
+    } : undefined
     return (
     <section className={styles.container}>
-      <div className={styles.back} style={{ backgroundImage: `url(${background})` }}/>
+      <div className={styles.back} style={containerStyle} />
       <NavigationBar />
       {children}
       <Footer />

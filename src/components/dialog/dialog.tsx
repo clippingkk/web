@@ -7,6 +7,7 @@ type dialogProps = {
   onCancel: (e: React.MouseEvent) => void,
   onOk: (e: React.MouseEvent) => void,
   title: string,
+  children: JSX.Element
 }
 
 class Dialog extends React.PureComponent<dialogProps> {
@@ -26,9 +27,10 @@ class Dialog extends React.PureComponent<dialogProps> {
 }
 
 function exportDialog(props: dialogProps) {
+  const { children, ...others } = props
   return (
     ReactDOM.createPortal(
-      <Dialog {...props} />,
+      <Dialog {...props}>{children}</Dialog>,
       document.querySelector('#dialog') as Element
     )
   )
