@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from '@reach/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import Dialog from '../dialog/dialog'
 const styles = require('./preview.css')
 
@@ -20,16 +20,16 @@ type TPreviewState = {
 
 const CANVAS_CONFIG = {
   height: 1920,
-  width: 1080
+  width: 1080,
 }
 
 const QRCODE_METRIC = {
   width: 150,
-  height: 150
+  height: 150,
 }
 
 function downloadImage(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const img = new Image()
     img.onload = () => {
       resolve(img)
@@ -41,7 +41,8 @@ function downloadImage(src: string): Promise<HTMLImageElement> {
 
 class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
   state = {
-    output: 'https://wx2.sinaimg.cn/mw1024/77ba321fly1ffhu39h0njj20zk0qo0yr.jpg'
+    output:
+      'https://wx2.sinaimg.cn/mw1024/77ba321fly1ffhu39h0njj20zk0qo0yr.jpg',
   }
 
   async componentDidMount() {
@@ -49,7 +50,7 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
     canvas.width = CANVAS_CONFIG.width
     canvas.height = CANVAS_CONFIG.height
     const ctx = canvas.getContext('2d')
-    
+
     if (!ctx) {
       return
     }
@@ -64,10 +65,18 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
   }
 
   async renderBg(ctx: CanvasRenderingContext2D) {
-    const bg = await downloadImage(require('../../assets/book-image.jpg') || this.props.background)
+    const bg = await downloadImage(
+      require('../../assets/book-image.jpg') || this.props.background
+    )
     ctx.save()
     ctx.filter = 'blur(10px)'
-    ctx.drawImage(bg, -10, -10, CANVAS_CONFIG.width + 20, CANVAS_CONFIG.height + 20)
+    ctx.drawImage(
+      bg,
+      -10,
+      -10,
+      CANVAS_CONFIG.width + 20,
+      CANVAS_CONFIG.height + 20
+    )
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
     ctx.fillRect(0, 0, CANVAS_CONFIG.width, CANVAS_CONFIG.height)
     ctx.restore()
@@ -77,7 +86,8 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
     ctx.save()
     ctx.textAlign = 'left'
     ctx.textBaseline = 'middle'
-    ctx.font = 'normal 64px -apple-system, BlinkMacSystemFont, Lato, "Microsoft Jhenghei", "Hiragino Sans GB", "Microsoft YaHei", sans-serif'
+    ctx.font =
+      'normal 64px -apple-system, BlinkMacSystemFont, Lato, "Microsoft Jhenghei", "Hiragino Sans GB", "Microsoft YaHei", sans-serif'
     ctx.fillStyle = '#fff'
     let text = this.props.content.slice()
     const step = 80
@@ -87,7 +97,7 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
     const widthBoundry = CANVAS_CONFIG.width - 40 * 2
     let cursor = 0
 
-    while(cursor < text.length) {
+    while (cursor < text.length) {
       const t = text.slice(0, cursor)
       const metric = ctx.measureText(t)
 
@@ -117,21 +127,32 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
     ctx.save()
     ctx.textAlign = 'left'
     ctx.textBaseline = 'middle'
-    ctx.font = 'normal 48px -apple-system, BlinkMacSystemFont, Lato, "Microsoft Jhenghei", "Hiragino Sans GB", "Microsoft YaHei", sans-serif'
+    ctx.font =
+      'normal 48px -apple-system, BlinkMacSystemFont, Lato, "Microsoft Jhenghei", "Hiragino Sans GB", "Microsoft YaHei", sans-serif'
     ctx.fillStyle = '#fff'
     const titleMetric = ctx.measureText(this.props.bookTitle)
-    ctx.fillText(this.props.bookTitle, CANVAS_CONFIG.width - 40 - titleMetric.width, CANVAS_CONFIG.height - 300)
+    ctx.fillText(
+      this.props.bookTitle,
+      CANVAS_CONFIG.width - 40 - titleMetric.width,
+      CANVAS_CONFIG.height - 300
+    )
 
     const author = '—— ' + this.props.author
     const authorMetric = ctx.measureText(author)
-    ctx.fillText(author, CANVAS_CONFIG.width - 40 - authorMetric.width, CANVAS_CONFIG.height - 220)
+    ctx.fillText(
+      author,
+      CANVAS_CONFIG.width - 40 - authorMetric.width,
+      CANVAS_CONFIG.height - 220
+    )
 
     ctx.restore()
   }
 
   async renderFooter(ctx: CanvasRenderingContext2D) {
     ctx.save()
-    const qrcode = await downloadImage(require('../../assets/website-qrcode.png'))
+    const qrcode = await downloadImage(
+      require('../../assets/website-qrcode.png')
+    )
     ctx.drawImage(
       qrcode,
       CANVAS_CONFIG.width - 40 - QRCODE_METRIC.width,
@@ -154,7 +175,9 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
           <footer className={styles.footer}>
             <a
               href={this.state.output}
-              download={`clippingkk-${this.props.bookTitle}-${this.props.author}.png`}
+              download={`clippingkk-${this.props.bookTitle}-${
+                this.props.author
+              }.png`}
               className={styles.action + ' ' + styles.download}
             >
               保存

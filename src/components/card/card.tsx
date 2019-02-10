@@ -7,7 +7,6 @@ type cardProps = {
 }
 
 class Card extends React.PureComponent<cardProps> {
-
   onCardClick = (e: React.MouseEvent) => {
     if (this.props.onClick) {
       this.props.onClick(e)
@@ -18,7 +17,7 @@ class Card extends React.PureComponent<cardProps> {
     const cls = `${styles.card} ${this.props.className || ''}`
     return (
       <section className={cls} onClick={this.onCardClick}>
-        { this.props.children }
+        {this.props.children}
       </section>
     )
   }

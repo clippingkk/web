@@ -9,12 +9,11 @@ import 'normalize.css'
 import './styles/index.styl'
 import './styles/icons'
 
-
 ReactDOM.render(
   <Provider store={store}>
     <Root />
   </Provider>,
   document.querySelector('#app')
-);
+)
 
-(fastclick as any).attach(document.body)
+;(fastclick as any).attach(document.body)

@@ -7,18 +7,16 @@ interface IReleasePageState {
 }
 
 class ReleasePage extends React.PureComponent<any, IReleasePageState> {
-
   state = {
-    versionList: []
+    versionList: [],
   }
 
   componentDidMount() {
     getVersions(this.props.platform).then(res => {
       this.setState({
-        versionList: res.data
+        versionList: res.data,
       })
     })
-
   }
   render() {
     return (
@@ -29,7 +27,9 @@ class ReleasePage extends React.PureComponent<any, IReleasePageState> {
         <ul className={styles.versionList}>
           {this.state.versionList.map((versionInfo: IVersionItem) => (
             <li>
-              <a href={versionInfo.url} download>{versionInfo.version}</a>
+              <a href={versionInfo.url} download>
+                {versionInfo.version}
+              </a>
               <p>{versionInfo.info}</p>
             </li>
           ))}

@@ -1,20 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Card from '../card/card';
+import Card from '../card/card'
 const styles = require('./dialog.css')
 
 type dialogProps = {
-  onCancel: (e: React.MouseEvent) => void,
-  onOk: (e: React.MouseEvent) => void,
-  title: string,
+  onCancel: (e: React.MouseEvent) => void
+  onOk: (e: React.MouseEvent) => void
+  title: string
   children: JSX.Element
 }
 
 class Dialog extends React.PureComponent<dialogProps> {
-
   stopBuble = (e: React.MouseEvent) => {
     e.stopPropagation()
   }
+
   render() {
     return (
       <div className={styles.mask} onClick={this.props.onCancel}>
@@ -28,11 +28,9 @@ class Dialog extends React.PureComponent<dialogProps> {
 
 function exportDialog(props: dialogProps) {
   const { children, ...others } = props
-  return (
-    ReactDOM.createPortal(
-      <Dialog {...props}>{children}</Dialog>,
-      document.querySelector('#dialog') as Element
-    )
+  return ReactDOM.createPortal(
+    <Dialog {...props}>{children}</Dialog>,
+    document.querySelector('#dialog') as Element
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { getClippings, IClippingItem } from '../../services/clippings'
-import Card from '../../components/card/card';
-import { Link } from '@reach/router';
+import Card from '../../components/card/card'
+import { Link } from '@reach/router'
 const styles = require('./home.css')
 
 type THomeState = {
@@ -53,7 +53,7 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
       }
       this.setState({
         list: [...this.state.list, ...list],
-        offset: this.state.offset + 20
+        offset: this.state.offset + 20,
       })
     } catch (e) {
       console.error(e)
@@ -71,7 +71,10 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
 
         <div className={styles.clippings}>
           {this.state.list.map((item: IClippingItem) => (
-            <Link to={`/dash/${this.props.userid}/clippings/${item.id}`} key={item.id}>
+            <Link
+              to={`/dash/${this.props.userid}/clippings/${item.id}`}
+              key={item.id}
+            >
               <Card className={styles.clipping}>
                 <h3 className={styles.bookTitle}>{item.title}</h3>
                 <hr />
@@ -82,7 +85,14 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
         </div>
 
         <footer className={styles.footer}>
-          <span className={styles.tip} ref={loadMoreDom => this.loadMoreDom = loadMoreDom as HTMLSpanElement}>{this.state.hasMore ? 'loading' : '没有更多了...'}</span>
+          <span
+            className={styles.tip}
+            ref={loadMoreDom =>
+              (this.loadMoreDom = loadMoreDom as HTMLSpanElement)
+            }
+          >
+            {this.state.hasMore ? 'loading' : '没有更多了...'}
+          </span>
         </footer>
       </section>
     )

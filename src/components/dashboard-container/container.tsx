@@ -1,18 +1,18 @@
 import React from 'react'
-import NavigationBar from '../navigation-bar/navigation-bar';
-import Footer from '../footer/Footer';
-import { connect } from 'react-redux';
-import { TGlobalStore } from '../../store';
+import NavigationBar from '../navigation-bar/navigation-bar'
+import Footer from '../footer/Footer'
+import { connect } from 'react-redux'
+import { TGlobalStore } from '../../store'
 const styles = require('./container.css')
 
 function mapStoreToState({ app }: TGlobalStore) {
   return {
-    background: app.background
+    background: app.background,
   }
 }
 
 type TContainerProps = {
-  background: string 
+  background: string
 }
 
 // @ts-ignore
@@ -20,16 +20,19 @@ type TContainerProps = {
 class Container extends React.PureComponent<TContainerProps> {
   render() {
     const { background, children } = this.props
-    const containerStyle = background && background !== '' ? {
-      backgroundImage: `url(${background})`
-    } : undefined
+    const containerStyle =
+      background && background !== ''
+        ? {
+            backgroundImage: `url(${background})`,
+          }
+        : undefined
     return (
-    <section className={styles.container}>
-      <div className={styles.back} style={containerStyle} />
-      <NavigationBar />
-      {children}
-      <Footer />
-    </section>
+      <section className={styles.container}>
+        <div className={styles.back} style={containerStyle} />
+        <NavigationBar />
+        {children}
+        <Footer />
+      </section>
     )
   }
 }

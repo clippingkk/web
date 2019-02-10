@@ -1,21 +1,25 @@
 import React from 'react'
-import { searchBookDetail, getClipping, IClippingItem, TBook } from '../../services/clippings';
-import { changeBackground } from '../../store/app/type';
+import {
+  searchBookDetail,
+  getClipping,
+  IClippingItem,
+  TBook,
+} from '../../services/clippings'
+import { changeBackground } from '../../store/app/type'
 import { connect } from 'react-redux'
 import Card from '../../components/card/card'
-import Dialog from '../../components/dialog/dialog'
 import Preview from '../../components/preview/preview'
 const styles = require('./clipping.css')
 
 type TClippingPageProp = {
   userid: number
-  clippingid: number,
+  clippingid: number
   changeBackground: (bg: string) => Promise<any>
 }
 
 type TClippingPageState = {
-  clipping: IClippingItem,
-  book: TBook,
+  clipping: IClippingItem
+  book: TBook
   dialogVisible: boolean
 }
 
@@ -23,14 +27,19 @@ function mapActionToProps(dispatch: any) {
   return {
     changeBackground(bg: string) {
       return dispatch(changeBackground(bg))
-    }
+    },
   }
 }
 
 // @ts-ignore
-@connect(null, mapActionToProps)
-class ClippingPage extends React.PureComponent<TClippingPageProp, TClippingPageState> {
-
+@connect(
+  null,
+  mapActionToProps
+)
+class ClippingPage extends React.PureComponent<
+  TClippingPageProp,
+  TClippingPageState
+> {
   state = {
     clipping: {} as IClippingItem,
     book: {} as TBook,
@@ -44,7 +53,9 @@ class ClippingPage extends React.PureComponent<TClippingPageProp, TClippingPageS
     this.setState({ book, clipping })
     // this.props.changeBackground(book.image)
     // this.props.changeBackground('https://cdn.annatarhe.com/athena/jike/FgGx0e6uGeaid26uWDydQ5FJ6Otd.jpg-copyrightDB.webp')
-    this.props.changeBackground('https://wx2.sinaimg.cn/mw1024/77ba321fly1ffhu39h0njj20zk0qo0yr.jpg')
+    this.props.changeBackground(
+      'https://wx2.sinaimg.cn/mw1024/77ba321fly1ffhu39h0njj20zk0qo0yr.jpg'
+    )
   }
 
   onCancel = () => {
@@ -58,7 +69,7 @@ class ClippingPage extends React.PureComponent<TClippingPageProp, TClippingPageS
 
   toggleDialog = () => {
     this.setState({
-      dialogVisible: !this.state.dialogVisible
+      dialogVisible: !this.state.dialogVisible,
     })
   }
 
@@ -76,11 +87,18 @@ class ClippingPage extends React.PureComponent<TClippingPageProp, TClippingPageS
           <Card className={styles.addons}>
             <ul className={styles.actionList}>
               <li className={styles.action}>
-                <button className={styles.actionBtn} onClick={this.toggleDialog}>图片分享</button>
+                <button
+                  className={styles.actionBtn}
+                  onClick={this.toggleDialog}
+                >
+                  图片分享
+                </button>
               </li>
               <li className={styles.action}>
                 <a
-                  href={`https://book.douban.com/subject/${this.state.book.doubanId}`}
+                  href={`https://book.douban.com/subject/${
+                    this.state.book.doubanId
+                  }`}
                   target="_blank"
                   className={styles.actionBtn}
                 >
