@@ -13,7 +13,11 @@ export interface IVersionListResponse extends IBaseResponseData {
     data: IVersionItem[]
 }
 
-export function getVersions(platform: string): Promise<IVersionListResponse> {
-    return request(`/version/${platform}?take=5`) as Promise<IVersionListResponse>
+export async function getVersions(platform: string): Promise<IVersionItem[]> {
+    const response = await (request(`/version/${platform}?take=5`) as Promise<IVersionItem[]>)
 
+    return response.map(x => ({
+      ...x,
+      // info: x.info.replace(/\n/g, '')
+    }))
 }

@@ -1,42 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { getVersions, IVersionItem } from '../../services/release'
-const styles = require('./release')
+const styles = require('./release.css')
 
-interface IReleasePageState {
-  versionList: IVersionItem[]
-}
+const isiPhone = /iPhone/.test(navigator.userAgent)
 
-class ReleasePage extends React.PureComponent<any, IReleasePageState> {
-  state = {
-    versionList: [],
-  }
+function ReleasePage({ platform }: any) {
+  const [versionList, setVersionList] = useState([])
 
-  componentDidMount() {
-    getVersions(this.props.platform).then(res => {
-      this.setState({
-        versionList: res.data,
-      })
-    })
-  }
-  render() {
-    return (
-      <section className={styles.releasePage}>
-        <h2 className={styles.platformTitle}>{this.props.platform}</h2>
-        <hr />
+  useEffect(() => {
+    getVersions(platform).then(setVersionList as any)
+  }, platform)
 
-        <ul className={styles.versionList}>
-          {this.state.versionList.map((versionInfo: IVersionItem) => (
-            <li>
-              <a href={versionInfo.url} download>
-                {versionInfo.version}
-              </a>
+  return (
+    <section className={styles.releasePage}>
+      <h2 className={styles.platformTitle}>ClippingKK ❤️ {platform}</h2>
+      <hr />
+
+      <ul className={styles.versionList}>
+        {versionList.map((versionInfo: IVersionItem) => (
+          <li className={styles.version} key={versionInfo.id}>
+            <a
+              href={versionInfo.url}
+              download={`clippingkk-${versionInfo.platform}-${versionInfo.version}.${isiPhone ? 'ipa' : 'apk'}`}
+              className={styles.versionLink}
+            >
+              <p className={styles.versionNumber}>😁 {versionInfo.version}</p>
               <p>{versionInfo.info}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
 }
 
 export default ReleasePage
