@@ -13,7 +13,7 @@ const AuthPage = React.lazy(() => import('./pages/auth/auth'))
 const HomePage = React.lazy(() => import('./pages/home/home'))
 const UploaderPage = React.lazy(() => import('./pages/uploader/uploader'))
 const ClippingPage = React.lazy(() => import('./pages/clipping/clipping'))
-
+const SquarePage = React.lazy(() => import('./pages/square/square'))
 
 @hot
 class Root extends React.Component {
@@ -29,6 +29,7 @@ class Root extends React.Component {
             <DashContainer path="dash/:userid">
               <HomePage path="home" />
               <UploaderPage path="upload" />
+              <SquarePage path="square" />
               <ClippingPage path="/clippings/:clippingid" />
             </DashContainer>
           </Router>

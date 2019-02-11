@@ -2,10 +2,10 @@ import React from 'react'
 const styles = require('./Hero.css')
 
 enum platformList {
-  'windows',
-  'ios',
-  'android',
-  'macos',
+  'Windows',
+  'iOS',
+  'Android',
+  'macOS',
   'web',
 }
 
@@ -16,25 +16,27 @@ type IPlatformItem = {
 }
 
 const platforms: IPlatformItem = {
-  windows: {
+  Windows: {
     url: 'https://www.microsoft.com/store/apps/9NMPMXC5X2CM',
   },
-  ios: {},
-  android: {},
-  web: {},
-  macos: {},
+  iOS: {},
+  Android: {},
+  web: {
+    url: '/auth'
+  },
+  macOS: {},
 }
 
 class Hero extends React.PureComponent {
   state = {
-    linkUrl: platforms.windows.url,
+    linkUrl: platforms.Windows.url,
   }
 
   componentDidMount() {
-    let deviceSpecUrl = platforms.windows.url
+    let deviceSpecUrl = platforms.Windows.url
     switch (navigator.platform.toLowerCase()) {
       case 'android':
-        deviceSpecUrl = platforms.android.url
+        deviceSpecUrl = platforms.Android.url
       case 'win32':
       default:
     }

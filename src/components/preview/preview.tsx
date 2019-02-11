@@ -39,6 +39,11 @@ function downloadImage(src: string): Promise<HTMLImageElement> {
   })
 }
 
+const BACKGROUND_COLLECTIONS = [
+  require('../../assets/book-image.jpg'),
+
+]
+
 class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
   state = {
     output:
@@ -65,9 +70,9 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
   }
 
   async renderBg(ctx: CanvasRenderingContext2D) {
-    const bg = await downloadImage(
-      require('../../assets/book-image.jpg') || this.props.background
-    )
+    // TODO: api 从豆瓣拉到图片之后，需要存到自己的 cdn 上。然后返回给前端，前端再画成底图。
+    // this.props.background 就是底图，只是现在先用固定的图
+    const bg = await downloadImage(BACKGROUND_COLLECTIONS.sort(() => Math.random() > 0.5 ? 1 : -1)[0])
     ctx.save()
     ctx.filter = 'blur(10px)'
     ctx.drawImage(

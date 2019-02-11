@@ -1,12 +1,13 @@
 @value colors: '../../styles/variables.css';
-@value primary-text-color, blur-background from colors;
+@value primary-text-color, blur-background, grey-lite from colors;
 
 .navbar {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: blur-background;
+  /* background-color: blur-background; */
+  background-color: grey-lite;
   padding: 1rem 0;
   position: sticky;
   top: 0;
@@ -14,7 +15,7 @@
 
 .navbar::before {
   content: '';
-  width: calc(90% + 10px);
+  /* width: calc(90% + 10px); */
   height: 100%;
   position: absolute;
   top: 0;

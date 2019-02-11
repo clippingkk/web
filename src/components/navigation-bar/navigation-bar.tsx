@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from '@reach/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
+import { execLogout } from '../../store/user/type';
 const styles = require('./navigation-bar.css')
 
 const leftMenu = [
@@ -11,7 +12,7 @@ const leftMenu = [
   },
   {
     icon: 'book-open',
-    dest: (id: number) => `/dash/${id}/home`,
+    dest: (id: number) => `/dash/${id}/square`,
   },
   {
     icon: 'cloud-upload-alt',
@@ -30,9 +31,20 @@ function mapStoreToState({ user, app }: any) {
   }
 }
 
+function mapActionToProps(dispatch: any) {
+  return {
+    logout: () => dispatch(execLogout())
+  }
+}
+
 // @ts-ignore
-@connect(mapStoreToState)
+@connect(mapStoreToState, mapActionToProps)
 class NavigationBar extends React.PureComponent<any, any> {
+
+  logout = () => {
+    this.props.logout()
+  }
+
   render() {
     return (
       <nav className={styles.navbar}>
@@ -60,7 +72,7 @@ class NavigationBar extends React.PureComponent<any, any> {
           <li className={styles.setting}>
             <FontAwesomeIcon icon="cog" color="#000" size="2x" />
           </li>
-          <li className={styles.setting}>
+          <li className={styles.setting} onClick={this.logout}>
             <FontAwesomeIcon icon="sign-out-alt" color="#000" size="2x" />
           </li>
         </ul>

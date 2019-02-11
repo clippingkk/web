@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, IUserAction, TUserState } from './type'
+import { AUTH_LOGIN, IUserAction, TUserState, USER_LOGOUT } from './type'
 
 const initState: TUserState = {
   profile: {
@@ -17,6 +17,8 @@ function userReducer(state = initState, action: IUserAction): TUserState {
         profile: action.profile,
         token: action.token
       }
+    case USER_LOGOUT:
+      return initState
     default:
       return state
   }
