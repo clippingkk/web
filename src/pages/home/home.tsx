@@ -3,10 +3,12 @@ import { getClippings, IClippingItem } from '../../services/clippings'
 import Card from '../../components/card/card'
 import { Link } from '@reach/router'
 import HomeContent from './content';
+import { getBooks, IBook } from '../../services/books';
+import BooksContent from './books';
 const styles = require('./home.css')
 
 type THomeState = {
-  list: IClippingItem[]
+  list: IBook[]
   hasMore: boolean
   offset: number
   loading: boolean
@@ -48,7 +50,7 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
     }
     this.setState({ loading: true })
     try {
-      const list = await getClippings(this.props.userid, this.state.offset)
+      const list = await getBooks(this.props.userid, this.state.offset)
       if (list.length < 20) {
         this.setState({ hasMore: false })
       }
@@ -71,7 +73,7 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
         </header>
 
         <div className={styles.clippings}>
-          <HomeContent
+          <BooksContent
             list={this.state.list}
             userid={this.props.userid}
           />

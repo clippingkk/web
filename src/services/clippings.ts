@@ -13,32 +13,11 @@ interface IBaseClippingItem {
   updatedAt: string
 }
 
-interface TBaseBook {
-  id: number
-  rating: number
-  author: string
-  originTitle: string
-  image: string
-  doubanId: string
-  title: string
-  url: string
-  authorIntro: string
-  summary: string
-}
-
-interface TServerBook extends TBaseBook {
-  pubDate: string
-}
-
-export interface TBook extends TBaseBook {
-  pubDate: Date
-}
-
 export interface IClippingItem extends IBaseClippingItem {
   createdAt: Date
 }
 
-interface IHttpClippingItem extends IBaseClippingItem {
+export interface IHttpClippingItem extends IBaseClippingItem {
   createdAt: number
 }
 
@@ -51,7 +30,6 @@ export async function getClippings(userid: number, offset: number): Promise<ICli
 
 export async function getClipping(clippingid: number): Promise<IClippingItem> {
   const response = await (request(`/clippings/${clippingid}`) as Promise<IHttpClippingItem>)
-  console.log(response)
 
   return {
     ...response,
@@ -66,12 +44,4 @@ export async function create(clippings: TClippingItem[]) {
   }) as Promise<IHttpClippingItem[]>)
 
   return response
-}
-
-export async function searchBookDetail(title: string): Promise<TBook> {
-  const response = await (request(`/clippings/book/${title}`) as Promise<TServerBook>)
-  return {
-    ...response,
-    pubDate: new Date(response.pubDate)
-  }
 }

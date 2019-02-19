@@ -1,14 +1,13 @@
 import React from 'react'
 import {
-  searchBookDetail,
   getClipping,
   IClippingItem,
-  TBook,
 } from '../../services/clippings'
 import { changeBackground } from '../../store/app/type'
 import { connect } from 'react-redux'
 import Card from '../../components/card/card'
 import Preview from '../../components/preview/preview'
+import { IBook, searchBookDetail } from '../../services/books';
 const styles = require('./clipping.css')
 
 type TClippingPageProp = {
@@ -19,7 +18,7 @@ type TClippingPageProp = {
 
 type TClippingPageState = {
   clipping: IClippingItem
-  book: TBook
+  book: IBook
   dialogVisible: boolean
 }
 
@@ -42,13 +41,13 @@ class ClippingPage extends React.PureComponent<
 > {
   state = {
     clipping: {} as IClippingItem,
-    book: {} as TBook,
+    book: {} as IBook,
     dialogVisible: true,
   }
 
   async componentDidMount() {
     const clipping = await getClipping(this.props.clippingid)
-    const book = await searchBookDetail(clipping.title)
+    const book = await searchBookDetail(clipping.bookId)
 
     this.setState({ book, clipping })
     // this.props.changeBackground(book.image)

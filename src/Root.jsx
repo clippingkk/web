@@ -15,6 +15,7 @@ const HomePage = React.lazy(() => import('./pages/home/home'))
 const UploaderPage = React.lazy(() => import('./pages/uploader/uploader'))
 const ClippingPage = React.lazy(() => import('./pages/clipping/clipping'))
 const SquarePage = React.lazy(() => import('./pages/square/square'))
+const BookPage = React.lazy(() => import('./pages/book/book'))
 
 
 @hot
@@ -33,6 +34,7 @@ class Root extends React.Component {
               <UploaderPage path="upload" />
               <SquarePage path="square" />
               <ClippingPage path="/clippings/:clippingid" />
+              <BookPage path="book/:bookid" />
             </DashContainer>
           </RouterContainer>
         </React.Suspense>

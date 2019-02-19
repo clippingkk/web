@@ -1,7 +1,7 @@
 
 let support: boolean
 
-export default function supportsWebp(): Promise<boolean> {
+export function supportsWebp(): Promise<boolean> {
   if (support !== undefined) {
     return Promise.resolve(support)
   }

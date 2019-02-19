@@ -16,7 +16,7 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
     proxy: {
-      '/api/*': 'http://localhost:9654'
+      '/api/*': 'http://localhost:9654',
       // 'http://localhost:8080/api': 'http://localhost:9654/api'
     }
   }
