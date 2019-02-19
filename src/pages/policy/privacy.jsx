@@ -8,7 +8,7 @@ class PrivacyPolicy extends React.PureComponent {
   }
   render() {
     return (
-      <section className={styles.container}>
+      <section className={`${styles.container} page`}>
         <h1>Privacy Policy</h1>
         <p>Effective date: October 07, 2018</p>
 

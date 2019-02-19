@@ -1,0 +1,7 @@
+.transition-group {
+  display: block !important;
+}
+
+.router {
+  flex: 1;
+}

@@ -3,8 +3,8 @@
 }
 
 .box {
-  margin-top: 2rem;
-  width: 100%;
+  width: 90%;
+  margin: 2rem auto;
   background-color: #eee;
   padding: 10rem 0;
   display: flex;

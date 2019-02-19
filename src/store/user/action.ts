@@ -1,8 +1,9 @@
-import { call, takeEvery, put } from "@redux-saga/core/effects";
+import { call, takeEvery, put, delay } from "@redux-saga/core/effects";
 import { navigate } from '@reach/router'
 import * as authAPI from '../../services/auth'
 import { AUTH_LOGIN_ACTION, TUserState, AUTH_LOGIN, USER_LOGOUT_ACTION, USER_LOGOUT } from "./type";
 import swal from 'sweetalert'
+import { SweetAlert } from "sweetalert/typings/core";
 
 type TLoginAction = {
   type: string
@@ -12,6 +13,16 @@ type TLoginAction = {
 
 function* loginAction(action: TLoginAction): IterableIterator<any> {
   const { email, pwd } = action
+
+  const loading: any = swal({
+    title: 'loading',
+    text: 'loading',
+    icon: 'info',
+    buttons: [false],
+    closeOnClickOutside: false,
+    closeOnEsc: false,
+  })
+
   try {
     const response: TUserState = yield call(authAPI.login, email, pwd)
 

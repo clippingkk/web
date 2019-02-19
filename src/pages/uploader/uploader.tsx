@@ -38,7 +38,7 @@ class UploaderPage extends React.PureComponent<any> {
 
   render() {
     return (
-      <section className={styles.uploader}>
+      <section className={`${styles.uploader} page`}>
         <div
           className={styles.box}
           onDragOver={this.stopDragOver}

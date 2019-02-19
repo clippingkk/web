@@ -2,6 +2,7 @@ import React from 'react'
 import { getClippings, IClippingItem } from '../../services/clippings'
 import Card from '../../components/card/card'
 import { Link } from '@reach/router'
+import HomeContent from './content';
 const styles = require('./home.css')
 
 type THomeState = {
@@ -64,24 +65,16 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
 
   render() {
     return (
-      <section className={styles.home}>
+      <section className={`${styles.home} page`}>
         <header className={styles.header}>
           <h2 className={styles.title}>我的书籍</h2>
         </header>
 
         <div className={styles.clippings}>
-          {this.state.list.map((item: IClippingItem) => (
-            <Link
-              to={`/dash/${this.props.userid}/clippings/${item.id}`}
-              key={item.id}
-            >
-              <Card className={styles.clipping}>
-                <h3 className={styles.bookTitle}>{item.title}</h3>
-                <hr />
-                <p className={styles.bookContent}>{item.content}</p>
-              </Card>
-            </Link>
-          ))}
+          <HomeContent
+            list={this.state.list}
+            userid={this.props.userid}
+          />
         </div>
 
         <footer className={styles.footer}>

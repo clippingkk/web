@@ -1,0 +1,47 @@
+
+.clipping {
+  width: calc(33vw - 6rem);
+  min-height: 20rem;
+}
+
+.book-title {
+  font-size: 14px;
+  color: #333;
+}
+
+.book-content {
+  font-size: 16px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .clipping {
+    width: auto;
+  }
+}
+
+.none {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 0 1rem #333;
+  padding: 10rem 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.tip {
+  font-size: 3rem;
+  margin-top: 0;
+}
+
+.talks {
+
+}
+
+.link {
+  margin-top: 1rem;
+  font-size: 2rem;
+  color: #333;
+}

@@ -1,4 +1,4 @@
-import { takeLatest, call } from "@redux-saga/core/effects"
+import { takeLatest, call, delay } from "@redux-saga/core/effects"
 import { log } from '../../utils/sentry'
 import { EXTRA_AND_UPLOAD_FILE_TO_SERVER, TClippingsFile } from "./type"
 import { create } from "../../services/clippings";
@@ -46,7 +46,7 @@ function parseData(file: string): TClippingItem[] {
         item = {} as any
         break
       case 0:
-        const title = lines[i].split(' ')[0]
+        const title = lines[i].split('(')[0]
         item.title = title.trim()
         break
       case 1:
@@ -73,6 +73,15 @@ function parseData(file: string): TClippingItem[] {
 
 function* extraAndUpload(action: TClippingsFile) {
   const { file } = action
+
+  const loading: any = swal({
+    title: '解析中',
+    text: '正在拼命解析中，请稍等...',
+    icon: 'info',
+    buttons: [false],
+    closeOnClickOutside: false,
+    closeOnEsc: false,
+  })
 
   const str: string = yield call(extraFile, file)
   const parsedData: TClippingItem[] = yield call(parseData, str)

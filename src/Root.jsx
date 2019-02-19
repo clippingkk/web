@@ -4,6 +4,7 @@ import { Router } from '@reach/router'
 import styles from './Root.css'
 
 import PageLoading from './components/loading/loading'
+import RouterContainer from './components/router-container/router';
 
 const IndexPage = React.lazy(() => import('./pages/index/index'))
 const PrivacyPolicy = React.lazy(() => import('./pages/policy/privacy'))
@@ -15,13 +16,14 @@ const UploaderPage = React.lazy(() => import('./pages/uploader/uploader'))
 const ClippingPage = React.lazy(() => import('./pages/clipping/clipping'))
 const SquarePage = React.lazy(() => import('./pages/square/square'))
 
+
 @hot
 class Root extends React.Component {
   render() {
     return (
       <div className={styles.container}>
         <React.Suspense fallback={<PageLoading />}>
-          <Router>
+          <RouterContainer>
             <IndexPage path="/" />
             <PrivacyPolicy path="/policy/privacy" />
             <ReleasePage path="/release/:platform" />
@@ -32,7 +34,7 @@ class Root extends React.Component {
               <SquarePage path="square" />
               <ClippingPage path="/clippings/:clippingid" />
             </DashContainer>
-          </Router>
+          </RouterContainer>
         </React.Suspense>
       </div>
     )

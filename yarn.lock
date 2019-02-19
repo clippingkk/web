@@ -807,6 +807,13 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@nearform/react-animation@^1.0.6":
+  version "1.0.6"
+  resolved "http://registry.npm.taobao.org/@nearform/react-animation/download/@nearform/react-animation-1.0.6.tgz#65487e8c2c793723a0effc0b4d993addc7ce6c88"
+  integrity sha1-ZUh+jCx5NyOg7/wLTZk63cfObIg=
+  dependencies:
+    regenerator-runtime "^0.13.1"
+
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
   resolved "http://registry.npm.taobao.org/@nodelib/fs.stat/download/@nodelib/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
@@ -916,6 +923,13 @@
   dependencies:
     "@types/react" "*"
     redux "^4.0.0"
+
+"@types/react-transition-group@^2.0.16":
+  version "2.0.16"
+  resolved "http://registry.npm.taobao.org/@types/react-transition-group/download/@types/react-transition-group-2.0.16.tgz#2dcb9e396ab385ee19c4af1c9caa469a14cd042f"
+  integrity sha1-LcueOWqzhe4ZxK8cnKpGmhTNBC8=
+  dependencies:
+    "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.7.21":
   version "16.7.22"
@@ -8833,6 +8847,11 @@ regenerator-runtime@^0.12.0:
   version "0.12.1"
   resolved "http://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
   integrity sha1-+hpxVEdkwDb4xJsToIsllMn4oN4=
+
+regenerator-runtime@^0.13.1:
+  version "0.13.1"
+  resolved "http://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.1.tgz#522ea2aafd9200a00eee143dc14219a35a0f3991"
+  integrity sha1-Ui6iqv2SAKAO7hQ9wUIZo1oPOZE=
 
 regenerator-transform@^0.13.3:
   version "0.13.3"

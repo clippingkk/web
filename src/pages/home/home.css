@@ -1,4 +1,6 @@
-
+.home {
+  height: 100%;
+}
 .header {
   display: flex;
   margin-top: 1rem;
@@ -17,21 +19,6 @@
   justify-content: center;
 }
 
-.clipping {
-  width: calc(33vw - 6rem);
-  min-height: 20rem;
-}
-
-.book-title {
-  font-size: 14px;
-  color: #333;
-}
-
-.book-content {
-  font-size: 16px;
-  color: #333;
-}
-
 
 .footer {
   display: flex;
@@ -42,10 +29,4 @@
 
 .tip {
   color: #333;
-}
-
-@media (max-width: 768px) {
-  .clipping {
-    width: auto;
-  }
 }

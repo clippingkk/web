@@ -12,7 +12,7 @@ function ReleasePage({ platform }: any) {
   }, platform)
 
   return (
-    <section className={styles.releasePage}>
+    <section className={`${styles.releasePage} page`}>
       <h2 className={styles.platformTitle}>ClippingKK ❤️ {platform}</h2>
       <hr />
 
