@@ -1,0 +1,24 @@
+@value colors: '../../styles/variables.css';
+@value primary-text-color, blur-background, grey-lite, primary-blur from colors;
+
+.divider {
+  width: 100%;
+  /* height: 1rem; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider::after {
+}
+
+.title {
+  color: #ffffff;
+  font-size: 1.3rem;
+  padding: 1rem 2rem;
+  background-color: primary-blur;
+  z-index: 2;
+  border-radius: 4px;
+
+}
+

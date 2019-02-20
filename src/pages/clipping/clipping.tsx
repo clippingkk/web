@@ -50,11 +50,7 @@ class ClippingPage extends React.PureComponent<
     const book = await searchBookDetail(clipping.bookId)
 
     this.setState({ book, clipping })
-    // this.props.changeBackground(book.image)
-    // this.props.changeBackground('https://cdn.annatarhe.com/athena/jike/FgGx0e6uGeaid26uWDydQ5FJ6Otd.jpg-copyrightDB.webp')
-    this.props.changeBackground(
-      'http://wx3.sinaimg.cn/large/8112eefdgy1ffsagko3p8j21kw23q4qp.jpg'
-    )
+    this.props.changeBackground(book.image)
   }
 
   onCancel = () => {

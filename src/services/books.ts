@@ -27,11 +27,10 @@ let isSupportWebp: boolean
 
 function covertHttpBook2Book(book: IHttpBook): IBook {
   const isCDNImage = book.image.indexOf('http') !== 0
-  // TODO: migrate to dest
   const image = isCDNImage ? `https://cdn.annatarhe.com/${book.image}-copyrightDB${isSupportWebp ? '.webp' : ''}` : book.image
   return {
     ...book,
-    image: 'https://via.placeholder.com/300/09f/fff.webp',
+    image: process.env.NODE_ENV === 'production' ? image : 'https://wx2.sinaimg.cn/large/8112eefdgy1fgncy5cyg9j21kw23vqv6.jpg',
     pubdate: new Date(book.pubdate)
   } as IBook
 }

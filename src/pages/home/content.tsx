@@ -1,9 +1,7 @@
 import React from 'react'
 import { IClippingItem } from '../../services/clippings';
-import { Link } from '@reach/router';
-import Card from '../../components/card/card';
 import NoContentAlert from './no-content';
-const styles = require('./content.css')
+import ClippingItem from '../../components/clipping-item/clipping-item';
 
 type TContentProps = {
   list: IClippingItem[],
@@ -16,17 +14,7 @@ function HomeContent(props: TContentProps) {
   }
 
   const list = props.list.map((item: IClippingItem) => (
-      <Link
-        to={`/dash/${props.userid}/clippings/${item.id}`}
-        key={item.id}
-        className={styles.clippingContainer}
-      >
-        <Card className={styles.clipping}>
-          <h3 className={styles.bookTitle}>{item.title}</h3>
-          <hr />
-          <p className={styles.bookContent}>{item.content}</p>
-        </Card>
-      </Link>
+    <ClippingItem item={item} key={item.id} userid={props.userid} />
   ))
 
   return (

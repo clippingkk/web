@@ -15,7 +15,7 @@ function BooksContent(props: TBooksProps) {
   }
 
   const list = props.list.map((item: IBook) => (
-    <BookCover book={item} userid={props.userid} />
+    <BookCover book={item} userid={props.userid} key={item.id} />
   ))
 
   return (

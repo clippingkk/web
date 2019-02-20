@@ -5,6 +5,7 @@ import { Link } from '@reach/router'
 import HomeContent from './content';
 import { getBooks, IBook } from '../../services/books';
 import BooksContent from './books';
+import ListFooter from '../../components/list-footer/list-footer';
 const styles = require('./home.css')
 
 type THomeState = {
@@ -19,10 +20,6 @@ type THomeProp = {
 }
 
 class HomePage extends React.PureComponent<THomeProp, THomeState> {
-  // @ts-ignore
-  private loadMoreDom: HTMLSpanElement
-  // @ts-ignore
-  private loadMoreObserver: IntersectionObserver
 
   state = {
     list: [],
@@ -31,20 +28,7 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
     loading: false,
   }
 
-  componentDidMount() {
-    this.loadMore()
-
-    this.loadMoreObserver = new IntersectionObserver(() => {
-      this.loadMore()
-    })
-    this.loadMoreObserver.observe(this.loadMoreDom)
-  }
-
-  componentWillUnmount() {
-    this.loadMoreObserver.disconnect()
-  }
-
-  async loadMore() {
+  loadMore = async () => {
     if (this.state.loading || !this.state.hasMore) {
       return
     }
@@ -79,16 +63,10 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
           />
         </div>
 
-        <footer className={styles.footer}>
-          <span
-            className={styles.tip}
-            ref={loadMoreDom =>
-              (this.loadMoreDom = loadMoreDom as HTMLSpanElement)
-            }
-          >
-            {this.state.hasMore ? 'loading' : '没有更多了...'}
-          </span>
-        </footer>
+        <ListFooter
+          loadMoreFn={this.loadMore}
+          hasMore={this.state.hasMore}
+        />
       </section>
     )
   }

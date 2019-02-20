@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { IBook, searchBookDetail, getBookClippings } from '../../services/books';
 import { IClippingItem } from '../../services/clippings';
+import BookInfo from '../../components/book-info/book-info';
+import ClippingItem from '../../components/clipping-item/clipping-item';
+import ListFooter from '../../components/list-footer/list-footer';
+import Divider from '../../components/divider/divider';
+import { changeBackground } from '../../store/app/type';
+import { connect } from 'react-redux';
 const styles = require('./book.css')
 
 type TBookPageProps = {
   userid: number,
-  bookid: string
+  bookid: string,
+  changeBackground: (bg: string) => void
 }
 
-function getBook(doubanId: string): IBook {
+function getBook(doubanId: string, onGetBook: (bg: string) => void): IBook {
   const [book, setBook] = useState({} as IBook)
 
   useEffect(() => {
     searchBookDetail(doubanId).then(res => {
       setBook(res)
+      onGetBook(res.image)
     })
   }, [doubanId])
 
@@ -22,34 +30,62 @@ function getBook(doubanId: string): IBook {
 
 type bookClippingsState = {
   clippings: IClippingItem[],
-  updatePage: (page: number) => void,
-  hasMore: boolean
+  loadMore: () => Promise<any>,
+  hasMore: boolean,
 }
 
-function getClippings(userid: number, bookId: string) {
-  // TODO: add clipping
+function getClippings(userid: number, bookId: string): bookClippingsState {
   const [clippings, setClippings] = useState([] as IClippingItem[])
   const [offset, setOffset] = useState(0)
+  const [hasMore, setHasMore] = useState(true)
+
+  function loadMore() {
+    return getBookClippings(userid, bookId, offset).then(res => {
+      setClippings(clippings.concat(res))
+      setOffset(offset + 20)
+      if (res.length === 0) {
+        setHasMore(false)
+      }
+    })
+  }
 
   useEffect(() => {
-    getBookClippings(userid, bookId, offset).then(res => {
-      setClippings(res)
-    })
+    loadMore
   }, [userid, bookId])
 
-  return clippings
+  return {
+    clippings,
+    loadMore,
+    hasMore,
+  }
 }
 
-function BookPage({ userid, bookid } : TBookPageProps) {
+function mapActionToProps(dispatch: any) {
+  return {
+    changeBackground(bg: string) {
+      return dispatch(changeBackground(bg))
+    },
+  }
+}
 
-  const book = getBook(bookid)
-  const clippings = getClippings(userid, bookid)
+function BookPage({ userid, bookid, changeBackground } : TBookPageProps) {
+  const book = getBook(bookid, changeBackground)
+  const { clippings, loadMore, hasMore } = getClippings(userid, bookid)
 
   return (
     <section className={`${styles.bookPage} page`}>
+      <BookInfo book={book} />
+      
+      <Divider title='书摘' />
 
+      <div className={styles.clippings}>
+        {clippings.map(clipping => (
+          <ClippingItem item={clipping} userid={userid} key={clipping.id} />
+        ))}
+        <ListFooter loadMoreFn={loadMore} hasMore={hasMore} />
+      </div>
     </section>
   )
 }
 
-export default BookPage
+export default connect(null, mapActionToProps)(BookPage)

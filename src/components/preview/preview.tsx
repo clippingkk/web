@@ -31,6 +31,7 @@ const QRCODE_METRIC = {
 function downloadImage(src: string): Promise<HTMLImageElement> {
   return new Promise(resolve => {
     const img = new Image()
+    img.crossOrigin = 'anonymous'
     img.onload = () => {
       resolve(img)
     }
@@ -40,14 +41,15 @@ function downloadImage(src: string): Promise<HTMLImageElement> {
 }
 
 const BACKGROUND_COLLECTIONS = [
-  require('../../assets/book-image.jpg'),
-
+  require('../../assets/share_bg_0.png'),
+  require('../../assets/share_bg_1.png'),
+  require('../../assets/share_bg_2.png'),
+  require('../../assets/share_bg_3.png'),
 ]
 
 class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
   state = {
-    output:
-      'https://wx2.sinaimg.cn/mw1024/77ba321fly1ffhu39h0njj20zk0qo0yr.jpg',
+    output: BACKGROUND_COLLECTIONS[0]
   }
 
   async componentDidMount() {
