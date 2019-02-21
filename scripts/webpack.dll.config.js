@@ -6,7 +6,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const vendors = [
   'whatwg-fetch',
   'fastclick',
-  'sweetalert'
+  'sweetalert',
+  'fingerprintjs2',
+  'js-sha256'
 ]
 
 const reacts = [
