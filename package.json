@@ -12,6 +12,9 @@
     "zip": "bestzip dist.zip dist/*",
     "build": "npm run prod:dll && npm run prod && npm run zip",
     "test": "cross-env NODE_ENV=test ava --verbose",
+    "release:base": "standard-version --commit-all",
+    "release": "npm run release:base --",
+    "release:pre": "npm run release:base -- --prerelease alpha",
     "lint": "prettier --write 'src/**/*.tsx'"
   },
   "repository": {
@@ -72,6 +75,7 @@
     "poststylus": "^1.0.0",
     "prettier": "1.16.4",
     "redux-devtools-extension": "^2.13.7",
+    "standard-version": "^5.0.0",
     "style-loader": "^0.23.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
