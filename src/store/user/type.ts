@@ -2,6 +2,8 @@ export const AUTH_LOGIN = 'auth.AUTH_LOGIN'
 export const AUTH_LOGIN_ACTION = 'auth.saga.AUTH_LOGIN_ACTION'
 export const USER_LOGOUT = 'auth.USER_LOGOUT'
 export const USER_LOGOUT_ACTION = 'auth.saga.USER_LOGOUT_ACTION'
+export const USER_SIGNUP = 'auth.USER_SIGNUP'
+export const USER_SIGNUP_ACTION = 'auth.USER_SIGNUP_ACTION'
 
 export type UserContent = {
     id: number
@@ -21,11 +23,34 @@ export interface IUserAction {
   token: string
 }
 
+interface TUserSignupDataBase {
+  email: string
+  pwd: string
+  name: string
+}
+
+export interface TUserSignupDataInput extends TUserSignupDataBase {
+  avatarFile: File
+}
+
+export interface TUserSignupData extends TUserSignupDataBase {
+  fp: string
+  avatarUrl: string
+}
 
 export function toLogin(email: string, pwd: string) {
   return {
     type: AUTH_LOGIN_ACTION,
     email, pwd
+  }
+}
+
+export function toSignup(
+  signupData: TUserSignupDataInput
+) {
+  return {
+    type: USER_SIGNUP_ACTION,
+    signup: signupData
   }
 }
 

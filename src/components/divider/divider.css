@@ -1,5 +1,5 @@
 @value colors: '../../styles/variables.css';
-@value primary-text-color, blur-background, grey-lite, primary-blur from colors;
+@value primary-text-color, blur-background, grey-lite, primary-blue from colors;
 
 .divider {
   width: 100%;
@@ -16,7 +16,7 @@
   color: #ffffff;
   font-size: 1.3rem;
   padding: 1rem 2rem;
-  background-color: primary-blur;
+  background-color: primary-blue;
   z-index: 2;
   border-radius: 4px;
 

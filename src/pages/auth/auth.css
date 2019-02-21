@@ -1,5 +1,5 @@
 @value colors: '../../styles/variables.css';
-@value primary-text-color, blur-background from colors;
+@value primary-text-color, blur-background, primary-blue from colors;
 
 .auth {
   display: flex;
@@ -7,6 +7,30 @@
   align-items: center;
   justify-content: center;
   background: radial-gradient(red, rgba(33,150,243,.9));
+}
+
+.tabs {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.tab {
+  display: flex;
+  padding: 1rem;
+  font-size: 1.8rem;
+  background-color: blur-background;
+  transition: background-color .35s;
+}
+
+.tab:hover {
+  background-color: aqua;
+}
+
+.tab.link-active {
+  background-color: aqua;
 }
 
 .form {
@@ -23,17 +47,21 @@
   padding: 1rem;
   border: none;
   border-bottom: 1px solid #888;
-  min-width: 30rem;
+  width: 40rem;
   background-color: blur-background;
 }
 
 .submit-btn {
   margin-top: 2rem;
-  background: rgba(33,150,243,.9);
+  background-color: primary-blue;
   color: #fff;
   font-size: 24px;
   border-radius: 2px;
   padding: 1rem;
+}
+
+.submit-btn:disabled {
+  background-color: #888;
 }
 
 .input:focus, .submit-btn:focus {

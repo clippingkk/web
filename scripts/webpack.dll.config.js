@@ -16,7 +16,8 @@ const reacts = [
   'redux',
   'react-transition-group',
   'react-redux',
-  'redux-saga'
+  'redux-saga',
+  '@nearform/react-animation'
 ]
 
 const config = {

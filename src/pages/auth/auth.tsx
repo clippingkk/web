@@ -1,8 +1,7 @@
 import React from 'react'
 import Card from '../../components/card/card'
-import { connect } from 'react-redux'
-import { toLogin } from '../../store/user/type'
-import { navigate } from '@reach/router';
+import { AnimateOnChange } from '@nearform/react-animation'
+import { navigate, Link } from '@reach/router';
 import swal from 'sweetalert';
 const styles = require('./auth.css')
 
@@ -10,26 +9,13 @@ function mapStoreToProps({ user }: any) {
   return { uid: user.profile.id }
 }
 
-// @ts-ignore
-@connect(
-  mapStoreToProps,
-  dispatch => ({
-    login: (email: string, pwd: string) => dispatch(toLogin(email, pwd)),
-  })
-)
+function checkIsCurrentPath({ isCurrent }: any) {
+  return {
+    className: `${styles.tab} ${isCurrent ? styles.linkActive : ''}`
+  }
+}
+
 class AuthPage extends React.PureComponent<any, any> {
-  state = {
-    email: '',
-    pwd: '',
-  }
-
-  private auth = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    await this.showMobileAlert()
-    this.props.login(this.state.email, this.state.pwd)
-  }
-
   // detect mobile and show alert tell user mobile is not a good way
   async showMobileAlert() {
     if (screen.width > 720) {
@@ -45,7 +31,7 @@ class AuthPage extends React.PureComponent<any, any> {
   componentDidMount() {
     this.showMobileAlert()
     const uid = this.props.uid
-    if (uid !== 0) {
+    if (uid && uid !== 0) {
       return navigate(`/dash/${uid}/home`)
     }
   }
@@ -54,36 +40,20 @@ class AuthPage extends React.PureComponent<any, any> {
     return (
       <section className={styles.auth}>
         <Card>
-          <h2>Auth</h2>
+          <div className={styles.tabs}>
+            <Link
+              to="/auth/signup"
+              className={styles.tab}
+              getProps={checkIsCurrentPath}
+            >注册</Link>
+            <Link
+              to="/auth/signin"
+              className={styles.tab}
+              getProps={checkIsCurrentPath}
+            >登陆</Link>
+          </div>
           <hr />
-
-          <form className={styles.form} onSubmit={this.auth}>
-            <div className={styles.field}>
-              <input
-                type="email"
-                className={styles.input}
-                value={this.state.email}
-                placeholder="email"
-                onChange={e => {
-                  this.setState({ email: e.target.value })
-                }}
-              />
-            </div>
-            <div className={styles.field}>
-              <input
-                type="password"
-                className={styles.input}
-                value={this.state.pwd}
-                placeholder="password"
-                onChange={e => {
-                  this.setState({ pwd: e.target.value })
-                }}
-              />
-            </div>
-            <button className={styles.submitBtn} type="submit">
-              let me in
-            </button>
-          </form>
+            {this.props.children}
         </Card>
       </section>
     )

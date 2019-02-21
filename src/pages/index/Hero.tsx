@@ -1,11 +1,12 @@
 import React from 'react'
+import swal from 'sweetalert';
 const styles = require('./Hero.css')
 
 enum platformList {
   'Windows',
   'iOS',
   'Android',
-  'macOS',
+  // 'macOS',
   'web',
 }
 
@@ -22,9 +23,9 @@ const platforms: IPlatformItem = {
   iOS: {},
   Android: {},
   web: {
-    url: '/auth'
+    url: '/auth/signin'
   },
-  macOS: {},
+  // macOS: {},
 }
 
 class Hero extends React.PureComponent {
@@ -46,6 +47,18 @@ class Hero extends React.PureComponent {
     })
   }
 
+  showAlert(platform: platformList) {
+    if (platforms[platform].url) {
+      return
+    }
+
+    swal({
+      title: `${platform} 暂未开放，敬请期待`,
+      text: '目前 windows 平台已经有了 \n web 版本功能最为丰富 \n ios, android 版开发中，即将上线',
+      icon: 'info'
+    })
+  }
+
   render() {
     return (
       <div className={styles.hero}>
@@ -54,11 +67,11 @@ class Hero extends React.PureComponent {
           <h4 className={styles.subTitle}>A new Vision to read</h4>
           <div className={styles.platformSection}>
             <a
-              href="https://www.microsoft.com/store/apps/9NMPMXC5X2CM"
+              href={platforms.web.url}
               target="_blank"
               className={styles.downloadBtn}
             >
-              Download now
+              立即体验！
             </a>
             <ul className={styles.platformList}>
               {Object.keys(platforms).map((key: any) => (
@@ -66,7 +79,8 @@ class Hero extends React.PureComponent {
                   <a
                     className={styles.platformLink}
                     href={platforms[key].url ? platforms[key].url : '#'}
-                    target="_blank"
+                    target={platforms[key].url ? '_blank' : ''}
+                    onClick={() => { this.showAlert(key) }}
                   >
                     {key}
                   </a>
