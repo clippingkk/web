@@ -50,7 +50,7 @@ class NavigationBar extends React.PureComponent<any, any> {
       <nav className={styles.navbar}>
         <div className={styles.menu}>
           <img
-            src={require('../../assets/logo.png')}
+            src={require('../../assets/logo.jpg')}
             alt="clippingkk logo"
             className={styles.logo}
           />

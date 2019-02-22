@@ -41,10 +41,10 @@ function downloadImage(src: string): Promise<HTMLImageElement> {
 }
 
 const BACKGROUND_COLLECTIONS = [
-  require('../../assets/share_bg_0.png'),
-  require('../../assets/share_bg_1.png'),
-  require('../../assets/share_bg_2.png'),
-  require('../../assets/share_bg_3.png'),
+  require('../../assets/share_bg_0.jpg'),
+  require('../../assets/share_bg_1.jpg'),
+  require('../../assets/share_bg_2.jpg'),
+  require('../../assets/share_bg_3.jpg'),
 ]
 
 class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
@@ -158,7 +158,7 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
   async renderFooter(ctx: CanvasRenderingContext2D) {
     ctx.save()
     const qrcode = await downloadImage(
-      require('../../assets/website-qrcode.png')
+      require('../../assets/website-qrcode.jpg')
     )
     ctx.drawImage(
       qrcode,
