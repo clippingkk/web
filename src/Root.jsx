@@ -18,7 +18,6 @@ const ClippingPage = React.lazy(() => import('./pages/clipping/clipping'))
 const SquarePage = React.lazy(() => import('./pages/square/square'))
 const BookPage = React.lazy(() => import('./pages/book/book'))
 
-
 @hot
 class Root extends React.Component {
   render() {

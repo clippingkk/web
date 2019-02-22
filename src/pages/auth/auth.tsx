@@ -5,10 +5,6 @@ import { navigate, Link } from '@reach/router';
 import swal from 'sweetalert';
 const styles = require('./auth.css')
 
-function mapStoreToProps({ user }: any) {
-  return { uid: user.profile.id }
-}
-
 function checkIsCurrentPath({ isCurrent }: any) {
   return {
     className: `${styles.tab} ${isCurrent ? styles.linkActive : ''}`
@@ -30,8 +26,8 @@ class AuthPage extends React.PureComponent<any, any> {
 
   componentDidMount() {
     this.showMobileAlert()
-    const uid = this.props.uid
-    if (uid && uid !== 0) {
+    const uid = sessionStorage.getItem('uid')
+    if (uid && uid !== '0') {
       return navigate(`/dash/${uid}/home`)
     }
   }
