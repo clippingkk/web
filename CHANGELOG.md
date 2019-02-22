@@ -2,12 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.0.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.0.1...v2.0.2) (2019-02-22)
+## [2.0.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.0.2...v2.0.3) (2019-02-22)
 
 
-### Performance Improvements
+### Bug Fixes
 
-* **assets:** update assets ([252e9ed](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/252e9ed))
+* **assets:** fix logo to png ([6abb87e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/6abb87e))
 
 
 
