@@ -36,6 +36,7 @@ function Signup(props: TSignupProps) {
   return (
     <form className={styles.form} onSubmit={signup}>
       <div className={styles.field}>
+        <label htmlFor="email" className={styles.label}>邮箱: </label>
         <input
           type="email"
           className={styles.input}
@@ -47,10 +48,12 @@ function Signup(props: TSignupProps) {
         />
       </div>
       <div className={styles.field}>
+        <label htmlFor="password" className={styles.label}>密码: </label>
         <input
           type="password"
           className={styles.input}
           value={pwd}
+          minLength={6}
           placeholder="password"
           onChange={e => {
             setPwd(e.target.value)
@@ -58,6 +61,7 @@ function Signup(props: TSignupProps) {
         />
       </div>
       <div className={styles.field}>
+        <label htmlFor="username" className={styles.label}>用户名: </label>
         <input
           type="text"
           className={styles.input}
@@ -69,6 +73,7 @@ function Signup(props: TSignupProps) {
         />
       </div>
       <div className={styles.field}>
+        <label htmlFor="username" className={styles.label}>头像: </label>
         <input
           type="file"
           className={styles.input}

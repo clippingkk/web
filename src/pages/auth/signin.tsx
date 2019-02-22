@@ -31,6 +31,7 @@ function Signin(props: TSigninProps) {
   return (
     <form className={styles.form} onSubmit={signin}>
       <div className={styles.field}>
+        <label htmlFor="username" className={styles.label}>邮箱: </label>
         <input
           type="email"
           className={styles.input}
@@ -42,6 +43,7 @@ function Signin(props: TSigninProps) {
         />
       </div>
       <div className={styles.field}>
+        <label htmlFor="username" className={styles.label}>密码: </label>
         <input
           type="password"
           className={styles.input}

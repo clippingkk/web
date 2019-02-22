@@ -15,6 +15,7 @@ import {
 import swal from 'sweetalert'
 import * as authAPI from '../../services/auth'
 import { uploadImage, TUploadResponse } from "../../services/misc";
+import { USER_TOKEN_KEY } from "../../constants/storage";
 
 function mobileAlert(): Promise<any> {
     if (screen.width > 720) {
@@ -55,8 +56,15 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
   try {
     const response: TUserState = yield call(authAPI.login, email, pwd)
 
+    localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
+      profile: response.profile,
+      token: response.token,
+      createdAt: Date.now()
+    }))
+
     sessionStorage.setItem('token', response.token)
     sessionStorage.setItem('uid', response.profile.id.toString())
+
     yield put({ type: AUTH_LOGIN, ...response })
 
     yield call(swal, {
