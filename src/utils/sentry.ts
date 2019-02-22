@@ -1,5 +1,15 @@
+import * as sentry from '@sentry/browser';
 
-export function log(err: Error | string, ctx: any) {
-  
-  console.log(err, ctx)
+const IS_PROD = process.env.NODE_ENV === 'production'
+
+if (IS_PROD) {
+  sentry.init({ dsn: 'https://76acd61ea02341739aa86941f5a931be@sentry.io/1251804' });
+}
+
+export function log(err: Error | string) {
+  if (!IS_PROD) {
+    console.log(err)
+    return
+  }
+  sentry.captureException(err)
 }

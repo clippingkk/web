@@ -881,6 +881,58 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@sentry/browser@4.6.3":
+  version "4.6.3"
+  resolved "http://registry.npm.taobao.org/@sentry/browser/download/@sentry/browser-4.6.3.tgz#e683c46c34937d997923be7270b8f071d6957cc6"
+  integrity sha1-5oPEbDSTfZl5I75ycLjwcdaVfMY=
+  dependencies:
+    "@sentry/core" "4.6.3"
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.3"
+    tslib "^1.9.3"
+
+"@sentry/core@4.6.3":
+  version "4.6.3"
+  resolved "http://registry.npm.taobao.org/@sentry/core/download/@sentry/core-4.6.3.tgz#5c120dea76d0b19757296e9c244f8c3939de744e"
+  integrity sha1-XBIN6nbQsZdXKW6cJE+MOTnedE4=
+  dependencies:
+    "@sentry/hub" "4.6.3"
+    "@sentry/minimal" "4.6.3"
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.3"
+    tslib "^1.9.3"
+
+"@sentry/hub@4.6.3":
+  version "4.6.3"
+  resolved "http://registry.npm.taobao.org/@sentry/hub/download/@sentry/hub-4.6.3.tgz#522c4fa5ac1434dcfbaa326ab279b81d595ec739"
+  integrity sha1-UixPpawUNNz7qjJqsnm4HVlexzk=
+  dependencies:
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.3"
+    tslib "^1.9.3"
+
+"@sentry/minimal@4.6.3":
+  version "4.6.3"
+  resolved "http://registry.npm.taobao.org/@sentry/minimal/download/@sentry/minimal-4.6.3.tgz#5ff78eefaa15cda6508b181d4f4e757ec1385828"
+  integrity sha1-X/eO76oVzaZQixgdT051fsE4WCg=
+  dependencies:
+    "@sentry/hub" "4.6.3"
+    "@sentry/types" "4.5.3"
+    tslib "^1.9.3"
+
+"@sentry/types@4.5.3":
+  version "4.5.3"
+  resolved "http://registry.npm.taobao.org/@sentry/types/download/@sentry/types-4.5.3.tgz#3350dce2b7f9b936a8c327891c12e3aef7bd8852"
+  integrity sha1-M1Dc4rf5uTaowyeJHBLjrve9iFI=
+
+"@sentry/utils@4.6.3":
+  version "4.6.3"
+  resolved "http://registry.npm.taobao.org/@sentry/utils/download/@sentry/utils-4.6.3.tgz#0dc4748ef4ead089ceb2c4a3670339df8be71679"
+  integrity sha1-DcR0jvTq0InOssSjZwM534vnFnk=
+  dependencies:
+    "@sentry/types" "4.5.3"
+    tslib "^1.9.3"
+
 "@types/fastclick@^1.0.28":
   version "1.0.28"
   resolved "http://registry.npm.taobao.org/@types/fastclick/download/@types/fastclick-1.0.28.tgz#db4b3f6f079235324b264338e229f9cdd98a6c4e"
@@ -10687,7 +10739,7 @@ ts-loader@^5.3.3:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-tslib@^1.9.0:
+tslib@^1.9.0, tslib@^1.9.3:
   version "1.9.3"
   resolved "http://registry.npm.taobao.org/tslib/download/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha1-1+TdeSRdhUKMTX5IIqeZF5VMooY=
