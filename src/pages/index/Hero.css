@@ -20,10 +20,32 @@
         transform: translateY(0);
     }
 }
+
+.info {
+
+  flex: 1;
+}
+
+.video-tips {
+  flex: 1;
+}
+
+.video {
+  width: 60rem;
+  height: 40rem;
+  border: 0;
+  box-shadow: 0 0 1rem #888;
+  border-radius: 4px;
+  max-width: 100%;
+}
+
 .title-field {
-    padding: 5rem;
+    margin: 5rem;
     animation-name: fade-in;
     animation-duration: 1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .title {
     margin: 0;
@@ -81,5 +103,12 @@
 
     .download-btn {
         font-size: 2rem;
+    }
+
+    .title-field {
+      flex-direction: column;
+    }
+    .video {
+      height: 15rem;
     }
 }

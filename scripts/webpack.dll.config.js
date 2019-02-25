@@ -8,7 +8,8 @@ const vendors = [
   'fastclick',
   'sweetalert',
   'fingerprintjs2',
-  'js-sha256'
+  'js-sha256',
+  '@sentry/browser'
 ]
 
 const reacts = [

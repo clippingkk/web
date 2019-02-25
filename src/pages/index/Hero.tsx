@@ -2,6 +2,20 @@ import React from 'react'
 import swal from 'sweetalert';
 const styles = require('./Hero.css')
 
+function VideoTipsArea() {
+  return (
+    <div className={styles.videoTips}>
+      <iframe
+        src="//player.bilibili.com/player.html?aid=44625474&cid=78121984&page=1"
+        scrolling="no"
+        allow="fullscreen"
+        className={styles.video}
+      />
+    </div>
+  )
+}
+
+
 enum platformList {
   'Windows',
   'iOS',
@@ -63,31 +77,38 @@ class Hero extends React.PureComponent {
     return (
       <div className={styles.hero}>
         <div className={styles.titleField}>
-          <h1 className={styles.title}>ClippingKK</h1>
-          <h4 className={styles.subTitle}>A new Vision to read</h4>
-          <div className={styles.platformSection}>
-            <a
-              href={platforms.web.url}
-              target="_blank"
-              className={styles.downloadBtn}
-            >
-              立即体验！
-            </a>
-            <ul className={styles.platformList}>
-              {Object.keys(platforms).map((key: any) => (
-                <li key={key} className={styles.platformItem}>
-                  <a
-                    className={styles.platformLink}
-                    href={platforms[key].url ? platforms[key].url : '#'}
-                    target={platforms[key].url ? '_blank' : ''}
-                    onClick={() => { this.showAlert(key) }}
-                  >
-                    {key}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          <div className={styles.info}>
+            <h1 className={styles.title}>ClippingKK</h1>
+            <h4 className={styles.subTitle}>A new Vision to read</h4>
+            <div className={styles.platformSection}>
+              <a
+                href={platforms.web.url}
+                target="_blank"
+                className={styles.downloadBtn}
+              >
+                立即体验！
+              </a>
+              <ul className={styles.platformList}>
+                {Object.keys(platforms).map((key: any) => (
+                  <li key={key} className={styles.platformItem}>
+                    <a
+                      className={styles.platformLink}
+                      href={platforms[key].url ? platforms[key].url : '#'}
+                      target={platforms[key].url ? '_blank' : ''}
+                      onClick={() => { this.showAlert(key) }}
+                    >
+                      {key}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
+
+          
+          <VideoTipsArea />
+
+
         </div>
       </div>
     )
