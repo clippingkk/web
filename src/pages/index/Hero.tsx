@@ -35,7 +35,9 @@ const platforms: IPlatformItem = {
     url: 'https://www.microsoft.com/store/apps/9NMPMXC5X2CM',
   },
   iOS: {},
-  Android: {},
+  Android: {
+    url: 'https://kindle.annatarhe.com/apk/clippingkk-1.0.1.apk'
+  },
   web: {
     url: '/auth/signin'
   },
