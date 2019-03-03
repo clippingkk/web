@@ -13,6 +13,7 @@ const config = {
   target: 'web',
   entry: [
     'whatwg-fetch',
+    'intersection-observer',
     './src/App.tsx'
   ],
   output: {

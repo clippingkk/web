@@ -97,6 +97,7 @@
     "fastclick": "^1.0.6",
     "fingerprintjs2": "^2.0.6",
     "i": "^0.3.6",
+    "intersection-observer": "^0.5.1",
     "js-sha256": "^0.9.0",
     "normalize.css": "^8.0.1",
     "npm": "^6.7.0",

@@ -9,6 +9,7 @@ const vendors = [
   'sweetalert',
   'fingerprintjs2',
   'js-sha256',
+  'intersection-observer',
   '@sentry/browser'
 ]
 
