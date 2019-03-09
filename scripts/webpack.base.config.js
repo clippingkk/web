@@ -84,7 +84,7 @@ const config = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       title: 'Kindle viewer',
-      template: path.resolve(__dirname, 'template.html'),
+      template: path.resolve(__dirname, __DEV__ ? 'template.html' : 'release.html'),
       inject: 'body',
       chunks: ['main', 'common', 'manifest', 'styles'],
     }),
