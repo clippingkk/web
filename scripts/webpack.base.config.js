@@ -5,6 +5,7 @@ const AddAssertHtmlPlugin = require('add-asset-html-webpack-plugin')
 const poststylus = require('poststylus')
 const values = require('postcss-modules-values')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
@@ -90,6 +91,14 @@ const config = {
     new MiniCssExtractPlugin({
       filename: "app.[contenthash].css",
       chunkFilename: "[id].[contenthash].css"
+    }),
+    new OptimizeCssAssetsPlugin({
+      // assetNameRegExp: /\.optimize\.css$/g,
+      cssProcessor: require('cssnano'),
+      cssProcessorPluginOptions: {
+        preset: ['default', { discardComments: { removeAll: true } }],
+      },
+      canPrint: true
     }),
     new AddAssertHtmlPlugin({
       filepath: path.resolve(__dirname, '..', 'dist', '*.dll.js'),
