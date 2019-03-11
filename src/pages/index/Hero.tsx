@@ -36,7 +36,7 @@ const platforms: IPlatformItem = {
   },
   iOS: {},
   Android: {
-    url: 'https://kindle.annatarhe.com/apk/clippingkk-1.0.1.apk'
+    url: 'https://www.coolapk.com/apk/219832'
   },
   web: {
     url: '/auth/signin'
