@@ -1001,6 +1001,11 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/w3c-web-usb@^1.0.3":
+  version "1.0.3"
+  resolved "http://registry.npm.taobao.org/@types/w3c-web-usb/download/@types/w3c-web-usb-1.0.3.tgz#723a5b37865b64e891d8fffa2703a2e4d0250170"
+  integrity sha1-cjpbN4ZbZOiR2P/6JwOi5NAlAXA=
+
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "http://registry.npm.taobao.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
