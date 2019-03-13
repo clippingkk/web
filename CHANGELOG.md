@@ -2,17 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.1.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.1.0...v2.1.1) (2019-03-03)
+# [2.2.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.1.1...v2.2.0) (2019-03-13)
 
 
 ### Bug Fixes
 
-* **safari:** fix intersection observer polyfill ([52d5765](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/52d5765))
+* **compatible:** fix qq browser issue ([4ba4279](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/4ba4279))
+* **home:** fix home scroll ([9af1fa2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/9af1fa2))
+* **release:** fix new relic support ([14178b9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/14178b9))
 
 
 ### Features
 
-* **index:** add video guide ([334495d](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/334495d))
+* **android:** add android download link ([73d595a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/73d595a))
 
 
 
