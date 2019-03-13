@@ -10,9 +10,10 @@ function useFooterLoadObs(loadMore: () => Promise<any>, hasMore: boolean) {
   const dom = useRef({} as HTMLSpanElement)
 
   useEffect(() => {
-    const obs = new IntersectionObserver(() => {
-      console.log('load more')
-      if (!hasMore) {
+    const obs = new IntersectionObserver((entities) => {
+      const entity = entities[0]
+
+      if (!hasMore || entity.intersectionRatio < 0.8) {
         return
       }
       loadMore()

@@ -50,9 +50,9 @@ function parseData(file: string): TClippingItem[] {
         item.title = title.trim()
         break
       case 1:
-        const matched = lines[i].match(/Location\ (\d+-\d+) | Added on (.*)/g)
+        const matched = lines[i].match(/Location\ (\d+-?\d+) | Added on (.*)/g)
         if (!matched || matched.length < 2) {
-          log('match location error', { text: lines[i] })
+          log('match location error', { text: lines[i], matched })
           item.pageAt = ''
           item.createdAt = new Date().toISOString()
           break

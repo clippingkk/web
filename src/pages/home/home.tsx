@@ -35,7 +35,7 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
     this.setState({ loading: true })
     try {
       const list = await getBooks(this.props.userid, this.state.offset)
-      if (list.length < 20) {
+      if (list.length === 0) {
         this.setState({ hasMore: false })
       }
       this.setState({
