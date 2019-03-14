@@ -51,3 +51,10 @@ export async function getBookClippings(userid: number, bookId: string, offset: n
   const response = await (request(`/book/clippings/${userid}/${bookId}?take=20&from=${offset}`) as Promise<IHttpClippingItem[]>)
   return response.map(item => ({ ...item, createdAt: new Date(item.createdAt) } as IClippingItem))
 }
+
+export async function updateClippingBook(clippingId: number, bookId: string) {
+    return request(`/book/clippings/${clippingId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ bookId })
+    })
+}

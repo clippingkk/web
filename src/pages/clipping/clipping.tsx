@@ -27,6 +27,10 @@ function mapActionToProps(dispatch: any) {
     changeBackground(bg: string) {
       return dispatch(changeBackground(bg))
     },
+
+    requestUpdateClippingBook(clippingId: number, bookId: string) {
+      return dispatch()
+    }
   }
 }
 
@@ -68,6 +72,9 @@ class ClippingPage extends React.PureComponent<
     })
   }
 
+  updateClipping = () => {
+  }
+
   render() {
     return (
       <div className={`${styles.clipping} page`}>
@@ -81,6 +88,16 @@ class ClippingPage extends React.PureComponent<
           {/** 再加一个作者简介 */}
           <Card className={styles.addons}>
             <ul className={styles.actionList}>
+
+              <li className={styles.action}>
+                <button
+                  className={styles.actionBtn}
+                  onClick={this.}
+                >
+                  书目更新
+                </button>
+              </li>
+
               <li className={styles.action}>
                 <button
                   className={styles.actionBtn}
@@ -91,9 +108,7 @@ class ClippingPage extends React.PureComponent<
               </li>
               <li className={styles.action}>
                 <a
-                  href={`https://book.douban.com/subject/${
-                    this.state.book.doubanId
-                  }`}
+                  href={`https://book.douban.com/subject/${this.state.book.doubanId}`}
                   target="_blank"
                   className={styles.actionBtn}
                 >
