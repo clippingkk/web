@@ -8,12 +8,14 @@ import { connect } from 'react-redux'
 import Card from '../../components/card/card'
 import Preview from '../../components/preview/preview'
 import { IBook, searchBookDetail } from '../../services/books';
+import { updateClippingBook } from '../../store/clippings/type';
 const styles = require('./clipping.css')
 
 type TClippingPageProp = {
   userid: number
   clippingid: number
   changeBackground: (bg: string) => Promise<any>
+  requestUpdateClippingBook: (clippingId: number) => Promise<any>
 }
 
 type TClippingPageState = {
@@ -28,8 +30,8 @@ function mapActionToProps(dispatch: any) {
       return dispatch(changeBackground(bg))
     },
 
-    requestUpdateClippingBook(clippingId: number, bookId: string) {
-      return dispatch()
+    requestUpdateClippingBook(clippingId: number) {
+      return dispatch(updateClippingBook(clippingId))
     }
   }
 }
@@ -58,7 +60,6 @@ class ClippingPage extends React.PureComponent<
   }
 
   onCancel = () => {
-    console.log('cancel')
     this.toggleDialog()
   }
 
@@ -73,6 +74,7 @@ class ClippingPage extends React.PureComponent<
   }
 
   updateClipping = () => {
+    this.props.requestUpdateClippingBook(this.state.clipping.id)
   }
 
   render() {
@@ -92,7 +94,7 @@ class ClippingPage extends React.PureComponent<
               <li className={styles.action}>
                 <button
                   className={styles.actionBtn}
-                  onClick={this.}
+                  onClick={this.updateClipping}
                 >
                   书目更新
                 </button>

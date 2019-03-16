@@ -9,7 +9,7 @@ function ReleasePage({ platform }: any) {
 
   useEffect(() => {
     getVersions(platform).then(setVersionList as any)
-  }, platform)
+  }, [platform])
 
   return (
     <section className={`${styles.releasePage} page`}>
