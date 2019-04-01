@@ -1,8 +1,10 @@
 import React from 'react'
 import Card from '../../components/card/card'
-import { AnimateOnChange } from '@nearform/react-animation'
 import { navigate, Link } from '@reach/router';
 import swal from 'sweetalert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { GithubClientID } from '../../constants/config';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 const styles = require('./auth.css')
 
 function checkIsCurrentPath({ isCurrent }: any) {
@@ -49,7 +51,19 @@ class AuthPage extends React.PureComponent<any, any> {
             >登陆</Link>
           </div>
           <hr />
-            {this.props.children}
+          {this.props.children}
+
+          <hr />
+
+          <div className={styles.oauth}>
+            <a
+              href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
+              className={styles.oauthLink}
+            >
+              <FontAwesomeIcon icon={faGithub} size="3x" />
+            </a>
+          </div>
+
         </Card>
       </section>
     )

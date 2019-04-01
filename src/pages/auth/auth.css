@@ -76,3 +76,13 @@
 .input:focus, .submit-btn:focus {
   outline: 0;
 }
+
+.oauth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oauth-link {
+
+}

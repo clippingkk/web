@@ -17,6 +17,7 @@ const UploaderPage = React.lazy(() => import('./pages/uploader/uploader'))
 const ClippingPage = React.lazy(() => import('./pages/clipping/clipping'))
 const SquarePage = React.lazy(() => import('./pages/square/square'))
 const BookPage = React.lazy(() => import('./pages/book/book'))
+const GithubOAuthPage = React.lazy(() => import('./pages/auth/github'))
 
 @hot
 class Root extends React.Component {
@@ -32,6 +33,7 @@ class Root extends React.Component {
               <SigninPage path="signin" />
               <SignupPage path="signup" />
             </AuthPage>
+            <GithubOAuthPage path="/oauth/github" />
             <DashContainer path="dash/:userid">
               <HomePage path="home" />
               <UploaderPage path="upload" />
