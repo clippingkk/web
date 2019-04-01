@@ -136,6 +136,7 @@ function* signupAction(action: TSignupAction) {
 function* logoutAction() {
   sessionStorage.removeItem('token')
   sessionStorage.removeItem('uid')
+  localStorage.removeItem(USER_TOKEN_KEY)
   yield put({ type: USER_LOGOUT })
   yield call(swal, {
     title: 'Logout',
