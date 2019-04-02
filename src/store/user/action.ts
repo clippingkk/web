@@ -8,9 +8,9 @@ import {
   AUTH_LOGIN,
   USER_LOGOUT_ACTION,
   USER_LOGOUT,
-  TUserSignupData,
   USER_SIGNUP_ACTION,
-  TUserSignupDataInput
+  TUserSignupDataInput,
+  AUTH_GITHUB_ACTION
 } from "./type";
 import swal from 'sweetalert'
 import * as authAPI from '../../services/auth'
@@ -34,15 +34,18 @@ type TLoginAction = {
   pwd: string
 }
 
+type TGithubLoginAction = {
+  type: string
+  code: string
+}
+
 type TSignupAction = {
   type: string
   signup: TUserSignupDataInput
 }
 
-function* loginAction(action: TLoginAction): IterableIterator<any> {
-  yield call(mobileAlert)
-
-  const { email, pwd } = action
+function* githubLoginAction(action: TGithubLoginAction) {
+  const { code } = action
 
   swal({
     title: 'loading',
@@ -54,8 +57,18 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
   })
 
   try {
-    const response: TUserState = yield call(authAPI.login, email, pwd)
+    const response: TUserState = yield call(authAPI.githubLogin, code)
+    yield call(postLogin, response)
+  } catch (e) {
+    swal({
+      title: "Oops",
+      text: e.toString(),
+      icon: 'error'
+    })
+  }
+}
 
+function* postLogin(response: TUserState) {
     localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
       profile: response.profile,
       token: response.token,
@@ -74,6 +87,25 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
     })
 
     yield call(navigate, `/dash/${response.profile.id}/home`)
+}
+
+function* loginAction(action: TLoginAction): IterableIterator<any> {
+  yield call(mobileAlert)
+
+  const { email, pwd } = action
+
+  swal({
+    title: 'loading',
+    text: 'loading',
+    icon: 'info',
+    buttons: [false],
+    closeOnClickOutside: false,
+    closeOnEsc: false,
+  })
+
+  try {
+    const response: TUserState = yield call(authAPI.login, email, pwd)
+    yield call(postLogin, response)
   } catch (e) {
     swal({
       title: "Oops",
@@ -150,4 +182,5 @@ export function* usersAction(): IterableIterator<any> {
   yield takeEvery(AUTH_LOGIN_ACTION, loginAction)
   yield takeEvery(USER_SIGNUP_ACTION, signupAction)
   yield takeEvery(USER_LOGOUT_ACTION, logoutAction)
+  yield takeEvery(AUTH_GITHUB_ACTION, githubLoginAction)
 }

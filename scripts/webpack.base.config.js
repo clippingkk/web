@@ -14,6 +14,7 @@ const config = {
   target: 'web',
   entry: [
     'whatwg-fetch',
+    '@ungap/url-search-params',
     'intersection-observer',
     './src/App.tsx'
   ],

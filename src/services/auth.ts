@@ -21,3 +21,10 @@ export function signup(signupData: TUserSignupData): Promise<any> {
     body: JSON.stringify(signupData)
   })
 }
+
+export function githubLogin(code: string): Promise<ILoginResponse> {
+  return request('/auth/github', {
+    method: 'POST',
+    body: JSON.stringify({ code })
+  })
+}

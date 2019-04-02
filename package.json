@@ -98,6 +98,7 @@
     "@nearform/react-animation": "^1.0.6",
     "@reach/router": "^1.2.1",
     "@sentry/browser": "4.6.3",
+    "@ungap/url-search-params": "^0.1.2",
     "fastclick": "^1.0.6",
     "fingerprintjs2": "^2.0.6",
     "i": "^0.3.6",

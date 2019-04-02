@@ -4,12 +4,13 @@ export const USER_LOGOUT = 'auth.USER_LOGOUT'
 export const USER_LOGOUT_ACTION = 'auth.saga.USER_LOGOUT_ACTION'
 export const USER_SIGNUP = 'auth.USER_SIGNUP'
 export const USER_SIGNUP_ACTION = 'auth.USER_SIGNUP_ACTION'
+export const AUTH_GITHUB_ACTION = 'auth.GITHUB_LOGIN_ACTION'
 
 export type UserContent = {
-    id: number
-    name: string
-    email: string
-    avatar: string
+  id: number
+  name: string
+  email: string
+  avatar: string
 }
 
 export type TUserState = {
@@ -51,6 +52,13 @@ export function toSignup(
   return {
     type: USER_SIGNUP_ACTION,
     signup: signupData
+  }
+}
+
+export function toGithubLogin(code: string) {
+  return {
+    type: AUTH_GITHUB_ACTION,
+    code
   }
 }
 
