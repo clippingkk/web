@@ -10,7 +10,8 @@ const vendors = [
   'fingerprintjs2',
   'js-sha256',
   'intersection-observer',
-  '@sentry/browser'
+  '@sentry/browser',
+  '@ungap/url-search-params'
 ]
 
 const reacts = [
