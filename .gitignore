@@ -59,3 +59,4 @@ typings/
 .env
 dist.zip
 .DS_Store
+dist-dev

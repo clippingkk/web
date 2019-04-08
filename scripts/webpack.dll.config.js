@@ -25,9 +25,11 @@ const reacts = [
   '@nearform/react-animation'
 ]
 
+const distDirname = 'dist' + (process.env.NODE_ENV !== 'production' ? '-dev' : '')
+
 const config = {
   output: {
-    path: path.resolve(__dirname, '..', 'dist'),
+    path: path.resolve(__dirname, '..', distDirname),
     filename: '[name]_[hash].dll.js',
     library: '[name]'
   },
@@ -39,7 +41,7 @@ const config = {
   devtool: process.env.NODE_ENV !== 'production' ? '#source-map' : false,
   plugins: [
     new webpack.DllPlugin({
-      path: path.resolve(__dirname, '..', 'dist', '[name]-manifest.json'),
+      path: path.resolve(__dirname, '..', distDirname, '[name]-manifest.json'),
       name: '[name]',
       context: __dirname
     }),

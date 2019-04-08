@@ -3,6 +3,7 @@ import { Link } from '@reach/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
 import { execLogout } from '../../store/user/type';
+import Unauthed from './unauthed';
 const styles = require('./navigation-bar.css')
 
 const leftMenu = [
@@ -46,6 +47,12 @@ class NavigationBar extends React.PureComponent<any, any> {
   }
 
   render() {
+
+    const { id } = this.props
+    if (!id || id === -1) {
+      return <Unauthed />
+    }
+
     return (
       <nav className={styles.navbar}>
         <div className={styles.menu}>

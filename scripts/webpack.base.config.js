@@ -19,7 +19,7 @@ const config = {
     './src/App.tsx'
   ],
   output: {
-    path: path.resolve(__dirname, '..', 'dist'),
+    path: path.resolve(__dirname, '..', 'dist' + (__DEV__ ? '-dev' : '')),
     publicPath: '/',
     filename: 'bundle.[hash].js'
   },
@@ -102,7 +102,7 @@ const config = {
       canPrint: true
     }),
     new AddAssertHtmlPlugin({
-      filepath: path.resolve(__dirname, '..', 'dist', '*.dll.js'),
+      filepath: path.resolve(__dirname, '..', 'dist' + (__DEV__ ? '-dev' : ''), '*.dll.js'),
       includeSourcemap: process.env.NODE_ENV !== 'production'
     }),
     new webpack.DefinePlugin({
@@ -160,7 +160,7 @@ dllRefs.forEach(x => {
   config.plugins.push(
     new webpack.DllReferencePlugin({
       context: __dirname,
-      manifest: require(`../dist/${x}-manifest.json`)
+      manifest: require(`../dist${__DEV__ ? '-dev' : ''}/${x}-manifest.json`)
     })
   )
 })

@@ -41,6 +41,12 @@
   flex: 1;
 }
 
+@media (max-width: 768px) {
+  .addons {
+    display: none;
+  }
+}
+
 .action-list {
   list-style: none;
   padding: 0;
