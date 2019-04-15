@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.3.0...v2.3.1) (2019-04-15)
+
+
+### Features
+
+* **📱:** remove navigation bar in mobile and perf update ([5daf550](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/5daf550))
+* **qrcode:** 生成的二维码引导到当前页 ([86ded7b](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/86ded7b))
+
+
+
 # [2.3.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.2.0...v2.3.0) (2019-04-03)
 
 
