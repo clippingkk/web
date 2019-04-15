@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from '@reach/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
+import QRCode from 'qrcode'
 import Dialog from '../dialog/dialog'
 const styles = require('./preview.css')
 
@@ -149,7 +150,8 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
     ctx.fillText(
       author,
       CANVAS_CONFIG.width - 40 - authorMetric.width,
-      CANVAS_CONFIG.height - 220
+      CANVAS_CONFIG.height - 220,
+      CANVAS_CONFIG.width
     )
 
     ctx.restore()
@@ -157,9 +159,9 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
 
   async renderFooter(ctx: CanvasRenderingContext2D) {
     ctx.save()
-    const qrcode = await downloadImage(
-      require('../../assets/website-qrcode.jpg')
-    )
+
+    const qrcodeText = await QRCode.toDataURL(location.href)
+    const qrcode = await downloadImage(qrcodeText)
     ctx.drawImage(
       qrcode,
       CANVAS_CONFIG.width - 40 - QRCODE_METRIC.width,
