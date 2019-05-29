@@ -27,7 +27,15 @@
     "env": {
         "test": {
             "presets": [
-                "es2015"
+                [
+                    "@babel/preset-env",
+                    {
+                        "targets": {
+                            "node": "current"
+                        }
+                    }
+                ],
+                "@babel/preset-typescript"
             ]
         }
     }
