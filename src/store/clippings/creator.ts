@@ -4,14 +4,7 @@ import { EXTRA_AND_UPLOAD_FILE_TO_SERVER, TClippingsFile } from "./type"
 import { create } from "../../services/clippings";
 import swal from "sweetalert";
 import { navigate } from "@reach/router";
-
-export type TClippingItem = {
-  title: string
-  content: string
-  pageAt: string
-  bookId: string
-  createdAt: string
-}
+import ClippingTextParser, { TClippingItem } from "./parser";
 
 export function* extraAndUploadAction() {
   yield takeLatest(EXTRA_AND_UPLOAD_FILE_TO_SERVER, extraAndUpload)
@@ -84,7 +77,9 @@ function* extraAndUpload(action: TClippingsFile) {
   })
 
   const str: string = yield call(extraFile, file)
-  const parsedData: TClippingItem[] = yield call(parseData, str)
+
+  const parser = new ClippingTextParser(str)
+  const parsedData = parser.execute()
 
   const chunkedData = parsedData.reduce((result: (TClippingItem[])[], item: TClippingItem, index: number) => {
     if (result[result.length - 1].length % 20 === 0 && index !== 0) {

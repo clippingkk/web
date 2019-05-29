@@ -1,5 +1,5 @@
 import { request, IBaseResponseData } from './ajax'
-import { TClippingItem } from '../store/clippings/creator';
+import { TClippingItem } from '../store/clippings/parser';
 
 interface IBaseClippingItem {
   id: number
