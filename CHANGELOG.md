@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.3.1...v2.3.2) (2019-05-29)
+
+
+### Bug Fixes
+
+* **package:** fix security issue ([e295aaa](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/e295aaa))
+* **parser:** fix clippings parser and add testcase ([0d21310](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/0d21310))
+
+
+
 ## [2.3.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.3.0...v2.3.1) (2019-04-15)
 
 
