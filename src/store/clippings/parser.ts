@@ -105,7 +105,9 @@ class ClippingTextParser {
       }
     }
 
-    this.processingItem.createdAt = new Date(dateStr).toISOString()
+    const date = new Date(dateStr)
+    date.setTime(date.getTime() - date.getTimezoneOffset() * 60 * 1000) // 设置时区
+    this.processingItem.createdAt = date.toISOString()
   }
 
   private exactContent() {
