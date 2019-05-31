@@ -64,7 +64,7 @@ class ClippingTextParser {
       this.next()
     } while (this.current)
 
-    return this.result.filter(item => item.content !== "")
+    return this.result.filter(item => item.content && item.content !== "")
   }
   private exactInfo() {
     const matched = this.current[1].match(this.infoRegexp)
