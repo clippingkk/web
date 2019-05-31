@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.3.2...v2.3.3) (2019-05-31)
+
+
+### Bug Fixes
+
+* **parser:** filter parsed content if no content here ([#3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/issues/3)) ([f900135](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/f900135))
+
+
+
 ## [2.3.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.3.1...v2.3.2) (2019-05-29)
 
 
