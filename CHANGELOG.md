@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [2.4.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.3.3...v2.4.0) (2019-07-09)
+
+
+### Features
+
+* **profile:** add a new page about user profile ([#6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/issues/6)) ([4b804d9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/4b804d9))
+
+
+
 ## [2.3.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.3.2...v2.3.3) (2019-05-31)
 
 
