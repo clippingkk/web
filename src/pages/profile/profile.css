@@ -1,0 +1,33 @@
+.userinfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  --size: 8rem;
+  height: var(--size);
+  width: var(--size);
+  border-radius: 100%;
+  margin-right: 3rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+} 
+
+.username {
+  font-size: 24px;
+}
+
+.text {
+  font-size: 16px;
+}
+
+.clippings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}

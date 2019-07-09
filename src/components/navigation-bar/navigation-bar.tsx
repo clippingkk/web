@@ -21,7 +21,7 @@ const leftMenu = [
   },
   {
     icon: 'user',
-    dest: (id: number) => `/dash/${id}/home`,
+    dest: (id: number) => `/dash/${id}/profile`,
   },
 ]
 

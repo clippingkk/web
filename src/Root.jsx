@@ -18,6 +18,7 @@ const ClippingPage = React.lazy(() => import('./pages/clipping/clipping'))
 const SquarePage = React.lazy(() => import('./pages/square/square'))
 const BookPage = React.lazy(() => import('./pages/book/book'))
 const GithubOAuthPage = React.lazy(() => import('./pages/auth/github'))
+const ProfilePage = React.lazy(() => import('./pages/profile/profile'))
 
 @hot
 class Root extends React.Component {
@@ -40,6 +41,7 @@ class Root extends React.Component {
               <SquarePage path="square" />
               <ClippingPage path="/clippings/:clippingid" />
               <BookPage path="book/:bookid" />
+              <ProfilePage path="profile" />
             </DashContainer>
           </RouterContainer>
         </React.Suspense>
