@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.4.0...v2.4.1) (2019-08-09)
+
+
+### Features
+
+* **firebase:** add firebase ([4acce6a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/4acce6a))
+
+
+### Performance Improvements
+
+* **html:** 新增 preconnect 指令 ([9b70b9c](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/9b70b9c))
+
+
+
 # [2.4.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.3.3...v2.4.0) (2019-07-09)
 
 
