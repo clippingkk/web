@@ -108,6 +108,7 @@
     "@ungap/url-search-params": "^0.1.2",
     "fastclick": "^1.0.6",
     "fingerprintjs2": "^2.0.6",
+    "firebase": "^6.3.5",
     "i": "^0.3.6",
     "intersection-observer": "^0.5.1",
     "js-sha256": "^0.9.0",

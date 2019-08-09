@@ -11,7 +11,8 @@ const vendors = [
   'js-sha256',
   'intersection-observer',
   '@sentry/browser',
-  '@ungap/url-search-params'
+  '@ungap/url-search-params',
+  'firebase'
 ]
 
 const reacts = [
