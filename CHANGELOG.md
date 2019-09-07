@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.4.1...v2.4.2) (2019-09-07)
+
+
+### Bug Fixes
+
+* **firebase:** fix firebase import ([d550de1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/d550de1))
+* **firebase:** fix production build ([5f0eb34](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/5f0eb34))
+
+
+### Features
+
+* **app:** add tailwind css and update background image ([6d00d2e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/6d00d2e))
+* **navbar:** update navbar styles ([32a885b](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/32a885b))
+
+
+
 ## [2.4.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.4.0...v2.4.1) (2019-08-09)
 
 
