@@ -48,7 +48,10 @@ const config = {
       ],
     }, {
       test: /.css$/,
-      exclude: /node_modules/,
+      exclude: [
+        path.resolve(__dirname, '..', 'src', 'styles', 'tailwind.css'),
+        /node_modules/,
+      ],
       use: [
         __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
         'css-loader?modules=true&camelCase=true&localIdentName=[name]_[local]-[hash:base64]&sourceMap=true',
@@ -56,10 +59,14 @@ const config = {
       ]
     }, {
       test: /.css$/,
-      include: /node_modules/,
+      include: [
+        path.resolve(__dirname, '..', 'src', 'styles', 'tailwind.css'),
+        /node_modules/,
+      ],
       use: [
         MiniCssExtractPlugin.loader,
-        'css-loader'
+        'css-loader',
+        'postcss-loader'
       ]
     }, {
       test: /\.(png|jpg|jpeg|gif)$/,

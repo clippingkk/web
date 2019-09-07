@@ -20,7 +20,6 @@ type THomeProp = {
 }
 
 class HomePage extends React.PureComponent<THomeProp, THomeState> {
-
   state = {
     list: [],
     hasMore: true,
@@ -28,10 +27,17 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
     loading: false,
   }
 
+  maxRetryTimes = __DEV__ ? 1 : 15
+
   loadMore = async () => {
     if (this.state.loading || !this.state.hasMore) {
       return
     }
+
+    if (this.maxRetryTimes <= 0) {
+      return
+    }
+
     this.setState({ loading: true })
     try {
       const list = await getBooks(this.props.userid, this.state.offset)
@@ -43,6 +49,7 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
         offset: this.state.offset + 20,
       })
     } catch (e) {
+      this.maxRetryTimes--
       console.error(e)
     } finally {
       this.setState({ loading: false })

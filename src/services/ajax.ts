@@ -24,7 +24,6 @@ export async function request(url: string, options: RequestInit = {}): Promise<a
     }
 
     return response.data
-
   } catch (e) {
     console.log(e.toString())
     swal({

@@ -12,13 +12,13 @@
   height: 100%;
   width: 100%;
   z-index: -1;
-  filter: blur(10px);
-  background-image: url('../../assets/coffee-blur.jpg');
-  background-size: cover;
-  transform: scale(1.1);
+  /* filter: blur(10px); */
+  /* background-image: url('../../assets/coffee-blur.jpg'); */
+  /* background-size: cover; */
+  /* transform: scale(1.1); */
   background-position: 50% 50%;
-  left: -1rem;
-  top: -1rem;
+  /* left: -1rem; */
+  /* top: -1rem; */
 }
 
 /* .container:before {
