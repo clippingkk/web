@@ -6,8 +6,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* background-color: blur-background; */
-  background-color: grey-lite;
+  backdrop-filter: blur(100px);
   padding: 1rem 0;
   position: sticky;
   top: 0;
