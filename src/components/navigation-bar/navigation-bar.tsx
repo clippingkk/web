@@ -47,12 +47,6 @@ class NavigationBar extends React.PureComponent<any, any> {
   }
 
   render() {
-
-    const { id } = this.props
-    if (!id || id === -1) {
-      return <Unauthed />
-    }
-
     return (
       <nav className={styles.navbar}>
         <div className={styles.menu}>

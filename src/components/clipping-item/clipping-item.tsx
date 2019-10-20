@@ -12,17 +12,17 @@ type TClippingItemProps = {
 
 function ClippingItem({ userid, item }: TClippingItemProps) {
   return (
-      <Link
-        to={`/dash/${userid}/clippings/${item.id}`}
-        key={item.id}
-        className={styles.clippingContainer}
-      >
-        <Card className={styles.clipping}>
-          <h3 className={styles.bookTitle}>{item.title}</h3>
-          <hr />
-          <p className={styles.bookContent}>{item.content}</p>
-        </Card>
-      </Link>
+    <Link
+      to={`/dash/${userid}/clippings/${item.id}`}
+      key={item.id}
+      className={styles.clippingContainer}
+    >
+      <Card className={styles.clipping}>
+        <h3 className={`text-2xl ${styles.bookTitle}`}>{item.title}</h3>
+        <hr className='my-4' />
+        <p className='text-lg text-gray-700'>{item.content}</p>
+      </Card>
+    </Link>
   )
 }
 

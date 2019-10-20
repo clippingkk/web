@@ -22,7 +22,7 @@ function useFooterLoadObs(loadMore: () => Promise<any>, hasMore: boolean) {
     return () => {
       obs.disconnect()
     }
-  })
+  }, [])
 
   return {
     dom
