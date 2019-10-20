@@ -4,6 +4,7 @@
 .card {
   margin: 1rem;
   padding: 1rem;
+  backdrop-filter: blur(10px);
   background: blur-background;
   border-radius: 4px;
   box-shadow: 0 0 10px primary-text-color;
