@@ -82,10 +82,10 @@ class ClippingPage extends React.PureComponent<
       <div className={`${styles.clipping} page`}>
         <div className={styles.main}>
           <Card className={styles.mainCard}>
-            <h1 className={styles.title}>{this.state.clipping.title}</h1>
-            <h3 className={styles.author}>{this.state.book.author}</h3>
+            <h1 className='text-2xl font-bold my-2'>{this.state.clipping.title}</h1>
+            <h3 className='font-light text-lg my-4'>{this.state.book.author}</h3>
             <hr className={styles.hr} />
-            <p className={styles.content}>{this.state.clipping.content}</p>
+            <p className='text-3xl leading-normal'>{this.state.clipping.content}</p>
           </Card>
           {/** 再加一个作者简介 */}
           <Card className={styles.addons}>

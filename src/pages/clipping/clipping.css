@@ -15,26 +15,8 @@
   color: primary-text-color;
 }
 
-.title {
-  font-size: 40px;
-  font-weight: bold;
-  margin: .5rem 0;
-}
-
-.author {
-  font-weight: lighter;
-  font-size: 16px;
-  margin: 1rem 0;
-}
-
 .hr {
   background-color: primary-text-color;
-}
-
-.content {
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 1.5;
 }
 
 .addons {
