@@ -18,9 +18,9 @@ function ClippingItem({ userid, item }: TClippingItemProps) {
       className={styles.clippingContainer}
     >
       <Card className={styles.clipping}>
-        <h3 className={`text-2xl ${styles.bookTitle}`}>{item.title}</h3>
+        <h3 className='text-4xl'>{item.title}</h3>
         <hr className='my-4' />
-        <p className='text-lg text-gray-700'>{item.content}</p>
+        <p className='text-2xl text-gray-900'>{item.content}</p>
       </Card>
     </Link>
   )
