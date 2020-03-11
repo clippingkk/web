@@ -95,9 +95,10 @@ function* extraAndUpload(action: TClippingsFile) {
       yield call(create, chunkedData[i])
     }
   } catch (e) {
+    console.error(e)
     return yield call(swal, {
-      title: 'Oops',
-      text: '哎呀呀，上传失败了，重试一下。实在不行联系程序员吧',
+      title: e.toString(),
+      text: '哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \n iamhele1994@gmail.com',
       icon: 'error'
     })
   }

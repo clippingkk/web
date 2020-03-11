@@ -26,7 +26,8 @@ class ClippingTextParser {
   private position: number = 0;
   private processingItem: TClippingItem = {} as any
   private result: TClippingItem[] = []
-  private readonly infoRegexp: RegExp;
+  // private readonly infoRegexp: RegExp
+  private readonly locationRegexp: RegExp
 
   public readonly language: FileLanuages;
 
@@ -45,10 +46,10 @@ class ClippingTextParser {
     })
 
     if (file.includes("Your Highlight on")) {
-      this.infoRegexp = /Your Highlight on (\w+ \d*-?\d*) | Added on (.*)/g
+      this.locationRegexp = /\d+(-?\d+)?/g
       this.language = FileLanuages.English
-    } else if (file.includes("您在位置 ")) {
-      this.infoRegexp = /您在位置\ (#\d+-?\d* ?的[\u4e00-\u9fa5]{2}) | 添加于 (.*)/g
+    } else if (file.includes("您在")) {
+      this.locationRegexp = /#\d+(-?\d+)?/g
       this.language = FileLanuages.Chinese
     } else {
       throw new Error('哎呀呀，暂不支持非中英文的内容呢~')
@@ -67,15 +68,16 @@ class ClippingTextParser {
     return this.result.filter(item => item.content && item.content !== "")
   }
   private exactInfo() {
-    const matched = this.current[1].match(this.infoRegexp)
-    if (!matched || matched.length < 2) {
-      console.log('match location error', { text: this.current, matched }, this)
-      this.processingItem.pageAt = ''
-      this.processingItem.createdAt = new Date().toISOString()
+    const l = this.current[1].split('|')
+    const locationSection = l[0]
+    const dateSection = l[l.length - 1]
+    const m = locationSection.match(this.locationRegexp)
+    if (!m) {
       return
     }
-    this.setPageAt(matched[0])
-    this.setDate(matched[1])
+
+    this.setPageAt(m[m.length - 1])
+    this.setDate(dateSection)
   }
   private setPageAt(pageAtString: string) {
     let pageAt = pageAtString
@@ -85,11 +87,19 @@ class ClippingTextParser {
     if (this.language === FileLanuages.English) {
       pageAt = pageAt.replace('Your Highlight on ', '')
     }
-    this.processingItem.pageAt = pageAt.trim()
+
+    // 如果是 location 类型的则前面加 #
+    if (
+      pageAt.includes('-') &&
+      !pageAt.startsWith('#')
+    ) {
+      pageAt = '#' + pageAt.trim()
+    }
+
+    this.processingItem.pageAt = pageAt
   }
 
   private setDate(matched: string) {
-
     let dateStr = matched.replace('添加于 ', '')
 
     if (this.language === FileLanuages.Chinese) {

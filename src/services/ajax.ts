@@ -25,10 +25,9 @@ export async function request(url: string, options: RequestInit = {}): Promise<a
 
     return response.data
   } catch (e) {
-    console.log(e.toString())
     swal({
       title: 'Oops',
-      text: '吊了... 请求挂了... 一会儿再试试',
+      text: '请求挂了... 一会儿再试试',
       icon: 'info'
     })
     return Promise.reject(e)
