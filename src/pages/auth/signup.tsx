@@ -32,7 +32,6 @@ function Signup(props: TSignupProps) {
     })
   }
 
-
   return (
     <form className={styles.form} onSubmit={signup}>
       <div className={styles.field}>

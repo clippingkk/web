@@ -12,7 +12,6 @@ const vendors = [
   'intersection-observer',
   '@sentry/browser',
   '@ungap/url-search-params',
-  'firebase'
 ]
 
 const reacts = [

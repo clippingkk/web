@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './utils/sentry'
-import './utils/firebase'
 import { Provider } from 'react-redux'
 import fastclick from 'fastclick'
 import Root from './Root'
