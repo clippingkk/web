@@ -24,13 +24,13 @@ function _RouterContainer(props: any) {
   return (
     <Location>
       {({ location }) => (
-        <AnimateOnChange
-          className={styles.transitionGroup}
-        >
+        // <AnimateOnChange
+        //   className={styles.transitionGroup}
+        // >
           <Router location={location} className={styles.router}>
             {props.children}
           </Router>
-        </AnimateOnChange>
+        // </AnimateOnChange>
       )}
     </Location>
   )

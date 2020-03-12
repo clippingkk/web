@@ -55,9 +55,9 @@ class NavigationBar extends React.PureComponent<any, any> {
             alt="clippingkk logo"
             className={styles.logo}
           />
-          <ul className={styles.menuUl}>
+          <ul className='flex'>
             {leftMenu.map((item, index) => (
-              <li className={styles.menuItem} key={index}>
+              <li className='mr-6' key={index}>
                 <Link to={item.dest(this.props.id)}>
                   <FontAwesomeIcon
                     icon={item.icon as any}
@@ -69,11 +69,11 @@ class NavigationBar extends React.PureComponent<any, any> {
             ))}
           </ul>
         </div>
-        <ul className={styles.settings}>
-          <li className={styles.setting}>
+        <ul className='flex'>
+          <li className='mr-6'>
             <FontAwesomeIcon icon="cog" color="#000" size="2x" />
           </li>
-          <li className={styles.setting} onClick={this.logout}>
+          <li className='mr-6' onClick={this.logout}>
             <FontAwesomeIcon icon="sign-out-alt" color="#000" size="2x" />
           </li>
         </ul>

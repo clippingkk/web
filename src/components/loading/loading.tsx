@@ -1,7 +1,8 @@
 import React from 'react'
+const styles = require('./style.css')
 
 function PageLoading() {
-  return <div> loading... </div>
+  return <div className={styles.loading}></div>
 }
 
-export default React.memo(PageLoading)
+export default PageLoading

@@ -4,6 +4,7 @@ import styles from './Root.css'
 
 import PageLoading from './components/loading/loading'
 import RouterContainer from './components/router-container/router';
+import NotFound from './pages/not-found/not-found';
 
 const IndexPage = React.lazy(() => import('./pages/index/index'))
 const PrivacyPolicy = React.lazy(() => import('./pages/policy/privacy'))
@@ -20,7 +21,6 @@ const BookPage = React.lazy(() => import('./pages/book/book'))
 const GithubOAuthPage = React.lazy(() => import('./pages/auth/github'))
 const ProfilePage = React.lazy(() => import('./pages/profile/profile'))
 
-@hot
 class Root extends React.Component {
   render() {
     return (
@@ -43,6 +43,7 @@ class Root extends React.Component {
               <BookPage path="book/:bookid" />
               <ProfilePage path="profile" />
             </DashContainer>
+            <NotFound default />
           </RouterContainer>
         </React.Suspense>
       </div>
@@ -50,4 +51,4 @@ class Root extends React.Component {
   }
 }
 
-export default Root
+export default hot(Root)

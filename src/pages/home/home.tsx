@@ -59,8 +59,8 @@ class HomePage extends React.PureComponent<THomeProp, THomeState> {
   render() {
     return (
       <section className={`${styles.home} page`}>
-        <header className={styles.header}>
-          <h2 className={styles.title}>我的书籍</h2>
+        <header className='flex items-center justify-center my-4'>
+          <h2 className='text-center font-light text-black text-3xl'>我的书籍</h2>
         </header>
 
         <div className={styles.clippings}>

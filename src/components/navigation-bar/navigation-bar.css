@@ -55,18 +55,3 @@
   height: 50px;
   margin-right: 3rem;
 }
-
-.settings {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  padding: 0;
-}
-
-.setting {
-  margin-right: 3rem;
-}
-
-.setting:last-child {
-  margin-right: 0;
-}

@@ -15,14 +15,14 @@ function BookInfo({ book }: TBookInfoProp) {
           <HideUntilLoaded
             imageToLoad={book.image}
           >
-            <img src={book.image} className={styles.image} />
+            <img src={book.image} className={styles.image + ' mr-4'} />
           </HideUntilLoaded>
         </div>
 
         <div className={styles.info}>
-          <h2 className={styles.title}>{book.title}</h2>
-          <h5 className={styles.author}>{book.author}</h5>
-          <p className={styles.summary}>{book.summary}</p>
+          <h2 className='my-4 text-4xl font-bold'>{book.title}</h2>
+          <h5 className='my-4 text-2xl'>{book.author}</h5>
+          <p className='font-light leading-relaxed text-lg'>{book.summary}</p>
         </div>
       </Card>
   )
