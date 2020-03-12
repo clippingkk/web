@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.5.0...v2.5.1) (2020-03-12)
+
+
+### Bug Fixes
+
+* **styles:** update styles ([256d6c9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/256d6c99aa2971f6a237d14abeac9aed9ad74678))
+
+
+### Features
+
+* **deps:** upgrade deps ([6f460e6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/6f460e6ed78408d29ae9935371853d74199bd371))
+
+
+
 # [2.5.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.4.3...v2.5.0) (2020-03-11)
 
 
