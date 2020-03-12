@@ -54,7 +54,7 @@ const config = {
       ],
       use: [
         __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
-        'css-loader?modules=true&camelCase=true&localIdentName=[name]_[local]-[hash:base64]&sourceMap=true',
+        'css-loader?modules=true&sourceMap=true',
         'postcss-loader'
       ]
     }, {

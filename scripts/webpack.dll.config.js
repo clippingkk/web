@@ -5,7 +5,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 // split your chunks
 const vendors = [
   'whatwg-fetch',
-  'fastclick',
   'sweetalert',
   'fingerprintjs2',
   'js-sha256',
