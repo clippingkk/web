@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.5.1...v2.5.2) (2020-03-22)
+
+
+### Bug Fixes
+
+* **landing:** fix landing page styles ([8f2d24a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/8f2d24ad348118f5942cae7a6565f917935e055e))
+
+
+
 ## [2.5.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.5.0...v2.5.1) (2020-03-12)
 
 
