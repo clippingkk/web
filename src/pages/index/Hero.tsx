@@ -4,7 +4,7 @@ const styles = require('./Hero.css')
 
 function VideoTipsArea() {
   return (
-    <div className={styles.videoTips}>
+    <div className={styles['video-tips']}>
       <iframe
         src="//player.bilibili.com/player.html?aid=44625474&cid=78121984&page=1"
         scrolling="no"
@@ -14,7 +14,6 @@ function VideoTipsArea() {
     </div>
   )
 }
-
 
 enum platformList {
   'Windows',
@@ -77,24 +76,25 @@ class Hero extends React.PureComponent {
 
   render() {
     return (
-      <div className={styles.hero}>
-        <div className={styles.titleField}>
+      <div className={'flex flex-col justify-center ' + styles.hero}>
+        <div className={styles.titleField + ' my-20 mx-20 flex items-center justify-center flex-col md:flex-row'}>
           <div className={styles.info}>
-            <h1 className={styles.title}>ClippingKK</h1>
-            <h4 className={styles.subTitle}>A new Vision to read</h4>
+
+            <h1 className={styles.title + ' mx-0 my-0 font-light text-white'}>ClippingKK</h1>
+            <h4 className='text-white text-3xl'>整理, 展示, 复盘, 进步</h4>
             <div className={styles.platformSection}>
               <a
                 href={platforms.web.url}
                 target="_blank"
-                className={styles.downloadBtn}
+                className={styles['download-btn'] + ' py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl'}
               >
                 立即体验！
               </a>
               <ul className={styles.platformList}>
                 {Object.keys(platforms).map((key: any) => (
-                  <li key={key} className={styles.platformItem}>
+                  <li key={key} className='ml-4'>
                     <a
-                      className={styles.platformLink}
+                      className='text-white text-lg'
                       href={platforms[key].url ? platforms[key].url : '#'}
                       target={platforms[key].url ? '_blank' : ''}
                       onClick={() => { this.showAlert(key) }}
@@ -106,10 +106,8 @@ class Hero extends React.PureComponent {
               </ul>
             </div>
           </div>
-
           
           <VideoTipsArea />
-
 
         </div>
       </div>
