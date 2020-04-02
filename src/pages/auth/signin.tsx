@@ -55,7 +55,7 @@ function Signin(props: TSigninProps) {
         />
       </div>
       <button
-        className={styles.submitBtn}
+        className='mt-4 bg-blue-600 text-gray-100 text-3xl rounded-lg p-4'
         type="submit"
         disabled={isDisabled}
       >

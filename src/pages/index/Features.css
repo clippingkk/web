@@ -45,10 +45,10 @@
 }
 
 @media (max-width: 768px) {
-    .feature {
+    /* .feature {
         padding: 0;
         flex-direction: column !important;
-    }
+    } */
 
     .img {
         width: 30rem;

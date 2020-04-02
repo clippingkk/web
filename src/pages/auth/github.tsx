@@ -7,7 +7,6 @@ interface IGithubLoginProps {
 }
 
 function GithubOAuth({ githubLogin }: IGithubLoginProps) {
-
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code')
