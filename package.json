@@ -16,7 +16,8 @@
     "release:base": "standard-version --commit-all",
     "release": "npm run release:base --",
     "release:pre": "npm run release:base -- --prerelease alpha",
-    "lint": "prettier --write 'src/**/*.tsx'"
+    "lint": "prettier --write 'src/**/*.tsx'",
+    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -62,6 +63,7 @@
     "babel-register": "^6.26.0",
     "bestzip": "^2.1.1",
     "connect-history-api-fallback": "^1.5.0",
+    "coveralls": "^3.0.11",
     "cross-env": "^5.0.5",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
