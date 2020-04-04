@@ -3,24 +3,29 @@ import { Link } from '@reach/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
 import { execLogout } from '../../store/user/type';
+import Tooltip from 'rc-tooltip'
 import Unauthed from './unauthed';
 const styles = require('./navigation-bar.css')
 
 const leftMenu = [
   {
-    icon: 'book',
+    emoji: '📙',
+    alt: '我的已读',
     dest: (id: number) => `/dash/${id}/home`,
   },
   {
-    icon: 'book-open',
+    emoji: '🎪',
+    alt: '广场',
     dest: (id: number) => `/dash/${id}/square`,
   },
   {
-    icon: 'cloud-upload-alt',
+    emoji: '🎈',
+    alt: '上传',
     dest: (id: number) => `/dash/${id}/upload`,
   },
   {
-    icon: 'user',
+    emoji: '👼',
+    alt: '我的信息',
     dest: (id: number) => `/dash/${id}/profile`,
   },
 ]
@@ -58,23 +63,27 @@ class NavigationBar extends React.PureComponent<any, any> {
           <ul className='flex'>
             {leftMenu.map((item, index) => (
               <li className='mr-6' key={index}>
-                <Link to={item.dest(this.props.id)}>
-                  <FontAwesomeIcon
-                    icon={item.icon as any}
-                    color="#000"
-                    size="2x"
-                  />
-                </Link>
+                <Tooltip placement='bottom' overlay={<span>{item.alt}</span>}>
+                  <Link to={item.dest(this.props.id)}>
+                    <span className='text-4xl'>
+                      {item.emoji}
+                    </span>
+                  </Link>
+                </Tooltip>
               </li>
             ))}
           </ul>
         </div>
         <ul className='flex'>
           <li className='mr-6'>
-            <FontAwesomeIcon icon="cog" color="#000" size="2x" />
+            <Tooltip placement='bottom' overlay={<span>设置</span>}>
+              <span className='text-4xl'>🛠</span>
+            </Tooltip>
           </li>
           <li className='mr-6' onClick={this.logout}>
-            <FontAwesomeIcon icon="sign-out-alt" color="#000" size="2x" />
+            <Tooltip placement='bottom' overlay={<span>退出</span>}>
+              <span className='text-4xl'>👋</span>
+            </Tooltip>
           </li>
         </ul>
       </nav>
