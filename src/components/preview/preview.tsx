@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
 import QRCode from 'qrcode'
 import Dialog from '../dialog/dialog'
+import { FetchQRCode } from '../../services/mp'
 const styles = require('./preview.css')
 
 type TPreviewProps = {
@@ -13,6 +14,7 @@ type TPreviewProps = {
   bookTitle: string
   author: string
   background: string
+  id: number
 }
 
 type TPreviewState = {
@@ -160,8 +162,9 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
   async renderFooter(ctx: CanvasRenderingContext2D) {
     ctx.save()
 
-    const qrcodeText = await QRCode.toDataURL(location.href)
-    const qrcode = await downloadImage(qrcodeText)
+    // const qrcodeText = await QRCode.toDataURL(location.href)
+    // const qrcode = await downloadImage(qrcodeText)
+    const qrcode = await FetchQRCode(`c=${this.props.id}`, "pages/landing/landing", QRCODE_METRIC.width, true)
     ctx.drawImage(
       qrcode,
       CANVAS_CONFIG.width - 40 - QRCODE_METRIC.width,
@@ -180,7 +183,7 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
         title="图片预览"
       >
         <section className={styles.preview}>
-          <img src={this.state.output} className={styles.previewImage} />
+          <img src={this.state.output} className={styles['preview-image']} />
           <footer className={styles.footer}>
             <a
               href={this.state.output}

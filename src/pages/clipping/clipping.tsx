@@ -81,7 +81,7 @@ class ClippingPage extends React.PureComponent<
     return (
       <div className={`${styles.clipping} page`}>
         <div className={styles.main}>
-          <Card className={styles.mainCard}>
+          <Card className={styles['main-card']}>
             <h1 className='text-2xl font-bold my-2'>{this.state.clipping.title}</h1>
             <h3 className='font-light text-lg my-4'>{this.state.book.author}</h3>
             <hr className={styles.hr} />
@@ -89,11 +89,10 @@ class ClippingPage extends React.PureComponent<
           </Card>
           {/** 再加一个作者简介 */}
           <Card className={styles.addons}>
-            <ul className={styles.actionList}>
-
+            <ul className={styles['action-list']}>
               <li className={styles.action}>
                 <button
-                  className={styles.actionBtn}
+                  className={styles['action-btn']}
                   onClick={this.updateClipping}
                 >
                   书目更新
@@ -102,7 +101,7 @@ class ClippingPage extends React.PureComponent<
 
               <li className={styles.action}>
                 <button
-                  className={styles.actionBtn}
+                  className={styles['action-btn']}
                   onClick={this.toggleDialog}
                 >
                   图片分享
@@ -112,13 +111,13 @@ class ClippingPage extends React.PureComponent<
                 <a
                   href={`https://book.douban.com/subject/${this.state.book.doubanId}`}
                   target="_blank"
-                  className={styles.actionBtn}
+                  className={styles['action-btn']}
                 >
                   豆瓣读书
                 </a>
               </li>
               <li className={styles.action}>
-                <p className={styles.actionBtn}>评论 (开发中)</p>
+                <p className={styles['action-btn']}>评论 (开发中)</p>
               </li>
             </ul>
           </Card>
@@ -126,6 +125,7 @@ class ClippingPage extends React.PureComponent<
 
         {this.state.dialogVisible && this.state.clipping.content && (
           <Preview
+            id={this.state.clipping.id}
             onCancel={this.onCancel}
             onOk={this.onOk}
             background={this.state.book.image}
