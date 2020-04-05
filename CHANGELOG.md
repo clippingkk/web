@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.5.2...v2.5.3) (2020-04-05)
+
+
+### Bug Fixes
+
+* **auth:** fix auth styles ([71d6426](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/71d64264465ae73330ff4627c65aa6260dcaecb6))
+* **ci:** fix ci coverage info ([2aa792e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/2aa792e54f4f497369489bb8ad592a6015a89614))
+
+
+### Features
+
+* **ci:** add ci cover ([774b80e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/774b80e29909aaf1ef393a77a9d920f2769f2fe5))
+* **ci:** show coverage ([88e76d2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/88e76d2c8592b1dee3980090f8ce94806fc5beb5))
+* **detail:** replace detail share post to mp code and update sentry user info ([06ac921](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/06ac921612e7d1ae2085d1f6e619e58baa1299bb))
+* **mp:** add mp qrcode in share post ([bd916bd](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/bd916bd2d03900b9108a821a2bf2f3d66a3a83c0))
+* **styles:** update styles ([715a0c9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commits/715a0c98b829d2fc405b995fb12b296db37d602a))
+
+
+
 ## [2.5.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.5.1...v2.5.2) (2020-03-22)
 
 
