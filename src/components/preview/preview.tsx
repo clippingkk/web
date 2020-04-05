@@ -162,9 +162,7 @@ class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
   async renderFooter(ctx: CanvasRenderingContext2D) {
     ctx.save()
 
-    // const qrcodeText = await QRCode.toDataURL(location.href)
-    // const qrcode = await downloadImage(qrcodeText)
-    const qrcode = await FetchQRCode(`c=${this.props.id}`, "pages/landing/landing", QRCODE_METRIC.width, true)
+    const qrcode = await FetchQRCode(`c=${this.props.id}`, "pages/landing/landing", QRCODE_METRIC.width, false)
     ctx.drawImage(
       qrcode,
       CANVAS_CONFIG.width - 40 - QRCODE_METRIC.width,

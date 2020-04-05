@@ -1,6 +1,7 @@
 import { request, IBaseResponseData } from './ajax'
 import { UserContent, TUserSignupData } from '../store/user/type'
 import { IHttpClippingItem, IClippingItem } from './clippings';
+import * as sentry from '@sentry/browser'
 
 interface ILoginResponse extends IBaseResponseData {
   data: {
@@ -25,6 +26,12 @@ export function login(email: string, pwd: string): Promise<ILoginResponse> {
   return request('/auth/login', {
     method: 'POST',
     body: JSON.stringify({ email, pwd })
+  }).catch(e => {
+    sentry.withScope(scope => {
+      scope.setExtra('API-error-type', 'login')
+      sentry.captureException(e)
+    })
+    throw e
   })
 }
 
@@ -32,6 +39,12 @@ export function signup(signupData: TUserSignupData): Promise<any> {
   return request('/auth/signup', {
     method: 'POST',
     body: JSON.stringify(signupData)
+  }).catch(e => {
+    sentry.withScope(scope => {
+      scope.setExtra('API-error-type', 'signup')
+      sentry.captureException(e)
+    })
+    throw e
   })
 }
 
@@ -39,6 +52,12 @@ export function githubLogin(code: string): Promise<ILoginResponse> {
   return request('/auth/github', {
     method: 'POST',
     body: JSON.stringify({ code })
+  }).catch(e => {
+    sentry.withScope(scope => {
+      scope.setExtra('API-error-type', 'github-login')
+      sentry.captureException(e)
+    })
+    throw e
   })
 }
 

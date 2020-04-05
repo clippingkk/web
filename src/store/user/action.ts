@@ -1,5 +1,6 @@
 import { call, takeEvery, put, delay } from "@redux-saga/core/effects";
 import { navigate } from '@reach/router'
+import * as sentry from '@sentry/browser'
 import fp2 from 'fingerprintjs2'
 import { sha256 } from 'js-sha256'
 import {
@@ -77,6 +78,11 @@ function* postLogin(response: TUserState) {
 
     sessionStorage.setItem('token', response.token)
     sessionStorage.setItem('uid', response.profile.id.toString())
+    sentry.setUser({
+      email: response.profile.email,
+      id: response.profile.id.toString(),
+      username: response.profile.name
+    })
 
     yield put({ type: AUTH_LOGIN, ...response })
 

@@ -1,4 +1,4 @@
-import * as sentry from '@sentry/browser';
+import * as sentry from '@sentry/browser'
 
 const IS_PROD = process.env.NODE_ENV === 'production'
 

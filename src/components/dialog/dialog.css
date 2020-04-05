@@ -4,7 +4,6 @@
 }
 
 .mask {
-  content: '';
   position: fixed;
   background: rgba(0, 0, 0, .8);
   width: 100vw;
@@ -15,5 +14,6 @@
   align-items: center;
   justify-content: center;
   animation: "fade-in" .35s;
-
+  z-index: 200;
+  backdrop-filter: blur(10px);
 }
