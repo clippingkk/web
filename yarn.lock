@@ -1349,10 +1349,10 @@
   resolved "https://registry.npm.taobao.org/@types/stack-utils/download/@types/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha1-CoUdO9lkmPolwzq3J47TvWXwbD4=
 
-"@types/w3c-web-usb@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npm.taobao.org/@types/w3c-web-usb/download/@types/w3c-web-usb-1.0.3.tgz#723a5b37865b64e891d8fffa2703a2e4d0250170"
-  integrity sha1-cjpbN4ZbZOiR2P/6JwOi5NAlAXA=
+"@types/w3c-web-usb@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@types/w3c-web-usb/-/w3c-web-usb-1.0.4.tgz#57e4181041dc1ad2bfad59b737caa7bddc7e1a27"
+  integrity sha512-aaOB3EL5WCWBBOYX7W1MKuzspOM9ZJI9s3iziRVypr1N+QyvIgXzCM4lm1iiOQ1VFzZioUPX9bsa23myCbKK4A==
 
 "@types/yargs-parser@*":
   version "13.1.0"
