@@ -18,14 +18,6 @@
     }
 }
 
-.info {
-  flex: 1;
-}
-
-.video-tips {
-  flex: 1;
-}
-
 .video {
   width: 60rem;
   height: 40rem;
@@ -75,6 +67,6 @@
       flex-direction: column;
     }
     .video {
-      height: 15rem;
+      height: 30rem;
     }
 }

@@ -31,7 +31,7 @@ const feats = [
 class Features extends React.PureComponent {
   renderFeatures = () => {
     return feats.map((f, i) => (
-      <div className={styles.feature + ' flex flex-col items-center justify-between px-0 py-0 hover:bg-gray-300 md:px-20 md:py-20 md:flex-row'} key={i}>
+      <div className={styles.feature + ' flex flex-col items-center justify-between hover:bg-gray-300 p-8 md:px-20 md:py-20 md:flex-row'} key={i}>
         <div className={styles.describes}>
           <h3 className={styles.title}>{f.title}</h3>
           <p className={styles.sub}>{f.sub}</p>

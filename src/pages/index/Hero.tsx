@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert';
 const styles = require('./Hero.css')
 
+function useLoad() {
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    function onload() {
+      setLoaded(true)
+    }
+    window.addEventListener('load', onload)
+    return () => {
+      window.removeEventListener('load', onload)
+    }
+  }, [])
+
+  return loaded
+}
+
 function VideoTipsArea() {
+  const loaded = useLoad()
+  if (!loaded) {
+    return null
+  }
+
   return (
-    <div className={styles['video-tips']}>
+    <div className='flex-1'>
       <iframe
         src="//player.bilibili.com/player.html?aid=44625474&cid=78121984&page=1"
         scrolling="no"
@@ -77,9 +98,8 @@ class Hero extends React.PureComponent {
   render() {
     return (
       <div className={'flex flex-col justify-center ' + styles.hero}>
-        <div className={styles.titleField + ' my-20 mx-20 flex items-center justify-center flex-col md:flex-row'}>
-          <div className={styles.info}>
-
+        <div className={styles.titleField + ' my-8 mx-8 md:my-20 md:mx-20 flex items-center justify-center flex-col md:flex-row'}>
+          <div className='flex-1 mb-8'>
             <h1 className={styles.title + ' mx-0 my-0 font-light text-white'}>ClippingKK</h1>
             <h4 className='text-white text-3xl'>整理, 展示, 复盘, 进步</h4>
             <div className={styles.platformSection}>
