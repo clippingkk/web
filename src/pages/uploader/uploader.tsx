@@ -1,22 +1,16 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useCallback } from 'react'
 import { Link } from '@reach/router'
 import swal from 'sweetalert'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { syncClippings } from '../../store/clippings/type'
+import { usePageTrack, useActionTrack } from '../../hooks/tracke'
 const styles = require('./uploader.css')
 
-// @ts-ignore
-@connect(
-  null,
-  dispatch => ({
-    sync(file: DataTransferItem) {
-      return dispatch(syncClippings(file))
-    },
-  })
-)
-class UploaderPage extends React.PureComponent<any> {
-  onDropEnd = (e: React.DragEvent) => {
+function UploaderPage() {
+  usePageTrack('uploader')
+  const onUpload = useActionTrack('upload')
+  const dispatch = useDispatch()
+  const onDropEnd = useCallback((e: React.DragEvent) => {
     e.preventDefault()
     const file = e.dataTransfer.items[0]
 
@@ -29,33 +23,31 @@ class UploaderPage extends React.PureComponent<any> {
       return
     }
 
-    this.props.sync(file)
-  }
+    onUpload()
+    dispatch(syncClippings(file))
+  }, [onUpload])
 
-  stopDragOver = (e: React.DragEvent) => {
+  const stopDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
-  }
-
-  render() {
-    return (
-      <section className={styles.uploader}>
-        <div
-          className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm ${styles.box}`}
-          onDragOver={this.stopDragOver}
-          onDrop={this.onDropEnd}
-        >
-          {/* <FontAwesomeIcon icon="cloud-upload-alt" color="#ffffff" size="8x" /> */}
-          <span className='text-6xl'>🎈</span>
-          <h3 className='text-2xl'>把 My Clippings.txt 拖进来</h3>
-        </div>
-        <div className='w-full flex items-center justify-center my-8'>
-          <Link to="/" className='text-center text-gray-900 text-lg hover:text-red-300'>
-            什么是 My Clippings.txt
+  }, [])
+  return (
+    <section className={styles.uploader}>
+      <div
+        className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm ${styles.box}`}
+        onDragOver={stopDragOver}
+        onDrop={onDropEnd}
+      >
+        {/* <FontAwesomeIcon icon="cloud-upload-alt" color="#ffffff" size="8x" /> */}
+        <span className='text-6xl'>🎈</span>
+        <h3 className='text-2xl'>把 My Clippings.txt 拖进来</h3>
+      </div>
+      <div className='w-full flex items-center justify-center my-8'>
+        <Link to="/" className='text-center text-gray-900 text-lg hover:text-red-300'>
+          什么是 My Clippings.txt
           </Link>
-        </div>
-      </section>
-    )
-  }
+      </div>
+    </section>
+  )
 }
 
 export default UploaderPage

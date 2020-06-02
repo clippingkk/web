@@ -1,7 +1,8 @@
 import React from 'react'
-const styles = require('./square.css')
+import { usePageTrack } from '../../hooks/tracke'
 
 function SquarePage() {
+  usePageTrack('square')
   return (
     <section className='flex items-center justify-center'>
       <div className='my-12 rounded-sm text-6xl font-light shadow-2xl p-8'>

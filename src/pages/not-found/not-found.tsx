@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from '@reach/router'
+import { usePageTrack } from '../../hooks/tracke'
 
 const styles = require('./style.css')
 
 function NotFound() {
+  usePageTrack('notfound')
   return (
     <div className={'w-full h-full flex justify-center items-center flex-col ' + styles.container}>
       <h1 className='text-6xl font-light'>

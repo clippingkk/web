@@ -99,6 +99,8 @@ function* postLogin(response: TUserState) {
     icon: 'success'
   })
 
+  mixpanel.track('login')
+
   yield call(navigate as any, `/dash/${response.profile.id}/home`)
 }
 
@@ -168,6 +170,12 @@ function* signupAction(action: TSignupAction) {
       icon: 'success'
     })
 
+    mixpanel.track('signup', {
+      email: signup.email.trim(),
+      name: signup.name.trim(),
+      avatarUrl: uploadedResponse.filePath,
+    })
+
     yield call(navigate as any, '/auth/signin')
   } catch (e) {
     swal({
@@ -188,7 +196,7 @@ function* logoutAction() {
     text: '下次再见哦~',
     icon: 'info'
   })
-  mixpanel.track("user logout")
+  mixpanel.track("logout")
   yield call(navigate as any, '/')
 }
 

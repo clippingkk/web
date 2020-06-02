@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { getVersions, IVersionItem } from '../../services/release'
+import { usePageTrack } from '../../hooks/tracke'
 const styles = require('./release.css')
 
 const isiPhone = /iPhone/.test(navigator.userAgent)
 
 function ReleasePage({ platform }: any) {
+  usePageTrack('legacy:release')
   const [versionList, setVersionList] = useState([])
 
   useEffect(() => {

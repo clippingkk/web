@@ -3,6 +3,7 @@ import { getUserProfile, IUserProfile } from '../../services/auth';
 import Card from '../../components/card/card';
 import Divider from '../../components/divider/divider';
 import ClippingItem from '../../components/clipping-item/clipping-item';
+import { usePageTrack } from '../../hooks/tracke';
 
 const styles = require('./profile.css')
 
@@ -27,8 +28,10 @@ function useProfile(userid: string): IUserProfile {
 }
 
 function Profile(props: TProfileProps) {
-
   const { user, clippings, clippingsCount } = useProfile(props.userid)
+  usePageTrack('profile', {
+    userId: props.userid
+  })
 
   return (
     <section>

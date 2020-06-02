@@ -7,6 +7,7 @@ import ListFooter from '../../components/list-footer/list-footer';
 import Divider from '../../components/divider/divider';
 import { changeBackground } from '../../store/app/type';
 import { connect } from 'react-redux';
+import { usePageTrack } from '../../hooks/tracke';
 const styles = require('./book.css')
 
 type TBookPageProps = {
@@ -69,6 +70,9 @@ function mapActionToProps(dispatch: any) {
 }
 
 function BookPage({ userid, bookid, changeBackground } : TBookPageProps) {
+  usePageTrack('book', {
+    bookId: bookid
+  })
   const book = getBook(bookid, changeBackground)
   const { clippings, loadMore, hasMore } = getClippings(userid, bookid)
 
