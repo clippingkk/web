@@ -10,6 +10,7 @@ import 'rc-tooltip/assets/bootstrap_white.css'
 // import '@fortawesome/fontawesome-free/css/all.css'
 import './styles/index.styl'
 import './styles/icons'
+import './utils/mixpanel'
 
 ReactDOM.render(
   <Provider store={store}>

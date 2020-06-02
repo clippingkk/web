@@ -15,18 +15,19 @@ import {
 } from "./type";
 import swal from 'sweetalert'
 import * as authAPI from '../../services/auth'
-import { uploadImage, TUploadResponse } from "../../services/misc";
-import { USER_TOKEN_KEY } from "../../constants/storage";
+import { uploadImage, TUploadResponse } from "../../services/misc"
+import { USER_TOKEN_KEY } from "../../constants/storage"
+import mixpanel from "mixpanel-browser"
 
 function mobileAlert(): Promise<any> {
-    if (screen.width > 720) {
-      return Promise.resolve(null)
-    }
-    return swal({
-      title: '敬告',
-      text: '手机体验很差哦，建议切换到电脑访问： https://kindle.annatarhe.com',
-      icon: 'info'
-    })
+  if (screen.width > 720) {
+    return Promise.resolve(null)
+  }
+  return swal({
+    title: '敬告',
+    text: '手机体验很差哦，建议切换到电脑访问： https://kindle.annatarhe.com',
+    icon: 'info'
+  })
 }
 
 type TLoginAction = {
@@ -70,29 +71,35 @@ function* githubLoginAction(action: TGithubLoginAction) {
 }
 
 function* postLogin(response: TUserState) {
-    localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
-      profile: response.profile,
-      token: response.token,
-      createdAt: Date.now()
-    }))
+  localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
+    profile: response.profile,
+    token: response.token,
+    createdAt: Date.now()
+  }))
 
-    sessionStorage.setItem('token', response.token)
-    sessionStorage.setItem('uid', response.profile.id.toString())
-    sentry.setUser({
-      email: response.profile.email,
-      id: response.profile.id.toString(),
-      username: response.profile.name
-    })
+  sessionStorage.setItem('token', response.token)
+  sessionStorage.setItem('uid', response.profile.id.toString())
+  sentry.setUser({
+    email: response.profile.email,
+    id: response.profile.id.toString(),
+    username: response.profile.name
+  })
+  mixpanel.identify(response.profile.id.toString())
+  mixpanel.people.set({
+    "$email": response.profile.email,
+    "Sign up date": "",
+    "USER_ID": response.profile.name,
+  });
 
-    yield put({ type: AUTH_LOGIN, ...response })
+  yield put({ type: AUTH_LOGIN, ...response })
 
-    yield call(swal, {
-      title: '哇，登陆了',
-      text: `欢迎你哦~ ${response.profile.name}`,
-      icon: 'success'
-    })
+  yield call(swal, {
+    title: '哇，登陆了',
+    text: `欢迎你哦~ ${response.profile.name}`,
+    icon: 'success'
+  })
 
-    yield call(navigate, `/dash/${response.profile.id}/home`)
+  yield call(navigate as any, `/dash/${response.profile.id}/home`)
 }
 
 function* loginAction(action: TLoginAction): IterableIterator<any> {
@@ -161,7 +168,7 @@ function* signupAction(action: TSignupAction) {
       icon: 'success'
     })
 
-    yield call(navigate, '/auth/signin')
+    yield call(navigate as any, '/auth/signin')
   } catch (e) {
     swal({
       title: "Oops",
@@ -181,7 +188,8 @@ function* logoutAction() {
     text: '下次再见哦~',
     icon: 'info'
   })
-  yield call(navigate, '/')
+  mixpanel.track("user logout")
+  yield call(navigate as any, '/')
 }
 
 export function* usersAction(): IterableIterator<any> {

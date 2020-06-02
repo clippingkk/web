@@ -1,5 +1,7 @@
 import { AUTH_LOGIN, IUserAction, TUserState, USER_LOGOUT } from './type'
-import { USER_TOKEN_KEY, IUserToken } from '../../constants/storage';
+import { USER_TOKEN_KEY, IUserToken } from '../../constants/storage'
+import mixpanel from 'mixpanel-browser'
+import * as sentry from '@sentry/browser'
 
 const initState: TUserState = {
   profile: {
@@ -21,6 +23,17 @@ function parseFromLS() {
   // TODO: check createdAt
   sessionStorage.setItem('token', auth.token)
   sessionStorage.setItem('uid', auth.profile.id.toString())
+    sentry.setUser({
+      email: auth.profile.email,
+      id: auth.profile.id.toString(),
+      username: auth.profile.name
+    })
+  mixpanel.identify(auth.profile.id.toString())
+  mixpanel.people.set({
+    "$email": auth.profile.email,
+    "Sign up date": auth.createdAt,
+    "USER_ID": auth.profile.name,
+  });
 
   initState.profile = auth.profile
   initState.token = auth.token
