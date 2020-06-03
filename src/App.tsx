@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import './utils/mixpanel'
 import './utils/sentry'
 import { Provider } from 'react-redux'
 import Root from './Root'
@@ -10,7 +11,6 @@ import 'rc-tooltip/assets/bootstrap_white.css'
 // import '@fortawesome/fontawesome-free/css/all.css'
 import './styles/index.styl'
 import './styles/icons'
-import './utils/mixpanel'
 
 ReactDOM.render(
   <Provider store={store}>
