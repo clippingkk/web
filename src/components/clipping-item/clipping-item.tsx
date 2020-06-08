@@ -11,6 +11,7 @@ type TClippingItemProps = {
 }
 
 function ClippingItem({ userid, item }: TClippingItemProps) {
+  console.log(userid, item)
   return (
     <Link
       to={`/dash/${userid}/clippings/${item.id}`}

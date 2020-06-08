@@ -44,10 +44,10 @@ function downloadImage(src: string): Promise<HTMLImageElement> {
 }
 
 const BACKGROUND_COLLECTIONS = [
-  require('../../assets/share_bg_0.jpg'),
-  require('../../assets/share_bg_1.jpg'),
-  require('../../assets/share_bg_2.jpg'),
-  require('../../assets/share_bg_3.jpg'),
+  require('../../assets/share_bg_0.jpg').default,
+  require('../../assets/share_bg_1.jpg').default,
+  require('../../assets/share_bg_2.jpg').default,
+  require('../../assets/share_bg_3.jpg').default,
 ]
 
 class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {

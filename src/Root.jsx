@@ -1,6 +1,5 @@
 import React from 'react'
 import { hot } from 'react-hot-loader/root'
-import styles from './Root.css'
 
 import PageLoading from './components/loading/loading'
 import RouterContainer from './components/router-container/router';
@@ -24,7 +23,7 @@ const ProfilePage = React.lazy(() => import('./pages/profile/profile'))
 class Root extends React.Component {
   render() {
     return (
-      <div className={styles.container}>
+      <div>
         <React.Suspense fallback={<PageLoading />}>
           <RouterContainer>
             <IndexPage path="/" />

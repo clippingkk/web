@@ -15,8 +15,8 @@ function Container(props: any) {
   // https://lokeshdhakar.com/projects/color-thief/#getting-started
   // + dark theme or light theme
   return (
-    <section className={styles.container}>
-      <div className={styles.back} style={containerStyle} />
+    <section className={styles.container} style={containerStyle}>
+      {/* <div className={styles.back} style={containerStyle} /> */}
       <NavigationBar />
       {props.children}
       <Footer />
