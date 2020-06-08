@@ -1,6 +1,25 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.5.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.5.3...v2.5.4) (2020-06-08)
+
+
+### Features
+
+* **mixpanel:** add mixpanel for data track ([f749cd5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f749cd5c2ecfc28fe9e884b885cac72f983fdec0))
+* **package:** update packages ([0ad98f1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0ad98f12f61e72835e64cbca0760f205c1398f99))
+* **track:** add page track ([41bf9ec](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/41bf9ec63868df0c23b92aa868c50774d0b8f32b))
+
+
+### Bug Fixes
+
+* **book:** fix detail image render ([fca6af2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fca6af25bd6499e9be831dd5116272ebb8e9e2af))
+* **clipping:** fix clipping details data ([89edf67](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/89edf6710e0ad0c52f060c757dba03a6cf99a062))
+* **fonts:** fix google fonts proxy issue ([1111552](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1111552954662fcd5bf702ec6eb6b2f04a96e66e))
+* **mixpanel:** move mixpanel init to top ([6485490](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6485490087c6fcb63aa3761554eacd7e6fdb9815))
+* **style:** fix home page style ([f5f88be](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f5f88be45a5cbed98217cab0df3349d00dbbcd81))
+* **track:** change pv key ([616c304](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/616c30420617fb7fda234c94c4d4fc338566c70e))
 
 ## [2.5.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.5.2...v2.5.3) (2020-04-05)
 
