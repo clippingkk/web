@@ -12,6 +12,9 @@
   top: 0;
   z-index: 100;
 }
+.navbar + div {
+  flex: 1;
+}
 
 .navbar::before {
   content: '';

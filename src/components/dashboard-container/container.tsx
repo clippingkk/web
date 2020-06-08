@@ -16,7 +16,6 @@ function Container(props: any) {
   // + dark theme or light theme
   return (
     <section className={styles.container} style={containerStyle}>
-      {/* <div className={styles.back} style={containerStyle} /> */}
       <NavigationBar />
       {props.children}
       <Footer />

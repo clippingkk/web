@@ -81,7 +81,7 @@ class ClippingPage extends React.PureComponent<
     return (
       <div className={`${styles.clipping} page`}>
         <div className={styles.main}>
-          <Card className={styles['main-card']}>
+          <Card className={styles['main-card'] + ' text-black'}>
             <h1 className='text-2xl font-bold my-2'>{this.state.clipping.title}</h1>
             <h3 className='font-light text-lg my-4'>{this.state.book.author}</h3>
             <hr className={styles.hr} />
