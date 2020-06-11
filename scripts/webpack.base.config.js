@@ -69,6 +69,10 @@ const config = {
         'postcss-loader'
       ]
     }, {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader'
+    }, {
       test: /\.(png|jpg|jpeg|gif)$/,
       use: [{loader: 'url-loader', options: {limit: 500, name: '[name]-[hash].[ext]'}}]
     }, {

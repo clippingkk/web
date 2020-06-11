@@ -2,7 +2,7 @@ import { API_HOST } from "../constants/config"
 
 export async function FetchQRCode(scene: string, page: string, width: number, isHyaline: boolean): Promise<HTMLImageElement> {
   return fetch(
-    `${API_HOST}/mp/qrcode?scene=${encodeURIComponent(scene)}&page=${page}&width=${width}&isHyaline=${isHyaline}`, {
+    `${API_HOST}/api/mp/qrcode?scene=${encodeURIComponent(scene)}&page=${page}&width=${width}&isHyaline=${isHyaline}`, {
     headers: {
       'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
     },

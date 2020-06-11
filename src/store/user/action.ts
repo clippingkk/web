@@ -18,6 +18,7 @@ import * as authAPI from '../../services/auth'
 import { uploadImage, TUploadResponse } from "../../services/misc"
 import { USER_TOKEN_KEY } from "../../constants/storage"
 import mixpanel from "mixpanel-browser"
+import { updateToken } from "../../services/ajax";
 
 function mobileAlert(): Promise<any> {
   if (screen.width > 720) {
@@ -120,6 +121,7 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
 
   try {
     const response: TUserState = yield call(authAPI.login, email, pwd)
+    yield call(updateToken, response.token)
     yield call(postLogin, response)
   } catch (e) {
     swal({

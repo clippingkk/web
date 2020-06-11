@@ -4,6 +4,7 @@ import { hot } from 'react-hot-loader/root'
 import PageLoading from './components/loading/loading'
 import RouterContainer from './components/router-container/router';
 import NotFound from './pages/not-found/not-found';
+import AdminPanel from './pages/admin/admin';
 
 const IndexPage = React.lazy(() => import('./pages/index/index'))
 const PrivacyPolicy = React.lazy(() => import('./pages/policy/privacy'))
@@ -35,6 +36,7 @@ class Root extends React.Component {
             </AuthPage>
             <GithubOAuthPage path="/oauth/github" />
             <DashContainer path="dash/:userid">
+              <AdminPanel path="admin" />
               <HomePage path="home" />
               <UploaderPage path="upload" />
               <SquarePage path="square" />

@@ -1,5 +1,6 @@
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 import { API_HOST } from '../constants/config'
-import swal from 'sweetalert';
+import swal from 'sweetalert'
 
 export interface IBaseResponseData {
   status: Number
@@ -7,8 +8,9 @@ export interface IBaseResponseData {
   data: any
 }
 
+let token = sessionStorage.getItem('token')
+
 export async function request(url: string, options: RequestInit = {}): Promise<any> {
-  const token = sessionStorage.getItem('token')
   if (token) {
     options.headers = {
       'Authorization': `Bearer ${token}`
@@ -18,7 +20,7 @@ export async function request(url: string, options: RequestInit = {}): Promise<a
   options.mode = 'cors'
 
   try {
-    const response: IBaseResponseData = await fetch(API_HOST + url, options).then(res => res.json())
+    const response: IBaseResponseData = await fetch(API_HOST + '/api' + url, options).then(res => res.json())
     if (response.status !== 200) {
       throw new Error(response.msg)
     }
@@ -33,3 +35,23 @@ export async function request(url: string, options: RequestInit = {}): Promise<a
     return Promise.reject(e)
   }
 }
+
+export function updateToken(t: string) {
+  token = t
+  client.setLink(new HttpLink({
+    uri: API_HOST + '/graphql',
+    headers: {
+      'Authorization': `Bearer ${t}`
+    }
+  }))
+}
+
+export const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    uri: API_HOST + '/graphql',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }),
+});
