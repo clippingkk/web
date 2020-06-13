@@ -15,7 +15,7 @@ interface Book {
 	summary: string
 }
 
-interface IHttpBook extends Book {
+export interface IHttpBook extends Book {
   pubdate: string
 }
 
@@ -25,12 +25,13 @@ export interface IBook extends Book {
 
 let isSupportWebp: boolean
 
-function covertHttpBook2Book(book: IHttpBook): IBook {
+export function covertHttpBook2Book(book: IHttpBook): IBook {
   const isCDNImage = book.image.indexOf('http') !== 0
   const image = isCDNImage ? `https://cdn.annatarhe.com/${book.image}-copyrightDB${isSupportWebp ? '.webp' : ''}` : book.image
+  console.log(isCDNImage, image, process.env.NODE_ENV)
   return {
     ...book,
-    image: process.env.NODE_ENV === 'production' ? image : 'https://wx2.sinaimg.cn/large/8112eefdgy1fgncy5cyg9j21kw23vqv6.jpg',
+    image: process.env.NODE_ENV === 'production' ? image : 'https://picsum.photos/400/500?random=' + Math.random(),
     pubdate: new Date(book.pubdate)
   } as IBook
 }

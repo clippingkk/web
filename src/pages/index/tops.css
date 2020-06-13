@@ -1,0 +1,7 @@
+.item {
+  transform: rotate3d(.5,-.866,0,15deg) rotate(1deg);
+}
+
+.item:hover {
+  transform: rotate3d(0, 0,0, 0deg) rotate(0deg);
+}

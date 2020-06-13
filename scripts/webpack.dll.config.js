@@ -11,17 +11,20 @@ const vendors = [
   'intersection-observer',
   '@sentry/browser',
   '@ungap/url-search-params',
+  'redux',
+  'mixpanel-browser',
 ]
 
 const reacts = [
   'react',
   '@reach/router',
   'react-dom',
-  'redux',
   'react-transition-group',
   'react-redux',
   'redux-saga',
-  '@nearform/react-animation'
+  '@nearform/react-animation',
+  'react-table',
+  '@apollo/client'
 ]
 
 const distDirname = 'dist' + (process.env.NODE_ENV !== 'production' ? '-dev' : '')

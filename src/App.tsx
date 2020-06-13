@@ -11,13 +11,21 @@ import 'rc-tooltip/assets/bootstrap_white.css'
 import './styles/index.styl'
 
 import './styles/icons'
-import { client } from './services/ajax'
+import { client, request } from './services/ajax'
+import { SWRConfig } from 'swr'
 
 ReactDOM.render(
   <Provider store={store}>
-    <ApolloProvider client={client}>
-      <Root />
-    </ApolloProvider>
+    <SWRConfig
+      value={{
+        refreshInterval: 3000,
+        fetcher: request
+      }}
+    >
+      <ApolloProvider client={client}>
+        <Root />
+      </ApolloProvider>
+    </SWRConfig>
   </Provider>,
   document.querySelector('#app')
 )

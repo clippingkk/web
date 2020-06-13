@@ -11,6 +11,9 @@ export type UserContent = {
   name: string
   email: string
   avatar: string
+  createdAt: string
+  updatedAt: string
+  wechatOpenid: string
 }
 
 export type TUserState = {

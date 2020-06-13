@@ -10,7 +10,7 @@ export interface IBaseResponseData {
 
 let token = sessionStorage.getItem('token')
 
-export async function request(url: string, options: RequestInit = {}): Promise<any> {
+export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
   if (token) {
     options.headers = {
       'Authorization': `Bearer ${token}`
@@ -25,7 +25,7 @@ export async function request(url: string, options: RequestInit = {}): Promise<a
       throw new Error(response.msg)
     }
 
-    return response.data
+    return response.data as T
   } catch (e) {
     swal({
       title: 'Oops',
