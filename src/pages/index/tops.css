@@ -1,7 +1,34 @@
 .item {
-  transform: rotate3d(.5,-.866,0,15deg) rotate(1deg);
+  /* transform: rotate3d(.5,-.866,0,15deg) rotate(1deg); */
 }
 
 .item:hover {
-  transform: rotate3d(0, 0,0, 0deg) rotate(0deg);
+  /* transform: rotate3d(0, 0,0, 0deg) rotate(0deg); */
+}
+
+
+.book-image {
+  height: 36rem;
+  width: 30vw;
+  min-width: 24rem;
+  max-width: 30rem;
+}
+
+.book-info {
+  background: linear-gradient(to top, #333, rgba(255, 255, 255, .2));
+  backdrop-filter: blur(10px);
+}
+
+.user-item {
+}
+
+.user-item:hover .user-name {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.user-name {
+  max-width: 7rem;
+  text-overflow: ellipsis;
+  transform: translateY(-10px);
 }

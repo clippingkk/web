@@ -1,15 +1,24 @@
 import React from 'react'
-import styles from './Footer.css'
 
-class Footer extends React.PureComponent {
-  render() {
-    return (
-      <footer className={styles.footer}>
-        <a href="http://www.miitbeian.gov.cn/" target="_blank">豫ICP备15003571号</a>
-        <a href="https://annatarhe.com" target="_blank">&copy; AnnatarHe</a>
-      </footer>
-    )
-  }
+function Footer() {
+  return (
+    <footer className='flex items-center justify-around md:p-20 p-4 bg-gray-200'>
+      <a
+        href="http://www.miitbeian.gov.cn/"
+        target="_blank"
+        className='no-underline text-black'
+      >
+        豫ICP备15003571号
+        </a>
+      <a
+        href="https://annatarhe.com"
+        target="_blank"
+        className='no-underline text-black'
+      >
+        &copy; AnnatarHe
+        </a>
+    </footer>
+  )
 }
 
 export default Footer

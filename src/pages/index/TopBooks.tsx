@@ -1,4 +1,5 @@
 import React from 'react'
+import { HideUntilLoaded } from '@nearform/react-animation'
 import { IHttpBook, covertHttpBook2Book } from '../../services/books'
 
 const styles = require('./tops.css')
@@ -12,18 +13,26 @@ function TopBooks(props: TopBooksProps) {
     return null
   }
 
-  const localBooks = props.books.map(covertHttpBook2Book)
+  const localBooks = props.books.map(covertHttpBook2Book).slice(5)
   return (
-    <div className='flex py-8 md:px-12 flex-wrap justify-center items-center'>
-      {localBooks.map(b => (
-        <div className={'relative mx-8 mb-8 transition-all duration-300 ' + styles.item} key={b.id}>
-          <img src={b.image} className=' h-1/3 w-2/5 object-cover' />
-          <div className='absolute bottom-0 left-0 w-full'>
-            <h2 className='text-2xl'>{b.title}</h2>
-            <h3 className='text-sm italic'>{b.author}</h3>
-          </div>
-        </div>
-      ))}
+    <div>
+      <h2 className='text-3xl text-center font-bold my-8'>大家在读</h2>
+      <div className='flex py-8 md:px-12 flex-wrap justify-center items-center'>
+        {localBooks.map(b => (
+          <HideUntilLoaded
+            imageToLoad={b.image}
+            key={b.id}
+          >
+            <div className={'relative mx-8 mb-8 transition-all duration-300 rounded transform hover:scale-110 shadow-2xl ' + styles.item}>
+              <img src={b.image} className={'object-cover rounded ' + styles['book-image']} />
+              <div className={'absolute bottom-0 left-0 w-full py-8 px-4 text-white rounded-b ' + styles['book-info']}>
+                <h2 className='text-2xl text-right'>{b.title}</h2>
+                <h3 className='text-sm italic text-right'>{b.author}</h3>
+              </div>
+            </div>
+          </HideUntilLoaded>
+        ))}
+      </div>
     </div>
   )
 }

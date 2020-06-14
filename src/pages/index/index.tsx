@@ -16,7 +16,7 @@ function IndexPage() {
   return (
     <div>
       <Hero />
-      <div>
+      <div style={{ backgroundColor: '#f8f8f8' }} className='pb-4'>
         <TopBooks books={data?.books} />
         <TopUsers users={data?.users} />
       </div>
