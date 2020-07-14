@@ -57,7 +57,7 @@
     "@types/react-transition-group": "^2.0.16",
     "@types/w3c-web-usb": "^1.0.3",
     "add-asset-html-webpack-plugin": "^2.1.3",
-    "autoprefixer": "^7.1.2",
+    "autoprefixer": "^9.8.5",
     "ava": "^3.8.2",
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
