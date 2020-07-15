@@ -29,7 +29,11 @@ export async function getClippings(userid: number, offset: number): Promise<ICli
 }
 
 export async function getClipping(clippingid: number): Promise<IClippingItem> {
-  const response = await (request(`/clippings/${clippingid}`) as Promise<IHttpClippingItem>)
+  const response = await request<IHttpClippingItem>(`/clippings/${clippingid}`, {
+    headers: {
+      a: 'b'
+    }
+  })
 
   return {
     ...response,

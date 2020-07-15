@@ -13,14 +13,10 @@ function TopUsers(props: TopUsersProps) {
     return null
   }
 
-  const users: UserContent[] = []
-
-  for (let i = 0; i < 10; i++) {
-    users.push({
-      ...props.users[0],
-      id: i + 1000
-    })
-  }
+  const users: UserContent[] = props.users.map(x => ({
+    ...x,
+    avatar: x.avatar.startsWith('http') ? x.avatar : `https://cdn.annatarhe.com/${x.avatar}-copyrightDB`
+  }))
 
   return (
     <div>
@@ -35,7 +31,7 @@ function TopUsers(props: TopUsersProps) {
             key={u.id}
           >
             <div className={'mx-4 flex flex-col justify-center items-center ' + styles['user-item']}>
-              <img src={u.avatar} className='w-16 h-16 rounded-full transform hover:scale-110 duration-300 shadow-2xl' />
+              <img src={u.avatar} className='w-16 h-16 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-contain' />
               <span className={'font-light block duration-300 opacity-0 mt-4 overflow-hidden ' + styles['user-name']}>{u.name}</span>
             </div>
           </HideUntilLoaded>

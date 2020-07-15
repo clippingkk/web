@@ -22,8 +22,8 @@ export interface IUserProfile {
   clippings: IClippingItem[]
 }
 
-export function login(email: string, pwd: string): Promise<ILoginResponse> {
-  return request('/auth/login', {
+export function login(email: string, pwd: string) {
+  return request<ILoginResponse>('/auth/login', {
     method: 'POST',
     body: JSON.stringify({ email, pwd })
   }).catch(e => {

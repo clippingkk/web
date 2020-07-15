@@ -13,6 +13,7 @@ let token = sessionStorage.getItem('token')
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
   if (token) {
     options.headers = {
+      ...(options.headers || {}),
       'Authorization': `Bearer ${token}`
     }
   }
