@@ -13,7 +13,7 @@ function TopBooks(props: TopBooksProps) {
     return null
   }
 
-  const localBooks = props.books.map(covertHttpBook2Book).slice(5)
+  const localBooks = props.books.map(covertHttpBook2Book)
   return (
     <div>
       <h2 className='text-3xl text-center font-bold my-8'>大家在读</h2>
