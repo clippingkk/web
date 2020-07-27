@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.0...v2.7.1) (2020-07-27)
+
+
+### Features
+
+* **book:** refactor book and add title on every page ([e668668](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e66866815f5607364f19b79d682b76b6fcb0013b))
+
+
+### Bug Fixes
+
+* **index:** fix index page ([#55](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/issues/55)) ([7930746](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7930746c6753ec246d9a732020a66fe202a71f0b))
+
 ### [2.5.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.5.3...v2.5.4) (2020-06-08)
 
 
