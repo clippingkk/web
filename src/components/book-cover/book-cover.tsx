@@ -11,7 +11,7 @@ type TBookCoverProps = {
 
 function BookCover({ book, userid }: TBookCoverProps) {
   return (
-    <Link to={`/dash/${userid}/book/${book.doubanId}`} className={styles.cover}>
+    <Link to={`/dash/${userid}/book/${book.doubanId}`} className={styles.cover + ' animate__fadeInDown'}>
       <HideUntilLoaded
         imageToLoad={book.image}
       >

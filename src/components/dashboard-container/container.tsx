@@ -6,10 +6,13 @@ import { TGlobalStore } from '../../store'
 
 const styles = require('./container.css')
 
+const defaultBg = require('../../assets/bg.jpg').default
+
 function Container(props: any) {
   const { width, height } = window.screen
   const containerStyle = {
-    backgroundImage: `url(https://picsum.photos/${width}/${height}/?blur=10)`
+    // backgroundImage: `url(https://picsum.photos/${width}/${height}/?blur=10)`
+    backgroundImage: `url(${defaultBg})`
   }
   // TODO: 预处理
   // https://lokeshdhakar.com/projects/color-thief/#getting-started

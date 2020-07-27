@@ -14,13 +14,11 @@ function BooksContent(props: TBooksProps) {
     return <NoContentAlert userid={props.userid} />
   }
 
-  const list = props.list.map((item: IBook) => (
-    <BookCover book={item} userid={props.userid} key={item.id} />
-  ))
-
   return (
     <React.Fragment>
-      {list}
+      {props.list.map((item: IBook) => (
+        <BookCover book={item} userid={props.userid} key={item.id} />
+      ))}
     </React.Fragment>
   )
 }

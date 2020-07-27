@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 const styles = require('./list-footer.css')
 
 type TListFooterProp = {
-  loadMoreFn: () => Promise<any>
+  loadMoreFn: () => any
   hasMore: boolean
 }
 
@@ -22,7 +22,7 @@ function useFooterLoadObs(loadMore: () => Promise<any>, hasMore: boolean) {
     return () => {
       obs.disconnect()
     }
-  }, [])
+  }, [hasMore, loadMore])
 
   return {
     dom
