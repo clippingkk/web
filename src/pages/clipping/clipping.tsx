@@ -17,7 +17,6 @@ type TClippingPageProp = {
   clippingid: number
 }
 
-
 function ClippingPage(props: TClippingPageProp) {
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
   const dispatch = useDispatch()
