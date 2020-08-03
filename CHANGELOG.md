@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.4...v2.7.5) (2020-08-03)
+
+
+### Bug Fixes
+
+* **cd:** deploy on push tags ([7c4b93f](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7c4b93ff745aeacc27d1dd5f25259c54ba62933c))
+
 ### [2.7.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.3...v2.7.4) (2020-08-03)
 
 
