@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.3...v2.7.4) (2020-08-03)
+
+
+### Features
+
+* **cd:** add action file for deploy in tencent cloud ([093ad84](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/093ad840e2139fefc7b4d8ab208622c086e6f7b7))
+* **config:** move api to another api ([e9fd102](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e9fd10211d6ff145619a12f94a845586454e53c9))
+* **deps:** update deps ([5bbdc56](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5bbdc56f2bfad9146b40ac616e44329959af8bd0))
+
+
+### Bug Fixes
+
+* **cd:** skip auto deploy in master branch ([9fcebd5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9fcebd5aea789db42091f5909381bc74fdfb4e22))
+* **ci:** remove unused stage ([b917b6f](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b917b6f34eeefbcb4c331c68b9751713d08935f4))
+
 ### [2.7.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.2...v2.7.3) (2020-07-27)
 
 
