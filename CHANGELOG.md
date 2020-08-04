@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.5...v2.7.6) (2020-08-04)
+
+
+### Features
+
+* **cdn:** move cdn ([20fd509](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/20fd50975814362892ff617e1d4b08458b40a835))
+
 ### [2.7.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.4...v2.7.5) (2020-08-03)
 
 
