@@ -15,7 +15,7 @@ function TopUsers(props: TopUsersProps) {
 
   const users: UserContent[] = props.users.map(x => ({
     ...x,
-    avatar: x.avatar.startsWith('http') ? x.avatar : `https://cdn.annatarhe.com/${x.avatar}-copyrightDB`
+    avatar: x.avatar.startsWith('http') ? x.avatar : `https://clippingkk-cdn.annatarhe.com/${x.avatar}-copyrightDB`
   }))
 
   return (
