@@ -1,5 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
-import { API_HOST } from '../constants/config'
+import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
 import swal from 'sweetalert'
 
 export interface IBaseResponseData {
@@ -55,4 +55,4 @@ export const client = new ApolloClient({
       'Authorization': `Bearer ${token}`
     }
   }),
-});
+})

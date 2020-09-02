@@ -6,15 +6,15 @@ import ClippingItem from '../../components/clipping-item/clipping-item';
 import ListFooter from '../../components/list-footer/list-footer';
 import Divider from '../../components/divider/divider';
 import { changeBackground } from '../../store/app/type';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { usePageTrack } from '../../hooks/tracke';
-import useSWR, { useSWRPages } from 'swr';
+import useSWR from 'swr';
 const styles = require('./book.css')
 
 type TBookPageProps = {
   userid: number,
   bookid: string,
-  changeBackground: (bg: string) => void
+  bookDoubanID: number,
 }
 
 function useBook(doubanId: string, onGetBook: (bg: string) => void): IBook {
@@ -62,18 +62,11 @@ function useBookClippings(userid: number, bookId: string): bookClippingsState {
   }
 }
 
-function mapActionToProps(dispatch: any) {
-  return {
-    changeBackground(bg: string) {
-      return dispatch(changeBackground(bg))
-    },
-  }
-}
-
-function BookPage({ userid, bookid, changeBackground }: TBookPageProps) {
+function BookPage({ userid, bookid }: TBookPageProps) {
   usePageTrack('book', {
     bookId: bookid
   })
+  const dispatch = useDispatch()
   const { data: book } = useSWR<IHttpBook>(`/clippings/book/${bookid}`)
 
   const { clippings, loadMore, hasMore } = useBookClippings(userid, bookid)
@@ -82,7 +75,7 @@ function BookPage({ userid, bookid, changeBackground }: TBookPageProps) {
     if (!book) {
       return
     }
-    changeBackground(covertHttpBook2Book(book).image)
+    dispatch(changeBackground(covertHttpBook2Book(book).image))
   }, [book, changeBackground])
 
   useEffect(() => {
@@ -96,7 +89,7 @@ function BookPage({ userid, bookid, changeBackground }: TBookPageProps) {
     return () => {
       document.title = oldTitle
     }
-  }, [book, changeBackground])
+  }, [book])
 
   if (!book) {
     return null
@@ -116,4 +109,4 @@ function BookPage({ userid, bookid, changeBackground }: TBookPageProps) {
   )
 }
 
-export default connect(null, mapActionToProps)(BookPage)
+export default BookPage
