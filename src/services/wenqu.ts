@@ -7,10 +7,10 @@ type WenquErrorResponse = {
 }
 
 export async function wenquRequest<T>(url: string, options: RequestInit = {}): Promise<T> {
-    options.headers = {
-      ...(options.headers || {}),
-      'X-Simple-Check': WENQU_SIMPLE_TOKEN
-    }
+  options.headers = {
+    ...(options.headers || {}),
+    'X-Simple-Check': WENQU_SIMPLE_TOKEN
+  }
   options.credentials = 'include'
   options.mode = 'cors'
 
@@ -29,4 +29,29 @@ export async function wenquRequest<T>(url: string, options: RequestInit = {}): P
     })
     return Promise.reject(e)
   }
+}
+
+export interface WenquBook {
+  id: number
+  rating: number
+  author: string
+  pubdate: string
+  totalPages: number
+  originTitle: string
+  image: string
+  doubanId: number
+  title: string
+  url: string
+  press: string
+  isbn: string
+  tags: string[]
+  authorIntro: string
+  summary: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface WenquSearchResponse {
+  count: number
+  books: WenquBook[]
 }

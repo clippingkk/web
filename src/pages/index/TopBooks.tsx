@@ -1,6 +1,7 @@
 import React from 'react'
 import { HideUntilLoaded } from '@nearform/react-animation'
 import { IHttpBook, covertHttpBook2Book } from '../../services/books'
+import { useSingleBook } from 'src/hooks/book'
 
 const styles = require('./tops.css')
 

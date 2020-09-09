@@ -1,15 +1,22 @@
 import React from 'react'
 import { Link } from '@reach/router';
 import { HideUntilLoaded } from '@nearform/react-animation'
-import { IBook } from '../../services/books';
+import { IBook } from '../../services/books'
+import { useSingleBook } from '../../hooks/book'
 const styles = require('./book-cover.css')
 
 type TBookCoverProps = {
-  book: IBook
+  bookId: string
   userid: number
 }
 
-function BookCover({ book, userid }: TBookCoverProps) {
+function BookCover({ bookId, userid }: TBookCoverProps) {
+  const book = useSingleBook(bookId)
+
+  if (!book) {
+    return null
+  }
+
   return (
     <Link to={`/dash/${userid}/book/${book.doubanId}`} className={styles.cover + ' animate__fadeInDown'}>
       <HideUntilLoaded

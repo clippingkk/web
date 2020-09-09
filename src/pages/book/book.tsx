@@ -8,7 +8,7 @@ import Divider from '../../components/divider/divider';
 import { changeBackground } from '../../store/app/type';
 import { connect, useDispatch } from 'react-redux';
 import { usePageTrack } from '../../hooks/tracke';
-import useSWR from 'swr';
+import { useSingleBook } from '../../hooks/book'
 const styles = require('./book.css')
 
 type TBookPageProps = {
@@ -67,7 +67,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
     bookId: bookid
   })
   const dispatch = useDispatch()
-  const { data: book } = useSWR<IHttpBook>(`/clippings/book/${bookid}`)
+  const book = useSingleBook(bookid)
 
   const { clippings, loadMore, hasMore } = useBookClippings(userid, bookid)
 
@@ -75,7 +75,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
     if (!book) {
       return
     }
-    dispatch(changeBackground(covertHttpBook2Book(book).image))
+    dispatch(changeBackground(book.image))
   }, [book, changeBackground])
 
   useEffect(() => {
@@ -97,7 +97,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
 
   return (
     <section className={`${styles.bookPage} page`}>
-      <BookInfo book={covertHttpBook2Book(book)} />
+      <BookInfo book={book} />
       <Divider title='书摘' />
       <div className={styles.clippings}>
         {clippings.map(clipping => (

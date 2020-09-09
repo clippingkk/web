@@ -2,7 +2,6 @@ import React from 'react'
 import { IBook } from '../../services/books';
 import NoContentAlert from './no-content';
 import BookCover from '../../components/book-cover/book-cover';
-const styles = require('./books.css')
 
 type TBooksProps = {
   list: IBook[],
@@ -17,7 +16,7 @@ function BooksContent(props: TBooksProps) {
   return (
     <React.Fragment>
       {props.list.map((item: IBook) => (
-        <BookCover book={item} userid={props.userid} key={item.id} />
+        <BookCover bookId={item.doubanId} userid={props.userid} key={item.id} />
       ))}
     </React.Fragment>
   )
