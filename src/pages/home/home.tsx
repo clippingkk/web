@@ -1,12 +1,11 @@
-import React from 'react'
-import { getClippings, IClippingItem } from '../../services/clippings'
-import Card from '../../components/card/card'
-import { Link } from '@reach/router'
-import HomeContent from './content';
+import React, { useState } from 'react'
 import { getBooks, IBook, IHttpBook, covertHttpBook2Book } from '../../services/books';
 import BooksContent from './books';
 import ListFooter from '../../components/list-footer/list-footer';
 import useSWR, { useSWRInfinite } from 'swr';
+import homeListQuery from '../../schema/books.graphql'
+import { useQuery } from '@apollo/client';
+import { books, booksVariables } from '../../schema/__generated__/books';
 const styles = require('./home.css')
 
 type THomeState = {
@@ -20,8 +19,18 @@ type THomeProp = {
   userid: number
 }
 
+const STEP = 10
+
 function _HomePage(props: THomeProp) {
-  const { data, size, setSize } = useSWRInfinite<IHttpBook[]>(index => `/clippings/books/${props.userid}?take=5&from=${index * 5}`)
+  const [offset, setOffset] = useState(0)
+  const { data, fetchMore, loading } = useQuery<books, booksVariables>(homeListQuery, {
+    variables: {
+      pagination: {
+        limit: STEP,
+        offset: 0
+      },
+    }
+  })
 
   if (!data) {
     return (
@@ -36,14 +45,40 @@ function _HomePage(props: THomeProp) {
 
       <div className={styles.clippings}>
         <BooksContent
-          list={([] as IHttpBook[]).concat(...data).map(x => covertHttpBook2Book(x))}
+          list={data.books}
           userid={props.userid}
         />
       </div>
 
       <ListFooter
-        loadMoreFn={() => { setSize(size + 1) }}
-        hasMore={data[data.length - 1].length >= 5}
+        loadMoreFn={() => {
+          if (loading) {
+            return
+          }
+          fetchMore({
+            variables: {
+              pagination: {
+                limit: 10,
+                offset
+              }
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+              console.log(prev, fetchMoreResult)
+              if (!fetchMoreResult || fetchMoreResult.books.length === 0) {
+                setOffset(-1)
+                return prev
+              }
+              return {
+                ...prev,
+                books: [...prev.books, ...fetchMoreResult.books] as any
+              }
+            }
+          }).then((res) => {
+            setOffset(o => o === -1 ? o : (o + STEP))
+          })
+
+        }}
+        hasMore={offset !== -1}
       />
     </section>
   )

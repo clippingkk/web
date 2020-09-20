@@ -1,0 +1,23 @@
+query profile($id: Int!) {
+  me(id: $id) {
+    id
+    name
+    email
+    password
+    avatar
+    checked
+    createdAt
+    updatedAt
+    wechatOpenid
+
+    recents {
+      id
+      bookID
+      title
+      content
+      createdAt
+      pageAt
+    }
+    clippingsCount
+  }
+}

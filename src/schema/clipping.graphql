@@ -1,0 +1,10 @@
+query fetchClipping($id: Int!) {
+  clipping(id: $id) {
+    id
+    bookID
+    title
+    content
+    createdAt
+    pageAt
+  }
+}

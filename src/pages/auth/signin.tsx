@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toLogin } from '../../store/user/type';
-import { connect } from 'react-redux';
+import mixpanel from "mixpanel-browser"
+import * as sentry from '@sentry/browser'
+import { connect } from 'react-redux'
+import profile from '../../utils/profile'
+import authQuery from '../../schema/auth.graphql'
+import { useLazyQuery } from '@apollo/client'
+import { auth } from '../../schema/__generated__/auth'
+import { authVariables } from '../../schema/__generated__/auth'
+import { useNavigate } from '@reach/router';
+import { useAuthSuccessed } from './hooks';
 const styles = require('./auth.css')
 
 type TSigninProps = {
   path: string,
-  login: (email: string, pwd: string) => void 
-}
-
-function mapActionToProps() {
-  return (dispatch: any) => ({
-    login: (email: string, pwd: string) => dispatch(toLogin(email, pwd)),
-  })
 }
 
 function Signin(props: TSigninProps) {
@@ -19,14 +21,23 @@ function Signin(props: TSigninProps) {
   const [pwd, setPwd] = useState('')
 
   const isDisabled = email === '' || pwd === ''
+  const [exec, resp] = useLazyQuery<auth, authVariables>(authQuery)
+  useAuthSuccessed(resp)
 
   function signin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (isDisabled) {
       return
     }
-    props.login(email, pwd)
+    exec({
+      variables: {
+        email: email,
+        password: pwd
+      }
+    })
   }
+
+  console.log(resp.error)
 
   return (
     <form className={styles.form} onSubmit={signin}>
@@ -54,6 +65,9 @@ function Signin(props: TSigninProps) {
           }}
         />
       </div>
+      {resp.error && (
+        <h5 className='bg-red-600 text-white p-4 rounded w-full text-xl'>{resp.error?.message}</h5>
+      )}
       <button
         className='mt-4 bg-blue-600 text-gray-100 text-3xl rounded-lg p-4'
         type="submit"
@@ -65,4 +79,4 @@ function Signin(props: TSigninProps) {
   )
 }
 
-export default connect(null, mapActionToProps)(Signin)
+export default Signin

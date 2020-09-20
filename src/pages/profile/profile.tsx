@@ -3,7 +3,10 @@ import { getUserProfile, IUserProfile } from '../../services/auth';
 import Card from '../../components/card/card';
 import Divider from '../../components/divider/divider';
 import ClippingItem from '../../components/clipping-item/clipping-item';
-import { usePageTrack } from '../../hooks/tracke';
+import { usePageTrack } from '../../hooks/tracke'
+import { useQuery } from '@apollo/client'
+import profileQuery from '../../schema/profile.graphql'
+import { profile, profileVariables } from '../../schema/__generated__/profile';
 
 const styles = require('./profile.css')
 
@@ -28,7 +31,11 @@ function useProfile(userid: string): IUserProfile {
 }
 
 function Profile(props: TProfileProps) {
-  const { user, clippings, clippingsCount } = useProfile(props.userid)
+  const { data, } = useQuery<profile, profileVariables>(profileQuery, {
+    variables: {
+      id: ~~props.userid
+    }
+  })
   usePageTrack('profile', {
     userId: props.userid
   })
@@ -36,17 +43,17 @@ function Profile(props: TProfileProps) {
   return (
     <section>
       <Card className={styles.userinfo}>
-        <img src={user.avatar} className={styles.avatar} />
+        <img src={data?.me.avatar} className={styles.avatar} />
         <div className={styles.info}>
-          <h3 className={styles.username}>{user.name}</h3>
-          <h5 className={styles.text}>已收集 {clippingsCount} 条记录</h5>
+          <h3 className={styles.username}>{data?.me.name}</h3>
+          <h5 className={styles.text}>已收集 {data?.me.clippingsCount} 条记录</h5>
         </div>
       </Card>
 
       <Divider title="最近动态" />
 
       <div className={styles.clippings}>
-        {clippings.map(
+        {data?.me.recents.map(
           (item => <ClippingItem key={item.id} item={item} userid={~~props.userid} />)
         )}
       </div>

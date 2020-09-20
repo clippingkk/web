@@ -1,8 +1,8 @@
 import { WenquBook, WenquSearchResponse, wenquRequest } from "../services/wenqu"
 import useSWR from "swr"
 
-export function useSingleBook(doubanId: string): WenquBook | null {
-  const { data: booksResponse } = useSWR<WenquSearchResponse>(`/books/search?dbId=${doubanId}`, {
+export function useSingleBook(doubanId?: string): WenquBook | null {
+  const { data: booksResponse } = useSWR<WenquSearchResponse>(() => doubanId && doubanId.length > 5 ? `/books/search?dbId=${doubanId}` : '', {
     fetcher: wenquRequest
   })
 

@@ -1,11 +1,12 @@
 import React from 'react'
 import { HideUntilLoaded } from '@nearform/react-animation'
 import { UserContent } from '../../store/user/type'
+import { publicData_public_users } from '../../schema/__generated__/publicData'
 
 const styles = require('./tops.css')
 
 type TopUsersProps = {
-  users?: UserContent[]
+  users?: readonly publicData_public_users[]
 }
 
 function TopUsers(props: TopUsersProps) {
@@ -13,7 +14,7 @@ function TopUsers(props: TopUsersProps) {
     return null
   }
 
-  const users: UserContent[] = props.users.map(x => ({
+  const users = props.users.map(x => ({
     ...x,
     avatar: x.avatar.startsWith('http') ? x.avatar : `https://clippingkk-cdn.annatarhe.com/${x.avatar}-copyrightDB`
   }))

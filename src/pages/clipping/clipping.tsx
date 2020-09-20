@@ -7,36 +7,38 @@ import { changeBackground } from '../../store/app/type'
 import { connect, useDispatch } from 'react-redux'
 import Card from '../../components/card/card'
 import Preview from '../../components/preview/preview'
-import { IBook, searchBookDetail } from '../../services/books';
-import { updateClippingBook } from '../../store/clippings/type';
-import useSWR from 'swr'
+import { updateClippingBook } from '../../store/clippings/type'
+import fetchClippingQuery from '../../schema/clipping.graphql'
+import { useQuery } from '@apollo/client'
+import { fetchClipping, fetchClippingVariables } from '../../schema/__generated__/fetchClipping'
+import { useSingleBook } from '../../hooks/book'
 const styles = require('./clipping.css')
 
 type TClippingPageProp = {
   userid: number
-  clippingid: number
+  clippingid: string
 }
 
 function ClippingPage(props: TClippingPageProp) {
+  const { data: clipping } = useQuery<fetchClipping, fetchClippingVariables>(fetchClippingQuery, {
+    variables: {
+      id: ~~props.clippingid
+    }
+  })
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
   const dispatch = useDispatch()
 
   const togglePreviewVisible = useCallback(() => {
     setSharePreviewVisible(v => !v)
   }, [])
-  const { data: clipping } = useSWR<IClippingItem>(
-    `clippings:${props.clippingid}`,
-    (k: string) => getClipping(~~k.split(':')[1])
-  )
-  const { data: book } = useSWR<IBook>(
-    () => clipping ? `book:${clipping.bookId}` : null,
-    (k: string) => searchBookDetail(k.split(':')[1])
-  )
+
+  const book = useSingleBook(clipping?.clipping.bookID)
+
   const updateClipping = useCallback(() => {
     if (!clipping) {
       return
     }
-    dispatch(updateClippingBook(clipping.id))
+    dispatch(updateClippingBook(clipping.clipping.id))
   }, [clipping])
 
   useEffect(() => {
@@ -63,10 +65,10 @@ function ClippingPage(props: TClippingPageProp) {
     <div className={`${styles.clipping} page`}>
       <div className={styles.main}>
         <Card className={styles['main-card'] + ' text-black'}>
-          <h1 className='text-2xl font-bold my-2'>{clipping?.title}</h1>
+          <h1 className='text-2xl font-bold my-2'>{clipping?.clipping.title}</h1>
           <h3 className='font-light text-lg my-4'>{book?.author}</h3>
           <hr className={styles.hr} />
-          <p className='text-3xl leading-normal'>{clipping?.content}</p>
+          <p className='text-3xl leading-normal'>{clipping?.clipping.content}</p>
         </Card>
         {/** 再加一个作者简介 */}
         <Card className={styles.addons}>
@@ -104,14 +106,14 @@ function ClippingPage(props: TClippingPageProp) {
         </Card>
       </div>
 
-      {sharePreviewVisible && clipping?.content && (
+      {sharePreviewVisible && clipping?.clipping.content && (
         <Preview
-          id={clipping.id}
+          id={clipping.clipping.id}
           onCancel={togglePreviewVisible}
           onOk={togglePreviewVisible}
           background={book!.image}
           bookTitle={book!.title}
-          content={clipping.content}
+          content={clipping.clipping.content}
           author={book!.author}
         />
       )}

@@ -2,11 +2,12 @@ import React from 'react'
 import { IClippingItem } from '../../services/clippings';
 import { Link } from '@reach/router';
 import Card from '../card/card';
+import { book_book_clippings } from '../../schema/__generated__/book'
 
 const styles = require('./clipping-item.css')
 
 type TClippingItemProps = {
-  item: IClippingItem,
+  item: book_book_clippings,
   userid: number
 }
 

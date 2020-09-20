@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { IBook, searchBookDetail, getBookClippings, IHttpBook, covertHttpBook2Book } from '../../services/books';
+import React, { useState, useEffect, useCallback, useDebugValue } from 'react'
+import { IBook, searchBookDetail, getBookClippings } from '../../services/books';
 import { IClippingItem } from '../../services/clippings';
 import BookInfo from '../../components/book-info/book-info';
 import ClippingItem from '../../components/clipping-item/clipping-item';
@@ -9,25 +9,14 @@ import { changeBackground } from '../../store/app/type';
 import { connect, useDispatch } from 'react-redux';
 import { usePageTrack } from '../../hooks/tracke';
 import { useSingleBook } from '../../hooks/book'
+import { useQuery } from '@apollo/client';
+import bookQuery from '../../schema/book.graphql'
+import { book, bookVariables, book_book_clippings } from '../../schema/__generated__/book';
 const styles = require('./book.css')
-
 type TBookPageProps = {
   userid: number,
   bookid: string,
   bookDoubanID: number,
-}
-
-function useBook(doubanId: string, onGetBook: (bg: string) => void): IBook {
-  const [book, setBook] = useState({} as IBook)
-
-  useEffect(() => {
-    searchBookDetail(doubanId).then(res => {
-      setBook(res)
-      onGetBook(res.image)
-    })
-  }, [doubanId])
-
-  return book
 }
 
 type bookClippingsState = {
@@ -36,74 +25,101 @@ type bookClippingsState = {
   hasMore: boolean,
 }
 
-function useBookClippings(userid: number, bookId: string): bookClippingsState {
-  const [clippings, setClippings] = useState([] as IClippingItem[])
-  const [offset, setOffset] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
-
-  const loadMore = useCallback(() => {
-    return getBookClippings(userid, bookId, offset).then(res => {
-      setClippings(c => c.concat(res))
-      setOffset(o => o + 20)
-      if (res.length === 0) {
-        setHasMore(false)
-      }
-    })
-  }, [userid, bookId, offset])
-
-  useEffect(() => {
-    loadMore()
-  }, [userid, bookId])
-
-  return {
-    clippings,
-    loadMore,
-    hasMore,
-  }
-}
-
 function BookPage({ userid, bookid }: TBookPageProps) {
   usePageTrack('book', {
     bookId: bookid
   })
   const dispatch = useDispatch()
-  const book = useSingleBook(bookid)
+  const bookData = useSingleBook(bookid)
 
-  const { clippings, loadMore, hasMore } = useBookClippings(userid, bookid)
+  const [offset, setOffset] = useState(10)
+  const { data: clippingsData, fetchMore, loading } = useQuery<book, bookVariables>(bookQuery, {
+    variables: {
+      id: ~~bookid,
+      pagination: {
+        limit: 10,
+        offset: 0
+      }
+    },
+  })
 
   useEffect(() => {
-    if (!book) {
+    if (!bookData) {
       return
     }
-    dispatch(changeBackground(book.image))
-  }, [book, changeBackground])
+    dispatch(changeBackground(bookData.image))
+  }, [bookData, changeBackground])
 
   useEffect(() => {
-    if (!book) {
+    if (!bookData) {
       return
     }
 
     const oldTitle = document.title
-    document.title = `${book.title} - clippingkk`
+    document.title = `${bookData.title} - clippingkk`
 
     return () => {
       document.title = oldTitle
     }
-  }, [book])
+  }, [bookData])
+  useDebugValue(clippingsData)
 
-  if (!book) {
+  if (!bookData) {
     return null
   }
 
+
   return (
     <section className={`${styles.bookPage} page`}>
-      <BookInfo book={book} />
+      <BookInfo book={bookData} />
       <Divider title='书摘' />
       <div className={styles.clippings}>
-        {clippings.map(clipping => (
-          <ClippingItem item={clipping} userid={userid} key={clipping.id} />
+        {clippingsData?.book.clippings.map(clipping => (
+          <ClippingItem
+            item={clipping}
+            userid={userid}
+            key={clipping.id}
+          />
         ))}
-        <ListFooter loadMoreFn={loadMore} hasMore={hasMore} />
+        <ListFooter
+          loadMoreFn={() => {
+            if (loading) {
+              return
+            }
+            if (offset === -1) {
+              return
+            }
+            fetchMore({
+              variables: {
+                id: ~~bookid,
+                pagination: {
+                  limit: 10,
+                  offset
+                }
+              },
+              updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) {
+                  return prev
+                }
+
+                if (fetchMoreResult.book.clippings.length === 0) {
+                  setOffset(-1)
+                }
+
+                return {
+                  ...prev,
+                  book: {
+                    ...prev.book,
+                    clippings: [...prev.book.clippings, ...fetchMoreResult.book.clippings]
+                  }
+                }
+              }
+            }).then(() => {
+              setOffset(o => o === -1 ? o : (o + 10))
+            })
+          }}
+          hasMore={offset >= 0}
+        />
       </div>
     </section>
   )

@@ -134,7 +134,6 @@ const config = {
         }
       }
     }),
-    new webpack.NamedModulesPlugin()
   ],
   optimization: {
     runtimeChunk: {

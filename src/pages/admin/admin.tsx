@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import { useTable, Row } from 'react-table'
-import homelessBooksQuery from '../../schema/homeless-books.graphql'
+import homelessBooksQuery from '../../schema/auth.graphql'
 import { GraphqlQueryBookData, GraphqlQueryBook } from '../../services/type'
 import Card from '../../components/card/card'
 import HomelessBookSyncInput from './sync-input'

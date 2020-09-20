@@ -1,6 +1,8 @@
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
+import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache } from '@apollo/client'
 import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
 import swal from 'sweetalert'
+import { forwardRef } from 'react'
+import profile from '../utils/profile'
 
 export interface IBaseResponseData {
   status: Number
@@ -8,7 +10,7 @@ export interface IBaseResponseData {
   data: any
 }
 
-let token = sessionStorage.getItem('token')
+let token = profile.token
 
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
   if (token) {
@@ -39,20 +41,30 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
 
 export function updateToken(t: string) {
   token = t
-  client.setLink(new HttpLink({
-    uri: API_HOST + '/graphql',
-    headers: {
-      'Authorization': `Bearer ${t}`
-    }
-  }))
 }
+
+const authLink = new ApolloLink((operation, forward) => {
+  operation.setContext(({ headers = {} }) => {
+    if (!token) {
+      return headers
+    }
+
+    return {
+      headers: {
+        ...headers,
+        'Authorization': `Bearer ${token}`
+      }
+    }
+  });
+
+  return forward(operation)
+})
+
+const httpLink = new HttpLink({
+    uri: API_HOST + '/api/v2/graphql',
+  })
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: API_HOST + '/graphql',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  }),
+  link: authLink.concat(httpLink),
 })
