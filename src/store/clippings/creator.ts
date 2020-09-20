@@ -80,6 +80,8 @@ function* extraAndUpload(action: TClippingsFile) {
 
   const parser = new ClippingTextParser(str)
   const parsedData = parser.execute()
+  
+  // TODO: search bookID
 
   const chunkedData = parsedData.reduce((result: (TClippingItem[])[], item: TClippingItem, index: number) => {
     if (result[result.length - 1].length % 20 === 0 && index !== 0) {
@@ -88,7 +90,7 @@ function* extraAndUpload(action: TClippingsFile) {
       result[result.length - 1].push(item)
     }
     return result
-  }, [[]])
+  }, [[]] as TClippingItem[][])
 
   try {
     for (let i = 0; i < chunkedData.length; i++) {

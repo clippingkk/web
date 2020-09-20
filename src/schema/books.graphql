@@ -1,0 +1,5 @@
+query books($pagination: PaginationLegacy!) {
+    books(pagination: $pagination) {
+        doubanId
+  }
+}

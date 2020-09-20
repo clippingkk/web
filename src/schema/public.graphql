@@ -1,0 +1,12 @@
+query publicData {
+  public {
+    users {
+      id
+      avatar
+      name
+    }
+    books {
+      doubanId
+    }
+  }
+}

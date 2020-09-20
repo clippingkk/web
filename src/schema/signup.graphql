@@ -1,0 +1,16 @@
+mutation signup($payload: SignupPayload!) {
+    signup(payload: $payload) {
+        user {
+            id
+            name
+            email
+            password
+            avatar
+            checked
+            createdAt
+            updatedAt
+            wechatOpenid
+        }
+        token
+    }
+}

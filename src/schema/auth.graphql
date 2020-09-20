@@ -1,0 +1,16 @@
+query auth($email: String!, $password: String!) {
+  auth(email: $email, pwd: $password) {
+    user {
+      id
+      name
+      email
+      password
+      avatar
+      checked
+      createdAt
+      updatedAt
+      wechatOpenid
+    }
+    token
+  }
+}
