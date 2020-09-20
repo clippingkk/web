@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.0.0...v3.1.0) (2020-09-20)
+
+
+### Features
+
+* **upload:** fix upload issue ([d2213d0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d2213d0786bb68d2dc5b17236409fbbcdff0c348))
+
 ## [3.0.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.6...v3.0.0) (2020-09-20)
 
 
