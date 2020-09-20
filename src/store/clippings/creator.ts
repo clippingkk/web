@@ -10,7 +10,7 @@ export function* extraAndUploadAction() {
   yield takeLatest(EXTRA_AND_UPLOAD_FILE_TO_SERVER, extraAndUpload)
 }
 
-function extraFile(file: DataTransferItem): Promise<string> {
+export function extraFile(file: DataTransferItem): Promise<string> {
   return new Promise((resolve, reject) => {
     const f = new FileReader()
     f.onload = (readEvent) => {

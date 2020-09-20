@@ -4,13 +4,17 @@ import swal from 'sweetalert'
 import { useDispatch } from 'react-redux'
 import { syncClippings } from '../../store/clippings/type'
 import { usePageTrack, useActionTrack } from '../../hooks/tracke'
+import { extraFile } from '../../store/clippings/creator'
+import ClippingTextParser, { TClippingItem } from '../../store/clippings/parser'
+import { useMutation } from '@apollo/client'
+import createClippingsQuery from '../../schema/mutations/create-clippings.graphql'
+import { createClippings, createClippingsVariables } from '../../schema/mutations/__generated__/createClippings'
+import { wenquRequest, WenquSearchResponse } from '../../services/wenqu'
 const styles = require('./uploader.css')
 
-function UploaderPage() {
-  usePageTrack('uploader')
-  const onUpload = useActionTrack('upload')
-  const dispatch = useDispatch()
-  const onDropEnd = useCallback((e: React.DragEvent) => {
+function useUploadData() {
+  const [exec, { data, error }] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
+  const cb = useCallback(async (e: React.DragEvent) => {
     e.preventDefault()
     const file = e.dataTransfer.items[0]
 
@@ -23,9 +27,78 @@ function UploaderPage() {
       return
     }
 
+    const str = await extraFile(file)
+
+    swal({
+      title: '解析中',
+      text: '正在拼命解析中，请稍等...',
+      icon: 'info',
+      buttons: [false],
+      closeOnClickOutside: false,
+      closeOnEsc: false,
+    })
+
+    const parser = new ClippingTextParser(str)
+    const parsedData = parser.execute()
+
+    for (let i of parsedData) {
+      try {
+        const resp = await wenquRequest<WenquSearchResponse>(`/books/search?query=${i.title}`)
+        if (resp.count > 0) {
+          i.bookId = resp.books[0].doubanId.toString()
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    // TODO: search bookID
+    const chunkedData = parsedData.reduce((result: (TClippingItem[])[], item: TClippingItem, index: number) => {
+      if (result[result.length - 1].length % 20 === 0 && index !== 0) {
+        result.push([item])
+      } else {
+        result[result.length - 1].push(item)
+      }
+      return result
+    }, [[]] as TClippingItem[][])
+
+
+    try {
+      for (let i = 0; i < chunkedData.length; i++) {
+        await exec({
+          variables: {
+            payload: chunkedData[i].map(x => ({ ...x, bookID: x.bookId }))
+          }
+        })
+      }
+      swal({
+        title: 'Yes!',
+        text: '牛逼！你上传完成了！',
+        icon: 'success'
+      })
+
+    } catch (e) {
+      swal({
+        title: e.toString(),
+        text: '哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \n iamhele1994@gmail.com',
+        icon: 'error'
+      })
+    }
+
+  }, [])
+
+  return cb
+}
+
+function UploaderPage() {
+  usePageTrack('uploader')
+  const onUploadData = useUploadData()
+  const onUpload = useActionTrack('upload')
+  const dispatch = useDispatch()
+  const onDropEnd = useCallback((e: React.DragEvent) => {
     onUpload()
-    dispatch(syncClippings(file))
-  }, [onUpload])
+    onUploadData(e)
+  }, [onUpload, onUploadData])
 
   const stopDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
