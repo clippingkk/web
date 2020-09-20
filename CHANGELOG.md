@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.6...v3.0.0) (2020-09-20)
+
+
+### Features
+
+* **apollo:** import queries ([e5e57ea](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e5e57eaca3e873c98748769aa6040860622d05bf))
+* **wenqu:** add wenqu api ([25e6ce5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/25e6ce514e44477d4290f8b280b269de3dc56d55))
+* **wenqu:** migrate book info to wenqu ([4c9908d](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4c9908d7c99fa09d694c640d8ae9a0dd60ef0ef4))
+
+
+### Bug Fixes
+
+* **api:** migrate to graphqlapi ([9fddf67](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9fddf6780acef823f6ce83c4261ebfae22838678))
+* **ci:** fix deploy script ([f3c9304](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f3c9304fe76a26dbd63fab4c09a3728f8201286f))
+
 ### [2.7.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v2.7.5...v2.7.6) (2020-08-04)
 
 
