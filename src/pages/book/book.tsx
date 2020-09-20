@@ -101,11 +101,9 @@ function BookPage({ userid, bookid }: TBookPageProps) {
                 if (!fetchMoreResult) {
                   return prev
                 }
-
                 if (fetchMoreResult.book.clippings.length === 0) {
                   setOffset(-1)
                 }
-
                 return {
                   ...prev,
                   book: {
