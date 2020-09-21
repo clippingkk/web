@@ -19,6 +19,7 @@ import { uploadImage, TUploadResponse } from "../../services/misc"
 import { USER_TOKEN_KEY } from "../../constants/storage"
 import mixpanel from "mixpanel-browser"
 import { updateToken } from "../../services/ajax";
+import profile from "../../utils/profile";
 
 function mobileAlert(): Promise<any> {
   if (screen.width > 720) {
@@ -189,9 +190,7 @@ function* signupAction(action: TSignupAction) {
 }
 
 function* logoutAction() {
-  sessionStorage.removeItem('token')
-  sessionStorage.removeItem('uid')
-  localStorage.removeItem(USER_TOKEN_KEY)
+  profile.onLogout()
   yield put({ type: USER_LOGOUT })
   yield call(swal, {
     title: 'Logout',

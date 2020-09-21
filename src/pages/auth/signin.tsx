@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { toLogin } from '../../store/user/type';
-import mixpanel from "mixpanel-browser"
-import * as sentry from '@sentry/browser'
-import { connect } from 'react-redux'
-import profile from '../../utils/profile'
 import authQuery from '../../schema/auth.graphql'
 import { useLazyQuery } from '@apollo/client'
 import { auth } from '../../schema/__generated__/auth'
 import { authVariables } from '../../schema/__generated__/auth'
-import { useNavigate } from '@reach/router';
 import { useAuthSuccessed } from './hooks';
+import { useTitle } from '../../hooks/tracke'
 const styles = require('./auth.css')
 
 type TSigninProps = {
@@ -20,7 +15,6 @@ function Signin(props: TSigninProps) {
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
 
-  const isDisabled = email === '' || pwd === ''
   const [exec, resp] = useLazyQuery<auth, authVariables>(authQuery)
   useAuthSuccessed(resp)
 
@@ -37,7 +31,9 @@ function Signin(props: TSigninProps) {
     })
   }
 
-  console.log(resp.error)
+  useTitle('signin')
+
+  const isDisabled = email === '' || pwd === '' || resp.loading
 
   return (
     <form className={styles.form} onSubmit={signin}>

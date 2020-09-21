@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GithubClientID } from '../../constants/config';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { usePageTrack, useActionTrack } from '../../hooks/tracke';
+import profile from '../../utils/profile';
 const styles = require('./auth.css')
 
 function checkIsCurrentPath({ isCurrent }: any) {
@@ -34,8 +35,8 @@ function AuthPage(props: AuthPageProps) {
   usePageTrack('auth')
   useEffect(() => {
     showMobileAlert()
-    const uid = sessionStorage.getItem('uid')
-    if (uid && uid !== '0') {
+    const uid = profile.uid
+    if (uid && uid > 0) {
       navigate(`/dash/${uid}/home`)
     }
   }, [])
@@ -62,7 +63,7 @@ function AuthPage(props: AuthPageProps) {
 
         <hr />
 
-        <div className={styles.oauth}>
+        {/* <div className={styles.oauth}>
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
             className={styles.oauthLink}
@@ -70,7 +71,7 @@ function AuthPage(props: AuthPageProps) {
           >
             <FontAwesomeIcon icon={faGithub} size="3x" />
           </a>
-        </div>
+        </div> */}
 
       </Card>
     </section>

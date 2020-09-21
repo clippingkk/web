@@ -17,3 +17,13 @@ export function useActionTrack(action: string, params?: any) {
     mixpanel.track('action:' + action, params)
   }, [action, params])
 }
+export function useTitle(title: string) {
+  useEffect(() => {
+    const t = document.title
+    document.title = title + ' - clippingkk'
+    return () => {
+      document.title = t
+    }
+  })
+}
+

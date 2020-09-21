@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link } from '@reach/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { connect } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import { execLogout } from '../../store/user/type';
 import Tooltip from 'rc-tooltip'
-import Unauthed from './unauthed';
+import { TGlobalStore } from '../../store'
 const styles = require('./navigation-bar.css')
 
 const leftMenu = [
@@ -30,29 +30,15 @@ const leftMenu = [
   },
 ]
 
-function mapStoreToState({ user, app }: any) {
-  return {
-    id: user.profile.id,
-    name: user.profile.name,
-  }
-}
+function NavigationBar() {
+  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const dispatch = useDispatch()
 
-function mapActionToProps(dispatch: any) {
-  return {
-    logout: () => dispatch(execLogout())
-  }
-}
+  const onLogout = useCallback(() => {
+    dispatch(execLogout())
+  }, [])
 
-// @ts-ignore
-@connect(mapStoreToState, mapActionToProps)
-class NavigationBar extends React.PureComponent<any, any> {
-
-  logout = () => {
-    this.props.logout()
-  }
-
-  render() {
-    return (
+  return (
       <nav className={styles.navbar}>
         <div className={styles.menu}>
           <img
@@ -64,7 +50,7 @@ class NavigationBar extends React.PureComponent<any, any> {
             {leftMenu.map((item, index) => (
               <li className='mr-6' key={index}>
                 <Tooltip placement='bottom' overlay={<span>{item.alt}</span>}>
-                  <Link to={item.dest(this.props.id)}>
+                  <Link to={item.dest(id)}>
                     <span className='text-4xl'>
                       {item.emoji}
                     </span>
@@ -80,15 +66,14 @@ class NavigationBar extends React.PureComponent<any, any> {
               <span className='text-4xl'>🛠</span>
             </Tooltip>
           </li>
-          <li className='mr-6' onClick={this.logout}>
+          <li className='mr-6' onClick={onLogout}>
             <Tooltip placement='bottom' overlay={<span>退出</span>}>
               <span className='text-4xl'>👋</span>
             </Tooltip>
           </li>
         </ul>
       </nav>
-    )
-  }
+  )
 }
 
 export default NavigationBar

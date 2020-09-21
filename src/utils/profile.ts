@@ -1,3 +1,8 @@
+import { client } from "../services/ajax"
+import meQuery from '../schema/profile.graphql'
+import { profile, profileVariables } from "../schema/__generated__/profile"
+import store from "../store"
+import { AUTH_LOGIN } from "../store/user/type"
 
 class MyProfile {
   private _token = ''
@@ -15,6 +20,24 @@ class MyProfile {
     if (u) {
       this._uid = ~~u
     }
+
+    setTimeout(() => {
+      this.initProfileData()
+    }, 10)
+  }
+
+  private initProfileData() {
+    if (this.uid === -1) {
+      return
+    }
+    client.query<profile, profileVariables>({
+      query: meQuery,
+      variables: {
+        id: this.uid
+      }
+    }).then((res) => {
+      store.dispatch({ type: AUTH_LOGIN, profile: res.data.me, token: this.token })
+    })
   }
 
   get token(): string {
@@ -29,6 +52,11 @@ class MyProfile {
   }
   set uid(uid: number) {
     localStorage.setItem(MyProfile.UID_KEY, uid.toString())
+  }
+
+  onLogout() {
+    localStorage.clear()
+    sessionStorage.clear()
   }
 }
 

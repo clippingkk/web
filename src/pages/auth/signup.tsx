@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
 import { toSignup, TUserSignupDataInput } from '../../store/user/type'
 import { connect } from 'react-redux'
+import { useMutation } from '@apollo/client'
+import signupQuery from '../../schema/signup.graphql'
+import { signup, signupVariables } from '../../schema/__generated__/signup'
+import fp2 from 'fingerprintjs2'
+import { sha256 } from 'js-sha256'
+import { useSignupSuccess } from './hooks'
+import { TUploadResponse, uploadImage } from '../../services/misc'
+import swal from 'sweetalert'
+import { useTitle } from '../../hooks/tracke'
 const styles = require('./auth.css')
 
-type TSignupProps = {
-  path: string
-  signup: (signupData: TUserSignupDataInput) => void 
-}
-
-function mapActionToProps() {
-  return (dispatch: any) => ({
-    signup: (signupData: TUserSignupDataInput) => dispatch(toSignup(signupData)),
-  })
-}
-
-function Signup(props: TSignupProps) {
+function Signup() {
   const [email, setEmail] = useState('')
   const [pwd, setPwd] = useState('')
   const [name, setName] = useState('')
@@ -22,15 +20,46 @@ function Signup(props: TSignupProps) {
 
   const isDisabled = email === '' || pwd === '' || name === '' || !avatarFile
 
-  function signup(e: React.FormEvent<HTMLFormElement>) {
+  const [exec, result] = useMutation<signup, signupVariables>(signupQuery)
+
+  async function signup(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (isDisabled) {
       return
     }
-    props.signup({
-      email, pwd, name, avatarFile
+    const fpResult = await fp2.getPromise({ excludes: { userAgent: true } })
+
+    const fp = (fpResult.find(x => x.key === 'canvas') as fp2.Component)
+      .value[1].split(',')[1]
+
+    let resp: TUploadResponse
+
+    try {
+      resp = await uploadImage(avatarFile)
+    } catch (e) {
+      swal({
+        icon: 'error',
+        title: "upload image failed"
+      })
+      throw e
+    }
+
+    exec({
+      variables: {
+        payload: {
+          email,
+          password: pwd,
+          name: name,
+          fingerPrint: fp,
+          avatarUrl: resp.filePath
+        }
+      }
     })
   }
+
+  useSignupSuccess(result)
+
+  useTitle('signup')
 
   return (
     <form className={styles.form} onSubmit={signup}>
@@ -87,15 +116,19 @@ function Signup(props: TSignupProps) {
           }}
         />
       </div>
+
+      {result.error && (
+        <h5 className='bg-red-600 text-white p-4 rounded w-full text-xl'>{result.error?.message}</h5>
+      )}
       <button
         className='mt-4 bg-blue-600 text-gray-100 text-3xl rounded-lg p-4'
         type="submit"
         disabled={isDisabled}
-       >
+      >
         let me in
       </button>
     </form>
   )
 }
 
-export default connect(null, mapActionToProps)(Signup)
+export default Signup

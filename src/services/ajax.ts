@@ -1,8 +1,10 @@
-import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache } from '@apollo/client'
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client'
+import { onError } from "@apollo/client/link/error"
 import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
 import swal from 'sweetalert'
 import { forwardRef } from 'react'
 import profile from '../utils/profile'
+import { text } from '@fortawesome/fontawesome-svg-core'
 
 export interface IBaseResponseData {
   status: Number
@@ -24,7 +26,7 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
 
   try {
     const response: IBaseResponseData = await fetch(API_HOST + '/api' + url, options).then(res => res.json())
-    if (response.status !== 200) {
+    if (response.status >= 400) {
       throw new Error(response.msg)
     }
 
@@ -55,10 +57,21 @@ const authLink = new ApolloLink((operation, forward) => {
         'Authorization': `Bearer ${token}`
       }
     }
-  });
+  })
 
   return forward(operation)
 })
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    swal({
+      icon: 'error',
+      title: graphQLErrors[0].message,
+      text: graphQLErrors[0].message,
+    })
+  }
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
 
 const httpLink = new HttpLink({
     uri: API_HOST + '/api/v2/graphql',
@@ -66,5 +79,5 @@ const httpLink = new HttpLink({
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: authLink.concat(httpLink),
+  link: errorLink.concat(authLink.concat(httpLink)),
 })
