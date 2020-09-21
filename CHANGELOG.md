@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.1.1...v3.2.0) (2020-09-21)
+
+
+### Bug Fixes
+
+* **graphql:** finish signin signup method ([9dd95ea](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9dd95ea835a473f4ff1c130e26a06b2d28717bb0))
+
 ### [3.1.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.1.0...v3.1.1) (2020-09-20)
 
 
