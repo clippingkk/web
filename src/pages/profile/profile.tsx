@@ -7,6 +7,7 @@ import { usePageTrack } from '../../hooks/tracke'
 import { useQuery } from '@apollo/client'
 import profileQuery from '../../schema/profile.graphql'
 import { profile, profileVariables } from '../../schema/__generated__/profile';
+import WechatBindButton from './bind';
 
 const styles = require('./profile.css')
 
@@ -31,7 +32,7 @@ function useProfile(userid: string): IUserProfile {
 }
 
 function Profile(props: TProfileProps) {
-  const { data, } = useQuery<profile, profileVariables>(profileQuery, {
+  const { data } = useQuery<profile, profileVariables>(profileQuery, {
     variables: {
       id: ~~props.userid
     }
@@ -47,8 +48,11 @@ function Profile(props: TProfileProps) {
         <div className={styles.info}>
           <h3 className={styles.username}>{data?.me.name}</h3>
           <h5 className={styles.text}>已收集 {data?.me.clippingsCount} 条记录</h5>
+          <WechatBindButton />
         </div>
       </Card>
+
+
 
       <Divider title="最近动态" />
 

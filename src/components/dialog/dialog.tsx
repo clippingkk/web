@@ -18,7 +18,7 @@ class Dialog extends React.PureComponent<dialogProps> {
   render() {
     return (
       <div className={styles.mask} onClick={this.props.onCancel}>
-        <Card className={styles.dialog} onClick={this.stopBuble}>
+        <Card className={styles.dialog + ' bg-gray-200'} onClick={this.stopBuble}>
           {this.props.children}
         </Card>
       </div>
