@@ -23,7 +23,7 @@ function TopUsers(props: TopUsersProps) {
     <div>
       <h2 className='text-3xl text-center font-bold my-8'>
         这些朋友爱读书
-        <i className='text-sm text-gray-500 italic'>由于隐私问题，并不展示用户书摘内容</i>
+        <i className='text-sm text-gray-600 italic dark:text-gray-800'>由于隐私问题，并不展示用户书摘内容</i>
       </h2>
       <ul className='flex items-center justify-center flex-wrap'>
         {users.map(u => (

@@ -20,7 +20,7 @@ function IndexPage() {
   return (
     <div>
       <Hero />
-      <div style={{ backgroundColor: '#f8f8f8' }} className='pb-4'>
+      <div className='py-4 bg-gray-200 dark:bg-gray-600'>
         <TopBooks books={data?.public.books} />
         <TopUsers users={data?.public.users} />
       </div>

@@ -52,8 +52,6 @@ function Profile(props: TProfileProps) {
         </div>
       </Card>
 
-
-
       <Divider title="最近动态" />
 
       <div className={styles.clippings}>

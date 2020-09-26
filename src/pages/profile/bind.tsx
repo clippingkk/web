@@ -40,7 +40,7 @@ function WechatBindButton(props: WechatBindButtonProps) {
           onOk={() => { setVisible(true) }}
         >
           <div className='p-8 flex flex-col justify-center items-center'>
-            <h2 className='text-2xl text-white mb-4'>使用 clippingKK 小程序 个人中心扫码即可绑定</h2>
+            <h2 className='text-2xl text-black mb-4'>使用 clippingKK 小程序 个人中心扫码即可绑定</h2>
             <BindQRCode />
           </div>
         </Dialog>

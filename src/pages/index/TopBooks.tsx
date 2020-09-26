@@ -45,7 +45,7 @@ function TopBooks(props: TopBooksProps) {
 
   return (
     <div>
-      <h2 className='text-3xl text-center font-bold my-8'>大家在读</h2>
+      <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>大家在读</h2>
       <div className='flex py-8 md:px-12 flex-wrap justify-center items-center'>
         {props.books.map(b => <LocalBook book={b} />)}
       </div>

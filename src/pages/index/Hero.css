@@ -1,21 +1,21 @@
 .hero {
-    background-image: url('../../assets/coffee-blur.jpg');
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    max-width: 100vw;
+  background-image: url('../../assets/coffee-blur.jpg');
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  max-width: 100vw;
 }
 
 @keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(1rem);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .video {
@@ -28,22 +28,22 @@
 }
 
 .titleField {
-    animation-name: fade-in;
-    animation-duration: 1s;
+  animation-name: fade-in;
+  animation-duration: 1s;
 }
 .download-btn {
-    background-color: rgba(33, 150, 243, .9);
-    text-decoration: none;
-    width: fit-content;
-    transition: all .35s;
+  background-color: rgba(33, 150, 243, 0.9);
+  text-decoration: none;
+  width: fit-content;
+  transition: all 0.35s;
 }
 
 .platform-list {
-    list-style: none;
-    display: flex;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
+  list-style: none;
+  display: flex;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .title {
@@ -51,22 +51,22 @@
 }
 
 @media (max-width: 768px) {
-    .title {
-        font-size: 4rem;
-    }
+  .title {
+    font-size: 4rem;
+  }
 
-    .sub-title {
-        font-size: 2rem;
-    }
+  .sub-title {
+    font-size: 2rem;
+  }
 
-    .download-btn {
-        font-size: 2rem;
-    }
+  .download-btn {
+    font-size: 2rem;
+  }
 
-    .title-field {
-      flex-direction: column;
-    }
-    .video {
-      height: 30rem;
-    }
+  .title-field {
+    flex-direction: column;
+  }
+  .video {
+    height: 30rem;
+  }
 }
