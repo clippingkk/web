@@ -14,7 +14,7 @@ type THomeProp = {
 
 const STEP = 10
 function HomePage(props: THomeProp) {
-  const [offset, setOffset] = useState(0)
+  const [reachEnd, setReachEnd] = useState(false)
   const { data, fetchMore, loading } = useQuery<books, booksVariables>(homeListQuery, {
     variables: {
       pagination: {
@@ -51,12 +51,12 @@ function HomePage(props: THomeProp) {
             variables: {
               pagination: {
                 limit: 10,
-                offset
+                offset: data.books.length
               }
             },
             updateQuery: (prev, { fetchMoreResult }) => {
               if (!fetchMoreResult || fetchMoreResult.books.length === 0) {
-                setOffset(-1)
+                setReachEnd(true)
                 return prev
               }
               return {
@@ -64,12 +64,10 @@ function HomePage(props: THomeProp) {
                 books: [...prev.books, ...fetchMoreResult.books] as any
               }
             }
-          }).then((res) => {
-            setOffset(o => o === -1 ? o : (o + STEP))
           })
 
         }}
-        hasMore={offset !== -1}
+        hasMore={!reachEnd}
       />
     </section>
   )
