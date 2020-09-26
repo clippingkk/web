@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.2.0...v3.3.0) (2020-09-26)
+
+
+### Features
+
+* **bind:** add bind method ([54399be](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/54399be5d9e2077e41315528d76a6f236e5d75bc))
+
 ## [3.2.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.1.1...v3.2.0) (2020-09-21)
 
 
