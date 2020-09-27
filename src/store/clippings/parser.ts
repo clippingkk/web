@@ -28,6 +28,7 @@ class ClippingTextParser {
   private result: TClippingItem[] = []
   // private readonly infoRegexp: RegExp
   private readonly locationRegexp: RegExp
+  static readonly STOP_WORDS = ['(', '（']
 
   public readonly language: FileLanuages;
 
@@ -125,7 +126,11 @@ class ClippingTextParser {
   }
 
   private exactTitlte() {
-    const title = this.current[0].split('(')[0]
+    let title: string = this.current[0]
+    ClippingTextParser.STOP_WORDS.forEach(x => {
+      title = title.split(x)[0]
+    })
+
     this.processingItem.title = title.trim()
   }
 
