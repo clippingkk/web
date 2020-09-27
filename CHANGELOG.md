@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.3.2...v3.3.3) (2020-09-27)
+
+
+### Features
+
+* **unchecked:** add page that no book id ([7d630db](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7d630dbcda57bb54f84a189ea14961ae22666d38))
+
 ### [3.3.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.3.1...v3.3.2) (2020-09-27)
 
 
