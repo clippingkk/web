@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.3.1...v3.3.2) (2020-09-27)
+
+
+### Features
+
+* **css:** support dark mode ([216ed05](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/216ed055d1e836f4424b6274f5937a3669a2a9c6))
+
+
+### Bug Fixes
+
+* **parser:** fix stop word destructor ([b4190b5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b4190b5a40045d1247db06eb282dd9a0cdabdee1))
+
 ### [3.3.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.3.0...v3.3.1) (2020-09-26)
 
 
