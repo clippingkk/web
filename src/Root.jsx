@@ -20,6 +20,7 @@ const SquarePage = React.lazy(() => import('./pages/square/square'))
 const BookPage = React.lazy(() => import('./pages/book/book'))
 const GithubOAuthPage = React.lazy(() => import('./pages/auth/github'))
 const ProfilePage = React.lazy(() => import('./pages/profile/profile'))
+const UncheckedPage = React.lazy(() => import('./pages/unchecked/unchecked'))
 
 class Root extends React.Component {
   render() {
@@ -43,6 +44,7 @@ class Root extends React.Component {
               <ClippingPage path="/clippings/:clippingid" />
               <BookPage path="book/:bookid" />
               <ProfilePage path="profile" />
+              <UncheckedPage path='/unchecked' />
             </DashContainer>
             <NotFound default />
           </RouterContainer>

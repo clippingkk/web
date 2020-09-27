@@ -1,10 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import {
-  getClipping,
-  IClippingItem,
-} from '../../services/clippings'
 import { changeBackground } from '../../store/app/type'
-import { connect, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Card from '../../components/card/card'
 import Preview from '../../components/preview/preview'
 import { updateClippingBook } from '../../store/clippings/type'
@@ -12,6 +8,7 @@ import fetchClippingQuery from '../../schema/clipping.graphql'
 import { useQuery } from '@apollo/client'
 import { fetchClipping, fetchClippingVariables } from '../../schema/__generated__/fetchClipping'
 import { useSingleBook } from '../../hooks/book'
+import { useTitle } from '../../hooks/tracke'
 const styles = require('./clipping.css')
 
 type TClippingPageProp = {
@@ -48,19 +45,8 @@ function ClippingPage(props: TClippingPageProp) {
     dispatch(changeBackground(book.image))
   }, [book])
 
-  useEffect(() => {
-    if (!book) {
-      return
-    }
-    const t = document.title
-    document.title = book.title + ' --clippingkk'
-    return () => {
-      document.title = t
-    }
-  }, [book])
+  useTitle(book?.title)
 
-  // const clipping = await getClipping(this.props.clippingid)
-  // const book = await searchBookDetail(clipping.bookId)
   return (
     <div className={`${styles.clipping} page`}>
       <div className={styles.main}>

@@ -1,0 +1,10 @@
+mutation updateClippingBookId($cid: Int!, $doubanId: Int!) {
+  updateClippingBookId(clippingId: $cid, doubanId: $doubanId) {
+    id
+    bookID
+    title
+    content
+    createdAt
+    pageAt
+  }
+}
