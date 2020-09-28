@@ -48,9 +48,11 @@ class MyProfile {
   }
 
   set token(v: string) {
+    this._token = v
     localStorage.setItem(MyProfile.TOKEN_KEY, v)
   }
   set uid(uid: number) {
+    this._uid = uid
     localStorage.setItem(MyProfile.UID_KEY, uid.toString())
   }
 
