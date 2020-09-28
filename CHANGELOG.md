@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.3.3...v3.3.4) (2020-09-28)
+
+
+### Features
+
+* **github:** fix github login and verify ([1f5f205](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1f5f205ec7d6e02c829826dc96e064f729918996))
+
+
+### Bug Fixes
+
+* **auth:** fix cannot set token after first login ([ded3c46](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ded3c467dbc513e94990cd1f65fc818c263a8608))
+
 ### [3.3.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.3.2...v3.3.3) (2020-09-27)
 
 
