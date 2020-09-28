@@ -1,12 +1,15 @@
+import { useLazyQuery } from '@apollo/client';
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toGithubLogin } from '../../store/user/type';
+import githubLoginQuery from '../../schema/login.graphql'
+import { githubLogin, githubLoginVariables } from '../../schema/__generated__/githubLogin';
+import { useAuthSuccessed } from './hooks';
 
-interface IGithubLoginProps {
-  githubLogin: (code: string) => void
-}
+function GithubOAuth() {
+  const [exec, resp] = useLazyQuery<githubLogin, githubLoginVariables>(githubLoginQuery)
 
-function GithubOAuth({ githubLogin }: IGithubLoginProps) {
+  useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.githubAuth)
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code')
@@ -16,7 +19,12 @@ function GithubOAuth({ githubLogin }: IGithubLoginProps) {
       return
     }
 
-    githubLogin(code)
+    exec({
+      variables: {
+        code
+      }
+    })
+
   }, [])
 
   return (
@@ -26,8 +34,4 @@ function GithubOAuth({ githubLogin }: IGithubLoginProps) {
   )
 }
 
-export default connect(null, (dispatch) => ({
-  githubLogin(code: string) {
-    return dispatch(toGithubLogin(code))
-  }
-}))(GithubOAuth)
+export default GithubOAuth

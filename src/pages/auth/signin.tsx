@@ -16,7 +16,7 @@ function Signin(props: TSigninProps) {
   const [pwd, setPwd] = useState('')
 
   const [exec, resp] = useLazyQuery<auth, authVariables>(authQuery)
-  useAuthSuccessed(resp)
+  useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.auth)
 
   function signin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

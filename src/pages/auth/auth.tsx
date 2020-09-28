@@ -63,7 +63,7 @@ function AuthPage(props: AuthPageProps) {
 
         <hr />
 
-        {/* <div className={styles.oauth}>
+        <div className={styles.oauth}>
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
             className={styles.oauthLink}
@@ -71,7 +71,7 @@ function AuthPage(props: AuthPageProps) {
           >
             <FontAwesomeIcon icon={faGithub} size="3x" />
           </a>
-        </div> */}
+        </div>
 
       </Card>
     </section>

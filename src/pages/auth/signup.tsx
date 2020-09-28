@@ -6,7 +6,7 @@ import signupQuery from '../../schema/signup.graphql'
 import { signup, signupVariables } from '../../schema/__generated__/signup'
 import fp2 from 'fingerprintjs2'
 import { sha256 } from 'js-sha256'
-import { useSignupSuccess } from './hooks'
+import { useAuthSuccessed, useSignupSuccess } from './hooks'
 import { TUploadResponse, uploadImage } from '../../services/misc'
 import swal from 'sweetalert'
 import { useTitle } from '../../hooks/tracke'
@@ -57,7 +57,7 @@ function Signup() {
     })
   }
 
-  useSignupSuccess(result)
+  useAuthSuccessed(result.called, result.loading, result.error, result.data?.signup)
 
   useTitle('signup')
 

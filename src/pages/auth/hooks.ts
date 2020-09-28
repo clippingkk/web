@@ -3,23 +3,27 @@ import mixpanel from "mixpanel-browser"
 import * as sentry from '@sentry/browser'
 import { useEffect } from "react"
 import profile from "../../utils/profile"
-import { LazyQueryResult, MutationResult } from "@apollo/client"
-import { auth } from "../../schema/__generated__/auth"
+import { ApolloError, LazyQueryResult, MutationResult } from "@apollo/client"
+import { auth, auth_auth } from "../../schema/__generated__/auth"
 import { authVariables } from "../../schema/__generated__/auth"
 import { useDispatch } from "react-redux"
 import { AUTH_LOGIN } from "../../store/user/type"
 import { signup } from "../../schema/__generated__/signup"
 import swal from "sweetalert"
 
-export function useAuthSuccessed(result: LazyQueryResult<auth, authVariables>) {
+export function useAuthSuccessed(
+  called: boolean,
+  loading: boolean,
+  error?: ApolloError,
+  authResponse?: auth_auth
+  ) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   useEffect(() => {
-    const { called, error, data, loading } = result
-    if (called && !error && data && !loading) {
-      profile.token = data.auth.token
-      profile.uid = data.auth.user.id
-      const me = data.auth.user
+    if (called && !error && authResponse && !loading) {
+      profile.token = authResponse.token
+      profile.uid = authResponse.user.id
+      const me = authResponse.user
       sentry.setUser({
         email: me.email,
         id: me.id.toString(),
@@ -38,7 +42,7 @@ export function useAuthSuccessed(result: LazyQueryResult<auth, authVariables>) {
         navigate(`/dash/${me.id}/home`)
       }, 0)
     }
-  }, [result])
+  }, [called, loading, error, authResponse])
 }
 
 export function useSignupSuccess(result: MutationResult<signup>) {
