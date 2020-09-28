@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux"
 import { AUTH_LOGIN } from "../../store/user/type"
 import { signup } from "../../schema/__generated__/signup"
 import swal from "sweetalert"
+import { updateToken } from "../../services/ajax"
 
 export function useAuthSuccessed(
   called: boolean,
@@ -36,6 +37,7 @@ export function useAuthSuccessed(
         "USER_ID": me.id.toString(),
       });
       mixpanel.track('login')
+      updateToken(profile.token)
       dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
       // redirect
       setTimeout(() => {
