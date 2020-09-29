@@ -2,6 +2,7 @@ import React from 'react'
 import { HideUntilLoaded } from '@nearform/react-animation'
 import { UserContent } from '../../store/user/type'
 import { publicData_public_users } from '../../schema/__generated__/publicData'
+import { useTranslation } from 'react-i18next'
 
 const styles = require('./tops.css')
 
@@ -10,20 +11,19 @@ type TopUsersProps = {
 }
 
 function TopUsers(props: TopUsersProps) {
+  const { t } = useTranslation()
   if (!props.users) {
     return null
   }
-
   const users = props.users.map(x => ({
     ...x,
     avatar: x.avatar.startsWith('http') ? x.avatar : `https://clippingkk-cdn.annatarhe.com/${x.avatar}-copyrightDB`
   }))
-
   return (
     <div>
       <h2 className='text-3xl text-center font-bold my-8'>
-        这些朋友爱读书
-        <i className='text-sm text-gray-600 italic dark:text-gray-800'>由于隐私问题，并不展示用户书摘内容</i>
+        {t('app.public.readers')}
+        <i className='text-sm text-gray-600 italic dark:text-gray-800'>{t('app.public.hideReasons')}</i>
       </h2>
       <ul className='flex items-center justify-center flex-wrap'>
         {users.map(u => (

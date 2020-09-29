@@ -1,0 +1,56 @@
+app:
+    common:
+        closed: This feature is still under heavy development
+
+    slogan: Organize, Display, Review, Be Better
+    go: Go!
+    menu:
+        read: Read
+        square: Square
+        upload: Upload
+        my: My Profile
+        settings: Settings
+        logout: Logout
+    public:
+        readings: Reading books
+        readers: Readers
+        hideReasons: Due to privacy issues, users’ book clippings are not displayed
+    book:
+        title: Clippings
+    auth:
+        signin: Sign in
+        signup: Sign up
+        username: User name
+        avatar: Avatar
+        email: Email
+        pwd: Password
+        submit: Go go go!
+    home:
+        title: My books
+        unchecked: Not matched books
+        notfound: What! No clippings for now?
+        uploadTip: click me and upload
+    clipping:
+        update: check book
+        shares: share
+        link: Douban link
+    square: 
+        title: Square
+    upload:
+        tip: Putting My Clippings.txt to here
+        errors:
+            fileTitle: Oops
+            fileNotFound: Please putting `My Clippings.txt` from Kindle
+            unknown: Unknown errors. please contact annatarhe@gmail.com
+        tips:
+            extracting: Extracting
+            extractingText: Extracting, please wait...
+        yesText: Congratulations, checkout clippings here
+        
+    profile:
+        collected: collected
+        records: records
+        recents: Recents
+        wechatBind: Wechat binding
+        wechatBindTip: binging wechat mini program
+

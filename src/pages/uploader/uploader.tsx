@@ -10,9 +10,11 @@ import { useMutation } from '@apollo/client'
 import createClippingsQuery from '../../schema/mutations/create-clippings.graphql'
 import { createClippings, createClippingsVariables } from '../../schema/mutations/__generated__/createClippings'
 import { wenquRequest, WenquSearchResponse } from '../../services/wenqu'
+import { useTranslation } from 'react-i18next'
 const styles = require('./uploader.css')
 
 function useUploadData() {
+  const { t } = useTranslation()
   const [exec, { data, error }] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
   const cb = useCallback(async (e: React.DragEvent) => {
     e.preventDefault()
@@ -20,18 +22,17 @@ function useUploadData() {
 
     if (file.kind !== 'file' || file.type !== 'text/plain') {
       swal({
-        title: 'Oops',
-        text: '请务必提供 kindle 中的 My Clipping.txt 哦',
+        title: t('app.upload.errors.fileTitle'),
+        text: t('app.upload.errors.fileNotFound'),
         icon: 'error',
       })
       return
     }
-
     const str = await extraFile(file)
 
     swal({
-      title: '解析中',
-      text: '正在拼命解析中，请稍等...',
+      title: t('app.upload.tips.extracting'),
+      text: t('app.upload.tips.extractingText'),
       icon: 'info',
       buttons: [false],
       closeOnClickOutside: false,
@@ -62,7 +63,6 @@ function useUploadData() {
       return result
     }, [[]] as TClippingItem[][])
 
-
     try {
       for (let i = 0; i < chunkedData.length; i++) {
         await exec({
@@ -73,18 +73,16 @@ function useUploadData() {
       }
       swal({
         title: 'Yes!',
-        text: '牛逼！你上传完成了！',
+        text: t('app.upload.yesText'),
         icon: 'success'
       })
-
     } catch (e) {
       swal({
         title: e.toString(),
-        text: '哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \n iamhele1994@gmail.com',
+        text: t('app.upload.errors.unknown'),
         icon: 'error'
       })
     }
-
   }, [])
 
   return cb
@@ -94,7 +92,7 @@ function UploaderPage() {
   usePageTrack('uploader')
   const onUploadData = useUploadData()
   const onUpload = useActionTrack('upload')
-  const dispatch = useDispatch()
+  const { t } = useTranslation()
   const onDropEnd = useCallback((e: React.DragEvent) => {
     onUpload()
     onUploadData(e)
@@ -112,7 +110,7 @@ function UploaderPage() {
       >
         {/* <FontAwesomeIcon icon="cloud-upload-alt" color="#ffffff" size="8x" /> */}
         <span className='text-6xl'>🎈</span>
-        <h3 className='text-2xl'>把 My Clippings.txt 拖进来</h3>
+        <h3 className='text-2xl'>{t('app.upload.tip')}</h3>
       </div>
       <div className='w-full flex items-center justify-center my-8'>
         <Link to="/" className='text-center text-gray-900 text-lg hover:text-red-300'>

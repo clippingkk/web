@@ -10,6 +10,7 @@ import { useAuthSuccessed, useSignupSuccess } from './hooks'
 import { TUploadResponse, uploadImage } from '../../services/misc'
 import swal from 'sweetalert'
 import { useTitle } from '../../hooks/tracke'
+import { useTranslation } from 'react-i18next'
 const styles = require('./auth.css')
 
 function Signup() {
@@ -58,6 +59,7 @@ function Signup() {
   }
 
   useAuthSuccessed(result.called, result.loading, result.error, result.data?.signup)
+  const { t } = useTranslation()
 
   useTitle('signup')
 
@@ -94,7 +96,7 @@ function Signup() {
           type="text"
           className={styles.input}
           value={name}
-          placeholder="用户名"
+          placeholder={t('app.auth.username')}
           onChange={e => {
             setName(e.target.value)
           }}
@@ -106,7 +108,7 @@ function Signup() {
           type="file"
           className={styles.input}
           accept="image/png, image/jpeg"
-          placeholder="头像"
+          placeholder={t('app.auth.avatar')}
           onChange={e => {
             if (!e.target.files) {
               return

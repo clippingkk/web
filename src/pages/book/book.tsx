@@ -10,6 +10,7 @@ import { useSingleBook } from '../../hooks/book'
 import { useQuery } from '@apollo/client';
 import bookQuery from '../../schema/book.graphql'
 import { book, bookVariables, book_book_clippings } from '../../schema/__generated__/book';
+import { useTranslation } from 'react-i18next';
 const styles = require('./book.css')
 type TBookPageProps = {
   userid: number,
@@ -55,6 +56,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
     }
   }, [bookData])
   useDebugValue(clippingsData)
+  const { t } = useTranslation()
 
   if (!bookData) {
     return null
@@ -63,7 +65,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
   return (
     <section className={`${styles.bookPage} page`}>
       <BookInfo book={bookData} />
-      <Divider title='书摘' />
+      <Divider title={t('app.book.title')} />
       <div className={styles.clippings}>
         {clippingsData?.book.clippings.map(clipping => (
           <ClippingItem

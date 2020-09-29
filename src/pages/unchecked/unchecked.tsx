@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import ClippingItem from '../../components/clipping-item/clipping-item'
 import Divider from '../../components/divider/divider'
@@ -22,10 +23,11 @@ function UncheckedPage(props: UncheckedPageProps) {
       }
     },
   })
+  const { t } = useTranslation()
 
   return (
     <div>
-      <Divider title='未找到的图书' />
+      <Divider title={t('app.home.unchecked')} />
       <div className='flex flex-wrap justify-center'>
         {clippingsData?.book.clippings.map(clipping => (
           <ClippingItem

@@ -7,6 +7,7 @@ import { GithubClientID } from '../../constants/config';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { usePageTrack, useActionTrack } from '../../hooks/tracke';
 import profile from '../../utils/profile';
+import { useTranslation } from 'react-i18next';
 const styles = require('./auth.css')
 
 function checkIsCurrentPath({ isCurrent }: any) {
@@ -41,6 +42,8 @@ function AuthPage(props: AuthPageProps) {
     }
   }, [])
 
+  const { t } = useTranslation()
+
   const onGithubClick = useActionTrack('login:github')
 
   return (
@@ -51,12 +54,12 @@ function AuthPage(props: AuthPageProps) {
             to="/auth/signup"
             className={styles.tab}
             getProps={checkIsCurrentPath}
-          >注册</Link>
+          >{t('app.auth.signup')}</Link>
           <Link
             to="/auth/signin"
             className={styles.tab}
             getProps={checkIsCurrentPath}
-          >登陆</Link>
+          >{t('app.auth.signin')}</Link>
         </div>
         <hr />
         {props.children}

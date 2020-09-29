@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/client';
 import { books, booksVariables } from '../../schema/__generated__/books';
 import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../store';
+import { useTranslation } from 'react-i18next';
 const styles = require('./home.css')
 
 type THomeProp = {
@@ -25,6 +26,7 @@ function HomePage(props: THomeProp) {
       },
     }
   })
+  const { t } = useTranslation()
 
   if (!data) {
     return (
@@ -35,11 +37,11 @@ function HomePage(props: THomeProp) {
   return (
     <section className={`${styles.home} page`}>
       <header className='flex items-center justify-center my-4'>
-        <h2 className='text-center font-light text-black text-3xl'>我的书籍</h2>
+        <h2 className='text-center font-light text-black text-3xl'>{t('app.home.title')}</h2>
         <Link
          to={`/dash/${uid}/unchecked`}
          className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-colors hover:bg-blue-700'
-         >未分类图书</Link>
+        >{t('app.home.unchecked')}</Link>
       </header>
 
       <div className={styles.clippings}>

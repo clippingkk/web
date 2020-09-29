@@ -5,6 +5,7 @@ import { publicData_public, publicData_public_books } from '../../schema/__gener
 import useSWR from 'swr'
 import { WenquSearchResponse, wenquRequest } from '../../services/wenqu'
 import { useSingleBook } from '../../hooks/book'
+import { useTranslation } from 'react-i18next'
 
 const styles = require('./tops.css')
 
@@ -39,13 +40,14 @@ function LocalBook(props: localBookProps) {
 }
 
 function TopBooks(props: TopBooksProps) {
+  const { t } = useTranslation()
   if (!props.books) {
     return null
   }
 
   return (
     <div>
-      <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>大家在读</h2>
+      <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>{t('app.public.readings')}</h2>
       <div className='flex py-8 md:px-12 flex-wrap justify-center items-center'>
         {props.books.map(b => <LocalBook book={b} />)}
       </div>

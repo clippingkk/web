@@ -73,6 +73,10 @@ const config = {
       exclude: /node_modules/,
       loader: 'graphql-tag/loader'
     }, {
+        test: /\.ya?ml$/,
+        type: 'json',
+        use: 'yaml-loader'
+    }, {
       test: /\.(png|jpg|jpeg|gif)$/,
       exclude: /node_modules/,
       use: [{ loader: 'url-loader', options: { limit: 500, name: '[name]-[hash].[ext]' } }]
@@ -101,7 +105,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      title: 'Kindle viewer',
+      title: 'ClippingKK 是 kindle 笔记整理收集复盘的好帮手',
       template: path.resolve(__dirname, __DEV__ ? 'template.html' : 'release.html'),
       inject: 'body',
       chunks: ['main', 'common', 'manifest', 'styles'],

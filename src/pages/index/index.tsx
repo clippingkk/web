@@ -13,9 +13,7 @@ import { publicData } from '../../schema/__generated__/publicData'
 
 function IndexPage() {
   usePageTrack('index')
-
   const {data } = useQuery<publicData>(fetchTopQuery)
-  // const { data } = useSWR<TopHttpResponse>('/public/top')
 
   return (
     <div>

@@ -15,6 +15,8 @@ import './styles/icons'
 import { client, request } from './services/ajax'
 import { SWRConfig } from 'swr'
 import './prefers-dark'
+import './utils/locales'
+
 
 ReactDOM.render(
   <Provider store={store}>

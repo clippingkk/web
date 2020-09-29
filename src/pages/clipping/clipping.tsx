@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client'
 import { fetchClipping, fetchClippingVariables } from '../../schema/__generated__/fetchClipping'
 import { useSingleBook } from '../../hooks/book'
 import { useTitle } from '../../hooks/tracke'
+import { useTranslation } from 'react-i18next'
 const styles = require('./clipping.css')
 
 type TClippingPageProp = {
@@ -30,7 +31,6 @@ function ClippingPage(props: TClippingPageProp) {
   }, [])
 
   const book = useSingleBook(clipping?.clipping.bookID)
-
   const updateClipping = useCallback(() => {
     if (!clipping) {
       return
@@ -46,6 +46,7 @@ function ClippingPage(props: TClippingPageProp) {
   }, [book])
 
   useTitle(book?.title)
+  const { t } = useTranslation()
 
   return (
     <div className={`${styles.clipping} page`}>
@@ -64,7 +65,7 @@ function ClippingPage(props: TClippingPageProp) {
                 className={styles['action-btn']}
                 onClick={updateClipping}
               >
-                书目更新
+                {t('app.clipping.update')}
                 </button>
             </li>
 
@@ -73,7 +74,7 @@ function ClippingPage(props: TClippingPageProp) {
                 className={styles['action-btn']}
                 onClick={togglePreviewVisible}
               >
-                图片分享
+                {t('app.clipping.shares')}
                 </button>
             </li>
             <li className={styles.action}>
@@ -82,7 +83,7 @@ function ClippingPage(props: TClippingPageProp) {
                 target="_blank"
                 className={styles['action-btn']}
               >
-                豆瓣读书
+                {t('app.clipping.link')}
                 </a>
             </li>
             <li className={styles.action}>

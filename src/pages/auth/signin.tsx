@@ -5,6 +5,7 @@ import { auth } from '../../schema/__generated__/auth'
 import { authVariables } from '../../schema/__generated__/auth'
 import { useAuthSuccessed } from './hooks';
 import { useTitle } from '../../hooks/tracke'
+import { useTranslation } from 'react-i18next'
 const styles = require('./auth.css')
 
 type TSigninProps = {
@@ -32,13 +33,14 @@ function Signin(props: TSigninProps) {
   }
 
   useTitle('signin')
+  const { t } = useTranslation()
 
   const isDisabled = email === '' || pwd === '' || resp.loading
 
   return (
     <form className={styles.form} onSubmit={signin}>
       <div className={styles.field}>
-        <label htmlFor="username" className={styles.label}>邮箱: </label>
+        <label htmlFor="username" className={styles.label}>{t('app.auth.email')}: </label>
         <input
           type="email"
           className={styles.input}
@@ -50,7 +52,7 @@ function Signin(props: TSigninProps) {
         />
       </div>
       <div className={styles.field}>
-        <label htmlFor="username" className={styles.label}>密码: </label>
+        <label htmlFor="username" className={styles.label}>{t('app.auth.pwd')}: </label>
         <input
           type="password"
           className={styles.input}
@@ -69,7 +71,7 @@ function Signin(props: TSigninProps) {
         type="submit"
         disabled={isDisabled}
       >
-        let me in
+        {t('app.auth.submit')}
       </button>
     </form>
   )

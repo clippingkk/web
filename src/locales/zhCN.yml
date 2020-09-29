@@ -1,0 +1,55 @@
+app:
+    common:
+        closed: 广场功能暂未开放哦~
+    slogan: 整理, 展示, 复盘, 进步
+    go: 立即体验！
+    menu:
+        read: 已读
+        square: 广场
+        upload: 上传
+        my: 我的信息
+        settings: 设置
+        logout: 退出
+    public:
+        readings: 大家在读
+        readers: 这些朋友爱读书
+        hideReasons: 由于隐私问题，并不展示用户书摘内容
+    book:
+        title: 书摘
+    auth:
+        signin: 登陆
+        signup: 注册
+        username: 用户名
+        avatar: 头像
+        email: 邮箱
+        pwd: 密码
+        submit: 搞快点
+    home:
+        title: 我的书籍
+        unchecked: 未分类图书
+        notfound: 什么！你竟然还没有读书笔记？
+        uploadTip: 还不快点我上传
+    clipping:
+        update: 书目更新
+        shares: 图片分享
+        link: 豆瓣读书
+    square: 
+        title: 广场
+    upload:
+        tip: 把 My Clippings.txt 拖进来
+        errors:
+            fileTitle: Oops
+            fileNotFound: 请务必提供 kindle 中的 My Clipping.txt 哦
+            unknown: 哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \n annatarhe@gmail.com
+        tips:
+            extracting: 解析中
+            extractingText: 正在拼命解析中，请稍等...
+        yesText: 牛逼！你上传完成了！
+        
+    profile:
+        collected: 已收集
+        records: 条记录
+        recents: 最近动态
+        wechatBind: 微信小程序绑定
+        wechatBindTip: 使用 clippingKK 小程序 个人中心扫码即可绑定
+
