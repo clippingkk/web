@@ -19,12 +19,11 @@ export async function wenquRequest<T>(url: string, options: RequestInit = {}): P
     if ('error' in response) {
       throw new Error(response.error)
     }
-
     return response
   } catch (e) {
     swal({
       title: 'Oops',
-      text: '请求挂了... 一会儿再试试',
+      text: e.toString(),
       icon: 'info'
     })
     return Promise.reject(e)
