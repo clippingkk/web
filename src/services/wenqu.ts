@@ -1,4 +1,5 @@
 import { WENQU_SIMPLE_TOKEN, WENQU_API_HOST } from "../constants/config"
+import * as Sentry from '@sentry/browser'
 import swal from 'sweetalert'
 
 type WenquErrorResponse = {
@@ -21,11 +22,7 @@ export async function wenquRequest<T>(url: string, options: RequestInit = {}): P
     }
     return response
   } catch (e) {
-    swal({
-      title: 'Oops',
-      text: e.toString(),
-      icon: 'info'
-    })
+    Sentry.captureException(e)
     return Promise.reject(e)
   }
 }
