@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.4.1...v3.5.0) (2020-10-08)
+
+
+### Features
+
+* **books:** update for wenqu multip books fetch ([0c82dda](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0c82dda8a69094347a5f86084968d33b12d7d4c6))
+* **upload:** add progress in upload module ([4af8a7c](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4af8a7c76e007b09dd74b1a839a64c8e1df0c8c5))
+
+
+### Bug Fixes
+
+* **wenqu:** remove wenqu error tip ([b2f9f17](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b2f9f170596b8d8e9fdc3642eb65d2c53a9ff439))
+
 ### [3.4.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.4.0...v3.4.1) (2020-10-01)
 
 
