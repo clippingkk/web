@@ -3,6 +3,7 @@ import { IBook } from '../../services/books';
 import NoContentAlert from './no-content';
 import BookCover from '../../components/book-cover/book-cover';
 import { books_books } from '../../schema/__generated__/books';
+import { useMultipBook } from '../../hooks/book';
 
 type TBooksProps = {
   list: readonly books_books[],
@@ -10,14 +11,17 @@ type TBooksProps = {
 }
 
 function BooksContent(props: TBooksProps) {
-  if (props.list.length === 0) {
+
+  const books = useMultipBook(props.list.map(x => x.doubanId))
+
+  if (books.length === 0) {
     return <NoContentAlert userid={props.userid} />
   }
 
   return (
     <React.Fragment>
-      {props.list.map((item, index) => (
-        <BookCover bookId={item.doubanId} userid={props.userid} key={index} />
+      {books.map((item, index) => (
+        <BookCover book={item} userid={props.userid} key={index} />
       ))}
     </React.Fragment>
   )

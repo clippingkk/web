@@ -55,7 +55,6 @@ function BookPage({ userid, bookid }: TBookPageProps) {
       document.title = oldTitle
     }
   }, [bookData])
-  useDebugValue(clippingsData)
   const { t } = useTranslation()
 
   if (!bookData) {

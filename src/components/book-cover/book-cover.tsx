@@ -2,16 +2,15 @@ import React from 'react'
 import { Link } from '@reach/router';
 import { HideUntilLoaded } from '@nearform/react-animation'
 import { useSingleBook } from '../../hooks/book'
+import { WenquBook } from '../../services/wenqu';
 const styles = require('./book-cover.css')
 
 type TBookCoverProps = {
-  bookId: string
+  book: WenquBook
   userid: number
 }
 
-function BookCover({ bookId, userid }: TBookCoverProps) {
-  const book = useSingleBook(bookId)
-
+function BookCover({ book, userid }: TBookCoverProps) {
   if (!book) {
     return null
   }
