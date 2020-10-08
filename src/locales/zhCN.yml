@@ -45,6 +45,15 @@ app:
             extracting: 解析中
             extractingText: 正在拼命解析中，请稍等...
         yesText: 牛逼！你上传完成了！
+        progress:
+            none: 无
+            parsing: 解析文件中
+            searchingBook: 正在匹配书目
+            uploading: 正在同步书摘
+            done: 完成
+            error: 错误
+            message:
+                open: 请等待结束，勿关闭此页面
         
     profile:
         collected: 已收集

@@ -46,6 +46,15 @@ app:
             extracting: Extracting
             extractingText: Extracting, please wait...
         yesText: Congratulations, checkout clippings here
+        progress:
+            none: None
+            parsing: Parsing File
+            searchingBook: Searching Book Data
+            uploading: Syncing
+            done: Done
+            error: Error
+            message:
+                open: Please do not close this window in uploading
         
     profile:
         collected: collected

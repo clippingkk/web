@@ -16,8 +16,10 @@ export function extraFile(file: DataTransferItem): Promise<string> {
     f.onload = (readEvent) => {
       resolve((readEvent.target as any).result)
     }
+    console.log(f, file)
 
     const uploadFile = file.getAsFile()
+    console.log(uploadFile)
     if (!uploadFile) {
       reject('nil')
       return

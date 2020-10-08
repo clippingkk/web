@@ -42,7 +42,7 @@ function NavigationBar() {
   const { t } = useTranslation()
 
   return (
-    <nav className={styles.navbar}>
+    <nav className={styles.navbar + ' z-30'}>
       <div className={styles.menu}>
         <img
           src={require('../../assets/logo.png').default}

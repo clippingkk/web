@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react'
-import { Link } from '@reach/router'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Link, useNavigate } from '@reach/router'
 import swal from 'sweetalert'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { syncClippings } from '../../store/clippings/type'
 import { usePageTrack, useActionTrack } from '../../hooks/tracke'
 import { extraFile } from '../../store/clippings/creator'
@@ -11,12 +11,27 @@ import createClippingsQuery from '../../schema/mutations/create-clippings.graphq
 import { createClippings, createClippingsVariables } from '../../schema/mutations/__generated__/createClippings'
 import { wenquRequest, WenquSearchResponse } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
+import { UploadStep } from './types'
+import LoadingModal from './loading-modal'
+import { counter } from '@fortawesome/fontawesome-svg-core'
+import { TGlobalStore } from '../../store'
 const styles = require('./uploader.css')
+
+function delay(ms: number) {
+  return new Promise((res, rej) => {
+    setTimeout(res, ms)
+  })
+}
 
 function useUploadData() {
   const { t } = useTranslation()
+  const [step, setStep] = useState(UploadStep.None)
+  const [count, setCount] = useState(-1)
+  const [at, setAt] = useState(-1)
+  const [messages, setMessages] = useState<string[]>([t('app.upload.progress.message.open')])
+
   const [exec, { data, error }] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
-  const cb = useCallback(async (e: React.DragEvent) => {
+  const onUpload = useCallback(async (e: React.DragEvent) => {
     e.preventDefault()
     const file = e.dataTransfer.items[0]
 
@@ -28,32 +43,38 @@ function useUploadData() {
       })
       return
     }
-    const str = await extraFile(file)
-
-    swal({
-      title: t('app.upload.tips.extracting'),
-      text: t('app.upload.tips.extractingText'),
-      icon: 'info',
-      buttons: [false],
-      closeOnClickOutside: false,
-      closeOnEsc: false,
-    })
+    let str = ''
+    try {
+      setStep(UploadStep.Parsing)
+      str = await extraFile(file)
+    } catch (e) {
+      console.error(e, e.toString())
+      setStep(UploadStep.Error)
+      setMessages(m => m.concat(e.toString()))
+      return
+    }
 
     const parser = new ClippingTextParser(str)
     const parsedData = parser.execute()
 
-    for (let i of parsedData) {
+    setStep(UploadStep.SearchingBook)
+    setCount(parsedData.length)
+
+    for (let index in parsedData) {
+      const i = parsedData[index]
+      setAt(~~index)
       try {
         const resp = await wenquRequest<WenquSearchResponse>(`/books/search?query=${i.title}`)
         if (resp.count > 0) {
           i.bookId = resp.books[0].doubanId.toString()
         }
       } catch (e) {
+        setMessages(m => m.concat(e.toString()))
         console.log(e)
       }
     }
 
-    // TODO: search bookID
+    setStep(UploadStep.Uploading)
     const chunkedData = parsedData.reduce((result: (TClippingItem[])[], item: TClippingItem, index: number) => {
       if (result[result.length - 1].length % 20 === 0 && index !== 0) {
         result.push([item])
@@ -62,45 +83,69 @@ function useUploadData() {
       }
       return result
     }, [[]] as TClippingItem[][])
-
+    setCount(chunkedData.length)
     try {
       for (let i = 0; i < chunkedData.length; i++) {
+        setAt(i)
         await exec({
           variables: {
             payload: chunkedData[i].map(x => ({ ...x, bookID: x.bookId }))
           }
         })
       }
-      swal({
-        title: 'Yes!',
-        text: t('app.upload.yesText'),
-        icon: 'success'
-      })
+      setAt(chunkedData.length)
+      setStep(UploadStep.Done)
     } catch (e) {
-      swal({
-        title: e.toString(),
-        text: t('app.upload.errors.unknown'),
-        icon: 'error'
-      })
+      setStep(UploadStep.Error)
+      setMessages(m => m.concat(e.toString()))
     }
   }, [])
 
-  return cb
+  useEffect(() => {
+    if (step === UploadStep.Done || step === UploadStep.Error) {
+      setTimeout(() => {
+      setStep(UploadStep.None)
+      setMessages([])
+      }, 3000)
+    }
+  }, [step])
+
+  return {
+    onUpload,
+    step,
+    at,
+    messages,
+    count
+  }
 }
 
 function UploaderPage() {
   usePageTrack('uploader')
-  const onUploadData = useUploadData()
-  const onUpload = useActionTrack('upload')
+
+  const { onUpload, step, count, at, messages } = useUploadData()
+  const onUploadTrack = useActionTrack('upload')
   const { t } = useTranslation()
+
   const onDropEnd = useCallback((e: React.DragEvent) => {
-    onUpload()
-    onUploadData(e)
-  }, [onUpload, onUploadData])
+    onUploadTrack()
+    onUpload(e)
+  }, [onUpload, onUploadTrack])
 
   const stopDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
   }, [])
+
+  const navigate = useNavigate()
+  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+
+  useEffect(() => {
+    if (step === UploadStep.Done) {
+      setTimeout(() => {
+        navigate(`/dash/${id}/home`)
+      }, 3000)
+    }
+  }, [step, id])
+
   return (
     <section className={styles.uploader}>
       <div
@@ -117,6 +162,15 @@ function UploaderPage() {
           什么是 My Clippings.txt
           </Link>
       </div>
+
+      {step !== UploadStep.None && (
+        <LoadingModal
+          stepAt={step}
+          count={count}
+          at={at}
+          message={messages[0]}
+        />
+      )}
     </section>
   )
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from '@reach/router';
 import { HideUntilLoaded } from '@nearform/react-animation'
-import { IBook } from '../../services/books'
 import { useSingleBook } from '../../hooks/book'
 const styles = require('./book-cover.css')
 
