@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.5.1...v3.5.2) (2020-10-09)
+
+
+### Features
+
+* **locales:** update locales config in clipping page ([461b21b](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/461b21b25694b45b8522d0bceed0da9c70ebfaf6))
+* **post:** update post share config ([c101297](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c1012970f559e78923de9673b84b7ee165eadbb0))
+
 ### [3.5.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.5.0...v3.5.1) (2020-10-09)
 
 
