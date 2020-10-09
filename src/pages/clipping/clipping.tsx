@@ -54,7 +54,7 @@ function ClippingPage(props: TClippingPageProp) {
   DateTimeFormat(
     navigator.language,
     {
-      hour: 'numeric', minute: 'numeric', second: 'numeric',
+      hour: 'numeric', minute: 'numeric',
       year: 'numeric', month: 'numeric', day: 'numeric',
     }
     ).
@@ -70,7 +70,7 @@ function ClippingPage(props: TClippingPageProp) {
           <p className='text-3xl leading-normal'>{clipping?.clipping.content}</p>
           <hr className='bg-gray-400 my-12' />
           <time className='text-base font-light text-right w-full block mt-4 text-gray-700'>
-            摘录于: {clippingAt}
+            {t('app.clipping.at')}: {clippingAt}
             </time>
         </Card>
         {/** 再加一个作者简介 */}

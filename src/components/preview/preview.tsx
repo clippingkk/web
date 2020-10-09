@@ -6,6 +6,7 @@ import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping
 import { WenquBook } from '../../services/wenqu'
 import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
+import { useTranslation } from 'react-i18next'
 const styles = require('./preview.css')
 
 type TPreviewProps = {
@@ -54,11 +55,13 @@ function Preview(props: TPreviewProps) {
     doRender()
   }, [doRender])
 
+  const { t } = useTranslation()
+
   return (
     <Dialog
       onCancel={props.onCancel}
       onOk={props.onOk}
-      title="图片预览"
+      title={t('app.clipping.preview')}
     >
       <section className={styles.preview}>
         <img src={imageData} className={styles['preview-image']} />
@@ -68,7 +71,7 @@ function Preview(props: TPreviewProps) {
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
             className={styles.action + ' ' + styles.download}
           >
-            保存
+            {t('app.clipping.save')}
             </a>
         </footer>
       </section>

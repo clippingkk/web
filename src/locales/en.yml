@@ -34,6 +34,9 @@ app:
         update: check book
         shares: share
         link: Douban link
+        at: Excerpted on
+        preview: Preview
+        save: Save
     square: 
         title: Square
     upload:
