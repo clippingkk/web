@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.5.0...v3.5.1) (2020-10-09)
+
+
+### Features
+
+* **public:** update book fetch in index page ([417f56a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/417f56afdccdcc7764ac0c2ed3beeca8783312b1))
+
 ## [3.5.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.4.1...v3.5.0) (2020-10-08)
 
 
