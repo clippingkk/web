@@ -1,202 +1,79 @@
-import React from 'react'
-import { Link } from '@reach/router'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { connect } from 'react-redux'
-import QRCode from 'qrcode'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import Dialog from '../dialog/dialog'
-import { FetchQRCode } from '../../services/mp'
+import { HtmlPostShareRender } from '../../utils/canvas/HtmlPostShareRender'
+import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping'
+import { WenquBook } from '../../services/wenqu'
+import { TGlobalStore } from '../../store'
+import { UserContent } from '../../store/user/type'
 const styles = require('./preview.css')
 
 type TPreviewProps = {
   onCancel: () => void
   onOk: () => void
-  content: string
-  bookTitle: string
-  author: string
   background: string
-  id: number
+  clipping: fetchClipping_clipping
+  book: WenquBook | null
 }
 
-type TPreviewState = {
-  output?: string
-}
+function Preview(props: TPreviewProps) {
+  const [imageData, setImageData] = useState('')
+  const user = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
 
-const CANVAS_CONFIG = {
-  height: 1920,
-  width: 1080,
-}
-
-const QRCODE_METRIC = {
-  width: 150,
-  height: 150,
-}
-
-function downloadImage(src: string): Promise<HTMLImageElement> {
-  return new Promise(resolve => {
-    const img = new Image()
-    img.crossOrigin = 'anonymous'
-    img.onload = () => {
-      resolve(img)
-    }
-
-    img.src = src
-  })
-}
-
-const BACKGROUND_COLLECTIONS = [
-  require('../../assets/share_bg_0.jpg').default,
-  require('../../assets/share_bg_1.jpg').default,
-  require('../../assets/share_bg_2.jpg').default,
-  require('../../assets/share_bg_3.jpg').default,
-]
-
-class Preview extends React.PureComponent<TPreviewProps, TPreviewState> {
-  state = {
-    output: BACKGROUND_COLLECTIONS[0]
-  }
-
-  async componentDidMount() {
-    const canvas = document.createElement('canvas')
-    canvas.width = CANVAS_CONFIG.width
-    canvas.height = CANVAS_CONFIG.height
-    const ctx = canvas.getContext('2d')
-
-    if (!ctx) {
+  const doRender = useCallback(async () => {
+    if (!props.book) {
       return
     }
 
-    await this.renderBg(ctx)
-    await this.renderText(ctx)
-    await this.renderAuthor(ctx)
-    await this.renderFooter(ctx)
+    const cvs = document.createElement('canvas')
+    const postRender = new HtmlPostShareRender(cvs, {
+      height: 812,
+      width: 375,
+      dpr: 3,
+      clipping: props.clipping,
+      bookInfo: props.book,
+      baseTextSize: 16,
+      padding: 24,
+      textFont: '',
+    })
 
-    const output = canvas.toDataURL('image/png')
-    this.setState({ output })
-  }
+    postRender.setup()
+    await postRender.renderBackground()
+    await postRender.renderText()
+    await postRender.renderTitle()
+    await postRender.renderAuthor()
+    await postRender.renderBanner()
+    await postRender.renderMyInfo(user)
+    await postRender.renderQRCode()
 
-  async renderBg(ctx: CanvasRenderingContext2D) {
-    // TODO: api 从豆瓣拉到图片之后，需要存到自己的 cdn 上。然后返回给前端，前端再画成底图。
-    // this.props.background 就是底图，只是现在先用固定的图
-    const bg = await downloadImage(BACKGROUND_COLLECTIONS.sort(() => Math.random() > 0.5 ? 1 : -1)[0])
-    ctx.save()
-    ctx.filter = 'blur(10px)'
-    ctx.drawImage(
-      bg,
-      -10,
-      -10,
-      CANVAS_CONFIG.width + 20,
-      CANVAS_CONFIG.height + 20
-    )
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
-    ctx.fillRect(0, 0, CANVAS_CONFIG.width, CANVAS_CONFIG.height)
-    ctx.restore()
-  }
+    const _imageData = await postRender.saveToLocal()
 
-  async renderText(ctx: CanvasRenderingContext2D) {
-    ctx.save()
-    ctx.textAlign = 'left'
-    ctx.textBaseline = 'middle'
-    ctx.font =
-      'normal 64px -apple-system, BlinkMacSystemFont, Lato, "Microsoft Jhenghei", "Hiragino Sans GB", "Microsoft YaHei", sans-serif'
-    ctx.fillStyle = '#fff'
-    let text = this.props.content.slice()
-    const step = 80
-    let line = 0
-    const lineOffset = 200
+    setImageData(_imageData)
+  }, [props.book, props.clipping, user])
+  useEffect(() => {
+    doRender()
+  }, [doRender])
 
-    const widthBoundry = CANVAS_CONFIG.width - 40 * 2
-    let cursor = 0
-
-    while (cursor < text.length) {
-      const t = text.slice(0, cursor)
-      const metric = ctx.measureText(t)
-
-      if (metric.width > widthBoundry - 104) {
-        ctx.fillText(t, 40, line * step + lineOffset)
-        text = text.slice(cursor)
-        line++
-        cursor = 0
-      }
-
-      // ouput last row directly
-      if (cursor === text.length - 1) {
-        ctx.fillText(text, 40, line * step + lineOffset)
-        break
-      }
-      // overflow check
-      if (cursor > 1000) {
-        break
-      }
-      cursor++
-    }
-
-    ctx.restore()
-  }
-
-  async renderAuthor(ctx: CanvasRenderingContext2D) {
-    ctx.save()
-    ctx.textAlign = 'left'
-    ctx.textBaseline = 'middle'
-    ctx.font =
-      'normal 48px -apple-system, BlinkMacSystemFont, Lato, "Microsoft Jhenghei", "Hiragino Sans GB", "Microsoft YaHei", sans-serif'
-    ctx.fillStyle = '#fff'
-    const titleMetric = ctx.measureText(this.props.bookTitle)
-    ctx.fillText(
-      this.props.bookTitle,
-      CANVAS_CONFIG.width - 40 - titleMetric.width,
-      CANVAS_CONFIG.height - 300
-    )
-
-    const author = '—— ' + this.props.author
-    const authorMetric = ctx.measureText(author)
-    ctx.fillText(
-      author,
-      CANVAS_CONFIG.width - 40 - authorMetric.width,
-      CANVAS_CONFIG.height - 220,
-      CANVAS_CONFIG.width
-    )
-
-    ctx.restore()
-  }
-
-  async renderFooter(ctx: CanvasRenderingContext2D) {
-    ctx.save()
-
-    const qrcode = await FetchQRCode(`c=${this.props.id}`, "pages/landing/landing", QRCODE_METRIC.width, false)
-    ctx.drawImage(
-      qrcode,
-      CANVAS_CONFIG.width - 40 - QRCODE_METRIC.width,
-      CANVAS_CONFIG.height - 170,
-      QRCODE_METRIC.width,
-      QRCODE_METRIC.height
-    )
-    ctx.restore()
-  }
-
-  render() {
-    return (
-      <Dialog
-        onCancel={this.props.onCancel}
-        onOk={this.props.onOk}
-        title="图片预览"
-      >
-        <section className={styles.preview}>
-          <img src={this.state.output} className={styles['preview-image']} />
-          <footer className={styles.footer}>
-            <a
-              href={this.state.output}
-              download={`clippingkk-${this.props.bookTitle}-${
-                this.props.author
-              }.png`}
-              className={styles.action + ' ' + styles.download}
-            >
-              保存
+  return (
+    <Dialog
+      onCancel={props.onCancel}
+      onOk={props.onOk}
+      title="图片预览"
+    >
+      <section className={styles.preview}>
+        <img src={imageData} className={styles['preview-image']} />
+        <footer className={styles.footer}>
+          <a
+            href={imageData}
+            download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
+            className={styles.action + ' ' + styles.download}
+          >
+            保存
             </a>
-          </footer>
-        </section>
-      </Dialog>
-    )
-  }
+        </footer>
+      </section>
+    </Dialog>
+  )
 }
 
 export default Preview

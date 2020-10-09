@@ -8,8 +8,9 @@ function SquarePage() {
   useTitle(t('app.square.title'))
   return (
     <section className='flex items-center justify-center'>
-      <div className='my-12 rounded-sm text-6xl font-light shadow-2xl p-8'>
-        🤦‍♂️ {t('app.common.closed')}
+      <div className='my-12 rounded-sm text-6xl font-light shadow-2xl p-8 flex flex-col justify-center items-center '>
+        <span>🤦‍♂️ </span>
+        <span>{t('app.common.closed')}</span>
       </div>
     </section>
   )

@@ -16,22 +16,6 @@ type TProfileProps = {
   userid: string
 }
 
-function useProfile(userid: string): IUserProfile {
-  const [user, setUser] = useState({} as any)
-  const [clippingsCount, setClippingsCount] = useState(0)
-  const [clippings, setClippings] = useState([] as any[])
-
-  useEffect(() => {
-    getUserProfile(userid).then(resp => {
-      setUser(resp.user)
-      setClippings(resp.clippings)
-      setClippingsCount(resp.clippingsCount)
-    })
-  }, [])
-
-  return { user, clippingsCount, clippings }
-}
-
 function Profile(props: TProfileProps) {
   const { data } = useQuery<profile, profileVariables>(profileQuery, {
     variables: {
@@ -52,7 +36,9 @@ function Profile(props: TProfileProps) {
         <div className={styles.info}>
           <h3 className={styles.username}>{data?.me.name}</h3>
           <h5 className={styles.text}>{t('app.profile.collected')} {data?.me.clippingsCount} {t('app.profile.records')}</h5>
-          <WechatBindButton />
+          {!data?.me.wechatOpenid && (
+            <WechatBindButton />
+          )}
         </div>
       </Card>
 

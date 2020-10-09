@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import React, { useState } from 'react'
 import QRCode from 'qrcode.react'
+import { QRNormal, QRImage } from 'react-qrbtf'
 import Dialog from '../../components/dialog/dialog'
 import wechatBindKeyQuery from '../../schema/bind.graphql'
 import { wechatBind } from '../../schema/__generated__/wechatBind'
@@ -14,10 +15,11 @@ function BindQRCode() {
   if (!data) {
     return null
   }
+
   return (
-    <QRCode
+    <QRImage
       className='animate__fadeInDown'
-      value={data?.wechatBindKey}
+      value={data.wechatBindKey}
       size={256}
     />
   )
@@ -34,7 +36,7 @@ function WechatBindButton(props: WechatBindButtonProps) {
         onClick={() => setVisible(true)}
       >
         {t('app.profile.wechatBind')}
-       </button>
+      </button>
       {visible && (
         <Dialog
           title='绑定'
@@ -42,7 +44,7 @@ function WechatBindButton(props: WechatBindButtonProps) {
           onOk={() => { setVisible(true) }}
         >
           <div className='p-8 flex flex-col justify-center items-center'>
-          <h2 className='text-2xl text-black mb-4'>{t('app.profile.wechatBindTip')}</h2>
+            <h2 className='text-2xl text-black mb-4'>{t('app.profile.wechatBindTip')}</h2>
             <BindQRCode />
           </div>
         </Dialog>

@@ -10,6 +10,7 @@ import { fetchClipping, fetchClippingVariables } from '../../schema/__generated_
 import { useSingleBook } from '../../hooks/book'
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
+import { navigate } from '@reach/router'
 const styles = require('./clipping.css')
 
 type TClippingPageProp = {
@@ -48,14 +49,29 @@ function ClippingPage(props: TClippingPageProp) {
   useTitle(book?.title)
   const { t } = useTranslation()
 
+  const clippingAtDate = clipping?.clipping ? new Date(clipping.clipping.createdAt) : new Date()
+  const clippingAt = new Intl.
+  DateTimeFormat(
+    navigator.language,
+    {
+      hour: 'numeric', minute: 'numeric', second: 'numeric',
+      year: 'numeric', month: 'numeric', day: 'numeric',
+    }
+    ).
+  format(clippingAtDate)
+
   return (
     <div className={`${styles.clipping} page`}>
       <div className={styles.main}>
         <Card className={styles['main-card'] + ' text-black'}>
           <h1 className='text-2xl font-bold my-2'>{clipping?.clipping.title}</h1>
           <h3 className='font-light text-lg my-4'>{book?.author}</h3>
-          <hr className={styles.hr} />
+          <hr className='bg-gray-400 my-12' />
           <p className='text-3xl leading-normal'>{clipping?.clipping.content}</p>
+          <hr className='bg-gray-400 my-12' />
+          <time className='text-base font-light text-right w-full block mt-4 text-gray-700'>
+            摘录于: {clippingAt}
+            </time>
         </Card>
         {/** 再加一个作者简介 */}
         <Card className={styles.addons}>
@@ -66,7 +82,7 @@ function ClippingPage(props: TClippingPageProp) {
                 onClick={updateClipping}
               >
                 {t('app.clipping.update')}
-                </button>
+              </button>
             </li>
 
             <li className={styles.action}>
@@ -75,7 +91,7 @@ function ClippingPage(props: TClippingPageProp) {
                 onClick={togglePreviewVisible}
               >
                 {t('app.clipping.shares')}
-                </button>
+              </button>
             </li>
             <li className={styles.action}>
               <a
@@ -84,7 +100,7 @@ function ClippingPage(props: TClippingPageProp) {
                 className={styles['action-btn']}
               >
                 {t('app.clipping.link')}
-                </a>
+              </a>
             </li>
             <li className={styles.action}>
               <p className={styles['action-btn']}>评论 (开发中)</p>
@@ -95,13 +111,11 @@ function ClippingPage(props: TClippingPageProp) {
 
       {sharePreviewVisible && clipping?.clipping.content && (
         <Preview
-          id={clipping.clipping.id}
           onCancel={togglePreviewVisible}
           onOk={togglePreviewVisible}
           background={book!.image}
-          bookTitle={book!.title}
-          content={clipping.clipping.content}
-          author={book!.author}
+          clipping={clipping.clipping}
+          book={book}
         />
       )}
     </div>
