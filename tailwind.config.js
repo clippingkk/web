@@ -4,8 +4,10 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   purge: [
-    "src/**/*.tsx",
-    "src/**/*.jsx"
+    'src/**/*.tsx',
+    'src/**/*.jsx',
+    './node_modules/tailwindcss-dark-mode/prefers-dark.js',
+    'src/prefers-dark.ts'
   ],
   whitelist: ['mode-dark'],
   theme: {
