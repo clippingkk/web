@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.5.2...v3.6.0) (2020-10-12)
+
+
+### Features
+
+* **dark:** add dark mode support ([d4c0313](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d4c0313b344d2580b8f8dee4941618a670145206))
+
 ### [3.5.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.5.1...v3.5.2) (2020-10-09)
 
 
