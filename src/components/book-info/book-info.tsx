@@ -11,12 +11,12 @@ type TBookInfoProp = {
 
 function BookInfo({ book }: TBookInfoProp) {
   return (
-      <Card className={styles.book}>
-        <div className={styles.imageContainer}>
+      <Card className='mt-20 flex p-12 bg-blue-200 bg-opacity-50'>
+        <div className='mr-12'>
           <HideUntilLoaded
             imageToLoad={book.image}
           >
-            <img src={book.image} className={styles.image + ' mr-4'} />
+            <img src={book.image} className={styles.image + ' shadow rounded mr-4'} />
           </HideUntilLoaded>
         </div>
 

@@ -70,6 +70,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
           <ClippingItem
             item={clipping}
             userid={userid}
+            book={bookData}
             key={clipping.id}
           />
         ))}

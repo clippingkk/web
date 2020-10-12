@@ -12,13 +12,13 @@ function Container(props: any) {
   const { width, height } = window.screen
   const containerStyle = {
     // backgroundImage: `url(https://picsum.photos/${width}/${height}/?blur=10)`
-    backgroundImage: `url(${defaultBg})`
+    // backgroundImage: `url(${defaultBg})`
   }
   // TODO: 预处理
   // https://lokeshdhakar.com/projects/color-thief/#getting-started
   // + dark theme or light theme
   return (
-    <section className={styles.container} style={containerStyle}>
+    <section className={styles.container + ' bg-gray-100 dark:bg-gray-900'} style={containerStyle}>
       <NavigationBar />
       {props.children}
       <Footer />

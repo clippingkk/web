@@ -149,16 +149,16 @@ function UploaderPage() {
   return (
     <section className={styles.uploader}>
       <div
-        className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm ${styles.box}`}
+        className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-blue-800 bg-opacity-25 ${styles.box}`}
         onDragOver={stopDragOver}
         onDrop={onDropEnd}
       >
         {/* <FontAwesomeIcon icon="cloud-upload-alt" color="#ffffff" size="8x" /> */}
         <span className='text-6xl'>🎈</span>
-        <h3 className='text-2xl'>{t('app.upload.tip')}</h3>
+        <h3 className='text-2xl dark:text-gray-300'>{t('app.upload.tip')}</h3>
       </div>
       <div className='w-full flex items-center justify-center my-8'>
-        <Link to="/" className='text-center text-gray-900 text-lg hover:text-red-300'>
+        <Link to="/" className='text-center text-gray-900 text-lg hover:text-red-300 dark:text-gray-300'>
           什么是 My Clippings.txt
           </Link>
       </div>

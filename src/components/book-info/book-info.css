@@ -1,36 +1,7 @@
 
-.book {
-  margin-top: 5rem;
-  display: flex;
-  padding: 3rem;
-}
-
-.image-container {
-  margin-right: 3rem;
-}
-
 .image {
   margin-top: -6rem;
   width: 300px;
   height: 350px;
-  box-shadow: 0 0 4px #888;
   transition: all .35s;
-  border-radius: 4px;
-}
-
-.title {
-  margin: 1rem 0;
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-.author {
-  margin: 1rem 0;
-  font-size: 1.6rem;
-}
-
-.summary {
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 2;
 }

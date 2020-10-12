@@ -2,23 +2,13 @@
 @value primary-text-color, blur-background, grey-lite from colors;
 
 .cover {
-  display: flex;
-  background-color: transparent;
   width: 30rem;
   height: 40rem;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: all .35s;
-  border-radius: 4px;
-
-  
-
 }
-.cover:hover {
+/* .cover:hover {
   background-color: rgba(255, 255, 255, .8);
   box-shadow: 0 0 1rem #888;
-}
+} */
 
 .cover:hover .image {
   transform: translateY(-2rem) scale(1.1);
@@ -30,20 +20,4 @@
   box-shadow: 0 0 4px #888;
   transition: all .35s;
   border-radius: 4px;
-}
-
-.info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.title {
-  margin: 0;
-}
-
-.author {
-  margin: 1rem 0;
 }

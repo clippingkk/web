@@ -33,6 +33,9 @@ app:
         update: 书目更新
         shares: 图片分享
         link: 豆瓣读书
+        at: 摘录于
+        preview: 预览
+        save: 保存
     square: 
         title: 广场
     upload:

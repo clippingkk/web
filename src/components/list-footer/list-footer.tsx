@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react'
-const styles = require('./list-footer.css')
 
 type TListFooterProp = {
   loadMoreFn: () => any
@@ -32,9 +31,9 @@ function useFooterLoadObs(loadMore: () => Promise<any>, hasMore: boolean) {
 function ListFooter({ loadMoreFn, hasMore }: TListFooterProp) {
   const { dom } = useFooterLoadObs(loadMoreFn, hasMore)
   return (
-    <footer className={styles.footer}>
+    <footer className='flex justify-center items-center my-4 mx-0 w-full'>
       <span
-        className={styles.tip}
+        className='text-gray-600 dark:text-gray-400 block'
         ref={dom}
       >
         {hasMore ? 'loading' : '没有更多了...'}

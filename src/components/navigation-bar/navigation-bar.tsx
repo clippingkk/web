@@ -42,7 +42,7 @@ function NavigationBar() {
   const { t } = useTranslation()
 
   return (
-    <nav className={styles.navbar + ' z-30'}>
+    <nav className={styles.navbar + ' bg-opacity-50 bg-gray-500 dark:bg-gray-800  sticky top-0 py-4 w-full flex justify-around items-center z-30'}>
       <div className={styles.menu}>
         <img
           src={require('../../assets/logo.png').default}

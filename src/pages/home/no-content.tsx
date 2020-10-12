@@ -10,9 +10,12 @@ type TNoContentProps = {
 function NoContentAlert({ userid }: TNoContentProps) {
   const { t } = useTranslation()
   return (
-    <Link className={styles.none} to={`/dash/${userid}/upload`}>
-      <h3 className={styles.tip}>{t('app.home.notfound')}</h3>
-      <h3 className={styles.tip}>{t('app.home.uploadTip')}</h3>
+    <Link
+     className='bg-gray-300 rounded shadow-lg py-40 px-64 flex items-center justify-center flex-col bg-opacity-75 dark:bg-gray-700'
+      to={`/dash/${userid}/upload`}
+      >
+      <h3 className='text-5xl mt-0'>{t('app.home.notfound')}</h3>
+      <h3 className='text-5xl mt-0'>{t('app.home.uploadTip')}</h3>
     </Link>
   )
 }

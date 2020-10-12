@@ -14,7 +14,7 @@ class Card extends React.PureComponent<cardProps> {
   }
 
   render() {
-    const cls = `${styles.card} ${this.props.className || ''}`
+    const cls = ` m-4 p-4 rounded shadow bg-gray-400 bg-opacity-50 ${styles.card} ${this.props.className || ''}`
     return (
       <section className={cls} onClick={this.onCardClick}>
         {this.props.children}

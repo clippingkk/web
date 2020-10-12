@@ -2,14 +2,7 @@
 @value primary-text-color, blur-background, grey-lite from colors;
 
 .navbar {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   backdrop-filter: blur(100px);
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
 }
 .navbar + div {
   flex: 1;
