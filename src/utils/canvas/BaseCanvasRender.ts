@@ -25,8 +25,14 @@ export class BaseCanvasRender {
     return this.config.padding;
   }
 
+  get renderFont(): string {
+    return this.config.textFont.join(',') +
+      (this.config.textFont.length > 0 ? ',' : '') +
+      this.defaultFontFamily
+  }
+
   private setupContentFontStyle() {
-    this.ctx.font = this.config.baseTextSize + 'px ' + this.defaultFontFamily;
+    this.ctx.font = this.config.baseTextSize + 'px bold ' + this.renderFont
     this.ctx.textAlign = 'left';
     this.ctx.textBaseline = 'middle';
   }

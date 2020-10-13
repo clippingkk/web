@@ -1,6 +1,7 @@
 import { FetchQRCode } from '../../services/mp'
 import { PostShareConfig, BasicUserInfo } from './mp-render';
 import { BaseCanvasRender } from "./BaseCanvasRender";
+import { UserContent } from '../../store/user/type';
 
 export class PostShareRender extends BaseCanvasRender {
   private offsetY: number = 0;
@@ -23,7 +24,7 @@ export class PostShareRender extends BaseCanvasRender {
   private async loadImage(src: string): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
       const img: HTMLImageElement = new Image()
-      img.crossOrigin="anonymous"
+      img.crossOrigin = "anonymous"
       img.onload = () => {
         resolve(img);
       };
@@ -46,14 +47,15 @@ export class PostShareRender extends BaseCanvasRender {
     return Promise.resolve();
   }
   renderText(): Promise<void> {
-    this.ctx.save();
+    this.ctx.save()
+    const clippingContent = this.config.clipping.content.replace(/\[\d*\]/, '')
     const y = this.drawText(
-      this.config.clipping.content,
+      clippingContent,
       this.scaledPadding,
       this.scaledPadding * 2,
       this.scaledWidth - this.scaledPadding * 2,
       this.config.baseTextSize * 1.5
-    );
+    )
 
     this.offsetY = y;
     this.ctx.restore();
@@ -61,7 +63,7 @@ export class PostShareRender extends BaseCanvasRender {
   }
   renderTitle(): Promise<void> {
     this.ctx.save();
-    this.ctx.font = this.config.baseTextSize * 0.7 + 'px bold ' + this.defaultFontFamily;
+    this.ctx.font = this.config.baseTextSize * 0.7 + 'px bold ' + this.renderFont
     this.ctx.fillStyle = '#4F4F4F';
     this.ctx.textAlign = 'right';
     this.ctx.textBaseline = 'middle';
@@ -78,7 +80,7 @@ export class PostShareRender extends BaseCanvasRender {
   }
   renderAuthor(): Promise<void> {
     this.ctx.save();
-    this.ctx.font = this.config.baseTextSize * 0.7 + 'px bold ' + this.defaultFontFamily;
+    this.ctx.font = this.config.baseTextSize * 0.7 + 'px bold ' + this.renderFont;
     this.ctx.fillStyle = '#4F4F4F';
     this.ctx.textAlign = 'right';
     this.ctx.textBaseline = 'middle';
@@ -97,7 +99,9 @@ export class PostShareRender extends BaseCanvasRender {
     this.ctx.save();
     const ctx = this.ctx;
     const x = this.scaledPadding;
-    const y = this.scaledHeight - this.bannerHeight - this.scaledPadding;
+
+    const y = this.offsetY + 200
+
     const width = this.scaledWidth - this.scaledPadding * 2;
     const height = this.bannerHeight;
     const defaultRadius = 5;
@@ -130,6 +134,7 @@ export class PostShareRender extends BaseCanvasRender {
     ctx.fill();
 
     this.ctx.restore();
+    this.offsetY = y + this.bannerHeight + this.scaledPadding
     return Promise.resolve();
   }
 
@@ -144,7 +149,7 @@ export class PostShareRender extends BaseCanvasRender {
     this.ctx.beginPath();
     this.ctx.arc(
       this.scaledPadding + avatarSize,
-      this.scaledHeight - this.scaledPadding - this.bannerHeight / 2 - 5,
+      this.offsetY - this.scaledPadding - this.bannerHeight / 2 - 5,
       avatarSize / 2,
       0,
       2 * Math.PI,
@@ -154,7 +159,7 @@ export class PostShareRender extends BaseCanvasRender {
     this.ctx.drawImage(
       avatar,
       this.scaledPadding + avatarSize / 2,
-      this.scaledHeight - this.scaledPadding - this.bannerHeight / 2 - avatarSize / 2 - 5,
+      this.offsetY - this.scaledPadding - this.bannerHeight / 2 - avatarSize / 2 - 5,
       avatarSize,
       avatarSize
     );
@@ -169,7 +174,7 @@ export class PostShareRender extends BaseCanvasRender {
     this.ctx.fillText(
       user.name,
       this.scaledPadding * 2,
-      this.scaledHeight - this.scaledPadding * 2,
+      this.offsetY - this.scaledPadding * 2,
       this.scaledWidth - this.scaledPadding * 2.5 - this.qrcodeSize
     );
 
@@ -183,12 +188,32 @@ export class PostShareRender extends BaseCanvasRender {
     await this.ctx.drawImage(
       qrcode,
       this.scaledWidth - (this.qrcodeSize + this.config.padding + this.bannerGap),
-      this.scaledHeight - (this.qrcodeSize + this.scaledPadding + this.bannerGap),
+      this.offsetY - (this.qrcodeSize + this.scaledPadding + this.bannerGap),
       this.qrcodeSize,
       this.qrcodeSize
     );
 
     this.ctx.restore();
     return Promise.resolve();
+  }
+
+  async draw(user?: BasicUserInfo): Promise<void> {
+    await this.renderBackground()
+    await this.renderText()
+    await this.renderTitle()
+    await this.renderAuthor()
+    await this.renderBanner()
+    await this.renderMyInfo(user)
+    await this.renderQRCode()
+    await this.resizePosterHeight()
+  }
+
+  async resizePosterHeight(): Promise<void> {
+    this.dom.height = this.offsetY * this.config.dpr
+    this.ctx?.scale(this.config.dpr, this.config.dpr)
+  }
+
+  get renderedHeight(): number {
+    return this.offsetY
   }
 }

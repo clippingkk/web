@@ -7,6 +7,8 @@ import { WenquBook } from '../../services/wenqu'
 import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
 import { useTranslation } from 'react-i18next'
+import { delay } from '../../utils/timer'
+import swal from 'sweetalert'
 const styles = require('./preview.css')
 
 type TPreviewProps = {
@@ -20,6 +22,7 @@ type TPreviewProps = {
 function Preview(props: TPreviewProps) {
   const [imageData, setImageData] = useState('')
   const user = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
+  const [imageHeight, setImageHeight] = useState(812)
 
   const doRender = useCallback(async () => {
     if (!props.book) {
@@ -35,10 +38,19 @@ function Preview(props: TPreviewProps) {
       bookInfo: props.book,
       baseTextSize: 16,
       padding: 24,
-      textFont: '',
+      textFont: ['SKKaiTi', 'KaiTi'],
     })
 
     postRender.setup()
+    await postRender.renderBackground()
+    await postRender.renderText()
+    await postRender.renderTitle()
+    await postRender.renderAuthor()
+    await postRender.renderBanner()
+    await postRender.renderMyInfo(user)
+    await postRender.renderQRCode()
+    await postRender.resizePosterHeight()
+
     await postRender.renderBackground()
     await postRender.renderText()
     await postRender.renderTitle()
@@ -50,6 +62,7 @@ function Preview(props: TPreviewProps) {
     const _imageData = await postRender.saveToLocal()
 
     setImageData(_imageData)
+    setImageHeight(postRender.renderedHeight)
   }, [props.book, props.clipping, user])
   useEffect(() => {
     doRender()
@@ -64,7 +77,13 @@ function Preview(props: TPreviewProps) {
       title={t('app.clipping.preview')}
     >
       <section className={styles.preview}>
-        <img src={imageData} className={styles['preview-image']} />
+        <img
+         src={imageData}
+          className={styles['preview-image'] + ' transition-all duration-300'}
+          style={{
+            height: imageHeight + 'px'
+          }}
+         />
         <footer className={styles.footer}>
           <a
             href={imageData}

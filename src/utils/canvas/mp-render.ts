@@ -17,7 +17,7 @@ export type PostShareConfig = {
   }
   padding: number,
   baseTextSize: number
-  textFont: string
+  textFont: string[]
   clipping: fetchClipping_clipping
   bookInfo: WenquBook
 }

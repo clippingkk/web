@@ -60,6 +60,8 @@ function ClippingPage(props: TClippingPageProp) {
     ).
   format(clippingAtDate)
 
+  const clippingContent = clipping?.clipping.content.replace(/\[\d*\]/, '')
+
   return (
     <div className={`${styles.clipping} page`}>
       <div className={styles.main}>
@@ -67,7 +69,7 @@ function ClippingPage(props: TClippingPageProp) {
           <h1 className='text-2xl font-bold my-2'>{clipping?.clipping.title}</h1>
           <h3 className='font-light text-lg my-4'>{book?.author}</h3>
           <hr className='bg-gray-400 my-12' />
-          <p className='text-3xl leading-normal'>{clipping?.clipping.content}</p>
+          <p className='text-3xl leading-normal'>{clippingContent}</p>
           <hr className='bg-gray-400 my-12' />
           <time className='text-base font-light text-right w-full block mt-4 text-gray-700'>
             {t('app.clipping.at')}: {clippingAt}
