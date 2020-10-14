@@ -32,6 +32,7 @@ export interface IPostShareRender {
   renderBanner(): Promise<void>
   renderMyInfo(user?: BasicUserInfo): Promise<void>
   renderQRCode(): Promise<void>
+  resizePosterHeight(): Promise<void>
 }
 
 
