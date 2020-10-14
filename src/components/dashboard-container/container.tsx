@@ -18,9 +18,11 @@ function Container(props: any) {
   // https://lokeshdhakar.com/projects/color-thief/#getting-started
   // + dark theme or light theme
   return (
-    <section className={styles.container + ' bg-gray-100 dark:bg-gray-900'} style={containerStyle}>
+    <section className={styles.container + ' w-full flex flex-col  anna-page-container'} style={containerStyle}>
       <NavigationBar />
+      <div className=' container flex-col flex m-auto'>
       {props.children}
+      </div>
       <Footer />
     </section>
   )

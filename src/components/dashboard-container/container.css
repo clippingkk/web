@@ -1,9 +1,7 @@
 .container {
-  width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
+
 
 .back {
   position: fixed;
@@ -12,21 +10,5 @@
   height: 100%;
   width: 100%;
   z-index: -1;
-  /* filter: blur(10px); */
-  /* background-image: url('../../assets/coffee-blur.jpg'); */
-  /* background-size: cover; */
-  /* transform: scale(1.1); */
   background-position: 50% 50%;
-  /* left: -1rem; */
-  /* top: -1rem; */
 }
-
-/* .container:before {
-  content: ' ';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  filter: blur(10px);
-} */

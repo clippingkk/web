@@ -64,12 +64,12 @@ function ClippingPage(props: TClippingPageProp) {
 
   return (
     <div className={`${styles.clipping} page`}>
-      <div className={styles.main}>
-        <Card className={styles['main-card'] + ' text-black'}>
-          <h1 className='text-2xl font-bold my-2'>{clipping?.clipping.title}</h1>
+      <div className='flex mt-40 py-0 px-2 lg:px-20'>
+        <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
+          <h1 className='text-3xl font-bold my-2'>{clipping?.clipping.title}</h1>
           <h3 className='font-light text-lg my-4'>{book?.author}</h3>
           <hr className='bg-gray-400 my-12' />
-          <p className='text-3xl leading-normal'>{clippingContent}</p>
+          <p className='text-4xl leading-normal'>{clippingContent}</p>
           <hr className='bg-gray-400 my-12' />
           <time className='text-base font-light text-right w-full block mt-4 text-gray-700'>
             {t('app.clipping.at')}: {clippingAt}

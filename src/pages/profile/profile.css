@@ -12,22 +12,6 @@
   margin-right: 3rem;
 }
 
-.info {
-  display: flex;
-  flex-direction: column;
-} 
-
-.username {
-  font-size: 24px;
-}
-
 .text {
   font-size: 16px;
-}
-
-.clippings {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
 }

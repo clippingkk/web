@@ -36,7 +36,7 @@ function HomePage(props: THomeProp) {
 
   return (
     <section className={`${styles.home} page`}>
-      <header className='flex items-center justify-center my-4'>
+      <header className='flex items-center justify-center my-10'>
         <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.title')}</h2>
         <Link
           to={`/dash/${uid}/unchecked`}

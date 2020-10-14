@@ -31,11 +31,11 @@ function Profile(props: TProfileProps) {
 
   return (
     <section>
-      <Card className={styles.userinfo}>
+      <Card className='flex items-center justify-center py-12 w-full lg:w-4/5 mx-auto my-20'>
         <img src={data?.me.avatar} className={styles.avatar} />
         <div className={styles.info}>
-          <h3 className={styles.username}>{data?.me.name}</h3>
-          <h5 className={styles.text}>{t('app.profile.collected')} {data?.me.clippingsCount} {t('app.profile.records')}</h5>
+          <h3 className='text-2xl'>{data?.me.name}</h3>
+          <h5 className='text-lg text-gray-800'>{t('app.profile.collected')} {data?.me.clippingsCount} {t('app.profile.records')}</h5>
           {!data?.me.wechatOpenid && (
             <WechatBindButton />
           )}
@@ -44,7 +44,7 @@ function Profile(props: TProfileProps) {
 
       <Divider title={t('app.profile.recents')} />
 
-      <div className={styles.clippings}>
+      <div className='flex flex-wrap justify-center items-center mb-16'>
         {data?.me.recents.map(
           (item => <ClippingItem key={item.id} item={item} userid={~~props.userid} />)
         )}
