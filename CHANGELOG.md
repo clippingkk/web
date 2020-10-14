@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.6.3...v3.6.4) (2020-10-14)
+
+
+### Bug Fixes
+
+* **preview:** fix username adjustment in poster ([d6120b0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d6120b0c01397afb28be570b03e746176185bc42))
+
 ### [3.6.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.6.2...v3.6.3) (2020-10-13)
 
 
