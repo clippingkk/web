@@ -62,7 +62,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
   }
 
   return (
-    <section className={`${styles.bookPage} page`}>
+    <section className={`${styles.bookPage} page anna-scale-in`}>
       <BookInfo book={bookData} />
       <Divider title={t('app.book.title')} />
       <div className={styles.clippings}>
