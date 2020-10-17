@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from '@reach/router'
 import swal from 'sweetalert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,7 +6,7 @@ import { syncClippings } from '../../store/clippings/type'
 import { usePageTrack, useActionTrack } from '../../hooks/tracke'
 import { extraFile } from '../../store/clippings/creator'
 import ClippingTextParser, { TClippingItem } from '../../store/clippings/parser'
-import { useMutation } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client'
 import createClippingsQuery from '../../schema/mutations/create-clippings.graphql'
 import { createClippings, createClippingsVariables } from '../../schema/mutations/__generated__/createClippings'
 import { wenquRequest, WenquSearchResponse } from '../../services/wenqu'
@@ -29,8 +29,10 @@ function useUploadData() {
   const [count, setCount] = useState(-1)
   const [at, setAt] = useState(-1)
   const [messages, setMessages] = useState<string[]>([t('app.upload.progress.message.open')])
+  const wenquSearchResult = useRef(new Map<string, number>())
+  const client = useApolloClient()
 
-  const [exec, { data, error }] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
+  const [exec] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
   const onUpload = useCallback(async (e: React.DragEvent) => {
     e.preventDefault()
     const file = e.dataTransfer.items[0]
@@ -63,6 +65,16 @@ function useUploadData() {
     for (let index in parsedData) {
       const i = parsedData[index]
       setAt(~~index)
+
+      // cache search
+      if (wenquSearchResult.current.has(i.title)) {
+        const dbId = wenquSearchResult.current.get(i.title)
+        if (dbId) {
+          i.bookId = dbId.toString()
+          continue
+        }
+      }
+
       try {
         const resp = await wenquRequest<WenquSearchResponse>(`/books/search?query=${i.title}`)
         if (resp.count > 0) {
@@ -71,6 +83,8 @@ function useUploadData() {
       } catch (e) {
         setMessages(m => m.concat(e.toString()))
         console.log(e)
+      } finally {
+        wenquSearchResult.current.set(i.title, i.bookId ? ~~i.bookId : 0)
       }
     }
 
@@ -98,6 +112,8 @@ function useUploadData() {
     } catch (e) {
       setStep(UploadStep.Error)
       setMessages(m => m.concat(e.toString()))
+    } finally {
+      client.resetStore()
     }
   }, [])
 

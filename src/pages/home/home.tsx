@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from '@reach/router'
-import BooksContent from './books';
 import ListFooter from '../../components/list-footer/list-footer';
 import homeListQuery from '../../schema/books.graphql'
 import { useQuery } from '@apollo/client';
@@ -8,6 +7,9 @@ import { books, booksVariables } from '../../schema/__generated__/books';
 import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../store';
 import { useTranslation } from 'react-i18next';
+import { useMultipBook } from '../../hooks/book';
+import NoContentAlert from './no-content';
+import BookCover from '../../components/book-cover/book-cover';
 const styles = require('./home.css')
 
 type THomeProp = {
@@ -27,6 +29,7 @@ function HomePage(props: THomeProp) {
     }
   })
   const { t } = useTranslation()
+  const books = useMultipBook(data?.books.map(x => x.doubanId) || [])
 
   if (!data) {
     return (
@@ -50,17 +53,18 @@ function HomePage(props: THomeProp) {
             loading
           </div>
         )}
-        {(!loading || called) && (
-          <BooksContent
-            list={data.books}
-            userid={props.userid}
-          />
+        {data.books.length === 0 && called && (
+          <NoContentAlert userid={props.userid} />
         )}
+        {(!loading || called) &&
+          books.books.map((item, index) => (
+            <BookCover book={item} userid={props.userid} key={index} />
+          ))}
       </div>
 
       <ListFooter
         loadMoreFn={() => {
-          if (loading) {
+          if (loading || !called || books.loading) {
             return
           }
           fetchMore({
@@ -81,7 +85,6 @@ function HomePage(props: THomeProp) {
               }
             }
           })
-
         }}
         hasMore={!reachEnd}
       />

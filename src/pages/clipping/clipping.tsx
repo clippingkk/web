@@ -63,7 +63,7 @@ function ClippingPage(props: TClippingPageProp) {
   const clippingContent = clipping?.clipping.content.replace(/\[\d*\]/, '')
 
   return (
-    <div className={`${styles.clipping} page`}>
+    <div className={`${styles.clipping} page anna-fade-in`}>
       <div className='flex mt-40 py-0 px-2 lg:px-20'>
         <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
           <h1 className='text-3xl font-bold my-2'>{clipping?.clipping.title}</h1>

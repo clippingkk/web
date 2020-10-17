@@ -18,7 +18,7 @@ function IndexPage() {
   return (
     <div>
       <Hero />
-      <div className='py-4 bg-gray-200 dark:bg-gray-600'>
+      <div className='py-4 anna-page-container'>
         <TopBooks books={data?.public.books} />
         <TopUsers users={data?.public.users} />
       </div>

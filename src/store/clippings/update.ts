@@ -11,7 +11,6 @@ export function* doUpdateClipping() {
 }
 
 function* updateClippingBookSaga(action: TClippingBookUpdateAction) {
-
   const { clippingId } = action
 
   const bookId = yield swal({
@@ -37,6 +36,8 @@ function* updateClippingBookSaga(action: TClippingBookUpdateAction) {
     title: '更新成功！',
     icon: 'success'
   })
+
+  client.resetStore()
 
   // try {
   //   const result = yield call(updateClippingBook, clippingId, bookId)
