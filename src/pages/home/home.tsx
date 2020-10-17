@@ -56,7 +56,7 @@ function HomePage(props: THomeProp) {
         {data.books.length === 0 && called && (
           <NoContentAlert userid={props.userid} />
         )}
-        {(!loading || called) &&
+        {(data.books.length > 0 && called) &&
           books.books.map((item, index) => (
             <BookCover book={item} userid={props.userid} key={index} />
           ))}
