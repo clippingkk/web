@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.6.8...v3.6.9) (2020-10-17)
+
+
+### Bug Fixes
+
+* **home:** fix home books rendering ([963932d](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/963932d5f3899f0d7202806c46ea128582eff993))
+
 ### [3.6.8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.6.7...v3.6.8) (2020-10-17)
 
 
