@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 const styles = require('./tops.css')
 
 type TopBooksProps = {
-  books?: readonly publicData_public_books[] 
+  books?: readonly publicData_public_books[]
 }
 
 type localBookProps = {
@@ -38,7 +38,7 @@ function LocalBook(props: localBookProps) {
 function TopBooks(props: TopBooksProps) {
   const { t } = useTranslation()
 
-  const books = useMultipBook(props.books?.map(x => x.doubanId) || [])
+  const { books } = useMultipBook(props.books?.map(x => x.doubanId) || [])
 
   return (
     <div>
