@@ -21,9 +21,9 @@ function TopUsers(props: TopUsersProps) {
   }))
   return (
     <div>
-      <h2 className='text-3xl text-center font-bold my-8'>
+      <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>
         {t('app.public.readers')}
-        <i className='text-sm text-gray-600 italic dark:text-gray-800'>{t('app.public.hideReasons')}</i>
+        <i className='text-sm text-gray-600 italic ml-2 dark:text-gray-200'>{t('app.public.hideReasons')}</i>
       </h2>
       <ul className='flex items-center justify-center flex-wrap'>
         {users.map(u => (
