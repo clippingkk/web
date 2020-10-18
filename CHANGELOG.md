@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.10](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.6.9...v3.6.10) (2020-10-18)
+
+
+### Bug Fixes
+
+* **home:** fix books fetching ([0b06d84](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0b06d8401bc297f7fc5a8b94fd8856c06d3e60e5))
+* **styles:** fix index style in dark mode ([a7518bc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a7518bcafafd4e051be6d31ecff0454de68546f4))
+
 ### [3.6.9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.6.8...v3.6.9) (2020-10-17)
 
 
