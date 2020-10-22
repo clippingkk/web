@@ -1,5 +1,5 @@
 import React from 'react'
-const styles = require('./Features.css')
+const styles = require('./Features.css').default
 
 const feats = [
   {

@@ -4,7 +4,7 @@ import { UserContent } from '../../store/user/type'
 import { publicData_public_users } from '../../schema/__generated__/publicData'
 import { useTranslation } from 'react-i18next'
 
-const styles = require('./tops.css')
+const styles = require('./tops.css').default
 
 type TopUsersProps = {
   users?: readonly publicData_public_users[]

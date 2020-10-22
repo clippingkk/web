@@ -11,7 +11,7 @@ import { TUploadResponse, uploadImage } from '../../services/misc'
 import swal from 'sweetalert'
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
-const styles = require('./auth.css')
+const styles = require('./auth.css').default
 
 function Signup() {
   const [email, setEmail] = useState('')

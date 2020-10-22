@@ -2,7 +2,7 @@ import React from 'react'
 import { Router, Location } from "@reach/router";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { AnimateOnChange } from '@nearform/react-animation'
-const styles = require('./router.css')
+const styles = require('./router.css').default
 
 function RouterContainer(props: any) {
   return (

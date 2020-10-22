@@ -3,7 +3,7 @@ import { HideUntilLoaded } from '@nearform/react-animation'
 import { IBook, searchBookDetail, getBookClippings } from '../../services/books';
 import Card from '../card/card';
 import { WenquBook } from '../../services/wenqu'
-const styles = require('./book-info.css')
+const styles = require('./book-info.css').default
 
 type TBookInfoProp = {
   book: WenquBook

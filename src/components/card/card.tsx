@@ -1,5 +1,5 @@
 import React from 'react'
-const styles = require('./card.css')
+const styles = require('./card.css').default
 
 type cardProps = {
   className?: string

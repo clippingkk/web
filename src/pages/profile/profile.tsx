@@ -10,7 +10,7 @@ import { profile, profileVariables } from '../../schema/__generated__/profile';
 import WechatBindButton from './bind';
 import { useTranslation } from 'react-i18next';
 
-const styles = require('./profile.css')
+const styles = require('./profile.css').default
 
 type TProfileProps = {
   userid: string

@@ -6,7 +6,7 @@ import { authVariables } from '../../schema/__generated__/auth'
 import { useAuthSuccessed } from './hooks';
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
-const styles = require('./auth.css')
+const styles = require('./auth.css').default
 
 type TSigninProps = {
   path: string,

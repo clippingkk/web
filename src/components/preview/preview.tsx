@@ -9,7 +9,7 @@ import { UserContent } from '../../store/user/type'
 import { useTranslation } from 'react-i18next'
 import { delay } from '../../utils/timer'
 import swal from 'sweetalert'
-const styles = require('./preview.css')
+const styles = require('./preview.css').default
 
 type TPreviewProps = {
   onCancel: () => void

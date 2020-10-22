@@ -5,7 +5,7 @@ import Card from '../card/card';
 import { book_book_clippings } from '../../schema/__generated__/book'
 import { WenquBook } from '../../services/wenqu';
 
-const styles = require('./clipping-item.css')
+const styles = require('./clipping-item.css').default
 
 type TClippingItemProps = {
   item: book_book_clippings

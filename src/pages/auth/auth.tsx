@@ -8,7 +8,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { usePageTrack, useActionTrack } from '../../hooks/tracke';
 import profile from '../../utils/profile';
 import { useTranslation } from 'react-i18next';
-const styles = require('./auth.css')
+const styles = require('./auth.css').default
 
 function checkIsCurrentPath({ isCurrent }: any) {
   return {

@@ -11,7 +11,7 @@ import { useQuery } from '@apollo/client';
 import bookQuery from '../../schema/book.graphql'
 import { book, bookVariables, book_book_clippings } from '../../schema/__generated__/book';
 import { useTranslation } from 'react-i18next';
-const styles = require('./book.css')
+const styles = require('./book.css').default
 type TBookPageProps = {
   userid: number,
   bookid: string,

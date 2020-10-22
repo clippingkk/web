@@ -4,7 +4,7 @@ import Footer from '../footer/Footer'
 import { connect } from 'react-redux'
 import { TGlobalStore } from '../../store'
 
-const styles = require('./container.css')
+const styles = require('./container.css').default
 
 const defaultBg = require('../../assets/bg.jpg').default
 

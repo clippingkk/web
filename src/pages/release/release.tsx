@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getVersions, IVersionItem } from '../../services/release'
 import { usePageTrack } from '../../hooks/tracke'
-const styles = require('./release.css')
+const styles = require('./release.css').default
 
 const isiPhone = /iPhone/.test(navigator.userAgent)
 

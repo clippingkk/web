@@ -21,11 +21,11 @@ const config = {
   output: {
     path: path.resolve(__dirname, '..', 'dist' + (__DEV__ ? '-dev' : '')),
     publicPath: '/',
-    filename: 'bundle.[hash].js'
+    filename: 'bundle.[contenthash].js'
   },
   module: {
     rules: [{
-      test: /.jsx?$/,
+      test: /.[jm]sx?$/,
       exclude: /node_modules/,
       use: ['babel-loader']
     }, {
@@ -54,7 +54,7 @@ const config = {
       ],
       use: [
         __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
-        'css-loader?modules=true&sourceMap=true',
+        'css-loader?modules=true&sourceMap=true&esModule=false',
         'postcss-loader'
       ]
     }, {
@@ -143,31 +143,31 @@ const config = {
     runtimeChunk: {
       name: 'manifest',
     },
-    splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      name: false,
-      cacheGroups: {
-        vendor: {
-          name: 'common',
-          chunks: 'initial',
-          priority: -10,
-          reuseExistingChunk: false,
-          test: /node_modules\/(.*)\.js/,
-        },
-        styles: {
-          name: 'styles',
-          test: /\.(scss|css|less)$/,
-          chunks: 'all',
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-      },
-    },
+    // splitChunks: {
+    //   chunks: 'async',
+    //   minSize: 30000,
+    //   minChunks: 1,
+    //   maxAsyncRequests: 5,
+    //   maxInitialRequests: 3,
+    //   name: false,
+    //   cacheGroups: {
+    //     vendor: {
+    //       name: 'common',
+    //       chunks: 'initial',
+    //       priority: -10,
+    //       reuseExistingChunk: false,
+    //       test: /node_modules\/(.*)\.js/,
+    //     },
+    //     styles: {
+    //       name: 'styles',
+    //       test: /\.(scss|css|less)$/,
+    //       chunks: 'all',
+    //       minChunks: 1,
+    //       reuseExistingChunk: true,
+    //       enforce: true,
+    //     },
+    //   },
+    // },
   },
   resolve: {
     extensions: ['.js', '.jsx', '.tsx', '.ts']

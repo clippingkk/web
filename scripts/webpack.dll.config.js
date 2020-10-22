@@ -40,7 +40,7 @@ const config = {
     reacts
   },
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  devtool: process.env.NODE_ENV !== 'production' ? '#source-map' : false,
+  // devtool: process.env.NODE_ENV !== 'production' ? '#source-map' : false,
   plugins: [
     new webpack.DllPlugin({
       path: path.resolve(__dirname, '..', distDirname, '[name]-manifest.json'),

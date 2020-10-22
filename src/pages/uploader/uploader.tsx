@@ -15,7 +15,7 @@ import { UploadStep } from './types'
 import LoadingModal from './loading-modal'
 import { counter } from '@fortawesome/fontawesome-svg-core'
 import { TGlobalStore } from '../../store'
-const styles = require('./uploader.css')
+const styles = require('./uploader.css').default
 
 function delay(ms: number) {
   return new Promise((res, rej) => {

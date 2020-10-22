@@ -1,5 +1,5 @@
 import React from 'react'
-const styles = require('./divider.css')
+const styles = require('./divider.css').default
 
 type TDividerProps = {
   title: string

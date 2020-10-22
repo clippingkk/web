@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import swal from 'sweetalert';
-const styles = require('./Hero.css')
+const styles = require('./Hero.css').default
 
 function useLoad() {
   const [loaded, setLoaded] = useState(false)

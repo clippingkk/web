@@ -3,7 +3,7 @@ import { Link } from '@reach/router';
 import { HideUntilLoaded } from '@nearform/react-animation'
 import { useSingleBook } from '../../hooks/book'
 import { WenquBook } from '../../services/wenqu';
-const styles = require('./book-cover.css')
+const styles = require('./book-cover.css').default
 
 type TBookCoverProps = {
   book: WenquBook

@@ -11,7 +11,7 @@ import { useSingleBook } from '../../hooks/book'
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { navigate } from '@reach/router'
-const styles = require('./clipping.css')
+const styles = require('./clipping.css').default
 
 type TClippingPageProp = {
   userid: number

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Card from '../card/card'
-const styles = require('./dialog.css')
+const styles = require('./dialog.css').default
 
 type dialogProps = {
   onCancel: (e: React.MouseEvent) => void

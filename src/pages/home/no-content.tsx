@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from '@reach/router';
 import { useTranslation } from 'react-i18next';
-const styles = require('./no-content.css')
 
 type TNoContentProps = {
   userid: number

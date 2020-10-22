@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useMultipBook } from '../../hooks/book';
 import NoContentAlert from './no-content';
 import BookCover from '../../components/book-cover/book-cover';
-const styles = require('./home.css')
+const styles = require('./home.css').default
 
 type THomeProp = {
   userid: number

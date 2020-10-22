@@ -12,9 +12,12 @@ config.plugins.push(
 
 module.exports = {
   ...config,
+  devtool: 'inline-source-map',
   devServer: {
     historyApiFallback: true,
     hot: true,
+    open: true,
+    port: 8080,
     proxy: {
       // '/api/*': 'http://localhost:9654',
       // 'http://localhost:8080/api': 'http://localhost:9654/api'
