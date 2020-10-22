@@ -53,9 +53,9 @@ function NavigationBar() {
           {leftMenu.map((item, index) => (
             <li className='mr-6' key={index}>
               <Tooltip
-               placement='bottom'
-               overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
-               >
+                placement='bottom'
+                overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
+              >
                 <Link to={item.dest(id)}>
                   <span className='text-4xl'>
                     {item.emoji}
@@ -70,15 +70,15 @@ function NavigationBar() {
         <li className='mr-6'>
           <Tooltip
             placement='bottom'
-          overlay={<span>{t('app.menu.settings')}</span>}
+            overlay={<span>{t('app.menu.settings')}</span>}
           >
-            <span className='text-4xl'>🛠</span>
+            <Link to={`/dash/${id}/settings`} className='text-4xl'>🛠</Link>
           </Tooltip>
         </li>
         <li className='mr-6' onClick={onLogout}>
           <Tooltip
             placement='bottom'
-          overlay={<span>{t('app.menu.logout')}</span>}
+            overlay={<span>{t('app.menu.logout')}</span>}
           >
             <span className='text-4xl'>👋</span>
           </Tooltip>

@@ -21,6 +21,7 @@ const BookPage = React.lazy(() => import('./pages/book/book'))
 const GithubOAuthPage = React.lazy(() => import('./pages/auth/github'))
 const ProfilePage = React.lazy(() => import('./pages/profile/profile'))
 const UncheckedPage = React.lazy(() => import('./pages/unchecked/unchecked'))
+const SettingsPage = React.lazy(() => import('./pages/settings/settings'))
 
 class Root extends React.Component {
   render() {
@@ -45,6 +46,7 @@ class Root extends React.Component {
               <BookPage path="book/:bookid" />
               <ProfilePage path="profile" />
               <UncheckedPage path='/unchecked' />
+              <SettingsPage path='settings' />
             </DashContainer>
             <NotFound default />
           </RouterContainer>
