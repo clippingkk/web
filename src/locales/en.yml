@@ -65,4 +65,7 @@ app:
         recents: Recents
         wechatBind: Wechat binding
         wechatBindTip: binging wechat mini program
+    settings:
+        title: Global Settings(for web)
+        theme: Theme
 

@@ -1,29 +1,46 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Select from 'react-select'
+import DarkModeToggle from "react-dark-mode-toggle"
 import { useTranslation } from 'react-i18next'
 
 type SettingsPageProps = {
 }
 
-const themeOptions = [{
-  value: 'dark',
-  label: 'dark'
-}, {
-  value: 'light',
-  label: 'light'
-}]
+const darkModeClassName = 'mode-dark'
+
+function useDarkModeStatus() {
+  const [is, setIs] = useState(false)
+  useEffect(() => {
+    const isDarkTheme = document.querySelector('html')?.classList.contains('mode-dark')
+    setIs(isDarkTheme ?? false)
+  }, [])
+  const onDarkThemeChange = useCallback((v) => {
+    const html = document.querySelector('html')
+    if (html?.classList.contains(darkModeClassName)) {
+      html?.classList.remove(darkModeClassName)
+    } else {
+      html?.classList.add(darkModeClassName)
+    }
+    setIs(v)
+  }, [])
+
+  return {
+    isDarkTheme: is,
+    onDarkThemeChange
+  }
+}
 
 function GlobalSettings() {
   const { t, i18n } = useTranslation()
   const langOptions = Object.keys(i18n.store.data).map(x => ({ value: x, label: x }))
+  const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
 
-  const isDarkTheme = document.querySelector('html')?.classList.contains('mode-dark')
   return (
     <div className='w-full'>
       <div className='w-full flex items-center justify-around mb-4'>
         <label
           htmlFor="lang"
-          className='mr-4 text-black dark:text-white w-20'
+          className='mr-4 text-black dark:text-white w-20 text-left'
         >
           Language:
             </label>
@@ -40,18 +57,17 @@ function GlobalSettings() {
       <div className='w-full flex items-center justify-around mb-4'>
         <label
           htmlFor="lang"
-          className='mr-4 text-black dark:text-white w-20'
+          className='mr-4 text-black dark:text-white w-20 text-left'
         >
-          Theme:
+          {t('app.settings.theme')}:
             </label>
-        <Select
-          options={themeOptions}
-          className='w-64'
-          value={isDarkTheme ? themeOptions[0] : themeOptions[1]}
-          onChange={(v: any) => {
-            console.log(v)
-          }}
-        />
+
+        <div className='w-64 text-right flex items-center justify-end'>
+          <DarkModeToggle
+            checked={isDarkTheme}
+            onChange={onDarkThemeChange}
+          />
+        </div>
       </div>
     </div>
   )
@@ -60,12 +76,13 @@ function GlobalSettings() {
 // dark mode
 // i18n
 function SettingsPage(props: SettingsPageProps) {
+  const { t } = useTranslation()
 
   return (
     <div
       className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-blue-800 bg-opacity-25`}
     >
-      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'>Global Settings</h3>
+      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'>{t('app.settings.title')}</h3>
       <GlobalSettings />
 
     </div>

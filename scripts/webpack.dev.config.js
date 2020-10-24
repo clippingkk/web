@@ -12,7 +12,7 @@ config.plugins.push(
 
 module.exports = {
   ...config,
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
   devServer: {
     historyApiFallback: true,
     hot: true,

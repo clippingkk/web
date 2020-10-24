@@ -1,0 +1,13 @@
+.tooltip-container {
+
+}
+
+.tip {
+  visibility: hidden;
+}
+
+.tooltip-container:hover .tip {
+  transition: opacity .35s;
+  opacity: 1;
+  visibility: visible;
+}

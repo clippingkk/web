@@ -4,10 +4,10 @@ import {initReactI18next} from 'react-i18next'
 
 const zhCN = require('../locales/zhCN.yml')
 const en = require('../locales/en.yml')
-setTimeout(() => {
-  const language = localStorage.getItem('i18nextLngLong')
-  i18n.changeLanguage(language || 'en')
-})
+// setTimeout(() => {
+//   const language = localStorage.getItem('i18nextLngLong')
+//   i18n.changeLanguage(language || 'en')
+// })
 
 i18n
   .use(languageDetector)
@@ -21,8 +21,7 @@ i18n
         translation: zhCN
       }
     },
-    lng: 'zhCN',
-    fallbackLng: 'zhCN',
+    fallbackLng: 'en',
 
     interpolation: {
       escapeValue: false

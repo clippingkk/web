@@ -6,17 +6,8 @@ import { execLogout } from '../../store/user/type';
 // import Tooltip from 'rc-tooltip'
 import { TGlobalStore } from '../../store'
 import { useTranslation } from 'react-i18next';
+import Tooltip from '../tooltip/Tooltip';
 const styles = require('./navigation-bar.css').default
-
-type TooltipProps = {
-  placement: string
-  overlay: React.ReactElement
-  children: React.ReactElement
-}
-
-function Tooltip(props: TooltipProps) {
-  return props.children
-}
 
 const leftMenu = [
   {

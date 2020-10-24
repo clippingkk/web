@@ -7,3 +7,5 @@ declare module '*.graphql' {
     const value: DocumentNode
     export default value
 }
+
+declare module 'react-dark-mode-toggle';
