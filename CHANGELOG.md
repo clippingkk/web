@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.6.10...v3.7.0) (2020-10-24)
+
+
+### Features
+
+* **build:** upgrade webpack version ([e7c942c](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e7c942c8d3ad4ca85cacdc680e19699e33da8c22))
+* **locales:** add language change support ([eaa6a50](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/eaa6a500e01ab4a24e871204656e42cc4c53aa16))
+* **react:** upgrade react ([6208b07](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6208b078040b8fa2e29b978c2a99b64cb6a606a3))
+* **setting:** update setting page ([c3b1b27](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c3b1b27056afb867c29bac2f7554f808a4f2eaa8))
+* **settings:** add dark mode and locales change support ([4c91a56](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4c91a56d724f7c0a69a3f85088ab810ea0a8ae8f))
+
 ### [3.6.10](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.6.9...v3.6.10) (2020-10-18)
 
 
