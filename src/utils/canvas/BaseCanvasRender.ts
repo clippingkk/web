@@ -2,9 +2,11 @@ import { PostShareConfig } from './mp-render';
 
 
 export class BaseCanvasRender {
-  // browser / mp are different
+  // @ts-ignore
   protected dom: HTMLCanvasElement;
+  // @ts-ignore
   protected ctx: CanvasRenderingContext2D;
+  // @ts-ignore
   protected config: PostShareConfig;
   protected readonly defaultFontFamily = 'YSHaoShenTi,-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif';
 

@@ -49,7 +49,7 @@ export function signup(signupData: TUserSignupData): Promise<any> {
 }
 
 export function githubLogin(code: string): Promise<ILoginResponse> {
-  return request('/auth/github', {
+  return request<ILoginResponse>('/auth/github', {
     method: 'POST',
     body: JSON.stringify({ code })
   }).catch(e => {

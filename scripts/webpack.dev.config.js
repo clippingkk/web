@@ -1,9 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const config = require('./webpack.base.config')
-const convert = require('koa-connect');
-const history = require('connect-history-api-fallback');
-const proxy = require('http-proxy-middleware');
 
 config.devtool = 'inline-source-map'
 config.plugins.push(
@@ -12,7 +9,14 @@ config.plugins.push(
 
 module.exports = {
   ...config,
-  devtool: 'eval-source-map',
+  optimization: {,
+    ...config.optimization,
+    runtimeChunk: true,
+    removeAvailableModules: false,
+    removeEmptyChunks: false,
+    // splitChunks: false,
+  },
+  devtool: 'eval-cheap-module-source-map',
   devServer: {
     historyApiFallback: true,
     hot: true,

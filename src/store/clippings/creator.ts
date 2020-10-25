@@ -113,6 +113,6 @@ function* extraAndUpload(action: TClippingsFile) {
     icon: 'success'
   })
   const uid = sessionStorage.getItem("uid")
-  return yield call(navigate, `/dash/${uid}/home`)
+  return yield call(navigate as any, `/dash/${uid}/home`)
 
 }

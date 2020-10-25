@@ -24,6 +24,7 @@ const reacts = [
   'redux-saga',
   '@nearform/react-animation',
   'react-table',
+  'react-dark-mode-toggle',
   '@apollo/client'
 ]
 

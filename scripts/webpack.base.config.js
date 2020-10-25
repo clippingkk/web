@@ -143,31 +143,28 @@ const config = {
     runtimeChunk: {
       name: 'manifest',
     },
-    // splitChunks: {
-    //   chunks: 'async',
-    //   minSize: 30000,
-    //   minChunks: 1,
-    //   maxAsyncRequests: 5,
-    //   maxInitialRequests: 3,
-    //   name: false,
-    //   cacheGroups: {
-    //     vendor: {
-    //       name: 'common',
-    //       chunks: 'initial',
-    //       priority: -10,
-    //       reuseExistingChunk: false,
-    //       test: /node_modules\/(.*)\.js/,
-    //     },
-    //     styles: {
-    //       name: 'styles',
-    //       test: /\.(scss|css|less)$/,
-    //       chunks: 'all',
-    //       minChunks: 1,
-    //       reuseExistingChunk: true,
-    //       enforce: true,
-    //     },
-    //   },
-    // },
+    splitChunks: {
+      chunks: 'async',
+      minSize: 20000,
+      minRemainingSize: 0,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      automaticNameDelimiter: '~',
+      enforceSizeThreshold: 50000,
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
   },
   resolve: {
     extensions: ['.js', '.jsx', '.tsx', '.ts']

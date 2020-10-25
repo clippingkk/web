@@ -8,7 +8,11 @@ const initState: TUserState = {
     id: 0,
     name: '',
     email: '',
-    avatar: ''
+    avatar: '',
+    createdAt: '',
+    updatedAt: '',
+    wechatOpenid: ''
+    
   },
   token: ''
 }

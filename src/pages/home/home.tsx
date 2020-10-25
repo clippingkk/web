@@ -15,7 +15,6 @@ const styles = require('./home.css').default
 type THomeProp = {
   userid: number
 }
-
 const STEP = 10
 function HomePage(props: THomeProp) {
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
