@@ -32,7 +32,7 @@ const distDirname = 'dist' + (process.env.NODE_ENV !== 'production' ? '-dev' : '
 const config = {
   output: {
     path: path.resolve(__dirname, '..', distDirname),
-    filename: '[name]_[hash].dll.js',
+    filename: '[name]_[contenthash].dll.js',
     library: '[name]'
   },
   entry: {
@@ -45,7 +45,8 @@ const config = {
     new webpack.DllPlugin({
       path: path.resolve(__dirname, '..', distDirname, '[name]-manifest.json'),
       name: '[name]',
-      context: __dirname
+      context: __dirname,
+      entryOnly: false
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static'
