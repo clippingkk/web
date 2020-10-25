@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.7.1...v3.7.2) (2020-10-25)
+
+
+### Bug Fixes
+
+* **build:** set dll.entryOnly to false to fix unexpected tree sharking ([e83dde0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e83dde02e8b59b3483f4a0d573d31102c94e6c95))
+
 ### [3.7.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.7.0...v3.7.1) (2020-10-25)
 
 
