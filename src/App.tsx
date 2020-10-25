@@ -7,8 +7,6 @@ import { ApolloProvider } from '@apollo/client'
 import Root from './Root'
 import store from './store/index'
 import './styles/tailwind.css'
-import 'rc-tooltip/assets/bootstrap_white.css'
-import 'animate.css'
 import './styles/index.styl'
 
 import './styles/icons'

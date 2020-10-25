@@ -61,7 +61,7 @@ const config = {
       test: /.css$/,
       include: [
         path.resolve(__dirname, '..', 'src', 'styles', 'tailwind.css'),
-        /node_modules/,
+        // /node_modules/,
       ],
       use: [
         MiniCssExtractPlugin.loader,
