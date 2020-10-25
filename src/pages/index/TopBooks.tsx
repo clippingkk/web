@@ -7,7 +7,7 @@ import { WenquSearchResponse, wenquRequest, WenquBook } from '../../services/wen
 import { useMultipBook, useSingleBook } from '../../hooks/book'
 import { useTranslation } from 'react-i18next'
 
-const styles = require('./tops.css')
+const styles = require('./tops.css').default
 
 type TopBooksProps = {
   books?: readonly publicData_public_books[]
