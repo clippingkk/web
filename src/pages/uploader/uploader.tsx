@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from '@reach/router'
 import swal from 'sweetalert'
-import { useDispatch, useSelector } from 'react-redux'
-import { syncClippings } from '../../store/clippings/type'
+import { useSelector } from 'react-redux'
 import { usePageTrack, useActionTrack } from '../../hooks/tracke'
 import { extraFile } from '../../store/clippings/creator'
 import ClippingTextParser, { TClippingItem } from '../../store/clippings/parser'
@@ -13,7 +12,6 @@ import { wenquRequest, WenquSearchResponse } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
 import { UploadStep } from './types'
 import LoadingModal from './loading-modal'
-import { counter } from '@fortawesome/fontawesome-svg-core'
 import { TGlobalStore } from '../../store'
 const styles = require('./uploader.css').default
 
@@ -56,8 +54,15 @@ function useUploadData() {
       return
     }
 
-    const parser = new ClippingTextParser(str)
-    const parsedData = parser.execute()
+    let parsedData: TClippingItem[]
+    try {
+      const parser = new ClippingTextParser(str)
+      parsedData = parser.execute()
+    } catch (e) {
+      setStep(UploadStep.Error)
+      setMessages(['file invalid'])
+      return
+    }
 
     setStep(UploadStep.SearchingBook)
     setCount(parsedData.length)
@@ -120,8 +125,8 @@ function useUploadData() {
   useEffect(() => {
     if (step === UploadStep.Done || step === UploadStep.Error) {
       setTimeout(() => {
-      setStep(UploadStep.None)
-      setMessages([])
+        setStep(UploadStep.None)
+        setMessages([])
       }, 3000)
     }
   }, [step])
