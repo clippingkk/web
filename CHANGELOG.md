@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.7.2...v3.7.3) (2020-10-30)
+
+
+### Bug Fixes
+
+* **css:** remove unused css ([d1ee3ab](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d1ee3ab186eaf4a5c91f54a125d1cc495dcb0ef3))
+* **index:** fix home styles ([c512c12](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c512c126ec01d62aa2658717cca77559e65ae291))
+* **upload:** add error tip if user drag a invalid file ([6785420](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6785420c3cd9889b162984e32e085adad4cf8cbe))
+
 ### [3.7.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.7.1...v3.7.2) (2020-10-25)
 
 
