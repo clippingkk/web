@@ -9,7 +9,7 @@ config.plugins.push(
 
 module.exports = {
   ...config,
-  optimization: {,
+  optimization: {
     ...config.optimization,
     runtimeChunk: true,
     removeAvailableModules: false,
@@ -22,6 +22,7 @@ module.exports = {
     hot: true,
     open: true,
     port: 8080,
+    disableHostCheck: true,
     proxy: {
       // '/api/*': 'http://localhost:9654',
       // 'http://localhost:8080/api': 'http://localhost:9654/api'

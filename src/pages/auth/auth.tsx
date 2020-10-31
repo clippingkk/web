@@ -3,11 +3,12 @@ import Card from '../../components/card/card'
 import { navigate, Link } from '@reach/router';
 import swal from 'sweetalert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GithubClientID } from '../../constants/config';
+import { GithubClientID, SignInWithAppleOptions } from '../../constants/config';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { usePageTrack, useActionTrack } from '../../hooks/tracke';
 import profile from '../../utils/profile';
 import { useTranslation } from 'react-i18next';
+import SignInWithApple from '../../components/sign-in-with-apple/sign-in-with-apple';
 const styles = require('./auth.css').default
 
 function checkIsCurrentPath({ isCurrent }: any) {
