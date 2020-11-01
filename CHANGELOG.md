@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.8.0...v3.8.1) (2020-11-01)
+
+
+### Features
+
+* **upload:** set public clippings upload as default ([e6c475c](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e6c475cf578a9b7258dbbd6fa150750c9e82ed82))
+
 ## [3.8.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.7.3...v3.8.0) (2020-11-01)
 
 
