@@ -40,6 +40,12 @@ app:
         title: 广场
     upload:
         tip: 把 My Clippings.txt 拖进来
+        help:
+            title: 什么是 My Clippings.txt
+            content: 将 kindle 插入电脑，点击进入 kindle，<br />在目录中寻找 `documents` 双击进入，<br />找到文件名为 `My Clippings.txt` 的即可.<br /> 视频和图片准备中
+        private:
+            on: 您上传的内容可以公开（可能被其他人看到）
+            off: 您上传的内容对他人隐藏（不能被其他人看到）
         errors:
             fileTitle: Oops
             fileNotFound: 请务必提供 kindle 中的 My Clipping.txt 哦

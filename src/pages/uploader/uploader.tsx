@@ -7,12 +7,15 @@ import { extraFile } from '../../store/clippings/creator'
 import ClippingTextParser, { TClippingItem } from '../../store/clippings/parser'
 import { useApolloClient, useMutation } from '@apollo/client'
 import createClippingsQuery from '../../schema/mutations/create-clippings.graphql'
+import { AnimateOnChange } from '@nearform/react-animation'
 import { createClippings, createClippingsVariables } from '../../schema/mutations/__generated__/createClippings'
 import { wenquRequest, WenquSearchResponse } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
 import { UploadStep } from './types'
 import LoadingModal from './loading-modal'
 import { TGlobalStore } from '../../store'
+import Switch from "react-switch"
+import ClippingsUploadHelp from './help'
 const styles = require('./uploader.css').default
 
 function delay(ms: number) {
@@ -21,7 +24,7 @@ function delay(ms: number) {
   })
 }
 
-function useUploadData() {
+function useUploadData(visible: boolean) {
   const { t } = useTranslation()
   const [step, setStep] = useState(UploadStep.None)
   const [count, setCount] = useState(-1)
@@ -31,7 +34,7 @@ function useUploadData() {
   const client = useApolloClient()
 
   const [exec] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
-  const onUpload = useCallback(async (e: React.DragEvent) => {
+  const onUpload = useCallback(async (e: React.DragEvent, v: boolean) => {
     e.preventDefault()
     const file = e.dataTransfer.items[0]
 
@@ -108,7 +111,8 @@ function useUploadData() {
         setAt(i)
         await exec({
           variables: {
-            payload: chunkedData[i].map(x => ({ ...x, bookID: x.bookId }))
+            payload: chunkedData[i].map(x => ({ ...x, bookID: x.bookId })),
+            visible: v
           }
         })
       }
@@ -120,7 +124,7 @@ function useUploadData() {
     } finally {
       client.resetStore()
     }
-  }, [])
+  }, [visible])
 
   useEffect(() => {
     if (step === UploadStep.Done || step === UploadStep.Error) {
@@ -140,17 +144,30 @@ function useUploadData() {
   }
 }
 
+function useSwitcher() {
+  const [isOn, setIsOn] = useState(false)
+  const onSwitchChange = useCallback(checked => {
+    setIsOn(checked)
+  }, [])
+
+  return {
+    isOn,
+    onSwitchChange
+  }
+}
+
 function UploaderPage() {
   usePageTrack('uploader')
 
-  const { onUpload, step, count, at, messages } = useUploadData()
+  const { isOn, onSwitchChange } = useSwitcher()
+  const { onUpload, step, count, at, messages } = useUploadData(isOn)
   const onUploadTrack = useActionTrack('upload')
   const { t } = useTranslation()
 
   const onDropEnd = useCallback((e: React.DragEvent) => {
     onUploadTrack()
-    onUpload(e)
-  }, [onUpload, onUploadTrack])
+    onUpload(e, isOn)
+  }, [onUpload, onUploadTrack, isOn])
 
   const stopDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -176,14 +193,20 @@ function UploaderPage() {
       >
         {/* <FontAwesomeIcon icon="cloud-upload-alt" color="#ffffff" size="8x" /> */}
         <span className='text-6xl'>🎈</span>
-        <h3 className='text-2xl dark:text-gray-300'>{t('app.upload.tip')}</h3>
-      </div>
-      <div className='w-full flex items-center justify-center my-8'>
-        <Link to="/" className='text-center text-gray-900 text-lg hover:text-red-300 dark:text-gray-300'>
-          什么是 My Clippings.txt
-          </Link>
+        <h3 className='text-3xl dark:text-gray-300'>{t('app.upload.tip')}</h3>
       </div>
 
+      <div className='mt-4 w-10/12 mx-auto'>
+        <label className='w-full flex items-center justify-around'>
+          <span className=' text-xl dark:text-gray-300'>
+            <AnimateOnChange>
+            {t(`app.upload.private.${isOn ? 'on' : 'off'}`)}
+            </AnimateOnChange>
+            </span>
+          <Switch onChange={onSwitchChange} checked={isOn} />
+        </label>
+      </div>
+      <ClippingsUploadHelp />
       {step !== UploadStep.None && (
         <LoadingModal
           stepAt={step}

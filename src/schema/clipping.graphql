@@ -6,5 +6,6 @@ query fetchClipping($id: Int!) {
     content
     createdAt
     pageAt
+    visible
   }
 }

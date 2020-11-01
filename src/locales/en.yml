@@ -41,6 +41,12 @@ app:
         title: Square
     upload:
         tip: Putting My Clippings.txt to here
+        help:
+            title: What is the `My Clippings.txt`
+            content: connect kindle to the computer by usb, and find a folder named as `documents`, <br /> double click and enter into the folder,<br /> then find the file `My Clippings.txt` <br /> video and images should be here
+        private:
+            on: Clippings you upload will be public(can be seen by others)
+            off: Clippings you upload will be private(only you can see)
         errors:
             fileTitle: Oops
             fileNotFound: Please putting `My Clippings.txt` from Kindle
