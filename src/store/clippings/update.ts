@@ -24,6 +24,10 @@ function* updateClippingBookSaga(action: TClippingBookUpdateAction) {
     }
   })
 
+  if (!bookId || bookId.length < 3) {
+    return
+  }
+
   yield client.mutate<updateClippingBookId, updateClippingBookIdVariables>({
     mutation: updateClippingBookIdMutation,
     variables: {
