@@ -145,7 +145,7 @@ function useUploadData(visible: boolean) {
 }
 
 function useSwitcher() {
-  const [isOn, setIsOn] = useState(false)
+  const [isOn, setIsOn] = useState(true)
   const onSwitchChange = useCallback(checked => {
     setIsOn(checked)
   }, [])
