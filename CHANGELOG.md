@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.7.3...v3.8.0) (2020-11-01)
+
+
+### Features
+
+* **apple:** add sign in apple module but not release ([829e6d6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/829e6d640096be51849a65ecaa432bf6f31fff16))
+* **upload:** add visible to clippings upload module ([67fda66](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/67fda661246379bce8b1d42452dad9fb048c280d))
+
 ### [3.7.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.7.2...v3.7.3) (2020-10-30)
 
 
