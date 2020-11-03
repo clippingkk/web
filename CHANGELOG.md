@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.8.1...v3.8.2) (2020-11-03)
+
+
+### Bug Fixes
+
+* **admin:** fix admin unchecked books query fetch ([0970377](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0970377bf9d272b71be853ed75a4070f5e8ae28e))
+* **clipping:** skip upload clipping book id if book id is invalid ([9bc473a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9bc473a77bf2886bdd335c1c926438caa16bf22d))
+
 ### [3.8.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.8.0...v3.8.1) (2020-11-01)
 
 
