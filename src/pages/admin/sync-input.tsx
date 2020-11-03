@@ -18,6 +18,7 @@ function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
         doubanID: doubanId
       }
     }).then(res => {
+      client.resetStore()
       swal({
         icon: 'success',
         title: 'updated'

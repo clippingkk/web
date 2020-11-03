@@ -1,10 +1,11 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import { useTable, Row } from 'react-table'
-import homelessBooksQuery from '../../schema/auth.graphql'
+import uncheckBooksRawQuery from '../../schema/admin.graphql'
 import { GraphqlQueryBookData, GraphqlQueryBook } from '../../services/type'
 import Card from '../../components/card/card'
 import HomelessBookSyncInput from './sync-input'
+import { uncheckBooksQuery, uncheckBooksQueryVariables } from '../../schema/__generated__/uncheckBooksQuery'
 
 const homelessBookColumn = [
   {
@@ -36,7 +37,14 @@ function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
 }
 
 function AdminPanel() {
-  const { data, loading } = useQuery<GraphqlQueryBookData>(homelessBooksQuery)
+  const { data, loading } = useQuery<uncheckBooksQuery, uncheckBooksQueryVariables>(uncheckBooksRawQuery, {
+    variables: {
+      pagination: {
+        limit: 50,
+        offset: 0
+      }
+    }
+  })
   const {
     getTableProps,
     getTableBodyProps,
@@ -44,7 +52,7 @@ function AdminPanel() {
     prepareRow,
     headerGroups
   } = useTable<homelessBookTableItem>({
-    data: data?.book.homeless.map(x => ({ name: x } as homelessBookTableItem)) || ([] as homelessBookTableItem[]),
+    data: data?.adminDashboard.uncheckedBooks.map(x => ({ name: x.title } as homelessBookTableItem)) || ([] as homelessBookTableItem[]),
     columns: homelessBookColumn as any
   })
 
