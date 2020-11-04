@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.8.2...v3.8.3) (2020-11-04)
+
+
+### Features
+
+* **admin:** add offset input ([c252fd8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c252fd8c106773ac5b5f405f34cbe6aee0362ca6))
+
 ### [3.8.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.8.1...v3.8.2) (2020-11-03)
 
 
