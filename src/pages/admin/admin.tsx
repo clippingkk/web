@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useTable, Row } from 'react-table'
 import uncheckBooksRawQuery from '../../schema/admin.graphql'
@@ -37,11 +37,14 @@ function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
 }
 
 function AdminPanel() {
+
+  const [offset, setOffset] = useState(0)
+
   const { data, loading } = useQuery<uncheckBooksQuery, uncheckBooksQueryVariables>(uncheckBooksRawQuery, {
     variables: {
       pagination: {
         limit: 50,
-        offset: 0
+        offset
       }
     }
   })
@@ -60,6 +63,12 @@ function AdminPanel() {
     <div>
       <Card>
         <h3 className='text-3xl mb-8 text-center'>无家可归的书目们</h3>
+        <input
+          type="number"
+          value={offset}
+          onChange={(e) => setOffset(~~e.target.value)}
+          placeholder="offset"
+        />
         {data ? (
           <table {...getTableProps()} className='table-fixed w-full'>
             <thead>
