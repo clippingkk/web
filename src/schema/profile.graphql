@@ -18,6 +18,27 @@ query profile($id: Int!) {
       createdAt
       pageAt
     }
+    analysis {
+      monthly {
+        date
+        count
+      }
+    }
+    comments {
+      id
+      content
+      belongsTo {
+        id
+        content
+        bookID
+        creator {
+          id
+          avatar
+          name
+        }
+      }
+    }
+
     clippingsCount
   }
 }

@@ -7,5 +7,14 @@ query fetchClipping($id: Int!) {
     createdAt
     pageAt
     visible
+    comments {
+      id
+      content
+      creator {
+        id
+        avatar
+        name
+      }
+    }
   }
 }
