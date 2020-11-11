@@ -4,6 +4,7 @@ import { Link } from '@reach/router';
 import Card from '../card/card';
 import { book_book_clippings } from '../../schema/__generated__/book'
 import { WenquBook } from '../../services/wenqu';
+import { fetchSquareData_featuredClippings_creator } from '../../schema/__generated__/fetchSquareData';
 
 const styles = require('./clipping-item.css').default
 
@@ -11,9 +12,10 @@ type TClippingItemProps = {
   item: book_book_clippings
   book?: WenquBook
   userid: number
+  creator?: fetchSquareData_featuredClippings_creator
 }
 
-function ClippingItem({ userid, item, book }: TClippingItemProps) {
+function ClippingItem({ userid, item, book, creator }: TClippingItemProps) {
   return (
     <Link
       to={`/dash/${userid}/clippings/${item.id}`}
@@ -26,6 +28,25 @@ function ClippingItem({ userid, item, book }: TClippingItemProps) {
         </h3>
         <hr className='my-4' />
         <p className='text-2xl text-gray-900'>{item.content}</p>
+        {creator && (
+          <React.Fragment>
+            <hr className='my-4 self-end' />
+            <div className='flex w-full justify-between'>
+              <div className='flex justify-center items-center'>
+                <img
+                  src={creator.avatar}
+                  alt={creator.name}
+                  className='w-10 h-10 rounded-full mr-4'
+                />
+                <span>{creator.name}</span>
+              </div>
+              <div>
+                <span>{creator.clippingsCount}</span>
+              </div>
+            </div>
+          </React.Fragment>
+        )}
+
       </Card>
     </Link>
   )
