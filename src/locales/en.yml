@@ -37,6 +37,14 @@ app:
         at: Excerpted on
         preview: Preview
         save: Save
+        comments:
+            title: Comments
+            count: count
+            submit: Submit
+            placeholder: What do you think this clipping? You can write down and communicate with others.
+            tip:
+                tooShort: Too short, need more thinking.
+                success: Yes, shared your's feeling
     square: 
         title: Square
     upload:

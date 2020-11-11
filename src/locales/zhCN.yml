@@ -36,6 +36,14 @@ app:
         at: 摘录于
         preview: 预览
         save: 保存
+        comments:
+            placeholder: 你觉得这段摘录怎么样？写下来分享给其他朋友吧~
+            title: 评论
+            count: 个字
+            submit: 提交
+            tip:
+                tooShort: 太短了，再多想想？
+                success: 搞定，已经分享给其他朋友了
     square: 
         title: 广场
     upload:

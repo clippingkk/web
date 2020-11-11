@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { changeBackground } from '../../store/app/type'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Card from '../../components/card/card'
 import Preview from '../../components/preview/preview'
 import { updateClippingBook } from '../../store/clippings/type'
@@ -11,6 +11,10 @@ import { useSingleBook } from '../../hooks/book'
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { navigate } from '@reach/router'
+import { TGlobalStore } from '../../store'
+import { UserContent } from '../../store/user/type'
+import CommentBox from './commentBox'
+import Comment from './comment'
 const styles = require('./clipping.css').default
 
 type TClippingPageProp = {
@@ -18,12 +22,16 @@ type TClippingPageProp = {
   clippingid: string
 }
 
+
+
+
 function ClippingPage(props: TClippingPageProp) {
   const { data: clipping } = useQuery<fetchClipping, fetchClippingVariables>(fetchClippingQuery, {
     variables: {
       id: ~~props.clippingid
     }
   })
+  const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
   const dispatch = useDispatch()
 
@@ -51,14 +59,14 @@ function ClippingPage(props: TClippingPageProp) {
 
   const clippingAtDate = clipping?.clipping ? new Date(clipping.clipping.createdAt) : new Date()
   const clippingAt = new Intl.
-  DateTimeFormat(
-    navigator.language,
-    {
-      hour: 'numeric', minute: 'numeric',
-      year: 'numeric', month: 'numeric', day: 'numeric',
-    }
+    DateTimeFormat(
+      navigator.language,
+      {
+        hour: 'numeric', minute: 'numeric',
+        year: 'numeric', month: 'numeric', day: 'numeric',
+      }
     ).
-  format(clippingAtDate)
+    format(clippingAtDate)
 
   const clippingContent = clipping?.clipping.content.replace(/\[\d*\]/, '')
 
@@ -73,7 +81,7 @@ function ClippingPage(props: TClippingPageProp) {
           <hr className='bg-gray-400 my-12' />
           <time className='text-base font-light text-right w-full block mt-4 text-gray-700'>
             {t('app.clipping.at')}: {clippingAt}
-            </time>
+          </time>
         </Card>
         {/** 再加一个作者简介 */}
         <Card className={styles.addons}>
@@ -104,10 +112,20 @@ function ClippingPage(props: TClippingPageProp) {
                 {t('app.clipping.link')}
               </a>
             </li>
-            <li className={styles.action}>
-              <p className={styles['action-btn']}>评论 (开发中)</p>
-            </li>
           </ul>
+        </Card>
+      </div>
+
+      <div className='container px-8 lg:px-20'>
+        <Card>
+          <h3 className='text-4xl font-light mb-4'>{t('app.clipping.comments.title')}</h3>
+          {clipping?.clipping.comments.map(m => (
+            <Comment key={m.id} comment={m} />
+          ))}
+
+          {clipping && me && (
+            <CommentBox me={me} clippingID={clipping?.clipping.id} />
+          )}
         </Card>
       </div>
 
