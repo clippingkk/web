@@ -13,10 +13,10 @@ import { UserContent } from '../../store/user/type'
 
 function DevelopingAlert() {
   return (
-      <div className='my-12 rounded-sm text-6xl font-light shadow-2xl p-8 flex flex-col justify-center items-center dark:text-gray-300'>
-        <span>🤦‍♂️ </span>
-        <span>{t('app.common.closed')}</span>
-      </div>
+    <div className='my-12 rounded-sm text-6xl font-light shadow-2xl p-8 flex flex-col justify-center items-center dark:text-gray-300'>
+      <span>🤦‍♂️ </span>
+      <span>{t('app.common.closed')}</span>
+    </div>
   )
 }
 
@@ -35,13 +35,11 @@ function SquarePage() {
 
   const books = useMultipBook(data?.featuredClippings.map(x => x.bookID) || [])
 
-  const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-
   return (
     <section className='flex items-center justify-center flex-col'>
       <h2 className='text-5xl dark:text-gray-400'>Square</h2>
       <div className='flex flex-wrap w-full'>
-      {data?.featuredClippings.map(clipping => (
+        {data?.featuredClippings.map(clipping => (
           <ClippingItem
             item={clipping as any}
             userid={clipping.creator.id}
@@ -49,7 +47,7 @@ function SquarePage() {
             key={clipping.id}
             creator={clipping.creator}
           />
-      ))}
+        ))}
       </div>
     </section>
   )
