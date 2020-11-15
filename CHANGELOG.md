@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.0...v3.9.1) (2020-11-15)
+
+
+### Bug Fixes
+
+* **avatar:** fix avatar host ([034d954](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/034d95430855c80961d99ca2a16248c4e5f37000))
+
 ## [3.9.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.8.3...v3.9.0) (2020-11-15)
 
 
