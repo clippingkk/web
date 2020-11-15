@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.8.3...v3.9.0) (2020-11-15)
+
+
+### Features
+
+* **clipping:** add clipping visible toggle and update some issue ([5b5ca67](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5b5ca67d17fee3accd06c291663783f0f29ff23b))
+* **comment:** add comments ([7f972bc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7f972bc0c3f179d8d86cc4ce87b78646b5efc60f))
+* **profile:** add profile analysis data ([eca1520](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/eca1520f04b0558409ed3fad98e5c91c2904ee4f))
+* **schema:** add schema for user analysis and comment ([fa84c3e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fa84c3e0d2a3c23bd6eafabc4d04e53c057af892))
+* **square:** add square data ([b7ae0b8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b7ae0b82417be2f3e81e9df64a1cb60ebd6e453f))
+
+
+### Bug Fixes
+
+* **square:** fix format ([22c074d](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/22c074db6c9136a17b38bd96efb27fb92baa5519))
+
 ### [3.8.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.8.2...v3.8.3) (2020-11-04)
 
 
