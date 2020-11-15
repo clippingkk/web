@@ -12,6 +12,7 @@ import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
 
 function DevelopingAlert() {
+  const { t } = useTranslation()
   return (
     <div className='my-12 rounded-sm text-6xl font-light shadow-2xl p-8 flex flex-col justify-center items-center dark:text-gray-300'>
       <span>🤦‍♂️ </span>
@@ -38,7 +39,7 @@ function SquarePage() {
   return (
     <section className='flex items-center justify-center flex-col'>
       <h2 className='text-5xl dark:text-gray-400'>Square</h2>
-      <div className='flex flex-wrap w-full'>
+      <div className='flex flex-wrap w-full justify-center items-center'>
         {data?.featuredClippings.map(clipping => (
           <ClippingItem
             item={clipping as any}

@@ -8,7 +8,7 @@ function Footer() {
         target="_blank"
         className='no-underline text-black dark:text-gray-300'
       >
-        豫ICP备15003571号
+        {/* 豫ICP备15003571号 */}
         </a>
       <a
         href="https://annatarhe.com"

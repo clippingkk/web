@@ -1,0 +1,6 @@
+mutation toggleClippingVisible($ids: [Int!]!) {
+    toggleClippingVisible(ids: $ids) {
+        id
+        visible
+    }
+}

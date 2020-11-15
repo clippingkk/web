@@ -11,7 +11,7 @@ type CommentBoxProps = {
   me: UserContent
 }
 
-const COMMENT_MIN_LEN = 1
+const COMMENT_MIN_LEN = 100
 
 function CommentBox(props: CommentBoxProps) {
   const [content, setContent] = useState('')
@@ -56,7 +56,7 @@ function CommentBox(props: CommentBoxProps) {
       </div>
 
       <div className='flex flex-1 ml-8 flex-col justify-center items-end'>
-        <textarea className='w-full rounded border-none focus:scale-105 transition-transform duration-75 focus:outline-none p-4 text-lg'
+        <textarea className='w-full rounded border-none focus:scale-105 transition-transform duration-75 focus:outline-none p-4 text-lg dark:bg-gray-700'
           rows={8}
           value={content}
           onChange={e => setContent(e.target.value)}

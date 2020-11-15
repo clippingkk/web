@@ -5,8 +5,9 @@ import Card from '../../components/card/card'
 import Preview from '../../components/preview/preview'
 import { updateClippingBook } from '../../store/clippings/type'
 import fetchClippingQuery from '../../schema/clipping.graphql'
-import { useQuery } from '@apollo/client'
+import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { fetchClipping, fetchClippingVariables } from '../../schema/__generated__/fetchClipping'
+import Switch from 'react-input-switch'
 import { useSingleBook } from '../../hooks/book'
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
@@ -15,15 +16,14 @@ import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
 import CommentBox from './commentBox'
 import Comment from './comment'
+import { toggleClippingVisible, toggleClippingVisibleVariables } from '../../schema/mutations/__generated__/toggleClippingVisible'
+import toggleClippingVisibleMutation from '../../schema/mutations/toggle-clipping-visible.graphql'
 const styles = require('./clipping.css').default
 
 type TClippingPageProp = {
   userid: number
   clippingid: string
 }
-
-
-
 
 function ClippingPage(props: TClippingPageProp) {
   const { data: clipping } = useQuery<fetchClipping, fetchClippingVariables>(fetchClippingQuery, {
@@ -56,6 +56,9 @@ function ClippingPage(props: TClippingPageProp) {
 
   useTitle(book?.title)
   const { t } = useTranslation()
+
+  const client = useApolloClient()
+  const [execToggleClipping] = useMutation<toggleClippingVisible, toggleClippingVisibleVariables>(toggleClippingVisibleMutation)
 
   const clippingAtDate = clipping?.clipping ? new Date(clipping.clipping.createdAt) : new Date()
   const clippingAt = new Intl.
@@ -112,6 +115,28 @@ function ClippingPage(props: TClippingPageProp) {
                 {t('app.clipping.link')}
               </a>
             </li>
+            {clipping?.clipping.creator.id === me.id && (
+              <li className={styles.action}>
+                <div className={styles['action-btn'] + ' w-full flex items-center justify-between'}>
+                  <label htmlFor="">{t('app.clipping.visible')}</label>
+                  <Switch
+                    value={clipping?.clipping.visible ? 1 : 0}
+                    onChange={() => {
+                      if (!clipping) {
+                        return
+                      }
+                      execToggleClipping({
+                        variables: {
+                          ids: [clipping.clipping.id]
+                        }
+                      }).then(() => {
+                        client.resetStore()
+                      })
+                    }}
+                  />
+                </div>
+              </li>
+            )}
           </ul>
         </Card>
       </div>

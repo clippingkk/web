@@ -1,4 +1,6 @@
 app:
+    fold: fold
+    unfold: unfold
     common:
         closed: This feature is still under heavy development
 
@@ -37,9 +39,10 @@ app:
         at: Excerpted on
         preview: Preview
         save: Save
+        visible: 1Visible(public to others ?)
         comments:
             title: Comments
-            count: count
+            count: count, 100 words at least. Don't let your tongue before your thinking.
             submit: Submit
             placeholder: What do you think this clipping? You can write down and communicate with others.
             tip:

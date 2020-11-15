@@ -1,10 +1,10 @@
 import React from 'react'
-import { IClippingItem } from '../../services/clippings';
 import { Link } from '@reach/router';
 import Card from '../card/card';
 import { book_book_clippings } from '../../schema/__generated__/book'
 import { WenquBook } from '../../services/wenqu';
 import { fetchSquareData_featuredClippings_creator } from '../../schema/__generated__/fetchSquareData';
+import { useTranslation } from 'react-i18next';
 
 const styles = require('./clipping-item.css').default
 
@@ -16,6 +16,7 @@ type TClippingItemProps = {
 }
 
 function ClippingItem({ userid, item, book, creator }: TClippingItemProps) {
+  const { t } = useTranslation()
   return (
     <Link
       to={`/dash/${userid}/clippings/${item.id}`}
@@ -41,7 +42,7 @@ function ClippingItem({ userid, item, book, creator }: TClippingItemProps) {
                 <span>{creator.name}</span>
               </div>
               <div>
-                <span>{creator.clippingsCount}</span>
+                <span>{creator.clippingsCount} {t('app.profile.records')} </span>
               </div>
             </div>
           </React.Fragment>

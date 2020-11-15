@@ -1,4 +1,6 @@
 app:
+    fold: 折叠
+    unfold: 展开
     common:
         closed: 广场功能暂未开放哦~
     slogan: 整理, 展示, 复盘, 进步
@@ -36,10 +38,11 @@ app:
         at: 摘录于
         preview: 预览
         save: 保存
+        visible: 是否对他人可见
         comments:
             placeholder: 你觉得这段摘录怎么样？写下来分享给其他朋友吧~
             title: 评论
-            count: 个字
+            count: 个字, 至少为 100 个字. 学而不思则惘.
             submit: 提交
             tip:
                 tooShort: 太短了，再多想想？
