@@ -39,7 +39,7 @@ app:
         at: Excerpted on
         preview: Preview
         save: Save
-        visible: 1Visible(public to others ?)
+        visible: Visible(public to others ?)
         comments:
             title: Comments
             count: count, 100 words at least. Don't let your tongue before your thinking.

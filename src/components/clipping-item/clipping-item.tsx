@@ -5,6 +5,7 @@ import { book_book_clippings } from '../../schema/__generated__/book'
 import { WenquBook } from '../../services/wenqu';
 import { fetchSquareData_featuredClippings_creator } from '../../schema/__generated__/fetchSquareData';
 import { useTranslation } from 'react-i18next';
+import Avatar from '../avatar/avatar';
 
 const styles = require('./clipping-item.css').default
 
@@ -34,11 +35,11 @@ function ClippingItem({ userid, item, book, creator }: TClippingItemProps) {
             <hr className='my-4 self-end' />
             <div className='flex w-full justify-between'>
               <div className='flex justify-center items-center'>
-                <img
-                  src={creator.avatar}
-                  alt={creator.name}
-                  className='w-10 h-10 rounded-full mr-4'
-                />
+                <Avatar
+                 img={creator.avatar}
+                  name={creator.name}
+                  className='w-10 h-10 mr-4'
+                 />
                 <span>{creator.name}</span>
               </div>
               <div>

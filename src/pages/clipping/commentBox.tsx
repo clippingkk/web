@@ -5,6 +5,7 @@ import createCommentMutation from '../../schema/mutations/create-comment.graphql
 import { createComment, createCommentVariables } from '../../schema/mutations/__generated__/createComment'
 import swal from 'sweetalert'
 import { useTranslation } from 'react-i18next'
+import Avatar from '../../components/avatar/avatar'
 
 type CommentBoxProps = {
   clippingID: number
@@ -47,11 +48,7 @@ function CommentBox(props: CommentBoxProps) {
   return (
     <div className='flex container'>
       <div className='flex flex-col mt-4'>
-        <img
-          src={props.me.avatar}
-          alt={props.me.name}
-          className='w-24 rounded-full'
-        />
+        <Avatar img={props.me.avatar} name={props.me.name} />
         <h5 className='w-24 mt-4 text-center'>{props.me.name}</h5>
       </div>
 
