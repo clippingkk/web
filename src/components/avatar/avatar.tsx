@@ -8,11 +8,19 @@ type AvatarProps = {
 
 function Avatar(props: AvatarProps) {
   const avatar = props.img.startsWith('http') ? props.img : `https://clippingkk-cdn.annatarhe.com/${props.img}-copyrightDB`
+
+  let cls = props.className || ''
+
+  if (!cls && !cls.includes('w-')) {
+    cls += ' w-24 h-24'
+  }
+  console.log(cls, props.className)
+
   return (
     <img
       src={avatar}
       alt={props.name}
-      className={'w-24 h-24 rounded-full ' + props.className}
+      className={'rounded-full ' + cls}
     />
   )
 }

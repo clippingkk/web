@@ -127,8 +127,9 @@ const config = {
       includeSourcemap: process.env.NODE_ENV !== 'production'
     }),
     new webpack.DefinePlugin({
-      __DEV__: process.env.NODE_ENV === 'development',
-      'env.NODE_ENV': process.env.NODE_ENV
+      __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
+      'env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      __VERSION__: JSON.stringify(process.env.VERSION || 'dev')
     }),
     new webpack.LoaderOptionsPlugin({
       debug: true,
