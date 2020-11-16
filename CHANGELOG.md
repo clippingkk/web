@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.1...v3.9.2) (2020-11-16)
+
+
+### Features
+
+* **logo:** replace logo, fix avatar size issue and update copyright info ([0046bb9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0046bb963715f7c68bde6eff98b25216b91d8e34))
+
 ### [3.9.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.0...v3.9.1) (2020-11-15)
 
 
