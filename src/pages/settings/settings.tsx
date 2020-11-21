@@ -6,12 +6,12 @@ import { useTranslation } from 'react-i18next'
 type SettingsPageProps = {
 }
 
-const darkModeClassName = 'mode-dark'
+const darkModeClassName = 'dark'
 
 function useDarkModeStatus() {
   const [is, setIs] = useState(false)
   useEffect(() => {
-    const isDarkTheme = document.querySelector('html')?.classList.contains('mode-dark')
+    const isDarkTheme = document.querySelector('html')?.classList.contains(darkModeClassName)
     setIs(isDarkTheme ?? false)
   }, [])
   const onDarkThemeChange = useCallback((v) => {

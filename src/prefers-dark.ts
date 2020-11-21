@@ -10,9 +10,9 @@ function watchDarkMode() {
 
 function addDarkModeSelector() {
   if (checkDarkMode()) {
-    document.documentElement.classList.add('mode-dark');
+    document.documentElement.classList.add('dark')
   } else {
-    document.documentElement.classList.remove('mode-dark');
+    document.documentElement.classList.remove('dark')
   }
 }
 
