@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.4...v3.9.6) (2020-11-21)
+
+
+### Features
+
+* **deps:** upgrade deps ([7ff1972](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7ff19722a8335f243c04386427330a89d15ea9d8))
+
+
+### Bug Fixes
+
+* **ci:** fix github action env issue ([152431e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/152431e18ec867f251588c2b0a8f1b40ef16a52a))
+
 ### [3.9.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.3...v3.9.4) (2020-11-21)
 
 
