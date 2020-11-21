@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.6...v3.9.7) (2020-11-21)
+
+
+### Bug Fixes
+
+* **index:** fix index text color in dark mode ([21ec404](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/21ec404f903b757c2ac454754f28a9bb2f8f4f19))
+
 ### [3.9.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.4...v3.9.6) (2020-11-21)
 
 
