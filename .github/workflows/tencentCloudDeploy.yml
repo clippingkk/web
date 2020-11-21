@@ -29,7 +29,7 @@ jobs:
         COVERALLS_REPO_TOKEN : ${{ secrets.CODEALLS_REPO_TOKEN }}
     - name: Build
       run: |
-        echo "::set-env name=VERSION::v${GITHUB_REF/refs\/tags\//}"
+        echo "VERSION=$(echo $GITHUB_REF | awk -F / '{print $3}')" >> $GITHUB_ENV
         npm run build
     
     - name: Deploy static to Tencent CloudBase
