@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.3...v3.9.4) (2020-11-21)
+
+
+### Bug Fixes
+
+* **ci:** try to fix ci ([3eaf4cb](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3eaf4cb03648358e994d8c434be5781b458bb4ea))
+* **index:** fix text color in dark mode ([d471122](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d4711224b5997d0236afdb1b05802611824c3e9e))
+
 ### [3.9.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.2...v3.9.3) (2020-11-16)
 
 
