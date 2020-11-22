@@ -36,9 +36,8 @@ function LoadingModal(props: LoadingModalProps) {
         progress={(props.at / props.count * 100)}
         message={props.message}
       /> */}
-        <h2 className='text-3xl mb-8'>上传中，请稍后...</h2>
+        <h2 className='text-3xl mb-8'>{t('app.upload.tips.extracting')}</h2>
         <AnimateOnChange>
-
           <span className='block text-6xl'>
             {props.stepAt !== UploadStep.Done && props.stepAt !== UploadStep.Error && (
               <span className='animate-bounce'>
