@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.7...v3.9.8) (2020-11-22)
+
+
+### Features
+
+* **help:** update help video ([76e665f](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/76e665fab05eda44d234b02c1ae235be437f93a0))
+
 ### [3.9.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.6...v3.9.7) (2020-11-21)
 
 
