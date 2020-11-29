@@ -18,6 +18,7 @@ import CommentBox from './commentBox'
 import Comment from './comment'
 import { toggleClippingVisible, toggleClippingVisibleVariables } from '../../schema/mutations/__generated__/toggleClippingVisible'
 import toggleClippingVisibleMutation from '../../schema/mutations/toggle-clipping-visible.graphql'
+import { useLocalTime } from '../../hooks/time'
 const styles = require('./clipping.css').default
 
 type TClippingPageProp = {
@@ -60,16 +61,7 @@ function ClippingPage(props: TClippingPageProp) {
   const client = useApolloClient()
   const [execToggleClipping] = useMutation<toggleClippingVisible, toggleClippingVisibleVariables>(toggleClippingVisibleMutation)
 
-  const clippingAtDate = clipping?.clipping ? new Date(clipping.clipping.createdAt) : new Date()
-  const clippingAt = new Intl.
-    DateTimeFormat(
-      navigator.language,
-      {
-        hour: 'numeric', minute: 'numeric',
-        year: 'numeric', month: 'numeric', day: 'numeric',
-      }
-    ).
-    format(clippingAtDate)
+  const clippingAt = useLocalTime(clipping?.clipping.createdAt)
 
   const clippingContent = clipping?.clipping.content.replace(/\[\d*\]/, '')
 
@@ -154,11 +146,13 @@ function ClippingPage(props: TClippingPageProp) {
         </Card>
       </div>
 
-      {sharePreviewVisible && clipping?.clipping.content && (
+      {sharePreviewVisible &&
+       clipping?.clipping.content &&
+       book && (
         <Preview
           onCancel={togglePreviewVisible}
           onOk={togglePreviewVisible}
-          background={book!.image}
+          background={book.image}
           clipping={clipping.clipping}
           book={book}
         />
