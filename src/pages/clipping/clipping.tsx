@@ -32,7 +32,7 @@ function ClippingPage(props: TClippingPageProp) {
     }
   })
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-  const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
+  const [sharePreviewVisible, setSharePreviewVisible] = useState(true)
   const dispatch = useDispatch()
 
   const togglePreviewVisible = useCallback(() => {
