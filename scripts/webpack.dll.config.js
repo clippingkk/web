@@ -2,6 +2,8 @@ const webpack = require('webpack')
 const path = require('path')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+const __DEV__ = process.env.NODE_ENV !== 'production'
+
 // split your chunks
 const vendors = [
   'whatwg-fetch',
@@ -28,12 +30,12 @@ const reacts = [
   '@apollo/client'
 ]
 
-const distDirname = 'dist' + (process.env.NODE_ENV !== 'production' ? '-dev' : '')
+const distDirname = 'dist' + (__DEV__ ? '-dev' : '')
 
 const config = {
   output: {
     path: path.resolve(__dirname, '..', distDirname),
-    filename: '[name]_[contenthash].dll.js',
+    filename: `[name]_[${__DEV__ ? 'id' : 'contenthash'}].dll.js`,
     library: '[name]'
   },
   entry: {
@@ -58,10 +60,6 @@ const config = {
 if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
     new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } })
-  )
-} else {
-  config.plugins.push(
-    new webpack.HotModuleReplacementPlugin()
   )
 }
 

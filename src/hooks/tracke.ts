@@ -3,6 +3,9 @@ import mixpanel from "mixpanel-browser";
 
 export function usePageTrack(page: string, params?: any) {
   useEffect(() => {
+    if (__DEV__) {
+      return
+    }
     mixpanel.track(`pv:in:${page}`, {
       ...(params || {})
     })
@@ -14,6 +17,9 @@ export function usePageTrack(page: string, params?: any) {
 
 export function useActionTrack(action: string, params?: any) {
   return useCallback(() => {
+    if (__DEV__) {
+      return
+    }
     mixpanel.track('action:' + action, params)
   }, [action, params])
 }

@@ -1,38 +1,6 @@
 @value colors: '../../styles/variables.css';
 @value primary-text-color, blur-background, primary-blue from colors;
 
-.auth {
-  display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(red, rgba(33,150,243,.9));
-}
-
-.tabs {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-}
-
-.tab {
-  display: flex;
-  padding: 1rem;
-  font-size: 1.8rem;
-  background-color: blur-background;
-  transition: background-color .35s;
-}
-
-.tab:hover {
-  background-color: aqua;
-}
-
-.tab.link-active {
-  background-color: aqua;
-}
-
 .form {
   display: flex;
   flex-direction: column;

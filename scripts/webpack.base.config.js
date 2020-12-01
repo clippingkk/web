@@ -10,6 +10,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
 const config = {
+  cache: true,
   mode: process.env.NODE_ENV,
   target: 'web',
   entry: [
@@ -21,7 +22,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, '..', 'dist' + (__DEV__ ? '-dev' : '')),
     publicPath: '/',
-    filename: 'bundle.[contenthash].js'
+    filename: `bundle${__DEV__ ? '.[id]' : '.[contenthash]'}.js`
   },
   module: {
     rules: [{
@@ -154,17 +155,17 @@ const config = {
       maxInitialRequests: 30,
       automaticNameDelimiter: '~',
       enforceSizeThreshold: 50000,
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
+      // cacheGroups: {
+      //   defaultVendors: {
+      //     test: /[\\/]node_modules[\\/]/,
+      //     priority: -10
+      //   },
+      //   default: {
+      //     minChunks: 2,
+      //     priority: -20,
+      //     reuseExistingChunk: true
+      //   }
+      // }
     }
   },
   resolve: {

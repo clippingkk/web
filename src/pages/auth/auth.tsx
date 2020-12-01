@@ -12,15 +12,15 @@ import SignInWithApple from '../../components/sign-in-with-apple/sign-in-with-ap
 const styles = require('./auth.css').default
 
 function checkIsCurrentPath({ isCurrent }: any) {
+  console.log('is curr', isCurrent)
   return {
-    className: `${styles.tab} ${isCurrent ? styles.linkActive : ''}`
+    className: `flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${isCurrent ? 'bg-indigo-400' : ''}`
   }
 }
 
 type AuthPageProps = {
   children: React.ReactElement
 }
-
 
 function showMobileAlert() {
   if (screen.width > 720) {
@@ -37,10 +37,11 @@ function AuthPage(props: AuthPageProps) {
   usePageTrack('auth')
   useEffect(() => {
     showMobileAlert()
-    const uid = profile.uid
-    if (uid && uid > 0) {
-      navigate(`/dash/${uid}/home`)
-    }
+    // FIXME: uncomment next lines before commit
+    // const uid = profile.uid
+    // if (uid && uid > 0) {
+    //   navigate(`/dash/${uid}/home`)
+    // }
   }, [])
 
   const { t } = useTranslation()
@@ -48,26 +49,22 @@ function AuthPage(props: AuthPageProps) {
   const onGithubClick = useActionTrack('login:github')
 
   return (
-    <section className={styles.auth}>
+    <section className='anna-page-container flex h-screen items-center justify-center'>
       <Card>
-        <div className={styles.tabs}>
+        <div className='w-full flex items-center justify-center rounded'>
           <Link
             to="/auth/signup"
-            className={styles.tab}
             getProps={checkIsCurrentPath}
           >{t('app.auth.signup')}</Link>
           <Link
             to="/auth/signin"
-            className={styles.tab}
             getProps={checkIsCurrentPath}
           >{t('app.auth.signin')}</Link>
         </div>
-        <hr />
+        <hr className='my-2' />
         {props.children}
-
-        <hr />
-
-        <div className={styles.oauth}>
+        <hr className='my-2' />
+        <div className='flex items-center justify-center'>
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
             className={styles.oauthLink}

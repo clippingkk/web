@@ -11,70 +11,76 @@ import { TUploadResponse, uploadImage } from '../../services/misc'
 import swal from 'sweetalert'
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 const styles = require('./auth.css').default
 
 function Signup() {
-  const [email, setEmail] = useState('')
-  const [pwd, setPwd] = useState('')
-  const [name, setName] = useState('')
-  const [avatarFile, setAvatarFile] = useState({} as File)
-
-  const isDisabled = email === '' || pwd === '' || name === '' || !avatarFile
-
   const [exec, result] = useMutation<signup, signupVariables>(signupQuery)
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      pwd: '',
+      name: '',
+      avatarFile: null as File | null
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Invalid email').required('Required'),
+      pwd: Yup.string().min(6).max(128).required(),
+      name: Yup.string().max(128).required(),
+      avatarFile: Yup.mixed().required()
+    }),
+    async onSubmit(values) {
+      if (!formik.isValid) return
+      if (!values.avatarFile) return
 
-  async function signup(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    if (isDisabled) {
-      return
-    }
-    const fpResult = await fp2.getPromise({ excludes: { userAgent: true } })
+      const fpResult = await fp2.getPromise({ excludes: { userAgent: true } })
+      const fp = (fpResult.find(x => x.key === 'canvas') as fp2.Component)
+        .value[1].split(',')[1]
 
-    const fp = (fpResult.find(x => x.key === 'canvas') as fp2.Component)
-      .value[1].split(',')[1]
+      let resp: TUploadResponse
 
-    let resp: TUploadResponse
-
-    try {
-      resp = await uploadImage(avatarFile)
-    } catch (e) {
-      swal({
-        icon: 'error',
-        title: "upload image failed"
-      })
-      throw e
-    }
-
-    exec({
-      variables: {
-        payload: {
-          email,
-          password: pwd,
-          name: name,
-          fingerPrint: fp,
-          avatarUrl: resp.filePath
-        }
+      try {
+        resp = await uploadImage(values.avatarFile)
+      } catch (e) {
+        swal({
+          icon: 'error',
+          title: "upload image failed"
+        })
+        throw e
       }
-    })
-  }
+
+      exec({
+        variables: {
+          payload: {
+            email: values.email,
+            password: values.pwd,
+            name: values.name,
+            fingerPrint: fp,
+            avatarUrl: resp.filePath
+          }
+        }
+      })
+    }
+  })
 
   useAuthSuccessed(result.called, result.loading, result.error, result.data?.signup)
   const { t } = useTranslation()
 
   useTitle('signup')
+  const formDisabled = formik.isSubmitting || (!formik.isValid)
 
   return (
-    <form className={styles.form} onSubmit={signup}>
+    <form className={styles.form} onSubmit={formik.handleSubmit}>
       <div className={styles.field}>
         <label htmlFor="email" className={styles.label}>邮箱: </label>
         <input
           type="email"
           className={styles.input}
-          value={email}
+          value={formik.values.email}
           placeholder="email"
-          onChange={e => {
-            setEmail(e.target.value)
-          }}
+          name='email'
+          onChange={formik.handleChange}
         />
       </div>
       <div className={styles.field}>
@@ -82,12 +88,11 @@ function Signup() {
         <input
           type="password"
           className={styles.input}
-          value={pwd}
+          value={formik.values.pwd}
           minLength={6}
           placeholder="password"
-          onChange={e => {
-            setPwd(e.target.value)
-          }}
+          name='pwd'
+          onChange={formik.handleChange}
         />
       </div>
       <div className={styles.field}>
@@ -95,15 +100,14 @@ function Signup() {
         <input
           type="text"
           className={styles.input}
-          value={name}
+          value={formik.values.name}
           placeholder={t('app.auth.username')}
-          onChange={e => {
-            setName(e.target.value)
-          }}
+          name='name'
+          onChange={formik.handleChange}
         />
       </div>
       <div className={styles.field}>
-        <label htmlFor="username" className={styles.label}>头像: </label>
+        <label htmlFor="avatar" className={styles.label}>头像: </label>
         <input
           type="file"
           className={styles.input}
@@ -114,7 +118,7 @@ function Signup() {
               return
             }
             const f = e.target.files[0]
-            setAvatarFile(f)
+            formik.setFieldValue('avatarFile', f)
           }}
         />
       </div>
@@ -123,9 +127,8 @@ function Signup() {
         <h5 className='bg-red-600 text-white p-4 rounded w-full text-xl'>{result.error?.message}</h5>
       )}
       <button
-        className='mt-4 bg-blue-600 text-gray-100 text-3xl rounded-lg p-4'
+        className={'mt-4 text-gray-100 text-3xl rounded-lg p-4 duration-300 ' + (formDisabled ? 'bg-gray-400' : 'bg-blue-400 hover:bg-blue-600')}
         type="submit"
-        disabled={isDisabled}
       >
         let me in
       </button>
