@@ -9,7 +9,6 @@ import { usePageTrack, useActionTrack } from '../../hooks/tracke';
 import profile from '../../utils/profile';
 import { useTranslation } from 'react-i18next';
 import SignInWithApple from '../../components/sign-in-with-apple/sign-in-with-apple';
-const styles = require('./auth.css').default
 
 function checkIsCurrentPath({ isCurrent }: any) {
   console.log('is curr', isCurrent)
@@ -38,10 +37,10 @@ function AuthPage(props: AuthPageProps) {
   useEffect(() => {
     showMobileAlert()
     // FIXME: uncomment next lines before commit
-    // const uid = profile.uid
-    // if (uid && uid > 0) {
-    //   navigate(`/dash/${uid}/home`)
-    // }
+    const uid = profile.uid
+    if (uid && uid > 0) {
+      navigate(`/dash/${uid}/home`)
+    }
   }, [])
 
   const { t } = useTranslation()
@@ -67,7 +66,6 @@ function AuthPage(props: AuthPageProps) {
         <div className='flex items-center justify-center'>
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
-            className={styles.oauthLink}
             onClick={onGithubClick}
           >
             <FontAwesomeIcon icon={faGithub} size="3x" />

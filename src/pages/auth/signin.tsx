@@ -6,70 +6,65 @@ import { authVariables } from '../../schema/__generated__/auth'
 import { useAuthSuccessed } from './hooks';
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
-const styles = require('./auth.css').default
+import { useFormik } from 'formik'
+import FieldInput from './input'
+import * as Yup from 'yup'
 
 type TSigninProps = {
   path: string,
 }
 
 function Signin(props: TSigninProps) {
-  const [email, setEmail] = useState('')
-  const [pwd, setPwd] = useState('')
-
   const [exec, resp] = useLazyQuery<auth, authVariables>(authQuery)
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.auth)
 
-  function signin(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    if (isDisabled) {
-      return
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      pwd: ''
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Invalid email').required('Required'),
+      pwd: Yup.string().min(6).max(128).required(),
+    }),
+    onSubmit(values) {
+      if (!formik.isValid) return
+      exec({
+        variables: {
+          email: values.email,
+          password: values.pwd
+        }
+      })
     }
-    exec({
-      variables: {
-        email: email,
-        password: pwd
-      }
-    })
-  }
+  })
 
   useTitle('signin')
   const { t } = useTranslation()
 
-  const isDisabled = email === '' || pwd === '' || resp.loading
+  const formDisabled = formik.isSubmitting || (!formik.isValid)
 
   return (
-    <form className={styles.form} onSubmit={signin}>
-      <div className={styles.field}>
-        <label htmlFor="username" className={styles.label}>{t('app.auth.email')}: </label>
-        <input
-          type="email"
-          className={styles.input}
-          value={email}
-          placeholder="email"
-          onChange={e => {
-            setEmail(e.target.value)
-          }}
-        />
-      </div>
-      <div className={styles.field}>
-        <label htmlFor="username" className={styles.label}>{t('app.auth.pwd')}: </label>
-        <input
-          type="password"
-          className={styles.input}
-          value={pwd}
-          placeholder="password"
-          onChange={e => {
-            setPwd(e.target.value)
-          }}
-        />
-      </div>
+    <form className='flex flex-col' onSubmit={formik.handleSubmit}>
+      <FieldInput
+        type='email'
+        name='email'
+        value={formik.values.email}
+        error={formik.errors.email}
+        onChange={formik.handleChange}
+      />
+      <FieldInput
+        type='password'
+        name='pwd'
+        value={formik.values.pwd}
+        error={formik.errors.pwd}
+        onChange={formik.handleChange}
+      />
       {resp.error && (
         <h5 className='bg-red-600 text-white p-4 rounded w-full text-xl'>{resp.error?.message}</h5>
       )}
       <button
-        className='mt-4 bg-blue-600 text-gray-100 text-3xl rounded-lg p-4'
+        className={'mt-4 text-gray-100 text-3xl rounded-lg p-4 duration-300 ' + (formDisabled ? 'bg-gray-400' : 'bg-blue-400 hover:bg-blue-600')}
         type="submit"
-        disabled={isDisabled}
       >
         {t('app.auth.submit')}
       </button>
