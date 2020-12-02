@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.8...v3.10.0) (2020-12-02)
+
+
+### Features
+
+* **auth:** update auth page logic and styles ([87c69ce](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/87c69ce358d89b642dbc8961385d542849908577))
+* **deps:** add deps to ready to migrate popup and preview component ([fc0d553](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fc0d553f6e0c8c084a8f56085c99cdbc73afa561))
+* **deps:** upgrade deps ([5113462](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5113462ea6d28c4f5ad3baf62f43f84ca350dd9f))
+
+
+### Bug Fixes
+
+* **index:** fix avatar object fit style ([2005b79](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2005b79f9bb2be3c0c34e3c21074a44edb99b58b))
+* **locals:** fix i18n text in upload page ([17a8cd8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/17a8cd879ed9251dc2172eb26291ff59214b73c7))
+
 ### [3.9.8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.9.7...v3.9.8) (2020-11-22)
 
 
