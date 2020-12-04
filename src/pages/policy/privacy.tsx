@@ -1,12 +1,11 @@
 import React from 'react'
 // import ReactMarkdown from 'react-markdown'
-import styles from './privacy.css'
 import { usePageTrack } from '../../hooks/tracke'
 
 function PrivacyPolicy() {
   usePageTrack('privacy')
   return (
-    <section className={`${styles.container} page`}>
+    <section className='page p-20'>
       <h1>Privacy Policy</h1>
       <p>Effective date: October 07, 2018</p>
 
