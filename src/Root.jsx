@@ -22,6 +22,7 @@ const GithubOAuthPage = React.lazy(() => import(/* webpackPrefetch: true */ './p
 const ProfilePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/profile/profile'))
 const UncheckedPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/unchecked/unchecked'))
 const SettingsPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/settings/settings'))
+const ReportYearlyPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/report/yearly'))
 
 class Root extends React.Component {
   render() {
@@ -32,6 +33,7 @@ class Root extends React.Component {
             <IndexPage path="/" />
             <PrivacyPolicy path="/policy/privacy" />
             <ReleasePage path="/release/:platform" />
+            <ReportYearlyPage path='/report/yearly' />
             <AuthPage path="/auth">
               <SigninPage path="signin" />
               <SignupPage path="signup" />
