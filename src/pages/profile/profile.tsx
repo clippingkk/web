@@ -14,6 +14,7 @@ import WechatBindButton from './bind';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import Avatar from '../../components/avatar/avatar';
+import { Link } from '@reach/router';
 
 const styles = require('./profile.css').default
 
@@ -61,6 +62,12 @@ function Profile(props: TProfileProps) {
               {!data?.me.wechatOpenid && (
                 <WechatBindButton />
               )}
+              <Link
+               to={`/report/yearly?uid=${data?.me.id}`}
+               className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
+              >
+                {t('app.profile.report.yearlyTitle')}
+                </Link>
             </div>
           </div>
 

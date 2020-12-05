@@ -80,6 +80,8 @@ app:
         recents: 最近动态
         wechatBind: 微信小程序绑定
         wechatBindTip: 使用 clippingKK 小程序 个人中心扫码即可绑定
+        report:
+            yearlyTitle: 年度报告
     settings:
         title: 全局配置(网站)
         theme: 黑暗模式

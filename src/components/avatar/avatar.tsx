@@ -14,7 +14,6 @@ function Avatar(props: AvatarProps) {
   if (!cls && !cls.includes('w-')) {
     cls += ' w-24 h-24'
   }
-  console.log(cls, props.className)
 
   return (
     <img
