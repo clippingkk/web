@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.11.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.10.1...v3.11.0) (2020-12-05)
+
+
+### Features
+
+* **report:** add report page entrance ([b66ee25](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b66ee2552963b2f7fadc7a9e8876c973f95f28f4))
+* **report:** add yearly report data ([6dac358](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6dac358be7b29842cee749735a9fb47aeccf82b3))
+
 ### [3.10.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.10.0...v3.10.1) (2020-12-02)
 
 
