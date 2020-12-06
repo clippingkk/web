@@ -41,9 +41,8 @@ function ReportYearly(props: ReportYearlyProps) {
   useTitle(`${data?.reportYearly.user.name} 的 ${year} 年读书数据`)
 
   return (
-    <div className='w-full anna-page-container py-28 flex justify-center items-center'>
-
-      <div className='container '>
+    <div className='w-full anna-page-container py-28 flex justify-center items-center h-min-screen'>
+      <div className='container anna-page-container'>
         <a
           className='flex fixed top-0 left-0 w-full p-4 bg-gray-200 dark:bg-gray-700 items-center justify-around z-50'
           href='https://clippingkk.annatarhe.com'
@@ -68,7 +67,9 @@ function ReportYearly(props: ReportYearlyProps) {
       </p>
         <ul className='flex justify-center items-center flex-wrap'>
           {books.map(b => (
-            <div className='flex flex-col justify-center items-center' key={b.id}>
+            <div
+             className='flex flex-col justify-center items-center w-full xl:w-1/2'
+            key={b.id}>
               <PublicBookItem book={b} />
               <span className='dark:text-gray-200 text-xl'>
                 摘录了 {data?.reportYearly.books.find(v => ~~v.doubanId === b.doubanId)?.clippingsCount ?? 0} 条书摘
