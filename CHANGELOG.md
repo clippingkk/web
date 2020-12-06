@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.1...v3.11.2) (2020-12-06)
+
+
+### Bug Fixes
+
+* **style:** remove google fonts and update report page ([ed5d634](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ed5d634b08e2cbd4bae86b94ed5d265cf3936db1))
+
 ### [3.11.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.0...v3.11.1) (2020-12-06)
 
 
