@@ -42,7 +42,7 @@ app:
         comments:
             placeholder: 你觉得这段摘录怎么样？写下来分享给其他朋友吧~
             title: 评论
-            count: 个字, 至少为 100 个字. 学而不思则惘.
+            count: 个字, 至少为 40 个字. 学而不思则惘.
             submit: 提交
             tip:
                 tooShort: 太短了，再多想想？

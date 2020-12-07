@@ -42,7 +42,7 @@ app:
         visible: Visible(public to others ?)
         comments:
             title: Comments
-            count: count, 100 words at least. Don't let your tongue before your thinking.
+            count: count, 40 words at least. Don't let your tongue before your thinking.
             submit: Submit
             placeholder: What do you think this clipping? You can write down and communicate with others.
             tip:
