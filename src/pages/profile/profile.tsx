@@ -55,7 +55,7 @@ function Profile(props: TProfileProps) {
         <div className='flex flex-col items-center justify-center w-full'>
 
           <div className='w-full flex items-center justify-center'>
-            <Avatar img={data?.me.avatar ?? ''} name={data?.me.name} className='w-32 h-32 mr-12' />
+            <Avatar img={data?.me.avatar ?? ''} name={data?.me.name} className='w-16 h-16 mr-12 lg:w-32 lg:h-32' />
             <div className={styles.info}>
               <h3 className='text-2xl'>{data?.me.name}</h3>
               <h5 className='text-lg text-gray-800'>{t('app.profile.collected')} {data?.me.clippingsCount} {t('app.profile.records')}</h5>

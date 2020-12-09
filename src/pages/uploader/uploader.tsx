@@ -193,12 +193,12 @@ function UploaderPage() {
       >
         {/* <FontAwesomeIcon icon="cloud-upload-alt" color="#ffffff" size="8x" /> */}
         <span className='text-6xl'>🎈</span>
-        <h3 className='text-3xl dark:text-gray-300 text-center'>{t('app.upload.tip')}</h3>
+        <h3 className='text-2xl lg:text-3xl dark:text-gray-300 text-center'>{t('app.upload.tip')}</h3>
       </div>
 
       <div className='mt-4 w-10/12 mx-auto'>
         <label className='w-full flex items-center justify-around'>
-          <span className=' text-xl dark:text-gray-300'>
+          <span className='lg:text-xl dark:text-gray-300'>
             <AnimateOnChange>
             {t(`app.upload.private.${isOn ? 'on' : 'off'}`)}
             </AnimateOnChange>
