@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:dll": "cross-env NODE_ENV=development webpack --config scripts/webpack.dll.config.js",
-    "dev": "cross-env NODE_ENV=development webpack --watch --config scripts/webpack.dev.config.js",
+    "dev": "cross-env NODE_ENV=development webpack serve --config scripts/webpack.dev.config.js",
     "prod:dll": "cross-env NODE_ENV=production webpack -p --config scripts/webpack.dll.config.js",
     "prod": "cross-env NODE_ENV=production webpack -p --config scripts/webpack.prod.config.js",
     "mock": "json-server mock/db.js --routes mock/routes.json --port 9000",

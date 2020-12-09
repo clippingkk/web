@@ -65,7 +65,7 @@ const config = {
         // /node_modules/,
       ],
       use: [
-        MiniCssExtractPlugin.loader,
+        __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
         'css-loader',
         'postcss-loader'
       ]
@@ -111,18 +111,14 @@ const config = {
       inject: 'body',
       chunks: ['main', 'common', 'manifest', 'styles'],
     }),
-    new MiniCssExtractPlugin({
-      filename: "app.[contenthash].css",
-      chunkFilename: "[id].[contenthash].css"
-    }),
-    new OptimizeCssAssetsPlugin({
-      // assetNameRegExp: /\.optimize\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }],
-      },
-      canPrint: true
-    }),
+    // new OptimizeCssAssetsPlugin({
+      // // assetNameRegExp: /\.optimize\.css$/g,
+      // cssProcessor: require('cssnano'),
+      // cssProcessorPluginOptions: {
+        // preset: ['default', { discardComments: { removeAll: true } }],
+      // },
+      // canPrint: true
+    // }),
     new AddAssertHtmlPlugin({
       filepath: path.resolve(__dirname, '..', 'dist' + (__DEV__ ? '-dev' : ''), '*.dll.js'),
       includeSourcemap: process.env.NODE_ENV !== 'production'
