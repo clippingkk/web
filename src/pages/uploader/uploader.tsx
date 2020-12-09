@@ -193,7 +193,7 @@ function UploaderPage() {
       >
         {/* <FontAwesomeIcon icon="cloud-upload-alt" color="#ffffff" size="8x" /> */}
         <span className='text-6xl'>🎈</span>
-        <h3 className='text-3xl dark:text-gray-300'>{t('app.upload.tip')}</h3>
+        <h3 className='text-3xl dark:text-gray-300 text-center'>{t('app.upload.tip')}</h3>
       </div>
 
       <div className='mt-4 w-10/12 mx-auto'>

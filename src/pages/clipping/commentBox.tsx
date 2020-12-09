@@ -46,20 +46,24 @@ function CommentBox(props: CommentBoxProps) {
   }, [createCommentAction, props.clippingID, content])
 
   return (
-    <div className='flex container'>
-      <div className='flex flex-col mt-4'>
-        <Avatar img={props.me.avatar} name={props.me.name} />
-        <h5 className='w-24 mt-4 text-center'>{props.me.name}</h5>
+    <div className='flex container flex-col lg:flex-row'>
+      <div className='flex flex-row lg:flex-col my-4 lg:mb-0 items-center'>
+        <Avatar
+         img={props.me.avatar}
+         name={props.me.name}
+         className='w-12 h-12 lg:h-24 lg:w-24'
+          />
+        <h5 className='w-24 lg:mt-4 text-center'>{props.me.name}</h5>
       </div>
 
-      <div className='flex flex-1 ml-8 flex-col justify-center items-end'>
+      <div className='flex flex-1 lg:ml-8 flex-col justify-center items-end'>
         <textarea className='w-full rounded border-none focus:scale-105 transition-transform duration-75 focus:outline-none p-4 text-lg dark:bg-gray-700'
           rows={8}
           value={content}
           onChange={e => setContent(e.target.value)}
           placeholder={t('app.clipping.comments.placeholder')}
         />
-        <div className='w-full flex items-center justify-between px-4 mt-4'>
+        <div className='w-full flex-col lg:flex-row flex items-center justify-between px-4 mt-4'>
           <small>{content.length} {t('app.clipping.comments.count')}</small>
 
           <button

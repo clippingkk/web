@@ -67,21 +67,21 @@ function ClippingPage(props: TClippingPageProp) {
 
   return (
     <div className={`${styles.clipping} page anna-fade-in`}>
-      <div className='flex mt-40 py-0 px-2 lg:px-20'>
+      <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20'>
         <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
-          <h1 className='text-3xl font-bold my-2'>{clipping?.clipping.title}</h1>
-          <h3 className='font-light text-lg my-4'>{book?.author}</h3>
+          <h1 className='lg:text-3xl text-xl font-bold my-2'>{clipping?.clipping.title}</h1>
+          <h3 className='font-light lg:text-lg my-4'>{book?.author}</h3>
           <hr className='bg-gray-400 my-12' />
-          <p className='text-4xl leading-normal'>{clippingContent}</p>
+          <p className='lg:text-4xl text-2xl leading-normal'>{clippingContent}</p>
           <hr className='bg-gray-400 my-12' />
-          <time className='text-base font-light text-right w-full block mt-4 text-gray-700'>
+          <time className='lg:text-base text-sm font-light text-right w-full block mt-4 text-gray-700'>
             {t('app.clipping.at')}: {clippingAt}
           </time>
         </Card>
         {/** 再加一个作者简介 */}
-        <Card className={styles.addons}>
+        <Card className='flex-1 hidden lg:block'>
           <ul className={styles['action-list']}>
-            <li className={styles.action}>
+            <li className='w-full mb-4'>
               <button
                 className={styles['action-btn']}
                 onClick={updateClipping}
@@ -90,7 +90,7 @@ function ClippingPage(props: TClippingPageProp) {
               </button>
             </li>
 
-            <li className={styles.action}>
+            <li className='w-full mb-4'>
               <button
                 className={styles['action-btn']}
                 onClick={togglePreviewVisible}
@@ -98,7 +98,7 @@ function ClippingPage(props: TClippingPageProp) {
                 {t('app.clipping.shares')}
               </button>
             </li>
-            <li className={styles.action}>
+            <li className='w-full mb-4'>
               <a
                 href={`https://book.douban.com/subject/${book?.doubanId}`}
                 target="_blank"
@@ -108,7 +108,7 @@ function ClippingPage(props: TClippingPageProp) {
               </a>
             </li>
             {clipping?.clipping.creator.id === me.id && (
-              <li className={styles.action}>
+              <li className='w-full mb-4'>
                 <div className={styles['action-btn'] + ' w-full flex items-center justify-between'}>
                   <label htmlFor="">{t('app.clipping.visible')}</label>
                   <Switch
@@ -133,9 +133,9 @@ function ClippingPage(props: TClippingPageProp) {
         </Card>
       </div>
 
-      <div className='container px-8 lg:px-20'>
+      <div className='container px-2 lg:px-20'>
         <Card>
-          <h3 className='text-4xl font-light mb-4'>{t('app.clipping.comments.title')}</h3>
+          <h3 className='text-2xl lg:text-4xl font-light lg:mb-4'>{t('app.clipping.comments.title')}</h3>
           {clipping?.clipping.comments.map(m => (
             <Comment key={m.id} comment={m} />
           ))}
