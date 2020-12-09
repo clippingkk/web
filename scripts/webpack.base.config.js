@@ -5,6 +5,7 @@ const AddAssertHtmlPlugin = require('add-asset-html-webpack-plugin')
 const poststylus = require('poststylus')
 const values = require('postcss-modules-values')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
@@ -28,11 +29,29 @@ const config = {
     rules: [{
       test: /.[jm]sx?$/,
       exclude: /node_modules/,
-      use: ['babel-loader']
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              __DEV__ && require.resolve('react-refresh/babel')
+            ].filter(Boolean)
+          }
+        }
+      ]
     }, {
       test: /.tsx?$/,
       exclude: /node_modules/,
-      use: [{
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              __DEV__ && require.resolve('react-refresh/babel')
+            ].filter(Boolean)
+          }
+        },
+        {
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
@@ -65,7 +84,7 @@ const config = {
         // /node_modules/,
       ],
       use: [
-        MiniCssExtractPlugin.loader,
+        __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
         'css-loader',
         'postcss-loader'
       ]
@@ -111,18 +130,14 @@ const config = {
       inject: 'body',
       chunks: ['main', 'common', 'manifest', 'styles'],
     }),
-    new MiniCssExtractPlugin({
-      filename: "app.[contenthash].css",
-      chunkFilename: "[id].[contenthash].css"
-    }),
-    new OptimizeCssAssetsPlugin({
-      // assetNameRegExp: /\.optimize\.css$/g,
-      cssProcessor: require('cssnano'),
-      cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }],
-      },
-      canPrint: true
-    }),
+    // new OptimizeCssAssetsPlugin({
+      // // assetNameRegExp: /\.optimize\.css$/g,
+      // cssProcessor: require('cssnano'),
+      // cssProcessorPluginOptions: {
+        // preset: ['default', { discardComments: { removeAll: true } }],
+      // },
+      // canPrint: true
+    // }),
     new AddAssertHtmlPlugin({
       filepath: path.resolve(__dirname, '..', 'dist' + (__DEV__ ? '-dev' : ''), '*.dll.js'),
       includeSourcemap: process.env.NODE_ENV !== 'production'
@@ -140,7 +155,8 @@ const config = {
         }
       }
     }),
-  ],
+    __DEV__ && new ReactRefreshPlugin()
+  ].filter(Boolean),
   optimization: {
     runtimeChunk: {
       name: 'manifest',
@@ -149,7 +165,7 @@ const config = {
       chunks: 'async',
       minSize: 20000,
       minRemainingSize: 0,
-      maxSize: 0,
+      maxSize: 1 << 16,
       minChunks: 1,
       maxAsyncRequests: 30,
       maxInitialRequests: 30,

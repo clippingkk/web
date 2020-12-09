@@ -5,6 +5,10 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 config.output.publicPath = '/'
 
 config.plugins.push(
+  new MiniCssExtractPlugin({
+    filename: "app.[contenthash].css",
+    chunkFilename: "[id].[contenthash].css"
+  }),
   new BundleAnalyzerPlugin({
     analyzerMode: 'static'
   })

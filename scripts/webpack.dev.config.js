@@ -9,6 +9,7 @@ config.plugins.push(
 
 module.exports = {
   ...config,
+  // watch: true,
   optimization: {
     ...config.optimization,
     runtimeChunk: true,
