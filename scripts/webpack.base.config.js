@@ -5,6 +5,7 @@ const AddAssertHtmlPlugin = require('add-asset-html-webpack-plugin')
 const poststylus = require('poststylus')
 const values = require('postcss-modules-values')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
@@ -28,11 +29,29 @@ const config = {
     rules: [{
       test: /.[jm]sx?$/,
       exclude: /node_modules/,
-      use: ['babel-loader']
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              __DEV__ && require.resolve('react-refresh/babel')
+            ].filter(Boolean)
+          }
+        }
+      ]
     }, {
       test: /.tsx?$/,
       exclude: /node_modules/,
-      use: [{
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              __DEV__ && require.resolve('react-refresh/babel')
+            ].filter(Boolean)
+          }
+        },
+        {
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
@@ -136,7 +155,8 @@ const config = {
         }
       }
     }),
-  ],
+    __DEV__ && new ReactRefreshPlugin()
+  ].filter(Boolean),
   optimization: {
     runtimeChunk: {
       name: 'manifest',
