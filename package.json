@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:dll": "cross-env NODE_ENV=development webpack --config scripts/webpack.dll.config.js",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config scripts/webpack.dev.config.js",
+    "dev": "cross-env NODE_ENV=development webpack --watch --config scripts/webpack.dev.config.js",
     "prod:dll": "cross-env NODE_ENV=production webpack -p --config scripts/webpack.dll.config.js",
     "prod": "cross-env NODE_ENV=production webpack -p --config scripts/webpack.prod.config.js",
     "mock": "json-server mock/db.js --routes mock/routes.json --port 9000",
@@ -98,7 +98,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.9.0",
     "webpack-bundle-analyzer": "^4.1.0",
-    "webpack-cli": "^3.3.12",
+    "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.10.3",
     "yaml-loader": "^0.6.0"
   },

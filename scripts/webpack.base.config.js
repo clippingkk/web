@@ -149,7 +149,7 @@ const config = {
       chunks: 'async',
       minSize: 20000,
       minRemainingSize: 0,
-      maxSize: 0,
+      maxSize: 1 << 16,
       minChunks: 1,
       maxAsyncRequests: 30,
       maxInitialRequests: 30,
