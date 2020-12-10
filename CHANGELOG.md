@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.2...v3.11.3) (2020-12-10)
+
+
+### Features
+
+* **comment:** set comment lowest limit to 40 words ([cdc674b](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cdc674bcc9b8e0636631bdee98bcc603b3c7428d))
+* **responsive:** fix phone screen display issue ([4389470](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/438947087a0a8137c7ff571a42200262d3bf23f7))
+* **responsive:** fix profile and clipping card in phone size ([c190f35](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c190f35eedba23e924e0de0a3c2082e49734f202))
+
+
+### Bug Fixes
+
+* **test:** fix test env ([17e3219](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/17e32199509114296cfde4c98eb389eb1f9f542c))
+
 ### [3.11.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.1...v3.11.2) (2020-12-06)
 
 
