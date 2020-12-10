@@ -1,6 +1,7 @@
 const config = require('./webpack.base.config')
 const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 config.output.publicPath = '/'
 
