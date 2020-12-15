@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.4...v3.11.5) (2020-12-15)
+
+
+### Features
+
+* **index:** update index hero bg picture ([17328c9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/17328c9e453bd96551940f231150a9273721e0a9))
+
 ### [3.11.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.3...v3.11.4) (2020-12-10)
 
 
