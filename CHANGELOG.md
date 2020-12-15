@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.5...v3.11.6) (2020-12-15)
+
+
+### Bug Fixes
+
+* **clipping:** update clipping detail leading loose ([c8a4ff8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c8a4ff84c048fd862dec8c472db113e314de8ef4))
+
 ### [3.11.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.4...v3.11.5) (2020-12-15)
 
 
