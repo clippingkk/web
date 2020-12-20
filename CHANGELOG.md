@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.6...v3.12.0) (2020-12-20)
+
+
+### Features
+
+* **search:** add searchbar ([8c0a1c6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8c0a1c6bfa72b495347475e1c8df9556e2f2e7d0))
+
+
+### Bug Fixes
+
+* **package:** remove node gyp dep ([bcd3441](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/bcd3441b8af9d7e804f3bebbcb01bfb28b436403))
+* **qrcode:** remove qrcode that need node gyp ([0430ee6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0430ee64f119b703d4f3bcb8490e2ca6936f8b88))
+
 ### [3.11.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.5...v3.11.6) (2020-12-15)
 
 
