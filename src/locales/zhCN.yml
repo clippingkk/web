@@ -12,6 +12,8 @@ app:
         my: 我的信息
         settings: 设置
         logout: 退出
+        search:
+            empty: 没有数据
     public:
         readings: 大家在读
         readers: 这些朋友爱读书

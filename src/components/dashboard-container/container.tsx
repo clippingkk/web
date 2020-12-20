@@ -3,6 +3,7 @@ import NavigationBar from '../navigation-bar/navigation-bar'
 import Footer from '../footer/Footer'
 import { connect } from 'react-redux'
 import { TGlobalStore } from '../../store'
+import SearchBar from '../searchbar/searchbar'
 
 const styles = require('./container.css').default
 
@@ -24,6 +25,7 @@ function Container(props: any) {
       {props.children}
       </div>
       <Footer />
+      <SearchBar />
     </section>
   )
 }

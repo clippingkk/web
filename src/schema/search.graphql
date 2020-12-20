@@ -1,0 +1,8 @@
+query searchQuery($query: String!) {
+  search(query: $query) {
+    clippings {
+      id
+      content
+    }
+  }
+}

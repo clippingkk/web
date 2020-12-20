@@ -13,6 +13,8 @@ app:
         my: My Profile
         settings: Settings
         logout: Logout
+        search:
+            empty: no data here
     public:
         readings: Reading books
         readers: Readers
