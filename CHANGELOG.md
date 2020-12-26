@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.0...v3.13.0) (2020-12-26)
+
+
+### Features
+
+* **ci:** change ci node version to 15.x ([fc56588](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fc5658830fd9667937ee7ba663bbb213d0e56929))
+* **locales:** support korean ([a645b2a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a645b2a30dc838d92478348c87d6fb8542a46f44))
+
 ## [3.12.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.6...v3.12.0) (2020-12-20)
 
 
