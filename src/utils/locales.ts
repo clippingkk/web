@@ -4,6 +4,7 @@ import {initReactI18next} from 'react-i18next'
 
 const zhCN = require('../locales/zhCN.yml')
 const en = require('../locales/en.yml')
+const ko = require('../locales/ko.yml')
 // setTimeout(() => {
 //   const language = localStorage.getItem('i18nextLngLong')
 //   i18n.changeLanguage(language || 'en')
@@ -19,6 +20,9 @@ i18n
       },
       zhCN: {
         translation: zhCN
+      },
+      ko: {
+        translation: ko
       }
     },
     fallbackLng: 'en',
