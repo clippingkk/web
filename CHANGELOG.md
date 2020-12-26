@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.0...v3.13.1) (2020-12-26)
+
+
+### Features
+
+* **lock:** fix lock ([96cfe87](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/96cfe87544c7f224b843e8aad691254abf51e4af))
+
+
+### Bug Fixes
+
+* **package:** fix lock file ([d5c2826](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d5c2826e1ae026a084fc38a16378684e46b55831))
+
 ## [3.13.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.0...v3.13.0) (2020-12-26)
 
 
