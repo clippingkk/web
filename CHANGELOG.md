@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.1...v3.13.2) (2020-12-27)
+
+
+### Bug Fixes
+
+* **settings:** fix dark mode switcher ([db63940](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/db6394070657936d211654bf86c30660fe2d4772))
+
 ### [3.13.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.0...v3.13.1) (2020-12-26)
 
 
