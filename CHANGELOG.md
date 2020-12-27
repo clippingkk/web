@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.2...v3.13.3) (2020-12-27)
+
+
+### Features
+
+* **public:** add public clippings ([4e1f098](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4e1f0988b151ad2fb7b6cebaeb343ffe2e57db12))
+
+
+### Bug Fixes
+
+* **build:** remove package info in dll ([9085966](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9085966984de8f95f35fdb42254b89b7856257b8))
+
 ### [3.13.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.1...v3.13.2) (2020-12-27)
 
 
