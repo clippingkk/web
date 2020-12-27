@@ -1070,7 +1070,7 @@
       {
         "kind": "OBJECT",
         "name": "PublicData",
-        "description": "import * from './user.graphql'\nimport * from './books.graphql'",
+        "description": "import * from './user.graphql'\nimport * from './books.graphql'\nimport * from './clippings.graphql'",
         "fields": [
           {
             "name": "users",
@@ -1112,6 +1112,30 @@
                   "ofType": {
                     "kind": "OBJECT",
                     "name": "Book",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "clippings",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Clipping",
                     "ofType": null
                   }
                 }
@@ -1362,7 +1386,18 @@
           {
             "name": "public",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "limit",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,

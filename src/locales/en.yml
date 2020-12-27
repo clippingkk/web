@@ -18,6 +18,7 @@ app:
     public:
         readings: Reading books
         readers: Readers
+        clippings: User clippings
         hideReasons: Due to privacy issues, users’ book clippings are not displayed
     book:
         title: Clippings

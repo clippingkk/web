@@ -10,6 +10,7 @@ import TopUsers from './TopUsers'
 import fetchTopQuery from '../../schema/public.graphql'
 import { useQuery } from '@apollo/client'
 import { publicData } from '../../schema/__generated__/publicData'
+import TopClippings from './TopClippings'
 
 function IndexPage() {
   usePageTrack('index')
@@ -20,6 +21,7 @@ function IndexPage() {
       <Hero />
       <div className='py-4 anna-page-container'>
         <TopBooks books={data?.public.books} />
+        <TopClippings clippings={data?.public.clippings} />
         <TopUsers users={data?.public.users} />
       </div>
       <Footer />

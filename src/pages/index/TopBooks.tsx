@@ -10,12 +10,6 @@ type TopBooksProps = {
   books?: readonly publicData_public_books[]
 }
 
-type localBookProps = {
-}
-
-function LocalBook(props: localBookProps) {
-}
-
 function TopBooks(props: TopBooksProps) {
   const { t } = useTranslation()
 
@@ -25,7 +19,7 @@ function TopBooks(props: TopBooksProps) {
     <div>
       <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>{t('app.public.readings')}</h2>
       <div className='flex py-8 md:px-12 flex-wrap justify-center items-center'>
-        {books.map(b => <PublicBookItem book={b} />)}
+        {books.map(b => <PublicBookItem key={b.id} book={b} />)}
       </div>
     </div>
   )

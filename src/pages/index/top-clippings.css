@@ -1,0 +1,18 @@
+.clippingText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.clippingItem {
+/*   
+  backface-visibility: visible;
+  perspective-origin: 150% 150%;
+  transform-style: preserve-3d; */
+}
+
+.clippingItem:hover {
+  /* perspective: 1500px; */
+}

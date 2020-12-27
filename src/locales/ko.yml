@@ -17,6 +17,7 @@ app:
     public:
         readings: 모두가 읽고 있습니다
         readers: 이 친구들은 읽기를 좋아합니다
+        clippings: 사용자 책 다이제스트
         hideReasons: 개인 정보 보호 문제로 인해 사용자의 책 발췌문이 표시되지 않습니다.
     book:
         title: 책 다이제스트

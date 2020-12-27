@@ -17,6 +17,7 @@ app:
     public:
         readings: 大家在读
         readers: 这些朋友爱读书
+        clippings: 用户书摘
         hideReasons: 由于隐私问题，并不展示用户书摘内容
     book:
         title: 书摘

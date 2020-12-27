@@ -8,5 +8,16 @@ query publicData {
     books {
       doubanId
     }
+    clippings {
+      id
+      content
+      bookID
+      title
+      creator {
+        id
+        name
+        avatar
+      }
+    }
   }
 }
