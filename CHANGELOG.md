@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.4...v3.13.5) (2020-12-27)
+
+
+### Features
+
+* **analytics:** add cloudflare analytics ([d313aa7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d313aa7b30408cc44047d1bec40f5f04299e8473))
+
 ### [3.13.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.3...v3.13.4) (2020-12-27)
 
 
