@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Select from 'react-select'
-import DarkModeToggle from "react-dark-mode-toggle"
+// import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import { useTranslation } from 'react-i18next'
+import DarkSwitcher from './dark-switcher';
+import SimpleSwitcher from './simple-switcher';
 
 type SettingsPageProps = {
 }
@@ -63,10 +65,21 @@ function GlobalSettings() {
             </label>
 
         <div className='w-64 text-right flex items-center justify-end'>
-          <DarkModeToggle
+          <SimpleSwitcher
+          checked={isDarkTheme}
+          onChange={onDarkThemeChange}
+           />
+          {/* <DarkSwitcher
+          checked={isDarkTheme}
+          onChange={onDarkThemeChange}
+          size={120}
+           /> */}
+          {/* <DarkModeSwitch
+            style={{ marginBottom: '2rem' }}
             checked={isDarkTheme}
             onChange={onDarkThemeChange}
-          />
+            size={120}
+          /> */}
         </div>
       </div>
     </div>
@@ -82,7 +95,7 @@ function SettingsPage(props: SettingsPageProps) {
     <div
       className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-blue-800 bg-opacity-25`}
     >
-      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'>{t('app.settings.title')}</h3>
+      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'> 🛠 {t('app.settings.title')}</h3>
       <GlobalSettings />
 
     </div>
