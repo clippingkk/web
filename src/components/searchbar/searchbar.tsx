@@ -70,6 +70,22 @@ function SearchBar(props: SearchBarProps) {
     return
   }, [])
 
+  const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (loading) {
+      return
+    }
+    if (value.length < 2) {
+      return
+    }
+
+    doQuery({
+      variables: {
+        query: value
+      }
+    })
+  }, [doQuery])
+
   if (!visible) {
     return null
   }
@@ -82,56 +98,42 @@ function SearchBar(props: SearchBarProps) {
       }}
     >
       <div className='w-full items-center flex flex-col max-h-screen'>
-      <div className='p-4 container flex justify-center items-center mt-10' onClick={noop}>
-        <label htmlFor="search" className='text-4xl bg-white p-8 pr-2 rounded-l dark:bg-gray-300' >🔍</label>
-        <input
-          type="text"
-          name='search'
-          className='w-80 lg:w-1/3 py-8 px-4 rounded-r focus:outline-none text-4xl dark:bg-gray-300'
-          ref={searchDOM}
-          onChange={e => {
-            const value = e.target.value
-            if (loading) {
-              return
-            }
-            if (value.length < 2) {
-              return
-            }
-
-            doQuery({
-              variables: {
-                query: value
-              }
-            })
-          }}
-        />
-      </div>
-      <div className='flex flex-col w-80 lg:w-1/3 flex-1' onClick={noop}>
-        {called && !loading && data?.search.clippings.length === 0 && (
-          <div className='w-full bg-gray-300 flex items-center justify-center py-8 flex-col'>
-            <span className='text-5xl mb-4'>😭</span>
-            <span className='text-base'>{t('app.menu.search.empty')}</span>
-          </div>
-        )}
-        <ul className='list-none'>
-          {data?.search.clippings.map(c => (
-            <li
-              className='dark:bg-gray-300 bg-gray-400 mt-4 list-none anna-fade-in'
-              key={c.id}
-            >
-              <Link
-                to={`/dash/${uid}/clippings/${c.id}`}
-                className='block py-8 px-4 rounded dark:bg-gray-300 bg-gray-400 hover:bg-gray-200 transform hover:scale-105 duration-150'
-                onClick={() => {
-                  setVisible(false)
-                }}
+        <div className='p-4 container flex justify-center items-center mt-10' onClick={noop}>
+          <label htmlFor="search" className='text-4xl bg-white p-8 pr-2 rounded-l dark:bg-gray-300' >🔍</label>
+          <input
+            type="text"
+            name='search'
+            className='w-80 lg:w-1/3 py-8 px-4 rounded-r focus:outline-none text-4xl dark:bg-gray-300'
+            ref={searchDOM}
+            onChange={debounce(onInputChange, 300)}
+          />
+        </div>
+        <div className='flex flex-col w-80 lg:w-1/3 flex-1' onClick={noop}>
+          {called && !loading && data?.search.clippings.length === 0 && (
+            <div className='w-full bg-gray-300 flex items-center justify-center py-8 flex-col'>
+              <span className='text-5xl mb-4'>😭</span>
+              <span className='text-base'>{t('app.menu.search.empty')}</span>
+            </div>
+          )}
+          <ul className='list-none'>
+            {data?.search.clippings.map(c => (
+              <li
+                className='dark:bg-gray-300 bg-gray-400 mt-4 list-none anna-fade-in'
+                key={c.id}
               >
-                <p className='text-xl leading-normal'>{c.content}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+                <Link
+                  to={`/dash/${uid}/clippings/${c.id}`}
+                  className='block py-8 px-4 rounded dark:bg-gray-300 bg-gray-400 hover:bg-gray-200 transform hover:scale-105 duration-150'
+                  onClick={() => {
+                    setVisible(false)
+                  }}
+                >
+                  <p className='text-xl leading-normal'>{c.content}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   )
