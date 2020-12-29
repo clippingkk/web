@@ -1,10 +1,8 @@
 import React from 'react'
-import { hot } from 'react-hot-loader/root'
-
 import PageLoading from './components/loading/loading'
-import RouterContainer from './components/router-container/router';
-import NotFound from './pages/not-found/not-found';
-import AdminPanel from './pages/admin/admin';
+import RouterContainer from './components/router-container/router'
+import NotFound from './pages/not-found/not-found'
+import AdminPanel from './pages/admin/admin'
 
 const IndexPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/index/index'))
 const PrivacyPolicy = React.lazy(() => import(/* webpackPrefetch: true */ './pages/policy/privacy'))
@@ -58,4 +56,4 @@ class Root extends React.Component {
   }
 }
 
-export default hot(Root)
+export default Root
