@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.5...v3.13.6) (2020-12-29)
+
+
+### Bug Fixes
+
+* **search:** fix search debounce ([fc31cca](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fc31cca31118ae06d1388670b5596b59e844ac03))
+
 ### [3.13.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.4...v3.13.5) (2020-12-27)
 
 
