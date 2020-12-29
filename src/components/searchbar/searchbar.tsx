@@ -7,6 +7,7 @@ import { searchQuery, searchQueryVariables } from '../../schema/__generated__/se
 import { TGlobalStore } from '../../store'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { useTranslation } from 'react-i18next'
+import { debounce } from '../../utils/debounce'
 
 type SearchBarProps = {
 }
