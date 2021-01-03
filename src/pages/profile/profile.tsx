@@ -48,6 +48,7 @@ function Profile(props: TProfileProps) {
 
   }, [data?.me.analysis.monthly.length])
 
+  const year =  (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
   return (
     <section>
@@ -63,7 +64,7 @@ function Profile(props: TProfileProps) {
                 <WechatBindButton />
               )}
               <Link
-               to={`/report/yearly?uid=${data?.me.id}`}
+               to={`/report/yearly?uid=${data?.me.id}&year=${year}`}
                className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
               >
                 {t('app.profile.report.yearlyTitle')}
