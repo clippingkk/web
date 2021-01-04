@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.6...v3.11.7) (2021-01-04)
+
+
+### Bug Fixes
+
+* **profile:** fix yearly report params ([b2741a2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b2741a28d2a55c77d1c894e73fa21410485d9bb9))
+
 ### [3.13.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.5...v3.13.6) (2020-12-29)
 
 
