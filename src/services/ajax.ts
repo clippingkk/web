@@ -2,9 +2,9 @@ import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/clien
 import { onError } from "@apollo/client/link/error"
 import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
 import swal from 'sweetalert'
-import { forwardRef } from 'react'
 import profile from '../utils/profile'
-import { text } from '@fortawesome/fontawesome-svg-core'
+
+console.log(API_HOST, profile)
 
 export interface IBaseResponseData {
   status: Number
@@ -12,7 +12,7 @@ export interface IBaseResponseData {
   data: any
 }
 
-let token = profile.token
+let token = profile?.token
 
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
   if (token) {

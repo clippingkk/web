@@ -186,6 +186,8 @@ module.exports = {
   // Whether to use watchman for file crawling
   // watchman: true,
   moduleNameMapper: {
+    '(signup|updateClippingBook).graphql$': '<rootDir>/test/mocks/graphql-mutation.js',
+    '(profile|me).graphql$': '<rootDir>/test/mocks/graphql.js',
     '\\.(css|less|scss|sss)$': '<rootDir>/test/mocks/style.js',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/test/mocks/image.js',
   },
