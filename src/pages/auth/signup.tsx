@@ -101,7 +101,7 @@ function Signup() {
             return
           }
           const f = e.target.files[0]
-          formik.setFieldValue('avatarFile', f)
+          formik.setFieldValue('avatar', f)
         }}
         inputProps={{
           accept: "image/png, image/jpeg"
