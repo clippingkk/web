@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.7...v3.11.8) (2021-01-07)
+
+
+### Bug Fixes
+
+* **signup:** fix avatar field ([83f6a37](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/83f6a37fabf6cc98065b712ba1c17adeada5133e))
+
 ### [3.11.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.6...v3.11.7) (2021-01-04)
 
 
