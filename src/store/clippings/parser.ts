@@ -29,6 +29,7 @@ class ClippingTextParser {
   // private readonly infoRegexp: RegExp
   private readonly locationRegexp: RegExp
   static readonly STOP_WORDS = ['(', '（']
+  static readonly symbols = ["，", "。", "！", "@", "——", "【", "】"]
 
   public readonly language: FileLanuages;
 
@@ -121,8 +122,15 @@ class ClippingTextParser {
     this.processingItem.createdAt = date.toISOString()
   }
 
+  private trimSymbols(s: string): string {
+    return s.replace(/^(，|。|！|@|【】|——)+/, '')
+      .replace(/(，|。|！|@|【】|——)+$/, '')
+      .trim()
+  }
+
   private exactContent() {
-    this.processingItem.content = this.current[2]
+    const content = (this.current[2] || '').trim()
+    this.processingItem.content = this.trimSymbols(content)
   }
 
   private exactTitlte() {
