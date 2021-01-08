@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.8...v3.11.9) (2021-01-08)
+
+
+### Features
+
+* **package:** upgrade packages and add more testcase ([98b6618](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/98b6618ddc145365895717386e9a048a46687ea8))
+
+
+### Bug Fixes
+
+* **parser:** trim some charactor in content ([7797914](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/779791438b324f84f46e21621f55fb83765447fb))
+
 ### [3.11.8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.7...v3.11.8) (2021-01-07)
 
 
