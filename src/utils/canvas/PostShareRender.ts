@@ -63,7 +63,7 @@ export class PostShareRender extends BaseCanvasRender {
   }
   renderTitle(): Promise<void> {
     this.ctx.save();
-    this.ctx.font = this.config.baseTextSize * 0.7 + 'px bold ' + this.renderFont
+    this.ctx.font = this.config.baseTextSize * 0.7 + 'px ' + this.renderFont
     this.ctx.fillStyle = '#4F4F4F';
     this.ctx.textAlign = 'right';
     this.ctx.textBaseline = 'middle';
@@ -80,7 +80,7 @@ export class PostShareRender extends BaseCanvasRender {
   }
   renderAuthor(): Promise<void> {
     this.ctx.save();
-    this.ctx.font = this.config.baseTextSize * 0.7 + 'px bold ' + this.renderFont;
+    this.ctx.font = this.config.baseTextSize * 0.7 + 'px ' + this.renderFont;
     this.ctx.fillStyle = '#4F4F4F';
     this.ctx.textAlign = 'right';
     this.ctx.textBaseline = 'middle';
@@ -167,7 +167,7 @@ export class PostShareRender extends BaseCanvasRender {
     this.ctx.restore();
 
     this.ctx.save();
-    this.ctx.font = this.config.baseTextSize * 0.6 + 'px bold' + this.defaultFontFamily;
+    this.ctx.font = this.config.baseTextSize * 0.6 + 'px Roboto' ;
     this.ctx.fillStyle = '#ffffff';
     this.ctx.textAlign = 'center';
     this.ctx.textBaseline = 'middle';

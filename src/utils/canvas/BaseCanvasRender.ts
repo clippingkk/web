@@ -8,7 +8,7 @@ export class BaseCanvasRender {
   protected ctx: CanvasRenderingContext2D;
   // @ts-ignore
   protected config: PostShareConfig;
-  protected readonly defaultFontFamily = 'YSHaoShenTi,-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif';
+  protected readonly defaultFontFamily = 'MaShanZheng,YSHaoShenTi,-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif';
 
   // static readonly STOP_WORDS = [',', '.', ' ', '，', '。', '!', '！']
   static readonly STOP_WORDS = [''];
@@ -34,7 +34,7 @@ export class BaseCanvasRender {
   }
 
   private setupContentFontStyle() {
-    this.ctx.font = this.config.baseTextSize + 'px bold ' + this.renderFont
+    this.ctx.font = this.config.baseTextSize + 'px ' + this.renderFont
     this.ctx.textAlign = 'left';
     this.ctx.textBaseline = 'middle';
   }

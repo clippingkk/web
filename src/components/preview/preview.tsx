@@ -38,7 +38,7 @@ function Preview(props: TPreviewProps) {
       bookInfo: props.book,
       baseTextSize: 14,
       padding: 24,
-      textFont: ['STKaiTi', 'KaiTi'],
+      textFont: ['MaShanZheng', 'STKaiTi', 'KaiTi'],
     })
 
     postRender.setup()
