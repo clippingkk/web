@@ -26,7 +26,8 @@ const reacts = [
   'redux-saga',
   '@nearform/react-animation',
   'react-table',
-  '@apollo/client'
+  '@apollo/client',
+  'recharts'
 ]
 
 const distDirname = 'dist' + (__DEV__ ? '-dev' : '')
