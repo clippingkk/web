@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.10](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.9...v3.11.10) (2021-01-19)
+
+
+### Features
+
+* **fonts:** add fonts ([6ce52c2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6ce52c208a38aeaeb584424b30eded8f7f6ad651))
+* **poster:** update poster image ([723b3a8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/723b3a8cfedd403cdbf7a235df3d00b949f2c011))
+
 ### [3.11.9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.8...v3.11.9) (2021-01-08)
 
 
