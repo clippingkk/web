@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.11](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.10...v3.11.11) (2021-01-20)
+
+
+### Features
+
+* **preview:** increase font size in share image ([7b57cfe](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7b57cfe4c57fdc96bf022b9544cb0190b5195d47))
+
 ### [3.11.10](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.9...v3.11.10) (2021-01-19)
 
 
