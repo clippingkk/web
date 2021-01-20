@@ -36,7 +36,7 @@ function Preview(props: TPreviewProps) {
       dpr: 3,
       clipping: props.clipping,
       bookInfo: props.book,
-      baseTextSize: 14,
+      baseTextSize: 24,
       padding: 24,
       textFont: ['MaShanZheng', 'STKaiTi', 'KaiTi'],
     })
