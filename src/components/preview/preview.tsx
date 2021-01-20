@@ -9,6 +9,7 @@ import { UserContent } from '../../store/user/type'
 import { useTranslation } from 'react-i18next'
 import { delay } from '../../utils/timer'
 import swal from 'sweetalert'
+import { getImagePrimaryColor, getTheme, hexToRGB, ImageTheme, invertColor, rgbToHex, shadeColor } from '../../utils/image'
 const styles = require('./preview.css').default
 
 type TPreviewProps = {
@@ -41,8 +42,30 @@ function Preview(props: TPreviewProps) {
       textFont: ['MaShanZheng', 'STKaiTi', 'KaiTi'],
     })
 
+    let startColor: string | undefined
+    let endColor: string | undefined
+
+    try {
+      const color = await getImagePrimaryColor(props.book.image)
+      const colorTheme = getTheme(color[0], color[1], color[2])
+      // 如果是暗色，则变亮一些尝试
+      // 第二次还是暗色，则对第一次结果反转，一定为亮色
+      if (colorTheme === ImageTheme.dark) {
+        startColor = shadeColor(rgbToHex(color[0], color[1], color[2]), 40)
+        const tempColor = hexToRGB(startColor!)
+        if (getTheme(tempColor[0], tempColor[1], tempColor[2]) === ImageTheme.dark) {
+          startColor = invertColor(rgbToHex(color[0], color[1], color[2]))
+        }
+      } else {
+        startColor = rgbToHex(color[0], color[1], color[2])
+      }
+      endColor = shadeColor(startColor, -20)
+    } catch (err) {
+      console.error(err)
+    }
+
     postRender.setup()
-    await postRender.renderBackground()
+    await postRender.renderBackground(startColor, endColor)
     await postRender.renderText()
     await postRender.renderTitle()
     await postRender.renderAuthor()
@@ -51,7 +74,7 @@ function Preview(props: TPreviewProps) {
     await postRender.renderQRCode()
     await postRender.resizePosterHeight()
 
-    await postRender.renderBackground()
+    await postRender.renderBackground(startColor, endColor)
     await postRender.renderText()
     await postRender.renderTitle()
     await postRender.renderAuthor()
@@ -78,12 +101,12 @@ function Preview(props: TPreviewProps) {
     >
       <section className={styles.preview}>
         <img
-         src={imageData}
+          src={imageData}
           className={styles['preview-image'] + ' transition-all duration-300'}
           style={{
             height: imageHeight + 'px'
           }}
-         />
+        />
         <footer className={styles.footer}>
           <a
             href={imageData}
@@ -91,7 +114,7 @@ function Preview(props: TPreviewProps) {
             className={styles.action + ' ' + styles.download}
           >
             {t('app.clipping.save')}
-            </a>
+          </a>
         </footer>
       </section>
     </Dialog>

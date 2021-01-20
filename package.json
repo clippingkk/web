@@ -126,6 +126,7 @@
     "@sentry/browser": "^5.27.6",
     "@ungap/url-search-params": "^0.2.2",
     "body-scroll-lock": "^3.1.5",
+    "colorthief": "^2.3.2",
     "core-js": "^3.8.1",
     "dayjs": "^1.9.6",
     "dom-to-image": "^2.6.0",

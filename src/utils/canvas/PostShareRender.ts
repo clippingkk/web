@@ -36,11 +36,11 @@ export class PostShareRender extends BaseCanvasRender {
     });
   }
 
-  renderBackground(): Promise<void> {
+  renderBackground(start: string = '#f2f2f2', end: string = '#e0e0e0'): Promise<void> {
     this.ctx.save();
     const gradient = this.ctx.createLinearGradient(0, 0, this.scaledWidth, this.scaledHeight);
-    gradient.addColorStop(0, '#f2f2f2');
-    gradient.addColorStop(1, '#e0e0e0');
+    gradient.addColorStop(0, start);
+    gradient.addColorStop(1, end);
     this.ctx.fillStyle = gradient;
     this.ctx.fillRect(0, 0, this.scaledWidth, this.scaledHeight);
     this.ctx.restore();
