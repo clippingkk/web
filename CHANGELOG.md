@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.11...v3.12.0) (2021-01-20)
+
+
+### Features
+
+* **preview:** set share post image background color as book image related color ([1a6230b](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1a6230b7cee60a6658b08ec242d0adac57778f36))
+
 ### [3.11.11](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.10...v3.11.11) (2021-01-20)
 
 
