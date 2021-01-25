@@ -12,7 +12,6 @@ const initState: TUserState = {
     createdAt: '',
     updatedAt: '',
     wechatOpenid: ''
-    
   },
   token: ''
 }

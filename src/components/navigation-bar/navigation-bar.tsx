@@ -57,7 +57,7 @@ function NavigationBar() {
                 placement='bottom'
                 overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
               >
-                <Link to={item.dest(id)}>
+                <Link to={id === 0 ? '/auth/signin' :item.dest(id)}>
                   <span className='text-3xl lg:text-4xl'>
                     {item.emoji}
                   </span>
@@ -73,7 +73,7 @@ function NavigationBar() {
             placement='bottom'
             overlay={<span>{t('app.menu.settings')}</span>}
           >
-            <Link to={`/dash/${id}/settings`} className='text-3xl lg:text-4xl'>🛠</Link>
+            <Link to={id === 0 ? '/auth/signin' : `/dash/${id}/settings`} className='text-3xl lg:text-4xl'>🛠</Link>
           </Tooltip>
         </li>
         <li className='mr-6' onClick={onLogout}>

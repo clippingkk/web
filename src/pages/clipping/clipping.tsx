@@ -79,84 +79,91 @@ function ClippingPage(props: TClippingPageProp) {
           </time>
         </Card>
         {/** 再加一个作者简介 */}
-        <Card className='flex-1 hidden lg:block'>
-          <ul className={styles['action-list']}>
-            <li className='w-full mb-4'>
-              <button
-                className={styles['action-btn']}
-                onClick={updateClipping}
-              >
-                {t('app.clipping.update')}
-              </button>
-            </li>
+        {me.id !== 0 && (
 
-            <li className='w-full mb-4'>
-              <button
-                className={styles['action-btn']}
-                onClick={togglePreviewVisible}
-              >
-                {t('app.clipping.shares')}
-              </button>
-            </li>
-            <li className='w-full mb-4'>
-              <a
-                href={`https://book.douban.com/subject/${book?.doubanId}`}
-                target="_blank"
-                className={styles['action-btn']}
-              >
-                {t('app.clipping.link')}
-              </a>
-            </li>
-            {clipping?.clipping.creator.id === me.id && (
+          <Card className='flex-1 hidden lg:block'>
+            <ul className={styles['action-list']}>
               <li className='w-full mb-4'>
-                <div className={styles['action-btn'] + ' w-full flex items-center justify-between'}>
-                  <label htmlFor="">{t('app.clipping.visible')}</label>
-                  <Switch
-                    value={clipping?.clipping.visible ? 1 : 0}
-                    onChange={() => {
-                      if (!clipping) {
-                        return
-                      }
-                      execToggleClipping({
-                        variables: {
-                          ids: [clipping.clipping.id]
-                        }
-                      }).then(() => {
-                        client.resetStore()
-                      })
-                    }}
-                  />
-                </div>
+                <button
+                  className={styles['action-btn']}
+                  onClick={updateClipping}
+                >
+                  {t('app.clipping.update')}
+                </button>
               </li>
-            )}
-          </ul>
-        </Card>
+
+              <li className='w-full mb-4'>
+                <button
+                  className={styles['action-btn']}
+                  onClick={togglePreviewVisible}
+                >
+                  {t('app.clipping.shares')}
+                </button>
+              </li>
+              <li className='w-full mb-4'>
+                <a
+                  href={`https://book.douban.com/subject/${book?.doubanId}`}
+                  target="_blank"
+                  className={styles['action-btn']}
+                >
+                  {t('app.clipping.link')}
+                </a>
+              </li>
+              {clipping?.clipping.creator.id === me.id && (
+                <li className='w-full mb-4'>
+                  <div className={styles['action-btn'] + ' w-full flex items-center justify-between'}>
+                    <label htmlFor="">{t('app.clipping.visible')}</label>
+                    <Switch
+                      value={clipping?.clipping.visible ? 1 : 0}
+                      onChange={() => {
+                        if (!clipping) {
+                          return
+                        }
+                        execToggleClipping({
+                          variables: {
+                            ids: [clipping.clipping.id]
+                          }
+                        }).then(() => {
+                          client.resetStore()
+                        })
+                      }}
+                    />
+                  </div>
+                </li>
+              )}
+            </ul>
+          </Card>
+        )}
       </div>
 
-      <div className='container px-2 lg:px-20'>
-        <Card>
-          <h3 className='text-2xl lg:text-4xl font-light lg:mb-4'>{t('app.clipping.comments.title')}</h3>
-          {clipping?.clipping.comments.map(m => (
-            <Comment key={m.id} comment={m} />
-          ))}
+      {
+        me.id !== 0 && (
+          <div className='container px-2 lg:px-20'>
+            <Card>
+              <h3 className='text-2xl lg:text-4xl font-light lg:mb-4'>{t('app.clipping.comments.title')}</h3>
+              {clipping?.clipping.comments.map(m => (
+                <Comment key={m.id} comment={m} />
+              ))}
 
-          {clipping && me && (
-            <CommentBox me={me} clippingID={clipping?.clipping.id} />
-          )}
-        </Card>
-      </div>
+              {clipping && me && (
+                <CommentBox me={me} clippingID={clipping?.clipping.id} />
+              )}
+            </Card>
+          </div>
+        )
+      }
 
       {sharePreviewVisible &&
-       clipping?.clipping.content &&
-       book && (
-        <Preview
-          onCancel={togglePreviewVisible}
-          onOk={togglePreviewVisible}
-          background={book.image}
-          clipping={clipping.clipping}
-          book={book}
-        />
-      )}
+        clipping?.clipping.content &&
+        book && (
+          <Preview
+            onCancel={togglePreviewVisible}
+            onOk={togglePreviewVisible}
+            background={book.image}
+            clipping={clipping.clipping}
+            book={book}
+          />
+        )}
     </div>
   )
 }
