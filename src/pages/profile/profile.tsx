@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
-import { getUserProfile, IUserProfile } from '../../services/auth';
 import Card from '../../components/card/card';
 import Divider from '../../components/divider/divider';
 import ClippingItem from '../../components/clipping-item/clipping-item';

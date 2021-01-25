@@ -59,7 +59,7 @@ function Preview(props: TPreviewProps) {
       } else {
         startColor = rgbToHex(color[0], color[1], color[2])
       }
-      endColor = shadeColor(startColor, -20)
+      endColor = shadeColor(startColor, -30)
     } catch (err) {
       console.error(err)
     }

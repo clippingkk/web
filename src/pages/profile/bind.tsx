@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client'
 import React, { useState } from 'react'
-import QRCode from 'qrcode.react'
 // import { QRNormal, QRImage } from 'react-qrbtf'
 import QRCode from 'qrcode.react'
 import Dialog from '../../components/dialog/dialog'
@@ -40,7 +39,7 @@ function WechatBindButton(props: WechatBindButtonProps) {
       </button>
       {visible && (
         <Dialog
-          title='绑定'
+          title={t('app.profile.wechatBind')}
           onCancel={() => { setVisible(false) }}
           onOk={() => { setVisible(true) }}
         >
