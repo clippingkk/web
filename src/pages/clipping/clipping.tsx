@@ -75,24 +75,23 @@ function ClippingPage(props: TClippingPageProp) {
           <hr className='bg-gray-400 my-12' />
           <p className='lg:text-3xl text-2xl lg:leading-loose leading-normal'>{clippingContent}</p>
           <hr className='bg-gray-400 my-12' />
-          <footer className='flex justify-between'>
+          <footer className='flex justify-between mt-4'>
             {me.id === 0 && (
               <Link className='flex justify-center items-center' to={`/auth/signin`}>
                 <img
                   src={creator?.avatar.startsWith('http') ? creator.avatar : `https://clippingkk-cdn.annatarhe.com/${creator?.avatar}-copyrightDB`}
-                  className='w-16 h-16 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover'
+                  className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover'
                 />
                 <span className='ml-4 text-gray-700 dark:text-gray-200 font-light'>{creator?.name}</span>
               </Link>
             )}
-            <time className='lg:text-base text-sm font-light text-right w-full block mt-4 text-gray-700'>
+            <time className='lg:text-base text-sm font-light w-full text-gray-700 flex items-center justify-end'>
               {t('app.clipping.at')}: {clippingAt}
             </time>
           </footer>
         </Card>
         {/** 再加一个作者简介 */}
         {me.id !== 0 && (
-
           <Card className='flex-1 hidden lg:block'>
             <ul className={styles['action-list']}>
               <li className='w-full mb-4'>
