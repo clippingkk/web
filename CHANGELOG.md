@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.2...v3.12.3) (2021-01-25)
+
+
+### Features
+
+* **unauth:** add creator information in unauthed clipping view ([b941526](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b941526d32f631c9528502c7d6fd1aa822fca2a8))
+
 ### [3.12.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.1...v3.12.2) (2021-01-25)
 
 
