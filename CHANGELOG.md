@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.3...v3.12.4) (2021-01-25)
+
+
+### Bug Fixes
+
+* **clipping:** fix align style ([a93c7c9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a93c7c90d326da42e9041f7b1b3f814b7af2f321))
+
 ### [3.12.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.2...v3.12.3) (2021-01-25)
 
 
