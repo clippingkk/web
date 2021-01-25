@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.1...v3.12.2) (2021-01-25)
+
+
+### Features
+
+* **profile:** something update ([31ec3ce](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/31ec3ce6b0c0ab7f98bca1dcae04664e56c396c0))
+* **unauth:** update logic when user not logged ([8cf4784](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8cf47849e28b3a5e46e2c987fbe93c462026f600))
+
 ### [3.12.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.11.11...v3.12.1) (2021-01-20)
 
 
