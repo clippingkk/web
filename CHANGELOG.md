@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.4...v3.13.7) (2021-01-27)
+
+
+### Features
+
+* **index:** set clipping in index page clickable ([4389bd7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4389bd75dce1ab0e9ff23d1f44b7dc67af894248))
+
+
+### Bug Fixes
+
+* **docs:** update docs ([e9ec978](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e9ec97876a9f6d379a7cf3fa56d8e04cda169107))
+* **docs:** update docs and schema ([1016158](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/101615879d935ed89ac7d391bf19d2b015da38c3))
+
 ### [3.12.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.3...v3.12.4) (2021-01-25)
 
 
