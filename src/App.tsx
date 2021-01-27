@@ -20,7 +20,6 @@ ReactDOM.render(
   <Provider store={store}>
     <SWRConfig
       value={{
-        refreshInterval: 10000,
         fetcher: request
       }}
     >
