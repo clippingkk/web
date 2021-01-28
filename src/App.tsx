@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { ApolloProvider } from '@apollo/client'
 import Root from './Root'
 import store from './store/index'
+import 'emoji-mart/css/emoji-mart.css'
 import './styles/tailwind.css'
 import './styles/index.styl'
 
