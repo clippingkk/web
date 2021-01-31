@@ -42,6 +42,10 @@ app:
         preview: 预览
         save: 保存
         visible: 是否对他人可见
+        reactions:
+            removeSuccess: 已移除自己的态度
+            addSuccess: 已表达自己的态度
+            actionRejected: 操作失败，请稍后重试哦~
         comments:
             placeholder: 你觉得这段摘录怎么样？写下来分享给其他朋友吧~
             title: 评论
