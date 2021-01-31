@@ -7,6 +7,16 @@ query fetchClipping($id: Int!) {
     createdAt
     pageAt
     visible
+    reactions {
+      id
+      symbol
+      creator {
+        id
+        avatar
+        name
+      }
+      createdAt
+    }
     creator {
       id
       name

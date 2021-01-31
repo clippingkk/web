@@ -43,6 +43,10 @@ app:
         preview: Preview
         save: Save
         visible: Visible(public to others ?)
+        reactions:
+            removeSuccess: Removed
+            addSuccess: Added
+            actionRejected: Action rejected, please try again later
         comments:
             title: Comments
             count: count, 40 words at least. Don't let your tongue before your thinking.

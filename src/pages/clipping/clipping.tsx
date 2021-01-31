@@ -19,6 +19,7 @@ import Comment from './comment'
 import { toggleClippingVisible, toggleClippingVisibleVariables } from '../../schema/mutations/__generated__/toggleClippingVisible'
 import toggleClippingVisibleMutation from '../../schema/mutations/toggle-clipping-visible.graphql'
 import { useLocalTime } from '../../hooks/time'
+import Reactions from './reactions'
 const styles = require('./clipping.css').default
 
 type TClippingPageProp = {
@@ -74,6 +75,8 @@ function ClippingPage(props: TClippingPageProp) {
           <h3 className='font-light lg:text-lg my-4'>{book?.author}</h3>
           <hr className='bg-gray-400 my-12' />
           <p className='lg:text-3xl text-2xl lg:leading-loose leading-normal'>{clippingContent}</p>
+          <hr className='bg-gray-400 my-12' />
+          <Reactions reactions={clipping?.clipping.reactions ?? []} cid={clipping?.clipping.id || -1} />
           <hr className='bg-gray-400 my-12' />
           <footer className='flex justify-between mt-4'>
             {me.id === 0 && (

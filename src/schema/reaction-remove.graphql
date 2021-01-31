@@ -1,0 +1,3 @@
+mutation reactionRemove($rid: Int!) {
+    removeReaction(rid: $rid)
+}

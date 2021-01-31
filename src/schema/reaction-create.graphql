@@ -1,0 +1,3 @@
+mutation reactionCreate($targetId: Int!, $target: ReactionTarget!, $symbol: String!) {
+    createReaction(targetId: $targetId, target: $target, symbol: $symbol)
+}

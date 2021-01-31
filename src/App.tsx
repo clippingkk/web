@@ -6,6 +6,9 @@ import { Provider } from 'react-redux'
 import { ApolloProvider } from '@apollo/client'
 import Root from './Root'
 import store from './store/index'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import 'emoji-mart/css/emoji-mart.css'
 import './styles/tailwind.css'
 import './styles/index.styl'
 
@@ -25,6 +28,7 @@ ReactDOM.render(
     >
       <ApolloProvider client={client}>
         <Root />
+        <ToastContainer />
       </ApolloProvider>
     </SWRConfig>
   </Provider>,
