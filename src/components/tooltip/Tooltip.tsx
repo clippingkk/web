@@ -38,7 +38,7 @@ function Tooltip2(props: TooltipProps) {
 
 function Tooltip(props: TooltipProps) {
   return (
-    <div className={'relative ' + styles['tooltip-container']}>
+    <div className={'relative ' + styles['tooltip-container'] + ' ' + props.className}>
       <div
         className={'absolute top-0 left-0 translate-y-12 -translate-x-2  transform dar:bg-gray-700 bg-gray-200 p-1 rounded-sm whitespace-no-wrap opacity-0 ' + styles.tip}
       >

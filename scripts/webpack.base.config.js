@@ -81,8 +81,8 @@ const config = {
       test: /.css$/,
       include: [
         path.resolve(__dirname, '..', 'src', 'styles', 'tailwind.css'),
-        /emoji-mart/
-        // /node_modules/,
+        /emoji-mart/,
+        /react-toastify/,
       ],
       use: [
         __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
