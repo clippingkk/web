@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.14.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.7...v3.14.0) (2021-01-31)
+
+
+### Features
+
+* **locals:** fix ko, zhCN locals ([9b349c6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9b349c69b3a5fef538bd777f2a6c7c5fae7c2061))
+* **reaction:** add reaction module ([99b97c2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/99b97c2c5245ba6b38626534621589a238624696))
+* **reactions:** add reaction in clipping ([2005e30](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2005e304140f136b7cbbdc3b3204da5a117d4843))
+
 ### [3.13.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.12.4...v3.13.7) (2021-01-27)
 
 
