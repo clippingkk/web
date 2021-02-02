@@ -13,6 +13,7 @@ import Dialog from '../../components/dialog/dialog'
 import Tooltip from '../../components/tooltip/Tooltip'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
+import { Link, useNavigate } from '@reach/router'
 
 type ReactionsProps = {
   cid: number
@@ -45,6 +46,7 @@ function Reactions(props: ReactionsProps) {
     setPickerVisible(s => !s)
   }, [])
   const { t } = useTranslation()
+  const navigate = useNavigate()
   return (
     <div className='w-full'>
       <div className='relative inline-block w-full'>
@@ -66,6 +68,10 @@ function Reactions(props: ReactionsProps) {
             <button
               className='inline-flex py-4 px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
               onClick={() => {
+                if (uid === 0) {
+                  navigate('/auth/signin')
+                  return
+                }
                 const val = rs[k].find(x => x.creator.id === uid)
                 if (val) {
                   doReactionRemove({
@@ -99,10 +105,14 @@ function Reactions(props: ReactionsProps) {
             </button>
           </Tooltip>
         ))}
+        {uid === 0 ? (
+          <Link className='py-4 px-8 rounded-3xl hover:bg-gray-300' to='/auth/signin'>➕</Link>
+        ) : (
         <button
           className='py-4 px-8 rounded-3xl hover:bg-gray-300'
           onClick={togglePicker}
         >➕</button>
+        )}
         {pickerVisible && (
           <Dialog
             title='aaa'
