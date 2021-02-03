@@ -24,7 +24,9 @@ export class PostShareRender extends BaseCanvasRender {
   private async loadImage(src: string): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
       const img: HTMLImageElement = new Image()
-      img.crossOrigin = "anonymous"
+      if (!src.includes('annatarhe.com')) {
+        img.crossOrigin = "anonymous"
+      }
       img.onload = () => {
         resolve(img);
       };
