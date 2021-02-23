@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.15.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.14.0...v3.15.0) (2021-02-23)
+
+
+### Features
+
+* **profile:** add update profile entry ([501ad1c](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/501ad1cdc7230badae03971cc9119039b5554c14))
+* **profile:** update locals ([e085b5e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e085b5ec5c0941143e8d1c7482fbb9a691538635))
+
+
+### Bug Fixes
+
+* **poster:** remove anonymous when fetch image from remote if origin site is my own ([27fe926](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/27fe92698abaf839cce92b8304e43de14093d8dc))
+* **reaction:** add guard for reactions create, delete ([2ba1a18](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2ba1a18f91a7527f569106ced00d70f212fd42b4))
+
 ## [3.14.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.13.7...v3.14.0) (2021-01-31)
 
 
