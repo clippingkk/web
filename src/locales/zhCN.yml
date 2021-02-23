@@ -3,6 +3,9 @@ app:
     unfold: 展开
     common:
         closed: 广场功能暂未开放哦~
+        cancel: 取消
+        doUpdate: 更新
+
     slogan: 整理, 展示, 复盘, 进步
     go: 立即体验！
     menu:
@@ -28,6 +31,7 @@ app:
         avatar: 头像
         email: 邮箱
         pwd: 密码
+        bio: 个人简介
         submit: 搞快点
     home:
         title: 我的书籍
@@ -87,6 +91,9 @@ app:
         recents: 最近动态
         wechatBind: 微信小程序绑定
         wechatBindTip: 使用 clippingKK 小程序 个人中心扫码即可绑定
+        editor:
+            title: 更新我的个人信息
+            updated: 已更新
         report:
             yearlyTitle: 年度报告
     settings:

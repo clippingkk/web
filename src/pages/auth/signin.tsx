@@ -7,7 +7,7 @@ import { useAuthSuccessed } from './hooks';
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
-import FieldInput from './input'
+import FieldInput from '../../components/input'
 import * as Yup from 'yup'
 
 type TSigninProps = {

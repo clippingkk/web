@@ -9,6 +9,7 @@ mutation signup($payload: SignupPayload!) {
             checked
             createdAt
             updatedAt
+            bio
             wechatOpenid
         }
         token
