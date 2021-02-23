@@ -30,8 +30,8 @@ app:
         username: User name
         avatar: Avatar
         email: Email
-        bio: Bio
         pwd: Password
+        bio: Bio
         submit: Go go go!
     home:
         title: My books
