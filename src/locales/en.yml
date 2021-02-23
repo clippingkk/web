@@ -3,6 +3,8 @@ app:
     unfold: unfold
     common:
         closed: This feature is still under heavy development
+        cancel: cancel
+        doUpdate: update
 
     slogan: Organize, Display, Review, Be Better
     go: Go!
@@ -28,6 +30,7 @@ app:
         username: User name
         avatar: Avatar
         email: Email
+        bio: Bio
         pwd: Password
         submit: Go go go!
     home:
@@ -89,6 +92,9 @@ app:
         recents: Recents
         wechatBind: Wechat binding
         wechatBindTip: binging wechat mini program
+        editor:
+            title: update my profile
+            updated: updated
         report:
             yearlyTitle: Yearly report
     settings:

@@ -9,6 +9,7 @@ import FieldTextarea from '../../components/textarea'
 import { updateProfile, updateProfileVariables } from '../../schema/mutations/__generated__/updateProfile'
 import { toast } from 'react-toastify'
 import { uploadImage } from '../../services/misc'
+import { useTranslation } from 'react-i18next/*'
 
 type ProfileEditorProps = {
 }
@@ -17,6 +18,7 @@ function ProfileEditor(props: ProfileEditorProps) {
   const [visible, setVisible] = useState(false)
 
   const [doUpdate, { client }] = useMutation<updateProfile, updateProfileVariables>(updateProfileMutation)
+  const { t } = useTranslation()
 
   const formik = useFormik({
     initialValues: {
@@ -48,7 +50,7 @@ function ProfileEditor(props: ProfileEditorProps) {
         formik.resetForm()
         setVisible(false)
         client.resetStore()
-        toast.success('updated')
+        toast.success(t('app.profile.editor.updated'))
       }).catch(err => {
         console.error(err)
         toast.error(err)
@@ -69,7 +71,7 @@ function ProfileEditor(props: ProfileEditorProps) {
       >⚙</button>
       {visible && (
         <Dialog
-          title=''
+          title={t('app.profile.editor.title')}
           onCancel={onEditCancel}
           onOk={() => {
             formik.handleSubmit()
@@ -100,8 +102,8 @@ function ProfileEditor(props: ProfileEditorProps) {
             />
 
             <div className='flex items-center justify-end'>
-              <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-sm px-4 py-2 mr-4' onClick={onEditCancel}>cancel</button>
-              <button className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2' type='submit'>submit</button>
+              <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-sm px-4 py-2 mr-4' onClick={onEditCancel}>{t('app.common.cancel')}</button>
+              <button className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2' type='submit'>{t('app.common.doUpdate')}</button>
             </div>
           </form>
         </Dialog>
