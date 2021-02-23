@@ -3,6 +3,7 @@ query publicData {
     users {
       id
       avatar
+      bio
       name
     }
     books {

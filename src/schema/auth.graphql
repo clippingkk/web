@@ -9,6 +9,7 @@ query auth($email: String!, $password: String!) {
       checked
       createdAt
       updatedAt
+      bio
       wechatOpenid
     }
     token

@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
-import { toSignup, TUserSignupDataInput } from '../../store/user/type'
-import { connect } from 'react-redux'
+import React from 'react'
 import { useMutation } from '@apollo/client'
 import signupQuery from '../../schema/signup.graphql'
 import { signup, signupVariables } from '../../schema/__generated__/signup'
 import fp2 from 'fingerprintjs2'
-import { sha256 } from 'js-sha256'
 import { useAuthSuccessed, useSignupSuccess } from './hooks'
 import { TUploadResponse, uploadImage } from '../../services/misc'
 import swal from 'sweetalert'
@@ -13,7 +10,7 @@ import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import FieldInput from './input'
+import FieldInput from '../../components/input'
 
 function Signup() {
   const [exec, result] = useMutation<signup, signupVariables>(signupQuery)

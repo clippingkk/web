@@ -14,6 +14,9 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import Avatar from '../../components/avatar/avatar';
 import { Link } from '@reach/router';
+import ProfileEditor from './profile-editor';
+import { useSelector } from 'react-redux';
+import { TGlobalStore } from '../../store';
 
 const styles = require('./profile.css').default
 
@@ -27,6 +30,7 @@ function Profile(props: TProfileProps) {
       id: ~~props.userid
     }
   })
+  const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   usePageTrack('profile', {
     userId: props.userid
   })
@@ -44,10 +48,9 @@ function Profile(props: TProfileProps) {
       })
     }
     return c
-
   }, [data?.me.analysis.monthly.length])
 
-  const year =  (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
+  const year = (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
   return (
     <section>
@@ -57,17 +60,23 @@ function Profile(props: TProfileProps) {
           <div className='w-full flex items-center justify-center'>
             <Avatar img={data?.me.avatar ?? ''} name={data?.me.name} className='w-16 h-16 mr-12 lg:w-32 lg:h-32' />
             <div className={styles.info}>
-              <h3 className='text-2xl'>{data?.me.name}</h3>
+              <div className='flex items-center'>
+                <h3 className='text-2xl'>{data?.me.name}</h3>
+                {uid === data?.me.id && (<ProfileEditor />)}
+              </div>
               <h5 className='text-lg text-gray-800'>{t('app.profile.collected')} {data?.me.clippingsCount} {t('app.profile.records')}</h5>
-              {!data?.me.wechatOpenid && (
-                <WechatBindButton />
-              )}
+              <div className='mb-4'>
+                {data?.me.bio.split('\n').map((v, i) => (
+                  <p key={i}>{v}</p>
+                ))}
+              </div>
+              {!data?.me.wechatOpenid && (<WechatBindButton />)}
               <Link
-               to={`/report/yearly?uid=${data?.me.id}&year=${year}`}
-               className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
+                to={`/report/yearly?uid=${data?.me.id}&year=${year}`}
+                className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
               >
                 {t('app.profile.report.yearlyTitle')}
-                </Link>
+              </Link>
             </div>
           </div>
 
