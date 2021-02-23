@@ -9,7 +9,7 @@ import FieldTextarea from '../../components/textarea'
 import { updateProfile, updateProfileVariables } from '../../schema/mutations/__generated__/updateProfile'
 import { toast } from 'react-toastify'
 import { uploadImage } from '../../services/misc'
-import { useTranslation } from 'react-i18next/*'
+import { useTranslation } from 'react-i18next'
 
 type ProfileEditorProps = {
 }
