@@ -38,8 +38,8 @@ function SquarePage() {
 
   return (
     <section className='flex items-center justify-center flex-col'>
-      <h2 className='text-3xl lg:text-5xl dark:text-gray-400'>Square</h2>
-      <div className='flex flex-wrap w-full justify-center items-center'>
+      <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'>Square</h2>
+      <div className='masonry-1 lg:masonry-2 xl:masonry-3 2xl:masonry-4 masonry-gap-4 mb-16'>
         {data?.featuredClippings.map(clipping => (
           <ClippingItem
             item={clipping as any}

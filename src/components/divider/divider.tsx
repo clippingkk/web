@@ -1,5 +1,4 @@
 import React from 'react'
-const styles = require('./divider.css').default
 
 type TDividerProps = {
   title: string
@@ -8,8 +7,10 @@ type TDividerProps = {
 
 function Divider({ title }: TDividerProps) {
   return (
-    <div className={styles.divider}>
-      <span className={styles.title}>{title}</span>
+    <div className='w-full flex justify-center items-center my-4'>
+      <span
+       className='text-white text-lg py-4 px-8 z-10 rounded from-blue-400 to-blue-600 bg-gradient-to-br'
+       >{title}</span>
     </div>
   )
 }

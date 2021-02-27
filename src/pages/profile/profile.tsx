@@ -54,7 +54,7 @@ function Profile(props: TProfileProps) {
 
   return (
     <section>
-      <Card className='flex items-center justify-center py-12 w-full lg:w-4/5 mx-auto my-20 anna-fade-in bg-gray-200 bg-opacity-75'>
+      <Card className='flex items-center justify-center py-12 w-full lg:w-4/5 mx-auto mt-20 anna-fade-in bg-gray-200 bg-opacity-75'>
         <div className='flex flex-col items-center justify-center w-full'>
 
           <div className='w-full flex items-center justify-center'>
@@ -97,7 +97,7 @@ function Profile(props: TProfileProps) {
 
       <Divider title={t('app.profile.recents')} />
 
-      <div className='flex flex-wrap justify-center items-center mb-16'>
+      <div className='masonry-1 lg:masonry-2 xl:masonry-3 2xl:masonry-4 masonry-gap-4 mb-16'>
         {data?.me.recents.map(
           (item => <ClippingItem key={item.id} item={item} userid={~~props.userid} />)
         )}

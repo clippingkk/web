@@ -14,8 +14,11 @@
 }
 
 .clipping {
-  width: calc(33vw - 6rem);
-  min-height: 25rem;
+  /* width: calc(33vw - 6rem); */
+  width: 100%;
+
+  break-inside: avoid;
+  /* min-height: 25rem; */
 }
 
 @media (max-width: 768px) {

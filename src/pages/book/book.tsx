@@ -65,7 +65,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
     <section className={`${styles.bookPage} page anna-fade-in`}>
       <BookInfo book={bookData} />
       <Divider title={t('app.book.title')} />
-      <div className={styles.clippings}>
+      <div className='masonry-1 lg:masonry-2 xl:masonry-3 2xl:masonry-4 masonry-gap-4 mb-16'>
         {clippingsData?.book.clippings.map(clipping => (
           <ClippingItem
             item={clipping}

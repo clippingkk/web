@@ -1,10 +1,25 @@
-.book-page {
-  
+.clippings {
+  columns: 3;
+  column-gap: 30px;
 }
 
-.clippings {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+@media screen and (min-width: 1024px) and (max-width: 1439.98px) {
+  .clippings {
+    columns: 3;
+    column-gap: 20px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023.98px) {
+  .clippings {
+    columns: 2;
+    column-gap: 20px;
+  }
+}
+
+
+@media screen and (max-width: 767.98px) {
+  .clippings {
+    columns: 1;
+  }
 }

@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer utilities {
+  @variants responsive {
+    .masonry-4 {
+      columns: 4;
+    }
+    .masonry-3 {
+      columns: 3;
+    }
+    .masonry-2 {
+      columns: 2;
+    }
+    .masonry-1 {
+      columns: 1;
+    }
+
+    .masonry-gap-4 {
+      column-gap: 1rem;
+    }
+    .masonry-gap-8 {
+      column-gap: 2rem;
+    }
+    .masonry-gap-12 {
+      column-gap: 3rem;
+    }
+    .masonry-gap-16 {
+      column-gap: 4rem;
+    }
+
+  }
+}
