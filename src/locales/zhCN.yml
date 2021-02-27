@@ -33,6 +33,7 @@ app:
         pwd: 密码
         bio: 个人简介
         submit: 搞快点
+        endpoint: API 地址
     home:
         title: 我的书籍
         unchecked: 未分类图书
@@ -94,8 +95,15 @@ app:
         editor:
             title: 更新我的个人信息
             updated: 已更新
+            max4line: 最大仅支持 4 行文字
         report:
             yearlyTitle: 年度报告
     settings:
         title: 全局配置(网站)
         theme: 黑暗模式
+        export:
+            title: 导出数据
+            success: 已导出
+            flomo:
+                title: Flomo
+                submit: 导出至 flomo

@@ -33,6 +33,7 @@ app:
         pwd: 암호
         bio: 개인 프로필
         submit: 제출
+        endpoint: API
     home:
         title: 내 책들
         unchecked: 분류되지 않은 책
@@ -94,8 +95,15 @@ app:
         editor:
             title: 내 개인 정보 업데이트
             updated: 업데이트 됨
+            max4line: 최대 4 줄의 텍스트 만 지원합니다.
         report:
             yearlyTitle: 연간 보고서
     settings:
         title: 글로벌 구성 (웹 사이트)
         theme: 야간 모드
+        export:
+            title: 데이터 내보내기
+            success: 데이터를 내보냈습니다.
+            flomo:
+                title: Flomo
+                submit: flomo 로 내보내기

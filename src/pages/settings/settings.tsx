@@ -4,6 +4,7 @@ import Select from 'react-select'
 import { useTranslation } from 'react-i18next'
 import DarkSwitcher from './dark-switcher';
 import SimpleSwitcher from './simple-switcher';
+import Exports from './exports';
 
 type SettingsPageProps = {
 }
@@ -66,9 +67,9 @@ function GlobalSettings() {
 
         <div className='w-64 text-right flex items-center justify-end'>
           <SimpleSwitcher
-          checked={isDarkTheme}
-          onChange={onDarkThemeChange}
-           />
+            checked={isDarkTheme}
+            onChange={onDarkThemeChange}
+          />
           {/* <DarkSwitcher
           checked={isDarkTheme}
           onChange={onDarkThemeChange}
@@ -97,6 +98,11 @@ function SettingsPage(props: SettingsPageProps) {
     >
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'> 🛠 {t('app.settings.title')}</h3>
       <GlobalSettings />
+
+      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
+        {t('app.settings.export.title')}
+      </h3>
+      <Exports />
 
     </div>
   )

@@ -33,6 +33,7 @@ app:
         pwd: Password
         bio: Bio
         submit: Go go go!
+        endpoint: API
     home:
         title: My books
         unchecked: Not matched books
@@ -95,9 +96,16 @@ app:
         editor:
             title: update my profile
             updated: updated
+            max4line: Only supports up to 4 lines of text
         report:
             yearlyTitle: Yearly report
     settings:
         title: Global Settings(for web)
         theme: Theme
+        export:
+            title: Export
+            success: exported
+            flomo:
+                title: Flomo
+                submit: export to flomo
 

@@ -31,6 +31,10 @@ function ProfileEditor(props: ProfileEditorProps) {
     }),
     async onSubmit(vals) {
       // pre upload image here
+      if (vals.bio.split('\n').length > 4) {
+        toast.error(t('app.profile.editor.max4line'))
+        return
+      }
       let avatarUrl = ''
       if (vals.avatar) {
         try {
@@ -81,38 +85,40 @@ function ProfileEditor(props: ProfileEditorProps) {
             formik.handleSubmit()
           }}
         >
-          <form className='flex flex-col' onSubmit={formik.handleSubmit}>
-            <FieldInput
-              type='file'
-              name='avatar'
-              error={formik.errors.avatar}
-              onChange={e => {
-                if (!e.target.files) {
-                  return
-                }
-                const f = e.target.files[0]
-                formik.setFieldValue('avatar', f)
-              }}
-              inputProps={{
-                accept: "image/png, image/jpeg"
-              }}
-              value={undefined}
-            />
-            <FieldTextarea
-              name='bio'
-              onChange={formik.handleChange}
-              error={formik.errors.bio}
-              value={formik.values.bio}
-              inputProps={{
-                rows: 4
-              }}
-            />
+          <div>
+            <form className='flex flex-col' onSubmit={formik.handleSubmit}>
+              <FieldInput
+                type='file'
+                name='avatar'
+                error={formik.errors.avatar}
+                onChange={e => {
+                  if (!e.target.files) {
+                    return
+                  }
+                  const f = e.target.files[0]
+                  formik.setFieldValue('avatar', f)
+                }}
+                inputProps={{
+                  accept: "image/png, image/jpeg"
+                }}
+                value={undefined}
+              />
+              <FieldTextarea
+                name='bio'
+                onChange={formik.handleChange}
+                error={formik.errors.bio}
+                value={formik.values.bio}
+                inputProps={{
+                  rows: 4
+                }}
+              />
 
-            <div className='flex items-center justify-end'>
-              <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-sm px-4 py-2 mr-4' onClick={onEditCancel}>{t('app.common.cancel')}</button>
-              <button className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2' type='submit'>{t('app.common.doUpdate')}</button>
-            </div>
-          </form>
+              <div className='flex items-center justify-end'>
+                <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-sm px-4 py-2 mr-4' onClick={onEditCancel}>{t('app.common.cancel')}</button>
+                <button className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2' type='submit'>{t('app.common.doUpdate')}</button>
+              </div>
+            </form>
+          </div>
         </Dialog>
       )}
     </React.Fragment>

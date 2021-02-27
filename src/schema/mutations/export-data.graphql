@@ -1,0 +1,3 @@
+mutation exportDataTo($destination: ExportDestination!, $args: String!) {
+    exportData(destination: $destination, args: $args)
+}
