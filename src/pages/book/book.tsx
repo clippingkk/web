@@ -11,6 +11,7 @@ import { useQuery } from '@apollo/client';
 import bookQuery from '../../schema/book.graphql'
 import { book, bookVariables, book_book_clippings } from '../../schema/__generated__/book';
 import { useTranslation } from 'react-i18next';
+import MasonryContainer from '../../components/masonry-container';
 const styles = require('./book.css').default
 type TBookPageProps = {
   userid: number,
@@ -65,48 +66,50 @@ function BookPage({ userid, bookid }: TBookPageProps) {
     <section className={`${styles.bookPage} page anna-fade-in`}>
       <BookInfo book={bookData} />
       <Divider title={t('app.book.title')} />
-      <div className='masonry-1 lg:masonry-2 xl:masonry-3 2xl:masonry-4 masonry-gap-4 mb-16'>
-        {clippingsData?.book.clippings.map(clipping => (
-          <ClippingItem
-            item={clipping}
-            userid={userid}
-            book={bookData}
-            key={clipping.id}
-          />
-        ))}
-        <ListFooter
-          loadMoreFn={() => {
-            if (loading) {
-              return
-            }
-            fetchMore({
-              variables: {
-                id: ~~bookid,
-                pagination: {
-                  limit: 10,
-                  offset: clippingsData?.book.clippings.length
-                }
-              },
-              updateQuery: (prev: book, { fetchMoreResult }) => {
-                if (!fetchMoreResult) {
-                  return prev
-                }
-                if (fetchMoreResult.book.clippings.length < 10) {
-                  setHasMore(false)
-                }
-                return {
-                  ...prev,
-                  book: {
-                    ...prev.book,
-                    clippings: [...prev.book.clippings, ...fetchMoreResult.book.clippings]
+      <MasonryContainer>
+        <React.Fragment>
+          {clippingsData?.book.clippings.map(clipping => (
+            <ClippingItem
+              item={clipping}
+              userid={userid}
+              book={bookData}
+              key={clipping.id}
+            />
+          ))}
+          <ListFooter
+            loadMoreFn={() => {
+              if (loading) {
+                return
+              }
+              fetchMore({
+                variables: {
+                  id: ~~bookid,
+                  pagination: {
+                    limit: 10,
+                    offset: clippingsData?.book.clippings.length
+                  }
+                },
+                updateQuery: (prev: book, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) {
+                    return prev
+                  }
+                  if (fetchMoreResult.book.clippings.length < 10) {
+                    setHasMore(false)
+                  }
+                  return {
+                    ...prev,
+                    book: {
+                      ...prev.book,
+                      clippings: [...prev.book.clippings, ...fetchMoreResult.book.clippings]
+                    }
                   }
                 }
-              }
-            })
-          }}
-          hasMore={hasMore}
-        />
-      </div>
+              })
+            }}
+            hasMore={hasMore}
+          />
+        </React.Fragment>
+      </MasonryContainer>
     </section>
   )
 }

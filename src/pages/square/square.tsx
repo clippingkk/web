@@ -10,6 +10,7 @@ import { useMultipBook } from '../../hooks/book'
 import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
+import MasonryContainer from '../../components/masonry-container'
 
 function DevelopingAlert() {
   const { t } = useTranslation()
@@ -39,17 +40,19 @@ function SquarePage() {
   return (
     <section className='flex items-center justify-center flex-col'>
       <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'>Square</h2>
-      <div className='masonry-1 lg:masonry-2 xl:masonry-3 2xl:masonry-4 masonry-gap-4 mb-16'>
-        {data?.featuredClippings.map(clipping => (
-          <ClippingItem
-            item={clipping as any}
-            userid={clipping.creator.id}
-            book={books.books.find(x => x.id.toString() == clipping.bookID)}
-            key={clipping.id}
-            creator={clipping.creator}
-          />
-        ))}
-      </div>
+      <MasonryContainer>
+        <React.Fragment>
+          {data?.featuredClippings.map(clipping => (
+            <ClippingItem
+              item={clipping as any}
+              userid={clipping.creator.id}
+              book={books.books.find(x => x.id.toString() == clipping.bookID)}
+              key={clipping.id}
+              creator={clipping.creator}
+            />
+          ))}
+        </React.Fragment>
+      </MasonryContainer>
     </section>
   )
 }

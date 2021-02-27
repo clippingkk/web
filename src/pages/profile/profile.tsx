@@ -17,6 +17,7 @@ import { Link } from '@reach/router';
 import ProfileEditor from './profile-editor';
 import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../store';
+import MasonryContainer from '../../components/masonry-container';
 
 const styles = require('./profile.css').default
 
@@ -97,11 +98,13 @@ function Profile(props: TProfileProps) {
 
       <Divider title={t('app.profile.recents')} />
 
-      <div className='masonry-1 lg:masonry-2 xl:masonry-3 2xl:masonry-4 masonry-gap-4 mb-16'>
-        {data?.me.recents.map(
-          (item => <ClippingItem key={item.id} item={item} userid={~~props.userid} />)
-        )}
-      </div>
+      <MasonryContainer>
+        <React.Fragment>
+          {data?.me.recents.map(
+            (item => <ClippingItem key={item.id} item={item} userid={~~props.userid} />)
+          )}
+        </React.Fragment>
+      </MasonryContainer>
     </section>
   )
 }
