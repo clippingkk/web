@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.15.1...v3.16.0) (2021-02-27)
+
+
+### Features
+
+* **export:** add export data entry ([566d13a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/566d13a80f9b858b18c34689df0074388b02d0c0))
+* **profile:** update profile editor styles ([7783f41](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7783f419dbdd6125e64218015616d5be039d7db6))
+
 ### [3.15.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.14.0...v3.15.1) (2021-02-23)
 
 
