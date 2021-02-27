@@ -21,7 +21,7 @@ function FieldInput(props: FieldInputProps) {
       <input
         {...props.inputProps}
         type={props.type ?? 'text'}
-        className={`text-2xl p-4 border-2 lg:w-96 w-56 bg-gray-400 focus:outline-none ` + (props.error ? 'border-red-400' : 'border-transparent')}
+        className={`text-2xl p-4 border-2 lg:w-144 w-96 bg-gray-400 focus:outline-none ` + (props.error ? 'border-red-400' : 'border-transparent')}
         value={props.value}
         placeholder={t(`app.auth.${props.name}`)}
         name={props.name}

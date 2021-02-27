@@ -14,14 +14,14 @@ config.plugins.push(
     analyzerMode: 'static'
   })
 )
-config.optimization = {
-  ...config.optimization,
-  minimize: true,
-  minimizer: [
-    new ESBuildMinifyPlugin({
-      target: 'es2015' // Syntax to compile to (see options below for possible values)
-    })
-  ]
-}
+// config.optimization = {
+//   ...config.optimization,
+//   minimize: true,
+//   minimizer: [
+//     new ESBuildMinifyPlugin({
+//       target: 'es2015' // Syntax to compile to (see options below for possible values)
+//     })
+//   ]
+// }
 
 module.exports = config

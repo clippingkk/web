@@ -31,13 +31,13 @@ const config = {
       exclude: /node_modules/,
       use: [
         {
-          loader: 'esbuild-loader',
+          loader: 'babel-loader',
           options: {
-            loader: 'jsx',
-            target: 'es2015',
-            // plugins: [
-            //   __DEV__ && require.resolve('react-refresh/babel')
-            // ].filter(Boolean)
+            // loader: 'jsx',
+            // target: 'es2015',
+            plugins: [
+              __DEV__ && require.resolve('react-refresh/babel')
+            ].filter(Boolean)
           }
         }
       ]
@@ -45,15 +45,22 @@ const config = {
       test: /.tsx?$/,
       exclude: /node_modules/,
       use: [{
-          loader: 'esbuild-loader',
-          options: {
-            loader: 'tsx',
-            target: 'es2015',
-            // plugins: [
-            //   __DEV__ && require.resolve('react-refresh/babel')
-            // ].filter(Boolean)
-          }
-        }]
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            __DEV__ && require.resolve('react-refresh/babel')
+          ].filter(Boolean)
+        }
+      }, {
+        loader: 'ts-loader',
+        // options: {
+          // loader: 'tsx',
+          // target: 'es2015',
+          // plugins: [
+          //   __DEV__ && require.resolve('react-refresh/babel')
+          // ].filter(Boolean)
+        // }
+      }]
     }, {
       test: /.styl$/,
       exclude: /node_modules/,
@@ -90,9 +97,9 @@ const config = {
       exclude: /node_modules/,
       loader: 'graphql-tag/loader'
     }, {
-        test: /\.ya?ml$/,
-        type: 'json',
-        use: 'yaml-loader'
+      test: /\.ya?ml$/,
+      type: 'json',
+      use: 'yaml-loader'
     }, {
       test: /\.(png|jpg|jpeg|gif)$/,
       exclude: /node_modules/,
@@ -120,7 +127,7 @@ const config = {
     }]
   },
   plugins: [
-    new ESBuildPlugin(),
+    // new ESBuildPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       title: 'ClippingKK 是 kindle 笔记整理收集复盘的好帮手',
@@ -129,12 +136,12 @@ const config = {
       chunks: ['main', 'common', 'manifest', 'styles'],
     }),
     // new OptimizeCssAssetsPlugin({
-      // // assetNameRegExp: /\.optimize\.css$/g,
-      // cssProcessor: require('cssnano'),
-      // cssProcessorPluginOptions: {
-        // preset: ['default', { discardComments: { removeAll: true } }],
-      // },
-      // canPrint: true
+    // // assetNameRegExp: /\.optimize\.css$/g,
+    // cssProcessor: require('cssnano'),
+    // cssProcessorPluginOptions: {
+    // preset: ['default', { discardComments: { removeAll: true } }],
+    // },
+    // canPrint: true
     // }),
     new AddAssertHtmlPlugin({
       filepath: path.resolve(__dirname, '..', 'dist' + (__DEV__ ? '-dev' : ''), '*.dll.js'),

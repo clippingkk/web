@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { useFormik } from 'formik'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import Dialog from '../../components/dialog/dialog'
 import updateProfileMutation from '../../schema/mutations/update-profile.graphql'
@@ -12,6 +12,7 @@ import { uploadImage } from '../../services/misc'
 import { useTranslation } from 'react-i18next'
 
 type ProfileEditorProps = {
+  bio: string
 }
 
 function ProfileEditor(props: ProfileEditorProps) {
@@ -19,7 +20,6 @@ function ProfileEditor(props: ProfileEditorProps) {
 
   const [doUpdate, { client }] = useMutation<updateProfile, updateProfileVariables>(updateProfileMutation)
   const { t } = useTranslation()
-
   const formik = useFormik({
     initialValues: {
       bio: '',
@@ -57,6 +57,10 @@ function ProfileEditor(props: ProfileEditorProps) {
       })
     }
   })
+
+  useEffect(() => {
+    formik.setFieldValue('bio', props.bio)
+  }, [props.bio])
 
   const onEditCancel = useCallback(() => {
     formik.resetForm()
@@ -100,7 +104,7 @@ function ProfileEditor(props: ProfileEditorProps) {
               error={formik.errors.bio}
               value={formik.values.bio}
               inputProps={{
-                col: 3
+                rows: 4
               }}
             />
 

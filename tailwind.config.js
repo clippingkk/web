@@ -12,7 +12,12 @@ module.exports = {
   ],
   // whitelist: ['mode-dark'],
   theme: {
-    extend: {}
+    extend: {
+      width: {
+        '128': '32rem',
+        '144': '36rem',
+      }
+    }
   },
   // variants: {
   //   backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'dark-even', 'dark-odd', 'hover'],

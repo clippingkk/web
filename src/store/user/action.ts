@@ -121,9 +121,10 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
   })
 
   try {
-    const response: TUserState = yield call(authAPI.login, email, pwd)
-    yield call(updateToken, response.token)
-    yield call(postLogin, response)
+    const response = yield call(authAPI.login as any, email, pwd)
+    const res = response as any
+    yield call(updateToken, res.token)
+    yield call(postLogin as any, response)
   } catch (e) {
     swal({
       title: "Oops",
