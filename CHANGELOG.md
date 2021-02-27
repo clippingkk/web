@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.0...v3.16.1) (2021-02-27)
+
+
+### Features
+
+* **styles:** support css native masonry ([2cce8f2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2cce8f23d3cb0188603e79b5468aea4655183d2e))
+
+## [3.19.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.0...v3.19.0) (2021-02-27)
+
+
+### Features
+
+* **styles:** support css native masonry ([2cce8f2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2cce8f23d3cb0188603e79b5468aea4655183d2e))
+
+## [3.18.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.0...v3.18.0) (2021-02-27)
+
+
+### Features
+
+* **styles:** support css native masonry ([2cce8f2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2cce8f23d3cb0188603e79b5468aea4655183d2e))
+
+## [3.17.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.0...v3.17.0) (2021-02-27)
+
+
+### Features
+
+* **styles:** support css native masonry ([2cce8f2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2cce8f23d3cb0188603e79b5468aea4655183d2e))
+
 ## [3.16.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.15.1...v3.16.0) (2021-02-27)
 
 
