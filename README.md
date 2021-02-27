@@ -9,3 +9,5 @@ $ apollo schema:download --endpoint="http://localhost:9654/api/v2/graphql" --hea
 $ mv schema.json src/schema/
 $ apollo codegen:generate --target=typescript --localSchemaFile="./src/schema/schema.json" --includes="./src/schema/**/*.graphql" --useReadOnlyTypes
 ```
+
+esbuild 有问题报错 ENOENT: 执行: `node ./node_modules/esbuild/install.js`

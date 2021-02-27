@@ -99,6 +99,9 @@ function ProfileEditor(props: ProfileEditorProps) {
               onChange={formik.handleChange}
               error={formik.errors.bio}
               value={formik.values.bio}
+              inputProps={{
+                col: 3
+              }}
             />
 
             <div className='flex items-center justify-end'>
