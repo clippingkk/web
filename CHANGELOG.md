@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.1...v3.16.2) (2021-02-27)
+
+
+### Features
+
+* **masonry:** fix masonry layout ([ef5982f](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ef5982ff14f28d7511e235b1c7521c964ed64b8c))
+
 ### [3.16.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.0...v3.16.1) (2021-02-27)
 
 
