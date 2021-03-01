@@ -67,7 +67,6 @@ export function useMultipBook(doubanIds: string[]): bookRequestReturn {
       }
     })
 
-
     if (needToFetchIds.length === 0) {
       isLoading.current = false
       setLoading(false)
@@ -84,7 +83,7 @@ export function useMultipBook(doubanIds: string[]): bookRequestReturn {
         }, [])
       })
       bs.books.forEach(x => {
-        cache.set(x.id, x)
+        cache.set(x.doubanId, x)
       })
     }).finally(() => {
       isLoading.current = false
