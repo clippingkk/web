@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.2...v3.16.3) (2021-03-01)
+
+
+### Bug Fixes
+
+* **wenqu:** fix wenqu fetcher cache issue ([3a293c8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3a293c85a9a8b7bb9b931c057ebb5fa3737f2330))
+
 ### [3.16.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.1...v3.16.2) (2021-02-27)
 
 
