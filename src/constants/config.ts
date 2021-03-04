@@ -14,3 +14,5 @@ export const SignInWithAppleOptions = {
   state: "origin:web",
   usePopup: true,
 }
+
+export const CDN_DEFAULT_DOMAIN = 'https://clippingkk-cdn.annatarhe.com'
