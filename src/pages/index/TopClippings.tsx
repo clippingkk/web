@@ -33,7 +33,7 @@ function TopClippings(props: TopClippingsProps) {
         >
           <div>
             <p
-              className={` text-xl leading-relaxed ${styles.clippingText}`}
+              className={` text-xl leading-relaxed font-lxgw ${styles.clippingText}`}
             >
               {c.content}
             </p>
@@ -44,7 +44,7 @@ function TopClippings(props: TopClippingsProps) {
               <span className='ml-2'>{c.creator.name}</span>
             </div>
             <div className='ml-4'>
-              <span className='text-right'>{c.title}</span>
+              <span className='text-right font-lxgw'>{c.title}</span>
             </div>
           </div>
         </Link>

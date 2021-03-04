@@ -21,6 +21,7 @@ function HomePage(props: THomeProp) {
   const [reachEnd, setReachEnd] = useState(false)
   const { data, fetchMore, loading, called } = useQuery<books, booksVariables>(homeListQuery, {
     variables: {
+      id: uid,
       pagination: {
         limit: STEP,
         offset: 0

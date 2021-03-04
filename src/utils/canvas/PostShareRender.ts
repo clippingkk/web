@@ -24,9 +24,11 @@ export class PostShareRender extends BaseCanvasRender {
   private async loadImage(src: string): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
       const img: HTMLImageElement = new Image()
-      if (!src.includes('annatarhe.com')) {
-        img.crossOrigin = "anonymous"
-      }
+      // 咋回事，好像得 qiniu 支持什么鬼的。烦死了
+      
+      // if (!src.includes('annatarhe.com')) {
+      img.crossOrigin = "anonymous"
+      // }
       img.onload = () => {
         resolve(img);
       };

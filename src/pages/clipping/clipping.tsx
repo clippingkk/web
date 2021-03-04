@@ -74,7 +74,7 @@ function ClippingPage(props: TClippingPageProp) {
           <h1 className='lg:text-3xl text-xl font-bold my-2'>{clipping?.clipping.title}</h1>
           <h3 className='font-light lg:text-lg my-4'>{book?.author}</h3>
           <hr className='bg-gray-400 my-12' />
-          <p className='lg:text-3xl text-2xl lg:leading-loose leading-normal'>{clippingContent}</p>
+          <p className='lg:text-3xl text-2xl lg:leading-loose leading-normal font-lxgw'>{clippingContent}</p>
           <hr className='bg-gray-400 my-12' />
           <Reactions reactions={clipping?.clipping.reactions ?? []} cid={clipping?.clipping.id || -1} />
           <hr className='bg-gray-400 my-12' />

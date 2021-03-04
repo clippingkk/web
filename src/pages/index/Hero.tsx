@@ -42,8 +42,8 @@ function Hero() {
     <div className={'flex flex-col justify-center ' + styles.hero}>
       <div className={styles.titleField + ' my-8 mx-8 md:my-20 md:mx-20 flex items-center justify-center flex-col md:flex-row'}>
         <div className='flex-1 mb-8'>
-          <h1 className={styles.title + ' mx-0 my-0 font-light text-white'}>ClippingKK</h1>
-          <h4 className='text-white text-3xl'>{t('app.slogan')}</h4>
+          <h1 className={styles.title + ' mx-0 my-0 font-light text-white font-lxgw'}>ClippingKK</h1>
+          <h4 className='text-white text-3xl font-lxgw'>{t('app.slogan')}</h4>
           <div className={styles.platformSection}>
             <a
               href='/auth/signin'

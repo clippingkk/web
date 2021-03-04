@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: LxgwWenKai;
+    font-weight: 400;
+    src: url('../assets/LXGWWenKai-Regular.ttf')  format('truetype');
+  }
+}
 
 @layer utilities {
   @variants responsive {
@@ -30,6 +37,9 @@
     .masonry-gap-16 {
       column-gap: 4rem;
     }
+  }
 
+  .font-lxgw {
+    font-family: LxgwWenKai;
   }
 }

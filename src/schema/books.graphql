@@ -1,5 +1,13 @@
-query books($pagination: PaginationLegacy!) {
-    books(pagination: $pagination) {
-        doubanId
+query books($id: Int!, $pagination: PaginationLegacy!) {
+  me(id: $id) {
+    recent3mReadings
+    recents {
+      id
+      content
+      bookID
+    }
+  }
+  books(pagination: $pagination) {
+    doubanId
   }
 }
