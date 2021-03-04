@@ -35,6 +35,7 @@ app:
         submit: 제출
         endpoint: API
     home:
+        reading: 읽고있는 책
         title: 내 책들
         unchecked: 분류되지 않은 책
         notfound: 뭐! 아직 메모를 읽지 않았습니까?

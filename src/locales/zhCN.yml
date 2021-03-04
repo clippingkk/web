@@ -35,6 +35,7 @@ app:
         submit: 搞快点
         endpoint: API 地址
     home:
+        reading: 正在读
         title: 我的书籍
         unchecked: 未分类图书
         notfound: 什么！你竟然还没有读书笔记？

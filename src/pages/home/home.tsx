@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useMultipBook } from '../../hooks/book';
 import NoContentAlert from './no-content';
 import BookCover from '../../components/book-cover/book-cover';
+import ReadingBook from './reading-book';
 const styles = require('./home.css').default
 
 type THomeProp = {
@@ -39,6 +40,12 @@ function HomePage(props: THomeProp) {
 
   return (
     <section className={`${styles.home} page`}>
+      {data.me.recents.length > 0 && (
+        <div className='mt-8'>
+          <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.reading')}</h2>
+          <ReadingBook clipping={data.me.recents[0]} uid={uid} />
+        </div>
+      )}
       <header className='flex items-center justify-center my-10'>
         <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.title')}</h2>
         <Link

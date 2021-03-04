@@ -35,6 +35,7 @@ app:
         submit: Go go go!
         endpoint: API
     home:
+        reading: The Reading Book
         title: My books
         unchecked: Not matched books
         notfound: What! No clippings for now?

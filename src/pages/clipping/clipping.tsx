@@ -20,6 +20,7 @@ import { toggleClippingVisible, toggleClippingVisibleVariables } from '../../sch
 import toggleClippingVisibleMutation from '../../schema/mutations/toggle-clipping-visible.graphql'
 import { useLocalTime } from '../../hooks/time'
 import Reactions from './reactions'
+import ClippingContent from '../../components/clipping-content'
 const styles = require('./clipping.css').default
 
 type TClippingPageProp = {
@@ -64,7 +65,6 @@ function ClippingPage(props: TClippingPageProp) {
 
   const clippingAt = useLocalTime(clipping?.clipping.createdAt)
 
-  const clippingContent = clipping?.clipping.content.replace(/\[\d*\]/, '')
   const creator = clipping?.clipping.creator
 
   return (
@@ -74,7 +74,7 @@ function ClippingPage(props: TClippingPageProp) {
           <h1 className='lg:text-3xl text-xl font-bold my-2'>{clipping?.clipping.title}</h1>
           <h3 className='font-light lg:text-lg my-4'>{book?.author}</h3>
           <hr className='bg-gray-400 my-12' />
-          <p className='lg:text-3xl text-2xl lg:leading-loose leading-normal font-lxgw'>{clippingContent}</p>
+          <ClippingContent className='lg:text-3xl text-2xl lg:leading-loose leading-normal font-lxgw' content={clipping?.clipping.content ?? ''} />
           <hr className='bg-gray-400 my-12' />
           <Reactions reactions={clipping?.clipping.reactions ?? []} cid={clipping?.clipping.id || -1} />
           <hr className='bg-gray-400 my-12' />

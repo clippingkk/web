@@ -6,6 +6,7 @@ import { WenquBook } from '../../services/wenqu';
 import { fetchSquareData_featuredClippings_creator } from '../../schema/__generated__/fetchSquareData';
 import { useTranslation } from 'react-i18next';
 import Avatar from '../avatar/avatar';
+import ClippingContent from '../clipping-content';
 
 const styles = require('./clipping-item.css').default
 
@@ -29,7 +30,7 @@ function ClippingItem({ userid, item, book, creator }: TClippingItemProps) {
           {book?.title ?? item.title}
         </h3>
         <hr className='my-4' />
-        <p className='lg:text-2xl text-gray-900'>{item.content}</p>
+        <ClippingContent content={item.content} className='lg:text-2xl text-gray-900' />
         {creator && (
           <React.Fragment>
             <hr className='my-4 self-end' />

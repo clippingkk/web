@@ -98,7 +98,7 @@ function Profile(props: TProfileProps) {
 
       <Divider title={t('app.profile.recents')} />
 
-      <MasonryContainer>
+      <MasonryContainer className='anna-fade-in'>
         <React.Fragment>
           {data?.me.recents.map(
             (item => <ClippingItem key={item.id} item={item} userid={~~props.userid} />)
