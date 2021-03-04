@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.4...v3.16.5) (2021-03-04)
+
+
+### Bug Fixes
+
+* **poster:** fix avatar fetcher ([6735675](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6735675c823b94e79a492c4324ea283c1bc69f4c))
+
 ### [3.16.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.3...v3.16.4) (2021-03-04)
 
 
