@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.3...v3.16.4) (2021-03-04)
+
+
+### Features
+
+* **font:** add new font lxgw ([0bcc480](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0bcc480bc3c294ba42fcb4ab3f4fd9769de830cf))
+* **home:** add home heading book and update clipping format ([5227274](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5227274c6b26214f9501fef1aff085320e8df681))
+
 ### [3.16.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.2...v3.16.3) (2021-03-01)
 
 
