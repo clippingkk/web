@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.6...v3.16.7) (2021-03-06)
+
+
+### Bug Fixes
+
+* **locales:** set default locales to zhCN and remove console.log ([d40fd81](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d40fd81de3b2ef0e2e98636587f1e1dc6f4f9b82))
+
 ### [3.16.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.5...v3.16.6) (2021-03-06)
 
 
