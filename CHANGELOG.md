@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.5...v3.16.6) (2021-03-06)
+
+
+### Features
+
+* **konzert:** add utp and konzert service ([1198eb4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1198eb477e74575cce0eec6c9cfc4e356cecb20f))
+
 ### [3.16.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.4...v3.16.5) (2021-03-04)
 
 
