@@ -4,8 +4,6 @@ import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/confi
 import swal from 'sweetalert'
 import profile from '../utils/profile'
 
-console.log(API_HOST, profile)
-
 export interface IBaseResponseData {
   status: Number
   msg: string
