@@ -13,6 +13,7 @@ export function* doUpdateClipping() {
 function* updateClippingBookSaga(action: TClippingBookUpdateAction) {
   const { clippingId } = action
 
+  // @ts-ignore
   const bookId = yield swal({
     title: "请输入本书 豆瓣 id",
     content: {

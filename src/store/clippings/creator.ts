@@ -98,11 +98,12 @@ function* extraAndUpload(action: TClippingsFile) {
     }
   } catch (e) {
     console.error(e)
-    return yield call(swal, {
+    yield call(swal, {
       title: e.toString(),
       text: '哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \n iamhele1994@gmail.com',
       icon: 'error'
     })
+    return
   }
 
   yield call(swal, {
@@ -111,6 +112,6 @@ function* extraAndUpload(action: TClippingsFile) {
     icon: 'success'
   })
   const uid = sessionStorage.getItem("uid")
-  return yield call(navigate as any, `/dash/${uid}/home`)
-
+  yield call(navigate as any, `/dash/${uid}/home`)
+  return
 }

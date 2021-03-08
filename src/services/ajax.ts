@@ -2,7 +2,6 @@ import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/clien
 import { onError } from "@apollo/client/link/error"
 import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
 import swal from 'sweetalert'
-import profile from '../utils/profile'
 
 export interface IBaseResponseData {
   status: Number
@@ -10,7 +9,10 @@ export interface IBaseResponseData {
   data: any
 }
 
-let token = profile?.token
+// FIXME: 由于循环依赖的问题，这里避免引入 './profile'
+// 但是 profile 中有一样的初始化获取逻辑
+let token = localStorage.getItem('clippingkk-token')
+// let token = localProfile?.token
 
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
   if (token) {
