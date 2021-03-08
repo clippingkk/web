@@ -5,8 +5,7 @@ const AddAssertHtmlPlugin = require('add-asset-html-webpack-plugin')
 const poststylus = require('poststylus')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const { ESBuildPlugin } = require('esbuild-loader')
+// const { ESBuildPlugin } = require('esbuild-loader')
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
@@ -135,14 +134,6 @@ const config = {
       inject: 'body',
       chunks: ['main', 'common', 'manifest', 'styles'],
     }),
-    // new OptimizeCssAssetsPlugin({
-    // // assetNameRegExp: /\.optimize\.css$/g,
-    // cssProcessor: require('cssnano'),
-    // cssProcessorPluginOptions: {
-    // preset: ['default', { discardComments: { removeAll: true } }],
-    // },
-    // canPrint: true
-    // }),
     new AddAssertHtmlPlugin({
       filepath: path.resolve(__dirname, '..', 'dist' + (__DEV__ ? '-dev' : ''), '*.dll.js'),
       includeSourcemap: process.env.NODE_ENV !== 'production'
