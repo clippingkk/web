@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const TerserPlugin = require("terser-webpack-plugin")
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
@@ -61,6 +62,15 @@ if (process.env.NODE_ENV === 'production') {
   config.plugins.push(
     new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } })
   )
+  config.optimization = {
+    minimize: true,
+    minimizer: [
+      // new ESBuildMinifyPlugin({
+      // target: 'es2015' // Syntax to compile to (see options below for possible values)
+      // }),
+      new TerserPlugin(),
+    ]
+  }
 }
 
 module.exports = config

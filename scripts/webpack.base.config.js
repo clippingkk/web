@@ -159,7 +159,7 @@ const config = {
     },
     splitChunks: {
       chunks: 'async',
-      minSize: 20000,
+      minSize: 1 << 14,
       minRemainingSize: 0,
       maxSize: 1 << 16,
       minChunks: 1,
@@ -178,7 +178,8 @@ const config = {
       //     reuseExistingChunk: true
       //   }
       // }
-    }
+    },
+    minimizer: []
   },
   resolve: {
     extensions: ['.js', '.jsx', '.tsx', '.ts']
