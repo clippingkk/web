@@ -35,13 +35,16 @@ function Preview(props: PreviewProps) {
       return
     }
     const data = {
-      id: props.clipping.id,
-      avatar: props.clipping.creator.avatar,
-      un: props.clipping.creator.name,
-      time: (new Date(props.clipping.createdAt)).getTime(),
-      content: props.clipping.content,
-      bt: props.book.title,
-      author: props.book.author
+      // id: props.clipping.id,
+      // avatar: props.clipping.creator.avatar,
+      // un: props.clipping.creator.name,
+      // time: (new Date(props.clipping.createdAt)).getTime(),
+      // content: props.clipping.content,
+      // bt: props.book.title,
+      // author: props.book.author,
+      cid: props.clipping.id,
+      bid: props.book.id,
+      uid: props.clipping.creator.id,
     }
 
     const d = new URLSearchParams(data as any)
