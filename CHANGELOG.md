@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.7...v3.16.8) (2021-03-09)
+
+
+### Features
+
+* **build:** add teser for code compression ([acce80f](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/acce80f36b4986a6265dcdf651778b710eb148cf))
+* **pkg:** update packages and remove some code split ([4e794ae](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4e794aea2522a49559a9ea1112d432bc3b689518))
+* **preview:** update konzert service ([e8a6571](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e8a6571b8722f79fdcfb73cce0b35ac55622c6bd))
+
+
+### Bug Fixes
+
+* **ajax:** fix circle depency ([f6276be](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f6276be8846b3fbc5c62dfe0a92379b29898d257))
+
 ### [3.16.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.6...v3.16.7) (2021-03-06)
 
 
