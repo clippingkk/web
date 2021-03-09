@@ -50,10 +50,10 @@ function Preview(props: PreviewProps) {
     const d = new URLSearchParams(data as any)
     const distUrl = encodeURIComponent(`https://konzert.annatarhe.com/clipping.html?${d.toString()}`)
 
-    const screenWidth = screen.width > 480 ? 480 : screen.width
+    const screenWidth = screen.width > 375 ? 375 : screen.width
     const dpi = 3
     
-    setShareURL(`https://utp.annatarhe.com/?url=${distUrl}&isMobile=true&isFullPage=true&viewPortWidth=${screenWidth}&width=${screenWidth * dpi}&deviceScaleFactor=${dpi}`)
+    setShareURL(`https://utp.annatarhe.com/?url=${distUrl}&isMobile=true&isFullPage=true&viewPortWidth=${screenWidth}&width=${screenWidth * dpi}&deviceScaleFactor=${dpi}&viewPortHeight=812`)
     setLoading(true)
     setErrMsg('')
   }, [props.clipping.id, props.book?.id])
