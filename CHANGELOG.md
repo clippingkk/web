@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.8...v3.16.9) (2021-03-09)
+
+
+### Bug Fixes
+
+* **preview:** fix too much height in share image ([bb39907](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/bb39907e6de6ae0bb1c6bf76042fe67c399e0f08))
+
 ### [3.16.8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.7...v3.16.8) (2021-03-09)
 
 
