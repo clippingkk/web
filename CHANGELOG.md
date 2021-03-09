@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.16.10](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.9...v3.16.10) (2021-03-09)
+
+
+### Bug Fixes
+
+* **preview:** set default viewPort height down to 768 ([b0e1005](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b0e100561cb6d6638c396ef19c3d5ba5fcf14c8f))
+
 ### [3.16.9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.8...v3.16.9) (2021-03-09)
 
 
