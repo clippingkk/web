@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.10...v3.17.0) (2021-03-14)
+
+
+### Features
+
+* **share:** add book share service ([24c8a39](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/24c8a394a30a3f46f13be9630aa0cf0d7b7c26e5))
+
 ### [3.16.10](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.9...v3.16.10) (2021-03-09)
 
 
