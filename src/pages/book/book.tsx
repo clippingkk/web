@@ -64,7 +64,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
 
   return (
     <section className={`${styles.bookPage} page anna-fade-in`}>
-      <BookInfo book={bookData} />
+      <BookInfo book={bookData} uid={userid} />
       <Divider title={t('app.book.title')} />
       <MasonryContainer>
         <React.Fragment>

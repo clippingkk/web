@@ -24,6 +24,7 @@ app:
         hideReasons: Due to privacy issues, users’ book clippings are not displayed
     book:
         title: Clippings
+        share: Share the book
     auth:
         signin: Sign in
         signup: Sign up

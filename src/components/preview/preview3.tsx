@@ -4,6 +4,7 @@ import Dialog from '../dialog/dialog'
 import { WenquBook } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { getUTPLink, UTPService } from '../../services/utp'
 
 const styles = require('./preview.css').default
 
@@ -47,13 +48,7 @@ function Preview(props: PreviewProps) {
       uid: props.clipping.creator.id,
     }
 
-    const d = new URLSearchParams(data as any)
-    const distUrl = encodeURIComponent(`https://konzert.annatarhe.com/clipping.html?${d.toString()}`)
-
-    const screenWidth = screen.width > 375 ? 375 : screen.width
-    const dpi = 3
-    
-    setShareURL(`https://utp.annatarhe.com/?url=${distUrl}&isMobile=true&isFullPage=true&viewPortWidth=${screenWidth}&width=${screenWidth * dpi}&deviceScaleFactor=${dpi}&viewPortHeight=768`)
+    setShareURL(getUTPLink(UTPService.clipping, data))
     setLoading(true)
     setErrMsg('')
   }, [props.clipping.id, props.book?.id])

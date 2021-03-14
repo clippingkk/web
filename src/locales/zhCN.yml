@@ -24,6 +24,7 @@ app:
         hideReasons: 由于隐私问题，并不展示用户书摘内容
     book:
         title: 书摘
+        share: 分享这本书
     auth:
         signin: 登陆
         signup: 注册

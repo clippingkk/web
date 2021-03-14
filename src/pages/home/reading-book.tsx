@@ -18,7 +18,7 @@ function ReadingBook(props: ReadingBookProps) {
   }
   return (
     <div className='mb-4'>
-      <BookInfo book={book} />
+      <BookInfo book={book} uid={props.uid} />
       <Link
         to={`/dash/${props.uid}/clippings/${props.clipping.id}`}
         className='font-lxgw text-3xl leading-loose from-yellow-100 to-yellow-200 bg-gradient-to-br rounded-lg p-8 block hover:shadow-xl m-4 transform hover:scale-x-105 duration-300 dark:from-purple-600 dark:to-purple-800 dark:text-gray-200'

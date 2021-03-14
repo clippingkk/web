@@ -24,6 +24,7 @@ app:
         hideReasons: 개인 정보 보호 문제로 인해 사용자의 책 발췌문이 표시되지 않습니다.
     book:
         title: 책 다이제스트
+        share: 이 책 공유
     auth:
         signin: 로그인
         signup: 등기

@@ -1,6 +1,5 @@
 import { WENQU_SIMPLE_TOKEN, WENQU_API_HOST } from "../constants/config"
 import * as Sentry from '@sentry/browser'
-import swal from 'sweetalert'
 
 type WenquErrorResponse = {
   code: number
