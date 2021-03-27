@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.0...v3.17.1) (2021-03-27)
+
+
+### Features
+
+* **font:** update fonts ([6242021](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6242021204d293011e14cd0f7d70480c7d510912))
+
 ## [3.17.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.16.10...v3.17.0) (2021-03-14)
 
 
