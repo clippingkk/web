@@ -20,7 +20,7 @@ function SimpleAvatar({ avatar }: any) {
 function TopClippings(props: TopClippingsProps) {
   const { t } = useTranslation()
   return (
-    <div className='flex flex-wrap justify-center items-center'>
+    <div className='flex flex-wrap justify-center items-center flex-col'>
       <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>
         {t('app.public.clippings')}
       </h2>

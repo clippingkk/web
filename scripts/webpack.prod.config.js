@@ -1,9 +1,8 @@
 const config = require('./webpack.base.config')
-const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const TerserPlugin = require("terser-webpack-plugin")
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+// const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
 
 config.output.publicPath = '/'
@@ -20,9 +19,9 @@ config.plugins.push(
     clientsClaim: true,
     skipWaiting: true
   }),
-  new CopyWebpackPlugin([
-    { from: 'src/manifest', to: 'manifest' }
-  ])
+  // new CopyWebpackPlugin([
+  //   { from: 'src/manifest', to: 'manifest' }
+  // ])
 )
 config.optimization = {
   ...config.optimization,
