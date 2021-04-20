@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.1...v3.17.2) (2021-04-20)
+
+
+### Features
+
+* **package:** upgrade packages ([2bb8795](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2bb8795225b471fcef9fda825dd4de20d10207e6))
+* **pwa:** remove pwa ([62af312](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/62af312abdca07765b43cd99759b4b55e63e0550))
+* **pwa:** try to add pwa resource ([36f87fb](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/36f87fb7bcbb677e65eb56dcc4b0e2ce1039b89d))
+
+
+### Bug Fixes
+
+* **gql:** solve apollo codegen ([3aa359e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3aa359e28c966f9fde96564b59a2484163f4bebe))
+
 ### [3.17.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.0...v3.17.1) (2021-03-27)
 
 
