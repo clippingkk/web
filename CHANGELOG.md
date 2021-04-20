@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.2...v3.17.3) (2021-04-20)
+
+
+### Bug Fixes
+
+* **tool:** fix apollo cli ([f69e267](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f69e2678c15c04a807b6959882fb52cea69ecc57))
+
 ### [3.17.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.1...v3.17.2) (2021-04-20)
 
 
