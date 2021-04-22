@@ -71,7 +71,9 @@ function Profile(props: TProfileProps) {
                   <p key={i}>{v}</p>
                 ))}
               </div>
-              {!data?.me.wechatOpenid && (<WechatBindButton />)}
+              {!data?.me.wechatOpenid && (
+                <WechatBindButton />
+              )}
               <Link
                 to={`/report/yearly?uid=${data?.me.id}&year=${year}`}
                 className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'

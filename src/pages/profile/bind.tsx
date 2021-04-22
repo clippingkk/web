@@ -32,7 +32,7 @@ function WechatBindButton(props: WechatBindButtonProps) {
   return (
     <div>
       <button
-        className='bg-blue-300 py-2 px-4 rounded text-lg'
+        className='bg-blue-400 text-gray-200 py-2 px-4 rounded text-lg mb-4 hover:bg-blue-600'
         onClick={() => setVisible(true)}
       >
         {t('app.profile.wechatBind')}
