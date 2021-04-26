@@ -5,7 +5,7 @@ const IS_PROD = process.env.NODE_ENV === 'production'
 
 if (IS_PROD) {
   Sentry.init({
-    dsn: 'https://76acd61ea02341739aa86941f5a931be@sentry.io/1251804',
+    dsn: 'https://76acd61ea02341739aa86941f5a931be@o108564.ingest.sentry.io/1251804',
     integrations: [new Integrations.BrowserTracing()],
     tracesSampleRate: 0.2,
   })
