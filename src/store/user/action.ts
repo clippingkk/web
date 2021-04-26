@@ -1,6 +1,6 @@
 import { call, takeEvery, put, delay } from "@redux-saga/core/effects";
 import { navigate } from '@reach/router'
-import * as sentry from '@sentry/browser'
+import * as sentry from '@sentry/react'
 import fp2 from 'fingerprintjs2'
 import { sha256 } from 'js-sha256'
 import {

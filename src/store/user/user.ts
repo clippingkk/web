@@ -1,7 +1,7 @@
 import { AUTH_LOGIN, IUserAction, TUserState, USER_LOGOUT } from './type'
 import { USER_TOKEN_KEY, IUserToken } from '../../constants/storage'
 import mixpanel from 'mixpanel-browser'
-import * as sentry from '@sentry/browser'
+import * as sentry from '@sentry/react'
 
 const initState: TUserState = {
   profile: {

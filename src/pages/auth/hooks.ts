@@ -1,6 +1,6 @@
 import { navigate, useNavigate } from "@reach/router"
 import mixpanel from "mixpanel-browser"
-import * as sentry from '@sentry/browser'
+import * as sentry from '@sentry/react'
 import { useEffect } from "react"
 import profile from "../../utils/profile"
 import { ApolloError, LazyQueryResult, MutationResult } from "@apollo/client"
