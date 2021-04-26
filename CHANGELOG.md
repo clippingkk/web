@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.4...v3.17.5) (2021-04-26)
+
+
+### Features
+
+* **sentry:** update sentry dsn ([9a283fc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9a283fcb00c0a753cb2010cf779b0d2da65da313))
+* **sentry:** upgrade sentry ([8dece04](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8dece047ee0efacbfd9a48b9b0b3095f96f6c424))
+
 ### [3.17.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.3...v3.17.4) (2021-04-22)
 
 ### [3.17.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.2...v3.17.3) (2021-04-20)
