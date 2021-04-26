@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.5...v3.17.6) (2021-04-26)
+
+
+### Bug Fixes
+
+* **ci:** skip coverall due to the service is down for now ([18cb7f0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/18cb7f0c1c029d3e4e8ba46ddba0a0012d40c065))
+
 ### [3.17.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.4...v3.17.5) (2021-04-26)
 
 
