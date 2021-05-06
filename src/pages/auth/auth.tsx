@@ -70,7 +70,6 @@ function AuthPage(props: AuthPageProps) {
             <FontAwesomeIcon icon={faGithub} size="3x" />
           </a>
         </div>
-
       </Card>
     </section>
   )

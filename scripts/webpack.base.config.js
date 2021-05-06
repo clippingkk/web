@@ -83,6 +83,7 @@ const config = {
       test: /.css$/,
       include: [
         path.resolve(__dirname, '..', 'src', 'styles', 'tailwind.css'),
+        /react-phone-input-2/,
         /emoji-mart/,
         /react-toastify/,
       ],
