@@ -17,6 +17,7 @@ import { client, request } from './services/ajax'
 import { SWRConfig } from 'swr'
 import './prefers-dark'
 import './utils/locales'
+import './utils/leancloud'
 
 
 ReactDOM.render(

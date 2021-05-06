@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import SignInWithApple from '../../components/sign-in-with-apple/sign-in-with-apple';
 
 function checkIsCurrentPath({ isCurrent }: any) {
-  console.log('is curr', isCurrent)
   return {
     className: `flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${isCurrent ? 'bg-indigo-400' : ''}`
   }
