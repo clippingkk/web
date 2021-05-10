@@ -10,6 +10,7 @@ import SignupPage from './pages/auth/signup'
 import SigninPage from './pages/auth/signin'
 import ClippingPage from './pages/clipping/clipping'
 import ReportYearlyPage from './pages/report/yearly'
+import AuthPhone from './pages/auth/auth-phone'
 
 const PrivacyPolicy = React.lazy(() => import(/* webpackPrefetch: true */ './pages/policy/privacy'))
 const DashContainer = React.lazy(() => import(/* webpackPrefetch: true */ './components/dashboard-container/container'))
@@ -34,8 +35,9 @@ class Root extends React.Component {
             <ReleasePage path="/release/:platform" />
             <ReportYearlyPage path='/report/yearly' />
             <AuthPage path="/auth">
-              <SigninPage path="signin" />
-              <SignupPage path="signup" />
+              <AuthPhone path='phone' />
+              <SigninPage path='signin' />
+              <SignupPage path='signup' />
             </AuthPage>
             <GithubOAuthPage path="/oauth/github" />
             <DashContainer path="dash/:userid">

@@ -14,6 +14,7 @@ export type UserContent = {
   createdAt: string
   updatedAt: string
   wechatOpenid: string
+  bio: string
 }
 
 export type TUserState = {

@@ -12,20 +12,29 @@ import { uploadImage } from '../../services/misc'
 import { useTranslation } from 'react-i18next'
 
 type ProfileEditorProps = {
+  withNameChange: boolean
   bio: string
 }
 
 function ProfileEditor(props: ProfileEditorProps) {
   const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const u = new URLSearchParams(location.search)
+    if (u.has('with_profile_editor')) {
+      setVisible(true)
+    }
+  }, [])
 
   const [doUpdate, { client }] = useMutation<updateProfile, updateProfileVariables>(updateProfileMutation)
   const { t } = useTranslation()
   const formik = useFormik({
     initialValues: {
+      name: '',
       bio: '',
       avatar: null as File | null
     },
     validationSchema: Yup.object({
+      name: Yup.string(),
       bio: Yup.string().max(255),
       avatar: Yup.mixed()
     }),
@@ -87,6 +96,15 @@ function ProfileEditor(props: ProfileEditorProps) {
         >
           <div>
             <form className='flex flex-col' onSubmit={formik.handleSubmit}>
+              {props.withNameChange && (
+                <FieldInput
+                  type='text'
+                  name='name'
+                  onChange={formik.handleChange}
+                  error={formik.errors.name}
+                  value={formik.values.name}
+                />
+              )}
               <FieldInput
                 type='file'
                 name='avatar'

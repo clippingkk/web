@@ -38,7 +38,7 @@ function AuthPage(props: AuthPageProps) {
     // FIXME: uncomment next lines before commit
     const uid = profile.uid
     if (uid && uid > 0) {
-      navigate(`/dash/${uid}/home`)
+      // navigate(`/dash/${uid}/home`)
     }
   }, [])
 
@@ -50,6 +50,10 @@ function AuthPage(props: AuthPageProps) {
     <section className='anna-page-container flex h-screen items-center justify-center'>
       <Card>
         <div className='w-full flex items-center justify-center rounded'>
+          <Link
+            to="/auth/phone"
+            getProps={checkIsCurrentPath}
+          >{t('app.auth.phone')}</Link>
           <Link
             to="/auth/signup"
             getProps={checkIsCurrentPath}

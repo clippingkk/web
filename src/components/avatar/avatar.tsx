@@ -15,6 +15,9 @@ function Avatar(props: AvatarProps) {
     cls += ' w-24 h-24'
   }
 
+  if (props.img === '') {
+    return null
+  }
   return (
     <img
       src={avatar}

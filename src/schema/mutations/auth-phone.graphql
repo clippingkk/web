@@ -1,0 +1,17 @@
+mutation authByPhone($phone: String!, $code: String!) {
+  authByPhone(phone: $phone, code: $code) {
+    user {
+      id
+      name
+      email
+      password
+      avatar
+      checked
+      createdAt
+      updatedAt
+      bio
+      wechatOpenid
+    }
+    token
+  }
+}
