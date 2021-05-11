@@ -6,7 +6,6 @@ import AdminPanel from './pages/admin/admin'
 import IndexPage from './pages/index/index'
 import GithubOAuthPage from './pages/auth/github'
 import AuthPage from './pages/auth/auth'
-import SignupPage from './pages/auth/signup'
 import SigninPage from './pages/auth/signin'
 import ClippingPage from './pages/clipping/clipping'
 import ReportYearlyPage from './pages/report/yearly'
@@ -37,7 +36,6 @@ class Root extends React.Component {
             <AuthPage path="/auth">
               <AuthPhone path='phone' />
               <SigninPage path='signin' />
-              <SignupPage path='signup' />
             </AuthPage>
             <GithubOAuthPage path="/oauth/github" />
             <DashContainer path="dash/:userid">

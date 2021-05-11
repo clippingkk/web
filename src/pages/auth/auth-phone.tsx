@@ -24,6 +24,10 @@ function AuthPhone(props: AuthPhoneProps) {
   useAuthByPhoneSuccessed(doAuthResponse.called, doAuthResponse.loading,doAuthResponse.error, doAuthResponse.data?.authByPhone)
 
   const onPhoneNumberFinish = useCallback(() => {
+    // 还没输入，直接干掉好了
+    if (pn.length < 3) {
+      return
+    }
     if (pn.length < 5 || pn.length > 16) {
       toast.error(t('app.auth.errors.pnLen'))
       return
@@ -59,8 +63,9 @@ function AuthPhone(props: AuthPhoneProps) {
     }).catch(err => {
       toast.error(err.toString())
       setVerifyCode('')
+      onPhoneNumberFinish()
     })
-  }, [capture, verifyCode])
+  }, [capture, verifyCode, onPhoneNumberFinish])
   const onCodeEnd = useCallback((e: any) => {
     if (!smsSent) {
       return

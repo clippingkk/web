@@ -49,15 +49,19 @@ function AuthPage(props: AuthPageProps) {
   return (
     <section className='anna-page-container flex h-screen items-center justify-center'>
       <Card>
+        <div className='flex items-center justify-center flex-col mb-4'>
+        <img
+          src={require('../../assets/logo.png').default}
+          alt="clippingkk logo"
+          className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
+        />
+
+        </div>
         <div className='w-full flex items-center justify-center rounded'>
           <Link
             to="/auth/phone"
             getProps={checkIsCurrentPath}
           >{t('app.auth.phone')}</Link>
-          <Link
-            to="/auth/signup"
-            getProps={checkIsCurrentPath}
-          >{t('app.auth.signup')}</Link>
           <Link
             to="/auth/signin"
             getProps={checkIsCurrentPath}
@@ -70,6 +74,7 @@ function AuthPage(props: AuthPageProps) {
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
             onClick={onGithubClick}
+            title='github login'
           >
             <FontAwesomeIcon icon={faGithub} size="3x" />
           </a>

@@ -56,6 +56,7 @@ function ProfileEditor(props: ProfileEditorProps) {
       }
       doUpdate({
         variables: {
+          name: vals.name !== '' ? vals.name : null,
           avatar: avatarUrl !== '' ? avatarUrl : null,
           bio: vals.bio,
         }
