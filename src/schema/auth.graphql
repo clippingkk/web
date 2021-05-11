@@ -4,6 +4,7 @@ query auth($email: String!, $password: String!) {
       id
       name
       email
+      phone
       password
       avatar
       checked

@@ -4,6 +4,7 @@ query profile($id: Int!) {
     name
     email
     password
+    phone
     avatar
     checked
     bio
