@@ -28,6 +28,7 @@ app:
     auth:
         signin: 로그인
         signup: 등기
+        phone: 전화 번호
         username: 사용자 이름
         avatar: 화신
         email: 사서함
@@ -35,6 +36,15 @@ app:
         bio: 개인 프로필
         submit: 제출
         endpoint: API
+        name: 사용자 이름
+        code:
+            placeholder: 휴대폰의 인증 코드
+        info:
+            smsSent: 확인 코드가 전송되었습니다.
+        errors:
+            pnLen: 휴대폰 번호가 불법입니다.
+            verifyCodeLen: 인증 코드가 잘못되었습니다.
+            codeLen: 인증 코드의 길이가 충분하지 않습니다.
     home:
         reading: 읽고있는 책
         title: 내 책들
@@ -94,6 +104,8 @@ app:
         recents: 최근 활동
         wechatBind: WeChat 애플릿 바인딩
         wechatBindTip: 바인딩 할 개인 센터의 코드를 스캔하려면 "clippingKK" 애플릿을 사용하십시오.
+        phoneBind: 휴대 전화 번호 바인딩
+        phoneBinded: 휴대폰 번호를 성공적으로 바인딩
         editor:
             title: 내 개인 정보 업데이트
             updated: 업데이트 됨

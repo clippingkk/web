@@ -28,6 +28,7 @@ app:
     auth:
         signin: 登陆
         signup: 注册
+        phone: 手机
         username: 用户名
         avatar: 头像
         email: 邮箱
@@ -35,6 +36,15 @@ app:
         bio: 个人简介
         submit: 搞快点
         endpoint: API 地址
+        name: 用户名
+        code:
+            placeholder: 手机中的验证码
+        info:
+            smsSent: 验证码已发送
+        errors:
+            pnLen: 手机号不合法
+            verifyCodeLen: 验证码不合法
+            codeLen: 验证码长度不够哦
     home:
         reading: 正在读
         title: 我的书籍
@@ -94,6 +104,8 @@ app:
         recents: 最近动态
         wechatBind: 微信小程序绑定
         wechatBindTip: 使用 clippingKK 小程序 个人中心扫码即可绑定
+        phoneBind: 绑定手机号
+        phoneBinded: 绑定成功
         editor:
             title: 更新我的个人信息
             updated: 已更新
