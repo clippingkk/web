@@ -35,10 +35,9 @@ function AuthPage(props: AuthPageProps) {
   usePageTrack('auth')
   useEffect(() => {
     showMobileAlert()
-    // FIXME: uncomment next lines before commit
     const uid = profile.uid
     if (uid && uid > 0) {
-      // navigate(`/dash/${uid}/home`)
+      navigate(`/dash/${uid}/home`)
     }
   }, [])
 
