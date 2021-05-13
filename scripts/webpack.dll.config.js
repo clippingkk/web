@@ -12,7 +12,6 @@ const vendors = [
   'fingerprintjs2',
   'js-sha256',
   'intersection-observer',
-  '@sentry/browser',
   '@ungap/url-search-params',
   'redux',
   'mixpanel-browser',
@@ -28,6 +27,7 @@ const reacts = [
   '@nearform/react-animation',
   'react-table',
   '@apollo/client',
+  '@sentry/react',
   'recharts'
 ]
 

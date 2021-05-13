@@ -4,6 +4,7 @@ query githubLogin($code: String!) {
       id
       name
       email
+      phone
       password
       avatar
       checked

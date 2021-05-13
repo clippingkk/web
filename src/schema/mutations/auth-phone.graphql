@@ -1,10 +1,9 @@
-query auth($email: String!, $password: String!) {
-  auth(email: $email, pwd: $password) {
+mutation authByPhone($phone: String!, $code: String!) {
+  authByPhone(phone: $phone, code: $code) {
     user {
       id
       name
       email
-      phone
       password
       avatar
       checked

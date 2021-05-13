@@ -4,6 +4,7 @@ mutation signup($payload: SignupPayload!) {
             id
             name
             email
+            phone
             password
             avatar
             checked

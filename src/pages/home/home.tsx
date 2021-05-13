@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from '@reach/router'
+import React, { useEffect, useState } from 'react'
+import { Link, navigate } from '@reach/router'
 import ListFooter from '../../components/list-footer/list-footer';
 import homeListQuery from '../../schema/books.graphql'
 import { useQuery } from '@apollo/client';
@@ -11,14 +11,43 @@ import { useMultipBook } from '../../hooks/book';
 import NoContentAlert from './no-content';
 import BookCover from '../../components/book-cover/book-cover';
 import ReadingBook from './reading-book';
+import { UserContent } from '../../store/user/type';
 const styles = require('./home.css').default
 
 type THomeProp = {
   userid: number
 }
 const STEP = 10
+
+function useUserNewbie(userProfile: UserContent, onNewbie: () => void) {
+  useEffect(() => {
+    if (!userProfile || userProfile.id === 0) {
+      return
+    }
+    const sp = new URLSearchParams(location.search)
+    console.log(location.href,sp.has('from_auth'))
+    if (
+      userProfile.avatar === "" &&
+      userProfile.bio === "" &&
+      userProfile.name.startsWith('user.') &&
+      userProfile.createdAt === userProfile.updatedAt &&
+      sp.has('from_auth')
+    ) {
+      // is newbie
+      onNewbie()
+    }
+    // 正常用户，redirect to home page
+  }, [userProfile])
+}
+
 function HomePage(props: THomeProp) {
-  const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const userProfile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
+  const uid = userProfile.id
+  useUserNewbie(userProfile, () => {
+    // is new bie
+    navigate(`/dash/${uid}/profile?with_profile_editor=1`)
+  })
+
   const [reachEnd, setReachEnd] = useState(false)
   const { data, fetchMore, loading, called } = useQuery<books, booksVariables>(homeListQuery, {
     variables: {

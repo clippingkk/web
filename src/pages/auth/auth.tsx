@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import SignInWithApple from '../../components/sign-in-with-apple/sign-in-with-apple';
 
 function checkIsCurrentPath({ isCurrent }: any) {
-  console.log('is curr', isCurrent)
   return {
     className: `flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${isCurrent ? 'bg-indigo-400' : ''}`
   }
@@ -39,7 +38,7 @@ function AuthPage(props: AuthPageProps) {
     // FIXME: uncomment next lines before commit
     const uid = profile.uid
     if (uid && uid > 0) {
-      navigate(`/dash/${uid}/home`)
+      // navigate(`/dash/${uid}/home`)
     }
   }, [])
 
@@ -50,11 +49,19 @@ function AuthPage(props: AuthPageProps) {
   return (
     <section className='anna-page-container flex h-screen items-center justify-center'>
       <Card>
+        <div className='flex items-center justify-center flex-col mb-4'>
+        <img
+          src={require('../../assets/logo.png').default}
+          alt="clippingkk logo"
+          className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
+        />
+
+        </div>
         <div className='w-full flex items-center justify-center rounded'>
           <Link
-            to="/auth/signup"
+            to="/auth/phone"
             getProps={checkIsCurrentPath}
-          >{t('app.auth.signup')}</Link>
+          >{t('app.auth.phone')}</Link>
           <Link
             to="/auth/signin"
             getProps={checkIsCurrentPath}
@@ -67,11 +74,11 @@ function AuthPage(props: AuthPageProps) {
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
             onClick={onGithubClick}
+            title='github login'
           >
             <FontAwesomeIcon icon={faGithub} size="3x" />
           </a>
         </div>
-
       </Card>
     </section>
   )

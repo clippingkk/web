@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.18.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.6...v3.18.0) (2021-05-11)
+
+
+### Features
+
+* **auth:** add auth by phone ([88c042e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/88c042e46cf34b681da9e6c057f21ccdc121d21d))
+* **auth:** add auth by phone method ([355b5c7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/355b5c73289e96fa01f480c6793b7f1bff5f4e9d))
+* **i18n:** add locales ([babb611](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/babb611af06d0ae2588a673797b2660045b03231))
+* **leancloud:** add leancloud service ([f619b74](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f619b74f7a512b17137312933dbf1b742985af72))
+* **profile:** add bind phone method ([a60d5dc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a60d5dcd8c73b008d89c22b3500e6df5130af08d))
+
+
+### Bug Fixes
+
+* **auth:** fix user auth ([2f8dbac](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2f8dbac045037232756e98920cb4e6fc81717209))
+
+## [3.10.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.6...v3.10.0) (2021-05-11)
+
+
+### Features
+
+* **auth:** add auth by phone ([88c042e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/88c042e46cf34b681da9e6c057f21ccdc121d21d))
+* **auth:** add auth by phone method ([355b5c7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/355b5c73289e96fa01f480c6793b7f1bff5f4e9d))
+* **i18n:** add locales ([babb611](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/babb611af06d0ae2588a673797b2660045b03231))
+* **leancloud:** add leancloud service ([f619b74](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f619b74f7a512b17137312933dbf1b742985af72))
+* **profile:** add bind phone method ([a60d5dc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a60d5dcd8c73b008d89c22b3500e6df5130af08d))
+
+
+### Bug Fixes
+
+* **auth:** fix user auth ([2f8dbac](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2f8dbac045037232756e98920cb4e6fc81717209))
+
+### [3.17.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.5...v3.17.6) (2021-04-26)
+
+
+### Bug Fixes
+
+* **ci:** skip coverall due to the service is down for now ([18cb7f0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/18cb7f0c1c029d3e4e8ba46ddba0a0012d40c065))
+
+### [3.17.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.4...v3.17.5) (2021-04-26)
+
+
+### Features
+
+* **sentry:** update sentry dsn ([9a283fc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9a283fcb00c0a753cb2010cf779b0d2da65da313))
+* **sentry:** upgrade sentry ([8dece04](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8dece047ee0efacbfd9a48b9b0b3095f96f6c424))
+
 ### [3.17.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.3...v3.17.4) (2021-04-22)
 
 ### [3.17.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.2...v3.17.3) (2021-04-20)

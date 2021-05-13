@@ -1,7 +1,7 @@
 import { request, IBaseResponseData } from './ajax'
 import { UserContent, TUserSignupData } from '../store/user/type'
 import { IHttpClippingItem, IClippingItem } from './clippings';
-import * as sentry from '@sentry/browser'
+import * as sentry from '@sentry/react'
 
 interface ILoginResponse extends IBaseResponseData {
   data: {

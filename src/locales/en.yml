@@ -28,6 +28,7 @@ app:
     auth:
         signin: Sign in
         signup: Sign up
+        phone: phone
         username: User name
         avatar: Avatar
         email: Email
@@ -35,6 +36,15 @@ app:
         bio: Bio
         submit: Go go go!
         endpoint: API
+        name: User name
+        code:
+            placeholder: code from mobile phone sms
+        info:
+            smsSent: message has sent to your mobile phone
+        errors:
+            pnLen: phone number invalid
+            verifyCodeLen: verify code invalid
+            codeLen: code length should be 6
     home:
         reading: The Reading Book
         title: My books
@@ -95,6 +105,8 @@ app:
         recents: Recents
         wechatBind: Wechat binding
         wechatBindTip: binging wechat mini program
+        phoneBind: bind a phone
+        phoneBinded: success!
         editor:
             title: update my profile
             updated: updated

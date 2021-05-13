@@ -18,6 +18,7 @@ import ProfileEditor from './profile-editor';
 import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../store';
 import MasonryContainer from '../../components/masonry-container';
+import ProfileBindPhone from './bind-phone';
 
 const styles = require('./profile.css').default
 
@@ -63,7 +64,15 @@ function Profile(props: TProfileProps) {
             <div className={styles.info}>
               <div className='flex items-center'>
                 <h3 className='text-2xl'>{data?.me.name}</h3>
-                {uid === data?.me.id && (<ProfileEditor bio={data.me.bio} />)}
+                {data?.me.phone === '' && (
+                  <ProfileBindPhone />
+                )}
+                {uid === data?.me.id && (
+                  <ProfileEditor
+                   bio={data.me.bio}
+                   withNameChange={data.me.name.startsWith('user.')}
+                   />
+                )}
               </div>
               <h5 className='text-lg text-gray-800'>{t('app.profile.collected')} {data?.me.clippingsCount} {t('app.profile.records')}</h5>
               <div className='mb-4'>

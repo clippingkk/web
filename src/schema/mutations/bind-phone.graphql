@@ -1,0 +1,5 @@
+mutation bindUserPhone($phone: String!, $code: String!) {
+    bindPhone(phone: $phone, code: $code) {
+        id
+    }
+}

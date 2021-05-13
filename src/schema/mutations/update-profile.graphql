@@ -1,5 +1,5 @@
-mutation updateProfile($avatar: String, $bio: String) {
-    updateUserProfile(avatar: $avatar, bio: $bio) {
+mutation updateProfile($name: String, $avatar: String, $bio: String) {
+    updateUserProfile(name: $name, avatar: $avatar, bio: $bio) {
         id
     }
 }

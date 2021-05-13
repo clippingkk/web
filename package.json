@@ -1,6 +1,6 @@
 {
   "name": "kindle-viewer-website",
-  "version": "3.17.4",
+  "version": "3.18.0",
   "description": "kindle-viewer-website",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "release": "npm run release:base --",
     "release:pre": "npm run release:base -- --prerelease alpha",
     "lint": "prettier --write 'src/**/*.tsx'",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls:backup": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "coveralls": "exit 0"
   },
   "repository": {
     "type": "git",
@@ -126,7 +127,8 @@
     "@nearform/react-animation": "^1.0.6",
     "@popperjs/core": "^2.5.4",
     "@reach/router": "^1.3.4",
-    "@sentry/browser": "^6.2.1",
+    "@sentry/react": "^6.3.1",
+    "@sentry/tracing": "^6.3.1",
     "@ungap/url-search-params": "^0.2.2",
     "body-scroll-lock": "^3.1.5",
     "charts.css": "^0.9.0",
@@ -144,6 +146,7 @@
     "intersection-observer": "^0.12.0",
     "js-sha256": "^0.9.0",
     "jsencrypt": "^3.0.0-rc.1",
+    "leancloud-storage": "^4.10.1",
     "lottie-web": "^5.7.5",
     "mixpanel-browser": "^2.39.0",
     "parse-unit": "^1.0.1",
@@ -154,6 +157,7 @@
     "react-i18next": "^11.7.3",
     "react-input-switch": "^2.2.2",
     "react-markdown": "^6.0.0",
+    "react-phone-input-2": "^2.14.0",
     "react-popper": "^2.2.4",
     "react-redux": "^7.2.2",
     "react-select": "^4.3.0",
