@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.18.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.18.0...v3.18.1) (2021-05-13)
+
+
+### Features
+
+* **package:** upgrade pkgs ([9ec29d7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9ec29d7d256e54dd3b4d027603588ae055b603fb))
+* **pkg:** update pkg lock ([da430cf](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/da430cfe98ca684f3654ff9f1aef283a88ef71f7))
+
+
+### Bug Fixes
+
+* **auth:** auto navigate to home screen when logged in ([b2842ed](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b2842edd6e295d14dcc7f51103bbdcff2ba727ae))
+
 ## [3.18.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.17.6...v3.18.0) (2021-05-11)
 
 
