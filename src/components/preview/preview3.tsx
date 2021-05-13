@@ -25,7 +25,6 @@ function Preview(props: PreviewProps) {
     setLoading(false)
   }, [])
   const onImageError = useCallback((e) => {
-    console.log(e)
     toast.error(e.toString())
     setLoading(false)
     setErrMsg('')
@@ -60,18 +59,25 @@ function Preview(props: PreviewProps) {
       onOk={props.onOk}
       title={t('app.clipping.preview')}
     >
-      <section className={styles.preview}>
-        <img
-          src={shareURL}
-          onLoad={onImageLoad}
-          onError={onImageError}
-          className={styles['preview-image'] + ' transition-all duration-300'}
-        />
-        <footer className={styles.footer}>
+      <section className='flex'>
+        <div className='w-full'>
+          <img
+            src={shareURL}
+            onLoad={onImageLoad}
+            onError={onImageError}
+            className={styles['preview-image'] + ' transition-all duration-300' + loading ? 'hidden' : 'block'}
+            alt={t('app.common.loading')}
+          />
+          {loading && (
+            <span>{t('app.common.loading')}</span>
+          )}
+        </div>
+
+        <footer className='text-white ml-4 border-white border-l'>
           <a
             href={shareURL}
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
-            className={styles.action + ' ' + styles.download}
+            className='ml-4 text-white text-lg'
             target='_blank'
           >
             {t('app.clipping.save')}
