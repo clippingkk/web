@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.18.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.18.1...v3.18.2) (2021-05-25)
+
+
+### Features
+
+* **preview:** hide preview image before loaded ([0dad6bc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0dad6bc73a4b16cfd8e2246313c030692bdad65e))
+* **share:** add theme in share clipping modal ([6b9354b](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6b9354b063ef5d97fded5a93f64c67ed93784507))
+
 ### [3.18.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.18.0...v3.18.1) (2021-05-13)
 
 
