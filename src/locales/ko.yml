@@ -2,6 +2,7 @@ app:
     fold: 겹
     unfold: 펴다
     common:
+        loading: 짐싣기
         closed: 사각형 기능은 아직 열리지 않았습니다 ~
         cancel: 취소
         doUpdate: 최신 정보

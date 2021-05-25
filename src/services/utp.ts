@@ -3,6 +3,28 @@ export enum UTPService {
   clipping = 'clipping',
   book = 'book'
 }
+export const KonzertThemeMap = {
+  classic: {
+    id: 0,
+    name: '经典',
+  },
+  colorful: {
+    id: 1,
+    name: '彩色',
+  },
+  dark: {
+    id: 2,
+    name: '暗黑',
+  },
+  young: {
+    id: 3,
+    name: '青春',
+  },
+  light: {
+    id: 4,
+    name: '亮丽',
+  }
+}
 
 export function getUTPLink(service: UTPService, params: Object): string {
   const d = new URLSearchParams(params as any)

@@ -2,6 +2,7 @@ app:
     fold: 折叠
     unfold: 展开
     common:
+        loading: 加载中...
         closed: 广场功能暂未开放哦~
         cancel: 取消
         doUpdate: 更新

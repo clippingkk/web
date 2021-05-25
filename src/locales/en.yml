@@ -2,6 +2,7 @@ app:
     fold: fold
     unfold: unfold
     common:
+        loading: Loading...
         closed: This feature is still under heavy development
         cancel: cancel
         doUpdate: update

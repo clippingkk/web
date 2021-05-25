@@ -4,7 +4,8 @@ import Dialog from '../dialog/dialog'
 import { WenquBook } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { getUTPLink, UTPService } from '../../services/utp'
+import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
+import ThemePicker from './theme-picker'
 
 const styles = require('./preview.css').default
 
@@ -20,6 +21,7 @@ function Preview(props: PreviewProps) {
   const [shareURL, setShareURL] = useState('')
   const [loading, setLoading] = useState(true)
   const [errMsg, setErrMsg] = useState('')
+  const [currentTheme, setCurrentTheme] = useState(KonzertThemeMap.young.id)
 
   const onImageLoad = useCallback((e) => {
     setLoading(false)
@@ -35,22 +37,17 @@ function Preview(props: PreviewProps) {
       return
     }
     const data = {
-      // id: props.clipping.id,
-      // avatar: props.clipping.creator.avatar,
-      // un: props.clipping.creator.name,
-      // time: (new Date(props.clipping.createdAt)).getTime(),
-      // content: props.clipping.content,
-      // bt: props.book.title,
-      // author: props.book.author,
       cid: props.clipping.id,
       bid: props.book.id,
       uid: props.clipping.creator.id,
+      theme: currentTheme
     }
 
+    // setShareURL('https://avatars.githubusercontent.com/u/8704175?v=4')
     setShareURL(getUTPLink(UTPService.clipping, data))
     setLoading(true)
     setErrMsg('')
-  }, [props.clipping.id, props.book?.id])
+  }, [props.clipping.id, props.book?.id, currentTheme])
 
   const { t } = useTranslation()
   return (
@@ -59,25 +56,31 @@ function Preview(props: PreviewProps) {
       onOk={props.onOk}
       title={t('app.clipping.preview')}
     >
-      <section className='flex'>
+      <section className='flex flex-col'>
         <div className='w-full'>
           <img
             src={shareURL}
             onLoad={onImageLoad}
             onError={onImageError}
-            className={styles['preview-image'] + ' transition-all duration-300' + loading ? 'hidden' : 'block'}
+            className={styles['preview-image'] + ' transition-all duration-300'}
             alt={t('app.common.loading')}
           />
-          {loading && (
+          {/* {loading && (
             <span>{t('app.common.loading')}</span>
-          )}
+          )} */}
         </div>
 
-        <footer className='text-white ml-4 border-white border-l'>
+        <footer className='w-full mt-4 flex flex-col'>
+          <ThemePicker
+          current={currentTheme}
+          onChange={(t) => {
+            setCurrentTheme(t)
+          }}
+           />
           <a
             href={shareURL}
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
-            className='ml-4 text-white text-lg'
+            className='text-white text-lg w-full from-blue-200 to-red-200 bg-gradient-to-t block text-center py-4 mt-4'
             target='_blank'
           >
             {t('app.clipping.save')}
