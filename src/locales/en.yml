@@ -36,8 +36,10 @@ app:
         pwd: Password
         bio: Bio
         submit: Go go go!
-        endpoint: API
+        endpoint: API endpoint
         name: User name
+        notionPageId: notion page id
+        notionToken: notion bot token
         code:
             placeholder: code from mobile phone sms
         info:
@@ -123,4 +125,7 @@ app:
             flomo:
                 title: Flomo
                 submit: export to flomo
+            notion:
+                title: Notion
+                submit: export to notion
 

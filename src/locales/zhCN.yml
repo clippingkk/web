@@ -38,6 +38,8 @@ app:
         submit: 搞快点
         endpoint: API 地址
         name: 用户名
+        notionPageId: notion page id
+        notionToken: notion 机器人 token
         code:
             placeholder: 手机中的验证码
         info:
@@ -122,3 +124,6 @@ app:
             flomo:
                 title: Flomo
                 submit: 导出至 flomo
+            notion:
+                title: Notion
+                submit: 导出至 notion

@@ -38,6 +38,8 @@ app:
         submit: 제출
         endpoint: API
         name: 사용자 이름
+        notionPageId: notion page id
+        notionToken: notion bot token
         code:
             placeholder: 휴대폰의 인증 코드
         info:
@@ -122,3 +124,6 @@ app:
             flomo:
                 title: Flomo
                 submit: flomo 로 내보내기
+            notion:
+                title: Notion
+                submit: notion 로 내보내기
