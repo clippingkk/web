@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.19.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.18.2...v3.19.0) (2021-06-04)
+
+
+### Features
+
+* **notion:** add notion export ([d816e17](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d816e17a1e9706be2821c60b11cc8a5a1b90b70c))
+
+
+### Bug Fixes
+
+* **home:** skip home list if user id not loaded ([1858319](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/185831987d6813da06870ecfc0cb039f422a11f2))
+
 ### [3.18.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.18.1...v3.18.2) (2021-05-25)
 
 
