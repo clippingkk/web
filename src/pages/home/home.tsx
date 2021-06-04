@@ -56,7 +56,8 @@ function HomePage(props: THomeProp) {
         limit: STEP,
         offset: 0
       },
-    }
+    },
+    skip: !uid,
   })
   const { t } = useTranslation()
   const books = useMultipBook(data?.books.map(x => x.doubanId) || [])
