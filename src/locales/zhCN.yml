@@ -26,6 +26,8 @@ app:
     book:
         title: 书摘
         share: 分享这本书
+        durationTitle: 这本书看了
+        durationInDay: 天
     auth:
         signin: 登陆
         signup: 注册

@@ -26,6 +26,8 @@ app:
     book:
         title: Clippings
         share: Share the book
+        durationTitle: Read for
+        durationInDay: days
     auth:
         signin: Sign in
         signup: Sign up

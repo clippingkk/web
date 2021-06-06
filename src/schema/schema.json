@@ -170,6 +170,16 @@
             "description": null,
             "args": [
               {
+                "name": "uid",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
                 "name": "pagination",
                 "description": null,
                 "type": {
@@ -1684,6 +1694,54 @@
             "deprecationReason": null
           },
           {
+            "name": "startReadingAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lastReadingAt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isLastReadingBook",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "clippings",
             "description": null,
             "args": [],
@@ -2532,7 +2590,7 @@
           },
           {
             "name": "exportData",
-            "description": "flomo.args: https:/xxxxxxx",
+            "description": "flomo.args: https:/xxxxxxx\nnotion args: token | page id",
             "args": [
               {
                 "name": "destination",

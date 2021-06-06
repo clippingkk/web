@@ -11,9 +11,11 @@ const styles = require('./book-info.css').default
 type TBookInfoProp = {
   uid: number
   book: WenquBook
+  duration?: number
+  isLastReadingBook?: boolean
 }
 
-function BookInfo({ book, uid }: TBookInfoProp) {
+function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
   const { t } = useTranslation()
   return (
     <Card className='mt-20 flex p-12 bg-blue-200 bg-opacity-50 flex-col md:flex-row'>
@@ -28,6 +30,9 @@ function BookInfo({ book, uid }: TBookInfoProp) {
       <div className={styles.info}>
         <h2 className='my-4 text-4xl font-bold'>{book.title}</h2>
         <h5 className='my-4 text-2xl'>{book.author}</h5>
+        {duration && (
+          <h5 className='my-4 text-lg'>{t('app.book.durationTitle')} {duration} {t('app.book.durationInDay')}</h5>
+        )}
         <a
           href={getUTPLink(UTPService.book, { uid, bid: book.id, theme: KonzertThemeMap.young.id, })}
           target='_blank'

@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useDebugValue } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import BookInfo from '../../components/book-info/book-info';
 import ClippingItem from '../../components/clipping-item/clipping-item';
 import ListFooter from '../../components/list-footer/list-footer';
 import Divider from '../../components/divider/divider';
 import { changeBackground } from '../../store/app/type';
 import { useDispatch } from 'react-redux';
-import { usePageTrack } from '../../hooks/tracke';
+import { usePageTrack, useTitle } from '../../hooks/tracke';
 import { useSingleBook } from '../../hooks/book'
 import { useQuery } from '@apollo/client';
 import bookQuery from '../../schema/book.graphql'
 import { book, bookVariables, book_book_clippings } from '../../schema/__generated__/book';
 import { useTranslation } from 'react-i18next';
 import MasonryContainer from '../../components/masonry-container';
+import dayjs from 'dayjs';
 const styles = require('./book.css').default
 type TBookPageProps = {
   userid: number,
@@ -44,19 +45,17 @@ function BookPage({ userid, bookid }: TBookPageProps) {
     dispatch(changeBackground(bookData.image))
   }, [bookData, changeBackground])
 
-  useEffect(() => {
-    if (!bookData) {
-      return
-    }
-
-    const oldTitle = document.title
-    document.title = `${bookData.title} - clippingkk`
-
-    return () => {
-      document.title = oldTitle
-    }
-  }, [bookData])
+  useTitle(bookData?.title)
   const { t } = useTranslation()
+
+  const duration = useMemo(() => {
+    if (!clippingsData?.book.startReadingAt || !clippingsData.book.lastReadingAt) {
+      return undefined
+    }
+    const result = dayjs(clippingsData?.book.lastReadingAt)
+      .diff(dayjs(clippingsData?.book.startReadingAt), 'd', false)
+    return result || undefined
+  }, [clippingsData?.book.startReadingAt, clippingsData?.book.lastReadingAt])
 
   if (!bookData) {
     return null
@@ -64,7 +63,12 @@ function BookPage({ userid, bookid }: TBookPageProps) {
 
   return (
     <section className={`${styles.bookPage} page anna-fade-in`}>
-      <BookInfo book={bookData} uid={userid} />
+      <BookInfo
+        book={bookData}
+        uid={userid}
+        duration={duration}
+        isLastReadingBook={clippingsData?.book.isLastReadingBook}
+      />
       <Divider title={t('app.book.title')} />
       <MasonryContainer>
         <React.Fragment>
@@ -115,3 +119,4 @@ function BookPage({ userid, bookid }: TBookPageProps) {
 }
 
 export default BookPage
+
