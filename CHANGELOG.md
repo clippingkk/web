@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.19.0...v3.19.1) (2021-06-06)
+
+
+### Features
+
+* **book:** add book read duration info ([f81f4df](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f81f4dfcd2748cfe766f15276ad8a94c8a6afec0))
+
 ## [3.19.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.18.2...v3.19.0) (2021-06-04)
 
 
