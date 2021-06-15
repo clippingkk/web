@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.19.1...v3.19.2) (2021-06-15)
+
+
+### Features
+
+* **html:** add safari theme color support ([5278f76](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5278f762449d42e8681fd062bcd6723245ca2144))
+
 ### [3.19.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.19.0...v3.19.1) (2021-06-06)
 
 
