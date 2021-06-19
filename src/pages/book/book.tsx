@@ -13,6 +13,7 @@ import { book, bookVariables, book_book_clippings } from '../../schema/__generat
 import { useTranslation } from 'react-i18next';
 import MasonryContainer from '../../components/masonry-container';
 import dayjs from 'dayjs';
+import { IN_APP_CHANNEL } from '../../services/channel';
 const styles = require('./book.css').default
 type TBookPageProps = {
   userid: number,
@@ -78,6 +79,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
               userid={userid}
               book={bookData}
               key={clipping.id}
+              inAppChannel={IN_APP_CHANNEL.clippingFromBook}
             />
           ))}
           <ListFooter

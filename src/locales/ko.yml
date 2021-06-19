@@ -64,6 +64,9 @@ app:
         preview: 시사
         save: 저장
         visible: 다른 사람들이 볼 수 있습니까?
+        sidebar:
+            prev: 이전
+            next: 다음
         reactions:
             removeSuccess: 삭제됨
             addSuccess: 이미 추가

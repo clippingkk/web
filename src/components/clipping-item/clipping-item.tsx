@@ -7,6 +7,7 @@ import { fetchSquareData_featuredClippings_creator } from '../../schema/__genera
 import { useTranslation } from 'react-i18next';
 import Avatar from '../avatar/avatar';
 import ClippingContent from '../clipping-content';
+import { IN_APP_CHANNEL } from '../../services/channel';
 
 const styles = require('./clipping-item.css').default
 
@@ -14,14 +15,15 @@ type TClippingItemProps = {
   item: book_book_clippings
   book?: WenquBook
   userid: number
+  inAppChannel: IN_APP_CHANNEL
   creator?: fetchSquareData_featuredClippings_creator
 }
 
-function ClippingItem({ userid, item, book, creator }: TClippingItemProps) {
+function ClippingItem({ userid, item, book, creator, inAppChannel }: TClippingItemProps) {
   const { t } = useTranslation()
   return (
     <Link
-      to={`/dash/${userid}/clippings/${item.id}`}
+      to={`/dash/${userid}/clippings/${item.id}?iac=${inAppChannel}`}
       key={item.id}
       className={styles.clippingContainer}
     >

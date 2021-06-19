@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../store';
 import MasonryContainer from '../../components/masonry-container';
 import ProfileBindPhone from './bind-phone';
+import { IN_APP_CHANNEL } from '../../services/channel';
 
 const styles = require('./profile.css').default
 
@@ -69,9 +70,9 @@ function Profile(props: TProfileProps) {
                 )}
                 {uid === data?.me.id && (
                   <ProfileEditor
-                   bio={data.me.bio}
-                   withNameChange={data.me.name.startsWith('user.')}
-                   />
+                    bio={data.me.bio}
+                    withNameChange={data.me.name.startsWith('user.')}
+                  />
                 )}
               </div>
               <h5 className='text-lg text-gray-800'>{t('app.profile.collected')} {data?.me.clippingsCount} {t('app.profile.records')}</h5>
@@ -112,7 +113,12 @@ function Profile(props: TProfileProps) {
       <MasonryContainer className='anna-fade-in'>
         <React.Fragment>
           {data?.me.recents.map(
-            (item => <ClippingItem key={item.id} item={item} userid={~~props.userid} />)
+            (item => <ClippingItem
+              key={item.id}
+              item={item}
+              userid={~~props.userid}
+              inAppChannel={IN_APP_CHANNEL.clippingFromUser}
+            />)
           )}
         </React.Fragment>
       </MasonryContainer>

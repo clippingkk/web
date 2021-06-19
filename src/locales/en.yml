@@ -64,6 +64,9 @@ app:
         preview: Preview
         save: Save
         visible: Visible(public to others ?)
+        sidebar:
+            prev: previous clipping
+            next: next clipping
         reactions:
             removeSuccess: Removed
             addSuccess: Added

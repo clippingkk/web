@@ -7,6 +7,7 @@ import Divider from '../../components/divider/divider'
 import MasonryContainer from '../../components/masonry-container'
 import bookQuery from '../../schema/book.graphql'
 import { book, bookVariables } from '../../schema/__generated__/book'
+import { IN_APP_CHANNEL } from '../../services/channel'
 import { TGlobalStore } from '../../store'
 
 type UncheckedPageProps = {
@@ -36,6 +37,7 @@ function UncheckedPage(props: UncheckedPageProps) {
               item={clipping}
               userid={uid}
               key={clipping.id}
+              inAppChannel={IN_APP_CHANNEL.clippingFromUser}
             />
           ))}
         </React.Fragment>

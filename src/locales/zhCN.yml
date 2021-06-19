@@ -64,6 +64,9 @@ app:
         preview: 预览
         save: 保存
         visible: 是否对他人可见
+        sidebar:
+            prev: 上一条 
+            next: 下一条
         reactions:
             removeSuccess: 已移除自己的态度
             addSuccess: 已表达自己的态度

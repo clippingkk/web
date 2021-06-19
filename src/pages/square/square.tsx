@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
 import MasonryContainer from '../../components/masonry-container'
+import { IN_APP_CHANNEL } from '../../services/channel'
 
 function DevelopingAlert() {
   const { t } = useTranslation()
@@ -49,6 +50,7 @@ function SquarePage() {
               book={books.books.find(x => x.id.toString() == clipping.bookID)}
               key={clipping.id}
               creator={clipping.creator}
+              inAppChannel={IN_APP_CHANNEL.clippingFromUser}
             />
           ))}
         </React.Fragment>

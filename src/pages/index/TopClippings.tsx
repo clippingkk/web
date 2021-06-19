@@ -2,6 +2,7 @@ import { Link } from '@reach/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { publicData_public_clippings } from '../../schema/__generated__/publicData'
+import { IN_APP_CHANNEL } from '../../services/channel'
 
 const styles = require('./top-clippings.css').default
 
@@ -10,7 +11,6 @@ type TopClippingsProps = {
 }
 
 function SimpleAvatar({ avatar }: any) {
-
     const imageUrl = avatar.startsWith('http') ? avatar : `https://clippingkk-cdn.annatarhe.com/${avatar}-copyrightDB`
     return (
       <img src={imageUrl} className='w-8 h-8 rounded-full' />
@@ -29,7 +29,7 @@ function TopClippings(props: TopClippingsProps) {
         <Link
           className={`h-96 w-full md:w-1/2 lg:w-1/3 2xl:w-1/4 p-8 bg-gradient-to-br from-yellow-300 to-red-400 dark:from-gray-500 dark:to-gray-700 m-4 rounded-lg flex flex-col justify-between dark:text-gray-200 hover:scale-105 transform duration-300 ${styles.clippingItem}`}
           key={c.id}
-          to={`/dash/${c.creator.id}/clippings/${c.id}`}
+          to={`/dash/${c.creator.id}/clippings/${c.id}?iac=${IN_APP_CHANNEL.clippingFromUser}`}
         >
           <div>
             <p

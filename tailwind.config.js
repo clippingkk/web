@@ -1,9 +1,10 @@
 module.exports = {
+  mode: 'jit',
   darkMode: 'class',
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
+  // future: {
+  //   removeDeprecatedGapUtilities: true,
+  //   purgeLayersByDefault: true,
+  // },
   purge: [
     'src/**/*.tsx',
     'src/**/*.jsx',

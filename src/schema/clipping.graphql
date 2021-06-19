@@ -7,6 +7,14 @@ query fetchClipping($id: Int!) {
     createdAt
     pageAt
     visible
+    prevClipping {
+      userClippingID
+      bookClippingID
+    }
+    nextClipping {
+      userClippingID
+      bookClippingID
+    }
     reactions {
       id
       symbol

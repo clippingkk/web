@@ -25,7 +25,6 @@ function useUserNewbie(userProfile: UserContent, onNewbie: () => void) {
       return
     }
     const sp = new URLSearchParams(location.search)
-    console.log(location.href,sp.has('from_auth'))
     if (
       userProfile.avatar === "" &&
       userProfile.bio === "" &&
