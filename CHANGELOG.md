@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.20.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.19.2...v3.20.0) (2021-06-19)
+
+
+### Features
+
+* **clipping:** add supoort for previou and next clipping navigate ([56eb665](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/56eb66532f80d74b823fee30cb85196c96df72f7))
+
 ### [3.19.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.19.1...v3.19.2) (2021-06-15)
 
 
