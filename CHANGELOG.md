@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.20.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.0...v3.20.1) (2021-06-20)
+
+
+### Features
+
+* **notion:** add export to notion guide video ([3f330e0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3f330e0f652e2b2b019b3a86e89399f76ee93f97))
+
 ## [3.20.0](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.19.2...v3.20.0) (2021-06-19)
 
 
