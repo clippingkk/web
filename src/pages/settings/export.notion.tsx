@@ -52,7 +52,7 @@ function ExportToNotion(props: ExportToNotionProps) {
         onClick={() => setVisible(true)}
       >
         notion
-    </button>
+      </button>
       {visible && (
         <Dialog
           title={t('app.settings.export.notion.title')}
@@ -60,7 +60,15 @@ function ExportToNotion(props: ExportToNotionProps) {
           onOk={() => formik.handleSubmit()}
         >
           <div className='w-full'>
-            <form className='w-full' onSubmit={formik.handleSubmit}>
+            <iframe
+              src="//player.bilibili.com/player.html?aid=503430935&bvid=BV1Tg411G7gG&cid=349347987&page=1"
+              scrolling="no"
+              allow='fullscreen'
+              className='border-0 w-144 max-h-96 m-auto hidden lg:block'
+              height='768px'
+              width='1024px'
+            />
+            <form className='w-full flex flex-col justify-center items-center' onSubmit={formik.handleSubmit}>
               <FieldInput
                 name='notionToken'
                 value={formik.values.notionToken}
