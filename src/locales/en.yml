@@ -108,8 +108,10 @@ app:
                 open: Please do not close this window in uploading
         
     profile:
-        collected: collected
-        records: records
+        collected: collected {{ count }} item
+        collected_plural: collected {{ count }} items
+        rssTip: copy the RSS link to your RSS reader
+        yearlyReportTip: yearly report
         recents: Recents
         wechatBind: Wechat binding
         wechatBindTip: binging wechat mini program

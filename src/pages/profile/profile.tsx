@@ -20,6 +20,7 @@ import { TGlobalStore } from '../../store';
 import MasonryContainer from '../../components/masonry-container';
 import ProfileBindPhone from './bind-phone';
 import { IN_APP_CHANNEL } from '../../services/channel';
+import { API_HOST } from '../../constants/config';
 
 const styles = require('./profile.css').default
 
@@ -75,7 +76,7 @@ function Profile(props: TProfileProps) {
                   />
                 )}
               </div>
-              <h5 className='text-lg text-gray-800'>{t('app.profile.collected')} {data?.me.clippingsCount} {t('app.profile.records')}</h5>
+              <h5 className='text-lg text-gray-800'>{t('app.profile.collected', { count: data?.me.clippingsCount })}</h5>
               <div className='mb-4'>
                 {data?.me.bio.split('\n').map((v, i) => (
                   <p key={i}>{v}</p>
@@ -87,9 +88,18 @@ function Profile(props: TProfileProps) {
               <Link
                 to={`/report/yearly?uid=${data?.me.id}&year=${year}`}
                 className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
+                title={t('app.profile.yearlyReportTip')}
               >
                 {t('app.profile.report.yearlyTitle')}
               </Link>
+              <a
+                href={`${API_HOST}/api/rss/user/${data?.me.id}/clippings`}
+                target='_blank'
+                className='ml-4 px-4 py-2 rounded hover:bg-blue-400'
+                title={t('app.profile.rssTip')}
+              >
+                RSS
+              </a>
             </div>
           </div>
 

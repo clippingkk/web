@@ -107,8 +107,10 @@ app:
             message:
                 open: 끝까지 기다리십시오.이 페이지를 닫지 마십시오.
     profile:
-        collected: 모은
-        records: 기록
+        collected: 모은 {{ count }} 기록
+        collected_plural: 모은 {{ count }} 기록
+        rssTip: 이 RSS 링크를 RSS 리더에 붙여 넣기
+        yearlyReportTip: 연간 독서 보고서
         recents: 최근 활동
         wechatBind: WeChat 애플릿 바인딩
         wechatBindTip: 바인딩 할 개인 센터의 코드를 스캔하려면 "clippingKK" 애플릿을 사용하십시오.
