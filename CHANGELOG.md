@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.20.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.1...v3.20.2) (2021-06-24)
+
+
+### Features
+
+* **rss:** support rss link in profile page ([60f6fea](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/60f6feaee840935e719725a4055f06500f604b3a))
+
 ### [3.20.1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.0...v3.20.1) (2021-06-20)
 
 
