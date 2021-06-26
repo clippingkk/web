@@ -1,14 +1,4 @@
-import React, { useRef } from 'react'
-import { useChain, animated, useSpring, useTransition, config } from 'react-spring'
 import { IClippingListPropTypes } from './types';
-import ClippingItem from '../clipping-item/clipping-item';
-
-const values = {
-  config: config.stiff,
-  from: { size: '20%', background: 'hotpink' },
-  to: { size: '100%' }
-}
-
 function AnimatedClippings(p: IClippingListPropTypes) {
   return null
 // const springRef = useRef()
