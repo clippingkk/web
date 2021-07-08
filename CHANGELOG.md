@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.20.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.2...v3.20.3) (2021-07-08)
+
+
+### Features
+
+* **square:** square can load more and change to esbuild ([d1cc3f4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d1cc3f409e5dcd2f787358ce752a5161634ae6c5))
+
+
+### Bug Fixes
+
+* **ci:** add apollo cli to dev deps ([c28e6fc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c28e6fcbbc941ed9371f0ebb5753f763b41c4b6b))
+* **ci:** remove apollo cli ([e8a5c7d](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e8a5c7d31c5023e8ffc6ce22135ad109cdd2fd9a))
+
 ### [3.20.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.1...v3.20.2) (2021-06-24)
 
 
