@@ -30,13 +30,13 @@ const config = {
       exclude: /node_modules/,
       use: [
         {
-          loader: 'babel-loader',
+          loader: 'esbuild-loader',
           options: {
-            // loader: 'jsx',
-            // target: 'es2015',
-            plugins: [
-              __DEV__ && require.resolve('react-refresh/babel')
-            ].filter(Boolean)
+            loader: 'jsx',
+            target: 'es2015',
+            // plugins: [
+            //   __DEV__ && require.resolve('react-refresh/babel')
+            // ].filter(Boolean)
           }
         }
       ]
@@ -44,14 +44,16 @@ const config = {
       test: /.tsx?$/,
       exclude: /node_modules/,
       use: [{
-        loader: 'babel-loader',
+        loader: 'esbuild-loader',
         options: {
-          plugins: [
-            __DEV__ && require.resolve('react-refresh/babel')
-          ].filter(Boolean)
+            loader: 'tsx',
+            target: 'es2015',
+          // plugins: [
+          //   __DEV__ && require.resolve('react-refresh/babel')
+          // ].filter(Boolean)
         }
-      }, {
-        loader: 'ts-loader',
+      // }, {
+        // loader: 'ts-loader',
         // options: {
           // loader: 'tsx',
           // target: 'es2015',

@@ -1,7 +1,8 @@
 const config = require('./webpack.base.config')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const TerserPlugin = require("terser-webpack-plugin")
+const { ESBuildMinifyPlugin } = require('esbuild-loader')
+// const TerserPlugin = require("terser-webpack-plugin")
 // const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
 
@@ -27,11 +28,10 @@ config.optimization = {
   ...config.optimization,
   minimize: true,
   minimizer: [
-    // new ESBuildMinifyPlugin({
-    // target: 'es2015' // Syntax to compile to (see options below for possible values)
-    // }),
+    new ESBuildMinifyPlugin({
+      target: 'es2015'
+    }),
     ...config.optimization.minimizer,
-    new TerserPlugin(),
   ]
 }
 

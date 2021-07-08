@@ -25,7 +25,7 @@ function ClippingItem({ userid, item, book, creator, inAppChannel }: TClippingIt
     <Link
       to={`/dash/${userid}/clippings/${item.id}?iac=${inAppChannel}`}
       key={item.id}
-      className={styles.clippingContainer}
+      className='with-slide-in block'
     >
       <Card className={styles.clipping + ' lg:p-10 p-2 hover:shadow-2xl transition-all duration-300'} style={{ margin: '1rem 0' }}>
         <h3 className='lg:text-3xl text-xl'>

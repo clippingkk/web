@@ -12,6 +12,8 @@ import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
 import MasonryContainer from '../../components/masonry-container'
 import { IN_APP_CHANNEL } from '../../services/channel'
+import ListFooter from '../../components/list-footer/list-footer'
+import { useState } from 'react'
 
 function DevelopingAlert() {
   const { t } = useTranslation()
@@ -23,15 +25,19 @@ function DevelopingAlert() {
   )
 }
 
+const defaultLimit = 10
+
 function SquarePage() {
   usePageTrack('square')
   const { t } = useTranslation()
   useTitle(t('app.square.title'))
 
-  const { data, loading } = useQuery<fetchSquareData, fetchSquareDataVariables>(fetchSquareDataQuery, {
+  const [reachEnd, setReachEnd] = useState(false)
+
+  const { data, loading, fetchMore, called } = useQuery<fetchSquareData, fetchSquareDataVariables>(fetchSquareDataQuery, {
     variables: {
       pagination: {
-        limit: 20,
+        limit: defaultLimit,
       }
     }
   })
@@ -55,6 +61,32 @@ function SquarePage() {
           ))}
         </React.Fragment>
       </MasonryContainer>
+      <ListFooter
+        loadMoreFn={() => {
+          if (loading || !called) {
+            return
+          }
+          fetchMore({
+            variables: {
+              pagination: {
+                limit: defaultLimit,
+                lastId: data?.featuredClippings[data.featuredClippings.length - 1].id,
+              }
+            },
+            updateQuery(prev, { fetchMoreResult }) {
+              if (!fetchMoreResult || fetchMoreResult.featuredClippings.length === 0) {
+                setReachEnd(true)
+                return prev
+              }
+              return {
+                ...prev,
+                featuredClippings: [...prev.featuredClippings, ...fetchMoreResult.featuredClippings]
+              }
+            }
+          })
+        }}
+        hasMore={!reachEnd}
+      />
     </section>
   )
 }
