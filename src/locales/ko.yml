@@ -109,6 +109,8 @@ app:
     profile:
         collected: 모은 {{ count }} 기록
         collected_plural: 모은 {{ count }} 기록
+        records: {{ count }} 기록
+        records_plural: {{ count }} 기록
         rssTip: 이 RSS 링크를 RSS 리더에 붙여 넣기
         yearlyReportTip: 연간 독서 보고서
         recents: 최근 활동

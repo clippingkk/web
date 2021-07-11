@@ -110,6 +110,8 @@ app:
     profile:
         collected: collected {{ count }} item
         collected_plural: collected {{ count }} items
+        records: {{ count }} item
+        records_plural: {{ count }} items
         rssTip: copy the RSS link to your RSS reader
         yearlyReportTip: yearly report
         recents: Recents
