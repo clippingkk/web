@@ -22,3 +22,5 @@ export const LEANCLOUD = {
   APP_KEY: 'QQ7h7pbOY4xFWEap8fVuFtcl',
   SERVER_URL: 'https://clippingkk-lc.annatarhe.cn'
 }
+
+export const APP_API_STEP_LIMIT = 10

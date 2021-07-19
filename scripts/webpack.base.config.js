@@ -6,6 +6,7 @@ const poststylus = require('poststylus')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 // const { ESBuildPlugin } = require('esbuild-loader')
+// const WorkboxPlugin = require('workbox-webpack-plugin')
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
@@ -46,20 +47,20 @@ const config = {
       use: [{
         loader: 'esbuild-loader',
         options: {
-            loader: 'tsx',
-            target: 'es2015',
+          loader: 'tsx',
+          target: 'es2015',
           // plugins: [
           //   __DEV__ && require.resolve('react-refresh/babel')
           // ].filter(Boolean)
         }
-      // }, {
+        // }, {
         // loader: 'ts-loader',
         // options: {
-          // loader: 'tsx',
-          // target: 'es2015',
-          // plugins: [
-          //   __DEV__ && require.resolve('react-refresh/babel')
-          // ].filter(Boolean)
+        // loader: 'tsx',
+        // target: 'es2015',
+        // plugins: [
+        //   __DEV__ && require.resolve('react-refresh/babel')
+        // ].filter(Boolean)
         // }
       }]
     }, {
@@ -154,6 +155,10 @@ const config = {
         }
       }
     }),
+    // new WorkboxPlugin.GenerateSW({
+    //   clientsClaim: true,
+    //   skipWaiting: true
+    // }),
     __DEV__ && new ReactRefreshPlugin()
   ].filter(Boolean),
   optimization: {

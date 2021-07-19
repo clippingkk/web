@@ -16,10 +16,10 @@ config.plugins.push(
   new BundleAnalyzerPlugin({
     analyzerMode: 'static'
   }),
-  new WorkboxPlugin.GenerateSW({
-    clientsClaim: true,
-    skipWaiting: true
-  }),
+  // new WorkboxPlugin.GenerateSW({
+  //   clientsClaim: true,
+  //   skipWaiting: true
+  // }),
   // new CopyWebpackPlugin([
   //   { from: 'src/manifest', to: 'manifest' }
   // ])

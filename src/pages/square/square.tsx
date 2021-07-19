@@ -14,6 +14,7 @@ import MasonryContainer from '../../components/masonry-container'
 import { IN_APP_CHANNEL } from '../../services/channel'
 import ListFooter from '../../components/list-footer/list-footer'
 import { useState } from 'react'
+import { APP_API_STEP_LIMIT } from '../../constants/config'
 
 function DevelopingAlert() {
   const { t } = useTranslation()
@@ -25,8 +26,6 @@ function DevelopingAlert() {
   )
 }
 
-const defaultLimit = 10
-
 function SquarePage() {
   usePageTrack('square')
   const { t } = useTranslation()
@@ -37,7 +36,7 @@ function SquarePage() {
   const { data, loading, fetchMore, called } = useQuery<fetchSquareData, fetchSquareDataVariables>(fetchSquareDataQuery, {
     variables: {
       pagination: {
-        limit: defaultLimit,
+        limit: APP_API_STEP_LIMIT,
       }
     }
   })
@@ -69,7 +68,7 @@ function SquarePage() {
           fetchMore({
             variables: {
               pagination: {
-                limit: defaultLimit,
+                limit: APP_API_STEP_LIMIT,
                 lastId: data?.featuredClippings[data.featuredClippings.length - 1].id,
               }
             },

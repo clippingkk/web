@@ -29,7 +29,7 @@ type TProfileProps = {
 }
 
 function Profile(props: TProfileProps) {
-  const { data } = useQuery<profile, profileVariables>(profileQuery, {
+  const { data, loading, called, fetchMore } = useQuery<profile, profileVariables>(profileQuery, {
     variables: {
       id: ~~props.userid
     }

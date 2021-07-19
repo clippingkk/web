@@ -109,8 +109,8 @@ app:
     profile:
         collected: 已收集 {{ count }} 条记录
         collected_plural: 已收集 {{ count }} 条记录
-        records: {{ count }} 条记录
-        records_plural: {{ count }} 条记录
+        records: "{{ count }} 条记录"
+        records_plural: "{{ count }} 条记录"
         rssTip: 支持粘贴此 RSS 链接到 RSS 阅读器中
         yearlyReportTip: 年度阅读报告
         recents: 最近动态
