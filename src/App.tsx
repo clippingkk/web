@@ -11,7 +11,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'emoji-mart/css/emoji-mart.css'
 import './styles/tailwind.css'
 import './styles/index.styl'
-import 'react-phone-input-2/lib/style.css'
 
 import './styles/icons'
 import { client, request } from './services/ajax'

@@ -4,6 +4,7 @@ import PhoneInput from 'react-phone-input-2'
 import AV from 'leancloud-storage'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
+import 'react-phone-input-2/lib/style.css'
 
 type BindPhoneProps = {
   onFinalCheck(phone: string, code: string): Promise<any>
@@ -77,13 +78,13 @@ function BindPhone(props: BindPhoneProps) {
         console.error(err)
         toast.error(err.toString())
       })
-
   }, [smsSent])
 
   return (
     <div className='w-full flex items-center justify-center rounded flex-col'>
       <PhoneInput
         country='cn'
+        inputClass='w-full p-4 text-lg'
         preferredCountries={['cn']}
         value={pn}
         // 不知道手机号长度是多少，不能直接校验
@@ -91,9 +92,6 @@ function BindPhone(props: BindPhoneProps) {
         onEnterKeyPress={onPhoneNumberFinish}
         onBlur={onPhoneNumberFinish}
         autoFormat={false}
-        inputStyle={{
-          width: '100%'
-        }}
       />
       <div className='flex w-full flex-col'>
         {capture && (
@@ -105,6 +103,12 @@ function BindPhone(props: BindPhoneProps) {
               maxLength={4}
               onBlur={onVerifyCodeInputEnd}
               className='w-full py-2 px-4 focus:outline-none'
+              onKeyUp={e => {
+                if (e.key.toLowerCase() !== 'enter') {
+                  return
+                }
+                onVerifyCodeInputEnd()
+              }}
             />
           </div>
         )}
@@ -123,6 +127,12 @@ function BindPhone(props: BindPhoneProps) {
             maxLength={6}
             onBlur={onCodeEnd}
             className='w-full mt-4 py-2 px-4 focus:outline-none'
+            onKeyUp={e => {
+              if (e.key.toLowerCase() !== 'enter') {
+                return
+              }
+              onCodeEnd(e)
+            }}
           />
         )}
       </div>

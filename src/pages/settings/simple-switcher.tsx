@@ -1,4 +1,5 @@
 import React from 'react'
+import { Switch } from '@headlessui/react'
 
 type SimpleSwitcherProps = {
   checked: boolean
@@ -7,16 +8,22 @@ type SimpleSwitcherProps = {
 
 function SimpleSwitcher(props: SimpleSwitcherProps) {
   return (
-    <div
-     className={`w-24 h-10 rounded-3xl relative shadow-xl ${props.checked ? 'bg-blue-800' : 'bg-green-200'}`}
-     onClick={() => {
-       props.onChange(!props.checked)
-      }}
+    <Switch
+      checked={props.checked}
+      onChange={props.onChange}
+      className={
+        `${props.checked ? 'bg-blue-600' : 'bg-gray-200'
+        } relative inline-flex items-center h-12 rounded-full w-24`
+      }
     >
-      <div
-        className={`rounded-full shadow w-8 h-8 absolute left-1 top-1 transition-all transform duration-300 ease-in-out ${props.checked ? 'translate-x-14 bg-purple-600' : 'translate-x-0 bg-yellow-400'}`}
+      <span className='sr-only'>
+        {props.checked ? 'dark' : 'light'}
+      </span>
+      <span
+        className={`${props.checked ? 'translate-x-12' : 'translate-x-2'
+          } transition ease-in-out duration-200 inline-block w-10 h-10 transform bg-white rounded-full`}
       />
-    </div>
+    </Switch>
   )
 }
 
