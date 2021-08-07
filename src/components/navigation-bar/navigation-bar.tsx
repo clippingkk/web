@@ -43,7 +43,7 @@ function NavigationBar() {
   const { t } = useTranslation()
 
   return (
-    <nav className={styles.navbar + ' bg-opacity-50 bg-gray-500 dark:bg-gray-800  sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg'}>
+    <nav className={styles.navbar + 'bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl'}>
       <div className='flex justify-around items-center'>
         <img
           src={require('../../assets/logo.png').default}
@@ -57,7 +57,10 @@ function NavigationBar() {
                 placement='bottom'
                 overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
               >
-                <Link to={id === 0 ? '/auth/signin' :item.dest(id)}>
+                <Link
+                 to={id === 0 ? '/auth/signin' : item.dest(id)}
+                 title={t(`app.menu.${item.alt}`)}
+                 >
                   <span className='text-3xl lg:text-4xl'>
                     {item.emoji}
                   </span>
@@ -73,7 +76,13 @@ function NavigationBar() {
             placement='bottom'
             overlay={<span>{t('app.menu.settings')}</span>}
           >
-            <Link to={id === 0 ? '/auth/signin' : `/dash/${id}/settings`} className='text-3xl lg:text-4xl'>🛠</Link>
+            <Link
+              to={id === 0 ? '/auth/signin' : `/dash/${id}/settings`}
+              className='text-3xl lg:text-4xl'
+              title={t('app.menu.settings')}
+              >
+              🛠
+            </Link>
           </Tooltip>
         </li>
         <li className='mr-6' onClick={onLogout}>
@@ -81,7 +90,12 @@ function NavigationBar() {
             placement='bottom'
             overlay={<span>{t('app.menu.logout')}</span>}
           >
-            <span className='text-3xl lg:text-4xl'>👋</span>
+            <span
+             className='text-3xl lg:text-4xl'
+             title={t('app.menu.logout')}
+            >
+              👋
+            </span>
           </Tooltip>
         </li>
       </ul>

@@ -47,7 +47,7 @@ function AuthPage(props: AuthPageProps) {
 
   return (
     <section className='anna-page-container flex h-screen items-center justify-center'>
-      <Card>
+      <Card className='with-slide-in'>
         <div className='flex items-center justify-center flex-col mb-4'>
         <img
           src={require('../../assets/logo.png').default}

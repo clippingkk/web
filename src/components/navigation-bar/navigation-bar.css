@@ -2,7 +2,6 @@
 @value primary-text-color, blur-background, grey-lite from colors;
 
 .navbar {
-  backdrop-filter: blur(100px);
 }
 .navbar + div {
   flex: 1;
@@ -22,25 +21,4 @@
   left: -5px;
   top: -5px;
   overflow: hidden;
-
-}
-
-.menu {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.menu-ul {
-  display: flex;
-  list-style: none;
-  padding: 0;
-}
-
-.menu-item {
-  margin-right: 3rem;
-}
-
-.menu-item:last-child {
-  margin-right: 0;
 }
