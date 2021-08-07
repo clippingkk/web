@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.20.4](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.3...v3.20.4) (2021-08-07)
+
+
+### Bug Fixes
+
+* **locals:** fix locals ([318d0f9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/318d0f9797c29038196dafd0bacb447666cf0192))
+* **locals:** fix locals ([07bfc6c](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/07bfc6c6beb6296caaf412b110515d63b4a8eb69))
+
 ### [3.20.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.2...v3.20.3) (2021-07-08)
 
 
