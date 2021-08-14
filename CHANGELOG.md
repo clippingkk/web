@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.20.6](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.5...v3.20.6) (2021-08-14)
+
+
+### Features
+
+* **oauth:** update oauth page ([e858c28](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e858c2842814567133e4e18f8a1a3c5790c83080))
+* **upload:** set uploadable in others page ([05ff728](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/05ff72873057b7207e64f940a69b339ab9ad876a))
+
+
+### Bug Fixes
+
+* **upload:** fix debug state ([9055d4c](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9055d4cf00467b57e94b545bea86ef6bb9954f20))
+
 ### [3.20.5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.4...v3.20.5) (2021-08-07)
 
 
