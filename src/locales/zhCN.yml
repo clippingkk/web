@@ -83,6 +83,7 @@ app:
         title: 广场
     upload:
         tip: 把 My Clippings.txt 拖进来
+        dropHere: 松开鼠标
         help:
             title: 什么是 My Clippings.txt
             content: 将 kindle 插入电脑，点击进入 kindle，<br />在目录中寻找 `documents` 双击进入，<br />找到文件名为 `My Clippings.txt` 的即可.<br /> 视频和图片准备中
@@ -93,9 +94,14 @@ app:
             fileTitle: Oops
             fileNotFound: 请务必提供 kindle 中的 My Clipping.txt 哦
             unknown: 哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \n annatarhe@gmail.com
+            parse: 解析出错，您需要进入上传页面手动上传
         tips:
+            done: 所有数据已经同步完成
             extracting: 解析中
             extractingText: 正在拼命解析中，请稍等...
+            parsedInfoTitle: 解析成功，下次登陆将会自动同步到服务器
+            parsedInfoContent: 解析成功，下次登陆将会自动同步到服务器
+            backUpload: 后台同步中...
         yesText: 牛逼！你上传完成了！
         progress:
             none: 无

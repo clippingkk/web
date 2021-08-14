@@ -10,6 +10,7 @@ import SigninPage from './pages/auth/signin'
 import ClippingPage from './pages/clipping/clipping'
 import ReportYearlyPage from './pages/report/yearly'
 import AuthPhone from './pages/auth/auth-phone'
+import AppContainer from './AppContainer'
 
 const PrivacyPolicy = React.lazy(() => import(/* webpackPrefetch: true */ './pages/policy/privacy'))
 const DashContainer = React.lazy(() => import(/* webpackPrefetch: true */ './components/dashboard-container/container'))
@@ -26,7 +27,7 @@ const SettingsPage = React.lazy(() => import(/* webpackPrefetch: true */ './page
 class Root extends React.Component {
   render() {
     return (
-      <div>
+      <AppContainer>
         <React.Suspense fallback={<PageLoading />}>
           <RouterContainer>
             <IndexPage path="/" />
@@ -52,7 +53,7 @@ class Root extends React.Component {
             <NotFound default />
           </RouterContainer>
         </React.Suspense>
-      </div>
+      </AppContainer>
     )
   }
 }

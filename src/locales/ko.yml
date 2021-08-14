@@ -93,9 +93,15 @@ app:
             fileTitle: Oops
             fileNotFound: My Clipping.txt를 빛나게 제공하십시오.
             unknown: 죄송합니다. 업로드에 실패했습니다. 다시 시도하세요. 프로그래머에게 연락 할 수 없습니다. \n annatarhe@gmail.com
+            parse: 구문 분석 오류입니다. 수동으로 업로드하려면 업로드 페이지를 입력해야 합니다. 
         tips:
+            done: 모든 데이터가 동기화되었습니다 
+            dropHere: 마우스를 놓으십시오
             extracting: 파싱
             extractingText: 필사적으로 분석 중입니다. 잠시만 기다려주세요 ...
+            parsedInfoTitle: 분석이 성공하고 다음 로그인이 서버에 자동으로 동기화됩니다. 
+            parsedInfoContent: 분석이 성공하고 다음 로그인이 서버에 자동으로 동기화됩니다. 
+            backUpload: 백그라운드에서 동기화 중...
         yesText: 축하합니다. 업로드가 완료되었습니다.
         progress:
             none: 아니

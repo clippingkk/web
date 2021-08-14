@@ -83,6 +83,7 @@ app:
         title: Square
     upload:
         tip: Putting My Clippings.txt to here
+        dropHere: Release the mouse
         help:
             title: What is the `My Clippings.txt`
             content: connect kindle to the computer by usb, and find a folder named as `documents`, <br /> double click and enter into the folder,<br /> then find the file `My Clippings.txt` <br /> video and images should be here
@@ -93,9 +94,14 @@ app:
             fileTitle: Oops
             fileNotFound: Please putting `My Clippings.txt` from Kindle
             unknown: Unknown errors. please contact annatarhe@gmail.com
+            parse: parse clippings error. you need to upload manually
         tips:
+            done: All data up to date
             extracting: Extracting
             extractingText: Extracting, please wait...
+            parsedInfoTitle: parse successed. it will sync to server when you login next time
+            parsedInfoContent: parse success. it will sync to server when you login next time
+            backUpload: background uploading...
         yesText: Congratulations, checkout clippings here
         progress:
             none: None

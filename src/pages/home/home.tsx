@@ -12,6 +12,7 @@ import NoContentAlert from './no-content';
 import BookCover from '../../components/book-cover/book-cover';
 import ReadingBook from './reading-book';
 import { UserContent } from '../../store/user/type';
+import { useSyncClippingsToServer } from '../../hooks/my-file';
 const styles = require('./home.css').default
 
 type THomeProp = {
@@ -46,6 +47,7 @@ function HomePage(props: THomeProp) {
     // is new bie
     navigate(`/dash/${uid}/profile?with_profile_editor=1`)
   })
+  useSyncClippingsToServer()
 
   const [reachEnd, setReachEnd] = useState(false)
   const { data, fetchMore, loading, called } = useQuery<books, booksVariables>(homeListQuery, {
