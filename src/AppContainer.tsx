@@ -16,7 +16,7 @@ function AppContainer(props: AppContainerProps) {
   const onUploadTrack = useActionTrack('upload')
   const { t } = useTranslation()
 
-  const [isDraging, setIsDraging] = useState(true)
+  const [isDraging, setIsDraging] = useState(false)
 
   const onDropEnd = useCallback((e: React.DragEvent) => {
     setIsDraging(false)
