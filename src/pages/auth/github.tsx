@@ -28,8 +28,10 @@ function GithubOAuth() {
   }, [])
 
   return (
-    <main>
+    <main className='w-full h-full from-blue-400 to-purple-400 bg-gradient-to-br via-green-400 min-h-screen flex justify-center items-center'>
+      <p className='p-10 bg-gray-300 bg-opacity-40 rounded text-4xl backdrop-blur-lg'>
       authing
+      </p>
     </main>
   )
 }
