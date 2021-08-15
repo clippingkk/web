@@ -93,7 +93,7 @@ function SearchBar(props: SearchBarProps) {
 
   return (
     <div
-      className='fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-40 flex-col'
+      className='fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-40 flex-col backdrop-blur-lg with-fade-in'
       onClick={() => {
         setVisible(false)
       }}
@@ -119,7 +119,7 @@ function SearchBar(props: SearchBarProps) {
           <ul className='list-none'>
             {data?.search.clippings.map(c => (
               <li
-                className='dark:bg-gray-300 bg-gray-400 mt-4 list-none anna-fade-in'
+                className='dark:bg-gray-300 bg-gray-400 mt-4 list-none with-fade-in'
                 key={c.id}
               >
                 <Link

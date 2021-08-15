@@ -26,8 +26,8 @@ app:
     book:
         title: 书摘
         share: 分享这本书
-        durationTitle: 这本书看了
-        durationInDay: 天
+        readingDuration: "这本书看了 {{ count }} 天"
+        readingDuration_plural: "这本书看了 {{ count }} 天"
     auth:
         signin: 登陆
         signup: 注册

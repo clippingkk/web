@@ -26,8 +26,8 @@ app:
     book:
         title: 책 다이제스트
         share: 이 책 공유
-        durationTitle: 이 책을
-        durationInDay: 일 동안 읽으십시오
+        readingDuration: "이 책을 {{ count }} 일 동안 읽으십시오"
+        readingDuration_plural: "이 책을 {{ count }} 일 동안 읽으십시오"
     auth:
         signin: 로그인
         signup: 등기

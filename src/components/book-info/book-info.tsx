@@ -31,7 +31,11 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
         <h2 className='my-4 text-4xl font-bold'>{book.title}</h2>
         <h5 className='my-4 text-2xl'>{book.author}</h5>
         {duration && (
-          <h5 className='my-4 text-lg'>{t('app.book.durationTitle')} {duration} {t('app.book.durationInDay')}</h5>
+          <h5 className='my-4 text-lg'>
+            {t('app.book.readingDuration', {
+              count: duration
+            })}
+          </h5>
         )}
         <a
           href={getUTPLink(UTPService.book, { uid, bid: book.id, theme: KonzertThemeMap.young.id, })}

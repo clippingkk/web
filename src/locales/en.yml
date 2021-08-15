@@ -26,8 +26,8 @@ app:
     book:
         title: Clippings
         share: Share the book
-        durationTitle: Read for
-        durationInDay: days
+        readingDuration: "Read for {{ count }} day"
+        readingDuration_plural: "Read for {{ count }} days"
     auth:
         signin: Sign in
         signup: Sign up
