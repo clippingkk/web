@@ -32,7 +32,6 @@ function AppContainer(props: AppContainerProps) {
     if (!isDraging) {
       setIsDraging(true)
     }
-    console.log('drag over')
     e.preventDefault()
   }, [isDraging])
 
@@ -53,7 +52,7 @@ function AppContainer(props: AppContainerProps) {
           >
             <p className='text-6xl p-20 rounded text-blue-400 font-bold bg-purple-600 opacity-50'>
               {t('app.upload.dropHere')}
-              </p>
+            </p>
           </div>
         )}
       </React.Fragment>
