@@ -18,17 +18,22 @@ function AppContainer(props: AppContainerProps) {
 
   const [isDraging, setIsDraging] = useState(false)
 
+  const isUploadPage = /dash\/\d+\/upload/.test(location.pathname)
+
   const onDropEnd = useCallback((e: React.DragEvent) => {
     setIsDraging(false)
     // upload 页面不需要
-    if (/dash\/\d+\/upload/.test(location.pathname)) {
+    if (isUploadPage) {
       return
     }
     onUploadTrack()
     onUpload(e, true)
-  }, [onUpload, onUploadTrack])
+  }, [onUpload, onUploadTrack, isUploadPage])
 
   const stopDragOver = useCallback((e: React.DragEvent) => {
+    if (isUploadPage) {
+      return
+    }
     if (!isDraging) {
       setIsDraging(true)
     }
