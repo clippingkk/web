@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.20.9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.8...v3.20.9) (2021-08-18)
+
+
+### Bug Fixes
+
+* **parser:** fix parser when content only has one page info ([19a7a62](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/19a7a62d5c5189866cb4cb7c98bac2d35f22fc7c))
+
 ### [3.20.8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.7...v3.20.8) (2021-08-15)
 
 ### [3.20.7](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.6...v3.20.7) (2021-08-14)
