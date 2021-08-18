@@ -51,7 +51,7 @@ class ClippingTextParser {
       this.locationRegexp = /\d+(-?\d+)?/g
       this.language = FileLanuages.English
     } else if (file.includes("您在")) {
-      this.locationRegexp = /#\d+(-?\d+)?/g
+      this.locationRegexp = /#?\d+(-?\d+)?/g
       this.language = FileLanuages.Chinese
     } else {
       throw new Error('哎呀呀，暂不支持非中英文的内容呢~')

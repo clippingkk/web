@@ -66,3 +66,18 @@ test('parser: ric', () => {
   expect(result).toMatchSnapshot()
   // c.Content == "" || c.BookID == "" || c.PageAt == ""
 })
+
+
+test('parser: xumeng', () => {
+  const file = readFile('../__fixtures__/clippings_xm.txt')
+  const parser = new ClippingTextParser(file)
+  const result = parser.execute()
+  result.forEach(x => {
+    expect(x.bookId).toBeTruthy()
+    expect(x.content).toBeTruthy()
+    expect(x.pageAt).toBeTruthy()
+  })
+
+  expect(result).toMatchSnapshot()
+  // c.Content == "" || c.BookID == "" || c.PageAt == ""
+})
