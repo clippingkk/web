@@ -61,7 +61,7 @@ function Profile(props: TProfileProps) {
       return false
     }
 
-    return data?.me.wechatOpenid
+    return !data?.me.wechatOpenid
   }, [data])
 
   return (
