@@ -56,6 +56,14 @@ function Profile(props: TProfileProps) {
 
   const year = (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
+  const isWechatBindingVisible = useMemo(() => {
+    if (uid.toString() !== props.userid) {
+      return false
+    }
+
+    return data?.me.wechatOpenid
+  }, [data])
+
   return (
     <section>
       <Card className='flex items-center justify-center py-12 w-full lg:w-4/5 mx-auto mt-20 anna-fade-in bg-gray-200 bg-opacity-75'>
@@ -82,7 +90,7 @@ function Profile(props: TProfileProps) {
                   <p key={i}>{v}</p>
                 ))}
               </div>
-              {!data?.me.wechatOpenid && (
+              {isWechatBindingVisible && (
                 <WechatBindButton />
               )}
               <Link
