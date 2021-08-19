@@ -6,6 +6,7 @@ app:
         closed: 사각형 기능은 아직 열리지 않았습니다 ~
         cancel: 취소
         doUpdate: 최신 정보
+        done: 마치다
 
     slogan: 정리, 표시, 검토, 진행
     go: 지금 시도하십시오!
@@ -124,6 +125,9 @@ app:
         wechatBindTip: 바인딩 할 개인 센터의 코드를 스캔하려면 "clippingKK" 애플릿을 사용하십시오.
         phoneBind: 휴대 전화 번호 바인딩
         phoneBinded: 휴대폰 번호를 성공적으로 바인딩
+        fans:
+            follow: 주의를 기울이다
+            unfollow: 더 이상 팔로우하지 않음
         editor:
             title: 내 개인 정보 업데이트
             updated: 업데이트 됨

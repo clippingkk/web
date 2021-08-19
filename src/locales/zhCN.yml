@@ -6,6 +6,7 @@ app:
         closed: 广场功能暂未开放哦~
         cancel: 取消
         doUpdate: 更新
+        done: 完成
 
     slogan: 整理, 展示, 复盘, 进步
     go: 立即体验！
@@ -124,6 +125,9 @@ app:
         wechatBindTip: 使用 clippingKK 小程序 个人中心扫码即可绑定
         phoneBind: 绑定手机号
         phoneBinded: 绑定成功
+        fans:
+            follow: 追踪
+            unfollow: 不再追踪
         editor:
             title: 更新我的个人信息
             updated: 已更新

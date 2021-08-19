@@ -1,11 +1,12 @@
 app:
-    fold: fold
-    unfold: unfold
+    fold: Fold
+    unfold: Unfold
     common:
         loading: Loading...
         closed: This feature is still under heavy development
-        cancel: cancel
-        doUpdate: update
+        cancel: Cancel
+        doUpdate: Update
+        done: Done
 
     slogan: Organize, Display, Review, Be Better
     go: Go!
@@ -125,6 +126,9 @@ app:
         wechatBindTip: binging wechat mini program
         phoneBind: bind a phone
         phoneBinded: success!
+        fans:
+            follow: Follow
+            unfollow: Unfollow
         editor:
             title: update my profile
             updated: updated
