@@ -71,6 +71,9 @@ function Profile(props: TProfileProps) {
     if (!isInMyPage) {
       return false
     }
+    if (uid === 0) {
+      return false
+    }
 
     return !data?.me.wechatOpenid
   }, [data, isInMyPage])
