@@ -65,16 +65,16 @@ function Profile(props: TProfileProps) {
 
   const year = (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
-  const isInMyPage = uid.toString() !== props.userid
+  const isInMyPage = uid.toString() === props.userid
 
   const isWechatBindingVisible = useMemo(() => {
-    if (!isInMyPage) {
-      return false
-    }
     if (uid === 0) {
       return false
     }
 
+    if (!isInMyPage) {
+      return false
+    }
     return !data?.me.wechatOpenid
   }, [data, isInMyPage])
 
