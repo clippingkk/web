@@ -133,7 +133,7 @@ function Profile(props: TProfileProps) {
                     })
                   }}
                 >
-                  {t(`app.profile.fans.${data?.me.isFan ? 'unfollow' : ''}follow`)}
+                  {t(`app.profile.fans.${data?.me.isFan ? 'un' : ''}follow`)}
                 </button>
               )}
 
