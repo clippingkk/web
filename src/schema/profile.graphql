@@ -11,6 +11,13 @@ query profile($id: Int!) {
     createdAt
     updatedAt
     wechatOpenid
+    isFan
+    followers {
+      id
+      name
+      avatar
+      bio
+    }
 
     recents {
       id

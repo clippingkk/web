@@ -17,7 +17,6 @@ function AppContainer(props: AppContainerProps) {
   const { t } = useTranslation()
 
   const [isDraging, setIsDraging] = useState(false)
-
   const isUploadPage = /dash\/\d+\/upload/.test(location.pathname)
 
   const onDropEnd = useCallback((e: React.DragEvent) => {
