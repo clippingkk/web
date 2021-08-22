@@ -109,7 +109,7 @@ function Profile(props: TProfileProps) {
               {!isInMyPage && (
                 <button
                   className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6 mr-4'
-                  title={t(`app.profile.fans.${data?.me.isFan ? 'unfollow' : ''}follow`)}
+                  title={t(`app.profile.fans.${data?.me.isFan ? 'un' : ''}follow`)}
                   disabled={followLoading || unfollowLoading}
                   onClick={() => {
                     if (followLoading || unfollowLoading) {
