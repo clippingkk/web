@@ -7,6 +7,7 @@ app:
         cancel: 취소
         doUpdate: 최신 정보
         done: 마치다
+        delete: 삭제
 
     slogan: 정리, 표시, 검토, 진행
     go: 지금 시도하십시오!
@@ -41,6 +42,7 @@ app:
         submit: 제출
         endpoint: API
         name: 사용자 이름
+        hookUrl: Web Hook URL
         notionPageId: notion page id
         notionToken: notion bot token
         code:
@@ -137,6 +139,9 @@ app:
     settings:
         title: 글로벌 구성 (웹 사이트)
         theme: 야간 모드
+        webhook:
+            title: Web Hook
+            submit: 제출하다
         export:
             title: 데이터 내보내기
             success: 데이터를 내보냈습니다.

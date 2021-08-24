@@ -1,0 +1,5 @@
+fragment webhookItemData on WebHookItem {
+	id
+	step
+	hookUrl
+}

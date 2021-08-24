@@ -74,10 +74,11 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = new HttpLink({
-    uri: API_HOST + '/api/v2/graphql',
-  })
+  uri: API_HOST + '/api/v2/graphql',
+})
 
 export const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({ }),
   link: errorLink.concat(authLink.concat(httpLink)),
+  connectToDevTools: __DEV__,
 })

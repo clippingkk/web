@@ -7,6 +7,7 @@ app:
         cancel: Cancel
         doUpdate: Update
         done: Done
+        delete: Delete
 
     slogan: Organize, Display, Review, Be Better
     go: Go!
@@ -41,6 +42,7 @@ app:
         submit: Go go go!
         endpoint: API endpoint
         name: User name
+        hookUrl: Web Hook URL
         notionPageId: notion page id
         notionToken: notion bot token
         code:
@@ -138,6 +140,9 @@ app:
     settings:
         title: Global Settings(for web)
         theme: Theme
+        webhook:
+            title: Web Hook
+            submit: Submit
         export:
             title: Export
             success: exported

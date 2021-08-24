@@ -1,0 +1,9 @@
+#import './fragments/webhook.graphql'
+
+query fetchMyWebHooks($id: Int!) {
+  me(id: $id) {
+	  webhooks {
+		  ...webhookItemData
+	  }
+  }
+}
