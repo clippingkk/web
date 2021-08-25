@@ -35,7 +35,7 @@ const webhookColumns: Column<fetchMyWebHooks_me_webhooks>[] = [{
 
 function WebHooks(props: WebHooksProps) {
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
-  const { data: webhooksResp, client } = useQuery<fetchMyWebHooks, fetchMyWebHooksVariables>(fetchMyWebHooksQuery, {
+  const { data: webhooksResp, client, refetch } = useQuery<fetchMyWebHooks, fetchMyWebHooksVariables>(fetchMyWebHooksQuery, {
     variables: {
       id: uid
     },
@@ -66,8 +66,9 @@ function WebHooks(props: WebHooksProps) {
         }
       }).then(() => {
         toast.success(t('app.common.done'))
-        client.resetStore()
         formik.resetForm()
+        client.resetStore()
+        refetch()
         setVisible(false)
       }).catch(e => {
         toast.error(e.toString())
@@ -107,6 +108,16 @@ function WebHooks(props: WebHooksProps) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()} className='table-row-group'>
+          {rows.length === 0 && (
+            <tr className='table-row'>
+              <td
+                className='table-cell py-2 px-4 border-2'
+                colSpan={webhookColumns.length}
+              >
+                {t('app.menu.search.empty')}
+              </td>
+            </tr>
+          )}
           {rows.map(row => {
             prepareRow(row)
             return (
