@@ -1,0 +1,3 @@
+mutation deleteAWebHook($id: Int!) {
+	deleteWebHook(id: $id)
+}

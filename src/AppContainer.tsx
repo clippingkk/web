@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
@@ -17,7 +18,16 @@ function AppContainer(props: AppContainerProps) {
   const { t } = useTranslation()
 
   const [isDraging, setIsDraging] = useState(false)
-  const isUploadPage = /dash\/\d+\/upload/.test(location.pathname)
+  const [isUploadPage, setIsUploadPage] = useState(false)
+  // 由于找不到 on history change 的事件，这里靠 interval 来 work around
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsUploadPage(/dash\/\d+\/upload/.test(location.pathname))
+    }, 1000)
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
 
   const onDropEnd = useCallback((e: React.DragEvent) => {
     setIsDraging(false)

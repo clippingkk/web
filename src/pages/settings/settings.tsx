@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Select from 'react-select'
-// import { DarkModeSwitch } from 'react-toggle-dark-mode';
+// import { DarkModeSwitch } from 'react-toggle-dark-mode'
 import { useTranslation } from 'react-i18next'
-import DarkSwitcher from './dark-switcher';
-import SimpleSwitcher from './simple-switcher';
-import Exports from './exports';
+import DarkSwitcher from './dark-switcher'
+import SimpleSwitcher from './simple-switcher'
+import Exports from './exports'
+import WebHooks from './webhooks'
 
 type SettingsPageProps = {
 }
@@ -37,7 +38,6 @@ function GlobalSettings() {
   const { t, i18n } = useTranslation()
   const langOptions = Object.keys(i18n.store.data).map(x => ({ value: x, label: x }))
   const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
-
   return (
     <div className='w-full'>
       <div className='w-full flex items-center justify-around mb-4'>
@@ -103,6 +103,11 @@ function SettingsPage(props: SettingsPageProps) {
         {t('app.settings.export.title')}
       </h3>
       <Exports />
+
+      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
+        {t('app.settings.webhook.title')}
+      </h3>
+      <WebHooks />
 
     </div>
   )

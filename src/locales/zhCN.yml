@@ -7,6 +7,7 @@ app:
         cancel: 取消
         doUpdate: 更新
         done: 完成
+        delete: 删除
 
     slogan: 整理, 展示, 复盘, 进步
     go: 立即体验！
@@ -41,6 +42,7 @@ app:
         submit: 搞快点
         endpoint: API 地址
         name: 用户名
+        hookUrl: hook 地址
         notionPageId: notion page id
         notionToken: notion 机器人 token
         code:
@@ -137,6 +139,9 @@ app:
     settings:
         title: 全局配置(网站)
         theme: 黑暗模式
+        webhook:
+            title: Web Hook
+            submit: 提交
         export:
             title: 导出数据
             success: 已导出

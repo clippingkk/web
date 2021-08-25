@@ -1,0 +1,7 @@
+#import '../fragments/webhook.graphql'
+
+mutation createNewWebHook($step: WebHookStep!, $hookUrl: String!) {
+	createWebHook(step: $step, hookUrl: $hookUrl) {
+		...webhookItemData
+	}
+}
