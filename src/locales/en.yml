@@ -143,6 +143,7 @@ app:
         webhook:
             title: Web Hook
             submit: Submit
+            docLink: documentation
         export:
             title: Export
             success: exported

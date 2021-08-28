@@ -99,7 +99,7 @@ function WebHooks(props: WebHooksProps) {
               {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps()}
-                  className='table-cell py-2 px-8 dark:border-white border-purple-900 border-2'
+                  className='table-cell py-2 px-8 dark:border-white border-gray-300 border-2'
                 >
                   {column.render('Header')}
                 </th>
@@ -111,7 +111,7 @@ function WebHooks(props: WebHooksProps) {
           {rows.length === 0 && (
             <tr className='table-row'>
               <td
-                className='table-cell py-2 px-4 border-2'
+                className='table-cell py-2 px-4 border-2 text-base my-4'
                 colSpan={webhookColumns.length}
               >
                 {t('app.menu.search.empty')}

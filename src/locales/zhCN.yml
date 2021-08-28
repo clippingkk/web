@@ -142,6 +142,7 @@ app:
         webhook:
             title: Web Hook
             submit: 提交
+            docLink: 文档在这里
         export:
             title: 导出数据
             success: 已导出

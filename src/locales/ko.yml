@@ -142,6 +142,7 @@ app:
         webhook:
             title: Web Hook
             submit: 제출하다
+            docLink: 문서를 보려면 여기를 클릭하십시오
         export:
             title: 데이터 내보내기
             success: 데이터를 내보냈습니다.

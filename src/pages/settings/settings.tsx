@@ -23,7 +23,7 @@ function GlobalSettings() {
           className='mr-4 text-black dark:text-white w-20 text-left'
         >
           Language:
-            </label>
+        </label>
         <Select
           options={langOptions}
           className='w-64'
@@ -40,7 +40,7 @@ function GlobalSettings() {
           className='mr-4 text-black dark:text-white w-20 text-left'
         >
           {t('app.settings.theme')}:
-            </label>
+        </label>
 
         <div className='w-64 text-right flex items-center justify-end'>
           <SimpleSwitcher
@@ -83,6 +83,14 @@ function SettingsPage(props: SettingsPageProps) {
 
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
         {t('app.settings.webhook.title')}
+        <a
+          href="https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae"
+          target='_blank'
+          referrerPolicy='no-referrer'
+          className='text-gray-800 dark:text-gray-200 text-sm ml-4 hover:underline'
+        >
+          {t('app.settings.webhook.docLink')}
+        </a>
       </h3>
       <WebHooks />
 
