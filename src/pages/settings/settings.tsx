@@ -6,32 +6,9 @@ import DarkSwitcher from './dark-switcher'
 import SimpleSwitcher from './simple-switcher'
 import Exports from './exports'
 import WebHooks from './webhooks'
+import { useDarkModeStatus } from '../../hooks/theme'
 
 type SettingsPageProps = {
-}
-
-const darkModeClassName = 'dark'
-
-function useDarkModeStatus() {
-  const [is, setIs] = useState(false)
-  useEffect(() => {
-    const isDarkTheme = document.querySelector('html')?.classList.contains(darkModeClassName)
-    setIs(isDarkTheme ?? false)
-  }, [])
-  const onDarkThemeChange = useCallback((v) => {
-    const html = document.querySelector('html')
-    if (html?.classList.contains(darkModeClassName)) {
-      html?.classList.remove(darkModeClassName)
-    } else {
-      html?.classList.add(darkModeClassName)
-    }
-    setIs(v)
-  }, [])
-
-  return {
-    isDarkTheme: is,
-    onDarkThemeChange
-  }
 }
 
 function GlobalSettings() {

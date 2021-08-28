@@ -28,7 +28,9 @@ ReactDOM.render(
     >
       <ApolloProvider client={client}>
         <Root />
-        <ToastContainer />
+        <ToastContainer
+          theme={'light'}
+        />
       </ApolloProvider>
     </SWRConfig>
   </Provider>,

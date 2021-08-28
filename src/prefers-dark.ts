@@ -1,20 +1,25 @@
-function checkDarkMode() {
+export function checkDarkMode() {
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 function watchDarkMode() {
   if (!window.matchMedia) return;
 
-  window.matchMedia('(prefers-color-scheme: dark)').addListener(addDarkModeSelector);
+  window.matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener("change", addDarkModeSelector)
 }
 
-function addDarkModeSelector() {
-  if (checkDarkMode()) {
+function addDarkModeSelector(e: MediaQueryListEvent) {
+  if (e.matches) {
     document.documentElement.classList.add('dark')
   } else {
     document.documentElement.classList.remove('dark')
   }
 }
 
-addDarkModeSelector();
-watchDarkMode();
+watchDarkMode()
+
+// only can init by once
+if (checkDarkMode()) {
+    document.documentElement.classList.add('dark')
+}

@@ -61,7 +61,6 @@ function DarkSwitcher(props: DarkSwitcherProps) {
     (window as any).lo = lottieRef.current
 
     function onEnterFrame({ currentTime, totalTime }: any) {
-      console.log(currentTime, totalTime)
       setProgress(currentTime / totalTime)
     }
 
