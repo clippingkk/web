@@ -1,6 +1,7 @@
 import { Link } from '@reach/router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import { publicData_public_clippings } from '../../schema/__generated__/publicData'
 import { IN_APP_CHANNEL } from '../../services/channel'
 
@@ -11,7 +12,7 @@ type TopClippingsProps = {
 }
 
 function SimpleAvatar({ avatar }: any) {
-    const imageUrl = avatar.startsWith('http') ? avatar : `https://clippingkk-cdn.annatarhe.com/${avatar}-copyrightDB`
+    const imageUrl = avatar.startsWith('http') ? avatar : `${CDN_DEFAULT_DOMAIN}/${avatar}`
     return (
       <img src={imageUrl} className='w-8 h-8 rounded-full' />
     )

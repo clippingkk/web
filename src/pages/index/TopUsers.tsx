@@ -2,6 +2,7 @@ import React from 'react'
 import { HideUntilLoaded } from '@nearform/react-animation'
 import { publicData_public_users } from '../../schema/__generated__/publicData'
 import { useTranslation } from 'react-i18next'
+import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 
 const styles = require('./tops.css').default
 
@@ -16,7 +17,7 @@ function TopUsers(props: TopUsersProps) {
   }
   const users = props.users.map(x => ({
     ...x,
-    avatar: x.avatar.startsWith('http') ? x.avatar : `https://clippingkk-cdn.annatarhe.com/${x.avatar}-copyrightDB`
+    avatar: x.avatar.startsWith('http') ? x.avatar : `${CDN_DEFAULT_DOMAIN}/${x.avatar}`
   }))
   return (
     <div>

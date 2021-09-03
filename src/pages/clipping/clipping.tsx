@@ -21,6 +21,7 @@ import Reactions from './reactions'
 import ClippingContent from '../../components/clipping-content'
 import ClippingSidebar from './clipping-sidebar'
 import { IN_APP_CHANNEL } from '../../services/channel'
+import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 const styles = require('./clipping.css').default
 
 type TClippingPageProp = {
@@ -74,7 +75,7 @@ function ClippingPage(props: TClippingPageProp) {
             {me.id === 0 && (
               <Link className='flex justify-center items-center' to={`/auth/signin`}>
                 <img
-                  src={creator?.avatar.startsWith('http') ? creator.avatar : `https://clippingkk-cdn.annatarhe.com/${creator?.avatar}-copyrightDB`}
+                  src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
                   className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover'
                 />
                 <span className='ml-4 text-gray-700 dark:text-gray-200 font-light'>{creator?.name}</span>

@@ -1,6 +1,7 @@
 import { request } from "./ajax";
 import { supportsWebp } from '../utils/image'
 import { IClippingItem, IHttpClippingItem } from "./clippings";
+import { CDN_DEFAULT_DOMAIN } from "../constants/config";
 
 interface Book {
   id: number
@@ -27,7 +28,7 @@ let isSupportWebp: boolean
 
 export function covertHttpBook2Book(book: IHttpBook): IBook {
   const isCDNImage = book.image.indexOf('http') !== 0
-  const image = isCDNImage ? `https://clippingkk-cdn.annatarhe.com/${book.image}-copyrightDB${isSupportWebp ? '.webp' : ''}` : book.image
+  const image = isCDNImage ? `${CDN_DEFAULT_DOMAIN}/${book.image}` : book.image
   return {
     ...book,
     image: process.env.NODE_ENV === 'production' ? image : 'https://picsum.photos/400/500?random=' + Math.random(),

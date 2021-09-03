@@ -1,4 +1,5 @@
 import React from 'react'
+import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 
 type AvatarProps = {
   img: string
@@ -7,7 +8,7 @@ type AvatarProps = {
 }
 
 function Avatar(props: AvatarProps) {
-  const avatar = props.img.startsWith('http') ? props.img : `https://clippingkk-cdn.annatarhe.com/${props.img}-copyrightDB`
+  const avatar = props.img.startsWith('http') ? props.img : `${CDN_DEFAULT_DOMAIN}/${props.img}`
 
   let cls = props.className || ''
 
