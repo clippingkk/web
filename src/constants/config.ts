@@ -16,7 +16,7 @@ export const SignInWithAppleOptions = {
 }
 
 // export const CDN_DEFAULT_DOMAIN = 'https://clippingkk-cdn.annatarhe.com'
-export const CDN_DEFAULT_DOMAIN = 'https://ck-cdn.annatarhe.com'
+export const CDN_DEFAULT_DOMAIN = 'https://ck-cdn.annatarhe.cn'
 
 export const LEANCLOUD = {
   APP_ID: 'aA4dKCxL9noDX5CyYp2AdnHl-9Nh9j0Va',
