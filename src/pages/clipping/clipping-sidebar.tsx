@@ -12,6 +12,7 @@ import { UserContent } from '../../store/user/type'
 import { useTranslation } from 'react-i18next'
 import { Link } from '@reach/router'
 import { IN_APP_CHANNEL } from '../../services/channel'
+import { toast } from 'react-toastify'
 const styles = require('./clipping.css').default
 
 type ClippingSidebarProps = {
@@ -56,6 +57,26 @@ function ClippingSidebar(props: ClippingSidebarProps) {
     dispatch(updateClippingBook(clipping.id))
   }, [clipping])
 
+  const onCopyEmbedHtml = useCallback(() => {
+    const template = `
+    <blockquote class="ck-clipping-card" data-cid='${clipping?.id}'>
+  <p lang="zh" dir="ltr" class="ck-content">
+  ${clipping?.content}
+  </p>
+  <p class="ck-author">
+    —— 《${book?.title ?? clipping?.title}》 <small>${book?.author ?? ''}</small>
+  </p>
+  <p class="ck-info">
+    <span>${clipping?.creator.name}</span> 摘录于 <time>${clipping?.createdAt}</time>
+  </p>
+</blockquote>
+<script async src="https://web-widget-script.pages.dev/bundle.js" charset="utf-8"></script>
+`
+    navigator.clipboard.writeText(template).then(() => {
+      toast.success('copied. just paste to your website')
+    })
+  }, [clipping, book])
+
   const siblingLink = getSiblingLink(props.inAppChannel, me.id, clipping)
   return (
     <Card className='flex-1 hidden lg:block'>
@@ -86,6 +107,14 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             >
               {t('app.clipping.link')}
             </a>
+          </li>
+          <li className='w-full mb-4'>
+            <button
+              className={styles['action-btn']}
+              onClick={onCopyEmbedHtml}
+            >
+              copy embed html
+            </button>
           </li>
           {clipping?.creator.id === me.id && (
             <li className='w-full mb-4'>
