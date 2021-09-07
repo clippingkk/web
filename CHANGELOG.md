@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.20.10](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.9...v3.20.10) (2021-09-07)
+
+
+### Features
+
+* **clipping:** add embed html share method ([3dd7bef](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3dd7bef6e693b1a6b6bd357e5d754f30aaf1cbe9))
+* **deps:** update react toastify ([125da29](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/125da2951edd90822e5c1307e20e07176b6a5f99))
+* **fans:** add fans module ([fa98deb](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fa98deb40b0146b6a351d991ea7105e3d7994eb0))
+* **webhook:** add documentation ([89a21ce](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/89a21ce6a84d165e3528620d037889f110cca2ef))
+* **webhook:** add webhook settings ([8d53ea8](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8d53ea8785fa9ac90bfa4e09a6b53134881cbed4))
+
+
+### Bug Fixes
+
+* **app:** recheck isUpload page every second ([e234ca1](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e234ca17da5a700ca0e828d7e57cda8cf008dc8f))
+* **cdn:** fix cdn ([2b9bf56](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2b9bf5629771bfd133c7e31284cc8db83f7e57da))
+* **cdn:** move to new cdn ([9bd3f0e](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9bd3f0e3e97fc8fce0a3ceb91d6650d9df821e0d))
+* **profile:** disable wechat binding in others page ([82fe368](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/82fe368a0ad0ad32afaece82a823db7723888d29))
+* **profile:** disable wechat binding when user not logged ([ed99e75](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ed99e7547315f6a67042453c6affcf57c27c2097))
+* **profile:** fix profile `isMyPage` variables ([832349c](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/832349c05ff76079852a0a6de15721db42044227))
+* **profile:** fix typo ([ee30d1a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ee30d1afc0e100a809a313086c89f5fc533b30e2))
+* **profile:** fix typo ([32f06d2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/32f06d200bab67fa0f5bc095e6e5dc01b99f712e))
+* **profile:** fix wechat binding button visiblity ([39b768a](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/39b768afe26b44aece3a87172557f89bd6d8d832))
+* **test:** fix parser test ([990b770](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/990b7709d3a1251ce53d02ac7f0c69a9c69d8f88))
+* **upload:** fix upload in upload page ([96069fc](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/96069fc32c39553a9bafb8f581f1b42b12d3abb4))
+
 ### [3.20.9](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.8...v3.20.9) (2021-08-18)
 
 
