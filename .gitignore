@@ -61,3 +61,4 @@ dist.zip
 .DS_Store
 dist-dev
 __generated__
+.next
