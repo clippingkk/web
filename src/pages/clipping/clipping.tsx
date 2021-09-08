@@ -22,6 +22,7 @@ import ClippingContent from '../../components/clipping-content'
 import ClippingSidebar from './clipping-sidebar'
 import { IN_APP_CHANNEL } from '../../services/channel'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
+import OGWithClipping from '../../components/og/og-with-clipping'
 const styles = require('./clipping.css').default
 
 type TClippingPageProp = {
@@ -58,10 +59,9 @@ function ClippingPage(props: TClippingPageProp) {
   const clippingAt = useLocalTime(clipping?.clipping.createdAt)
 
   const creator = clipping?.clipping.creator
-
-  console.log(l)
   return (
     <div className={`${styles.clipping} page anna-fade-in`}>
+      <OGWithClipping clipping={clipping?.clipping} book={book} />
       <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20'>
         <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
           <h1 className='lg:text-3xl text-xl font-bold my-2'>{clipping?.clipping.title}</h1>
