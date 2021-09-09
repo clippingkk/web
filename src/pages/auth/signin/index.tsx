@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import authQuery from '../../schema/auth.graphql'
+import authQuery from '../../../schema/auth.graphql'
 import { useLazyQuery } from '@apollo/client'
-import { auth } from '../../schema/__generated__/auth'
-import { authVariables } from '../../schema/__generated__/auth'
-import { useAuthSuccessed } from './hooks';
-import { useTitle } from '../../hooks/tracke'
+import { auth } from '../../../schema/__generated__/auth'
+import { authVariables } from '../../../schema/__generated__/auth'
+import { useAuthSuccessed } from '../hooks';
+import { useTitle } from '../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
-import FieldInput from '../../components/input'
+import FieldInput from '../../../components/input'
 import * as Yup from 'yup'
+import AuthPage from '../auth'
 
 type TSigninProps = {
   path: string,
@@ -69,6 +70,14 @@ function Signin(props: TSigninProps) {
         {t('app.auth.submit')}
       </button>
     </form>
+  )
+}
+
+Signin.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <AuthPage>
+      {page}
+    </AuthPage>
   )
 }
 

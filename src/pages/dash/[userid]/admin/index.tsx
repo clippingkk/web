@@ -96,7 +96,6 @@ function AdminPanel() {
 }
 
 AdminPanel.getLayout = function getLayout(page: React.ReactElement) {
-  console.log('get layout')
   return (
     <DashboardContainer>
       {page}

@@ -13,6 +13,7 @@ import swal from "sweetalert"
 import { updateToken } from "../../services/ajax"
 import { authByPhone_authByPhone } from "../../schema/mutations/__generated__/authByPhone"
 import { USER_TOKEN_KEY } from "../../constants/storage"
+import { useRouter } from "next/router"
 
 export function useAuthByPhoneSuccessed(
   called: boolean,
@@ -20,7 +21,8 @@ export function useAuthByPhoneSuccessed(
   error?: ApolloError,
   authResponse?: authByPhone_authByPhone
 ) {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const { push: navigate } = useRouter()
   const dispatch = useDispatch()
   useEffect(() => {
     if (!called) {
@@ -76,7 +78,7 @@ export function useAuthSuccessed(
   error?: ApolloError,
   authResponse?: auth_auth
 ) {
-  const navigate = useNavigate()
+  const { push: navigate } = useRouter()
   const dispatch = useDispatch()
   useEffect(() => {
     if (called && !error && authResponse && !loading) {

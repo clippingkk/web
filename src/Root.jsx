@@ -9,7 +9,7 @@ import AuthPage from './pages/auth/auth'
 import SigninPage from './pages/auth/signin'
 import ClippingPage from './pages/clipping/clipping'
 import ReportYearlyPage from './pages/report/yearly'
-import AuthPhone from './pages/auth/auth-phone'
+import AuthPhone from './pages/auth/phone'
 import AppContainer from './AppContainer'
 
 const PrivacyPolicy = React.lazy(() => import(/* webpackPrefetch: true */ './pages/policy/privacy'))

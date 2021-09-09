@@ -1,9 +1,10 @@
 import React from 'react'
-import authByPhoneMutation from '../../schema/mutations/auth-phone.graphql'
+import authByPhoneMutation from '../../../schema/mutations/auth-phone.graphql'
 import { useMutation } from '@apollo/client'
-import { authByPhone, authByPhoneVariables } from '../../schema/mutations/__generated__/authByPhone'
-import { useAuthByPhoneSuccessed } from './hooks'
-import BindPhone from '../../components/bind-phone'
+import { authByPhone, authByPhoneVariables } from '../../../schema/mutations/__generated__/authByPhone'
+import { useAuthByPhoneSuccessed } from '../hooks'
+import BindPhone from '../../../components/bind-phone'
+import AuthPage from '../auth'
 
 type AuthPhoneProps = {
 }
@@ -17,6 +18,15 @@ function AuthPhone(props: AuthPhoneProps) {
     <BindPhone
       onFinalCheck={(pn, code) => doAuth({ variables: { phone: pn, code } })}
     />
+  )
+}
+
+
+AuthPhone.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <AuthPage>
+      {page}
+    </AuthPage>
   )
 }
 
