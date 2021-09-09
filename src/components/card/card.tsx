@@ -1,5 +1,4 @@
 import React from 'react'
-const styles = require('./card.css').default
 
 type cardProps = {
   className?: string
@@ -15,7 +14,7 @@ class Card extends React.PureComponent<cardProps> {
   }
 
   render() {
-    const cls = `m-4 p-4 rounded shadow bg-gray-400 bg-opacity-50 ${styles.card} ${this.props.className || ''}`
+    const cls = `m-4 p-4 rounded shadow bg-gray-400 bg-opacity-50 ${this.props.className || ''}`
     return (
       <section
         className={cls}

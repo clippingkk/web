@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom';
 import { usePopper } from 'react-popper';
 
-const styles = require('./style.css').default
+import styles from './style.module.css'
 
 type TooltipProps = {
   placement: string
@@ -11,7 +11,6 @@ type TooltipProps = {
   children: React.ReactElement
 }
 
-const toastDOM = document.querySelector('#toast')
 
 function Tooltip2(props: TooltipProps) {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
@@ -30,7 +29,7 @@ function Tooltip2(props: TooltipProps) {
         >
           {props.overlay}
         </div>,
-        toastDOM!
+        document.querySelector('#toast')!
       )}
     </React.Fragment>
   )

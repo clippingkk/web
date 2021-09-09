@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import Image from 'next/image'
 import { Link } from '@reach/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect, useDispatch, useSelector } from 'react-redux'
@@ -7,7 +8,8 @@ import { execLogout } from '../../store/user/type';
 import { TGlobalStore } from '../../store'
 import { useTranslation } from 'react-i18next';
 import Tooltip from '../tooltip/Tooltip';
-const styles = require('./navigation-bar.css').default
+import styles from './navigation-bar.module.css'
+// const styles = require('').default
 
 const leftMenu = [
   {
@@ -45,12 +47,14 @@ function NavigationBar() {
   return (
     <nav className={styles.navbar + ' bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl'}>
       <div className='flex justify-around items-center'>
-        <img
+        <Image
           src={require('../../assets/logo.png').default}
           alt="clippingkk logo"
           className='w-10 h-10 lg:w-20 lg:h-20 mr-2 lg:mr-12'
+          width={40}
+          height={40}
         />
-        <ul className='flex'>
+        <ul className='flex ml-2 lg:ml-12'>
           {leftMenu.map((item, index) => (
             <li className='mr-3 lg:mr-6' key={index}>
               <Tooltip

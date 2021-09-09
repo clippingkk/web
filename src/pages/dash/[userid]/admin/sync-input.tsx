@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { useMutation, useApolloClient } from '@apollo/client'
-import syncHomelessBook from '../../schema/mutations/sync-homeless-books.graphql'
+import syncHomelessBook from '../../../../schema/mutations/sync-homeless-books.graphql'
 import swal from 'sweetalert'
 
 type HomelessBookSyncInputProps = {

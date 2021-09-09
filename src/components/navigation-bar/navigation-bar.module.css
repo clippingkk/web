@@ -1,6 +1,3 @@
-@value colors: '../../styles/variables.css';
-@value primary-text-color, blur-background, grey-lite from colors;
-
 .navbar {
 }
 .navbar + div {
@@ -15,7 +12,8 @@
   top: 0;
   left: 0;
   z-index: -1;
-  background-color: blur-background;
+  background-color: rgba(272, 242, 242, .5);
+  /* background-color: blur-background; */
   filter: blur(5px);
   transform: scale(1.1);
   left: -5px;

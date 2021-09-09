@@ -19,6 +19,11 @@ import '../utils/locales'
 import '../utils/leancloud'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const getLayout = (Component as any).getLayout || ((page: any) => page)
+
+  const content = getLayout(
+    <Component {...pageProps} />
+  )
   return (
     <Provider store={store}>
       <SWRConfig
@@ -27,7 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}
       >
         <ApolloProvider client={client}>
-          <Component {...pageProps} />
+          {content}
           <ToastContainer
             theme={'light'}
           />

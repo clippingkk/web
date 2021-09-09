@@ -10,7 +10,7 @@ class DocumentTop extends Document {
     return (
       <Html>
         <Head>
-          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="description" content="" />
           <meta name="keywords" content="" />
           <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
@@ -36,7 +36,7 @@ class DocumentTop extends Document {
             content="rgba(33, 150, 243, 0.9)"
             media="(prefers-color-scheme: dark)"
           /> */}
-          <title>title here</title>
+          {/* <title>title here</title> */}
           <link href="https://cdn.annatarhe.com" rel='preconnect' crossOrigin='true' />
           <link href="https://ck-cdn.annatarhe.cn" rel='preconnect' crossOrigin='true' />
           <link href="https://clippingkk-api.annatarhe.com" rel='preconnect' crossOrigin='true' />

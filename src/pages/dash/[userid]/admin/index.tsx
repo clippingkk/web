@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useTable, Row } from 'react-table'
-import uncheckBooksRawQuery from '../../schema/admin.graphql'
-import { GraphqlQueryBookData, GraphqlQueryBook } from '../../services/type'
-import Card from '../../components/card/card'
+import uncheckBooksRawQuery from '../../../../schema/admin.graphql'
+import { GraphqlQueryBookData, GraphqlQueryBook } from '../../../../services/type'
+import Card from '../../../../components/card/card'
 import HomelessBookSyncInput from './sync-input'
-import { uncheckBooksQuery, uncheckBooksQueryVariables } from '../../schema/__generated__/uncheckBooksQuery'
+import { uncheckBooksQuery, uncheckBooksQueryVariables } from '../../../../schema/__generated__/uncheckBooksQuery'
+import DashboardContainer from '../../../../components/dashboard-container/container'
 
 const homelessBookColumn = [
   {
@@ -37,7 +38,6 @@ function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
 }
 
 function AdminPanel() {
-
   const [offset, setOffset] = useState(0)
 
   const { data, loading } = useQuery<uncheckBooksQuery, uncheckBooksQueryVariables>(uncheckBooksRawQuery, {
@@ -92,6 +92,15 @@ function AdminPanel() {
           )}
       </Card>
     </div>
+  )
+}
+
+AdminPanel.getLayout = function getLayout(page: React.ReactElement) {
+  console.log('get layout')
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
   )
 }
 
