@@ -1,35 +1,37 @@
 import { useQuery } from '@apollo/client'
+import Image from 'next/image'
 import { useLocation } from '@reach/router'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import Avatar from '../../components/avatar/avatar'
-import PublicBookItem from '../../components/public-book-item/public-book-item'
-import { useMultipBook } from '../../hooks/book'
-import { useTitle } from '../../hooks/tracke'
-import fetchReportYearlyQuery from '../../schema/report.graphql'
-import { fetchYearlyReport, fetchYearlyReportVariables } from '../../schema/__generated__/fetchYearlyReport'
+import Avatar from '../../../components/avatar/avatar'
+import PublicBookItem from '../../../components/public-book-item/public-book-item'
+import { useMultipBook } from '../../../hooks/book'
+import { useTitle } from '../../../hooks/tracke'
+import fetchReportYearlyQuery from '../../../schema/report.graphql'
+import { fetchYearlyReport, fetchYearlyReportVariables } from '../../../schema/__generated__/fetchYearlyReport'
+import { useRouter } from 'next/router'
 
 type ReportYearlyProps = {
 }
 
 function ReportYearly(props: ReportYearlyProps) {
-  const l = useLocation()
-  const searchParmas = new URLSearchParams(l.search)
+  // const l = useLocation()
+  const searchParams = useRouter().query
 
   useEffect(() => {
     if (
-      !searchParmas.has('uid')
+      !searchParams.uid
     ) {
       // show toast
       return
     }
-  }, [searchParmas])
+  }, [searchParams])
 
-  const year = ~~(searchParmas.get('year') || new Date().getFullYear())
+  const year = ~~(searchParams.year || new Date().getFullYear())
 
   const { data, error, loading } = useQuery<fetchYearlyReport, fetchYearlyReportVariables>(fetchReportYearlyQuery, {
     variables: {
-      uid: ~~(searchParmas.get('uid') || -1),
+      uid: ~~(searchParams.uid || -1),
       year
     }
   })
@@ -47,18 +49,19 @@ function ReportYearly(props: ReportYearlyProps) {
           Loading...
         </div>
       ) : (
-
           <div className='container anna-page-container'>
             <a
               className='flex fixed top-0 left-0 w-full p-4 bg-gray-200 dark:bg-gray-700 items-center justify-around z-50'
               href='https://clippingkk.annatarhe.com'
             >
-              <img
-                src={require('../../assets/logo.png').default}
+              <Image
+                src={require('../../../assets/logo.png').default}
                 alt="clippingkk logo"
-                className='w-16 h-16 mr-8'
+                height={64}
+                width={64}
+                // className='w-16 h-16 mr-8'
               />
-              <span className=' text-gray-700 dark:text-gray-200'>{t('app.slogan')}</span>
+              <span className=' text-gray-700 dark:text-gray-200 ml-8'>{t('app.slogan')}</span>
             </a>
             <div className='flex justify-center items-center flex-col'>
               <Avatar
