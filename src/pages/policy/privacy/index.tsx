@@ -1,6 +1,6 @@
 import React from 'react'
 // import ReactMarkdown from 'react-markdown'
-import { usePageTrack } from '../../hooks/tracke'
+import { usePageTrack } from '../../../hooks/tracke'
 
 function PrivacyPolicy() {
   usePageTrack('privacy')
@@ -106,7 +106,7 @@ function PrivacyPolicy() {
       <h2>Contact Us</h2>
       <p>If you have any questions about this Privacy Policy, please contact us:</p>
       <ul>
-        <li>By email: iamhele1994@gmail.com</li>
+        <li>By email: Annatar.He+ck.privacy@gmail.com</li>
 
       </ul>
     </section>
