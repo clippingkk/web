@@ -24,7 +24,7 @@ function Footer() {
           <a href="https://i.fanyijing.love" className='ml-2'>jing</a>
           </small>
         </p>
-        <p>Version: {__VERSION__}</p>
+        <p>Version: dev</p>
       </div>
       <a
         href="https://annatarhe.com"

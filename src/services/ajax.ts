@@ -9,9 +9,12 @@ export interface IBaseResponseData {
   data: any
 }
 
+
+console.log(process.browser, typeof window)
+
 // FIXME: 由于循环依赖的问题，这里避免引入 './profile'
 // 但是 profile 中有一样的初始化获取逻辑
-let token = localStorage.getItem('clippingkk-token')
+let token = (process.browser) ? localStorage.getItem('clippingkk-token') : ''
 // let token = localProfile?.token
 
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
@@ -77,8 +80,10 @@ const httpLink = new HttpLink({
   uri: API_HOST + '/api/v2/graphql',
 })
 
+console.log('env', process.env.DEV)
+
 export const client = new ApolloClient({
   cache: new InMemoryCache({ }),
   link: errorLink.concat(authLink.concat(httpLink)),
-  connectToDevTools: __DEV__,
+  connectToDevTools: !!process.env.DEV,
 })

@@ -4,7 +4,7 @@ import { useMultipBook } from '../../hooks/book'
 import { useTranslation } from 'react-i18next'
 import PublicBookItem from '../../components/public-book-item/public-book-item'
 
-const styles = require('./tops.css').default
+const styles = require('./tops.module.css').default
 
 type TopBooksProps = {
   books?: readonly publicData_public_books[]

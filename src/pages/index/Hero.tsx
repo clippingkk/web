@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-const styles = require('./Hero.css').default
+import styles from './Hero.module.css'
 
 function useLoad() {
   const [loaded, setLoaded] = useState(false)

@@ -18,6 +18,9 @@ const initState: TUserState = {
 }
 
 function parseFromLS() {
+  if (!process.browser) {
+    return
+  }
   const authInfo = localStorage.getItem(USER_TOKEN_KEY)
   if (!authInfo) {
     return

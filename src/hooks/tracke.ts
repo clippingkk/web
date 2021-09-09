@@ -1,6 +1,8 @@
 import { useEffect, useCallback } from "react";
 import mixpanel from "mixpanel-browser";
 
+const __DEV__ = process.env.NODE_ENV !== 'production'
+
 export function usePageTrack(page: string, params?: any) {
   useEffect(() => {
     if (__DEV__) {
