@@ -17,9 +17,6 @@ import { createNewWebHook, createNewWebHookVariables } from '../../../../schema/
 import { deleteAWebHook, deleteAWebHookVariables } from '../../../../schema/mutations/__generated__/deleteAWebHook'
 import { useTranslation } from 'react-i18next'
 
-type WebHooksProps = {
-}
-
 const webhookColumns: Column<fetchMyWebHooks_me_webhooks>[] = [{
   Header: 'id',
   accessor: 'id'
@@ -33,7 +30,7 @@ const webhookColumns: Column<fetchMyWebHooks_me_webhooks>[] = [{
   Header: 'action',
 }]
 
-function WebHooks(props: WebHooksProps) {
+function WebHooks() {
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   const { data: webhooksResp, client, refetch } = useQuery<fetchMyWebHooks, fetchMyWebHooksVariables>(fetchMyWebHooksQuery, {
     variables: {

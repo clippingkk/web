@@ -16,19 +16,19 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import Avatar from '../../../../components/avatar/avatar';
 import { Link } from '@reach/router';
-import ProfileEditor from './profile-editor';
-import { useSelector } from 'react-redux';
-import { TGlobalStore } from '../../../../store';
-import MasonryContainer from '../../../../components/masonry-container';
-import ProfileBindPhone from './bind-phone';
-import { IN_APP_CHANNEL } from '../../../../services/channel';
-import { API_HOST } from '../../../../constants/config';
-import { followUser, followUserVariables } from '../../../../schema/mutations/__generated__/followUser';
-import { unfollowUser, unfollowUserVariables } from '../../../../schema/mutations/__generated__/unfollowUser';
-import { toast } from 'react-toastify';
+import ProfileEditor from './profile-editor'
+import { useSelector } from 'react-redux'
+import { TGlobalStore } from '../../../../store'
+import MasonryContainer from '../../../../components/masonry-container'
+import ProfileBindPhone from './bind-phone'
+import { IN_APP_CHANNEL } from '../../../../services/channel'
+import { API_HOST } from '../../../../constants/config'
+import { followUser, followUserVariables } from '../../../../schema/mutations/__generated__/followUser'
+import { unfollowUser, unfollowUserVariables } from '../../../../schema/mutations/__generated__/unfollowUser'
+import { toast } from 'react-toastify'
 
 import styles from './profile.module.css'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
 function Profile() {
   const userid = useRouter().query.userid as string

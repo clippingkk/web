@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigate } from '@reach/router'
 import { useSelector } from 'react-redux'
 import { usePageTrack, useActionTrack } from '../../../../hooks/tracke'
-import { AnimateOnChange } from '@nearform/react-animation'
 import { useTranslation } from 'react-i18next'
 import { UploadStep } from './types'
 import LoadingModal from './loading-modal'
@@ -12,6 +10,8 @@ import ClippingsUploadHelp from './help'
 import { useUploadData } from '../../../../hooks/my-file'
 
 import styles from './uploader.module.css'
+import { useRouter } from 'next/router'
+import AnimateOnChange from '../../../../components/SimpleAnimation/AnimateOnChange'
 
 function useSwitcher() {
   const [isOn, setIsOn] = useState(true)
@@ -42,7 +42,7 @@ function UploaderPage() {
     e.preventDefault()
   }, [])
 
-  const navigate = useNavigate()
+  const { push: navigate } = useRouter()
   const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
 
   useEffect(() => {

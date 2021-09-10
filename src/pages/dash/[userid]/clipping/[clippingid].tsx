@@ -25,7 +25,7 @@ import OGWithClipping from '../../../../components/og/og-with-clipping'
 import styles from './clipping.module.css'
 
 function ClippingPage() {
-  const { userid, clippingid } = useRouter().query as { userid: string, clippingid: string }
+  const { clippingid } = useRouter().query as { userid: string, clippingid: string }
 
   const { data: clipping } = useQuery<fetchClipping, fetchClippingVariables>(fetchClippingQuery, {
     variables: {

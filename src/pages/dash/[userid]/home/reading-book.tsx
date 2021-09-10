@@ -1,5 +1,5 @@
-import { Link } from '@reach/router'
 import React from 'react'
+import Link from 'next/link'
 import BookInfo from '../../../../components/book-info/book-info'
 import ClippingContent from '../../../../components/clipping-content'
 import { useSingleBook } from '../../../../hooks/book'
@@ -20,10 +20,11 @@ function ReadingBook(props: ReadingBookProps) {
     <div className='mb-4'>
       <BookInfo book={book} uid={props.uid} />
       <Link
-        to={`/dash/${props.uid}/clippings/${props.clipping.id}?iac=${IN_APP_CHANNEL.clippingFromBook}`}
-        className='font-lxgw text-3xl leading-loose from-yellow-100 to-yellow-200 bg-gradient-to-br rounded-lg p-8 block hover:shadow-xl m-4 transform hover:scale-x-105 duration-300 dark:from-purple-600 dark:to-purple-800 dark:text-gray-200'
+        href={`/dash/${props.uid}/clippings/${props.clipping.id}?iac=${IN_APP_CHANNEL.clippingFromBook}`}
       >
-        <ClippingContent content={props.clipping.content} />
+        <a className='font-lxgw text-3xl leading-loose from-yellow-100 to-yellow-200 bg-gradient-to-br rounded-lg p-8 block hover:shadow-xl m-4 transform hover:scale-x-105 duration-300 dark:from-purple-600 dark:to-purple-800 dark:text-gray-200'>
+          <ClippingContent content={props.clipping.content} />
+        </a>
       </Link>
     </div>
   )

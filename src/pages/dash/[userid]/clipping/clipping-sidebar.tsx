@@ -13,7 +13,8 @@ import { useTranslation } from 'react-i18next'
 import { Link } from '@reach/router'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { toast } from 'react-toastify'
-const styles = require('./clipping.css').default
+
+import styles from './clipping.module.css'
 
 type ClippingSidebarProps = {
   clipping: fetchClipping_clipping | undefined

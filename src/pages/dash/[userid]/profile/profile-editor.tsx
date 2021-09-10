@@ -10,6 +10,7 @@ import { updateProfile, updateProfileVariables } from '../../../../schema/mutati
 import { toast } from 'react-toastify'
 import { uploadImage } from '../../../../services/misc'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 
 type ProfileEditorProps = {
   withNameChange: boolean
@@ -18,12 +19,12 @@ type ProfileEditorProps = {
 
 function ProfileEditor(props: ProfileEditorProps) {
   const [visible, setVisible] = useState(false)
+  const withProfileEditor = useRouter().query.with_profile_editor
   useEffect(() => {
-    const u = new URLSearchParams(location.search)
-    if (u.has('with_profile_editor')) {
+    if (withProfileEditor) {
       setVisible(true)
     }
-  }, [])
+  }, [withProfileEditor])
 
   const [doUpdate, { client }] = useMutation<updateProfile, updateProfileVariables>(updateProfileMutation)
   const { t } = useTranslation()

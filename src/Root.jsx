@@ -21,7 +21,7 @@ const SquarePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/
 const BookPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/book/[bookid]'))
 
 const ProfilePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/profile'))
-const UncheckedPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/unchecked/unchecked'))
+const UncheckedPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/unchecked'))
 const SettingsPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/settings'))
 
 class Root extends React.Component {

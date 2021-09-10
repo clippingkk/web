@@ -11,6 +11,7 @@ import store from '../store/index'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-phone-input-2/lib/style.css'
 import 'emoji-mart/css/emoji-mart.css'
+import '../styles/react-animation.css'
 import '../styles/global.css'
 import '../styles/tailwind.css'
 

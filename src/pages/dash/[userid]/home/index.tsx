@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from '@reach/router'
+import Link from 'next/link'
 import ListFooter from '../../../../components/list-footer/list-footer';
 import homeListQuery from '../../schema/books.graphql'
 import { useQuery } from '@apollo/client';
@@ -82,9 +82,12 @@ function HomePage() {
       <header className='flex items-center justify-center my-10'>
         <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.title')}</h2>
         <Link
-          to={`/dash/${uid}/unchecked`}
-          className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-colors hover:bg-blue-700'
-        >{t('app.home.unchecked')}</Link>
+          href={`/dash/${uid}/unchecked`}
+        >
+          <a className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-colors hover:bg-blue-700'>
+          {t('app.home.unchecked')}
+          </a>
+        </Link>
       </header>
 
       <div className={styles.clippings}>
