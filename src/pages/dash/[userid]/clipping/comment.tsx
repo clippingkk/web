@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Avatar from '../../components/avatar/avatar'
-import { fetchClipping_clipping_comments } from '../../schema/__generated__/fetchClipping'
+import Avatar from '../../../../components/avatar/avatar'
+import { fetchClipping_clipping_comments } from '../../../../schema/__generated__/fetchClipping'
 
 type CommentProps = {
   comment: fetchClipping_clipping_comments

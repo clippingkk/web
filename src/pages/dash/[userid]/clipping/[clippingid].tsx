@@ -1,38 +1,35 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { changeBackground } from '../../store/app/type'
+import { changeBackground } from '../../../../store/app/type'
 import { useDispatch, useSelector } from 'react-redux'
-import Card from '../../components/card/card'
-import Preview from '../../components/preview/preview3'
+import Card from '../../../../components/card/card'
+import Preview from '../../../../components/preview/preview3'
 import fetchClippingQuery from '../../schema/clipping.graphql'
 import {  useQuery } from '@apollo/client'
-import { fetchClipping, fetchClippingVariables } from '../../schema/__generated__/fetchClipping'
-import { useSingleBook } from '../../hooks/book'
-import { useTitle } from '../../hooks/tracke'
+import { fetchClipping, fetchClippingVariables } from '../../../../schema/__generated__/fetchClipping'
+import { useSingleBook } from '../../../../hooks/book'
+import { useTitle } from '../../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { TGlobalStore } from '../../store'
-import { UserContent } from '../../store/user/type'
+import { TGlobalStore } from '../../../../store'
+import { UserContent } from '../../../../store/user/type'
 import CommentBox from './commentBox'
 import Comment from './comment'
-import { useLocalTime } from '../../hooks/time'
+import { useLocalTime } from '../../../../hooks/time'
 import Reactions from './reactions'
-import ClippingContent from '../../components/clipping-content'
+import ClippingContent from '../../../../components/clipping-content'
 import ClippingSidebar from './clipping-sidebar'
-import { IN_APP_CHANNEL } from '../../services/channel'
-import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import OGWithClipping from '../../components/og/og-with-clipping'
+import { IN_APP_CHANNEL } from '../../../../services/channel'
+import { CDN_DEFAULT_DOMAIN } from '../../../../constants/config'
+import OGWithClipping from '../../../../components/og/og-with-clipping'
 import styles from './clipping.module.css'
 
-type TClippingPageProp = {
-  userid: number
-  clippingid: string
-}
+function ClippingPage() {
+  const { userid, clippingid } = useRouter().query as { userid: string, clippingid: string }
 
-function ClippingPage(props: TClippingPageProp) {
   const { data: clipping } = useQuery<fetchClipping, fetchClippingVariables>(fetchClippingQuery, {
     variables: {
-      id: ~~props.clippingid
+      id: ~~clippingid
     }
   })
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)

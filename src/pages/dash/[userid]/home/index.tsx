@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from '@reach/router'
-import ListFooter from '../../components/list-footer/list-footer';
+import ListFooter from '../../../../components/list-footer/list-footer';
 import homeListQuery from '../../schema/books.graphql'
 import { useQuery } from '@apollo/client';
-import { books, booksVariables } from '../../schema/__generated__/books';
+import { books, booksVariables } from '../../../../schema/__generated__/books';
 import { useSelector } from 'react-redux';
-import { TGlobalStore } from '../../store';
+import { TGlobalStore } from '../../../../store';
 import { useTranslation } from 'react-i18next';
-import { useMultipBook } from '../../hooks/book';
+import { useMultipBook } from '../../../../hooks/book';
 import NoContentAlert from './no-content';
-import BookCover from '../../components/book-cover/book-cover';
+import BookCover from '../../../../components/book-cover/book-cover';
 import ReadingBook from './reading-book';
-import { UserContent } from '../../store/user/type';
-import { useSyncClippingsToServer } from '../../hooks/my-file';
+import { UserContent } from '../../../../store/user/type';
+import { useSyncClippingsToServer } from '../../../../hooks/my-file';
 import styles from './home.module.css'
 import { useRouter } from 'next/router';
 
-type THomeProp = {
-  userid: number
-}
 const STEP = 10
 
 function useUserNewbie(userProfile: UserContent, onNewbie: () => void) {
@@ -41,7 +38,8 @@ function useUserNewbie(userProfile: UserContent, onNewbie: () => void) {
   }, [userProfile])
 }
 
-function HomePage(props: THomeProp) {
+function HomePage() {
+  const theUserid = useRouter().query.userid as string
   const userProfile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const uid = userProfile.id
 
@@ -96,11 +94,11 @@ function HomePage(props: THomeProp) {
           </div>
         )}
         {data.books.length === 0 && called && (
-          <NoContentAlert userid={props.userid} />
+          <NoContentAlert userid={~~theUserid} />
         )}
         {(books.books.length > 0 && called) &&
           books.books.map((item, index) => (
-            <BookCover book={item} userid={props.userid} key={index} />
+            <BookCover book={item} userid={~~theUserid} key={index} />
           ))}
       </div>
 

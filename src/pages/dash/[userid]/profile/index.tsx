@@ -2,41 +2,40 @@ import React, { useMemo } from 'react'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
-import Card from '../../components/card/card';
-import Divider from '../../components/divider/divider';
-import ClippingItem from '../../components/clipping-item/clipping-item';
-import { usePageTrack, useTitle } from '../../hooks/tracke'
+import Card from '../../../../components/card/card';
+import Divider from '../../../../components/divider/divider';
+import ClippingItem from '../../../../components/clipping-item/clipping-item';
+import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import { useMutation, useQuery } from '@apollo/client'
 import profileQuery from '../../schema/profile.graphql'
 import followMutation from '../../schema/mutations/follow.graphql'
 import unfollowMutation from '../../schema/mutations/unfollow.graphql'
-import { profile, profileVariables } from '../../schema/__generated__/profile';
+import { profile, profileVariables } from '../../../../schema/__generated__/profile';
 import WechatBindButton from './bind';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import Avatar from '../../components/avatar/avatar';
+import Avatar from '../../../../components/avatar/avatar';
 import { Link } from '@reach/router';
 import ProfileEditor from './profile-editor';
 import { useSelector } from 'react-redux';
-import { TGlobalStore } from '../../store';
-import MasonryContainer from '../../components/masonry-container';
+import { TGlobalStore } from '../../../../store';
+import MasonryContainer from '../../../../components/masonry-container';
 import ProfileBindPhone from './bind-phone';
-import { IN_APP_CHANNEL } from '../../services/channel';
-import { API_HOST } from '../../constants/config';
-import { followUser, followUserVariables } from '../../schema/mutations/__generated__/followUser';
-import { unfollowUser, unfollowUserVariables } from '../../schema/mutations/__generated__/unfollowUser';
+import { IN_APP_CHANNEL } from '../../../../services/channel';
+import { API_HOST } from '../../../../constants/config';
+import { followUser, followUserVariables } from '../../../../schema/mutations/__generated__/followUser';
+import { unfollowUser, unfollowUserVariables } from '../../../../schema/mutations/__generated__/unfollowUser';
 import { toast } from 'react-toastify';
 
 import styles from './profile.module.css'
+import { useRouter } from 'next/router';
 
-type TProfileProps = {
-  userid: string
-}
+function Profile() {
+  const userid = useRouter().query.userid as string
 
-function Profile(props: TProfileProps) {
   const { data, loading, called, fetchMore } = useQuery<profile, profileVariables>(profileQuery, {
     variables: {
-      id: ~~props.userid
+      id: ~~userid
     }
   })
 
@@ -45,7 +44,7 @@ function Profile(props: TProfileProps) {
 
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   usePageTrack('profile', {
-    userId: props.userid
+    userId: userid
   })
 
   useTitle(data?.me.name)
@@ -65,7 +64,7 @@ function Profile(props: TProfileProps) {
 
   const year = (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
-  const isInMyPage = uid.toString() === props.userid
+  const isInMyPage = uid.toString() === userid
 
   const isWechatBindingVisible = useMemo(() => {
     if (uid === 0) {
@@ -115,7 +114,7 @@ function Profile(props: TProfileProps) {
                     if (followLoading || unfollowLoading) {
                       return
                     }
-                    const params: followUserVariables = {targetUserID: ~~props.userid }
+                    const params: followUserVariables = {targetUserID: ~~userid }
                     let mutationJob: Promise<any>
                     if (data?.me.isFan) {
                       mutationJob = doUnfollow({
@@ -178,7 +177,7 @@ function Profile(props: TProfileProps) {
             (item => <ClippingItem
               key={item.id}
               item={item}
-              userid={~~props.userid}
+              userid={~~userid}
               inAppChannel={IN_APP_CHANNEL.clippingFromUser}
             />)
           )}

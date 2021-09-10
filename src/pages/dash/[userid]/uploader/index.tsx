@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from '@reach/router'
 import { useSelector } from 'react-redux'
-import { usePageTrack, useActionTrack } from '../../hooks/tracke'
+import { usePageTrack, useActionTrack } from '../../../../hooks/tracke'
 import { AnimateOnChange } from '@nearform/react-animation'
 import { useTranslation } from 'react-i18next'
 import { UploadStep } from './types'
 import LoadingModal from './loading-modal'
-import { TGlobalStore } from '../../store'
+import { TGlobalStore } from '../../../../store'
 import Switch from "react-switch"
 import ClippingsUploadHelp from './help'
-import { useUploadData } from '../../hooks/my-file'
+import { useUploadData } from '../../../../hooks/my-file'
 
 import styles from './uploader.module.css'
 

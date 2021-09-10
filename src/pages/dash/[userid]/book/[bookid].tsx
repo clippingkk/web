@@ -1,28 +1,24 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import BookInfo from '../../components/book-info/book-info';
-import ClippingItem from '../../components/clipping-item/clipping-item';
-import ListFooter from '../../components/list-footer/list-footer';
-import Divider from '../../components/divider/divider';
-import { changeBackground } from '../../store/app/type';
+import BookInfo from '../../../../components/book-info/book-info';
+import ClippingItem from '../../../../components/clipping-item/clipping-item';
+import ListFooter from '../../../../components/list-footer/list-footer';
+import Divider from '../../../../components/divider/divider';
+import { changeBackground } from '../../../../store/app/type';
 import { useDispatch } from 'react-redux';
-import { usePageTrack, useTitle } from '../../hooks/tracke';
-import { useSingleBook } from '../../hooks/book'
+import { usePageTrack, useTitle } from '../../../../hooks/tracke';
+import { useSingleBook } from '../../../../hooks/book'
 import { useQuery } from '@apollo/client';
 import bookQuery from '../../schema/book.graphql'
-import { book, bookVariables, book_book_clippings } from '../../schema/__generated__/book';
+import { book, bookVariables, book_book_clippings } from '../../../../schema/__generated__/book';
 import { useTranslation } from 'react-i18next';
-import MasonryContainer from '../../components/masonry-container';
+import MasonryContainer from '../../../../components/masonry-container';
 import dayjs from 'dayjs';
-import { IN_APP_CHANNEL } from '../../services/channel';
+import { IN_APP_CHANNEL } from '../../../../services/channel';
 import styles from './book.module.css'
+import { useRouter } from 'next/router';
 
-type TBookPageProps = {
-  userid: number,
-  bookid: string,
-  bookDoubanID: number,
-}
-
-function BookPage({ userid, bookid }: TBookPageProps) {
+function BookPage() {
+  const { userid, bookid } = useRouter().query as { userid: string, bookid: string }
   usePageTrack('book', {
     bookId: bookid
   })
@@ -67,7 +63,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
     <section className={`${styles.bookPage} page anna-fade-in`}>
       <BookInfo
         book={bookData}
-        uid={userid}
+        uid={~~userid}
         duration={duration}
         isLastReadingBook={clippingsData?.book.isLastReadingBook}
       />
@@ -77,7 +73,7 @@ function BookPage({ userid, bookid }: TBookPageProps) {
           {clippingsData?.book.clippings.map(clipping => (
             <ClippingItem
               item={clipping}
-              userid={userid}
+              userid={~~userid}
               book={bookData}
               key={clipping.id}
               inAppChannel={IN_APP_CHANNEL.clippingFromBook}

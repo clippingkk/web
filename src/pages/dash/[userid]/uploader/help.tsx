@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Dialog from '../../components/dialog/dialog'
+import Dialog from '../../../../components/dialog/dialog'
 
 function BilibiliUploadHelpVideo() {
   const { t } = useTranslation()

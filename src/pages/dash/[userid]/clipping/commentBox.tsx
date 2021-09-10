@@ -1,11 +1,11 @@
 import { useApolloClient, useMutation } from '@apollo/client'
 import React, { useCallback, useState } from 'react'
-import { UserContent } from '../../store/user/type'
+import { UserContent } from '../../../../store/user/type'
 import createCommentMutation from '../../schema/mutations/create-comment.graphql'
-import { createComment, createCommentVariables } from '../../schema/mutations/__generated__/createComment'
+import { createComment, createCommentVariables } from '../../../../schema/mutations/__generated__/createComment'
 import swal from 'sweetalert'
 import { useTranslation } from 'react-i18next'
-import Avatar from '../../components/avatar/avatar'
+import Avatar from '../../../../components/avatar/avatar'
 
 type CommentBoxProps = {
   clippingID: number

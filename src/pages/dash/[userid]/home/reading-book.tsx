@@ -1,10 +1,10 @@
 import { Link } from '@reach/router'
 import React from 'react'
-import BookInfo from '../../components/book-info/book-info'
-import ClippingContent from '../../components/clipping-content'
-import { useSingleBook } from '../../hooks/book'
-import { books_me_recents } from '../../schema/__generated__/books'
-import { IN_APP_CHANNEL } from '../../services/channel'
+import BookInfo from '../../../../components/book-info/book-info'
+import ClippingContent from '../../../../components/clipping-content'
+import { useSingleBook } from '../../../../hooks/book'
+import { books_me_recents } from '../../../../schema/__generated__/books'
+import { IN_APP_CHANNEL } from '../../../../services/channel'
 
 type ReadingBookProps = {
   uid: number

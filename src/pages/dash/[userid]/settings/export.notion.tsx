@@ -4,11 +4,11 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
-import Dialog from '../../components/dialog/dialog'
-import { ExportDestination } from '../../../__generated__/globalTypes'
-import FieldInput from '../../components/input'
+import Dialog from '../../../../components/dialog/dialog'
+import { ExportDestination } from '../../../../../__generated__/globalTypes'
+import FieldInput from '../../../../components/input'
 import exportDataMutation from '../../schema/mutations/export-data.graphql'
-import { exportDataTo, exportDataToVariables } from '../../schema/mutations/__generated__/exportDataTo'
+import { exportDataTo, exportDataToVariables } from '../../../../schema/mutations/__generated__/exportDataTo'
 
 function ExportToNotion() {
   const [visible, setVisible] = useState(false)

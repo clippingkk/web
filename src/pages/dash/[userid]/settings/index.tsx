@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import SimpleSwitcher from './simple-switcher'
 import Exports from './exports'
 import WebHooks from './webhooks'
-import { useDarkModeStatus } from '../../hooks/theme'
+import { useDarkModeStatus } from '../../../../hooks/theme'
 
 type SettingsPageProps = {
 }
