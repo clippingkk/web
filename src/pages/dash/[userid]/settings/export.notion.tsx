@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import Dialog from '../../../../components/dialog/dialog'
 import { ExportDestination } from '../../../../../__generated__/globalTypes'
 import FieldInput from '../../../../components/input'
-import exportDataMutation from '../../schema/mutations/export-data.graphql'
+import exportDataMutation from '../../../../schema/mutations/export-data.graphql'
 import { exportDataTo, exportDataToVariables } from '../../../../schema/mutations/__generated__/exportDataTo'
 
 function ExportToNotion() {

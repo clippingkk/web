@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import BindPhone from '../../../../components/bind-phone'
 import Dialog from '../../../../components/dialog/dialog'
-import bindPhoneMutation from '../../schema/mutations/bind-phone.graphql'
+import bindPhoneMutation from '../../../../schema/mutations/bind-phone.graphql'
 import { bindUserPhone, bindUserPhoneVariables } from '../../../../schema/mutations/__generated__/bindUserPhone'
 
 type BindPhoneProps = {

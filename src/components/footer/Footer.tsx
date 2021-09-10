@@ -5,7 +5,7 @@ function ICPInfo() {
     <a
       href="http://www.miitbeian.gov.cn/"
       target="_blank"
-      className='no-underline text-black dark:text-gray-300'
+      className='no-underline text-black dark:text-gray-300' rel="noreferrer"
     >
       豫ICP备15003571号
     </a>
@@ -29,7 +29,7 @@ function Footer() {
       <a
         href="https://annatarhe.com"
         target="_blank"
-        className='no-underline text-black dark:text-gray-300'
+        className='no-underline text-black dark:text-gray-300' rel="noreferrer"
       >
         &copy; AnnatarHe
         </a>

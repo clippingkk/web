@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { getVersions, IVersionItem } from '../../services/release'
 import { usePageTrack } from '../../hooks/tracke'
-const styles = require('./release.css').default
+import styles from './release.module.css'
 
-const isiPhone = /iPhone/.test(navigator.userAgent)
+const isiPhone = process.browser ? /iPhone/.test(navigator.userAgent) : false
 
 function ReleasePage({ platform }: any) {
   usePageTrack('legacy:release')

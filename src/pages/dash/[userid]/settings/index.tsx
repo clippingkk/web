@@ -85,7 +85,7 @@ function SettingsPage(props: SettingsPageProps) {
           href="https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae"
           target='_blank'
           referrerPolicy='no-referrer'
-          className='text-gray-800 dark:text-gray-200 text-sm ml-4 hover:underline'
+          className='text-gray-800 dark:text-gray-200 text-sm ml-4 hover:underline' rel="noreferrer"
         >
           {t('app.settings.webhook.docLink')}
         </a>

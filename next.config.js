@@ -1,4 +1,5 @@
 module.exports = {
+  excludeFile: (str) => /__tests__/.test(str),
   env: {
     'DEV': true
   },
@@ -12,6 +13,12 @@ module.exports = {
       type: 'json',
       loader: 'yaml-loader',
     })
+    config.module.rules.push(
+      {
+        test: /__tests__\/\.*\.[j|t]sx?$/,
+        loader: 'ignore-loader'
+      }
+    )
 
     //   test: /\.(graphql|gql)$/,
     //   exclude: /node_modules/,

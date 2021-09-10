@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import ListFooter from '../../../../components/list-footer/list-footer';
-import homeListQuery from '../../schema/books.graphql'
+import homeListQuery from '../../../../schema/books.graphql'
 import { useQuery } from '@apollo/client';
 import { books, booksVariables } from '../../../../schema/__generated__/books';
 import { useSelector } from 'react-redux';

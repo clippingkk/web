@@ -72,8 +72,10 @@ function AdminPanel() {
           <table {...getTableProps()} className='table-fixed w-full'>
             <thead>
               {headerGroups.map(headerGroup => (
+                // eslint-disable-next-line react/jsx-key
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
+                    // eslint-disable-next-line react/jsx-key
                     <th {...column.getHeaderProps()} className='border-gray-300 border-2 p-4 text-lg'>{column.render("Header")}</th>
                   ))}
                 </tr>

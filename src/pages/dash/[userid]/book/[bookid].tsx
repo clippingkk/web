@@ -8,14 +8,14 @@ import { useDispatch } from 'react-redux';
 import { usePageTrack, useTitle } from '../../../../hooks/tracke';
 import { useSingleBook } from '../../../../hooks/book'
 import { useQuery } from '@apollo/client';
-import bookQuery from '../../schema/book.graphql'
-import { book, bookVariables, book_book_clippings } from '../../../../schema/__generated__/book';
+import bookQuery from '../../../../schema/book.graphql'
+import { book, bookVariables } from '../../../../schema/__generated__/book';
 import { useTranslation } from 'react-i18next';
 import MasonryContainer from '../../../../components/masonry-container';
 import dayjs from 'dayjs';
 import { IN_APP_CHANNEL } from '../../../../services/channel';
 import styles from './book.module.css'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
 function BookPage() {
   const { userid, bookid } = useRouter().query as { userid: string, bookid: string }

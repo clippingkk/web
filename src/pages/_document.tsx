@@ -15,7 +15,7 @@ class DocumentTop extends Document {
           <meta name="keywords" content="" />
           <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
           <meta name="renderer" content="webkit" />
-          <meta http-equiv="Cache-Control" content="no-siteapp" />
+          <meta httpEquiv="Cache-Control" content="no-siteapp" />
           {React.createElement('meta', {
             name: 'theme-color',
             content: 'rgba(33, 150, 243, 0.9)',

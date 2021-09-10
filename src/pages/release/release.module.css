@@ -1,8 +1,4 @@
-@value colors: '../../styles/variables.css';
-@value primary-text-color, blur-background from colors;
-
 .release-page {
-
 }
 
 .platform-title {
@@ -15,7 +11,7 @@
 }
 
 .version {
-  box-shadow: 0 0 4px primary-text-color;
+  box-shadow: 0 0 4px #fff;
   padding: 1rem;
   margin-bottom: 1rem;
   /* border-bottom: 1px solid primary-text-color; */

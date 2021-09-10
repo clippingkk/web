@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { usePageTrack, useActionTrack } from '../../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
-import { UploadStep } from './types'
+import { UploadStep } from '../../../../services/uploader'
 import LoadingModal from './loading-modal'
 import { TGlobalStore } from '../../../../store'
 import Switch from "react-switch"

@@ -3,7 +3,7 @@ import authQuery from '../../../schema/auth.graphql'
 import { useLazyQuery } from '@apollo/client'
 import { auth } from '../../../schema/__generated__/auth'
 import { authVariables } from '../../../schema/__generated__/auth'
-import { useAuthSuccessed } from '../hooks';
+import { useAuthSuccessed } from '../../../hooks/hooks';
 import { useTitle } from '../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'

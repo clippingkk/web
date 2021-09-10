@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import fetchSquareDataQuery from '../../schema/square.graphql'
+import fetchSquareDataQuery from '../../../../schema/square.graphql'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import { fetchSquareData, fetchSquareDataVariables } from '../../../../schema/__generated__/fetchSquareData'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'

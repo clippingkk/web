@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
+import Link from 'next/link'
 import styles from './Hero.module.css'
 
 function useLoad() {
@@ -45,13 +46,16 @@ function Hero() {
           <h1 className={styles.title + ' mx-0 my-0 font-light text-white font-lxgw'}>ClippingKK</h1>
           <h4 className='text-white text-3xl font-lxgw'>{t('app.slogan')}</h4>
           <div className={styles.platformSection}>
-            <a
+            <Link
               href='/auth/signin'
-              target="_blank"
-              className={styles['download-btn'] + ' py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl'}
             >
-              {t('app.go')}
+              <a
+                target="_blank"
+                className={styles['download-btn'] + ' py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl'}
+              >
+                {t('app.go')}
               </a>
+            </Link>
           </div>
         </div>
 

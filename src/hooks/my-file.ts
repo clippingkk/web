@@ -1,7 +1,7 @@
 import { useApolloClient, useMutation } from "@apollo/client"
 import { useState, useRef, useCallback, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { UploadStep } from "../pages/dash/[userid]/uploader/types"
+import { UploadStep } from "../services/uploader"
 import { createClippings, createClippingsVariables } from "../schema/mutations/__generated__/createClippings"
 import { wenquRequest, WenquSearchResponse } from "../services/wenqu"
 import swal from 'sweetalert'

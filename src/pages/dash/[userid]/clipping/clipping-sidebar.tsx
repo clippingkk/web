@@ -3,7 +3,7 @@ import { useApolloClient, useMutation } from '@apollo/client'
 import Switch from 'react-input-switch'
 import Card from '../../../../components/card/card'
 import { toggleClippingVisible, toggleClippingVisibleVariables } from '../../../../schema/mutations/__generated__/toggleClippingVisible'
-import toggleClippingVisibleMutation from '../../schema/mutations/toggle-clipping-visible.graphql'
+import toggleClippingVisibleMutation from '../../../../schema/mutations/toggle-clipping-visible.graphql'
 import { updateClippingBook } from '../../../../store/clippings/type'
 import { fetchClipping_clipping } from '../../../../schema/__generated__/fetchClipping'
 import { WenquBook } from '../../../../services/wenqu'
@@ -104,7 +104,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             <a
               href={`https://book.douban.com/subject/${book?.doubanId}`}
               target="_blank"
-              className={styles['action-btn']}
+              className={styles['action-btn']} rel="noreferrer"
             >
               {t('app.clipping.link')}
             </a>

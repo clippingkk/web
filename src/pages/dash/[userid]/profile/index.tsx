@@ -7,9 +7,9 @@ import Divider from '../../../../components/divider/divider';
 import ClippingItem from '../../../../components/clipping-item/clipping-item';
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import { useMutation, useQuery } from '@apollo/client'
-import profileQuery from '../../schema/profile.graphql'
-import followMutation from '../../schema/mutations/follow.graphql'
-import unfollowMutation from '../../schema/mutations/unfollow.graphql'
+import profileQuery from '../../../../schema/profile.graphql'
+import followMutation from '../../../../schema/mutations/follow.graphql'
+import unfollowMutation from '../../../../schema/mutations/unfollow.graphql'
 import { profile, profileVariables } from '../../../../schema/__generated__/profile';
 import WechatBindButton from './bind';
 import { useTranslation } from 'react-i18next';
@@ -147,7 +147,7 @@ function Profile() {
                 href={`${API_HOST}/api/rss/user/${data?.me.id}/clippings`}
                 target='_blank'
                 className='ml-4 px-4 py-2 rounded hover:bg-blue-400'
-                title={t('app.profile.rssTip')}
+                title={t('app.profile.rssTip')} rel="noreferrer"
               >
                 RSS
               </a>

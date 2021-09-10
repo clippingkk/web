@@ -8,7 +8,7 @@ import Dialog from '../../../../components/dialog/dialog'
 import { ExportDestination } from '../../../../../__generated__/globalTypes'
 import FieldInput from '../../../../components/input'
 import { exportDataTo, exportDataToVariables } from '../../../../schema/mutations/__generated__/exportDataTo'
-import exportDataMutation from '../../schema/mutations/export-data.graphql'
+import exportDataMutation from '../../../../schema/mutations/export-data.graphql'
 
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)

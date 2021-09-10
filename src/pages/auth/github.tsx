@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { toGithubLogin } from '../../store/user/type';
 import githubLoginQuery from '../../schema/login.graphql'
 import { githubLogin, githubLoginVariables } from '../../schema/__generated__/githubLogin';
-import { useAuthSuccessed } from './hooks';
+import { useAuthSuccessed } from '../../hooks/hooks';
 
 function GithubOAuth() {
   const [exec, resp] = useLazyQuery<githubLogin, githubLoginVariables>(githubLoginQuery)

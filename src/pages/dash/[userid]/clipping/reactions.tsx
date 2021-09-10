@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { Picker } from 'emoji-mart'
 import { fetchClipping_clipping_reactions } from '../../../../schema/__generated__/fetchClipping'
-import reactionCreateMutation from '../../schema/reaction-create.graphql'
-import reactionRemoveMutation from '../../schema/reaction-remove.graphql'
+import reactionCreateMutation from '../../../../schema/reaction-create.graphql'
+import reactionRemoveMutation from '../../../../schema/reaction-remove.graphql'
 import { useApolloClient, useMutation } from '@apollo/client'
 import { reactionCreate, reactionCreateVariables } from '../../../../schema/__generated__/reactionCreate'
 import { reactionRemove, reactionRemoveVariables } from '../../../../schema/__generated__/reactionRemove'
@@ -59,7 +59,7 @@ function Reactions(props: ReactionsProps) {
             overlay={(
               <div>
                 {rs[k].map(x => (
-                  <span>
+                  <span key={x.id}>
                     {x.creator.name}
                   </span>
                 ))}

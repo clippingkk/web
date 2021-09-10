@@ -9,7 +9,7 @@ function BilibiliUploadHelpVideo() {
       <a
         className='text-center text-gray-900 lg:text-lg hover:text-red-300 dark:text-gray-300'
         href='https://www.bilibili.com/video/BV11z4y1y7fx'
-        target='_blank'
+        target='_blank' rel="noreferrer"
       >
         {t('app.upload.help.title')}
       </a>

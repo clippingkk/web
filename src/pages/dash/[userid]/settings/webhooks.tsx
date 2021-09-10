@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import { useSelector } from 'react-redux'
 import { Column, useTable } from 'react-table'
-import fetchMyWebHooksQuery from '../../schema/fetchMyWebhooks.graphql'
-import deleteWebHookMutation from '../../schema/mutations/webhook.delete.graphql'
-import createNewWebHookMutation from '../../schema/mutations/webhook.create.graphql'
+import fetchMyWebHooksQuery from '../../../../schema/fetchMyWebhooks.graphql'
+import deleteWebHookMutation from '../../../../schema/mutations/webhook.delete.graphql'
+import createNewWebHookMutation from '../../../../schema/mutations/webhook.create.graphql'
 import { fetchMyWebHooks, fetchMyWebHooksVariables, fetchMyWebHooks_me_webhooks } from '../../../../schema/__generated__/fetchMyWebHooks'
 import { TGlobalStore } from '../../../../store'
 import Dialog from '../../../../components/dialog/dialog'
@@ -89,11 +89,13 @@ function WebHooks() {
       <table {...getTableProps()} className='table-auto mx-auto dark:text-white'>
         <thead className='w-full'>
           {headerGroups.map(headerGroup => (
+            // eslint-disable-next-line react/jsx-key
             <tr
               {...headerGroup.getHeaderGroupProps()}
               className='table-row'
             >
               {headerGroup.headers.map(column => (
+                // eslint-disable-next-line react/jsx-key
                 <th
                   {...column.getHeaderProps()}
                   className='table-cell py-2 px-8 dark:border-white border-gray-300 border-2'
@@ -118,6 +120,7 @@ function WebHooks() {
           {rows.map(row => {
             prepareRow(row)
             return (
+              // eslint-disable-next-line react/jsx-key
               <tr {...row.getRowProps()} className='table-row with-fade-in'>
                 {row.cells.map(cell => {
                   if (cell.column.Header === 'action') {
@@ -145,6 +148,7 @@ function WebHooks() {
                     )
                   }
                   return (
+                    // eslint-disable-next-line react/jsx-key
                     <td
                       {...cell.getCellProps()}
                       className='table-cell py-2 px-4 border-2'

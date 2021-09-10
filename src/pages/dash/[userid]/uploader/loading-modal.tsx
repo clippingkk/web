@@ -1,8 +1,8 @@
-import { AnimateOnChange } from '@nearform/react-animation'
 import React from 'react'
-import { UploadStep } from './types'
+import { UploadStep } from '../../../../services/uploader'
 
 import { useTranslation } from 'react-i18next'
+import AnimateOnChange from '../../../../components/SimpleAnimation/AnimateOnChange'
 
 type LoadingModalProps = {
   stepAt: UploadStep
