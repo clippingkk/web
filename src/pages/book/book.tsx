@@ -14,7 +14,8 @@ import { useTranslation } from 'react-i18next';
 import MasonryContainer from '../../components/masonry-container';
 import dayjs from 'dayjs';
 import { IN_APP_CHANNEL } from '../../services/channel';
-const styles = require('./book.css').default
+import styles from './book.module.css'
+
 type TBookPageProps = {
   userid: number,
   bookid: string,

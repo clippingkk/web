@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ExportToFlomo from './export.flomo'
 import ExportToNotion from './export.notion'
 
-type ExportsProps = {
-}
-
-function Exports(props: ExportsProps) {
+function Exports() {
   return (
     <div className='w-full flex justify-center items-center'>
       <ExportToFlomo />

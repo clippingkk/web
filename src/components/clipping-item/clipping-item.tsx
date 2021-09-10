@@ -9,7 +9,7 @@ import Avatar from '../avatar/avatar';
 import ClippingContent from '../clipping-content';
 import { IN_APP_CHANNEL } from '../../services/channel';
 
-const styles = require('./clipping-item.css').default
+import styles from './clipping-item.module.css'
 
 type TClippingItemProps = {
   item: book_book_clippings

@@ -3,15 +3,14 @@ import { changeBackground } from '../../store/app/type'
 import { useDispatch, useSelector } from 'react-redux'
 import Card from '../../components/card/card'
 import Preview from '../../components/preview/preview3'
-import { updateClippingBook } from '../../store/clippings/type'
 import fetchClippingQuery from '../../schema/clipping.graphql'
-import { useApolloClient, useMutation, useQuery } from '@apollo/client'
+import {  useQuery } from '@apollo/client'
 import { fetchClipping, fetchClippingVariables } from '../../schema/__generated__/fetchClipping'
-import Switch from 'react-input-switch'
 import { useSingleBook } from '../../hooks/book'
 import { useTitle } from '../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation, useParams } from '@reach/router'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
 import CommentBox from './commentBox'
@@ -23,7 +22,7 @@ import ClippingSidebar from './clipping-sidebar'
 import { IN_APP_CHANNEL } from '../../services/channel'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import OGWithClipping from '../../components/og/og-with-clipping'
-const styles = require('./clipping.css').default
+import styles from './clipping.module.css'
 
 type TClippingPageProp = {
   userid: number
@@ -39,7 +38,7 @@ function ClippingPage(props: TClippingPageProp) {
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
   const dispatch = useDispatch()
-  const l = useLocation()
+  const iac = (useRouter().query.iac ?? '0') as string
 
   const togglePreviewVisible = useCallback(() => {
     setSharePreviewVisible(v => !v)
@@ -73,12 +72,14 @@ function ClippingPage(props: TClippingPageProp) {
           <hr className='bg-gray-400 my-12' />
           <footer className='flex justify-between mt-4'>
             {me.id === 0 && (
-              <Link className='flex justify-center items-center' to={`/auth/signin`}>
+              <Link href={`/auth/signin`}>
+                <a className='flex justify-center items-center' >
                 <img
                   src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
                   className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover'
                 />
                 <span className='ml-4 text-gray-700 dark:text-gray-200 font-light'>{creator?.name}</span>
+                </a>
               </Link>
             )}
             <time className='lg:text-base text-sm font-light w-full text-gray-700 flex items-center justify-end'>
@@ -93,7 +94,7 @@ function ClippingPage(props: TClippingPageProp) {
             book={book}
             onTogglePreviewVisible={togglePreviewVisible}
             me={me}
-            inAppChannel={parseInt(new URLSearchParams(l.search).get('iac') ?? '0') as IN_APP_CHANNEL}
+            inAppChannel={parseInt(iac) as IN_APP_CHANNEL}
           />
         )}
       </div>

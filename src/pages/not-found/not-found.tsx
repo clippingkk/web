@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from '@reach/router'
 import { usePageTrack } from '../../hooks/tracke'
 
-const styles = require('./style.css').default
+import styles from './style.module.css'
 
 function NotFound() {
   usePageTrack('notfound')

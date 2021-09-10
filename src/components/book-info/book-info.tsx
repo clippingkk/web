@@ -1,12 +1,9 @@
 import React from 'react'
-import { HideUntilLoaded } from '@nearform/react-animation'
-import { IBook, searchBookDetail, getBookClippings } from '../../services/books';
 import Card from '../card/card';
 import { WenquBook } from '../../services/wenqu'
-import { Link } from '@reach/router';
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp';
 import { useTranslation } from 'react-i18next';
-const styles = require('./book-info.css').default
+import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
 
 type TBookInfoProp = {
   uid: number
@@ -23,11 +20,11 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
         <HideUntilLoaded
           imageToLoad={book.image}
         >
-          <img src={book.image} className={styles.image + ' shadow rounded mr-4'} />
+          <img src={book.image} className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300' />
         </HideUntilLoaded>
       </div>
 
-      <div className={styles.info}>
+      <div>
         <h2 className='my-4 text-4xl font-bold'>{book.title}</h2>
         <h5 className='my-4 text-2xl'>{book.author}</h5>
         {duration && (

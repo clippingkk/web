@@ -4,8 +4,6 @@ import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping
 import { WenquBook } from '../../services/wenqu'
 const logo = require('../../assets/logo.png').default
 
-console.log(logo)
-
 type OGWithClippingProps = {
   clipping?: fetchClipping_clipping
   book: WenquBook | null

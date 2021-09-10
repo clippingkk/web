@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
 import ThemePicker from './theme-picker'
-
-const styles = require('./preview.css').default
+import styles from './preview.module.css'
 
 type PreviewProps = {
   onCancel: () => void

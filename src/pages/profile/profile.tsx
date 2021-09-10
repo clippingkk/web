@@ -27,7 +27,7 @@ import { followUser, followUserVariables } from '../../schema/mutations/__genera
 import { unfollowUser, unfollowUserVariables } from '../../schema/mutations/__generated__/unfollowUser';
 import { toast } from 'react-toastify';
 
-const styles = require('./profile.css').default
+import styles from './profile.module.css'
 
 type TProfileProps = {
   userid: string

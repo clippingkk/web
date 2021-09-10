@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, navigate } from '@reach/router'
+import { Link } from '@reach/router'
 import ListFooter from '../../components/list-footer/list-footer';
 import homeListQuery from '../../schema/books.graphql'
 import { useQuery } from '@apollo/client';
@@ -13,7 +13,8 @@ import BookCover from '../../components/book-cover/book-cover';
 import ReadingBook from './reading-book';
 import { UserContent } from '../../store/user/type';
 import { useSyncClippingsToServer } from '../../hooks/my-file';
-const styles = require('./home.css').default
+import styles from './home.module.css'
+import { useRouter } from 'next/router';
 
 type THomeProp = {
   userid: number
@@ -43,6 +44,9 @@ function useUserNewbie(userProfile: UserContent, onNewbie: () => void) {
 function HomePage(props: THomeProp) {
   const userProfile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const uid = userProfile.id
+
+  const { push: navigate } = useRouter()
+
   useUserNewbie(userProfile, () => {
     // is new bie
     navigate(`/dash/${uid}/profile?with_profile_editor=1`)

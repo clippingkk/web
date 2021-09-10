@@ -10,9 +10,6 @@ import FieldInput from '../../components/input'
 import { exportDataTo, exportDataToVariables } from '../../schema/mutations/__generated__/exportDataTo'
 import exportDataMutation from '../../schema/mutations/export-data.graphql'
 
-type FlomoExportProps = {
-}
-
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()

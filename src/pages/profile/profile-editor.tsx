@@ -49,7 +49,7 @@ function ProfileEditor(props: ProfileEditorProps) {
         try {
           const resp = await uploadImage(vals.avatar)
           avatarUrl = resp.filePath
-        } catch (e) {
+        } catch (e: any) {
           toast.error(e)
           throw e
         }

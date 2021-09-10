@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link } from '@reach/router';
-import { HideUntilLoaded } from '@nearform/react-animation'
-import { useSingleBook } from '../../hooks/book'
 import { WenquBook } from '../../services/wenqu';
-const styles = require('./book-cover.css').default
+import styles from './book-cover.module.css'
+import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded';
 
 type TBookCoverProps = {
   book: WenquBook

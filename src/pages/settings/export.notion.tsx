@@ -10,10 +10,7 @@ import FieldInput from '../../components/input'
 import exportDataMutation from '../../schema/mutations/export-data.graphql'
 import { exportDataTo, exportDataToVariables } from '../../schema/mutations/__generated__/exportDataTo'
 
-type ExportToNotionProps = {
-}
-
-function ExportToNotion(props: ExportToNotionProps) {
+function ExportToNotion() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
   const [mutate] = useMutation<exportDataTo, exportDataToVariables>(exportDataMutation)

@@ -4,7 +4,6 @@ import PhoneInput from 'react-phone-input-2'
 import AV from 'leancloud-storage'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import 'react-phone-input-2/lib/style.css'
 
 type BindPhoneProps = {
   onFinalCheck(phone: string, code: string): Promise<any>

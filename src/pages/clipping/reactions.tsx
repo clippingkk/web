@@ -13,7 +13,8 @@ import Dialog from '../../components/dialog/dialog'
 import Tooltip from '../../components/tooltip/Tooltip'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from '@reach/router'
+import { Link } from '@reach/router'
+import { useRouter } from 'next/router'
 
 type ReactionsProps = {
   cid: number
@@ -46,7 +47,7 @@ function Reactions(props: ReactionsProps) {
     setPickerVisible(s => !s)
   }, [])
   const { t } = useTranslation()
-  const navigate = useNavigate()
+  const { push: navigate } = useRouter()
   return (
     <div className='w-full'>
       <div className='relative inline-block w-full'>

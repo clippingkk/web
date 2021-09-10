@@ -10,7 +10,8 @@ import { TGlobalStore } from '../../store'
 import Switch from "react-switch"
 import ClippingsUploadHelp from './help'
 import { useUploadData } from '../../hooks/my-file'
-const styles = require('./uploader.css').default
+
+import styles from './uploader.module.css'
 
 function useSwitcher() {
   const [isOn, setIsOn] = useState(true)

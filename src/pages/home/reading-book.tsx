@@ -5,7 +5,6 @@ import ClippingContent from '../../components/clipping-content'
 import { useSingleBook } from '../../hooks/book'
 import { books_me_recents } from '../../schema/__generated__/books'
 import { IN_APP_CHANNEL } from '../../services/channel'
-import { WenquBook } from '../../services/wenqu'
 
 type ReadingBookProps = {
   uid: number

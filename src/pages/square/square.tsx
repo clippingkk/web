@@ -4,27 +4,23 @@ import { useTranslation } from 'react-i18next'
 import fetchSquareDataQuery from '../../schema/square.graphql'
 import { usePageTrack, useTitle } from '../../hooks/tracke'
 import { fetchSquareData, fetchSquareDataVariables } from '../../schema/__generated__/fetchSquareData'
-import { propTypes } from 'qrcode.react'
 import ClippingItem from '../../components/clipping-item/clipping-item'
 import { useMultipBook } from '../../hooks/book'
-import { useSelector } from 'react-redux'
-import { TGlobalStore } from '../../store'
-import { UserContent } from '../../store/user/type'
 import MasonryContainer from '../../components/masonry-container'
 import { IN_APP_CHANNEL } from '../../services/channel'
 import ListFooter from '../../components/list-footer/list-footer'
 import { useState } from 'react'
 import { APP_API_STEP_LIMIT } from '../../constants/config'
 
-function DevelopingAlert() {
-  const { t } = useTranslation()
-  return (
-    <div className='my-12 rounded-sm text-6xl font-light shadow-2xl p-8 flex flex-col justify-center items-center dark:text-gray-300'>
-      <span>🤦‍♂️ </span>
-      <span>{t('app.common.closed')}</span>
-    </div>
-  )
-}
+// function DevelopingAlert() {
+//   const { t } = useTranslation()
+//   return (
+//     <div className='my-12 rounded-sm text-6xl font-light shadow-2xl p-8 flex flex-col justify-center items-center dark:text-gray-300'>
+//       <span>🤦‍♂️ </span>
+//       <span>{t('app.common.closed')}</span>
+//     </div>
+//   )
+// }
 
 function SquarePage() {
   usePageTrack('square')
