@@ -10,11 +10,11 @@ import { WenquBook } from '../../../../services/wenqu'
 import { useDispatch } from 'react-redux'
 import { UserContent } from '../../../../store/user/type'
 import { useTranslation } from 'react-i18next'
-import { Link } from '@reach/router'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { toast } from 'react-toastify'
 
 import styles from './clipping.module.css'
+import Link from 'next/link'
 
 type ClippingSidebarProps = {
   clipping: fetchClipping_clipping | undefined
@@ -144,22 +144,30 @@ function ClippingSidebar(props: ClippingSidebarProps) {
           {siblingLink.prev && (
             <li className='w-full mb-4'>
               <Link
-                to={siblingLink.prev}
-                className={styles['action-btn']}
-                title={t('app.clipping.sidebar.prev')}
+                href={siblingLink.prev}
               >
-                {t('app.clipping.sidebar.prev')}
+                <a
+                  className={styles['action-btn']}
+                  title={t('app.clipping.sidebar.prev')}
+                >
+
+                  {t('app.clipping.sidebar.prev')}
+                </a>
               </Link>
             </li>
           )}
           {siblingLink.next && (
             <li className='w-full mb-4'>
               <Link
-                to={siblingLink.next}
-                className={styles['action-btn']}
-                title={t('app.clipping.sidebar.next')}
+                href={siblingLink.next}
               >
-                {t('app.clipping.sidebar.next')}
+                <a
+                  className={styles['action-btn']}
+                  title={t('app.clipping.sidebar.next')}
+                >
+
+                  {t('app.clipping.sidebar.next')}
+                </a>
               </Link>
             </li>
           )}

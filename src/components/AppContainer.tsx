@@ -3,9 +3,9 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useUploadData } from './hooks/my-file'
-import { useActionTrack } from './hooks/tracke'
-import { TGlobalStore } from './store'
+import { useUploadData } from '../hooks/my-file'
+import { useActionTrack } from '../hooks/tracke'
+import { TGlobalStore } from '../store'
 
 type AppContainerProps = {
   children: React.ReactElement

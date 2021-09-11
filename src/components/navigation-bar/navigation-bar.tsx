@@ -1,15 +1,14 @@
 import React, { useCallback } from 'react'
 import Image from 'next/image'
-import { Link } from '@reach/router'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { connect, useDispatch, useSelector } from 'react-redux'
-import { execLogout } from '../../store/user/type';
+import { useDispatch, useSelector } from 'react-redux'
+import { execLogout } from '../../store/user/type'
 // import Tooltip from 'rc-tooltip'
 import { TGlobalStore } from '../../store'
 import { useTranslation } from 'react-i18next';
 import Tooltip from '../tooltip/Tooltip';
 import styles from './navigation-bar.module.css'
-// const styles = require('').default
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const leftMenu = [
   {
@@ -37,9 +36,10 @@ const leftMenu = [
 function NavigationBar() {
   const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   const dispatch = useDispatch()
+  const { push } = useRouter()
 
   const onLogout = useCallback(() => {
-    dispatch(execLogout())
+    dispatch(execLogout(push))
   }, [])
 
   const { t } = useTranslation()
@@ -62,9 +62,9 @@ function NavigationBar() {
                 overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
               >
                 <Link
-                 to={id === 0 ? '/auth/signin' : item.dest(id)}
-                 title={t(`app.menu.${item.alt}`)}
-                 >
+                  href={id === 0 ? '/auth/signin' : item.dest(id)}
+                  title={t(`app.menu.${item.alt}`)}
+                >
                   <span className='text-3xl lg:text-4xl'>
                     {item.emoji}
                   </span>
@@ -81,11 +81,15 @@ function NavigationBar() {
             overlay={<span>{t('app.menu.settings')}</span>}
           >
             <Link
-              to={id === 0 ? '/auth/signin' : `/dash/${id}/settings`}
-              className='text-3xl lg:text-4xl'
-              title={t('app.menu.settings')}
+              href={id === 0 ? '/auth/signin' : `/dash/${id}/settings`}
+            >
+              <a
+                className='text-3xl lg:text-4xl'
+                title={t('app.menu.settings')}
               >
+
               🛠
+              </a>
             </Link>
           </Tooltip>
         </li>
@@ -95,8 +99,8 @@ function NavigationBar() {
             overlay={<span>{t('app.menu.logout')}</span>}
           >
             <span
-             className='text-3xl lg:text-4xl'
-             title={t('app.menu.logout')}
+              className='text-3xl lg:text-4xl'
+              title={t('app.menu.logout')}
             >
               👋
             </span>

@@ -8,7 +8,6 @@ import swal from 'sweetalert'
 import createClippingsQuery from '../schema/mutations/create-clippings.graphql'
 import { extraFile } from "../store/clippings/creator"
 import ClippingTextParser, { TClippingItem } from "../store/clippings/parser"
-import { useNavigate } from "@reach/router"
 import { useSelector } from "react-redux"
 import { TGlobalStore } from "../store"
 import { toast } from "react-toastify"
@@ -44,7 +43,7 @@ export function useUploadData(
     try {
       setStep(UploadStep.Parsing)
       str = await extraFile(file)
-    } catch (e) {
+    } catch (e: any) {
       console.error(e, e.toString())
       setStep(UploadStep.Error)
       setMessages(m => m.concat(e.toString()))
@@ -82,7 +81,7 @@ export function useUploadData(
         if (resp.count > 0) {
           i.bookId = resp.books[0].doubanId.toString()
         }
-      } catch (e) {
+      } catch (e: any) {
         setMessages(m => m.concat(e.toString()))
         console.log(e)
       } finally {
@@ -124,7 +123,7 @@ export function useUploadData(
       }
       setAt(chunkedData.length)
       setStep(UploadStep.Done)
-    } catch (e) {
+    } catch (e: any) {
       setStep(UploadStep.Error)
       setMessages(m => m.concat(e.toString()))
     } finally {

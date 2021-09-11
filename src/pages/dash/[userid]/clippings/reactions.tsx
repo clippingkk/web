@@ -13,8 +13,8 @@ import Dialog from '../../../../components/dialog/dialog'
 import Tooltip from '../../../../components/tooltip/Tooltip'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import { Link } from '@reach/router'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 type ReactionsProps = {
   cid: number
@@ -107,12 +107,20 @@ function Reactions(props: ReactionsProps) {
           </Tooltip>
         ))}
         {uid === 0 ? (
-          <Link className='py-4 px-8 rounded-3xl hover:bg-gray-300' to='/auth/signin'>➕</Link>
+          <Link
+            href='/auth/signin'
+          >
+            <a
+              className='py-4 px-8 rounded-3xl hover:bg-gray-300'
+            >
+              ➕
+            </a>
+          </Link>
         ) : (
-        <button
-          className='py-4 px-8 rounded-3xl hover:bg-gray-300'
-          onClick={togglePicker}
-        >➕</button>
+          <button
+            className='py-4 px-8 rounded-3xl hover:bg-gray-300'
+            onClick={togglePicker}
+          >➕</button>
         )}
         {pickerVisible && (
           <Dialog

@@ -19,6 +19,7 @@ import '../styles/icons'
 import '../prefers-dark'
 import '../utils/locales'
 import '../utils/leancloud'
+import AppContainer from '../components/AppContainer'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = (Component as any).getLayout || ((page: any) => page)
@@ -34,7 +35,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}
       >
         <ApolloProvider client={client}>
-          {content}
+          <AppContainer>
+            {content}
+          </AppContainer>
           <ToastContainer
             theme={'light'}
           />

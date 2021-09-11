@@ -3,7 +3,6 @@ import { log } from '../../utils/sentry'
 import { EXTRA_AND_UPLOAD_FILE_TO_SERVER, TClippingsFile } from "./type"
 import { create } from "../../services/clippings";
 import swal from "sweetalert";
-import { navigate } from "@reach/router";
 import ClippingTextParser, { TClippingItem } from "./parser";
 
 export function* extraAndUploadAction() {
@@ -96,7 +95,7 @@ function* extraAndUpload(action: TClippingsFile) {
     for (let i = 0; i < chunkedData.length; i++) {
       yield call(create, chunkedData[i])
     }
-  } catch (e) {
+  } catch (e: any) {
     console.error(e)
     yield call(swal, {
       title: e.toString(),
@@ -112,6 +111,6 @@ function* extraAndUpload(action: TClippingsFile) {
     icon: 'success'
   })
   const uid = sessionStorage.getItem("uid")
-  yield call(navigate as any, `/dash/${uid}/home`)
+  yield call(action.navigate as any, `/dash/${uid}/home`)
   return
 }

@@ -43,30 +43,34 @@ export interface TUserSignupData extends TUserSignupDataBase {
   avatarUrl: string
 }
 
-export function toLogin(email: string, pwd: string) {
+export function toLogin(email: string, pwd: string, navigate: (url: string) => void) {
   return {
     type: AUTH_LOGIN_ACTION,
-    email, pwd
+    email, pwd,
+    navigate
   }
 }
 
 export function toSignup(
-  signupData: TUserSignupDataInput
+  signupData: TUserSignupDataInput,
+  navigate: (url: string) => void
 ) {
   return {
     type: USER_SIGNUP_ACTION,
-    signup: signupData
+    signup: signupData,
+    navigate
   }
 }
 
-export function toGithubLogin(code: string) {
+export function toGithubLogin(code: string, navigate: (url: string) => void) {
   return {
     type: AUTH_GITHUB_ACTION,
-    code
+    code,
+    navigate
   }
 }
 
-export function execLogout() {
-  return { type: USER_LOGOUT_ACTION }
+export function execLogout(navigate: (url: string) => void) {
+  return { type: USER_LOGOUT_ACTION, navigate }
 }
 

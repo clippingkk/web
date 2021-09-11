@@ -1,11 +1,9 @@
-import { navigate, useNavigate } from "@reach/router"
 import mixpanel from "mixpanel-browser"
 import * as sentry from '@sentry/react'
 import { useEffect } from "react"
 import profile from "../utils/profile"
-import { ApolloError, LazyQueryResult, MutationResult } from "@apollo/client"
-import { auth, auth_auth } from "../schema/__generated__/auth"
-import { authVariables } from "../schema/__generated__/auth"
+import { ApolloError, MutationResult } from "@apollo/client"
+import { auth_auth } from "../schema/__generated__/auth"
 import { useDispatch } from "react-redux"
 import { AUTH_LOGIN } from "../store/user/type"
 import { signup } from "../schema/__generated__/signup"
@@ -108,7 +106,7 @@ export function useAuthSuccessed(
 }
 
 export function useSignupSuccess(result: MutationResult<signup>) {
-  const navigate = useNavigate()
+  const { push: navigate } = useRouter()
   useEffect(() => {
     const { called, error, data, loading } = result
     if (called && !error && data && !loading) {

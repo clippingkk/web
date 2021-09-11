@@ -10,7 +10,7 @@ import SigninPage from './pages/auth/signin'
 import ClippingPage from './pages/dash/[userid]/clipping/[clippingid]'
 import ReportYearlyPage from './pages/report/yearly'
 import AuthPhone from './pages/auth/phone'
-import AppContainer from './AppContainer'
+import AppContainer from './components/AppContainer'
 
 const PrivacyPolicy = React.lazy(() => import(/* webpackPrefetch: true */ './pages/policy/privacy'))
 const DashContainer = React.lazy(() => import(/* webpackPrefetch: true */ './components/dashboard-container/container'))

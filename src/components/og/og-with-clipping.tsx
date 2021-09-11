@@ -1,5 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
+import { APP_URL_ORIGIN } from '../../constants/config'
 import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping'
 import { WenquBook } from '../../services/wenqu'
 const logo = require('../../assets/logo.png').default
@@ -10,12 +11,12 @@ type OGWithClippingProps = {
 }
 
 function OGWithClipping(props: OGWithClippingProps) {
-  const url = `${location.origin}/dash/${props.clipping?.creator.id}/clippings/${props.clipping?.id}?iac=0`
+  const url = `${APP_URL_ORIGIN}/dash/${props.clipping?.creator.id}/clippings/${props.clipping?.id}?iac=0`
 
   const bookTitle = props.book?.title ?? props.clipping?.title
   const metaTitle = `${bookTitle} - ${props.clipping?.creator.name} 的书摘录 - clippingkk`
 
-  const logoLink = location.origin + logo
+  const logoLink = APP_URL_ORIGIN + logo
 
   return (
     <Helmet>
