@@ -22,10 +22,10 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
           imageToLoad={book.image}
         >
           <img
-           src={book.image}
+            src={book.image}
             className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300 max-w-xs'
             alt={book.title}
-           alt="" />
+          />
           {/* <Image
             src={book.image}
             className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300'
