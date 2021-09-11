@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from '@reach/router';
 import Card from '../card/card';
 import { book_book_clippings } from '../../schema/__generated__/book'
 import { WenquBook } from '../../services/wenqu';
@@ -10,6 +9,7 @@ import ClippingContent from '../clipping-content';
 import { IN_APP_CHANNEL } from '../../services/channel';
 
 import styles from './clipping-item.module.css'
+import Link from 'next/link';
 
 type TClippingItemProps = {
   item: book_book_clippings
@@ -23,10 +23,11 @@ function ClippingItem({ userid, item, book, creator, inAppChannel }: TClippingIt
   const { t } = useTranslation()
   return (
     <Link
-      to={`/dash/${userid}/clippings/${item.id}?iac=${inAppChannel}`}
+      href={`/dash/${userid}/clippings/${item.id}?iac=${inAppChannel}`}
       key={item.id}
-      className='with-slide-in block'
     >
+      <a className='with-slide-in block'>
+
       <Card className={styles.clipping + ' lg:p-10 p-2 hover:shadow-2xl transition-all duration-300'} style={{ margin: '1rem 0' }}>
         <h3 className='lg:text-3xl text-xl'>
           {book?.title ?? item.title}
@@ -53,6 +54,7 @@ function ClippingItem({ userid, item, book, creator, inAppChannel }: TClippingIt
         )}
 
       </Card>
+      </a>
     </Link>
   )
 }

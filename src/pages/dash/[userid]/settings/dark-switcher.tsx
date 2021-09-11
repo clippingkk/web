@@ -30,7 +30,6 @@ function DarkSwitcher(props: DarkSwitcherProps) {
   const [sizeValue, sizeUnit] = parseUnit(size)
   const segments = checked ? { segments: [2, 96] } : null
   useEffect(() => {
-    console.log(progress, checked)
     // FIXME: 改不好了。放弃了
 
     // if (progress >= 0.5) {

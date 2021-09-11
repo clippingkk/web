@@ -1,4 +1,7 @@
 
+html {
+  font-size: 10px;
+}
 body {
   font-display: swap;
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Microsoft Jhenghei","Hiragino Sans GB","Microsoft YaHei",sans-serif;
@@ -9,7 +12,7 @@ body {
   --gray-text-color: #707070;
 }
 
-a {
+/* a {
   text-decoration: none;
   color: black;
 }
@@ -18,13 +21,13 @@ div[role="group"][tabindex] {
   flex: 1;
 }
 
+.h-min-screen {
+  min-height: 100vh;
+} */
 img {
   max-width: unset;
 }
 
-.h-min-screen {
-  min-height: 100vh;
-}
 
 .dark .anna-page-container {
     background-color: #485461;

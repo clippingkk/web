@@ -7,7 +7,7 @@ import IndexPage from './pages/index/index'
 import GithubOAuthPage from './pages/auth/github'
 import AuthPage from './pages/auth/auth'
 import SigninPage from './pages/auth/signin'
-import ClippingPage from './pages/dash/[userid]/clipping/[clippingid]'
+import ClippingPage from './pages/dash/[userid]/clippings/[clippingid]'
 import ReportYearlyPage from './pages/report/yearly'
 import AuthPhone from './pages/auth/phone'
 import AppContainer from './components/AppContainer'
@@ -16,7 +16,7 @@ const PrivacyPolicy = React.lazy(() => import(/* webpackPrefetch: true */ './pag
 const DashContainer = React.lazy(() => import(/* webpackPrefetch: true */ './components/dashboard-container/container'))
 const ReleasePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/release/release'))
 const HomePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/home'))
-const UploaderPage = React.lazy(() => import(/* webpackPrefetch: true */'./pages/dash/[userid]/uploader'))
+const UploaderPage = React.lazy(() => import(/* webpackPrefetch: true */'./pages/dash/[userid]/upload'))
 const SquarePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/square'))
 const BookPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/book/[bookid]'))
 

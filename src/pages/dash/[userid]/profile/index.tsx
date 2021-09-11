@@ -15,7 +15,6 @@ import WechatBindButton from './bind';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import Avatar from '../../../../components/avatar/avatar';
-import { Link } from '@reach/router';
 import ProfileEditor from './profile-editor'
 import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../../../store'
@@ -30,6 +29,7 @@ import { toast } from 'react-toastify'
 import styles from './profile.module.css'
 import { useRouter } from 'next/router'
 import DashboardContainer from '../../../../components/dashboard-container/container';
+import Link from 'next/link';
 
 function Profile() {
   const userid = useRouter().query.userid as string
@@ -115,7 +115,7 @@ function Profile() {
                     if (followLoading || unfollowLoading) {
                       return
                     }
-                    const params: followUserVariables = {targetUserID: ~~userid }
+                    const params: followUserVariables = { targetUserID: ~~userid }
                     let mutationJob: Promise<any>
                     if (data?.me.isFan) {
                       mutationJob = doUnfollow({
@@ -138,11 +138,15 @@ function Profile() {
               )}
 
               <Link
-                to={`/report/yearly?uid=${data?.me.id}&year=${year}`}
-                className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
-                title={t('app.profile.yearlyReportTip')}
+                href={`/report/yearly?uid=${data?.me.id}&year=${year}`}
               >
-                {t('app.profile.report.yearlyTitle')}
+                <a
+                  className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
+                  title={t('app.profile.yearlyReportTip')}
+                >
+
+                  {t('app.profile.report.yearlyTitle')}
+                </a>
               </Link>
               <a
                 href={`${API_HOST}/api/rss/user/${data?.me.id}/clippings`}

@@ -52,11 +52,6 @@ export function useAuthByPhoneSuccessed(
       username: me.name
     })
     mixpanel.identify(me.id.toString())
-    mixpanel.people.set({
-      "$email": me.email,
-      "Sign up date": me.createdAt,
-      "USER_ID": me.id.toString(),
-    });
     mixpanel.track('login')
     updateToken(profile.token)
     dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })

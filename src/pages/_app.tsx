@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/client'
 import { SWRConfig } from 'swr'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
+import AppContainer from '../components/AppContainer'
 import { client, request } from '../services/ajax'
 import store from '../store/index'
 
@@ -19,7 +20,6 @@ import '../styles/icons'
 import '../prefers-dark'
 import '../utils/locales'
 import '../utils/leancloud'
-import AppContainer from '../components/AppContainer'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = (Component as any).getLayout || ((page: any) => page)

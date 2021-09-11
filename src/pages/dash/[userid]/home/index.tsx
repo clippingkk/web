@@ -12,7 +12,7 @@ import NoContentAlert from './no-content';
 import BookCover from '../../../../components/book-cover/book-cover';
 import ReadingBook from './reading-book';
 import { UserContent } from '../../../../store/user/type';
-import { useSyncClippingsToServer } from '../../../../hooks/my-file';
+import { useSyncClippingsToServer } from '../../../../hooks/my-file'
 import styles from './home.module.css'
 import { useRouter } from 'next/router';
 import DashboardContainer from '../../../../components/dashboard-container/container';

@@ -56,7 +56,7 @@ function NavigationBar() {
         />
         <ul className='flex ml-2 lg:ml-12'>
           {leftMenu.map((item, index) => (
-            <li className='mr-3 lg:mr-6' key={index}>
+            <li className='mr-3 lg:mr-6 cursor-pointer' key={index}>
               <Tooltip
                 placement='bottom'
                 overlay={<span>{t(`app.menu.${item.alt}`)}</span>}

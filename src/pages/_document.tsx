@@ -14,7 +14,7 @@ class DocumentTop extends Document {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="description" content="" />
           <meta name="keywords" content="" />
-          <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+          {/* <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" /> */}
           <meta name="renderer" content="webkit" />
           <meta httpEquiv="Cache-Control" content="no-siteapp" />
           {React.createElement('meta', {

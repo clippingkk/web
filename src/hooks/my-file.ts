@@ -83,7 +83,6 @@ export function useUploadData(
         }
       } catch (e: any) {
         setMessages(m => m.concat(e.toString()))
-        console.log(e)
       } finally {
         wenquSearchResult.current.set(i.title, i.bookId ? ~~i.bookId : 0)
       }
@@ -154,7 +153,6 @@ export function useSyncClippingsToServer() {
   const { t } = useTranslation()
   const [exec, { client }] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
   useEffect(() => {
-    console.log('try to sync data...')
     if (!id) {
       return
     }

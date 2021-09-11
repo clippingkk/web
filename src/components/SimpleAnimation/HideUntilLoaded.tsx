@@ -21,14 +21,13 @@ function HideUntilLoaded(props: HideUntilLoadedProps) {
     }
     img.src = props.imageToLoad
   }, [props.imageToLoad])
-
   if (errored) {
     return (
       <span>error msg</span>
     )
   }
 
-  if (!loaded) {
+  if (!loaded && process.browser) {
     return null
   }
 

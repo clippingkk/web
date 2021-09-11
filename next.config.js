@@ -1,4 +1,7 @@
 module.exports = {
+  images: {
+    domains: ['ck-cdn.annatarhe.cn'],
+  },
   excludeFile: (str) => /__tests__/.test(str),
   env: {
     'DEV': true

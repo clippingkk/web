@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from '../card/card';
 import { WenquBook } from '../../services/wenqu'
+// import Image from 'next/image'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp';
 import { useTranslation } from 'react-i18next';
 import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
@@ -16,11 +17,22 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
   const { t } = useTranslation()
   return (
     <Card className='mt-20 flex p-12 bg-blue-200 bg-opacity-50 flex-col md:flex-row'>
-      <div className='mr-12'>
+      <div className='mr-12 w-full h-full'>
         <HideUntilLoaded
           imageToLoad={book.image}
         >
-          <img src={book.image} className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300' />
+          <img
+           src={book.image}
+            className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300 max-w-xs'
+            alt={book.title}
+           alt="" />
+          {/* <Image
+            src={book.image}
+            className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300'
+            height={320}
+            width={384}
+            alt={book.title}
+          /> */}
         </HideUntilLoaded>
       </div>
 
