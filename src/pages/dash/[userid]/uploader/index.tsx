@@ -12,6 +12,7 @@ import { useUploadData } from '../../../../hooks/my-file'
 import styles from './uploader.module.css'
 import { useRouter } from 'next/router'
 import AnimateOnChange from '../../../../components/SimpleAnimation/AnimateOnChange'
+import DashboardContainer from '../../../../components/dashboard-container/container'
 
 function useSwitcher() {
   const [isOn, setIsOn] = useState(true)
@@ -85,6 +86,14 @@ function UploaderPage() {
         />
       )}
     </section>
+  )
+}
+
+UploaderPage.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
   )
 }
 

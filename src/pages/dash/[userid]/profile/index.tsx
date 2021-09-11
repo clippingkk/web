@@ -29,6 +29,7 @@ import { toast } from 'react-toastify'
 
 import styles from './profile.module.css'
 import { useRouter } from 'next/router'
+import DashboardContainer from '../../../../components/dashboard-container/container';
 
 function Profile() {
   const userid = useRouter().query.userid as string
@@ -184,6 +185,15 @@ function Profile() {
         </React.Fragment>
       </MasonryContainer>
     </section>
+  )
+}
+
+
+Profile.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
   )
 }
 

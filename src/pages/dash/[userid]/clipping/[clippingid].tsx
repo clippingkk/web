@@ -23,6 +23,7 @@ import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { CDN_DEFAULT_DOMAIN } from '../../../../constants/config'
 import OGWithClipping from '../../../../components/og/og-with-clipping'
 import styles from './clipping.module.css'
+import DashboardContainer from '../../../../components/dashboard-container/container'
 
 function ClippingPage() {
   const { clippingid } = useRouter().query as { userid: string, clippingid: string }
@@ -125,6 +126,15 @@ function ClippingPage() {
           />
         )}
     </div>
+  )
+}
+
+
+ClippingPage.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
   )
 }
 

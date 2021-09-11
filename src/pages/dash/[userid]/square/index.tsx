@@ -11,6 +11,7 @@ import { IN_APP_CHANNEL } from '../../../../services/channel'
 import ListFooter from '../../../../components/list-footer/list-footer'
 import { useState } from 'react'
 import { APP_API_STEP_LIMIT } from '../../../../constants/config'
+import DashboardContainer from '../../../../components/dashboard-container/container'
 
 // function DevelopingAlert() {
 //   const { t } = useTranslation()
@@ -83,6 +84,14 @@ function SquarePage() {
         hasMore={!reachEnd}
       />
     </section>
+  )
+}
+
+SquarePage.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
   )
 }
 

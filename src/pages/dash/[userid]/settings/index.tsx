@@ -5,6 +5,7 @@ import SimpleSwitcher from './simple-switcher'
 import Exports from './exports'
 import WebHooks from './webhooks'
 import { useDarkModeStatus } from '../../../../hooks/theme'
+import DashboardContainer from '../../../../components/dashboard-container/container'
 
 type SettingsPageProps = {
 }
@@ -93,6 +94,14 @@ function SettingsPage(props: SettingsPageProps) {
       <WebHooks />
 
     </div>
+  )
+}
+
+SettingsPage.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
   )
 }
 

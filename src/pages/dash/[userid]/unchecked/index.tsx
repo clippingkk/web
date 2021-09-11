@@ -3,6 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
+import DashboardContainer from '../../../../components/dashboard-container/container'
 import Divider from '../../../../components/divider/divider'
 import MasonryContainer from '../../../../components/masonry-container'
 import bookQuery from '../../../../schema/book.graphql'
@@ -40,6 +41,14 @@ function UncheckedPage() {
         </React.Fragment>
       </MasonryContainer>
     </div>
+  )
+}
+
+UncheckedPage.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
   )
 }
 

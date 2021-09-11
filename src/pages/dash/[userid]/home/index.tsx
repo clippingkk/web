@@ -15,6 +15,7 @@ import { UserContent } from '../../../../store/user/type';
 import { useSyncClippingsToServer } from '../../../../hooks/my-file';
 import styles from './home.module.css'
 import { useRouter } from 'next/router';
+import DashboardContainer from '../../../../components/dashboard-container/container';
 
 const STEP = 10
 
@@ -136,4 +137,12 @@ function HomePage() {
 
 }
 
+
+HomePage.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
+  )
+}
 export default HomePage

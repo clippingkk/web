@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import { IN_APP_CHANNEL } from '../../../../services/channel';
 import styles from './book.module.css'
 import { useRouter } from 'next/router'
+import DashboardContainer from '../../../../components/dashboard-container/container';
 
 function BookPage() {
   const { userid, bookid } = useRouter().query as { userid: string, bookid: string }
@@ -114,6 +115,14 @@ function BookPage() {
         </React.Fragment>
       </MasonryContainer>
     </section>
+  )
+}
+
+BookPage.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+    <DashboardContainer>
+      {page}
+    </DashboardContainer>
   )
 }
 
