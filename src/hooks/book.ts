@@ -9,17 +9,22 @@ type bookRequestReturn = {
 
 const cache = new Map<number, WenquBook | null>()
 
-export function useSingleBook(doubanId?: string): WenquBook | null {
+export function useSingleBook(doubanId?: string, skip?: boolean): WenquBook | null {
   const [book, setBook] = useState<WenquBook | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (skip) {
+      setLoading(false)
+      return
+    }
     if (!doubanId || doubanId.length < 4) {
       setLoading(false)
       return
     }
 
     if (cache.has(~~doubanId)) {
+      setLoading(false)
       setBook(cache.get(~~doubanId)!)
       return
     }
@@ -33,7 +38,7 @@ export function useSingleBook(doubanId?: string): WenquBook | null {
     }).finally(() => {
       setLoading(false)
     })
-  }, [doubanId])
+  }, [doubanId, skip])
 
   return book
 }

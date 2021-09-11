@@ -5,6 +5,7 @@ import ListFooter from '../../../../components/list-footer/list-footer';
 import Divider from '../../../../components/divider/divider';
 import { changeBackground } from '../../../../store/app/type';
 import { useDispatch } from 'react-redux';
+import Head from 'next/head'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke';
 import { useSingleBook } from '../../../../hooks/book'
 import { useQuery } from '@apollo/client';
@@ -17,6 +18,7 @@ import { IN_APP_CHANNEL } from '../../../../services/channel';
 import styles from './book.module.css'
 import { useRouter } from 'next/router'
 import DashboardContainer from '../../../../components/dashboard-container/container';
+import OGWithBook from '../../../../components/og/og-with-book';
 
 function BookPage() {
   const { userid, bookid } = useRouter().query as { userid: string, bookid: string }
@@ -62,6 +64,10 @@ function BookPage() {
 
   return (
     <section className={`${styles.bookPage} page anna-fade-in`}>
+      <Head>
+        <title>{bookData.title}</title>
+        <OGWithBook book={bookData} uid={~~userid} />
+        </Head>
       <BookInfo
         book={bookData}
         uid={~~userid}

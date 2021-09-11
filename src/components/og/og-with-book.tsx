@@ -4,16 +4,16 @@ import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping
 import { WenquBook } from '../../services/wenqu'
 const logo = require('../../assets/logo.png').default
 
-type OGWithClippingProps = {
-  clipping?: fetchClipping_clipping
+type OGWithBookProps = {
+  uid: number
   book: WenquBook | null
 }
 
-function OGWithClipping(props: OGWithClippingProps) {
-  const url = `${APP_URL_ORIGIN}/dash/${props.clipping?.creator.id}/clippings/${props.clipping?.id}?iac=0`
+function OGWithBook(props: OGWithBookProps) {
+  const url = `${APP_URL_ORIGIN}/dash/${props.uid}/book/${props.book?.doubanId}`
 
-  const bookTitle = props.book?.title ?? props.clipping?.title
-  const metaTitle = `${bookTitle} - ${props.clipping?.creator.name} 的书摘录 - clippingkk`
+  const bookTitle = props.book?.title
+  const metaTitle = `${bookTitle} - 书摘 - clippingkk`
 
   const logoLink = APP_URL_ORIGIN + logo
 
@@ -23,19 +23,19 @@ function OGWithClipping(props: OGWithClippingProps) {
       <meta property="og:type" content='website' />
       <meta property="og:title" content={metaTitle} />
       <meta property="og:image" content={logoLink} />
-      <meta property="og:description" content={props.clipping?.content} />
+      <meta property="og:description" content={props.book?.title} />
       <meta property="og:site_name" content='clippingkk' />
-      <meta property="article:author" content={props.clipping?.creator.name} />
+      <meta property="article:author" content={props.book?.author} />
 
-      <meta name="twitter:card" content={props.clipping?.content} />
+      <meta name="twitter:card" content={props.book?.title} />
       <meta name="twitter:site" content='clippingkk' />
-      <meta name="twitter:creator" content={`@${props.clipping?.creator.name}`} />
+      <meta name="twitter:creator" content={`@${props.book?.author}`} />
       <meta name="twitter:url" content={url} />
       <meta name="twitter:title" content={metaTitle} />
-      <meta name="twitter:description" content={props.clipping?.content} />
+      <meta name="twitter:description" content={props.book?.title} />
       <meta name="twitter:image" content={logoLink} />
     </React.Fragment>
   )
 }
 
-export default OGWithClipping
+export default OGWithBook

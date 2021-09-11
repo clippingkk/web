@@ -6,7 +6,7 @@ export function useLocalTime(date?: string): string {
 
   return new Intl.
     DateTimeFormat(
-      navigator.language,
+      process.browser ? navigator.language : 'en',
       {
         hour: 'numeric', minute: 'numeric',
         year: 'numeric', month: 'numeric', day: 'numeric',

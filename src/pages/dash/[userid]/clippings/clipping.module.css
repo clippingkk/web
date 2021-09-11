@@ -20,22 +20,3 @@
 .action:last-child {
   margin-bottom: 0;
 }
-
-.action-btn {
-  border: none;
-  padding: 1rem;
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  background-color: rgba(33, 150, 243, 0.9);
-  margin: 0;
-  cursor: pointer;
-}
-
-.action-btn:hover {
-  background-color: #fff;
-}
-
-.action-btn:focus {
-  outline: 0;
-}

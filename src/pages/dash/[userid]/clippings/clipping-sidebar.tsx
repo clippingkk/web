@@ -85,7 +85,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
         <ul className={'w-full p-0 list-none'}>
           <li className='w-full mb-4'>
             <button
-              className={styles['action-btn']}
+              className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 '
               onClick={updateClipping}
             >
               {t('app.clipping.update')}
@@ -94,7 +94,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
 
           <li className='w-full mb-4'>
             <button
-              className={styles['action-btn']}
+              className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 '
               onClick={props.onTogglePreviewVisible}
             >
               {t('app.clipping.shares')}
@@ -104,14 +104,15 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             <a
               href={`https://book.douban.com/subject/${book?.doubanId}`}
               target="_blank"
-              className={styles['action-btn']} rel="noreferrer"
+              className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 '
+              rel="noreferrer"
             >
               {t('app.clipping.link')}
             </a>
           </li>
           <li className='w-full mb-4'>
             <button
-              className={styles['action-btn']}
+              className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
               onClick={onCopyEmbedHtml}
             >
               copy embed html
@@ -119,7 +120,9 @@ function ClippingSidebar(props: ClippingSidebarProps) {
           </li>
           {clipping?.creator.id === me.id && (
             <li className='w-full mb-4'>
-              <div className={styles['action-btn'] + ' w-full flex items-center justify-between'}>
+              <div
+                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center justify-between'
+              >
                 <label htmlFor="">{t('app.clipping.visible')}</label>
                 <Switch
                   value={clipping.visible ? 1 : 0}
@@ -147,7 +150,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 href={siblingLink.prev}
               >
                 <a
-                  className={styles['action-btn']}
+                  className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
                   title={t('app.clipping.sidebar.prev')}
                 >
 
@@ -162,7 +165,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 href={siblingLink.next}
               >
                 <a
-                  className={styles['action-btn']}
+                  className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
                   title={t('app.clipping.sidebar.next')}
                 >
 
