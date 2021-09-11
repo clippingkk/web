@@ -63,9 +63,11 @@ function NavigationBar() {
               >
                 <Link
                   href={id === 0 ? '/auth/signin' : item.dest(id)}
-                  title={t(`app.menu.${item.alt}`)}
                 >
-                  <span className='text-3xl lg:text-4xl'>
+                  <span
+                    className='text-3xl lg:text-4xl'
+                    title={t(`app.menu.${item.alt}`)}
+                  >
                     {item.emoji}
                   </span>
                 </Link>
@@ -88,7 +90,7 @@ function NavigationBar() {
                 title={t('app.menu.settings')}
               >
 
-              🛠
+                🛠
               </a>
             </Link>
           </Tooltip>

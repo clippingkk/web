@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client'
 import Image from 'next/image'
-import { useLocation } from '@reach/router'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../../components/avatar/avatar'
