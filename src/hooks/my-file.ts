@@ -1,14 +1,13 @@
 import { useApolloClient, useMutation } from "@apollo/client"
 import { useState, useRef, useCallback, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { UploadStep } from "../pages/uploader/types"
+import { UploadStep } from "../services/uploader"
 import { createClippings, createClippingsVariables } from "../schema/mutations/__generated__/createClippings"
 import { wenquRequest, WenquSearchResponse } from "../services/wenqu"
 import swal from 'sweetalert'
 import createClippingsQuery from '../schema/mutations/create-clippings.graphql'
 import { extraFile } from "../store/clippings/creator"
 import ClippingTextParser, { TClippingItem } from "../store/clippings/parser"
-import { useNavigate } from "@reach/router"
 import { useSelector } from "react-redux"
 import { TGlobalStore } from "../store"
 import { toast } from "react-toastify"
@@ -44,7 +43,7 @@ export function useUploadData(
     try {
       setStep(UploadStep.Parsing)
       str = await extraFile(file)
-    } catch (e) {
+    } catch (e: any) {
       console.error(e, e.toString())
       setStep(UploadStep.Error)
       setMessages(m => m.concat(e.toString()))
@@ -82,9 +81,8 @@ export function useUploadData(
         if (resp.count > 0) {
           i.bookId = resp.books[0].doubanId.toString()
         }
-      } catch (e) {
+      } catch (e: any) {
         setMessages(m => m.concat(e.toString()))
-        console.log(e)
       } finally {
         wenquSearchResult.current.set(i.title, i.bookId ? ~~i.bookId : 0)
       }
@@ -124,7 +122,7 @@ export function useUploadData(
       }
       setAt(chunkedData.length)
       setStep(UploadStep.Done)
-    } catch (e) {
+    } catch (e: any) {
       setStep(UploadStep.Error)
       setMessages(m => m.concat(e.toString()))
     } finally {
@@ -155,7 +153,6 @@ export function useSyncClippingsToServer() {
   const { t } = useTranslation()
   const [exec, { client }] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
   useEffect(() => {
-    console.log('try to sync data...')
     if (!id) {
       return
     }

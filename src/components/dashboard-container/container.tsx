@@ -1,16 +1,14 @@
 import React from 'react'
 import NavigationBar from '../navigation-bar/navigation-bar'
 import Footer from '../footer/Footer'
-import { connect } from 'react-redux'
-import { TGlobalStore } from '../../store'
 import SearchBar from '../searchbar/searchbar'
 
-const styles = require('./container.css').default
+import styles from './container.module.css'
 
 const defaultBg = require('../../assets/bg.jpg').default
 
-function Container(props: any) {
-  const { width, height } = window.screen
+function DashboardContainer(props: any) {
+  // const { width, height } = window.screen
   const containerStyle = {
     // backgroundImage: `url(https://picsum.photos/${width}/${height}/?blur=10)`
     // backgroundImage: `url(${defaultBg})`
@@ -30,4 +28,4 @@ function Container(props: any) {
   )
 }
 
-export default Container
+export default DashboardContainer

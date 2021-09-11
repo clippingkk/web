@@ -1,5 +1,4 @@
 import { call, takeEvery, put, delay } from "@redux-saga/core/effects";
-import { navigate } from '@reach/router'
 import * as sentry from '@sentry/react'
 import fp2 from 'fingerprintjs2'
 import { sha256 } from 'js-sha256'
@@ -36,16 +35,19 @@ type TLoginAction = {
   type: string
   email: string
   pwd: string
+  navigate: (url: string) => void
 }
 
 type TGithubLoginAction = {
   type: string
   code: string
+  navigate: (url: string) => void
 }
 
 type TSignupAction = {
   type: string
   signup: TUserSignupDataInput
+  navigate: (url: string) => void
 }
 
 function* githubLoginAction(action: TGithubLoginAction) {
@@ -62,8 +64,8 @@ function* githubLoginAction(action: TGithubLoginAction) {
 
   try {
     const response: TUserState = yield call(authAPI.githubLogin, code)
-    yield call(postLogin, response)
-  } catch (e) {
+    yield call(postLogin, response, action.navigate)
+  } catch (e: any) {
     swal({
       title: "Oops",
       text: e.toString(),
@@ -72,7 +74,7 @@ function* githubLoginAction(action: TGithubLoginAction) {
   }
 }
 
-function* postLogin(response: TUserState) {
+function* postLogin(response: TUserState, navigate: (url: string) => void) {
   localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
     profile: response.profile,
     token: response.token,
@@ -124,8 +126,8 @@ function* loginAction(action: TLoginAction): IterableIterator<any> {
     const response = yield call(authAPI.login as any, email, pwd)
     const res = response as any
     yield call(updateToken, res.token)
-    yield call(postLogin as any, response)
-  } catch (e) {
+    yield call(postLogin as any, response, action.navigate)
+  } catch (e: any) {
     swal({
       title: "Oops",
       text: e.toString(),
@@ -180,8 +182,8 @@ function* signupAction(action: TSignupAction) {
       avatarUrl: uploadedResponse.filePath,
     })
 
-    yield call(navigate as any, '/auth/signin')
-  } catch (e) {
+    yield call(action.navigate as any, '/auth/signin')
+  } catch (e: any) {
     swal({
       title: "Oops",
       text: e.toString(),
@@ -190,7 +192,7 @@ function* signupAction(action: TSignupAction) {
   }
 }
 
-function* logoutAction() {
+function* logoutAction(action: any) {
   profile.onLogout()
   yield put({ type: USER_LOGOUT })
   yield call(swal, {
@@ -199,7 +201,7 @@ function* logoutAction() {
     icon: 'info'
   })
   mixpanel.track("logout")
-  yield call(navigate as any, '/')
+  yield call(action.navigate as any, '/')
 }
 
 export function* usersAction(): IterableIterator<any> {

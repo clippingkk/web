@@ -1,5 +1,5 @@
 import React from 'react'
-const styles = require('./style.css').default
+import styles from './style.module.css'
 
 function _PageLoading() {
   return (

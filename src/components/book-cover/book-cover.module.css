@@ -1,0 +1,16 @@
+.cover {
+  /* width: 30rem;
+  height: 40rem; */
+}
+/* .cover:hover {
+  background-color: rgba(255, 255, 255, .8);
+  box-shadow: 0 0 1rem #888;
+} */
+
+.cover:hover .image {
+  transform: translateY(-2rem) scale(1.1);
+}
+
+.image {
+  
+}

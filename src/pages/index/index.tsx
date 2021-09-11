@@ -1,20 +1,35 @@
 import React from 'react'
-import useSWR from 'swr'
 import Hero from './Hero'
-import Features from './Features'
 import Footer from '../../components/footer/Footer'
 import { usePageTrack } from '../../hooks/tracke'
-import { TopHttpResponse } from '../../services/public'
 import TopBooks from './TopBooks'
 import TopUsers from './TopUsers'
 import fetchTopQuery from '../../schema/public.graphql'
 import { useQuery } from '@apollo/client'
 import { publicData } from '../../schema/__generated__/publicData'
 import TopClippings from './TopClippings'
+import { client } from '../../services/ajax'
+import { InferGetStaticPropsType } from 'next'
 
-function IndexPage() {
+export const getStaticProps = async () => {
+  const data = await client.query<publicData>({ 
+    query: fetchTopQuery
+  })
+
+  return {
+    props: {
+      preloadPublicData: data.data
+    },
+  }
+}
+
+function IndexPage({ preloadPublicData }: InferGetStaticPropsType<typeof getStaticProps>) {
   usePageTrack('index')
-  const {data } = useQuery<publicData>(fetchTopQuery)
+  const { data: newData } = useQuery<publicData>(fetchTopQuery, {
+    skip: !preloadPublicData
+  })
+
+  const data = preloadPublicData ?? newData
 
   return (
     <div>

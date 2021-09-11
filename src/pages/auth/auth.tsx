@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Card from '../../components/card/card'
-import { navigate, Link } from '@reach/router';
+import Link from 'next/link'
+import Image from 'next/image'
 import swal from 'sweetalert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GithubClientID, SignInWithAppleOptions } from '../../constants/config';
@@ -9,6 +10,7 @@ import { usePageTrack, useActionTrack } from '../../hooks/tracke';
 import profile from '../../utils/profile';
 import { useTranslation } from 'react-i18next';
 import SignInWithApple from '../../components/sign-in-with-apple/sign-in-with-apple';
+import { useRouter } from 'next/router';
 
 function checkIsCurrentPath({ isCurrent }: any) {
   return {
@@ -33,6 +35,7 @@ function showMobileAlert() {
 
 function AuthPage(props: AuthPageProps) {
   usePageTrack('auth')
+  const { push: navigate, pathname } = useRouter()
   useEffect(() => {
     showMobileAlert()
     const uid = profile.uid
@@ -49,22 +52,34 @@ function AuthPage(props: AuthPageProps) {
     <section className='anna-page-container flex h-screen items-center justify-center'>
       <Card className='with-slide-in'>
         <div className='flex items-center justify-center flex-col mb-4'>
-        <img
-          src={require('../../assets/logo.png').default}
-          alt="clippingkk logo"
-          className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
-        />
+          <Image
+            src={require('../../assets/logo.png').default}
+            alt="clippingkk logo"
+            // className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
+            width={96}
+            height={96}
+          />
 
         </div>
         <div className='w-full flex items-center justify-center rounded'>
           <Link
-            to="/auth/phone"
-            getProps={checkIsCurrentPath}
-          >{t('app.auth.phone')}</Link>
+            href="/auth/phone"
+          >
+            <a
+              className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('phone') ? 'bg-indigo-400' : ''}`}
+            >
+              {t('app.auth.phone')}
+            </a>
+          </Link>
+
           <Link
-            to="/auth/signin"
-            getProps={checkIsCurrentPath}
-          >{t('app.auth.signin')}</Link>
+            href="/auth/signin"
+          // getProps={checkIsCurrentPath}
+          >
+            <a className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('signin') ? 'bg-indigo-400' : ''}`}>
+              {t('app.auth.signin')}
+            </a>
+          </Link>
         </div>
         <hr className='my-2' />
         {props.children}

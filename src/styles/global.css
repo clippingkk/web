@@ -1,0 +1,42 @@
+
+html {
+  font-size: 10px;
+}
+body {
+  font-display: swap;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Microsoft Jhenghei","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --gray-text-color: #707070;
+}
+
+/* a {
+  text-decoration: none;
+  color: black;
+}
+
+div[role="group"][tabindex] {
+  flex: 1;
+}
+
+.h-min-screen {
+  min-height: 100vh;
+} */
+img {
+  max-width: unset;
+}
+
+
+.dark .anna-page-container {
+    background-color: #485461;
+    background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+}
+.anna-page-container {
+  background: linear-gradient(325deg, #D2CCC4, #8CACAC);
+}
+
+
+
+

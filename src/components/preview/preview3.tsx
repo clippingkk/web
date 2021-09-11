@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
 import ThemePicker from './theme-picker'
-
-const styles = require('./preview.css').default
+import styles from './preview.module.css'
 
 type PreviewProps = {
   onCancel: () => void
@@ -81,7 +80,7 @@ function Preview(props: PreviewProps) {
             href={shareURL}
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
             className='text-white text-lg w-full from-blue-200 to-red-200 bg-gradient-to-t block text-center py-4 mt-4'
-            target='_blank'
+            target='_blank' rel="noreferrer"
           >
             {t('app.clipping.save')}
           </a>

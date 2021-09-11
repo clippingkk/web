@@ -1,0 +1,22 @@
+.clipping {
+  min-height: 100%;
+}
+
+.main {
+  display: flex;
+  margin-top: 10rem;
+  padding: 0 5rem;
+}
+
+.main-card {
+  flex: 3;
+}
+
+.action {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.action:last-child {
+  margin-bottom: 0;
+}

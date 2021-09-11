@@ -1,5 +1,4 @@
 import { useLazyQuery } from '@apollo/client'
-import { Link } from '@reach/router'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import searchQueryDoc from '../../schema/search.graphql'
@@ -8,6 +7,7 @@ import { TGlobalStore } from '../../store'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { useTranslation } from 'react-i18next'
 import { debounce } from '../../utils/debounce'
+import Link from 'next/link'
 
 type SearchBarProps = {
 }
@@ -123,13 +123,17 @@ function SearchBar(props: SearchBarProps) {
                 key={c.id}
               >
                 <Link
-                  to={`/dash/${uid}/clippings/${c.id}`}
-                  className='block py-8 px-4 rounded dark:bg-gray-300 bg-gray-400 hover:bg-gray-200 transform hover:scale-105 duration-150'
-                  onClick={() => {
-                    setVisible(false)
-                  }}
+                  href={`/dash/${uid}/clippings/${c.id}`}
                 >
-                  <p className='text-xl leading-normal'>{c.content}</p>
+                  <a
+                    className='block py-8 px-4 rounded dark:bg-gray-300 bg-gray-400 hover:bg-gray-200 transform hover:scale-105 duration-150'
+                    onClick={() => {
+                      setVisible(false)
+                    }}
+                  >
+
+                    <p className='text-xl leading-normal'>{c.content}</p>
+                  </a>
                 </Link>
               </li>
             ))}

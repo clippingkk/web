@@ -1,12 +1,10 @@
 import React from 'react'
-import { HideUntilLoaded } from '@nearform/react-animation'
-import { IBook, searchBookDetail, getBookClippings } from '../../services/books';
 import Card from '../card/card';
 import { WenquBook } from '../../services/wenqu'
-import { Link } from '@reach/router';
+// import Image from 'next/image'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp';
 import { useTranslation } from 'react-i18next';
-const styles = require('./book-info.css').default
+import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
 
 type TBookInfoProp = {
   uid: number
@@ -19,15 +17,26 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
   const { t } = useTranslation()
   return (
     <Card className='mt-20 flex p-12 bg-blue-200 bg-opacity-50 flex-col md:flex-row'>
-      <div className='mr-12'>
+      <div className='mr-12 w-full h-full'>
         <HideUntilLoaded
           imageToLoad={book.image}
         >
-          <img src={book.image} className={styles.image + ' shadow rounded mr-4'} />
+          <img
+           src={book.image}
+            className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300 max-w-xs'
+            alt={book.title}
+           alt="" />
+          {/* <Image
+            src={book.image}
+            className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300'
+            height={320}
+            width={384}
+            alt={book.title}
+          /> */}
         </HideUntilLoaded>
       </div>
 
-      <div className={styles.info}>
+      <div>
         <h2 className='my-4 text-4xl font-bold'>{book.title}</h2>
         <h5 className='my-4 text-2xl'>{book.author}</h5>
         {duration && (
@@ -40,7 +49,7 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
         <a
           href={getUTPLink(UTPService.book, { uid, bid: book.id, theme: KonzertThemeMap.young.id, })}
           target='_blank'
-          className='bg-blue-400 py-2 px-4 mb-2 inline-block hover:underline'
+          className='bg-blue-400 py-2 px-4 mb-2 inline-block hover:underline' rel="noreferrer"
         >
           {t('app.book.share')}
         </a>

@@ -2,27 +2,27 @@ import React from 'react'
 import PageLoading from './components/loading/loading'
 import RouterContainer from './components/router-container/router'
 import NotFound from './pages/not-found/not-found'
-import AdminPanel from './pages/admin/admin'
+import AdminPanel from './pages/dash/[userid]/admin'
 import IndexPage from './pages/index/index'
 import GithubOAuthPage from './pages/auth/github'
 import AuthPage from './pages/auth/auth'
 import SigninPage from './pages/auth/signin'
-import ClippingPage from './pages/clipping/clipping'
+import ClippingPage from './pages/dash/[userid]/clippings/[clippingid]'
 import ReportYearlyPage from './pages/report/yearly'
-import AuthPhone from './pages/auth/auth-phone'
-import AppContainer from './AppContainer'
+import AuthPhone from './pages/auth/phone'
+import AppContainer from './components/AppContainer'
 
 const PrivacyPolicy = React.lazy(() => import(/* webpackPrefetch: true */ './pages/policy/privacy'))
 const DashContainer = React.lazy(() => import(/* webpackPrefetch: true */ './components/dashboard-container/container'))
 const ReleasePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/release/release'))
-const HomePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/home/home'))
-const UploaderPage = React.lazy(() => import(/* webpackPrefetch: true */'./pages/uploader/uploader'))
-const SquarePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/square/square'))
-const BookPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/book/book'))
+const HomePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/home'))
+const UploaderPage = React.lazy(() => import(/* webpackPrefetch: true */'./pages/dash/[userid]/upload'))
+const SquarePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/square'))
+const BookPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/book/[bookid]'))
 
-const ProfilePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/profile/profile'))
-const UncheckedPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/unchecked/unchecked'))
-const SettingsPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/settings/settings'))
+const ProfilePage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/profile'))
+const UncheckedPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/unchecked'))
+const SettingsPage = React.lazy(() => import(/* webpackPrefetch: true */ './pages/dash/[userid]/settings'))
 
 class Root extends React.Component {
   render() {

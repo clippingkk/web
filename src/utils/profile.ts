@@ -11,6 +11,9 @@ class MyProfile {
   static readonly UID_KEY = 'clippingkk-uid'
 
   constructor() {
+    if (!process.browser) {
+      return
+    }
     const t = localStorage.getItem(MyProfile.TOKEN_KEY)
     const u = localStorage.getItem(MyProfile.UID_KEY)
 

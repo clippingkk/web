@@ -1,8 +1,14 @@
 export function checkDarkMode() {
+  if (!process.browser) {
+    return
+  }
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 function watchDarkMode() {
+  if (!process.browser) {
+    return
+  }
   if (!window.matchMedia) return;
 
   window.matchMedia('(prefers-color-scheme: dark)')

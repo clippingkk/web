@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react'
-import { Link } from '@reach/router'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { connect, useDispatch, useSelector } from 'react-redux'
-import { execLogout } from '../../store/user/type';
+import Image from 'next/image'
+import { useDispatch, useSelector } from 'react-redux'
+import { execLogout } from '../../store/user/type'
 // import Tooltip from 'rc-tooltip'
 import { TGlobalStore } from '../../store'
 import { useTranslation } from 'react-i18next';
 import Tooltip from '../tooltip/Tooltip';
-const styles = require('./navigation-bar.css').default
+import styles from './navigation-bar.module.css'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const leftMenu = [
   {
@@ -35,9 +36,10 @@ const leftMenu = [
 function NavigationBar() {
   const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   const dispatch = useDispatch()
+  const { push } = useRouter()
 
   const onLogout = useCallback(() => {
-    dispatch(execLogout())
+    dispatch(execLogout(push))
   }, [])
 
   const { t } = useTranslation()
@@ -45,22 +47,24 @@ function NavigationBar() {
   return (
     <nav className={styles.navbar + ' bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl'}>
       <div className='flex justify-around items-center'>
-        <img
+        <Image
           src={require('../../assets/logo.png').default}
           alt="clippingkk logo"
           className='w-10 h-10 lg:w-20 lg:h-20 mr-2 lg:mr-12'
+          width={40}
+          height={40}
         />
-        <ul className='flex'>
+        <ul className='flex ml-2 lg:ml-12'>
           {leftMenu.map((item, index) => (
-            <li className='mr-3 lg:mr-6' key={index}>
+            <li className='mr-3 lg:mr-6 cursor-pointer' key={index}>
               <Tooltip
                 placement='bottom'
                 overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
               >
                 <Link
-                 to={id === 0 ? '/auth/signin' : item.dest(id)}
-                 title={t(`app.menu.${item.alt}`)}
-                 >
+                  href={id === 0 ? '/auth/signin' : item.dest(id)}
+                  title={t(`app.menu.${item.alt}`)}
+                >
                   <span className='text-3xl lg:text-4xl'>
                     {item.emoji}
                   </span>
@@ -77,11 +81,15 @@ function NavigationBar() {
             overlay={<span>{t('app.menu.settings')}</span>}
           >
             <Link
-              to={id === 0 ? '/auth/signin' : `/dash/${id}/settings`}
-              className='text-3xl lg:text-4xl'
-              title={t('app.menu.settings')}
+              href={id === 0 ? '/auth/signin' : `/dash/${id}/settings`}
+            >
+              <a
+                className='text-3xl lg:text-4xl'
+                title={t('app.menu.settings')}
               >
+
               🛠
+              </a>
             </Link>
           </Tooltip>
         </li>
@@ -91,8 +99,8 @@ function NavigationBar() {
             overlay={<span>{t('app.menu.logout')}</span>}
           >
             <span
-             className='text-3xl lg:text-4xl'
-             title={t('app.menu.logout')}
+              className='text-3xl lg:text-4xl'
+              title={t('app.menu.logout')}
             >
               👋
             </span>
