@@ -5,6 +5,10 @@ import { ApolloProvider } from '@apollo/client'
 import { SWRConfig } from 'swr'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
+
+import '../utils/mixpanel'
+import '../utils/sentry'
+
 import AppContainer from '../components/AppContainer'
 import { client, request } from '../services/ajax'
 import store from '../store/index'
