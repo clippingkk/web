@@ -1,13 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
-import { usePageTrack } from '../../hooks/tracke'
-
-import styles from './style.module.css'
+import Head from 'next/head'
+import { usePageTrack } from '../hooks/tracke'
 
 function NotFound() {
   usePageTrack('notfound')
   return (
-    <div className={'w-full h-full flex justify-center items-center flex-col ' + styles.container}>
+    <div className='flex justify-center items-center flex-col w-screen h-screen'>
+      <Head>
+        <title>not found - clippingkk</title>
+      </Head>
       <h1 className='text-6xl font-light'>
         404
       </h1>
