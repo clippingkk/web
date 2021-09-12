@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import { composeWithDevTools } from 'redux-devtools-extension'
+// import { composeWithDevTools } from 'redux-devtools-extension'
 import userReducer from './user/user'
 import rootSaga from './saga';
 import appReducer from './app/app';
@@ -20,9 +20,9 @@ const store = createStore(
     user: userReducer,
     app: appReducer,
   }),
-  composeWithDevTools(
+  // composeWithDevTools(
     applyMiddleware(saga)
-  )
+  // )
 )
 
 saga.run(rootSaga)

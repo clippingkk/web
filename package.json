@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3008",
     "lint": "next lint",
     "gql": "apollo client:codegen --target=typescript --localSchemaFile=\"./src/schema/schema.json\" --includes=\"./src/schema/**/*.graphql\" --useReadOnlyTypes",
     "test": "jest",
