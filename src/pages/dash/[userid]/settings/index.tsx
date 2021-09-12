@@ -1,6 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
 import { useTranslation } from 'react-i18next'
+import Head from 'next/head'
 import SimpleSwitcher from './simple-switcher'
 import Exports from './exports'
 import WebHooks from './webhooks'
@@ -72,6 +73,9 @@ function SettingsPage(props: SettingsPageProps) {
     <div
       className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-blue-800 bg-opacity-25`}
     >
+      <Head>
+        <title>setting page</title>
+        </Head>
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'> 🛠 {t('app.settings.title')}</h3>
       <GlobalSettings />
 

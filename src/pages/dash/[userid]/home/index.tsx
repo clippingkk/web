@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Head from 'next/head'
 import Link from 'next/link'
 import ListFooter from '../../../../components/list-footer/list-footer';
 import homeListQuery from '../../../../schema/books.graphql'
@@ -74,6 +75,9 @@ function HomePage() {
 
   return (
     <section className={`${styles.home} page`}>
+      <Head>
+        <title>{userProfile.name} clippings</title>
+        </Head>
       {data.me.recents.length > 0 && (
         <div className='mt-8'>
           <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.reading')}</h2>

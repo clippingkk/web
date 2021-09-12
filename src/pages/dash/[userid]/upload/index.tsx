@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import Head from 'next/head'
 import { usePageTrack, useActionTrack } from '../../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { UploadStep } from '../../../../services/uploader'
@@ -56,6 +57,9 @@ function UploaderPage() {
 
   return (
     <section className={styles.uploader}>
+      <Head>
+        <title>同步用户书摘</title>
+        </Head>
       <div
         className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-blue-800 bg-opacity-25 ${styles.box}`}
         onDragOver={stopDragOver}

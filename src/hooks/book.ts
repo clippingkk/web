@@ -43,12 +43,15 @@ export function useSingleBook(doubanId?: string, skip?: boolean): WenquBook | nu
   return book
 }
 
-export function useMultipBook(doubanIds: string[]): bookRequestReturn {
+export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestReturn {
   const [books, setBooks] = useState<WenquBook[]>([])
   const [loading, setLoading] = useState(false)
   const isLoading = useRef(false)
 
   useEffect(() => {
+    if (skip) {
+      return
+    }
     if (!doubanIds) {
       return
     }
@@ -94,7 +97,7 @@ export function useMultipBook(doubanIds: string[]): bookRequestReturn {
       isLoading.current = false
       setLoading(false)
     })
-  }, [doubanIds.join(',')])
+  }, [doubanIds.join(','), skip])
 
   return {
     books,

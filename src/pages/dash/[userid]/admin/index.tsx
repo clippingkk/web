@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Head from 'next/head'
 import { useQuery } from '@apollo/client'
 import { useTable, Row } from 'react-table'
 import uncheckBooksRawQuery from '../../../../schema/admin.graphql'
@@ -60,6 +61,9 @@ function AdminPanel() {
 
   return (
     <div>
+      <Head>
+        <title>homeless book list</title>
+        </Head>
       <Card>
         <h3 className='text-3xl mb-8 text-center'>无家可归的书目们</h3>
         <input

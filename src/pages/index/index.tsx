@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 import Hero from './Hero'
 import Footer from '../../components/footer/Footer'
 import { usePageTrack } from '../../hooks/tracke'
@@ -10,6 +11,7 @@ import { publicData } from '../../schema/__generated__/publicData'
 import TopClippings from './TopClippings'
 import { client } from '../../services/ajax'
 import { InferGetStaticPropsType } from 'next'
+import OGWithIndex from '../../components/og/og-with-index'
 
 export const getStaticProps = async () => {
   const data = await client.query<publicData>({ 
@@ -33,6 +35,10 @@ function IndexPage({ preloadPublicData }: InferGetStaticPropsType<typeof getStat
 
   return (
     <div>
+      <Head>
+        <title>ClippingKK - kindle 书摘管理</title>
+        <OGWithIndex />
+        </Head>
       <Hero />
       <div className='py-4 anna-page-container'>
         <TopBooks books={data?.public.books} />

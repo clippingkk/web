@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import Head from 'next/head'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
 import DashboardContainer from '../../../../components/dashboard-container/container'
 import Divider from '../../../../components/divider/divider'
@@ -27,6 +28,9 @@ function UncheckedPage() {
 
   return (
     <div>
+      <Head>
+        <title>unchecked books</title>
+        </Head>
       <Divider title={t('app.home.unchecked')} />
       <MasonryContainer>
         <React.Fragment>

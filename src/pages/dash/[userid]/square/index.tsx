@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import React from 'react'
+import Head from 'next/head'
 import { useTranslation } from 'react-i18next'
 import fetchSquareDataQuery from '../../../../schema/square.graphql'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
@@ -42,6 +43,9 @@ function SquarePage() {
 
   return (
     <section className='flex items-center justify-center flex-col'>
+      <Head>
+        <title>square</title>
+        </Head>
       <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'>Square</h2>
       <MasonryContainer>
         <React.Fragment>

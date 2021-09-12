@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import Head from 'next/head'
 import authQuery from '../../../schema/auth.graphql'
 import { useLazyQuery } from '@apollo/client'
 import { auth } from '../../../schema/__generated__/auth'
@@ -10,6 +11,7 @@ import { useFormik } from 'formik'
 import FieldInput from '../../../components/input'
 import * as Yup from 'yup'
 import AuthPage from '../auth'
+import OGWithAuth from '../../../components/og/og-with-auth'
 
 type TSigninProps = {
   path: string,
@@ -46,6 +48,10 @@ function Signin(props: TSigninProps) {
 
   return (
     <form className='flex flex-col' onSubmit={formik.handleSubmit}>
+      <Head>
+        <title>登陆</title>
+        <OGWithAuth urlPath='auth/signin' />
+      </Head>
       <FieldInput
         type='email'
         name='email'

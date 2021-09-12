@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import Head from 'next/head'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
@@ -30,6 +31,7 @@ import styles from './profile.module.css'
 import { useRouter } from 'next/router'
 import DashboardContainer from '../../../../components/dashboard-container/container';
 import Link from 'next/link';
+import OGWithUserProfile from '../../../../components/og/og-with-user-profile';
 
 function Profile() {
   const userid = useRouter().query.userid as string
@@ -80,6 +82,10 @@ function Profile() {
 
   return (
     <section>
+      <Head>
+        <title>{data?.me.name}`s profile</title>
+        <OGWithUserProfile profile={data?.me} />
+      </Head>
       <Card className='flex items-center justify-center py-12 w-full lg:w-4/5 mx-auto mt-20 anna-fade-in bg-gray-200 bg-opacity-75'>
         <div className='flex flex-col items-center justify-center w-full'>
           <div className='w-full flex items-center justify-center'>

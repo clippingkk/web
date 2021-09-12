@@ -46,6 +46,7 @@ class DocumentTop extends Document {
 
           <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.annatarhe.com/annatarhe/kindle/fav/favicon-32x32.png-thumbnails" />
           <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.annatarhe.com/annatarhe/kindle/fav/favicon-16x16.png-thumbnails" />
+          <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}' />
         </Head>
         <body>
           <Main />
