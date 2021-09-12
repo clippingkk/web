@@ -66,15 +66,14 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
               alt="clippingkk logo"
               height={64}
               width={64}
-            // className='w-16 h-16 mr-8'
             />
             <span className=' text-gray-700 dark:text-gray-200 ml-8'>{t('app.slogan')}</span>
           </a>
-          <div className='flex justify-center items-center flex-col'>
+          <div className='flex justify-center items-center flex-col mt-8'>
             <Avatar
               img={data?.reportYearly.user.avatar ?? ''}
               name={data?.reportYearly.user.name}
-              className='w-16 h-16'
+              className='w-24 h-24'
             />
             <span className='text-2xl dark:text-gray-200'>{data?.reportYearly.user.name}</span>
           </div>

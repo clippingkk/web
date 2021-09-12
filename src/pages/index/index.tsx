@@ -28,17 +28,13 @@ export const getStaticProps = async () => {
 function IndexPage({ preloadPublicData }: InferGetStaticPropsType<typeof getStaticProps>) {
   usePageTrack('index')
   const { data: newData } = useQuery<publicData>(fetchTopQuery, {
-    skip: !preloadPublicData
+    skip: !!preloadPublicData
   })
 
   const data = preloadPublicData ?? newData
 
   return (
     <div>
-      <Head>
-        <title>ClippingKK - kindle 书摘管理</title>
-        <OGWithIndex />
-        </Head>
       <Hero />
       <div className='py-4 anna-page-container'>
         <TopBooks books={data?.public.books} />
