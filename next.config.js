@@ -4,7 +4,7 @@ module.exports = {
   },
   excludeFile: (str) => /__tests__/.test(str),
   env: {
-    'DEV': true
+    'DEV': process.env.NODE_ENV !== 'production'
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push({
