@@ -4,7 +4,8 @@ FROM node:alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json ./
-RUN npm ci && npm install apollo -g
+RUN npm ci
+RUN npm install apollo -g
 
 # Rebuild the source code only when needed
 FROM node:alpine AS builder
