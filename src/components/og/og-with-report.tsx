@@ -12,8 +12,7 @@ type OGWithReportProps = {
 
 function OGWithReport(props: OGWithReportProps) {
   const url = APP_URL_ORIGIN
-
-  const metaTitle = `${props.data?.reportYearly.user.name} 在 ${props.year} 年共读了 ${props.data?.reportYearly.books.length} 本书- Clippingkk - kindle 书摘管理`
+  const metaTitle = `${props.data?.reportYearly.user.name} 在 ${props.year} 年共读了 ${props.data?.reportYearly.books.length} 本书 - Clippingkk - kindle 书摘管理`
 
   const plainAvatar = props.data?.reportYearly.user.avatar
   const avatar = plainAvatar?.startsWith('http') ?

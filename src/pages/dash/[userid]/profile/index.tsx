@@ -32,15 +32,20 @@ import { useRouter } from 'next/router'
 import DashboardContainer from '../../../../components/dashboard-container/container';
 import Link from 'next/link';
 import OGWithUserProfile from '../../../../components/og/og-with-user-profile';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { client } from '../../../../services/ajax';
 
-function Profile() {
+function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const userid = useRouter().query.userid as string
 
-  const { data, loading, called, fetchMore } = useQuery<profile, profileVariables>(profileQuery, {
+  const { data: localProfileData, loading, called, fetchMore } = useQuery<profile, profileVariables>(profileQuery, {
     variables: {
       id: ~~userid
     }
   })
+
+  // 优先使用本地数据，服务端数据只是为了 seo
+  const data = localProfileData ?? serverResponse.profileServerData
 
   const [doFollow, { loading: followLoading }] = useMutation<followUser, followUserVariables>(followMutation)
   const [doUnfollow, { loading: unfollowLoading }] = useMutation<unfollowUser, unfollowUserVariables>(unfollowMutation)
@@ -198,6 +203,24 @@ function Profile() {
   )
 }
 
+type serverSideProps = {
+  profileServerData: profile
+}
+
+export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
+  const uid = ~~(context.params?.userid ?? -1) as number
+  const profileResponse = await client.query<profile, profileVariables>({
+    query: profileQuery,
+    variables: {
+      id: uid
+    },
+  })
+  return {
+    props: {
+      profileServerData: profileResponse.data,
+    }
+  }
+}
 
 Profile.getLayout = function getLayout(page: React.ReactElement) {
   return (

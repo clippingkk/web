@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { useTranslation } from 'react-i18next'
 import fetchSquareDataQuery from '../../../../schema/square.graphql'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
-import { fetchSquareData, fetchSquareDataVariables } from '../../../../schema/__generated__/fetchSquareData'
+import { fetchSquareData, fetchSquareDataVariables, fetchSquareData_featuredClippings } from '../../../../schema/__generated__/fetchSquareData'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
 import { useMultipBook } from '../../../../hooks/book'
 import MasonryContainer from '../../../../components/masonry-container'
@@ -13,6 +13,11 @@ import ListFooter from '../../../../components/list-footer/list-footer'
 import { useState } from 'react'
 import { APP_API_STEP_LIMIT } from '../../../../constants/config'
 import DashboardContainer from '../../../../components/dashboard-container/container'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { client } from '../../../../services/ajax'
+import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
+import OGWithSquare from '../../../../components/og/og-with-square-page'
+import { fetchClipping_clipping } from '../../../../schema/__generated__/fetchClipping'
 
 // function DevelopingAlert() {
 //   const { t } = useTranslation()
@@ -24,28 +29,33 @@ import DashboardContainer from '../../../../components/dashboard-container/conta
 //   )
 // }
 
-function SquarePage() {
+function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   usePageTrack('square')
   const { t } = useTranslation()
   useTitle(t('app.square.title'))
 
   const [reachEnd, setReachEnd] = useState(false)
 
-  const { data, loading, fetchMore, called } = useQuery<fetchSquareData, fetchSquareDataVariables>(fetchSquareDataQuery, {
+  const { data: localData, loading, fetchMore, called } = useQuery<fetchSquareData, fetchSquareDataVariables>(fetchSquareDataQuery, {
     variables: {
       pagination: {
         limit: APP_API_STEP_LIMIT,
       }
-    }
+    },
+    // skip: !!serverResponse.squareServerData
   })
 
+  const data = localData ?? serverResponse.squareServerData
+  // 这里会翻页，所以还是用客户端的书列表
+  // ssr 的数据用来做 seo
   const books = useMultipBook(data?.featuredClippings.map(x => x.bookID) || [])
 
   return (
     <section className='flex items-center justify-center flex-col'>
       <Head>
-        <title>square</title>
-        </Head>
+        <title>square - clippingkk</title>
+        <OGWithSquare books={serverResponse.books} />
+      </Head>
       <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'>Square</h2>
       <MasonryContainer>
         <React.Fragment>
@@ -63,7 +73,7 @@ function SquarePage() {
       </MasonryContainer>
       <ListFooter
         loadMoreFn={() => {
-          if (loading || !called) {
+          if (loading || !called || !fetchMore) {
             return
           }
           fetchMore({
@@ -78,9 +88,20 @@ function SquarePage() {
                 setReachEnd(true)
                 return prev
               }
+
+              const resultDataList = [
+                ...(prev.featuredClippings ?? []),
+                ...fetchMoreResult.featuredClippings
+              ].reduce((acc, cur) => {
+                if (acc.findIndex(x => x.id === cur.id) === -1) {
+                  acc.push(cur)
+                }
+                return acc
+              }, [] as fetchSquareData_featuredClippings[])
+
               return {
                 ...prev,
-                featuredClippings: [...prev.featuredClippings, ...fetchMoreResult.featuredClippings]
+                featuredClippings: resultDataList
               }
             }
           })
@@ -89,6 +110,44 @@ function SquarePage() {
       />
     </section>
   )
+}
+
+type serverSideProps = {
+  squareServerData: fetchSquareData
+  books: WenquBook[]
+}
+
+export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
+  const squareResponse = await client.query<fetchSquareData, fetchSquareDataVariables>({
+    query: fetchSquareDataQuery,
+    variables: {
+      pagination: {
+        limit: APP_API_STEP_LIMIT,
+      }
+    },
+  })
+
+  const dbIds = squareResponse.
+    data.
+    featuredClippings.
+    map(x => x.bookID).
+    filter(x => x.length > 3) ?? []
+
+  let booksServerData: WenquBook[] = []
+
+  if (dbIds.length >= 1) {
+
+    const query = dbIds.join('&dbIds=')
+    const books = await wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`)
+    booksServerData.push(...books.books)
+  }
+
+  return {
+    props: {
+      squareServerData: squareResponse.data,
+      books: booksServerData
+    }
+  }
 }
 
 SquarePage.getLayout = function getLayout(page: React.ReactElement) {
