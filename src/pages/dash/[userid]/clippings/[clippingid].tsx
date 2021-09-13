@@ -144,7 +144,6 @@ type serverSideProps = {
   bookServerData: WenquBook | null
 }
 
-
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
   const cid = ~~(context.params?.clippingid ?? -1) as number
   // const uid = ~~(context.params?.userid ?? -1) as number

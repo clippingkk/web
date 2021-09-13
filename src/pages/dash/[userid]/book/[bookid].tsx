@@ -19,14 +19,17 @@ import styles from './book.module.css'
 import { useRouter } from 'next/router'
 import DashboardContainer from '../../../../components/dashboard-container/container';
 import OGWithBook from '../../../../components/og/og-with-book';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu';
 
-function BookPage() {
+function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { userid, bookid } = useRouter().query as { userid: string, bookid: string }
   usePageTrack('book', {
     bookId: bookid
   })
   const dispatch = useDispatch()
-  const bookData = useSingleBook(bookid)
+  const bookLocalData = useSingleBook(bookid, !!serverResponse.bookServerData)
+  const bookData = serverResponse.bookServerData ?? bookLocalData
 
   const [hasMore, setHasMore] = useState(true)
   const { data: clippingsData, fetchMore, loading } = useQuery<book, bookVariables>(bookQuery, {
@@ -46,7 +49,6 @@ function BookPage() {
     dispatch(changeBackground(bookData.image))
   }, [bookData, changeBackground])
 
-  useTitle(bookData?.title)
   const { t } = useTranslation()
 
   const duration = useMemo(() => {
@@ -65,7 +67,7 @@ function BookPage() {
   return (
     <section className={`${styles.bookPage} page anna-fade-in`}>
       <Head>
-        <title>{bookData.title}</title>
+        <title>{bookData.title} - clippingkk</title>
         <OGWithBook book={bookData} uid={~~userid} />
         </Head>
       <BookInfo
@@ -122,6 +124,26 @@ function BookPage() {
       </MasonryContainer>
     </section>
   )
+}
+
+
+type serverSideProps = {
+  bookServerData: WenquBook | null
+}
+
+export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
+  const dbId = context.params?.bookid ?? ''
+  const book = await wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`).then(bs => {
+    if (bs.count !== 1) {
+      return null
+    }
+    return bs.books[0]
+  })
+  return {
+    props: {
+      bookServerData: book
+    }
+  }
 }
 
 BookPage.getLayout = function getLayout(page: React.ReactElement) {
