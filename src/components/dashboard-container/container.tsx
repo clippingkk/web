@@ -5,7 +5,7 @@ import SearchBar from '../searchbar/searchbar'
 
 import styles from './container.module.css'
 
-const defaultBg = require('../../assets/bg.jpg').default
+// const defaultBg = require('../../assets/bg.jpg').default
 
 function DashboardContainer(props: any) {
   // const { width, height } = window.screen

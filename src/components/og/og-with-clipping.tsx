@@ -2,7 +2,7 @@ import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping'
 import { WenquBook } from '../../services/wenqu'
-const logo = require('../../assets/logo.png').default
+import logo from '../../assets/logo.png'
 
 type OGWithClippingProps = {
   clipping?: fetchClipping_clipping
@@ -15,7 +15,7 @@ function OGWithClipping(props: OGWithClippingProps) {
   const bookTitle = props.book?.title ?? props.clipping?.title
   const metaTitle = `${bookTitle} - ${props.clipping?.creator.name} 的书摘录 - clippingkk`
 
-  const logoLink = APP_URL_ORIGIN + logo
+  const logoLink = APP_URL_ORIGIN + logo.src
 
   return (
     <React.Fragment>

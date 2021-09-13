@@ -11,6 +11,7 @@ import profile from '../../utils/profile';
 import { useTranslation } from 'react-i18next';
 import SignInWithApple from '../../components/sign-in-with-apple/sign-in-with-apple';
 import { useRouter } from 'next/router';
+import logo from '../../assets/logo.png'
 
 function checkIsCurrentPath({ isCurrent }: any) {
   return {
@@ -53,7 +54,7 @@ function AuthPage(props: AuthPageProps) {
       <Card className='with-slide-in'>
         <div className='flex items-center justify-center flex-col mb-4'>
           <Image
-            src={require('../../assets/logo.png').default}
+            src={logo}
             alt="clippingkk logo"
             // className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
             width={96}

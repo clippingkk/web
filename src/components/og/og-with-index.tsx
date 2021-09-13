@@ -1,8 +1,6 @@
 import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
-import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping'
-import { WenquBook } from '../../services/wenqu'
-const logo = require('../../assets/logo.png').default
+import logo from '../../assets/logo.png'
 
 type OGWithIndexProps = {
 }
@@ -12,7 +10,7 @@ function OGWithIndex(props: OGWithIndexProps) {
 
   const metaTitle = `Clippingkk - kindle 书摘管理`
 
-  const logoLink = APP_URL_ORIGIN + logo
+  const logoLink = APP_URL_ORIGIN + logo.src
 
   return (
     <React.Fragment>

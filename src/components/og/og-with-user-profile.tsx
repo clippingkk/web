@@ -1,7 +1,7 @@
 import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import { profile_me } from '../../schema/__generated__/profile'
-const logo = require('../../assets/logo.png').default
+import logo from '../../assets/logo.png'
 
 type OGWithUserProfileProps = {
   profile?: profile_me
@@ -12,7 +12,7 @@ function OGWithUserProfile(props: OGWithUserProfileProps) {
 
   const metaTitle = `${props.profile?.name} - 书摘 - clippingkk`
 
-  const logoLink = APP_URL_ORIGIN + logo
+  const logoLink = APP_URL_ORIGIN + logo.src
 
   return (
     <React.Fragment>

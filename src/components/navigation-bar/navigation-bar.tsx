@@ -9,6 +9,7 @@ import Tooltip from '../tooltip/Tooltip';
 import styles from './navigation-bar.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import logo from '../../assets/logo.png'
 
 const leftMenu = [
   {
@@ -48,7 +49,7 @@ function NavigationBar() {
     <nav className={styles.navbar + ' bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl'}>
       <div className='flex justify-around items-center'>
         <Image
-          src={require('../../assets/logo.png').default}
+          src={logo}
           alt="clippingkk logo"
           className='w-10 h-10 lg:w-20 lg:h-20 mr-2 lg:mr-12'
           width={40}

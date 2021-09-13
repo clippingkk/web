@@ -1,8 +1,6 @@
 import React from 'react'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import { fetchYearlyReport } from '../../schema/__generated__/fetchYearlyReport'
-import { WenquBook } from '../../services/wenqu'
-const logo = require('../../assets/logo.png').default
 
 type OGWithReportProps = {
   data?: fetchYearlyReport

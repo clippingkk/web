@@ -13,6 +13,7 @@ import OGWithReport from '../../../components/og/og-with-report'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { client } from '../../../services/ajax'
+import logo from '../../../assets/logo.png'
 
 function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // const l = useLocation()
@@ -62,7 +63,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
             href='https://clippingkk.annatarhe.com'
           >
             <Image
-              src={require('../../../assets/logo.png').default}
+              src={logo}
               alt="clippingkk logo"
               height={64}
               width={64}

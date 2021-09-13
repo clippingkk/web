@@ -1,6 +1,6 @@
 import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
-const logo = require('../../assets/logo.png').default
+import logo from '../../assets/logo.png'
 
 type OGWithAuthProps = {
   urlPath: string
@@ -9,10 +9,9 @@ type OGWithAuthProps = {
 function OGWithAuth(props: OGWithAuthProps) {
   const url = `${APP_URL_ORIGIN}/${props.urlPath}`
 
-  const bookTitle = '登陆'
   const metaTitle = `登陆 - 书摘 - clippingkk`
 
-  const logoLink = APP_URL_ORIGIN + logo
+  const logoLink = APP_URL_ORIGIN + logo.src
 
   return (
     <React.Fragment>

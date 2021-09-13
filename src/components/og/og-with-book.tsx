@@ -1,8 +1,7 @@
 import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
-import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping'
 import { WenquBook } from '../../services/wenqu'
-const logo = require('../../assets/logo.png').default
+import logo from '../../assets/logo.png'
 
 type OGWithBookProps = {
   uid: number
@@ -15,7 +14,7 @@ function OGWithBook(props: OGWithBookProps) {
   const bookTitle = props.book?.title
   const metaTitle = `${bookTitle} - 书摘 - clippingkk`
 
-  const logoLink = APP_URL_ORIGIN + logo
+  const logoLink = APP_URL_ORIGIN + logo.src
 
   return (
     <React.Fragment>
