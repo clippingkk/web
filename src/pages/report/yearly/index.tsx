@@ -50,7 +50,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
     <div className='w-full anna-page-container py-28 flex justify-center items-center h-min-screen'>
       <Head>
         <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
-        <OGWithReport data={data} year={year} />
+        <OGWithReport data={data} year={year} books={books} />
       </Head>
       {loading ? (
         <div>

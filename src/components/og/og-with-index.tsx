@@ -1,6 +1,7 @@
 import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import logo from '../../assets/logo.png'
+import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 
 type OGWithIndexProps = {
 }
@@ -22,13 +23,17 @@ function OGWithIndex(props: OGWithIndexProps) {
       <meta property="og:site_name" content='clippingkk' />
       <meta property="article:author" content='AnntarHe' />
 
-      <meta name="twitter:card" content={metaTitle} />
-      <meta name="twitter:site" content='clippingkk' />
-      <meta name="twitter:creator" content={`@AnnatarHe`} />
-      <meta name="twitter:url" content={url} />
-      <meta name="twitter:title" content={metaTitle} />
-      <meta name="twitter:description" content={metaTitle} />
-      <meta name="twitter:image" content={logoLink} />
+      <meta name='description' content={metaTitle} />
+      <meta name='keyword' content={`clippingkk, 书摘, 首页` } />
+      <MetaTwitterCard
+        card={TwitterCardType.summary}
+        site='AnnatarHe'
+        creator='AnnatarHe'
+        url={url}
+        title={metaTitle}
+        description={metaTitle}
+        image={logoLink}
+      />
     </React.Fragment>
   )
 }

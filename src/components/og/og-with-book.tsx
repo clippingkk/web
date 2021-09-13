@@ -2,6 +2,7 @@ import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import { WenquBook } from '../../services/wenqu'
 import logo from '../../assets/logo.png'
+import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 
 type OGWithBookProps = {
   uid: number
@@ -10,11 +11,10 @@ type OGWithBookProps = {
 
 function OGWithBook(props: OGWithBookProps) {
   const url = `${APP_URL_ORIGIN}/dash/${props.uid}/book/${props.book?.doubanId}`
-
   const bookTitle = props.book?.title
   const metaTitle = `${bookTitle} - 书摘 - clippingkk`
 
-  const logoLink = APP_URL_ORIGIN + logo.src
+  const logoLink = props.book?.image ?? (APP_URL_ORIGIN + logo.src)
 
   return (
     <React.Fragment>
@@ -26,13 +26,17 @@ function OGWithBook(props: OGWithBookProps) {
       <meta property="og:site_name" content='clippingkk' />
       <meta property="article:author" content={props.book?.author} />
 
-      <meta name="twitter:card" content={props.book?.title} />
-      <meta name="twitter:site" content='clippingkk' />
-      <meta name="twitter:creator" content={`@${props.book?.author}`} />
-      <meta name="twitter:url" content={url} />
-      <meta name="twitter:title" content={metaTitle} />
-      <meta name="twitter:description" content={props.book?.title} />
-      <meta name="twitter:image" content={logoLink} />
+      <meta name='description' content={props.book?.title} />
+      <meta name='keyword' content={`${props.book?.title}, ${props.book?.author}, clippingkk, 书摘` } />
+      <MetaTwitterCard
+        card={TwitterCardType.summary}
+        site='AnnatarHe'
+        creator={props.book?.author ?? ''}
+        url={url}
+        title={metaTitle}
+        description={props.book?.title ?? ''}
+        image={logoLink}
+      />
     </React.Fragment>
   )
 }

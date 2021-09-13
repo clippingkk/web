@@ -1,6 +1,7 @@
 import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import logo from '../../assets/logo.png'
+import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 
 type OGWithAuthProps = {
   urlPath: string
@@ -12,6 +13,7 @@ function OGWithAuth(props: OGWithAuthProps) {
   const metaTitle = `登陆 - 书摘 - clippingkk`
 
   const logoLink = APP_URL_ORIGIN + logo.src
+  const desc = '书摘 kindle'
 
   return (
     <React.Fragment>
@@ -19,17 +21,23 @@ function OGWithAuth(props: OGWithAuthProps) {
       <meta property="og:type" content='website' />
       <meta property="og:title" content={metaTitle} />
       <meta property="og:image" content={logoLink} />
-      <meta property="og:description" content='书摘 kindle' />
+      <meta property="og:description" content={desc} />
       <meta property="og:site_name" content='clippingkk' />
       <meta property="article:author" content='AnnatarHe' />
 
-      <meta name="twitter:card" content={metaTitle} />
-      <meta name="twitter:site" content='clippingkk' />
-      <meta name="twitter:creator" content={`@AnnatarHe`} />
-      <meta name="twitter:url" content={url} />
-      <meta name="twitter:title" content={metaTitle} />
-      <meta name="twitter:description" content='书摘 kindle' />
-      <meta name="twitter:image" content={logoLink} />
+      <meta name='description' content={desc} />
+      <meta name='keyword' content='clippingkk, 书摘, 登陆' />
+
+      <MetaTwitterCard
+        card={TwitterCardType.summary}
+        site='AnnatarHe'
+        creator='AnnatarHe'
+        url={url}
+        title={metaTitle}
+        description={desc}
+        image={logoLink}
+      />
+
     </React.Fragment>
   )
 }
