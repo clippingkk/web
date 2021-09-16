@@ -133,6 +133,13 @@ type serverSideProps = {
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
   const dbId = context.params?.bookid ?? ''
+  if (dbId.length <= 3) {
+    return {
+      props: {
+        bookServerData: null
+      }
+    }
+  }
   const book = await wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`).then(bs => {
     if (bs.count !== 1) {
       return null

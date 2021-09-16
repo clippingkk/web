@@ -153,13 +153,21 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
       id: ~~cid
     },
   })
-  // const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-  const book = await wenquRequest<WenquSearchResponse>(`/books/search?dbId=${clippingsResponse.data.clipping.bookID}`).then(bs => {
-    if (bs.count !== 1) {
-      return null
-    }
-    return bs.books[0]
-  })
+
+  const bookID = clippingsResponse.data.clipping.bookID
+
+  let book: WenquBook | null
+  if (bookID.length <= 3) {
+    book = null
+  } else {
+    // const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
+    book = await wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`).then(bs => {
+      if (bs.count !== 1) {
+        return null
+      }
+      return bs.books[0]
+    })
+  }
   return {
     props: {
       clippingServerData: clippingsResponse.data,
