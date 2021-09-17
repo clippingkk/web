@@ -1,56 +1,145 @@
 import React from 'react'
-import styles from './Features.module.css'
 
-const feats = [
-  {
-    img:
-      'https://github.com/AnnatarHe/kindle-viewer/raw/master/assets/index-page.jpg',
-    title: '清爽',
-    sub: '简单，直接，高效, 无推送, 无骚扰',
-  },
-  {
-    img:
-      'https://github.com/AnnatarHe/kindle-viewer/raw/master/assets/list-clips.jpg',
-    title: '现代',
-    sub: '专为现代平台开发，效果丰富，体验良好',
-  },
-  {
-    img:
-      'https://github.com/AnnatarHe/kindle-viewer/raw/master/assets/detail-clip.jpg',
-    title: '强大',
-    sub: '拖入 My Clippings.txt 即可，web 与小程序版本同步',
-  },
-  {
-    img:
-      'https://github.com/clippingkk/clippingkk-mobile/raw/master/docs/flutter_01.png',
-    title: '跨平台',
-    sub: '提供 Web, 小程序，及 Android 和 Windows UWP 版本',
-  },
-]
-
-class Features extends React.PureComponent {
-  renderFeatures = () => {
-    return feats.map((f, i) => (
-      <div className={styles.feature + ' flex flex-col items-center justify-between hover:bg-gray-300 p-8 md:px-20 md:py-20 md:flex-row'} key={i}>
-        <div className={styles.describes}>
-          <h3 className={styles.title}>{f.title}</h3>
-          <p className={styles.sub}>{f.sub}</p>
-        </div>
-        <div className={styles.featImage}>
-          <img src={f.img} className={styles.img} />
-        </div>
-      </div>
-    ))
-  }
-
-  render() {
-    return (
-      <section className={styles.container}>
-        <h2 className={styles.h2}>Features</h2>
-        <div className={styles.features}>{this.renderFeatures()}</div>
-      </section>
-    )
-  }
+type featureColorPattern = {
+  title: string[]
+  rows: string[]
 }
+
+const colorPatterns: featureColorPattern[] = [{
+  title: [
+    'from-green-400',
+    'to-blue-500',
+    'bg-clip-text',
+    'text-transparent',
+    'bg-gradient-to-r'
+  ],
+  rows: [
+    'text-green-400',
+    'text-green-600',
+    'text-green-800',
+    'text-green-900',
+  ]
+}, {
+  title: [
+    'from-red-400',
+    'to-pink-500',
+    'bg-clip-text',
+    'text-transparent',
+    'bg-gradient-to-r'
+  ],
+  rows: [
+    'text-blue-400',
+    'text-blue-600',
+    'text-blue-800',
+    'text-blue-900',
+  ]
+}, {
+  title: [
+    'from-indigo-400',
+    'to-purple-500',
+    'bg-clip-text',
+    'text-transparent',
+    'bg-gradient-to-r'
+  ],
+  rows: [
+    'text-indigo-400',
+    'text-indigo-600',
+    'text-indigo-800',
+    'text-indigo-900',
+  ]
+
+}]
+
+type FeatureSectionType = {
+  title: string
+  items: {
+    feature: string
+    desc?: string
+    block?: React.ReactElement
+  }[]
+  colorPattern: featureColorPattern
+}
+
+function FeatureSection(props: FeatureSectionType) {
+  return (
+    <div className='flex items-center w-full justify-around py-16'>
+      <h3 className={'text-8xl overflow-visible text-center max-w-xs ' + props.colorPattern.title.join(' ')}>
+        {props.title}
+      </h3>
+      <ul className='text-6xl ml-12'>
+        {props.items.map(((x, i) => (
+          <li key={x.feature} className='mb-10'>
+            <h4 className={props.colorPattern.rows[i]}>
+              {x.feature}
+            </h4>
+            {x.desc && (
+              <h6 className='text-base'>
+                {x.desc}
+              </h6>
+            )}
+            {x.block}
+          </li>
+        )))}
+      </ul>
+    </div>
+  )
+}
+
+function Features() {
+  return (
+    <div className='w-full flex justify-center flex-col p-10'>
+      <h2 className='text-3xl text-center dark:text-gray-100'>Feature List</h2>
+      <FeatureSection
+        title='Open'
+        colorPattern={colorPatterns[0]}
+        items={[{
+          feature: 'Export To Notion'
+        }, {
+          feature: 'Export To Flomo'
+        }, {
+          feature: 'Webhook'
+        }, {
+          feature: 'Web widget',
+          desc: '支持在任意外部网站引用你的读书笔记 (除非微信屏蔽 狗头)',
+          block: (<p>preview image here</p>)
+        }]}
+      />
+      <FeatureSection
+        colorPattern={colorPatterns[1]}
+        title='Modern'
+        items={[{
+          feature: 'Arch'
+        }, {
+          feature: 'Code'
+        }, {
+          feature: 'Mind: the most important thing'
+        }]}
+      />
+      <FeatureSection
+        colorPattern={colorPatterns[2]}
+        title='Sense'
+        items={[{
+          feature: 'iOS widget'
+        }, {
+          feature: 'Privacy'
+        }, {
+          feature: 'Comminicate'
+        }]}
+      />
+      <FeatureSection
+        colorPattern={colorPatterns[0]}
+        title='Make Reading Greate Aagain'
+        items={[{
+          feature: 'platforms'
+        }, {
+          feature: 'close to user'
+        }, {
+          feature: 'free'
+        }]}
+      />
+    </div>
+  )
+}
+
 
 export default Features

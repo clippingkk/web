@@ -12,6 +12,7 @@ import TopBooks from './index/TopBooks'
 import TopClippings from './index/TopClippings'
 import TopUsers from './index/TopUsers'
 import OGWithIndex from '../components/og/og-with-index'
+import Features from './index/Features'
 
 export const getStaticProps = async () => {
   const data = await client.query<publicData>({ 
@@ -44,6 +45,7 @@ function IndexPage({ preloadPublicData }: InferGetStaticPropsType<typeof getStat
         <TopBooks books={data?.public.books} />
         <TopClippings clippings={data?.public.clippings} />
         <TopUsers users={data?.public.users} />
+        <Features />
       </div>
       <Footer />
     </div>
