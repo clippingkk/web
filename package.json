@@ -15,6 +15,7 @@
     "release": "npm run release:base --",
     "release:pre": "npm run release:base -- --prerelease alpha",
     "coveralls:backup": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "postinstall": "npm install apollo graphql -g && npm run gql && npm run build",
     "coveralls": "exit 0"
   },
   "repository": {
@@ -34,6 +35,9 @@
       "./test/helpers/setup-test-env.js"
     ]
   },
+    "engines": {
+      "node": "*"
+    },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.7",
