@@ -15,7 +15,7 @@
     "release": "npm run release:base --",
     "release:pre": "npm run release:base -- --prerelease alpha",
     "coveralls:backup": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "prepare": "npx apollo client:codegen --target=typescript --localSchemaFile=\"./src/schema/schema.json\" --includes=\"./src/schema/**/*.graphql\" --useReadOnlyTypes && npm run build",
+    "prepare": "npm config set prefix '/tmp/npm-global-cache' && npm install -g apollo graphql && npm run gql && npm run build",
     "coveralls": "exit 0"
   },
   "repository": {
@@ -72,7 +72,7 @@
     "enzyme": "^3.11.0",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
-    "graphql": "^15.6.0",
+    "graphql": "^15.5.3",
     "graphql-tag": "^2.12.3",
     "husky": "^6.0.0",
     "ignore-loader": "^0.1.2",
@@ -98,7 +98,7 @@
     "yaml-loader": "^0.6.0"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.15",
+    "@apollo/client": "^3.4.15",
     "@babel/runtime": "^7.12.5",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -178,8 +178,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "resolutions": {
-    "graphql": "^15.5.0"
   }
 }
