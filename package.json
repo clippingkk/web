@@ -15,7 +15,7 @@
     "release": "npm run release:base --",
     "release:pre": "npm run release:base -- --prerelease alpha",
     "coveralls:backup": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "postinstall": "npm install apollo graphql -g && npm run gql && npm run build",
+    "prepare": "npx apollo client:codegen --target=typescript --localSchemaFile=\"./src/schema/schema.json\" --includes=\"./src/schema/**/*.graphql\" --useReadOnlyTypes && npm run build",
     "coveralls": "exit 0"
   },
   "repository": {
@@ -35,9 +35,9 @@
       "./test/helpers/setup-test-env.js"
     ]
   },
-    "engines": {
-      "node": "*"
-    },
+  "engines": {
+    "node": "*"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.7",
@@ -72,6 +72,7 @@
     "enzyme": "^3.11.0",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
+    "graphql": "^15.6.0",
     "graphql-tag": "^2.12.3",
     "husky": "^6.0.0",
     "ignore-loader": "^0.1.2",
@@ -121,7 +122,6 @@
     "file-saver": "^2.0.5",
     "fingerprintjs2": "^2.1.2",
     "formik": "^2.2.5",
-    "graphql": "^15.5.0",
     "i18next": "^20.2.1",
     "i18next-browser-languagedetector": "^6.0.1",
     "intersection-observer": "^0.12.0",
