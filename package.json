@@ -15,7 +15,6 @@
     "release": "npm run release:base --",
     "release:pre": "npm run release:base -- --prerelease alpha",
     "coveralls:backup": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "prepare": "mkdir ~/.npm-global && npm config set prefix '~/.npm-global' && export PATH=~/.npm-global/bin:$PATH && npm install -g apollo graphql && npm run gql && npm run build",
     "coveralls": "exit 0"
   },
   "repository": {

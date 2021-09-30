@@ -1,0 +1,8 @@
+build:
+  - echo "build..."
+  - mkdir ~/.npm-global
+  - npm config set prefix '~/.npm-global'
+  - export PATH=~/.npm-global/bin:$PATH
+  - npm install -g apollo graphql
+  - npm run gql 
+  - npm run build
