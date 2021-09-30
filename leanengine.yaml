@@ -6,3 +6,5 @@ build:
   - npm install -g apollo graphql
   - npm run gql 
   - npm run build
+  - export PORT=$LEANCLOUD_APP_PORT
+  - echo "PORT: " $PORT
