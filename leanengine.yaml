@@ -7,5 +7,5 @@ build:
   - npm run gql 
   - npm run build
   - export PORT=$LEANCLOUD_APP_PORT
-  - echo 'PORT: ' $PORT
+  - echo 'PORT ' $PORT
 
