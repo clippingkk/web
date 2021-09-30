@@ -136,7 +136,6 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   let booksServerData: WenquBook[] = []
 
   if (dbIds.length >= 1) {
-
     const query = dbIds.join('&dbIds=')
     const books = await wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`)
     booksServerData.push(...books.books)
