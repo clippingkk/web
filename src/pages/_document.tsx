@@ -25,7 +25,7 @@ class DocumentTop extends Document {
           })}
           {React.createElement('meta', {
             name: 'theme-color',
-            content: 'rgba(33, 150, 243, 0.9)',
+            content: 'rgba(30, 34, 31, 0.9)',
             media: '(prefers-color-scheme: dark)'
           })}
           {/* <meta
@@ -38,7 +38,6 @@ class DocumentTop extends Document {
             content="rgba(33, 150, 243, 0.9)"
             media="(prefers-color-scheme: dark)"
           /> */}
-          {/* <title>title here</title> */}
           <link href="https://cdn.annatarhe.com" rel='preconnect' crossOrigin='true' />
           <link href="https://ck-cdn.annatarhe.cn" rel='preconnect' crossOrigin='true' />
           <link href="https://clippingkk-api.annatarhe.com" rel='preconnect' crossOrigin='true' />
