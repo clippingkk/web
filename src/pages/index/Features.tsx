@@ -5,50 +5,53 @@ type featureColorPattern = {
   rows: string[]
 }
 
-const colorPatterns: featureColorPattern[] = [{
-  title: [
-    'from-green-400',
-    'to-blue-500',
-    'bg-clip-text',
-    'text-transparent',
-    'bg-gradient-to-r'
-  ],
-  rows: [
-    'text-green-400',
-    'text-green-600',
-    'text-green-800',
-    'text-green-900',
-  ]
-}, {
-  title: [
-    'from-red-400',
-    'to-pink-500',
-    'bg-clip-text',
-    'text-transparent',
-    'bg-gradient-to-r'
-  ],
-  rows: [
-    'text-blue-400',
-    'text-blue-600',
-    'text-blue-800',
-    'text-blue-900',
-  ]
-}, {
-  title: [
-    'from-indigo-400',
-    'to-purple-500',
-    'bg-clip-text',
-    'text-transparent',
-    'bg-gradient-to-r'
-  ],
-  rows: [
-    'text-indigo-400',
-    'text-indigo-600',
-    'text-indigo-800',
-    'text-indigo-900',
-  ]
-
-}]
+const colorPatterns: featureColorPattern[] = [
+  {
+    title: [
+      'from-green-400',
+      'to-blue-500',
+      'bg-clip-text',
+      'text-transparent',
+      'bg-gradient-to-r'
+    ],
+    rows: [
+      'text-green-400',
+      'text-green-600',
+      'text-green-400',
+      'text-green-600',
+      'text-green-400',
+      'text-green-600',
+    ]
+  }, {
+    title: [
+      'from-red-400',
+      'to-pink-500',
+      'bg-clip-text',
+      'text-transparent',
+      'bg-gradient-to-r'
+    ],
+    rows: [
+      'text-blue-400',
+      'text-blue-600',
+      'text-blue-400',
+      'text-blue-600',
+    ]
+  }, {
+    title: [
+      'from-indigo-400',
+      'to-purple-500',
+      'bg-clip-text',
+      'text-transparent',
+      'bg-gradient-to-r'
+    ],
+    rows: [
+      'text-indigo-400',
+      'text-indigo-600',
+      'text-indigo-800',
+      'text-indigo-900',
+    ]
+  }
+]
 
 type FeatureSectionType = {
   title: string
@@ -100,7 +103,7 @@ function Features() {
           feature: 'Webhook'
         }, {
           feature: 'Web widget',
-          desc: '支持在任意外部网站引用你的读书笔记 (除非微信屏蔽 狗头)',
+          desc: '支持在任意外部网站引用你的读书笔记 (除非微信屏蔽)',
           block: (<p>preview image here</p>)
         }]}
       />
