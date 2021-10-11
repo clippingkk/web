@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 import Head from 'next/head'
 import fetchTopQuery from '../schema/public.graphql'
 import { publicData } from '../schema/__generated__/publicData'
-import { InferGetStaticPropsType } from 'next'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Footer from '../components/footer/Footer'
 import { usePageTrack } from '../hooks/tracke'
 import { client } from '../services/ajax'
@@ -14,7 +14,7 @@ import TopUsers from './index/TopUsers'
 import OGWithIndex from '../components/og/og-with-index'
 import Features from './index/Features'
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const data = await client.query<publicData>({ 
     query: fetchTopQuery
   })
@@ -23,6 +23,7 @@ export const getStaticProps = async () => {
     props: {
       preloadPublicData: data.data
     },
+    revalidate: true
   }
 }
 
