@@ -153,4 +153,38 @@ app:
             notion:
                 title: Notion
                 submit: export to notion
+    index:
+        features:
+            open:
+                title: Open
+                f1: Export To Notion
+                f2: Export To Flomo
+                f2Desc: copy your flomo endpoint in setting page
+                f3: Web Hook
+                f4: Web Widget
+                f4Desc: click `copy embed html` in detail page
+            modern:
+                title: Modern
+                f1: Arch
+                f1Desc: The Modern software architecture used in this app
+                f2: Code
+                f2Desc: Good tasty code here
+                f3: Mindset
+                f3Desc: The most important - we have real readers mindset
+            sense:
+                title: Sense
+                f1: iOS Widget
+                f1Desc: we offer iOS widget to display your clippings in home screen
+                f2: Privacy
+                f2Desc: we really care about your privacy. So you have option to hide some clippings you highlighted
+                f3: Comminicate
+                f3Desc: You can leave some deep comments here and comminicate with each other
+            reading4:
+                title: Make Reading Greate Aagain
+                f1: Multip Platform
+                f1Desc: iOS, wechat mini program
+                f2: Close to readers
+                f2Desc: other readers can reach your steps
+                f3: Free
+                f3Desc: maybe the last Free land can share your readings
 

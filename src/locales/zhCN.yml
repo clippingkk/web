@@ -152,3 +152,38 @@ app:
             notion:
                 title: Notion
                 submit: 导出至 notion
+    index:
+        features:
+            open:
+                title: 开放
+                f1: 导出到 Notion
+                f2: 导出到 Flomo
+                f2Desc: 在设置页面复制 flomo 连接
+                f3: Web Hook
+                f4: 网页分享组件
+                f4Desc: 在详情页点击 `复制 HTML`
+            modern:
+                title: 现代
+                f1: 架构
+                f1Desc: 现代软件架构上组织的产品，非常自豪~
+                f2: 代码
+                f2Desc: 优雅的代码质量
+                f3: 思维模式
+                f3Desc: 最重要的 —— 思维模式。 我们是真正的阅读者，有着不一样的思维模式（和而不同）
+            sense:
+                title: 产品洞见
+                f1: iOS 小组件
+                f1Desc: 我们为您的 iPhone 桌面提供小组件，方便随时 review 曾经的阅读状况
+                f2: 隐私
+                f2Desc: 我们真心关注您的隐私情况 —— 您可屏蔽书摘的对外访问情况
+                f3: 交流
+                f3Desc: 您可留下一些深思熟虑和其他阅读者共同交流
+            reading4:
+                title: 使长阅读再次伟大
+                f1: 多平台
+                f1Desc: iOS, 微信小程序
+                f2: 追随师者
+                f2Desc: 其他读者可以方便地追踪您的阅读轨迹
+                f3: 自由
+                f3Desc: 也许是为数不多愿意分享自己阅读感知的地方了
+

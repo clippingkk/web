@@ -37,6 +37,9 @@ img {
   background: linear-gradient(325deg, #D2CCC4, #8CACAC);
 }
 
-
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 
 
