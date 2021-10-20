@@ -49,7 +49,6 @@ export function useUploadData(
       setMessages(m => m.concat(e.toString()))
       return
     }
-
     let parsedData: TClippingItem[]
     try {
       const parser = new ClippingTextParser(str)
@@ -87,7 +86,6 @@ export function useUploadData(
         wenquSearchResult.current.set(i.title, i.bookId ? ~~i.bookId : 0)
       }
     }
-
     setStep(UploadStep.Uploading)
     const chunkedData = parsedData.reduce((result: (TClippingItem[])[], item: TClippingItem, index: number) => {
       if (result[result.length - 1].length % 20 === 0 && index !== 0) {
@@ -122,13 +120,14 @@ export function useUploadData(
       }
       setAt(chunkedData.length)
       setStep(UploadStep.Done)
+      toast.success(t('app.upload.tips.done'))
     } catch (e: any) {
       setStep(UploadStep.Error)
       setMessages(m => m.concat(e.toString()))
     } finally {
       client.resetStore()
     }
-  }, [visible])
+  }, [client, exec, t, willSyncServer])
 
   useEffect(() => {
     if (step === UploadStep.Done || step === UploadStep.Error) {

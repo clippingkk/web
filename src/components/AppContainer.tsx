@@ -19,6 +19,7 @@ function AppContainer(props: AppContainerProps) {
 
   const [isDraging, setIsDraging] = useState(false)
   const [isUploadPage, setIsUploadPage] = useState(false)
+
   // 由于找不到 on history change 的事件，这里靠 interval 来 work around
   useEffect(() => {
     const timer = setInterval(() => {
@@ -47,7 +48,7 @@ function AppContainer(props: AppContainerProps) {
       setIsDraging(true)
     }
     e.preventDefault()
-  }, [isDraging])
+  }, [isDraging, isUploadPage])
 
   return (
     <div
