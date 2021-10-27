@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { ExternalLinkIcon } from '@heroicons/react/solid'
 
 type featureColorPattern = {
   title: string[]
@@ -68,7 +69,7 @@ type FeatureSectionType = {
 function FeatureSection(props: FeatureSectionType) {
   return (
     <div className='flex items-center w-full justify-around py-16 lg:flex-row flex-col'>
-      <h3 className={'lg:text-8xl text-4xl overflow-visible text-center max-w-xs mb-8 lg:mb-0 ' + props.colorPattern.title.join(' ')}>
+      <h3 className={'lg:text-8xl text-4xl text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible ' + props.colorPattern.title.join(' ')}>
         {props.title}
       </h3>
       <ul className='text-3xl lg:text-6xl lg:ml-12 ml-6'>
@@ -82,6 +83,7 @@ function FeatureSection(props: FeatureSectionType) {
                 rel="noreferrer"
               >
                 {x.feature}
+                <ExternalLinkIcon className=' h-4 w-4 lg:h-5 lg:w-5 inline-block mb-2 lg:mb-8' />
               </a>
             ) : (
               <h4 className={props.colorPattern.rows[i]}>
@@ -166,6 +168,10 @@ function Features() {
         }, {
           feature: t('app.index.features.reading4.f3'),
           desc: t('app.index.features.reading4.f3Desc'),
+          link: 'https://github.com/clippingkk/cli'
+        }, {
+          feature: t('app.index.features.reading4.f4'),
+          desc: t('app.index.features.reading4.f4Desc'),
         }]}
       />
     </div>

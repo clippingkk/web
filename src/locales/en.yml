@@ -183,8 +183,10 @@ app:
                 title: Make Reading Greate Aagain
                 f1: Multip Platform
                 f1Desc: iOS, wechat mini program
-                f2: Close to readers
+                f2: Closer to readers
                 f2Desc: other readers can reach your steps
-                f3: Free
-                f3Desc: maybe the last Free land can share your readings
+                f3: Command Line Interface
+                f3Desc: we provided cli to parse file in termainal
+                f4: Free
+                f4Desc: maybe the last Free land can share your readings
 
