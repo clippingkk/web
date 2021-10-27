@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.21.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.2...v3.21.3) (2021-10-27)
+
+
+### Features
+
+* **index:** update index page styles and add introduce cli ([41053a5](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/41053a54e3f2b33bb3aa0c5e8bc13288359d91a8))
+* **next:** upgrade next to 12 ([fd18b35](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fd18b355938c045a5ed09aa83525f80bf9497af8))
+* **next:** use swrMinify ([f2a21dd](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f2a21dd69ebe98a713c3411dc2883e5d68c9d7f5))
+
 ### [3.21.2](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.20.11...v3.21.2) (2021-10-20)
 
 
