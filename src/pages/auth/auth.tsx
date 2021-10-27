@@ -3,15 +3,14 @@ import Card from '../../components/card/card'
 import Link from 'next/link'
 import Image from 'next/image'
 import swal from 'sweetalert';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GithubClientID, SignInWithAppleOptions } from '../../constants/config';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { usePageTrack, useActionTrack } from '../../hooks/tracke';
 import profile from '../../utils/profile';
 import { useTranslation } from 'react-i18next';
 import SignInWithApple from '../../components/sign-in-with-apple/sign-in-with-apple';
 import { useRouter } from 'next/router';
 import logo from '../../assets/logo.png'
+import GithubLogo from '../../components/icons/github.logo.svg';
 
 function checkIsCurrentPath({ isCurrent }: any) {
   return {
@@ -91,7 +90,7 @@ function AuthPage(props: AuthPageProps) {
             onClick={onGithubClick}
             title='github login'
           >
-            <FontAwesomeIcon icon={faGithub} size="3x" />
+            <GithubLogo />
           </a>
         </div>
       </Card>

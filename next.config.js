@@ -22,14 +22,6 @@ module.exports = {
         loader: 'ignore-loader'
       }
     )
-
-    //   test: /\.(graphql|gql)$/,
-    //   exclude: /node_modules/,
-    //   loader: 'graphql-tag/loader'
-    // }, {
-    //   test: /\.ya?ml$/,
-    //   type: 'json',
-    //   use: 'yaml-loader'
     return config
   },
   swcMinify: true,
