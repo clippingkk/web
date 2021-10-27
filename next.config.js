@@ -32,4 +32,5 @@ module.exports = {
     //   use: 'yaml-loader'
     return config
   },
+  swcMinify: true,
 }
