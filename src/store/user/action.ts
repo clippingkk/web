@@ -150,14 +150,6 @@ function* signupAction(action: TSignupAction) {
     closeOnEsc: false,
   })
 
-  const fpResult: fp2.Component[] = yield call(fp2.getPromise, {
-    excludes: {
-      userAgent: true,
-    }
-  })
-
-  const fp = (fpResult.find(x => x.key === 'canvas') as fp2.Component)
-    .value[1].split(',')[1]
 
   try {
     const uploadedResponse: TUploadResponse = yield call(uploadImage, signup.avatarFile)
@@ -167,7 +159,7 @@ function* signupAction(action: TSignupAction) {
       pwd: signup.pwd.trim(),
       name: signup.name.trim(),
       avatarUrl: uploadedResponse.filePath,
-      fp: sha256(fp).toString()
+      fp: Math.random().toString()
     })
 
     yield call(swal, {
