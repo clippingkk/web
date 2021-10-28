@@ -1,5 +1,4 @@
-import ColorThief from 'colorthief'
-import { number } from 'yup/lib/locale'
+// import ColorThief from 'colorthief'
 let support: boolean
 
 export enum ImageTheme {
@@ -24,26 +23,26 @@ export function supportsWebp(): Promise<boolean> {
   })
 }
 
-export async function getImagePrimaryColor(imageUrl?: string): Promise<number[]> {
-  if (!imageUrl) {
-    return Promise.reject('image not found')
-  }
-  return new Promise((resolve, reject) => {
-    const colorThief = new ColorThief()
-    const img = new Image()
-    img.crossOrigin = 'Anonymous'
-    img.src = imageUrl
-    img.addEventListener('load', function () {
-      const c: number[] = colorThief.getColor(img)
-      if (!c || c.length !== 3) {
-        reject('color not found')
-      }
-      resolve(c)
-    })
-    img.addEventListener('error', reject)
-  })
+// export async function getImagePrimaryColor(imageUrl?: string): Promise<number[]> {
+  // if (!imageUrl) {
+    // return Promise.reject('image not found')
+  // }
+  // return new Promise((resolve, reject) => {
+    // const colorThief = new ColorThief()
+    // const img = new Image()
+    // img.crossOrigin = 'Anonymous'
+    // img.src = imageUrl
+    // img.addEventListener('load', function () {
+      // const c: number[] = colorThief.getColor(img)
+      // if (!c || c.length !== 3) {
+        // reject('color not found')
+      // }
+      // resolve(c)
+    // })
+    // img.addEventListener('error', reject)
+  // })
 
-}
+// }
 
 // https://awik.io/determine-color-bright-dark-using-javascript/
 // http://alienryderflex.com/hsp.html

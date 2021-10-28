@@ -1,2 +1,2 @@
 
-declare module '@nearform/react-animation';
+// declare module '@nearform/react-animation';

@@ -20,7 +20,6 @@ import '../styles/react-animation.css'
 import '../styles/global.css'
 import '../styles/tailwind.css'
 
-import '../styles/icons'
 import '../prefers-dark'
 import '../utils/locales'
 import '../utils/leancloud'

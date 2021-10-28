@@ -1,6 +1,6 @@
 import { call, takeEvery, put, delay } from "@redux-saga/core/effects";
 import * as sentry from '@sentry/react'
-import fp2 from 'fingerprintjs2'
+import fp2 from '@fingerprintjs/fingerprintjs'
 import { sha256 } from 'js-sha256'
 import {
   AUTH_LOGIN_ACTION,
