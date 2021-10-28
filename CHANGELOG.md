@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.21.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.3...v3.21.4) (2021-10-28)
+
+
+### Features
+
+* **deps:** clean some deps ([ca1e05e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ca1e05ea0dae61fadb97f699ee0674ca1eb6dc45))
+* **deps:** upgrade deps ([645ec0f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/645ec0f61b57a4d38d2a0a42f7878ef3a58c2e31))
+
+
+### Bug Fixes
+
+* **build:** remove unused packages ([0d6fe9a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0d6fe9a49eb3e035fa389c0c25823a224dd0a907))
+* **fp:** fix fp call after upgraded ([51253ce](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/51253ce92b15818cb25f583214ec300a2290fa27))
+* **leancloud:** try to add python in leancloud engine ([ee60563](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ee60563be0ef0a96ac9e85a6dbff99e2a78ee5d5))
+* **pkg:** remove unreachable pkgs ([5959991](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5959991e85e42db6fda1334a706bde86f4c2b574))
+
 ### [3.21.3](http://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.2...v3.21.3) (2021-10-27)
 
 
