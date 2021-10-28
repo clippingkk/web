@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.21.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.5...v3.21.6) (2021-10-28)
+
+
+### Features
+
+* **ctrlP:** update index page style and add ctrl-k ([2e81808](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2e81808952250603472956d5b1038abb98bce26b))
+
+
+### Bug Fixes
+
+* **node:** add workaround for webpack and node 17 issue. ref https://github.com/webpack/webpack/issues/14532 ([1c28cfe](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1c28cfed336a98148b47c35a1d449ad6b70bd2c3))
+* **pkg:** fix pkg lock ([4f3b7d5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4f3b7d59c14f35a82c0f2da0689df902f87eb839))
+
 ### [3.21.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.4...v3.21.5) (2021-10-28)
 
 
