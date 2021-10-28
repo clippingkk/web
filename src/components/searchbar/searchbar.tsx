@@ -15,8 +15,14 @@ type SearchBarProps = {
 function useCtrlP() {
   const [visible, setVisible] = useState(false)
   const searchDOM = useRef<HTMLInputElement>(null)
-  const onKeyRelease = useCallback((e: KeyboardEvent) => {
-    if (e.ctrlKey && e.code === 'KeyP') {
+  useEffect(() => {
+    function onKeyRelease(e: KeyboardEvent) {
+      if (!e.ctrlKey) {
+        return
+      }
+      if (e.code !== 'KeyP' && e.code !== 'KeyK') {
+        return
+      }
       e.stopPropagation()
       e.preventDefault()
       setVisible(true)
@@ -27,16 +33,14 @@ function useCtrlP() {
       }, 100)
       return false
     }
-  }, [])
-  const onKeyEscape = useCallback((e: KeyboardEvent) => {
-    if (e.code === 'Escape') {
-      e.stopPropagation()
-      e.preventDefault()
-      setVisible(false)
-      return false
+    function onKeyEscape(e: KeyboardEvent) {
+      if (e.code === 'Escape') {
+        e.stopPropagation()
+        e.preventDefault()
+        setVisible(false)
+        return false
+      }
     }
-  }, [])
-  useEffect(() => {
     document.body.addEventListener('keydown', onKeyRelease)
     document.body.addEventListener('keydown', onKeyEscape)
     return () => {
@@ -85,7 +89,7 @@ function SearchBar(props: SearchBarProps) {
         query: value
       }
     })
-  }, [doQuery])
+  }, [doQuery, loading])
 
   if (!visible) {
     return null
@@ -116,7 +120,7 @@ function SearchBar(props: SearchBarProps) {
               <span className='text-base'>{t('app.menu.search.empty')}</span>
             </div>
           )}
-          <ul className='list-none'>
+          <ul className='list-none max-h-screen overflow-y-auto'>
             {data?.search.clippings.map(c => (
               <li
                 className='dark:bg-gray-300 bg-gray-400 mt-4 list-none with-fade-in'

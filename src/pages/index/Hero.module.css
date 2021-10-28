@@ -36,7 +36,7 @@
 .download-btn {
   /* background-color: rgba(33, 150, 243, 0.9); */
   /* text-decoration: none; */
-  /* width: fit-content; */
+  width: fit-content;
   transition: all 0.35s;
 }
 

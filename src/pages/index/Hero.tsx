@@ -51,7 +51,7 @@ function Hero() {
             >
               <a
                 target="_blank"
-                className={styles['download-btn'] + ' py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 w-48 text-center'}
+                className={styles['download-btn'] + ' py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center'}
               >
                 {t('app.go')}
               </a>
