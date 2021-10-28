@@ -31,9 +31,8 @@ function Signup() {
       if (!formik.isValid) return
       if (!values.avatar) return
 
-      const fpResult = await fp2.getPromise({ excludes: { userAgent: true } })
-      const fp = (fpResult.find(x => x.key === 'canvas') as fp2.Component)
-        .value[1].split(',')[1]
+      const fpResult = await fp2.load().then(x => x.get())
+      const fp = fpResult.visitorId
 
       let resp: TUploadResponse
 
