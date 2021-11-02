@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.21.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.6...v3.21.7) (2021-11-02)
+
+
+### Bug Fixes
+
+* **style:** set base font size to 12px ([7fd4651](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7fd465182149bc6784797cdd92227f7a3376146c))
+
 ### [3.21.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.5...v3.21.6) (2021-10-28)
 
 
