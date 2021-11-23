@@ -152,6 +152,8 @@ app:
             notion:
                 title: Notion
                 submit: 导出至 notion
+        domain:
+            title: 域名路由
     index:
         features:
             open:

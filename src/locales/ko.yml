@@ -152,6 +152,8 @@ app:
             notion:
                 title: Notion
                 submit: notion 로 내보내기
+        domain:
+            title: Domain name
     index:
         features:
             open:

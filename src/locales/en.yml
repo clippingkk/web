@@ -153,6 +153,8 @@ app:
             notion:
                 title: Notion
                 submit: export to notion
+        domain:
+            title: Domain name
     index:
         features:
             open:
