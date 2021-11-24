@@ -3,14 +3,14 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 type TNoContentProps = {
-  userid: number
+  domain: string
 }
 
-function NoContentAlert({ userid }: TNoContentProps) {
+function NoContentAlert({ domain }: TNoContentProps) {
   const { t } = useTranslation()
   return (
     <Link
-      href={`/dash/${userid}/upload`}
+      href={`/dash/${domain}/upload`}
     >
       <a
         className='bg-gray-300 rounded shadow-lg py-40 px-64 flex items-center justify-center flex-col bg-opacity-75 dark:bg-gray-700'

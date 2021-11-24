@@ -5,12 +5,12 @@ import logo from '../../assets/logo.png'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 
 type OGWithBookProps = {
-  uid: number
+  domain: string
   book: WenquBook | null
 }
 
 function OGWithBook(props: OGWithBookProps) {
-  const url = `${APP_URL_ORIGIN}/dash/${props.uid}/book/${props.book?.doubanId}`
+  const url = `${APP_URL_ORIGIN}/dash/${props.domain}/book/${props.book?.doubanId}`
   const bookTitle = props.book?.title
   const metaTitle = `${bookTitle} - 书摘 - clippingkk`
 

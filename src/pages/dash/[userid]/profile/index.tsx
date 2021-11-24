@@ -36,23 +36,15 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { client } from '../../../../services/ajax';
 
 function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const userid = useRouter().query.userid as string
-
-  const { data: localProfileData, loading, called, fetchMore } = useQuery<profile, profileVariables>(profileQuery, {
-    variables: {
-      id: ~~userid
-    }
-  })
-
   // 优先使用本地数据，服务端数据只是为了 seo
-  const data = localProfileData ?? serverResponse.profileServerData
+  const data = serverResponse.profileServerData
 
   const [doFollow, { loading: followLoading }] = useMutation<followUser, followUserVariables>(followMutation)
   const [doUnfollow, { loading: unfollowLoading }] = useMutation<unfollowUser, unfollowUserVariables>(unfollowMutation)
 
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   usePageTrack('profile', {
-    userId: userid
+    userId: data.me.id
   })
 
   useTitle(data?.me.name)
@@ -72,7 +64,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
 
   const year = (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
-  const isInMyPage = uid.toString() === userid
+  const isInMyPage = uid === data.me.id
 
   const isWechatBindingVisible = useMemo(() => {
     if (uid === 0) {
@@ -105,6 +97,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
                   <ProfileEditor
                     bio={data.me.bio}
                     withNameChange={data.me.name.startsWith('user.')}
+                    domain={data.me.domain}
                   />
                 )}
               </div>
@@ -126,7 +119,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
                     if (followLoading || unfollowLoading) {
                       return
                     }
-                    const params: followUserVariables = { targetUserID: ~~userid }
+                    const params: followUserVariables = { targetUserID: data.me.id }
                     let mutationJob: Promise<any>
                     if (data?.me.isFan) {
                       mutationJob = doUnfollow({
@@ -193,7 +186,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
             (item => <ClippingItem
               key={item.id}
               item={item}
-              userid={~~userid}
+              domain={data.me.domain.length > 2 ? data.me.domain : data.me.id.toString()}
               inAppChannel={IN_APP_CHANNEL.clippingFromUser}
             />)
           )}
@@ -208,11 +201,13 @@ type serverSideProps = {
 }
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
-  const uid = ~~(context.params?.userid ?? -1) as number
+  const pathUid: string = (context.params?.userid as string) ?? ''
+  const uid = parseInt(pathUid)
   const profileResponse = await client.query<profile, profileVariables>({
     query: profileQuery,
     variables: {
-      id: uid
+      id: Number.isNaN(uid) ? -1 : uid,
+      domain: Number.isNaN(uid) ? pathUid : null
     },
   })
   return {

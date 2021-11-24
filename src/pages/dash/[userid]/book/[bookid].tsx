@@ -10,7 +10,9 @@ import { usePageTrack, useTitle } from '../../../../hooks/tracke';
 import { useSingleBook } from '../../../../hooks/book'
 import { useQuery } from '@apollo/client';
 import bookQuery from '../../../../schema/book.graphql'
-import { book, bookVariables } from '../../../../schema/__generated__/book';
+import myIdByDomainQuery from '../../../../schema/myIdByDomain.graphql'
+import { book, bookVariables } from '../../../../schema/__generated__/book'
+import { queryMyIdByDomain, queryMyIdByDomainVariables } from '../../../../schema/__generated__/queryMyIdByDomain'
 import { useTranslation } from 'react-i18next';
 import MasonryContainer from '../../../../components/masonry-container';
 import dayjs from 'dayjs';
@@ -21,15 +23,15 @@ import DashboardContainer from '../../../../components/dashboard-container/conta
 import OGWithBook from '../../../../components/og/og-with-book';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu';
+import { number } from 'yup';
 
 function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { userid, bookid } = useRouter().query as { userid: string, bookid: string }
+  const { userid: domain, bookid } = useRouter().query as { userid: string, bookid: string }
   usePageTrack('book', {
     bookId: bookid
   })
   const dispatch = useDispatch()
-  const bookLocalData = useSingleBook(bookid, !!serverResponse.bookServerData)
-  const bookData = serverResponse.bookServerData ?? bookLocalData
+  const bookData = serverResponse.bookServerData
 
   const [hasMore, setHasMore] = useState(true)
   const { data: clippingsData, fetchMore, loading } = useQuery<book, bookVariables>(bookQuery, {
@@ -60,6 +62,14 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
     return result || undefined
   }, [clippingsData?.book.startReadingAt, clippingsData?.book.lastReadingAt])
 
+  const mappedMyData = useQuery<queryMyIdByDomain, queryMyIdByDomainVariables>(myIdByDomainQuery, {
+    variables: {
+      domain
+    },
+    // 是 NaN 就是 domain 啦~
+    skip: !Number.isNaN(parseInt(domain))
+  })
+
   if (!bookData) {
     return null
   }
@@ -68,11 +78,11 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
     <section className={`${styles.bookPage} page anna-fade-in`}>
       <Head>
         <title>{bookData.title} - clippingkk</title>
-        <OGWithBook book={bookData} uid={~~userid} />
-        </Head>
+        <OGWithBook book={bookData} domain={domain} />
+      </Head>
       <BookInfo
         book={bookData}
-        uid={~~userid}
+        uid={mappedMyData.data?.me.id ?? (~~domain)}
         duration={duration}
         isLastReadingBook={clippingsData?.book.isLastReadingBook}
       />
@@ -82,7 +92,7 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
           {clippingsData?.book.clippings.map(clipping => (
             <ClippingItem
               item={clipping}
-              userid={~~userid}
+              domain={domain}
               book={bookData}
               key={clipping.id}
               inAppChannel={IN_APP_CHANNEL.clippingFromBook}

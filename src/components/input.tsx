@@ -36,7 +36,7 @@ function FieldInput(props: FieldInputProps) {
       <input
         {...props.inputProps}
         type={props.type ?? 'text'}
-        className={`text-2xl p-4 border-2 ${(sizeWidth as any)[size]} bg-gray-400 focus:outline-none ` + (props.error ? 'border-red-400' : 'border-transparent')}
+        className={`text-2xl p-4 border-2 ${(sizeWidth as any)[size]} bg-gray-400 focus:outline-none disabled:text-gray-500 ` + (props.error ? 'border-red-400' : 'border-transparent')}
         value={props.value}
         placeholder={t(`app.auth.${props.name}`)}
         name={props.name}
@@ -44,7 +44,7 @@ function FieldInput(props: FieldInputProps) {
       />
       {props.tail}
       {props.error && (
-        <span className='absolute bottom-0 right-0 text-right transform translate-y-4 text-red-400 text-sm'>
+        <span className='absolute bottom-0 right-0 text-right transform translate-y-4 text-red-500 dark:text-red-900 text-base'>
           {props.error}
         </span>
       )}

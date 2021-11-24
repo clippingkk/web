@@ -1,5 +1,5 @@
-query profile($id: Int!) {
-  me(id: $id) {
+query profile($id: Int!, $domain: String) {
+  me(id: $id, domain: $domain) {
     id
     name
     email
@@ -12,6 +12,7 @@ query profile($id: Int!) {
     updatedAt
     wechatOpenid
     isFan
+    domain
     followers {
       id
       name

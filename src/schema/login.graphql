@@ -11,6 +11,7 @@ query githubLogin($code: String!) {
       bio
       createdAt
       updatedAt
+      domain
       wechatOpenid
     }
     token
