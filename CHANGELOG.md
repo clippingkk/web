@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.7...v3.22.0) (2021-11-25)
+
+
+### Features
+
+* **deps:** upgrade deps ([8926ea4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8926ea4a3b3543c22d5732c4071181e0f3c5a614))
+* **domain:** add domain editor and url path support ([1449192](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1449192b06397afdbe885cb2ff39ce76073f4c31))
+* **user:** add domain editor for user profile ([9926f37](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9926f37c100bde73f439b5d11139952406738bd0))
+
 ### [3.21.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.21.6...v3.21.7) (2021-11-02)
 
 
