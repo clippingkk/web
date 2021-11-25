@@ -11,6 +11,7 @@ query auth($email: String!, $password: String!) {
       createdAt
       updatedAt
       bio
+      domain
       wechatOpenid
     }
     token

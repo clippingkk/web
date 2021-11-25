@@ -24,19 +24,19 @@ type ClippingSidebarProps = {
   onTogglePreviewVisible: () => void
 }
 
-function getSiblingLink(iac: IN_APP_CHANNEL, uid: number, clipping?: fetchClipping_clipping) {
+function getSiblingLink(iac: IN_APP_CHANNEL, domain: string, clipping?: fetchClipping_clipping) {
   let prev = '', next = ''
   if (!clipping) {
     return { prev, next }
   }
   switch (iac) {
     case IN_APP_CHANNEL.clippingFromBook:
-      prev = clipping.prevClipping.bookClippingID ? `/dash/${uid}/clippings/${clipping?.prevClipping.bookClippingID}?iac=${iac}` : ''
-      next = clipping.nextClipping.bookClippingID ? `/dash/${uid}/clippings/${clipping?.nextClipping.bookClippingID}?iac=${iac}` : ''
+      prev = clipping.prevClipping.bookClippingID ? `/dash/${domain}/clippings/${clipping?.prevClipping.bookClippingID}?iac=${iac}` : ''
+      next = clipping.nextClipping.bookClippingID ? `/dash/${domain}/clippings/${clipping?.nextClipping.bookClippingID}?iac=${iac}` : ''
     case IN_APP_CHANNEL.clippingFromUser:
     default:
-      prev = clipping.prevClipping.userClippingID ? `/dash/${uid}/clippings/${clipping?.prevClipping.userClippingID}?iac=${iac}` : ''
-      next = clipping.nextClipping.userClippingID ? `/dash/${uid}/clippings/${clipping?.nextClipping.userClippingID}?iac=${iac}` : ''
+      prev = clipping.prevClipping.userClippingID ? `/dash/${domain}/clippings/${clipping?.prevClipping.userClippingID}?iac=${iac}` : ''
+      next = clipping.nextClipping.userClippingID ? `/dash/${domain}/clippings/${clipping?.nextClipping.userClippingID}?iac=${iac}` : ''
   }
   return {
     prev,
@@ -78,7 +78,15 @@ function ClippingSidebar(props: ClippingSidebarProps) {
     })
   }, [clipping, book])
 
-  const siblingLink = getSiblingLink(props.inAppChannel, me.id, clipping)
+  const clippingDomain = clipping ?
+    (
+      clipping.creator.domain.length > 2 ?
+        clipping.creator.domain :
+        clipping.creator.id.toString()
+    ) :
+    me.id.toString()
+
+  const siblingLink = getSiblingLink(props.inAppChannel, clippingDomain, clipping)
   return (
     <Card className='flex-1 hidden lg:block'>
       <div className='flex w-full h-full flex-col justify-between items-center'>

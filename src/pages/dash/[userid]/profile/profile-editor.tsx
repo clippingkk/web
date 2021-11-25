@@ -15,6 +15,7 @@ import { useRouter } from 'next/router'
 type ProfileEditorProps = {
   withNameChange: boolean
   bio: string
+  domain: string
 }
 
 function ProfileEditor(props: ProfileEditorProps) {
@@ -32,17 +33,23 @@ function ProfileEditor(props: ProfileEditorProps) {
     initialValues: {
       name: '',
       bio: '',
+      domain: props.domain,
       avatar: null as File | null
     },
     validationSchema: Yup.object({
       name: Yup.string(),
       bio: Yup.string().max(255),
+      domain: Yup.string().min(3).max(32).trim().lowercase().matches(/^\w+[\.|-]?\w+$/),
       avatar: Yup.mixed()
     }),
     async onSubmit(vals) {
       // pre upload image here
       if (vals.bio.split('\n').length > 4) {
         toast.error(t('app.profile.editor.max4line'))
+        return
+      }
+      if (!formik.isValid) {
+        toast.error(t('app.profile.editor.invalid'))
         return
       }
       let avatarUrl = ''
@@ -55,11 +62,16 @@ function ProfileEditor(props: ProfileEditorProps) {
           throw e
         }
       }
+
+      // 因为不能重复填写
+      const domain = props.domain.length > 2 ? '' : vals.domain
+
       doUpdate({
         variables: {
           name: vals.name !== '' ? vals.name : null,
           avatar: avatarUrl !== '' ? avatarUrl : null,
-          bio: vals.bio,
+          bio: vals.bio !== '' ? vals.bio : null,
+          domain
         }
       }).then(() => {
         formik.resetForm()
@@ -109,6 +121,16 @@ function ProfileEditor(props: ProfileEditorProps) {
                 />
               )}
               <FieldInput
+                type='text'
+                name='domain'
+                onChange={formik.handleChange}
+                inputProps={{
+                  disabled: props.domain.length > 2
+                }}
+                error={formik.errors.domain}
+                value={formik.values.domain}
+              />
+              <FieldInput
                 type='file'
                 name='avatar'
                 error={formik.errors.avatar}
@@ -135,8 +157,21 @@ function ProfileEditor(props: ProfileEditorProps) {
               />
 
               <div className='flex items-center justify-end'>
-                <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-sm px-4 py-2 mr-4' onClick={onEditCancel}>{t('app.common.cancel')}</button>
-                <button className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2' type='submit'>{t('app.common.doUpdate')}</button>
+                <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-sm px-4 py-2 mr-4' onClick={onEditCancel}>
+                  {t('app.common.cancel')}
+                </button>
+                <button
+                  className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2 disabled:text-gray-500'
+                   type='submit'
+                  disabled={(!formik.isValid) || (
+                    formik.values.name === '' &&
+                    formik.values.bio === '' &&
+                    (!formik.values.avatar) && 
+                    (props.domain.length > 2 ? true : formik.values.domain.length < 3)
+                  )}
+                >
+                  {t('app.common.doUpdate')}
+                </button>
               </div>
             </form>
           </div>

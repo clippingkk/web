@@ -14,16 +14,16 @@ import Link from 'next/link';
 type TClippingItemProps = {
   item: book_book_clippings
   book?: WenquBook
-  userid: number
+  domain: string
   inAppChannel: IN_APP_CHANNEL
   creator?: fetchSquareData_featuredClippings_creator
 }
 
-function ClippingItem({ userid, item, book, creator, inAppChannel }: TClippingItemProps) {
+function ClippingItem({ domain, item, book, creator, inAppChannel }: TClippingItemProps) {
   const { t } = useTranslation()
   return (
     <Link
-      href={`/dash/${userid}/clippings/${item.id}?iac=${inAppChannel}`}
+      href={`/dash/${domain}/clippings/${item.id}?iac=${inAppChannel}`}
       key={item.id}
     >
       <a className='with-slide-in block'>

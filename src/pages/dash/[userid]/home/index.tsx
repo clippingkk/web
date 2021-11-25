@@ -41,7 +41,7 @@ function useUserNewbie(userProfile: UserContent, onNewbie: () => void) {
 }
 
 function HomePage() {
-  const theUserid = useRouter().query.userid as string
+  const userDomain = useRouter().query.userid as string
   const userProfile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const uid = userProfile.id
 
@@ -77,7 +77,7 @@ function HomePage() {
     <section className={`${styles.home} page`}>
       <Head>
         <title>{userProfile.name} clippings</title>
-        </Head>
+      </Head>
       {data.me.recents.length > 0 && (
         <div className='mt-8'>
           <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.reading')}</h2>
@@ -90,7 +90,7 @@ function HomePage() {
           href={`/dash/${uid}/unchecked`}
         >
           <a className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-colors hover:bg-blue-700'>
-          {t('app.home.unchecked')}
+            {t('app.home.unchecked')}
           </a>
         </Link>
       </header>
@@ -102,11 +102,15 @@ function HomePage() {
           </div>
         )}
         {data.books.length === 0 && called && (
-          <NoContentAlert userid={~~theUserid} />
+          <NoContentAlert domain={userDomain} />
         )}
         {(books.books.length > 0 && called) &&
           books.books.map((item, index) => (
-            <BookCover book={item} userid={~~theUserid} key={index} />
+            <BookCover
+              book={item}
+              key={index}
+              domain={userDomain}
+            />
           ))}
       </div>
 

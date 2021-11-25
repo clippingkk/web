@@ -5,6 +5,7 @@ query fetchYearlyReport($year: Int!, $uid: Int!) {
       id
       avatar
       name
+      domain
     }
     books {
       doubanId

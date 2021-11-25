@@ -7,17 +7,17 @@ import Image from 'next/image'
 
 type TBookCoverProps = {
   book: WenquBook
-  userid: number
+  domain: string
 }
 
-function BookCover({ book, userid }: TBookCoverProps) {
+function BookCover({ book, domain }: TBookCoverProps) {
   if (!book) {
     return null
   }
 
   return (
     <Link
-      href={`/dash/${userid}/book/${book.doubanId}`}
+      href={`/dash/${domain}/book/${book.doubanId}`}
     >
       <a
         className={styles.cover + ' bg-transparent flex flex-col items-center content-center transition-all duration-300 rounded hover:bg-opacity-75 hover:bg-gray-300 hover:shadow-lg animate__fadeInDown w-128 h-156 overflow-visible'}

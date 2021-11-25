@@ -45,6 +45,7 @@ app:
         hookUrl: Web Hook URL
         notionPageId: notion page id
         notionToken: notion bot token
+        domain: Domain
         code:
             placeholder: 휴대폰의 인증 코드
         info:
@@ -134,6 +135,7 @@ app:
             title: 내 개인 정보 업데이트
             updated: 업데이트 됨
             max4line: 최대 4 줄의 텍스트 만 지원합니다.
+            invalid: invalid
         report:
             yearlyTitle: 연간 보고서
     settings:
@@ -152,6 +154,8 @@ app:
             notion:
                 title: Notion
                 submit: notion 로 내보내기
+        domain:
+            title: Domain name
     index:
         features:
             open:

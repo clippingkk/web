@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
-import { execLogout } from '../../store/user/type'
+import { execLogout, TUserState, UserContent } from '../../store/user/type'
 // import Tooltip from 'rc-tooltip'
 import { TGlobalStore } from '../../store'
 import { useTranslation } from 'react-i18next';
@@ -10,32 +10,36 @@ import styles from './navigation-bar.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
+import { propTypes } from 'qrcode.react'
 
 const leftMenu = [
   {
     emoji: '📙',
     alt: 'read',
-    dest: (id: number) => `/dash/${id}/home`,
+    dest: (id: number | string) => `/dash/${id}/home`,
   },
   {
     emoji: '🎪',
     alt: 'square',
-    dest: (id: number) => `/dash/${id}/square`,
+    dest: (id: number | string) => `/dash/${id}/square`,
   },
   {
     emoji: '🎈',
     alt: 'upload',
-    dest: (id: number) => `/dash/${id}/upload`,
+    dest: (id: number | string) => `/dash/${id}/upload`,
   },
   {
     emoji: '👼',
     alt: 'my',
-    dest: (id: number) => `/dash/${id}/profile`,
+    dest: (id: number | string) => `/dash/${id}/profile`,
   },
 ]
 
 function NavigationBar() {
-  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
+
+  const id = profile.domain.length > 2 ? profile.domain : profile.id
+
   const dispatch = useDispatch()
   const { push } = useRouter()
 

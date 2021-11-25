@@ -45,6 +45,7 @@ app:
         hookUrl: hook 地址
         notionPageId: notion page id
         notionToken: notion 机器人 token
+        domain: 域名
         code:
             placeholder: 手机中的验证码
         info:
@@ -134,6 +135,7 @@ app:
             title: 更新我的个人信息
             updated: 已更新
             max4line: 最大仅支持 4 行文字
+            invalid: 内容有错误
         report:
             yearlyTitle: 年度报告
     settings:
@@ -152,6 +154,8 @@ app:
             notion:
                 title: Notion
                 submit: 导出至 notion
+        domain:
+            title: 域名路由
     index:
         features:
             open:

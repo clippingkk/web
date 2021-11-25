@@ -1,0 +1,6 @@
+query queryMyIdByDomain($domain: String!) {
+  me(id: -1, domain: $domain) {
+    id
+    domain
+  }
+}

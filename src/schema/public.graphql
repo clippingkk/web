@@ -5,6 +5,7 @@ query publicData {
       avatar
       bio
       name
+      domain
     }
     books {
       doubanId
@@ -18,6 +19,7 @@ query publicData {
         id
         name
         avatar
+        domain
       }
     }
   }

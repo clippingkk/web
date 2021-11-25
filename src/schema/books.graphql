@@ -1,5 +1,6 @@
 query books($id: Int!, $pagination: PaginationLegacy!) {
   me(id: $id) {
+    domain
     recent3mReadings
     recents {
       id

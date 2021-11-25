@@ -30,12 +30,11 @@ function TopClippings(props: TopClippingsProps) {
         {props.clippings?.map(c => (
           <Link
             key={c.id}
-            href={`/dash/${c.creator.id}/clippings/${c.id}?iac=${IN_APP_CHANNEL.clippingFromUser}`}
+            href={`/dash/${c.creator.domain.length > 2 ? c.creator.domain : c.creator.id}/clippings/${c.id}?iac=${IN_APP_CHANNEL.clippingFromUser}`}
           >
             <a
               className={`h-96 w-full md:w-1/2 lg:w-1/3 2xl:w-1/4 p-8 bg-gradient-to-br from-yellow-300 to-red-400 dark:from-gray-500 dark:to-gray-700 m-4 rounded-lg flex flex-col justify-between dark:text-gray-200 hover:scale-105 transform duration-300 with-slide-in ${styles.clippingItem}`}
             >
-
               <div>
                 <p
                   className={` text-xl leading-relaxed font-lxgw ${styles.clippingText}`}

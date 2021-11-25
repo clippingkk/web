@@ -45,6 +45,7 @@ app:
         hookUrl: Web Hook URL
         notionPageId: notion page id
         notionToken: notion bot token
+        domain: Domain
         code:
             placeholder: code from mobile phone sms
         info:
@@ -132,9 +133,10 @@ app:
             follow: Follow
             unfollow: Unfollow
         editor:
-            title: update my profile
-            updated: updated
+            title: Update my profile
+            updated: Updated
             max4line: Only supports up to 4 lines of text
+            invalid: Invalid input
         report:
             yearlyTitle: Yearly report
     settings:
@@ -153,6 +155,8 @@ app:
             notion:
                 title: Notion
                 submit: export to notion
+        domain:
+            title: Domain name
     index:
         features:
             open:

@@ -12,6 +12,7 @@ const initState: TUserState = {
     createdAt: '',
     updatedAt: '',
     wechatOpenid: '',
+    domain: '',
     bio: ''
   },
   token: ''
@@ -42,6 +43,11 @@ function parseFromLS() {
       "Sign up date": auth.createdAt,
       "USER_ID": auth.profile.name,
     });
+  }
+
+  // 存量数据里没这个字段，这里加一下 patch
+  if (typeof auth.profile.domain !== 'string') {
+    auth.profile.domain = ''
   }
 
   initState.profile = auth.profile
