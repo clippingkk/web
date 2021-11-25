@@ -62,7 +62,7 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
           {data?.featuredClippings.map(clipping => (
             <ClippingItem
               item={clipping as any}
-              userid={clipping.creator.id}
+              domain={clipping.creator.domain.length > 2 ? clipping.creator.domain : clipping.creator.id.toString()}
               book={books.books.find(x => x.id.toString() == clipping.bookID)}
               key={clipping.id}
               creator={clipping.creator}

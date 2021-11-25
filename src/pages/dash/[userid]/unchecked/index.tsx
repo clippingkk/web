@@ -11,10 +11,12 @@ import bookQuery from '../../../../schema/book.graphql'
 import { book, bookVariables } from '../../../../schema/__generated__/book'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { TGlobalStore } from '../../../../store'
+import { UserContent } from '../../../../store/user/type'
 
 function UncheckedPage() {
-  const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
 
+  const domain = profile.domain.length > 2 ? profile.domain : profile.id.toString()
   const { data: clippingsData } = useQuery<book, bookVariables>(bookQuery, {
     variables: {
       id: 0,
@@ -37,7 +39,7 @@ function UncheckedPage() {
           {clippingsData?.book.clippings.map(clipping => (
             <ClippingItem
               item={clipping}
-              userid={uid}
+              domain={domain}
               key={clipping.id}
               inAppChannel={IN_APP_CHANNEL.clippingFromUser}
             />
