@@ -14,6 +14,7 @@ import styles from './uploader.module.css'
 import { useRouter } from 'next/router'
 import AnimateOnChange from '../../../../components/SimpleAnimation/AnimateOnChange'
 import DashboardContainer from '../../../../components/dashboard-container/container'
+import { UserContent } from '../../../../store/user/type'
 
 function useSwitcher() {
   const [isOn, setIsOn] = useState(true)
@@ -45,15 +46,17 @@ function UploaderPage() {
   }, [])
 
   const { push: navigate } = useRouter()
-  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+
+  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
+  const domain = profile.domain.length > 2 ? profile.domain : profile.id
 
   useEffect(() => {
     if (step === UploadStep.Done) {
       setTimeout(() => {
-        navigate(`/dash/${id}/home`)
+        navigate(`/dash/${domain}/home`)
       }, 3000)
     }
-  }, [step, id])
+  }, [step, domain, navigate])
 
   return (
     <section className={styles.uploader}>
