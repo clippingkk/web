@@ -75,7 +75,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
       return false
     }
     return !data?.me.wechatOpenid
-  }, [data, isInMyPage])
+  }, [data, uid, isInMyPage])
 
   return (
     <section>
@@ -90,7 +90,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
             <div className={styles.info}>
               <div className='flex items-center'>
                 <h3 className='text-2xl'>{data?.me.name}</h3>
-                {data?.me.phone === '' && (
+                {data?.me.phone === '' && isInMyPage && (
                   <ProfileBindPhone />
                 )}
                 {uid === data?.me.id && (

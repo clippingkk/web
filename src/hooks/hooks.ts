@@ -58,7 +58,8 @@ export function useAuthByPhoneSuccessed(
     // redirect
     mixpanel.track('login')
     setTimeout(() => {
-      navigate(`/dash/${me.id}/home?from_auth=1`)
+      const domain = me.domain.length > 2 ? me.domain : me.id
+      navigate(`/dash/${domain}/home?from_auth=1`)
     }, 0)
   }, [called, loading, error, authResponse])
 }

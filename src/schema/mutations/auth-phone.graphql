@@ -11,6 +11,7 @@ mutation authByPhone($phone: String!, $code: String!) {
       updatedAt
       bio
       wechatOpenid
+      domain
     }
     token
   }
