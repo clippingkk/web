@@ -29,7 +29,7 @@ import styles from './clipping.module.css'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
 import Head from 'next/head'
 function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { clippingid } = useRouter().query as { userid: string, clippingid: string }
+  const { clippingid } = useRouter().query as { clippingid: string }
 
   const { data: clippingLocalData } = useQuery<fetchClipping, fetchClippingVariables>(fetchClippingQuery, {
     variables: {
@@ -42,7 +42,6 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
 
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
-  const dispatch = useDispatch()
   const iac = (useRouter().query.iac ?? '0') as string
 
   const togglePreviewVisible = useCallback(() => {
