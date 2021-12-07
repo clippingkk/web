@@ -152,7 +152,8 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
     props: {
       reportInfoServerData: reportInfoResponse.data,
       booksServerData
-    }
+    },
+    revalidate: true
   }
 }
 

@@ -171,7 +171,8 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
     props: {
       clippingServerData: clippingsResponse.data,
       bookServerData: book
-    }
+    },
+    revalidate: true
   }
 }
 

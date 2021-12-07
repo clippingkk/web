@@ -213,7 +213,8 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   return {
     props: {
       profileServerData: profileResponse.data,
-    }
+    },
+    revalidate: true
   }
 }
 
