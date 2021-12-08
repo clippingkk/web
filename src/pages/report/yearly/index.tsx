@@ -126,6 +126,7 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   // const uid = ~~(context.params?.userid ?? -1) as number
   const reportInfoResponse = await client.query<fetchYearlyReport, fetchYearlyReportVariables>({
     query: fetchReportYearlyQuery,
+    fetchPolicy: 'network-only',
     variables: {
       uid,
       year
@@ -142,7 +143,6 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   let booksServerData: WenquBook[] = []
 
   if (dbIds.length >= 1) {
-
     const query = dbIds.join('&dbIds=')
     const books = await wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`)
     booksServerData.push(...books.books)
@@ -153,7 +153,6 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
       reportInfoServerData: reportInfoResponse.data,
       booksServerData
     },
-    revalidate: true
   }
 }
 

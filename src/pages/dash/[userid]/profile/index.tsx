@@ -205,6 +205,7 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   const uid = parseInt(pathUid)
   const profileResponse = await client.query<profile, profileVariables>({
     query: profileQuery,
+    fetchPolicy: 'network-only',
     variables: {
       id: Number.isNaN(uid) ? -1 : uid,
       domain: Number.isNaN(uid) ? pathUid : null
@@ -214,7 +215,6 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
     props: {
       profileServerData: profileResponse.data,
     },
-    revalidate: true
   }
 }
 

@@ -160,7 +160,6 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
     props: {
       bookServerData: book
     },
-    revalidate: true
   }
 }
 

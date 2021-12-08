@@ -16,7 +16,8 @@ import Features from './index/Features'
 
 export const getStaticProps: GetStaticProps = async () => {
   const data = await client.query<publicData>({ 
-    query: fetchTopQuery
+    query: fetchTopQuery,
+    fetchPolicy: 'network-only'
   })
 
   return {

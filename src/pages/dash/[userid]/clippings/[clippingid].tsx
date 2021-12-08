@@ -148,6 +148,7 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   // const uid = ~~(context.params?.userid ?? -1) as number
   const clippingsResponse = await client.query<fetchClipping, fetchClippingVariables>({
     query: fetchClippingQuery,
+    fetchPolicy: 'network-only',
     variables: {
       id: ~~cid
     },
@@ -172,7 +173,6 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
       clippingServerData: clippingsResponse.data,
       bookServerData: book
     },
-    revalidate: true
   }
 }
 
