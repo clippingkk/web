@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.22.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.22.1...v3.22.2) (2021-12-08)
+
+
+### Features
+
+* **upload:** respect user domain ([95d6ba6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/95d6ba60bdd6e080621c9c7c033d597efc788a00))
+
+
+### Bug Fixes
+
+* **clippings:** fix code ([e0e018b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e0e018b93f8e0e30b732efc947e7b643f3808fd7))
+* **profile:** fix profile page button visiblity ([12d7d8e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/12d7d8e74f4938b3442a2bc1978cf231a4950237))
+* **ssr:** revalidate in ssr page ([b35b6c3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b35b6c38cfc848f8090becfa9be96c69e618df19))
+
 ### [3.22.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.22.0...v3.22.1) (2021-11-25)
 
 
