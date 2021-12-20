@@ -1,0 +1,3 @@
+query claimCliAPIToken(token: String!) {
+	claimAPIKey(token: $token)
+}
