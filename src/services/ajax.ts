@@ -9,9 +9,13 @@ export interface IBaseResponseData {
   data: any
 }
 
+export function getLocalToken() {
+  return localStorage.getItem('clippingkk-token')
+}
+
 // FIXME: 由于循环依赖的问题，这里避免引入 './profile'
 // 但是 profile 中有一样的初始化获取逻辑
-let token = (process.browser) ? localStorage.getItem('clippingkk-token') : ''
+let token = (process.browser) ? getLocalToken() : ''
 // let token = localProfile?.token
 
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {

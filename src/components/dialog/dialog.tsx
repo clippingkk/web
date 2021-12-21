@@ -10,7 +10,7 @@ type dialogProps = {
   children: JSX.Element
 }
 
-class Dialog extends React.PureComponent<dialogProps> {
+class InnerDialog extends React.PureComponent<dialogProps> {
   stopBuble = (e: React.MouseEvent) => {
     e.stopPropagation()
   }
@@ -33,12 +33,12 @@ class Dialog extends React.PureComponent<dialogProps> {
   }
 }
 
-function exportDialog(props: dialogProps) {
+function Dialog(props: dialogProps) {
   const { children, ...others } = props
   return ReactDOM.createPortal(
-    <Dialog {...props}>{children}</Dialog>,
+    <InnerDialog {...props}>{children}</InnerDialog>,
     document.querySelector('#dialog') as Element
   )
 }
 
-export default exportDialog
+export default Dialog
