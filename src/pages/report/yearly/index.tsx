@@ -7,7 +7,7 @@ import Avatar from '../../../components/avatar/avatar'
 import PublicBookItem from '../../../components/public-book-item/public-book-item'
 import { useMultipBook } from '../../../hooks/book'
 import fetchReportYearlyQuery from '../../../schema/report.graphql'
-import { fetchYearlyReport, fetchYearlyReportVariables } from '../../../schema/__generated__/fetchYearlyReport'
+import { fetchYearlyReport, fetchYearlyReportVariables, fetchYearlyReport_reportYearly_books } from '../../../schema/__generated__/fetchYearlyReport'
 import { useRouter } from 'next/router'
 import OGWithReport from '../../../components/og/og-with-report'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
@@ -15,8 +15,40 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { client } from '../../../services/ajax'
 import logo from '../../../assets/logo.png'
 
+type ReportBookItemTypes = {
+  book: WenquBook
+  reportDataBook: readonly fetchYearlyReport_reportYearly_books[]
+}
+
+function ReportBookItem(props: ReportBookItemTypes) {
+  const b = props.book
+  const books = props.reportDataBook
+  const clippingsCount = books.find(v => ~~v.doubanId === b.doubanId)?.clippingsCount ?? 0
+  const bookClippings = books.find(v => ~~v.doubanId === b.doubanId)?.clippings
+
+  const sampleClipping = bookClippings ?
+    bookClippings[Math.floor(Math.random() * bookClippings.length)].content :
+    ''
+
+
+  return (
+    <div
+      className='flex flex-col justify-center items-center w-full xl:w-1/2'
+    >
+      <PublicBookItem book={b} />
+      <span className='dark:text-gray-200 text-xl'>
+        摘录了 {clippingsCount} 条书摘
+      </span>
+
+      <p className='italic text-gray-700 dark:text-gray-200 my-4 text-center w-full px-8'>
+        {sampleClipping}
+      </p>
+      <hr className='my-4 w-full border-gray-300 dark:border-gray-700' />
+    </div>
+  )
+}
+
 function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  // const l = useLocation()
   const searchParams = useRouter().query
 
   useEffect(() => {
@@ -83,20 +115,11 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
           </p>
           <ul className='flex justify-center items-center flex-wrap'>
             {books.map(b => (
-              <div
-                className='flex flex-col justify-center items-center w-full xl:w-1/2'
-                key={b.id}>
-                <PublicBookItem book={b} />
-                <span className='dark:text-gray-200 text-xl'>
-                  摘录了 {data?.reportYearly.books.find(v => ~~v.doubanId === b.doubanId)?.clippingsCount ?? 0} 条书摘
-                </span>
-
-                <p className='italic text-gray-700 dark:text-gray-200 my-4 text-center w-full px-8'>
-                  {data?.reportYearly.books.find(v => ~~v.doubanId === b.doubanId)?.clippings[0].content}
-                </p>
-
-                <hr className='my-4 w-full border-gray-300 dark:border-gray-700' />
-              </div>
+              <ReportBookItem
+                key={b.id}
+                book={b}
+                reportDataBook={data.reportYearly.books || []}
+              />
             ))}
           </ul>
 
