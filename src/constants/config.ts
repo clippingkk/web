@@ -1,7 +1,7 @@
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
 export const API_HOST = __DEV__ ?
-  'http://localhost:9654' :
+  'http://localhost:19654' :
   'https://clippingkk-api.annatarhe.com'
 
 export const WENQU_API_HOST = 'https://wenqu.annatarhe.cn/api/v1'

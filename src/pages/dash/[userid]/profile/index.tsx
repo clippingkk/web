@@ -34,6 +34,7 @@ import Link from 'next/link';
 import OGWithUserProfile from '../../../../components/og/og-with-user-profile';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { client } from '../../../../services/ajax';
+import CliApiToken from './cli-api';
 
 function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // 优先使用本地数据，服务端数据只是为了 seo
@@ -74,7 +75,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
     if (!isInMyPage) {
       return false
     }
-    return !data?.me.wechatOpenid
+    return !!data?.me.wechatOpenid
   }, [data, uid, isInMyPage])
 
   return (
@@ -86,7 +87,11 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
       <Card className='flex items-center justify-center py-12 w-full lg:w-4/5 mx-auto mt-20 anna-fade-in bg-gray-200 bg-opacity-75'>
         <div className='flex flex-col items-center justify-center w-full'>
           <div className='w-full flex items-center justify-center'>
-            <Avatar img={data?.me.avatar ?? ''} name={data?.me.name} className='w-16 h-16 mr-12 lg:w-32 lg:h-32' />
+            <Avatar
+              img={data?.me.avatar ?? ''}
+              name={data?.me.name}
+              className='w-16 h-16 mr-12 lg:w-32 lg:h-32'
+            />
             <div className={styles.info}>
               <div className='flex items-center'>
                 <h3 className='text-2xl'>{data?.me.name}</h3>
@@ -100,8 +105,11 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
                     domain={data.me.domain}
                   />
                 )}
+                <CliApiToken />
               </div>
-              <h5 className='text-lg text-gray-800'>{t('app.profile.collected', { count: data?.me.clippingsCount })}</h5>
+              <h5 className='text-lg text-gray-800'>
+                {t('app.profile.collected', { count: data?.me.clippingsCount })}
+              </h5>
               <div className='mb-4'>
                 {data?.me.bio.split('\n').map((v, i) => (
                   <p key={i}>{v}</p>
@@ -148,7 +156,6 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
                   className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
                   title={t('app.profile.yearlyReportTip')}
                 >
-
                   {t('app.profile.report.yearlyTitle')}
                 </a>
               </Link>
@@ -156,7 +163,8 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
                 href={`${API_HOST}/api/rss/user/${data?.me.id}/clippings`}
                 target='_blank'
                 className='ml-4 px-4 py-2 rounded hover:bg-blue-400'
-                title={t('app.profile.rssTip')} rel="noreferrer"
+                title={t('app.profile.rssTip')}
+                rel="noreferrer"
               >
                 RSS
               </a>
@@ -175,7 +183,6 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
             </ResponsiveContainer>
           </div>
         </div>
-
       </Card>
 
       <Divider title={t('app.profile.recents')} />
