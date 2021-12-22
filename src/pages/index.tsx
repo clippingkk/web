@@ -30,11 +30,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 function IndexPage({ preloadPublicData }: InferGetStaticPropsType<typeof getStaticProps>) {
   usePageTrack('index')
-  const { data: newData } = useQuery<publicData>(fetchTopQuery, {
-    skip: !preloadPublicData
-  })
-
-  const data = preloadPublicData ?? newData
+  const data = preloadPublicData
 
   return (
     <div>
