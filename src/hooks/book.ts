@@ -82,15 +82,24 @@ export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestR
     }
     const query = needToFetchIds.join('&dbIds=')
     wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`).then(bs => {
+      // sort order by prev
+      const bsBooks = needToFetchIds.reduce<WenquBook[]>((acc, cur) => {
+        const bb = bs.books.find(x => x.doubanId.toString() === cur)
+        if (bb) {
+          acc.push(bb)
+        }
+        return acc
+      }, [])
+
       setBooks(s => {
-        return [...s, ...bs.books].reduce<WenquBook[]>((acc, cur) => {
+        return [...s, ...bsBooks].reduce<WenquBook[]>((acc, cur) => {
           if (acc.findIndex(x => x.doubanId === cur.doubanId) === -1) {
             acc.push(cur)
           }
           return acc
         }, [])
       })
-      bs.books.forEach(x => {
+      bsBooks.forEach(x => {
         cache.set(x.doubanId, x)
       })
     }).finally(() => {
