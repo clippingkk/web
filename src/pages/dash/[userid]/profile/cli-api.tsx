@@ -38,7 +38,7 @@ function CliApiToken(props: CliApiTokenProps) {
       return ''
     }
 
-    return `ck-cli --token="${k}" parse --input My\ Clippings.txt --out http`
+    return `ck-cli --token="${k}" parse --input My\ Clippings.txt --output http`
   }, [data?.claimAPIKey])
 
   const onCopyToClipboard = useCallback(() => {
