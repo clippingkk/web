@@ -90,7 +90,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
       ) : (
         <div className='container anna-page-container'>
           <a
-            className='flex sticky top-0 left-0 w-full p-4 bg-gray-200 dark:bg-gray-700 items-center justify-around z-50'
+            className='flex fixed top-0 left-0 w-full p-4 bg-gray-200 dark:bg-gray-700 items-center justify-around z-50'
             href='https://clippingkk.annatarhe.com'
           >
             <Image
