@@ -1,6 +1,7 @@
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
+import * as sentry from '@sentry/react'
 import AV from 'leancloud-storage'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
@@ -30,7 +31,7 @@ function BindPhone(props: BindPhoneProps) {
       setVerifyCode('')
       setCapture(res)
     })
-  }, [pn])
+  }, [pn.length, t])
   const onVerifyCodeInputEnd = useCallback(() => {
     if (pn.length < 5 || pn.length > 16) {
       toast.error(t('app.auth.errors.pnLen'))
@@ -48,18 +49,26 @@ function BindPhone(props: BindPhoneProps) {
         validateToken: vt
       }).then(res => {
         // something
-        toast.success('app.auth.info.smsSent')
+        toast.success(t('app.auth.info.smsSent'))
         // redirect
         setSmsSent(true)
       }).catch(err => {
+        sentry.withScope(s => {
+          s.setExtras({ pn: pn })
+          sentry.captureException(err)
+        })
         toast.error(err.toString())
       })
     }).catch(err => {
+      sentry.withScope(s => {
+        s.setExtras({ pn: pn })
+        sentry.captureException(err)
+      })
       toast.error(err.toString())
       setVerifyCode('')
       onPhoneNumberFinish()
     })
-  }, [capture, verifyCode, onPhoneNumberFinish])
+  }, [pn, verifyCode, capture, t, onPhoneNumberFinish])
   const onCodeEnd = useCallback((e: any) => {
     if (!smsSent) {
       return
@@ -77,7 +86,26 @@ function BindPhone(props: BindPhoneProps) {
         console.error(err)
         toast.error(err.toString())
       })
-  }, [smsSent])
+  }, [pn, props, smsSent, t])
+
+  useEffect(() => {
+    // 中国区号，手机号长度达到 11 位都进行尝试发短信
+    if (!pn.startsWith('+86') && !pn.startsWith('86')) {
+      return
+    }
+    const realPN = pn.replace('+86', '')
+    if (realPN.length !== 11) {
+      return
+    }
+    onPhoneNumberFinish()
+  }, [onPhoneNumberFinish, pn])
+  useEffect(() => {
+    if (code.length !== 4) {
+      return
+    }
+
+    onVerifyCodeInputEnd()
+  }, [code.length, onVerifyCodeInputEnd])
 
   return (
     <div className='w-full flex items-center justify-center rounded flex-col'>
