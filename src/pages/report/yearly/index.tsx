@@ -30,7 +30,6 @@ function ReportBookItem(props: ReportBookItemTypes) {
     bookClippings[Math.floor(Math.random() * bookClippings.length)].content :
     ''
 
-
   return (
     <div
       className='flex flex-col justify-center items-center w-full xl:w-1/2'
@@ -79,7 +78,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
   const { t } = useTranslation()
 
   return (
-    <div className='w-full anna-page-container py-28 flex justify-center items-center h-min-screen'>
+    <div className='w-full anna-page-container pb-28 flex justify-center items-center h-min-screen'>
       <Head>
         <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
         <OGWithReport data={data} year={year} books={books} />
@@ -91,7 +90,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
       ) : (
         <div className='container anna-page-container'>
           <a
-            className='flex fixed top-0 left-0 w-full p-4 bg-gray-200 dark:bg-gray-700 items-center justify-around z-50'
+            className='flex sticky top-0 left-0 w-full p-4 bg-gray-200 dark:bg-gray-700 items-center justify-around z-50'
             href='https://clippingkk.annatarhe.com'
           >
             <Image

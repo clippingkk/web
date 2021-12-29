@@ -30,8 +30,14 @@ function BindPhone(props: BindPhoneProps) {
     AV.Captcha.request().then(res => {
       setVerifyCode('')
       setCapture(res)
+    }).catch(err => {
+      sentry.withScope(s => {
+        s.setExtra('pn', pn)
+        sentry.captureException(err)
+      })
+      toast.error(err.toString())
     })
-  }, [pn.length, t])
+  }, [pn, t])
   const onVerifyCodeInputEnd = useCallback(() => {
     if (pn.length < 5 || pn.length > 16) {
       toast.error(t('app.auth.errors.pnLen'))
@@ -48,9 +54,7 @@ function BindPhone(props: BindPhoneProps) {
       }, {
         validateToken: vt
       }).then(res => {
-        // something
         toast.success(t('app.auth.info.smsSent'))
-        // redirect
         setSmsSent(true)
       }).catch(err => {
         sentry.withScope(s => {
@@ -100,12 +104,12 @@ function BindPhone(props: BindPhoneProps) {
     onPhoneNumberFinish()
   }, [onPhoneNumberFinish, pn])
   useEffect(() => {
-    if (code.length !== 4) {
+    if (verifyCode.length !== 4) {
       return
     }
 
     onVerifyCodeInputEnd()
-  }, [code.length, onVerifyCodeInputEnd])
+  }, [verifyCode.length, onVerifyCodeInputEnd])
 
   return (
     <div className='w-full flex items-center justify-center rounded flex-col'>
@@ -123,12 +127,11 @@ function BindPhone(props: BindPhoneProps) {
       <div className='flex w-full flex-col'>
         {capture && (
           <div className='flex mt-4'>
-            <img src={capture?.url} />
+            <img src={capture?.url} onClick={onPhoneNumberFinish} />
             <input
               value={verifyCode}
               onChange={e => setVerifyCode(e.target.value.trim())}
               maxLength={4}
-              onBlur={onVerifyCodeInputEnd}
               className='w-full py-2 px-4 focus:outline-none'
               onKeyUp={e => {
                 if (e.key.toLowerCase() !== 'enter') {
@@ -163,7 +166,6 @@ function BindPhone(props: BindPhoneProps) {
           />
         )}
       </div>
-
     </div>
   )
 }
