@@ -10,5 +10,4 @@ declare module '*.graphql' {
 }
 
 declare module 'react-dark-mode-toggle';
-declare module 'react-input-switch';
 declare module 'colorthief';

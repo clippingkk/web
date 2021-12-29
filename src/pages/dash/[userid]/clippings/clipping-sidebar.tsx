@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useApolloClient, useMutation } from '@apollo/client'
-import Switch from 'react-input-switch'
+import Switch from '../../../../components/switcher'
 import Card from '../../../../components/card/card'
 import { toggleClippingVisible, toggleClippingVisibleVariables } from '../../../../schema/mutations/__generated__/toggleClippingVisible'
 import toggleClippingVisibleMutation from '../../../../schema/mutations/toggle-clipping-visible.graphql'
@@ -133,7 +133,9 @@ function ClippingSidebar(props: ClippingSidebarProps) {
               >
                 <label htmlFor="">{t('app.clipping.visible')}</label>
                 <Switch
-                  value={clipping.visible ? 1 : 0}
+                  disabled={false}
+                  name='visible'
+                  checked={clipping.visible}
                   onChange={() => {
                     if (!clipping) {
                       return

@@ -1,11 +1,10 @@
 module.exports = {
-  mode: 'jit',
   darkMode: 'class',
   // future: {
   //   removeDeprecatedGapUtilities: true,
   //   purgeLayersByDefault: true,
   // },
-  purge: [
+  content: [
     'src/**/*.tsx',
     'src/**/*.jsx',
     './node_modules/tailwindcss-dark-mode/prefers-dark.js',

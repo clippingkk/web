@@ -6,37 +6,36 @@
   @font-face {
     font-family: LxgwWenKai;
     font-weight: 400;
-    src: url('https://qcloud-1251807749.cos.ap-shanghai.myqcloud.com/LXGWWenKai-Regular20210327.ttf')  format('truetype');
+    src: url('https://qcloud-1251807749.cos.ap-shanghai.myqcloud.com/LXGWWenKai-Regular20210327.ttf')
+      format('truetype');
   }
 }
 
 @layer utilities {
-  @variants responsive {
-    .masonry-4 {
-      columns: 4;
-    }
-    .masonry-3 {
-      columns: 3;
-    }
-    .masonry-2 {
-      columns: 2;
-    }
-    .masonry-1 {
-      columns: 1;
-    }
+  .masonry-4 {
+    columns: 4;
+  }
+  .masonry-3 {
+    columns: 3;
+  }
+  .masonry-2 {
+    columns: 2;
+  }
+  .masonry-1 {
+    columns: 1;
+  }
 
-    .masonry-gap-4 {
-      column-gap: 1rem;
-    }
-    .masonry-gap-8 {
-      column-gap: 2rem;
-    }
-    .masonry-gap-12 {
-      column-gap: 3rem;
-    }
-    .masonry-gap-16 {
-      column-gap: 4rem;
-    }
+  .masonry-gap-4 {
+    column-gap: 1rem;
+  }
+  .masonry-gap-8 {
+    column-gap: 2rem;
+  }
+  .masonry-gap-12 {
+    column-gap: 3rem;
+  }
+  .masonry-gap-16 {
+    column-gap: 4rem;
   }
 
   .font-lxgw {
@@ -55,7 +54,7 @@
   }
 
   .with-fade-in {
-    animation: animation-fade-in .35s;
+    animation: animation-fade-in 0.35s;
   }
 
   @keyframes animation-slide-in {
@@ -70,6 +69,6 @@
   }
 
   .with-slide-in {
-    animation: animation-slide-in .35s;
+    animation: animation-slide-in 0.35s;
   }
 }
