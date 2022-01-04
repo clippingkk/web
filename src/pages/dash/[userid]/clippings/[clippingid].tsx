@@ -75,7 +75,7 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
           <hr className='bg-gray-400 my-12' />
           <ClippingContent className='lg:text-3xl text-2xl lg:leading-loose leading-normal font-lxgw' content={clipping?.clipping.content ?? ''} />
           <hr className='bg-gray-400 my-12' />
-          <Reactions reactions={clipping?.clipping.reactions ?? []} cid={clipping?.clipping.id || -1} />
+          <Reactions reactions={clipping?.clipping.reactionData} cid={clipping?.clipping.id || -1} />
           <hr className='bg-gray-400 my-12' />
           <footer className='flex justify-between mt-4'>
             {me.id === 0 && (

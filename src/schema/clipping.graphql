@@ -15,15 +15,23 @@ query fetchClipping($id: Int!) {
       userClippingID
       bookClippingID
     }
-    reactions {
-      id
-      symbol
-      creator {
-        id
-        avatar
-        name
+    reactionData {
+      count
+      symbolCounts {
+        symbol
+        count
+        done
+        recently {
+          id
+          symbol
+          creator {
+            id
+            avatar
+            name
+          }
+          createdAt
+        }
       }
-      createdAt
     }
     creator {
       id

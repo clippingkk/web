@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { Picker } from 'emoji-mart'
-import { fetchClipping_clipping_reactions } from '../../../../schema/__generated__/fetchClipping'
 import reactionCreateMutation from '../../../../schema/reaction-create.graphql'
 import reactionRemoveMutation from '../../../../schema/reaction-remove.graphql'
 import { useApolloClient, useMutation } from '@apollo/client'
@@ -15,29 +14,14 @@ import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { fetchClipping_clipping_reactionData } from '../../../../schema/__generated__/fetchClipping'
 
 type ReactionsProps = {
   cid: number
-  reactions: readonly fetchClipping_clipping_reactions[]
-}
-
-type groupedReactions = {
-  [x: string]: fetchClipping_clipping_reactions[]
+  reactions?: fetchClipping_clipping_reactionData
 }
 
 function Reactions(props: ReactionsProps) {
-  const rs = useMemo(() => {
-    return props.reactions.reduce<groupedReactions>((acc, c) => {
-      const result: fetchClipping_clipping_reactions[] = []
-      if (c.symbol in acc) {
-        result.concat([...(acc[c.symbol]), c])
-      } else {
-        result.push(c)
-      }
-      acc[c.symbol] = result
-      return acc
-    }, {})
-  }, [props.reactions.map(x => x.id).join('')])
   const [pickerVisible, setPickerVisible] = useState(false)
   const client = useApolloClient()
   const [doReactionCreate] = useMutation<reactionCreate, reactionCreateVariables>(reactionCreateMutation)
@@ -51,14 +35,14 @@ function Reactions(props: ReactionsProps) {
   return (
     <div className='w-full'>
       <div className='relative inline-block w-full'>
-        {Object.keys(rs).map(k => (
+        {(props.reactions?.symbolCounts ?? []).map(k => (
           <Tooltip
             className='inline-block w-min'
-            key={k}
+            key={k.symbol}
             placement='top'
             overlay={(
               <div>
-                {rs[k].map(x => (
+                {k.recently.map(x => (
                   <span key={x.id}>
                     {x.creator.name}
                   </span>
@@ -73,11 +57,10 @@ function Reactions(props: ReactionsProps) {
                   navigate('/auth/signin')
                   return
                 }
-                const val = rs[k].find(x => x.creator.id === uid)
-                if (val) {
+                if (k.done) {
                   doReactionRemove({
                     variables: {
-                      rid: val.id
+                      symbol: k.symbol
                     }
                   }).then(() => {
                     toast.success(t('app.clipping.reactions.removeSuccess'))
@@ -91,7 +74,7 @@ function Reactions(props: ReactionsProps) {
                   variables: {
                     target: ReactionTarget.clipping,
                     targetId: props.cid,
-                    symbol: k,
+                    symbol: k.symbol,
                   }
                 }).then(() => {
                   toast.success(t('app.clipping.reactions.addSuccess'))
@@ -101,8 +84,8 @@ function Reactions(props: ReactionsProps) {
                 })
               }}
             >
-              <span className='text-2xl'>{k}</span>
-              <span className='text-2xl ml-2'>{rs[k].length}</span>
+              <span className='text-2xl'>{k.symbol}</span>
+              <span className='text-2xl ml-2'>{k.count}</span>
             </button>
           </Tooltip>
         ))}
