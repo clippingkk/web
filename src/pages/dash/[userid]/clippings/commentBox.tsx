@@ -34,7 +34,7 @@ function CommentBox(props: CommentBoxProps) {
     createCommentAction({
       variables: {
         cid: props.clippingID,
-        content: content.repeat(20)
+        content: content
       }
     }).then(() => {
       swal({
@@ -43,7 +43,7 @@ function CommentBox(props: CommentBoxProps) {
       })
       client.resetStore()
     })
-  }, [createCommentAction, props.clippingID, content])
+  }, [content, createCommentAction, props.clippingID, t, client])
 
   return (
     <div className='flex container flex-col lg:flex-row'>
