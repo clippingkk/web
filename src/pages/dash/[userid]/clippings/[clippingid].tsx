@@ -35,7 +35,7 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
     variables: {
       id: ~~clippingid
     },
-    skip: !!serverResponse.clippingServerData
+    // skip: !!serverResponse.clippingServerData
   })
 
   const clipping = clippingLocalData || serverResponse.clippingServerData

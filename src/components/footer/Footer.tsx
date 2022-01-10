@@ -19,10 +19,6 @@ function Footer() {
 
         <p>
           Build with ❤ by AnnatarHe 
-          <small className='ml-2 hidden'>
-          and 
-          <a href="https://i.fanyijing.love" className='ml-2'>jing</a>
-          </small>
         </p>
         <p>Version: dev</p>
       </div>

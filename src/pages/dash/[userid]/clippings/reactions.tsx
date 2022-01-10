@@ -14,11 +14,33 @@ import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { fetchClipping_clipping_reactionData } from '../../../../schema/__generated__/fetchClipping'
+import { fetchClipping_clipping_reactionData, fetchClipping_clipping_reactionData_symbolCounts } from '../../../../schema/__generated__/fetchClipping'
+
+const avaliableReactions = ["👍", "❤️", "⭐️", "🐶", "😱"]
 
 type ReactionsProps = {
   cid: number
   reactions?: fetchClipping_clipping_reactionData
+}
+
+type ReactionCellProps = {
+  symbol: string
+  count: number
+  onClick: () => void
+}
+
+function ReactionCell(props: ReactionCellProps) {
+  const { push: navigate } = useRouter()
+  return (
+            <button
+              className='inline-flex py-4 px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
+              onClick={props.onClick}
+            >
+              <span className='text-2xl'>{props.symbol}</span>
+              <span className='text-2xl ml-2'>{props.count}</span>
+            </button>
+
+  )
 }
 
 function Reactions(props: ReactionsProps) {
@@ -32,15 +54,38 @@ function Reactions(props: ReactionsProps) {
   }, [])
   const { t } = useTranslation()
   const { push: navigate } = useRouter()
+
+  const symbolCounts = useMemo<fetchClipping_clipping_reactionData_symbolCounts[]>(() => {
+    if (!props.reactions?.symbolCounts) {
+    return []
+    }
+    const s = [...props.reactions.symbolCounts]
+
+    // 如果服务端返回的没有这些数据，则补全
+    for (let ar of avaliableReactions) {
+      const has = s.findIndex(x => x.symbol === ar) > -1
+      if (!has) {
+        s.push({
+          count: 0,
+          symbol: ar,
+          done: false,
+          recently: [],
+          __typename: 'ReactionWithSymbolCount',
+        })
+      }
+    }
+    return s
+  }, [props.reactions?.symbolCounts])
+
   return (
     <div className='w-full'>
       <div className='relative inline-block w-full'>
-        {(props.reactions?.symbolCounts ?? []).map(k => (
+        {symbolCounts.map(k => (
           <Tooltip
             className='inline-block w-min'
             key={k.symbol}
             placement='top'
-            overlay={(
+            overlay={k.recently.length > 0 ? (
               <div>
                 {k.recently.map(x => (
                   <span key={x.id}>
@@ -48,12 +93,14 @@ function Reactions(props: ReactionsProps) {
                   </span>
                 ))}
               </div>
+            ) : (
+              <div>waiting for your feedback</div>
             )}
           >
             <button
               className='inline-flex py-4 px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
               onClick={() => {
-                if (uid === 0) {
+                if (uid <= 0) {
                   navigate('/auth/signin')
                   return
                 }
@@ -89,22 +136,6 @@ function Reactions(props: ReactionsProps) {
             </button>
           </Tooltip>
         ))}
-        {uid === 0 ? (
-          <Link
-            href='/auth/signin'
-          >
-            <a
-              className='py-4 px-8 rounded-3xl hover:bg-gray-300'
-            >
-              ➕
-            </a>
-          </Link>
-        ) : (
-          <button
-            className='py-4 px-8 rounded-3xl hover:bg-gray-300'
-            onClick={togglePicker}
-          >➕</button>
-        )}
         {pickerVisible && (
           <Dialog
             title='aaa'
