@@ -12,7 +12,7 @@ type CommentBoxProps = {
   me: UserContent
 }
 
-const COMMENT_MIN_LEN = 100
+const COMMENT_MIN_LEN = 40
 
 function CommentBox(props: CommentBoxProps) {
   const [content, setContent] = useState('')
