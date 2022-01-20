@@ -28,7 +28,7 @@ export const KonzertThemeMap = {
 
 export function getUTPLink(service: UTPService, params: Object): string {
   const d = new URLSearchParams(params as any)
-  const distUrl = encodeURIComponent(`https://konzert.annatarhe.com/${service.toString()}.html?${d.toString()}`)
+  const distUrl = encodeURIComponent(`https://konzert.annatarhe.cn/${service.toString()}.html?${d.toString()}`)
 
   const screenWidth = process.browser ? (screen.width > 375 ? 375 : screen.width) : 375
   const dpi = 3
