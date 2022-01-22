@@ -57,7 +57,7 @@ function CommentBox(props: CommentBoxProps) {
       </div>
 
       <div className='flex flex-1 lg:ml-8 flex-col justify-center items-end'>
-        <textarea className='w-full rounded border-none focus:scale-105 transition-transform duration-75 focus:outline-none p-4 text-lg dark:bg-gray-700'
+        <textarea className='w-full rounded border-none focus:scale-105 transition-transform duration-75 focus:outline-none p-4 text-lg dark:bg-gray-700 dark:text-gray-200'
           rows={8}
           value={content}
           onChange={e => setContent(e.target.value)}
