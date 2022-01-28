@@ -168,6 +168,11 @@ app:
                 submit: 导出至 notion
         domain:
             title: 域名路由
+        danger:
+            removeAccount: 删除账户
+            removeButton: 删除我的账户
+            removeAccountDone: 账户已删除
+            removeAccountDoneTip: 24 小时内不再登陆，则账户数据会被永久删除
     index:
         features:
             open:

@@ -196,6 +196,11 @@ function* logoutAction(action: any) {
   yield call(action.navigate as any, '/')
 }
 
+export function plainLogout() {
+  profile.onLogout()
+  mixpanel.track("logout")
+}
+
 export function* usersAction(): IterableIterator<any> {
   yield takeEvery(AUTH_LOGIN_ACTION, loginAction)
   yield takeEvery(USER_SIGNUP_ACTION, signupAction)

@@ -169,6 +169,11 @@ app:
                 submit: export to notion
         domain:
             title: Domain name
+        danger:
+            removeAccount: Delete Account
+            removeButton: Delete My Account
+            removeAccountDone: Account Deleted
+            removeAccountDoneTip: Do not login again in 24 hours, and your account will be delete permently
     index:
         features:
             open:

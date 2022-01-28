@@ -168,6 +168,11 @@ app:
                 submit: notion 로 내보내기
         domain:
             title: Domain name
+        danger:
+            removeAccount: Delete Account
+            removeButton: Delete My Account
+            removeAccountDone: Account Deleted
+            removeAccountDoneTip: Do not login again in 24 hours, and your account will be delete permently
     index:
         features:
             open:

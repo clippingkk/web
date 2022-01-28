@@ -7,6 +7,7 @@ import Exports from './exports'
 import WebHooks from './webhooks'
 import { useDarkModeStatus } from '../../../../hooks/theme'
 import DashboardContainer from '../../../../components/dashboard-container/container'
+import AccountRemoveButton from './account-remove'
 
 type SettingsPageProps = {
 }
@@ -96,6 +97,11 @@ function SettingsPage(props: SettingsPageProps) {
         </a>
       </h3>
       <WebHooks />
+
+      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
+        {t('app.settings.danger.removeAccount')}
+      </h3>
+      <AccountRemoveButton />
 
     </div>
   )
