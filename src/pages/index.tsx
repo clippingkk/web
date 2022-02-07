@@ -13,6 +13,7 @@ import TopClippings from './index/TopClippings'
 import TopUsers from './index/TopUsers'
 import OGWithIndex from '../components/og/og-with-index'
 import Features from './index/Features'
+import { WenquBook, wenquRequest, WenquSearchResponse } from '../services/wenqu'
 
 export const getStaticProps: GetStaticProps = async () => {
   const data = await client.query<publicData>({ 
@@ -20,15 +21,38 @@ export const getStaticProps: GetStaticProps = async () => {
     fetchPolicy: 'network-only'
   })
 
+  const dbIds = data.
+    data.
+    public.
+    books.
+    map(x => x.doubanId).
+    filter(x => x.length > 3) ?? []
+
+  let booksServerData: WenquBook[] = []
+
+  if (dbIds.length >= 1) {
+    const query = dbIds.join('&dbIds=')
+    const books = await wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`)
+    const bsBooks = dbIds.reduce<WenquBook[]>((acc, cur) => {
+      const bb = books.books.find(x => x.doubanId.toString() === cur)
+      if (bb) {
+        acc.push(bb)
+      }
+      return acc
+    }, [])
+    booksServerData.push(...bsBooks)
+  }
+
   return {
     props: {
-      preloadPublicData: data.data
+      preloadPublicData: data.data,
+      books: booksServerData
     },
     revalidate: true
   }
 }
 
-function IndexPage({ preloadPublicData }: InferGetStaticPropsType<typeof getStaticProps>) {
+function IndexPage({ preloadPublicData, books }: InferGetStaticPropsType<typeof getStaticProps>) {
   usePageTrack('index')
   const data = preloadPublicData
 
@@ -40,7 +64,7 @@ function IndexPage({ preloadPublicData }: InferGetStaticPropsType<typeof getStat
         </Head>
       <Hero />
       <div className='py-4 anna-page-container'>
-        <TopBooks books={data?.public.books} />
+        <TopBooks books={books} />
         <TopClippings clippings={data?.public.clippings} />
         <TopUsers users={data?.public.users} />
         <Features />
