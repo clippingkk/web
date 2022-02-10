@@ -19,6 +19,7 @@ app:
         settings: 설정
         logout: 그만두 다
         search:
+            title: 검색
             empty: 데이터 없음
     public:
         readings: 모두가 읽고 있습니다

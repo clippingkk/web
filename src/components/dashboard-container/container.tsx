@@ -1,7 +1,6 @@
 import React from 'react'
 import NavigationBar from '../navigation-bar/navigation-bar'
 import Footer from '../footer/Footer'
-import SearchBar from '../searchbar/searchbar'
 
 import styles from './container.module.css'
 
@@ -23,7 +22,6 @@ function DashboardContainer(props: any) {
       {props.children}
       </div>
       <Footer />
-      <SearchBar />
     </section>
   )
 }

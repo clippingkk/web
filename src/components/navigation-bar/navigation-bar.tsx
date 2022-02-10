@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import { propTypes } from 'qrcode.react'
+import SearchBar, { useCtrlP } from '../searchbar/searchbar'
 
 const leftMenu = [
   {
@@ -45,6 +46,11 @@ function NavigationBar() {
 
   const onLogout = useCallback(() => {
     dispatch(execLogout(push))
+  }, [])
+
+  const { visible, setVisible } = useCtrlP()
+  const onSearchbarClose = useCallback(() => {
+    setVisible(false)
   }, [])
 
   const { t } = useTranslation()
@@ -82,6 +88,24 @@ function NavigationBar() {
         </ul>
       </div>
       <ul className='flex'>
+
+        <li className='mr-6'>
+          <Tooltip
+            placement='bottom'
+            overlay={<span>{t('app.menu.search.title')}</span>}
+          >
+            <button
+              className='text-3xl lg:text-4xl'
+              title={t('app.menu.search.title')}
+              onClick={() => {
+                setVisible(true)
+              }}
+            >
+              🔍
+            </button>
+          </Tooltip>
+        </li>
+
         <li className='mr-6'>
           <Tooltip
             placement='bottom'
@@ -94,7 +118,6 @@ function NavigationBar() {
                 className='text-3xl lg:text-4xl'
                 title={t('app.menu.settings')}
               >
-
                 🛠
               </a>
             </Link>
@@ -114,6 +137,7 @@ function NavigationBar() {
           </Tooltip>
         </li>
       </ul>
+      <SearchBar visible={visible} onClose={onSearchbarClose} />
     </nav>
   )
 }
