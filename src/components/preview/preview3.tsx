@@ -79,7 +79,7 @@ function Preview(props: PreviewProps) {
           <a
             href={shareURL}
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
-            className='text-white text-lg w-full from-blue-200 to-red-200 bg-gradient-to-t block text-center py-4 mt-4'
+            className='text-white text-lg w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow'
             target='_blank' rel="noreferrer"
           >
             {t('app.clipping.save')}
