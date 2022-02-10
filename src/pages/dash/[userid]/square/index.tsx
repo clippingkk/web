@@ -18,6 +18,8 @@ import { client } from '../../../../services/ajax'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
 import OGWithSquare from '../../../../components/og/og-with-square-page'
 import { fetchClipping_clipping } from '../../../../schema/__generated__/fetchClipping'
+import { Masonry } from 'masonic'
+import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size'
 
 // function DevelopingAlert() {
 //   const { t } = useTranslation()
@@ -33,6 +35,8 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
   usePageTrack('square')
   const { t } = useTranslation()
   useTitle(t('app.square.title'))
+
+  const masonaryColumnCount = useMasonaryColumnCount()
 
   const [reachEnd, setReachEnd] = useState(false)
 
@@ -57,7 +61,25 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
         <OGWithSquare books={serverResponse.books} />
       </Head>
       <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'>Square</h2>
-      <MasonryContainer>
+      <Masonry
+      items={(data.featuredClippings ?? []) as fetchSquareData_featuredClippings[]}
+      columnCount={masonaryColumnCount}
+      columnGutter={30}
+      render={(row) => {
+        const clipping = row.data
+        return (
+            <ClippingItem
+              key={clipping.id}
+              item={clipping as any}
+              domain={clipping.creator.domain.length > 2 ? clipping.creator.domain : clipping.creator.id.toString()}
+              book={books.books.find(x => x.id.toString() == clipping.bookID)}
+              creator={clipping.creator}
+              inAppChannel={IN_APP_CHANNEL.clippingFromUser}
+            />
+        )
+      }}
+      />
+      {/* <MasonryContainer>
         <React.Fragment>
           {data?.featuredClippings.map(clipping => (
             <ClippingItem
@@ -70,7 +92,7 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
             />
           ))}
         </React.Fragment>
-      </MasonryContainer>
+      </MasonryContainer> */}
       <ListFooter
         loadMoreFn={() => {
           if (loading || !called || !fetchMore) {
