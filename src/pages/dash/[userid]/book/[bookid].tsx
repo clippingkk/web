@@ -6,12 +6,11 @@ import Divider from '../../../../components/divider/divider';
 import { changeBackground } from '../../../../store/app/type';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head'
-import { usePageTrack, useTitle } from '../../../../hooks/tracke';
-import { useSingleBook } from '../../../../hooks/book'
+import { usePageTrack } from '../../../../hooks/tracke';
 import { useQuery } from '@apollo/client';
 import bookQuery from '../../../../schema/book.graphql'
 import myIdByDomainQuery from '../../../../schema/myIdByDomain.graphql'
-import { book, bookVariables } from '../../../../schema/__generated__/book'
+import { book, bookVariables, book_book_clippings } from '../../../../schema/__generated__/book'
 import { queryMyIdByDomain, queryMyIdByDomainVariables } from '../../../../schema/__generated__/queryMyIdByDomain'
 import { useTranslation } from 'react-i18next';
 import MasonryContainer from '../../../../components/masonry-container';
@@ -23,7 +22,8 @@ import DashboardContainer from '../../../../components/dashboard-container/conta
 import OGWithBook from '../../../../components/og/og-with-book';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu';
-import { number } from 'yup';
+import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size';
+import { Masonry } from 'masonic';
 
 function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { userid: domain, bookid } = useRouter().query as { userid: string, bookid: string }
@@ -70,6 +70,8 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
     skip: !Number.isNaN(parseInt(domain))
   })
 
+  const masonaryColumnCount = useMasonaryColumnCount()
+
   if (!bookData) {
     return null
   }
@@ -87,51 +89,57 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
         isLastReadingBook={clippingsData?.book.isLastReadingBook}
       />
       <Divider title={t('app.book.title')} />
-      <MasonryContainer>
-        <React.Fragment>
-          {clippingsData?.book.clippings.map(clipping => (
-            <ClippingItem
-              item={clipping}
-              domain={domain}
-              book={bookData}
-              key={clipping.id}
-              inAppChannel={IN_APP_CHANNEL.clippingFromBook}
-            />
-          ))}
-          <ListFooter
-            loadMoreFn={() => {
-              if (loading) {
-                return
-              }
-              fetchMore({
-                variables: {
-                  id: ~~bookid,
-                  pagination: {
-                    limit: 10,
-                    offset: clippingsData?.book.clippings.length
-                  }
-                },
-                updateQuery: (prev: book, { fetchMoreResult }) => {
-                  if (!fetchMoreResult) {
-                    return prev
-                  }
-                  if (fetchMoreResult.book.clippings.length < 10) {
-                    setHasMore(false)
-                  }
-                  return {
-                    ...prev,
-                    book: {
-                      ...prev.book,
-                      clippings: [...prev.book.clippings, ...fetchMoreResult.book.clippings]
-                    }
+      <div>
+        <Masonry
+          items={(clippingsData?.book.clippings ?? []) as book_book_clippings[]}
+          columnCount={masonaryColumnCount}
+          columnGutter={30}
+          render={(row) => {
+            const clipping = row.data
+            return (
+              <ClippingItem
+                item={clipping}
+                domain={domain}
+                book={bookData}
+                key={clipping.id}
+                inAppChannel={IN_APP_CHANNEL.clippingFromBook}
+              />
+            )
+          }}
+        />
+        <ListFooter
+          loadMoreFn={() => {
+            if (loading) {
+              return
+            }
+            fetchMore({
+              variables: {
+                id: ~~bookid,
+                pagination: {
+                  limit: 10,
+                  offset: clippingsData?.book.clippings.length
+                }
+              },
+              updateQuery: (prev: book, { fetchMoreResult }) => {
+                if (!fetchMoreResult) {
+                  return prev
+                }
+                if (fetchMoreResult.book.clippings.length < 10) {
+                  setHasMore(false)
+                }
+                return {
+                  ...prev,
+                  book: {
+                    ...prev.book,
+                    clippings: [...prev.book.clippings, ...fetchMoreResult.book.clippings]
                   }
                 }
-              })
-            }}
-            hasMore={hasMore}
-          />
-        </React.Fragment>
-      </MasonryContainer>
+              }
+            })
+          }}
+          hasMore={hasMore}
+        />
+      </div>
     </section>
   )
 }

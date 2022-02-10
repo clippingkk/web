@@ -62,12 +62,12 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
       </Head>
       <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'>Square</h2>
       <Masonry
-      items={(data.featuredClippings ?? []) as fetchSquareData_featuredClippings[]}
-      columnCount={masonaryColumnCount}
-      columnGutter={30}
-      render={(row) => {
-        const clipping = row.data
-        return (
+        items={(data.featuredClippings ?? []) as fetchSquareData_featuredClippings[]}
+        columnCount={masonaryColumnCount}
+        columnGutter={30}
+        render={(row) => {
+          const clipping = row.data
+          return (
             <ClippingItem
               key={clipping.id}
               item={clipping as any}
@@ -76,8 +76,8 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
               creator={clipping.creator}
               inAppChannel={IN_APP_CHANNEL.clippingFromUser}
             />
-        )
-      }}
+          )
+        }}
       />
       {/* <MasonryContainer>
         <React.Fragment>
