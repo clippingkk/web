@@ -19,6 +19,7 @@ app:
         settings: 设置
         logout: 退出
         search:
+            title: 搜索
             empty: 没有数据
     public:
         readings: 大家在读

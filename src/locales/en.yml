@@ -19,6 +19,7 @@ app:
         settings: Settings
         logout: Logout
         search:
+            title: Search
             empty: no data here
     public:
         readings: Reading books
