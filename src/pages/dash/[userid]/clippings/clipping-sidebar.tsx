@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useApolloClient, useMutation } from '@apollo/client'
 import Switch from '../../../../components/switcher'
 import Card from '../../../../components/card/card'
@@ -15,6 +15,7 @@ import { toast } from 'react-toastify'
 
 import styles from './clipping.module.css'
 import Link from 'next/link'
+import BookInfoChanger from '../../../../components/book-info-changer/bookInfoChanger'
 
 type ClippingSidebarProps = {
   clipping: fetchClipping_clipping | undefined
@@ -51,12 +52,23 @@ function ClippingSidebar(props: ClippingSidebarProps) {
   const client = useApolloClient()
   const dispatch = useDispatch()
   const [execToggleClipping] = useMutation<toggleClippingVisible, toggleClippingVisibleVariables>(toggleClippingVisibleMutation)
+
+  const [updateClippingBookId, setUpdateClippingBookId] = useState(-1)
+
   const updateClipping = useCallback(() => {
     if (!clipping) {
       return
     }
-    dispatch(updateClippingBook(clipping.id))
-  }, [clipping])
+
+    setUpdateClippingBookId(clipping.id)
+  }, [clipping?.id])
+
+  // const updateClipping = useCallback(() => {
+  //   if (!clipping) {
+  //     return
+  //   }
+  //   dispatch(updateClippingBook(clipping.id))
+  // }, [clipping])
 
   const onCopyEmbedHtml = useCallback(() => {
     const template = `
@@ -98,6 +110,18 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             >
               {t('app.clipping.update')}
             </button>
+            <BookInfoChanger
+              clippingID={clipping?.id ?? -1}
+              visible={updateClippingBookId >= 0}
+              onClose={() => {
+                setUpdateClippingBookId(-1)
+              }}
+              onConfirm={newBookId => {
+                setUpdateClippingBookId(-1)
+                console.log(1)
+                return Promise.resolve(1)
+              }}
+            />
           </li>
 
           <li className='w-full mb-4'>

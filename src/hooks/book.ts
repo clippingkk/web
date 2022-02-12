@@ -114,3 +114,19 @@ export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestR
   }
 }
 
+export function useBookSearch(query: string, offset: number) {
+  const [books, setBooks] = useState<WenquSearchResponse | null>(null)
+  useEffect(() => {
+    if (query.length < 3) {
+      return
+    }
+
+    wenquRequest<WenquSearchResponse>(`/books/search?query=${query}&limit=50&offset=${offset}`)
+      .then(bs => {
+        setBooks(bs)
+      })
+  }, [query, offset])
+
+  return books
+}
+

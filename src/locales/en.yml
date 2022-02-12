@@ -62,8 +62,11 @@ app:
         notfound: What! No clippings for now?
         uploadTip: click me and upload
     clipping:
-        update: check book
-        shares: share
+        update: Change book info
+        updatePlaceholder: Search any book you need
+        updateCandidatesCount: "candidate count: {{ count }}"
+        updateSelectedTip: "selected new book is: {{ title }}"
+        shares: Share
         link: Douban link
         at: Excerpted on
         preview: Preview

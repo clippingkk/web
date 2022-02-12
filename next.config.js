@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ['ck-cdn.annatarhe.cn'],
+    domains: ['ck-cdn.annatarhe.cn', 'img1.doubanio.com'],
   },
   excludeFile: (str) => /__tests__/.test(str),
   env: {

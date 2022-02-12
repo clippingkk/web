@@ -62,7 +62,10 @@ app:
         notfound: 뭐! 아직 메모를 읽지 않았습니까?
         uploadTip: 还不快点我上传
     clipping:
-        update: 서지 업데이트
+        update: 책 업데이트
+        updatePlaceholder: 책 제목 검색
+        updateCandidatesCount: "총 {{ count }} 개의 데이터"
+        updateSelectedTip: "선택한 새 책은 다음과 같습니다. {{ title }}"
         shares: 사진 공유
         link: Douban 독서
         at: 발췌 시간

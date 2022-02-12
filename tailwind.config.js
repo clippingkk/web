@@ -10,6 +10,10 @@ module.exports = {
     './node_modules/tailwindcss-dark-mode/prefers-dark.js',
     'src/prefers-dark.ts'
   ],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
+  ],
   // whitelist: ['mode-dark'],
   theme: {
     extend: {

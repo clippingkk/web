@@ -63,6 +63,9 @@ app:
         uploadTip: 还不快点我上传
     clipping:
         update: 书目更新
+        updatePlaceholder: 搜索需要匹配的图书 
+        updateCandidatesCount: "共: {{ count }}"
+        updateSelectedTip: "已选中新书: {{ title }}"
         shares: 图片分享
         link: 豆瓣读书
         at: 摘录于
