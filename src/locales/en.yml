@@ -8,7 +8,6 @@ app:
         doUpdate: Update
         done: Done
         delete: Delete
-
     slogan: Organize, Display, Review, Be Better
     go: Go!
     menu:
@@ -20,6 +19,7 @@ app:
         logout: Logout
         search:
             title: Search
+            placeholder: Empire, faith, free...
             empty: no data here
     public:
         readings: Reading books

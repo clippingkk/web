@@ -8,7 +8,6 @@ app:
         doUpdate: 更新
         done: 完成
         delete: 删除
-
     slogan: 整理, 展示, 复盘, 进步
     go: 立即体验！
     menu:
@@ -20,6 +19,7 @@ app:
         logout: 退出
         search:
             title: 搜索
+            placeholder: 父亲, 士大夫, 人民...
             empty: 没有数据
     public:
         readings: 大家在读

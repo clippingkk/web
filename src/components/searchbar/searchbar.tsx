@@ -107,6 +107,7 @@ function SearchBar(props: SearchBarProps) {
               className='w-80 lg:w-1/3 py-8 px-4 rounded-r focus:outline-none text-4xl dark:bg-gray-300'
               autoFocus
               onChange={debounce(onInputChange, 300)}
+              placeholder={t('app.menu.search.placeholder')}
             />
           </div>
           <div className='flex flex-col w-80 lg:w-1/3 flex-1' onClick={noop}>

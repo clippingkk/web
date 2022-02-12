@@ -8,7 +8,6 @@ app:
         doUpdate: 최신 정보
         done: 마치다
         delete: 삭제
-
     slogan: 정리, 표시, 검토, 진행
     go: 지금 시도하십시오!
     menu:
@@ -20,6 +19,7 @@ app:
         logout: 그만두 다
         search:
             title: 검색
+            placeholder: 군대, 위엄, 사랑...
             empty: 데이터 없음
     public:
         readings: 모두가 읽고 있습니다
