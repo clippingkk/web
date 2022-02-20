@@ -47,7 +47,7 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
           </h5>
         )}
         <a
-          href={getUTPLink(UTPService.book, { uid, bid: book.id, theme: KonzertThemeMap.young.id, })}
+          href={getUTPLink(UTPService.book, { uid, bid: book.id, theme: KonzertThemeMap.dark.id, })}
           target='_blank'
           className='bg-blue-400 py-2 px-4 mb-2 inline-block hover:underline' rel="noreferrer"
         >
