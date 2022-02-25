@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.22.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.23.1...v3.22.3) (2022-02-25)
+
+
+### Features
+
+* **book:** update book share as dark theme ([4ae6f3e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4ae6f3e3207c661b880216071c4cbca4c99641db))
+* **deps:** update deps ([f120a5b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f120a5b090ea509247eebf4c3e176f2c94108735))
+
+
+### Bug Fixes
+
+* **ci:** fix ci script ([8bb447f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8bb447f4b8ba1bec51f8adf96bcb7cf21b98ad70))
+* **deps:** update deps ([cc598de](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cc598deef91775f380e29faf86c34deccaf9ffbd))
+
 ### [3.22.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.22.1...v3.22.2) (2021-12-08)
 
 
