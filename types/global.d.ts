@@ -3,10 +3,14 @@ declare var __VERSION__: string
 
 // graphql.d.ts file
 declare module '*.graphql' {
-    import {DocumentNode} from 'graphql'
+  import { DocumentNode } from 'graphql'
 
-    const value: DocumentNode
-    export default value
+  const value: DocumentNode
+  export default value
+}
+declare module '*.yml' {
+  const v: object
+  export default v
 }
 
 declare module 'react-dark-mode-toggle';

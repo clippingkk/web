@@ -1,4 +1,7 @@
 module.exports = {
+  // experimental: {
+    // runtime: 'edge',
+  // },
   images: {
     domains: ['ck-cdn.annatarhe.cn', 'img1.doubanio.com'],
   },
