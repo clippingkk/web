@@ -1,6 +1,11 @@
 module.exports = {
+  strictMode: true,
   // experimental: {
-    // runtime: 'edge',
+  //   runtime: 'edge',
+  // },
+  // i18n: {
+  //   locales: ['default', 'zhCN', 'en', 'ko'],
+  //   defaultLocale: 'zhCN'
   // },
   images: {
     domains: ['ck-cdn.annatarhe.cn', 'img1.doubanio.com'],
