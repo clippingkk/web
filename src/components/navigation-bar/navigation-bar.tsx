@@ -10,7 +10,6 @@ import styles from './navigation-bar.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
-import { propTypes } from 'qrcode.react'
 import SearchBar, { useCtrlP } from '../searchbar/searchbar'
 
 const leftMenu = [
