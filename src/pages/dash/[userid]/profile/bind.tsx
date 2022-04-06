@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import React, { useState } from 'react'
 // import { QRNormal, QRImage } from 'react-qrbtf'
-import QRCode from 'qrcode.react'
+import {QRCodeSVG} from 'qrcode.react'
 import Dialog from '../../../../components/dialog/dialog'
 import wechatBindKeyQuery from '../../../../schema/bind.graphql'
 import { wechatBind } from '../../../../schema/__generated__/wechatBind'
@@ -17,8 +17,8 @@ function BindQRCode() {
   }
 
   return (
-    <QRCode
-      className='animate__fadeInDown'
+    <QRCodeSVG
+      // className='animate__fadeInDown'
       value={data.wechatBindKey}
       size={256}
     />
