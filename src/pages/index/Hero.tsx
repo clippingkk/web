@@ -46,7 +46,7 @@ const bgs = [
   'DSCF1611.jpg',
   'DSCF1642.jpg',
   'DSCF1642.jpg',
-  'clippingkk-hero-bg.jpg',
+  'coffee-blur.jpg',
 ]
 
 function Hero() {
