@@ -5,14 +5,3 @@
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
 }
-
-.clippingItem {
-/*   
-  backface-visibility: visible;
-  perspective-origin: 150% 150%;
-  transform-style: preserve-3d; */
-}
-
-.clippingItem:hover {
-  /* perspective: 1500px; */
-}

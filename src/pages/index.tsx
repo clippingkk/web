@@ -1,5 +1,4 @@
 import React from 'react'
-import { useQuery } from '@apollo/client'
 import Head from 'next/head'
 import fetchTopQuery from '../schema/public.graphql'
 import { publicData } from '../schema/__generated__/publicData'
@@ -15,8 +14,8 @@ import OGWithIndex from '../components/og/og-with-index'
 import Features from './index/Features'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../services/wenqu'
 
-export const getStaticProps: GetStaticProps = async () => {
-  const data = await client.query<publicData>({ 
+export const getStaticProps: GetStaticProps<{ preloadPublicData: publicData, books: WenquBook[] }> = async () => {
+  const data = await client.query<publicData>({
     query: fetchTopQuery,
     fetchPolicy: 'network-only'
   })
@@ -61,7 +60,7 @@ function IndexPage({ preloadPublicData, books }: InferGetStaticPropsType<typeof 
       <Head>
         <title>ClippingKK - kindle 书摘管理</title>
         <OGWithIndex />
-        </Head>
+      </Head>
       <Hero />
       <div className='py-4 anna-page-container'>
         <TopBooks books={books} />
