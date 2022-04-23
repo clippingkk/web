@@ -83,14 +83,9 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
         <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
         <OGWithReport data={data} year={year} books={books} />
       </Head>
-      {loading ? (
-        <div>
-          Loading...
-        </div>
-      ) : (
-        <div className='container anna-page-container'>
+      <div className='w-full min-h-screen'>
           <a
-            className='flex fixed top-0 left-0 w-full p-4 bg-gray-200 dark:bg-gray-700 items-center justify-around z-50'
+            className='flex sticky top-0 left-0 w-full p-4 bg-opacity-10 dark:bg-opacity-10 bg-gray-200 dark:bg-gray-700 backdrop-blur-lg items-center justify-around z-50'
             href='https://clippingkk.annatarhe.com'
           >
             <Image
@@ -101,7 +96,8 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
             />
             <span className=' text-gray-700 dark:text-gray-200 ml-8'>{t('app.slogan')}</span>
           </a>
-          <div className='flex justify-center items-center flex-col mt-8'>
+        <div className='container anna-page-container m-auto'>
+          <div className='flex justify-center items-center flex-col mt-8 mb-1'>
             <Avatar
               img={data?.reportYearly.user.avatar ?? ''}
               name={data?.reportYearly.user.name}
@@ -131,7 +127,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
             拖入 kindle 文件即可同步
           </p>
         </div>
-      )}
+      </div>
     </div>
   )
 }
