@@ -12,6 +12,67 @@ import { updateToken } from "../services/ajax"
 import { authByPhone_authByPhone } from "../schema/mutations/__generated__/authByPhone"
 import { USER_TOKEN_KEY } from "../constants/storage"
 import { useRouter } from "next/router"
+import { authByWeb3_loginByWeb3 } from "../schema/__generated__/authByWeb3"
+
+export function useAuthByWeb3Successed(
+  called: boolean,
+  loading: boolean,
+  error?: ApolloError,
+  authResponse?: authByWeb3_loginByWeb3
+) {
+  // const navigate = useNavigate()
+  const { push: navigate } = useRouter()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (!called) {
+      return
+    }
+    if (error) {
+      return
+    }
+    if (loading) {
+      return
+    }
+    if (!authResponse) {
+      return
+    }
+
+    if (authResponse.isNewUserFromWeb3 && authResponse.user.id === 0) {
+      // to bind by phone or email
+      console.log('to bind by phone or email')
+      // navigate('/')
+      return
+    }
+
+    localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
+      profile: authResponse.user,
+      token: authResponse.token,
+      createdAt: Date.now()
+    }))
+    sessionStorage.setItem('token', authResponse.token)
+    sessionStorage.setItem('uid', authResponse.user.id.toString())
+
+    profile.token = authResponse.token
+    profile.uid = authResponse.user.id
+    const me = authResponse.user
+    sentry.setUser({
+      email: me.email,
+      id: me.id.toString(),
+      username: me.name
+    })
+    mixpanel.identify(me.id.toString())
+    mixpanel.track('login')
+    updateToken(profile.token)
+    dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
+    // redirect
+    mixpanel.track('login')
+    setTimeout(() => {
+      const domain = me.domain.length > 2 ? me.domain : me.id
+      navigate(`/dash/${domain}/home?from_auth=1`)
+    }, 0)
+  }, [called, loading, error, authResponse])
+}
+
 
 export function useAuthByPhoneSuccessed(
   called: boolean,
