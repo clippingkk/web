@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client'
 import authByWeb3Query from '../../schema/authByWeb3.graphql'
 import { authByWeb3, authByWeb3Variables } from '../../schema/__generated__/authByWeb3'
 import { useAuthByWeb3Successed } from '../../hooks/hooks'
+import AuthAppleButton from '../../components/auth.apple'
 
 type AuthV2Props = {
 }
@@ -95,6 +96,8 @@ function AuthV2(props: AuthV2Props) {
                 <MetamaskLogo />
                 <span className='text-2xl ml-4'>Metamask</span>
               </button>
+
+              <AuthAppleButton />
 
             </div>
           </div>
