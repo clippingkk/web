@@ -1,64 +1,17 @@
-import React, { useCallback, useEffect } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import { useBackgroundImage } from '../../hooks/theme'
 import logo from '../../assets/logo.png'
-import MetamaskLogo from '../../components/icons/metamask.logo.svg'
 import Head from 'next/head'
 import OGWithAuth from '../../components/og/og-with-auth'
-import { metaMask, hooks, signDataByWeb3 } from '../../utils/wallet'
-import { toast } from 'react-toastify'
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import authByWeb3Query from '../../schema/authByWeb3.graphql'
-import { authByWeb3, authByWeb3Variables } from '../../schema/__generated__/authByWeb3'
-import { useAuthBy3rdPartSuccessed } from '../../hooks/hooks'
 import AuthByAppleButton from '../../components/auth.apple'
+import AuthByMetamask from '../../components/auth.metamask'
 
 type AuthV2Props = {
 }
 
 function AuthV2(props: AuthV2Props) {
   const bg = useBackgroundImage()
-
-  const [doAuth, doAuthData] = useLazyQuery<authByWeb3, authByWeb3Variables>(authByWeb3Query)
-
-  const isActivating = hooks.useIsActivating()
-  const isActive = hooks.useIsActive()
-  const account = hooks.useAccount()
-  const err = hooks.useError()
-
-  const onMetamaskLogin = useCallback(async () => {
-    const resp = await metaMask.activate()
-    console.log('on metamask login end', resp)
-    await metaMask.deactivate()
-    // const resp = await metaMask.connectEagerly()
-  }, [])
-
-  useEffect(() => {
-    if (!err) {
-      return
-    }
-    toast.error('metamask: ' + err.message)
-  }, [err])
-
-  useEffect(() => {
-    if (!account) {
-      return
-    }
-
-    signDataByWeb3(account).then(res => {
-      doAuth({
-        variables: {
-          payload: {
-            address: res.address,
-            signature: res.signature,
-            text: res.text
-          }
-        }
-      })
-    })
-  }, [account, doAuth])
-
-  useAuthBy3rdPartSuccessed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.loginByWeb3)
 
   return (
     <React.Fragment>
@@ -89,13 +42,7 @@ function AuthV2(props: AuthV2Props) {
 
             <div>
               <h2 className='text-2xl dark:text-gray-100 mb-4'>Login by ...</h2>
-              <button
-                className=' px-16 py-2 rounded-lg hover:shadow-lg bg-purple-400 hover:bg-purple-500 flex justify-center items-center duration-150'
-                onClick={onMetamaskLogin}
-              >
-                <MetamaskLogo />
-                <span className='text-2xl ml-4'>Metamask</span>
-              </button>
+              <AuthByMetamask />
 
               <AuthByAppleButton />
 
