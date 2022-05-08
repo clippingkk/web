@@ -12,7 +12,8 @@ module.exports = {
   },
   excludeFile: (str) => /__tests__/.test(str),
   env: {
-    'DEV': process.env.NODE_ENV !== 'production'
+    'DEV': process.env.NODE_ENV !== 'production',
+    'infuraKey': process.env.infuraKey || ''
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push({

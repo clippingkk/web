@@ -1,0 +1,18 @@
+mutation bindWeb3Address($phone: String, $code: String, $payload: web3VerifyPayload!) {
+  bindWeb3Address(phone: $phone, code: $code, payload: $payload) {
+    user {
+      id
+      name
+      email
+      password
+      avatar
+      checked
+      createdAt
+      updatedAt
+      bio
+      wechatOpenid
+      domain
+    }
+    token
+  }
+}

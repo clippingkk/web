@@ -1,0 +1,20 @@
+query authByWeb3($payload: web3VerifyPayload!) {
+  loginByWeb3(payload: $payload) {
+    user {
+      id
+      name
+      email
+      phone
+      password
+      avatar
+      checked
+      createdAt
+      updatedAt
+      bio
+      domain
+      wechatOpenid
+    }
+    token
+    noAccountFrom3rdPart
+  }
+}

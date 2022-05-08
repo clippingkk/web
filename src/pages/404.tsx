@@ -6,11 +6,11 @@ import { usePageTrack } from '../hooks/tracke'
 function NotFound() {
   usePageTrack('notfound')
   return (
-    <div className='flex justify-center items-center flex-col w-screen h-screen'>
+    <div className='flex justify-center items-center flex-col w-screen h-screen dark:bg-gray-800'>
       <Head>
         <title>not found - clippingkk</title>
       </Head>
-      <h1 className='text-6xl font-light'>
+      <h1 className='text-6xl font-light dark:text-gray-200 mb-4'>
         404
       </h1>
       <h2 className='text-5xl font-bold text-gray-500'>
