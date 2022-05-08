@@ -14,7 +14,7 @@ type AuthAppleProps = {
 const authOptions = {
   clientId: 'com.annatarhe.clippingkk',
   scope: 'email name',
-  redirectURI: 'https://d291-101-87-176-213.ap.ngrok.io/auth/auth-v2',
+  redirectURI: 'https://clippingkk.annatarhe.com/auth/auth-v2',
   state: 'state',
   usePopup: true,
 }
