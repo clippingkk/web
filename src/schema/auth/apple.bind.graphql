@@ -1,0 +1,26 @@
+mutation bindAppleUnique(
+    $phone: String,
+    $code: String,
+    $payload: appleVerifyPayload!
+) {
+    bindAppleUnique(
+		phone: $phone,
+		code: $code,
+		payload: $payload
+    ) {
+		user {
+			id
+			name
+			email
+			password
+			avatar
+			checked
+			createdAt
+			updatedAt
+			bio
+			wechatOpenid
+			domain
+		}
+		token
+	}
+}

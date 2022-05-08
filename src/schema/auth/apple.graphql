@@ -1,5 +1,5 @@
-query authByWeb3($payload: web3VerifyPayload!) {
-  loginByWeb3(payload: $payload) {
+query loginByApple($payload: appleVerifyPayload!) {
+  loginByApple(payload: $payload) {
     user {
       id
       name
@@ -15,6 +15,6 @@ query authByWeb3($payload: web3VerifyPayload!) {
       wechatOpenid
     }
     token
-    noAccountFrom3rdPart
+	noAccountFrom3rdPart
   }
 }

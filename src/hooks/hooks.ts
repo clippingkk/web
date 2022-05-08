@@ -13,12 +13,15 @@ import { authByPhone_authByPhone } from "../schema/mutations/__generated__/authB
 import { USER_TOKEN_KEY } from "../constants/storage"
 import { useRouter } from "next/router"
 import { authByWeb3_loginByWeb3 } from "../schema/__generated__/authByWeb3"
+import { loginByApple, loginByApple_loginByApple } from "../schema/auth/__generated__/loginByApple"
+import { bindAppleUnique_bindAppleUnique } from "../schema/auth/__generated__/bindAppleUnique"
+import { bindWeb3Address_bindWeb3Address } from "../schema/__generated__/bindWeb3Address"
 
-export function useAuthByWeb3Successed(
+export function useAuthBy3rdPartSuccessed(
   called: boolean,
   loading: boolean,
   error?: ApolloError,
-  authResponse?: authByWeb3_loginByWeb3
+  authResponse?: authByWeb3_loginByWeb3 | loginByApple_loginByApple | bindAppleUnique_bindAppleUnique | bindWeb3Address_bindWeb3Address
 ) {
   // const navigate = useNavigate()
   const { push: navigate } = useRouter()
@@ -37,10 +40,7 @@ export function useAuthByWeb3Successed(
       return
     }
 
-    if (authResponse.isNewUserFromWeb3 && authResponse.user.id === 0) {
-      // to bind by phone or email
-      console.log('to bind by phone or email')
-      // navigate('/')
+    if (authResponse.user.id === 0) {
       return
     }
 
@@ -70,7 +70,7 @@ export function useAuthByWeb3Successed(
       const domain = me.domain.length > 2 ? me.domain : me.id
       navigate(`/dash/${domain}/home?from_auth=1`)
     }, 0)
-  }, [called, loading, error, authResponse])
+  }, [called, loading, error, authResponse, dispatch, navigate])
 }
 
 

@@ -7,11 +7,11 @@ import Head from 'next/head'
 import OGWithAuth from '../../components/og/og-with-auth'
 import { metaMask, hooks, signDataByWeb3 } from '../../utils/wallet'
 import { toast } from 'react-toastify'
-import { useMutation } from '@apollo/client'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import authByWeb3Query from '../../schema/authByWeb3.graphql'
 import { authByWeb3, authByWeb3Variables } from '../../schema/__generated__/authByWeb3'
-import { useAuthByWeb3Successed } from '../../hooks/hooks'
-import AuthAppleButton from '../../components/auth.apple'
+import { useAuthBy3rdPartSuccessed } from '../../hooks/hooks'
+import AuthByAppleButton from '../../components/auth.apple'
 
 type AuthV2Props = {
 }
@@ -19,7 +19,7 @@ type AuthV2Props = {
 function AuthV2(props: AuthV2Props) {
   const bg = useBackgroundImage()
 
-  const [doAuth, doAuthData] = useMutation<authByWeb3, authByWeb3Variables>(authByWeb3Query)
+  const [doAuth, doAuthData] = useLazyQuery<authByWeb3, authByWeb3Variables>(authByWeb3Query)
 
   const isActivating = hooks.useIsActivating()
   const isActive = hooks.useIsActive()
@@ -58,7 +58,7 @@ function AuthV2(props: AuthV2Props) {
     })
   }, [account, doAuth])
 
-  useAuthByWeb3Successed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.loginByWeb3)
+  useAuthBy3rdPartSuccessed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.loginByWeb3)
 
   return (
     <React.Fragment>
@@ -97,7 +97,7 @@ function AuthV2(props: AuthV2Props) {
                 <span className='text-2xl ml-4'>Metamask</span>
               </button>
 
-              <AuthAppleButton />
+              <AuthByAppleButton />
 
             </div>
           </div>

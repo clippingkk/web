@@ -1,6 +1,12 @@
+import { useLazyQuery, useMutation } from '@apollo/client'
 import React, { useCallback, useEffect } from 'react'
-import { useScript, appleAuthHelpers } from 'react-apple-signin-auth'
+import AppleSignin, { useScript, appleAuthHelpers } from 'react-apple-signin-auth'
 import { toast } from 'react-toastify'
+import { AppleAuthResponse } from '../services/apple'
+import loginByAppleMutation from '../schema/auth/apple.graphql'
+import { loginByApple, loginByAppleVariables } from '../schema/auth/__generated__/loginByApple'
+import { useRouter } from 'next/router'
+import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 
 type AuthAppleProps = {
 }
@@ -8,82 +14,72 @@ type AuthAppleProps = {
 const authOptions = {
   clientId: 'com.annatarhe.clippingkk',
   scope: 'email name',
-  redirectURI: 'https://98a9-101-87-176-213.ap.ngrok.io/api/v2/auth/apple',
+  redirectURI: 'https://d291-101-87-176-213.ap.ngrok.io/auth/auth-v2',
   state: 'state',
   usePopup: true,
 }
 
-
 function AuthAppleButton(props: any) {
-  // useEffect(() => {
-  //   appleAuthHelpers.signIn({
-  //     authOptions,
-  //     onSuccess: (response: any) => console.log(response),
-  //     onError: (error: any) => console.error(error),
-  //   })
-  // }, [])
-  useScript(appleAuthHelpers.APPLE_SCRIPT_SRC)
-
-  const doLogin = useCallback(async () => {
-    try {
-      const response = await appleAuthHelpers.signIn({
-        authOptions,
-        onError: (error: any) => console.error(error),
-      });
-      if (response) {
-        console.log(response);
-      } else {
-        console.error('Error performing apple signin.');
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }, [])
-
-
   return (
     <button
       className='flex justify-center items-center bg-black text-white w-full mt-4 rounded hover:scale-105 duration-150'
-      onClick={doLogin}
+      onClick={props.onClick}
     >
-      login
-      {/* {props.children} */}
+      {props.children}
     </button>
   )
 }
 
-// function AuthAppleButtonLegacy(props: AuthAppleProps) {
-//   return (
-//     <AppleSignin
-//       /** Auth options passed to AppleID.auth.init() */
-//       authOptions={{
-//       }} // REQUIRED
-//       /** General props */
-//       uiType="dark"
-//       /** className */
-//       className="apple-auth-btn"
-//       /** Removes default style tag */
-//       noDefaultStyle={false}
-//       /** Allows to change the button's children, eg: for changing the button text */
-//       buttonExtraChildren="Continue with Apple"
-//       /** Extra controlling props */
-//       /** Called upon signin success in case authOptions.usePopup = true -- which means auth is handled client side */
-//       onSuccess={(response: any) => console.log(response)} // default = undefined
-//       /** Called upon signin error */
-//       onError={
-//         (error: any) => {
-//           toast.error('Auth by Apple: ' + error.error)
-//         }
-//       } // default = undefined
-//       /** Skips loading the apple script if true */
-//       skipScript={false} // default = undefined
-//       /** Apple image props */
-//       iconProp={{ style: { marginTop: '10px' } }} // default = undefined
-//     /** render function - called with all props - can be used to fully customize the UI by rendering your own component  */
-//     // render={AuthByAppleButton}
-//     // render={(props: any) => <button {...props}>My Custom Button</button>}
-//     />
-//   )
-// }
+function AuthByAppleButton(props: AuthAppleProps) {
+  const router = useRouter()
+  const [doAppleAuth, appleAuthResponse] = useLazyQuery<loginByApple, loginByAppleVariables>(loginByAppleMutation)
 
-export default AuthAppleButton
+  const onSuccess = useCallback(async (resp: AppleAuthResponse) => {
+    const { code, id_token, state } = resp.authorization
+    const r = await doAppleAuth({
+      variables: {
+        payload: {
+          code: code,
+          idToken: id_token,
+          state: state,
+          platform: 'web'
+        }
+      }
+    })
+    if (r.data?.loginByApple.noAccountFrom3rdPart) {
+      router.push(`/auth/callback/apple?i=${id_token}`)
+      return
+    }
+  }, [doAppleAuth, router])
+
+  // on success
+  useAuthBy3rdPartSuccessed(
+    appleAuthResponse.called,
+    appleAuthResponse.loading,
+    appleAuthResponse.error,
+    appleAuthResponse.data?.loginByApple
+  )
+
+
+  return (
+    <AppleSignin
+      authOptions={authOptions}
+      uiType="dark"
+      className="apple-auth-btn"
+      noDefaultStyle={false}
+      buttonExtraChildren="Continue with Apple"
+      onSuccess={onSuccess}
+      onError={
+        (error: any) => {
+          toast.error('Auth by Apple: ' + error.error)
+        }
+      }
+      skipScript={false}
+      iconProp={{ style: { marginTop: '10px' } }}
+      render={AuthAppleButton}
+    />
+  )
+}
+
+// export default AuthAppleButton
+export default AuthByAppleButton
