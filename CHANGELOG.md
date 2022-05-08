@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.23.2...v4.0.0) (2022-05-08)
+
+
+### Features
+
+* **apple:** add apple login method ([11e4360](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/11e43606343b971bad4136303ed9668bb870193d))
+* **apple:** add sign in with apple support ([2109dab](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2109dabe09772359aaab7b30d26829da077d36a8))
+* **deps:** update deps ([947cd51](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/947cd51a0047b9681dfd5c8c0a5173a9a5d52168))
+* **font:** update font ([5f3e451](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5f3e451e1438be079311eade115cb51ea43bc584))
+* **index:** add random hero image(photo by me :) ) ([5a2daa7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5a2daa79b818133e24ab71a9c8463f69be5e389d))
+* **index:** update preview clippings in index page ([cb9fe36](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cb9fe361a24aa9ff464f33090e9d9e7ffd9ad65c))
+* **nft:** add erc721 abi ([5bcee21](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5bcee214ee152892116fee9f7fac4c036320bfff))
+* **web3:** add support for web3 login ([b010733](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b010733c76f8f683d0175aabfb4fe16e8fe42388))
+* **web3:** add web3 support ([a02c755](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a02c755bc589cc7852cb87e25cc1a698b6e0f3ca))
+
+
+### Bug Fixes
+
+* **hero:** fix image link ([7e8d860](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7e8d860fa57d221f1b02f2698fb2519ae47c43b6))
+* **navigator:** fix imports ([111d072](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/111d0720ac406faebdabc60d308531ec286afc69))
+* **qrcode:** fix qrcode ([5a3e05d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5a3e05d22803e897f244d9409d7b5852a5bca327))
+* **report:** fix report styles ([add3a7c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/add3a7c7fd869c1c240629bd7995e501a47573d9))
+
 ### [3.23.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.23.1...v3.23.2) (2022-02-25)
 
 
