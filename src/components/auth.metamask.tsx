@@ -7,6 +7,7 @@ import { metaMask, hooks, signDataByWeb3 } from '../utils/wallet'
 import authByWeb3Query from '../schema/authByWeb3.graphql'
 import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/router'
+import LoadingIcon from './icons/loading.svg'
 
 type AuthByMetamaskProps = {
 }
@@ -37,33 +38,45 @@ function AuthByMetamask(props: AuthByMetamaskProps) {
       return
     }
 
-    signDataByWeb3(account).then(res => {
-      doAuth({
-        variables: {
-          payload: {
-            address: res.address,
-            signature: res.signature,
-            text: res.text
+    signDataByWeb3(account)
+      .then(res => {
+        return doAuth({
+          variables: {
+            payload: {
+              address: res.address,
+              signature: res.signature,
+              text: res.text
+            }
           }
-        }
-      }).then(r => {
-        if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
-          router.push(`/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`)
-          return
-        }
+        }).then(r => {
+          if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
+            router.push(`/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`)
+            return
+          }
+        })
+      }).catch((err: any) => {
+        toast.error(err.message)
       })
-    })
   }, [account, doAuth, router])
 
   useAuthBy3rdPartSuccessed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.loginByWeb3)
 
+  const disabled = doAuthData.loading
+
   return (
     <button
-      className=' px-16 py-2 rounded-lg hover:shadow-lg bg-purple-400 hover:bg-purple-500 flex justify-center items-center duration-150'
+      className=' relative px-16 py-4 rounded hover:shadow-lg bg-purple-400 flex justify-center items-center hover:scale-105 duration-150 disabled:bg-gray-400 disabled:hover:scale-100 disabled:hover:shadow-none'
       onClick={onMetamaskLogin}
+      disabled={disabled}
     >
-      <MetamaskLogo />
+      <MetamaskLogo size={24} />
       <span className='text-2xl ml-4'>Metamask</span>
+      {disabled && (
+        <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center backdrop-blur-sm with-fade-in'>
+          <LoadingIcon className='animate-spin' />
+          <span className='dark:text-white text-sm ml-4'>Submitting...</span>
+        </div>
+        )}
     </button>
   )
 }

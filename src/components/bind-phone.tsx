@@ -13,6 +13,7 @@ type BindPhoneProps = {
 function BindPhone(props: BindPhoneProps) {
   const [pn, setPn] = useState('')
   const [capture, setCapture] = useState<AV.Captcha | null>(null)
+  // const [capture, setCapture] = useState<AV.Captcha | null>({ url: 'https://picsum.photos/100/40' })
   const [smsSent, setSmsSent] = useState(false)
   const [verifyCode, setVerifyCode] = useState('')
   const [code, setCode] = useState('')
@@ -113,26 +114,31 @@ function BindPhone(props: BindPhoneProps) {
 
   return (
     <div className='w-full flex items-center justify-center rounded flex-col'>
-      <PhoneInput
-        country='cn'
-        inputClass='w-full p-4 text-lg'
-        preferredCountries={['cn']}
-        value={pn}
-        // 不知道手机号长度是多少，不能直接校验
-        onChange={v => { setPn(v) }}
-        onEnterKeyPress={onPhoneNumberFinish}
-        onBlur={onPhoneNumberFinish}
-        autoFormat={false}
-      />
-      <div className='flex w-full flex-col'>
+      <div>
+        <PhoneInput
+          country='cn'
+          inputClass='w-full p-4 text-lg'
+          containerClass='w-full'
+          preferredCountries={['cn']}
+          value={pn}
+          // 不知道手机号长度是多少，不能直接校验
+          onChange={v => { setPn(v) }}
+          onEnterKeyPress={onPhoneNumberFinish}
+          onBlur={onPhoneNumberFinish}
+          autoFormat={false}
+        />
+      </div>
+      <div className='flex w-96 flex-col'>
         {capture && (
-          <div className='flex mt-4'>
+          <div className='flex mt-4 w-full'>
             <img src={capture?.url} onClick={onPhoneNumberFinish} />
             <input
+              type='text'
               value={verifyCode}
               onChange={e => setVerifyCode(e.target.value.trim())}
               maxLength={4}
-              className='w-full py-2 px-4 focus:outline-none'
+              placeholder='verify code'
+              className='w-full py-2 px-4 focus:outline-none bg-white dark:bg-gray-700 bg-opacity-90 '
               onKeyUp={e => {
                 if (e.key.toLowerCase() !== 'enter') {
                   return
@@ -156,7 +162,7 @@ function BindPhone(props: BindPhoneProps) {
             placeholder={t('app.auth.code.placeholder')}
             maxLength={6}
             onBlur={onCodeEnd}
-            className='w-full mt-4 py-2 px-4 focus:outline-none'
+            className='w-96 bg-white dark:bg-gray-700 bg-opacity-90 mx-auto mt-4 py-2 px-4 focus:outline-none'
             onKeyUp={e => {
               if (e.key.toLowerCase() !== 'enter') {
                 return

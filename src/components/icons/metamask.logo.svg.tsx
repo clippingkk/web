@@ -2,14 +2,15 @@ import Image from 'next/image'
 import React from 'react'
 
 type MetamaskLogoProps = {
+  size: number
 }
 
 function MetamaskLogo(props: MetamaskLogoProps) {
   return (
     <Image
       src='/metamask.logo.svg'
-      width={48}
-      height={48}
+      width={props.size}
+      height={props.size}
       alt='metamask'
     />
   )
