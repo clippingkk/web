@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 import styles from './Hero.module.css'
-import profile from '../../utils/profile';
 import { useBackgroundImage } from '../../hooks/theme'
 import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../store';
@@ -48,12 +47,11 @@ function Hero() {
   const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
 
   const goLinkUrl = useMemo(() => {
-    const uid = profile.uid
-    if (uid && uid > 0) {
-      return `/dash/${uid}/home`
+    if (id && id > 0) {
+      return `/dash/${id}/home`
     }
     return '/auth/auth-v2'
-  }, [])
+  }, [id])
 
   return (
     <div
