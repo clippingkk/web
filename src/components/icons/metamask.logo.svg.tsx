@@ -3,6 +3,7 @@ import React from 'react'
 
 type MetamaskLogoProps = {
   size: number
+  className?: string
 }
 
 function MetamaskLogo(props: MetamaskLogoProps) {
@@ -11,6 +12,7 @@ function MetamaskLogo(props: MetamaskLogoProps) {
       src='/metamask.logo.svg'
       width={props.size}
       height={props.size}
+      className={props.className}
       alt='metamask'
     />
   )

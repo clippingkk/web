@@ -100,6 +100,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
                 )}
                 {uid === data?.me.id && (
                   <ProfileEditor
+                    uid={uid}
                     bio={data.me.bio}
                     withNameChange={data.me.name.startsWith('user.')}
                     domain={data.me.domain}

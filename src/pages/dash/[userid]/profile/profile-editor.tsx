@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useFormik } from 'formik'
 import React, { useCallback, useEffect, useState } from 'react'
 import * as Yup from 'yup'
@@ -11,8 +11,10 @@ import { toast } from 'react-toastify'
 import { uploadImage } from '../../../../services/misc'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
+import ExternalAccountList from '../../../../components/externalAccount/list'
 
 type ProfileEditorProps = {
+  uid: number
   withNameChange: boolean
   bio: string
   domain: string
@@ -162,11 +164,11 @@ function ProfileEditor(props: ProfileEditorProps) {
                 </button>
                 <button
                   className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2 disabled:text-gray-500'
-                   type='submit'
+                  type='submit'
                   disabled={(!formik.isValid) || (
                     formik.values.name === '' &&
                     formik.values.bio === '' &&
-                    (!formik.values.avatar) && 
+                    (!formik.values.avatar) &&
                     (props.domain.length > 2 ? true : formik.values.domain.length < 3)
                   )}
                 >
@@ -174,6 +176,13 @@ function ProfileEditor(props: ProfileEditorProps) {
                 </button>
               </div>
             </form>
+
+            <hr className='my-10' />
+            {visible && (
+              <ExternalAccountList
+                uid={props.uid}
+              />
+            )}
           </div>
         </Dialog>
       )}

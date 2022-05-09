@@ -1,7 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import React, { useCallback, useMemo, useState } from 'react'
-import BindPhone from '../../../components/bind-phone'
 import { useAuthBy3rdPartSuccessed } from '../../../hooks/hooks'
 import bindWeb3Mutation from '../../../schema/bindWeb3.graphql'
 import { bindWeb3Address, bindWeb3AddressVariables } from '../../../schema/__generated__/bindWeb3Address'

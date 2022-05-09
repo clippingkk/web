@@ -8,6 +8,8 @@ app:
         doUpdate: Update
         done: Done
         delete: Delete
+        bind: Bind
+        bound: bound
     slogan: Organize, Display, Review, Be Better
     go: Go!
     menu:
@@ -138,6 +140,7 @@ app:
         wechatBindTip: binging wechat mini program
         phoneBind: bind a phone
         phoneBinded: success!
+        externalAccountList: External account list
         fans:
             follow: Follow
             unfollow: Unfollow

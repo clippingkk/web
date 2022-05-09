@@ -22,7 +22,6 @@ function AuthByMetamask(props: AuthByMetamaskProps) {
   const err = hooks.useError()
   const onMetamaskLogin = useCallback(async () => {
     const resp = await metaMask.activate()
-    console.log('on metamask login end', resp)
     await metaMask.deactivate()
     // const resp = await metaMask.connectEagerly()
   }, [])
