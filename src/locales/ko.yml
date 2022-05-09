@@ -55,6 +55,11 @@ app:
             pnLen: 휴대폰 번호가 불법입니다.
             verifyCodeLen: 인증 코드가 잘못되었습니다.
             codeLen: 인증 코드의 길이가 충분하지 않습니다.
+    authCallback:
+        logged: Cool, 생성 된
+        prevAccountTip: 이전에 연결해야 하는 계정이 있었나요?
+        createAccountDirectly: 아니요, 그냥 로그인
+        toBind: 예, 이전 계정을 바인딩해야 합니다.
     home:
         reading: 읽고있는 책
         title: 내 책들

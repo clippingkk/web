@@ -7,6 +7,8 @@ import loginByAppleMutation from '../schema/auth/apple.graphql'
 import { loginByApple, loginByAppleVariables } from '../schema/auth/__generated__/loginByApple'
 import { useRouter } from 'next/router'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
+import LoadingIcon from './icons/loading.svg'
+import WithLoading from './with-loading'
 
 type AuthAppleProps = {
 }
@@ -60,24 +62,27 @@ function AuthByAppleButton(props: AuthAppleProps) {
     appleAuthResponse.data?.loginByApple
   )
 
+  const disabled = appleAuthResponse.loading
 
   return (
-    <AppleSignin
-      authOptions={authOptions}
-      uiType="dark"
-      className="apple-auth-btn"
-      noDefaultStyle={false}
-      buttonExtraChildren="Continue with Apple"
-      onSuccess={onSuccess}
-      onError={
-        (error: any) => {
-          toast.error('Auth by Apple: ' + error.error)
+    <WithLoading loading={disabled}>
+      <AppleSignin
+        authOptions={authOptions}
+        uiType="dark"
+        className="apple-auth-btn"
+        noDefaultStyle={false}
+        buttonExtraChildren="Continue with Apple"
+        onSuccess={onSuccess}
+        onError={
+          (error: any) => {
+            toast.error('Auth by Apple: ' + error.error)
+          }
         }
-      }
-      skipScript={false}
-      iconProp={{ style: { marginTop: '10px' } }}
-      render={AuthAppleButton}
-    />
+        skipScript={false}
+        iconProp={{ style: { marginTop: '10px' } }}
+        render={AuthAppleButton}
+      />
+    </WithLoading>
   )
 }
 

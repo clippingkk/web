@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import BindPhone from '../../../components/bind-phone'
 import LoadingIcon from '../../../components/icons/loading.svg'
 import OGWithAuth from '../../../components/og/og-with-auth'
@@ -13,6 +14,7 @@ type AuthCallbackPageContainerProps = {
 
 function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
   const [willBind, setWillBind] = useState(false)
+  const { t } = useTranslation()
   return (
     <>
       <Head>
@@ -21,17 +23,21 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
       </Head>
       <div className='anna-page-container flex h-screen items-center justify-center relative flex-col'>
         <div
-         className={ 'duration-150 ' + (willBind ? 'opacity-50 ' : '')}
+          className={'duration-150 container ' + (willBind ? 'opacity-50 ' : '')}
         >
-          <h3 className='text-8xl dark:text-gray-100'> Cool, 已经登录成功 </h3>
-          <h4 className='text-6xl mt-4 dark:text-gray-100'>您是否已有账户了？</h4>
+          <h3 className='text-8xl dark:text-gray-100'>
+            {t('app.authCallback.logged')}
+          </h3>
+          <h4 className='text-6xl mt-4 dark:text-gray-100'>
+            {t('app.authCallback.prevAccountTip')}
+          </h4>
 
           <div className='my-8 flex flex-col'>
             <button
               className='py-4 px-8 from-teal-400 via-teal-500 to-teal-400 bg-gradient-to-br rounded-lg text-8xl hover:shadow-lg hover:scale-105 duration-150'
               onClick={props.doBind}
             >
-              之前没注册过，直接登陆
+              {t('app.authCallback.createAccountDirectly')}
             </button>
             {!willBind && (
               <button
@@ -40,7 +46,7 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
                   setWillBind(true)
                 }}
               >
-                已有账户，需要绑定
+                {t('app.authCallback.toBind')}
               </button>
             )}
           </div>

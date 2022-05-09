@@ -17,7 +17,7 @@ function AuthV2(props: AuthV2Props) {
   return (
     <React.Fragment>
       <Head>
-        <title>Login by web3</title>
+        <title>Login by ...</title>
         <OGWithAuth urlPath='auth/auth-v2' />
       </Head>
       <section
@@ -46,6 +46,17 @@ function AuthV2(props: AuthV2Props) {
               <AuthByMetamask />
               <AuthByAppleButton />
               <AuthByGithub />
+
+              <div className='mt-4'>
+                <p className=' dark:text-white text-center'>
+                  If you have any question, please email to
+                  <br />
+                  <a
+                    href='email:annatar.he+ck@gmail.com'
+                    className=' underline'
+                  >annatar.he+ck@gmail.com</a>
+                </p>
+              </div>
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import authByWeb3Query from '../schema/authByWeb3.graphql'
 import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/router'
 import LoadingIcon from './icons/loading.svg'
+import WithLoading from './with-loading'
 
 type AuthByMetamaskProps = {
 }
@@ -64,20 +65,18 @@ function AuthByMetamask(props: AuthByMetamaskProps) {
   const disabled = doAuthData.loading
 
   return (
-    <button
-      className=' relative px-16 py-4 rounded hover:shadow-lg bg-purple-400 flex justify-center items-center hover:scale-105 duration-150 disabled:bg-gray-400 disabled:hover:scale-100 disabled:hover:shadow-none'
-      onClick={onMetamaskLogin}
-      disabled={disabled}
+    <WithLoading
+      loading={disabled}
     >
-      <MetamaskLogo size={24} />
-      <span className='text-2xl ml-4'>Metamask</span>
-      {disabled && (
-        <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center backdrop-blur-sm with-fade-in'>
-          <LoadingIcon className='animate-spin' />
-          <span className='dark:text-white text-sm ml-4'>Submitting...</span>
-        </div>
-        )}
-    </button>
+      <button
+        className='px-16 py-4 rounded hover:shadow-lg bg-purple-400 flex justify-center items-center hover:scale-105 duration-150 disabled:bg-gray-400 disabled:hover:scale-100 disabled:hover:shadow-none w-full'
+        onClick={onMetamaskLogin}
+        disabled={disabled}
+      >
+        <MetamaskLogo size={24} />
+        <span className='text-2xl ml-4'>Metamask</span>
+      </button>
+    </WithLoading>
   )
 }
 

@@ -55,6 +55,11 @@ app:
             pnLen: 手机号不合法
             verifyCodeLen: 验证码不合法
             codeLen: 验证码长度不够哦
+    authCallback:
+        logged: Cool, 已经创建完成啦
+        prevAccountTip: 之前是否有过账户需要绑定？
+        createAccountDirectly: 没，直接登陆吧
+        toBind: 有， 需要绑定之前的账户
     home:
         reading: 正在读
         title: 我的书籍

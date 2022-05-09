@@ -2,6 +2,7 @@ import React from 'react'
 import { GithubClientID } from '../constants/config'
 import { useActionTrack } from '../hooks/tracke'
 import GithubLogo from './icons/github.logo.svg'
+import WithLoading from './with-loading'
 
 type AuthByGithubProps = {
 }

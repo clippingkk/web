@@ -55,6 +55,11 @@ app:
             pnLen: phone number invalid
             verifyCodeLen: verify code invalid
             codeLen: code length should be 6
+    authCallback:
+        logged: Cool, you have an account ~
+        prevAccountTip: Did you had an account before ?
+        createAccountDirectly: No Account, Just need to create a new one.
+        toBind: Yes, I need bind previous account
     home:
         reading: The Reading Book
         title: My books
