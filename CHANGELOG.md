@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.1...v4.0.2) (2022-05-09)
+
+
+### Features
+
+* **auth:** add 3rd part account bind ([aa87357](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/aa8735743f38ba59716c89e96d612601f4af0742))
+* **auth:** update auth v2 page ([9e68d01](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9e68d01fc1d6032029a4420de956f79c1d730cd9))
+* **github:** add github to auth v2 method list ([82e76b5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/82e76b51d58ee502b5b4807a0227857296f7c625))
+
 ## [4.0.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v3.23.2...v4.0.0) (2022-05-08)
 
 
