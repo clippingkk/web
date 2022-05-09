@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.3...v4.0.4) (2022-05-09)
+
+
+### Bug Fixes
+
+* **auth:** fix id fetcher ([0a98ec5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0a98ec56049bfe10260e0cefe7e21bac39165159))
+
 ### [4.0.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.2...v4.0.3) (2022-05-09)
 
 
