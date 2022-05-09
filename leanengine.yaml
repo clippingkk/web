@@ -1,5 +1,6 @@
 build:
   - echo 'build...'
+  - npm config set registry https://registry.npmmirror.com
   - export NODE_OPTIONS=--openssl-legacy-provider
   - mkdir ~/.npm-global
   - npm config set prefix '~/.npm-global'
