@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 import styles from './Hero.module.css'
+import profile from '../../utils/profile';
 import { useBackgroundImage } from '../../hooks/theme'
+import { useSelector } from 'react-redux';
+import { TGlobalStore } from '../../store';
 
 function useLoad() {
   const [loaded, setLoaded] = useState(false)
@@ -41,6 +44,17 @@ function VideoTipsArea() {
 function Hero() {
   const { t } = useTranslation()
   const bg = useBackgroundImage()
+  
+  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+
+  const goLinkUrl = useMemo(() => {
+    const uid = profile.uid
+    if (uid && uid > 0) {
+      return `/dash/${uid}/home`
+    }
+    return '/auth/auth-v2'
+  }, [])
+
   return (
     <div
       className={'flex flex-col justify-center h-screen w-full max-h-screen bg-cover'}
@@ -56,11 +70,10 @@ function Hero() {
             <h4 className='text-white text-3xl font-lxgw'>{t('app.slogan')}</h4>
             <div className={styles.platformSection}>
               <Link
-                href='/auth/signin'
+                href={goLinkUrl}
               >
                 <a
-                  target="_blank"
-                  className={styles['download-btn'] + ' py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center'}
+                  className={'w-fit py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center'}
                 >
                   {t('app.go')}
                 </a>

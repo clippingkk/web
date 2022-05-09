@@ -33,12 +33,6 @@
   animation-name: fade-in;
   animation-duration: 1s;
 }
-.download-btn {
-  /* background-color: rgba(33, 150, 243, 0.9); */
-  /* text-decoration: none; */
-  width: fit-content;
-  transition: all 0.35s;
-}
 
 .platform-list {
   list-style: none;
@@ -58,10 +52,6 @@
   }
 
   .sub-title {
-    font-size: 2rem;
-  }
-
-  .download-btn {
     font-size: 2rem;
   }
 
