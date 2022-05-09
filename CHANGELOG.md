@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.2...v4.0.3) (2022-05-09)
+
+
+### Features
+
+* **auth:** migrate auth to v2 ([00d5b13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/00d5b13072b8a1f176a54a4b03b8c4756f07ecfa))
+
 ### [4.0.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.1...v4.0.2) (2022-05-09)
 
 
