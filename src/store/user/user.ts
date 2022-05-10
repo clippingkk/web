@@ -18,9 +18,9 @@ const initState: TUserState = {
   token: ''
 }
 
-function parseFromLS() {
+export function initParseFromLS() {
   if (!process.browser) {
-    return
+    return 
   }
   const authInfo = localStorage.getItem(USER_TOKEN_KEY)
   if (!authInfo) {
@@ -50,11 +50,11 @@ function parseFromLS() {
     auth.profile.domain = ''
   }
 
-  initState.profile = auth.profile
-  initState.token = auth.token
+  return {
+    profile: auth.profile,
+    token: auth.token
+  }
 }
-
-parseFromLS()
 
 function userReducer(state = initState, action: IUserAction): TUserState {
   switch (action.type) {
