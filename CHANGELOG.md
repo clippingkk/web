@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.4...v4.0.5) (2022-05-24)
+
+
+### Features
+
+* **account:** add delete account button ([2e9c3e0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2e9c3e0622c2b502f01a7b21d402c01a6b656694))
+* **auth:** fix auth ([3866968](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/38669684bd88bac3f0aaf079d15934c1be3b5a2b))
+
+
+### Bug Fixes
+
+* **auth:** migrate to auth v2 in every page and update some styles ([f15722f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f15722fe8cc35af8bb1ee18d78e43716dbe7fcc3))
+* **ci:** use npm mirror ([7730b18](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7730b18a7674b45d8cbda5005fe6f5e9ce5aac77))
+* **clipping:** update clipping page and remove emoji picker ([c542fac](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c542fac36549d3d7e9dc7906528ee7646e4707c7))
+* **store:** fix init user info ([e4b0af1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e4b0af1e52b3dd070fc8f8c61793b573e0790096))
+
 ### [4.0.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.3...v4.0.4) (2022-05-09)
 
 
