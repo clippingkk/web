@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { fetchClipping_clipping_reactionData, fetchClipping_clipping_reactionData_symbolCounts } from '../../../../schema/__generated__/fetchClipping'
+import EmojiPicker from '../../../../components/emoji-picker'
 
 const avaliableReactions = ["👍", "❤️", "⭐️", "🐶", "😱"]
 
@@ -136,32 +137,6 @@ function Reactions(props: ReactionsProps) {
             </button>
           </Tooltip>
         ))}
-        {pickerVisible && (
-          <Dialog
-            title='aaa'
-            onCancel={togglePicker}
-            onOk={togglePicker}
-          >
-            <Picker
-              native
-              onSelect={emoji => {
-                doReactionCreate({
-                  variables: {
-                    target: ReactionTarget.clipping,
-                    targetId: props.cid,
-                    symbol: (emoji as any).native,
-                  }
-                }).then(() => {
-                  toast.success(t('app.clipping.reactions.addSuccess'))
-                  client.resetStore()
-                }).catch(err => {
-                  toast.error(t('app.clipping.reactions.actionRejected'))
-                })
-                togglePicker()
-              }}
-            />
-          </Dialog>
-        )}
       </div>
     </div>
   )

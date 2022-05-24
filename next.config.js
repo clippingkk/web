@@ -23,6 +23,7 @@ module.exports = {
     config.module.rules.push({
       test: /\.ya?ml$/,
       type: 'json',
+      options: { asJSON: true },
       loader: 'yaml-loader',
     })
     config.module.rules.push(
