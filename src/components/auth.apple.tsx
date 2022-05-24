@@ -24,7 +24,7 @@ const authOptions = {
 function AuthAppleButton(props: any) {
   return (
     <button
-      className='flex justify-center items-center bg-black text-white w-full mt-4 rounded hover:scale-105 duration-150'
+      className='flex justify-center items-center bg-black text-white w-full mt-4 rounded hover:scale-105 duration-150 py-0.5'
       onClick={props.onClick}
     >
       {props.children}

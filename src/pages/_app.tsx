@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import App from 'next/app'
 import type { AppProps, AppContext } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
@@ -23,9 +23,18 @@ import '../styles/tailwind.css'
 import '../prefers-dark'
 import '../utils/locales'
 import '../utils/leancloud'
+import { initParseFromLS } from '../store/user/user'
+import { AUTH_LOGIN } from '../store/user/type'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = (Component as any).getLayout || ((page: any) => page)
+  useEffect(() => {
+    const nt = initParseFromLS()
+    // 初次加载
+    if (nt) {
+      store.dispatch({ type: AUTH_LOGIN, token: nt.token, profile: nt.profile })
+    }
+  }, [])
 
   const content = getLayout(
     <Component {...pageProps} />

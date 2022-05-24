@@ -26,9 +26,5 @@ const store = createStore(
 saga.run(rootSaga)
 const nt = initParseFromLS()
 
-// 初次加载
-if (nt) {
-  store.dispatch({ type: AUTH_LOGIN, token: nt.token, profile: nt.profile })
-}
 
 export default store
