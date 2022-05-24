@@ -192,7 +192,7 @@ export function useSignupSuccess(result: MutationResult<signup>) {
         text: `欢迎你哦~ ${me.name}，现在需要去邮箱点一下刚刚发你的确认邮件。\n 如果有问题可以发邮件： iamhele1994@gmail.com`,
         icon: 'success'
       }).then(() => {
-        navigate('/auth/signin')
+        navigate('/auth/auth-v2')
       })
     }
   }, [result])

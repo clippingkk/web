@@ -28,6 +28,7 @@ import DashboardContainer from '../../../../components/dashboard-container/conta
 import styles from './clipping.module.css'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
 import Head from 'next/head'
+import Image from 'next/image'
 function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { clippingid } = useRouter().query as { clippingid: string }
 
@@ -68,22 +69,26 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
         <title>{book?.title ?? clipping.clipping.title}</title>
         <OGWithClipping clipping={clipping?.clipping} book={book} />
       </Head>
-      <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20'>
+      <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20 with-slide-in'>
         <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
           <h1 className='lg:text-3xl text-xl font-bold my-2'>{clipping?.clipping.title}</h1>
           <h3 className='font-light lg:text-lg my-4'>{book?.author}</h3>
           <hr className='bg-gray-400 my-12' />
-          <ClippingContent className='lg:text-3xl text-2xl lg:leading-loose leading-normal font-lxgw' content={clipping?.clipping.content ?? ''} />
+          <ClippingContent
+            className='lg:text-4xl text-3xl lg:leading-loose leading-normal font-lxgw'
+            content={clipping?.clipping.content ?? ''}
+          />
           <hr className='bg-gray-400 my-12' />
           <Reactions reactions={clipping?.clipping.reactionData} cid={clipping?.clipping.id || -1} />
           <hr className='bg-gray-400 my-12' />
-          <footer className='flex justify-between mt-4'>
+          <footer className='flex justify-between flex-col lg:flex-row mt-4'>
             {me.id === 0 && (
-              <Link href={`/auth/signin`}>
-                <a className='flex justify-center items-center' >
+              <Link href={`/auth/auth-v2`}>
+                <a className='flex justify-start items-center w-full' >
                   <img
                     src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
-                    className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover'
+                    className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover inline-block'
+                    alt={creator.name}
                   />
                   <span className='ml-4 text-gray-700 dark:text-gray-200 font-light'>{creator?.name}</span>
                 </a>

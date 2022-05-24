@@ -50,7 +50,7 @@ function Signin(props: TSigninProps) {
     <form className='flex flex-col' onSubmit={formik.handleSubmit}>
       <Head>
         <title>登陆</title>
-        <OGWithAuth urlPath='auth/signin' />
+        <OGWithAuth urlPath='auth/auth-v2' />
       </Head>
       <FieldInput
         type='email'

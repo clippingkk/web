@@ -73,7 +73,7 @@ function AuthPage(props: AuthPageProps) {
           </Link>
 
           <Link
-            href="/auth/signin"
+            href="/auth/auth-v2"
           // getProps={checkIsCurrentPath}
           >
             <a className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('signin') ? 'bg-indigo-400' : ''}`}>

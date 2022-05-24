@@ -21,27 +21,27 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
         <title>登陆</title>
         <OGWithAuth urlPath='auth/auth-v2' />
       </Head>
-      <div className='anna-page-container flex h-screen items-center justify-center relative flex-col'>
+      <div className='anna-page-container flex h-screen items-center justify-center relative flex-col px-4 lg:px-0'>
         <div
           className={'duration-150 container ' + (willBind ? 'opacity-50 ' : '')}
         >
-          <h3 className='text-8xl dark:text-gray-100'>
+          <h3 className=' text-3xl lg:text-8xl dark:text-gray-100'>
             {t('app.authCallback.logged')}
           </h3>
-          <h4 className='text-6xl mt-4 dark:text-gray-100'>
+          <h4 className=' text-xl lg:text-6xl mt-4 dark:text-gray-100'>
             {t('app.authCallback.prevAccountTip')}
           </h4>
 
           <div className='my-8 flex flex-col'>
             <button
-              className='py-4 px-8 from-teal-400 via-teal-500 to-teal-400 bg-gradient-to-br rounded-lg text-8xl hover:shadow-lg hover:scale-105 duration-150'
+              className='py-4 px-8 from-teal-400 via-teal-500 to-teal-400 bg-gradient-to-br rounded-lg text-3xl lg:text-8xl hover:shadow-lg hover:scale-105 duration-150'
               onClick={props.doBind}
             >
               {t('app.authCallback.createAccountDirectly')}
             </button>
             {!willBind && (
               <button
-                className='py-4 px-8 from-blue-400 via-teal-400 to-orange-400 bg-gradient-to-br rounded-lg text-7xl hover:shadow-lg hover:scale-105 duration-150 mt-6'
+                className='py-4 px-8 from-blue-400 via-teal-400 to-orange-400 bg-gradient-to-br rounded-lg text-2xl lg:text-7xl hover:shadow-lg hover:scale-105 duration-150 mt-6'
                 onClick={() => {
                   setWillBind(true)
                 }}

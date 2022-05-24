@@ -55,7 +55,7 @@ function NavigationBar() {
   const { t } = useTranslation()
 
   return (
-    <nav className={styles.navbar + ' bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl'}>
+    <nav className={styles.navbar + ' bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl with-slide-in'}>
       <div className='flex justify-around items-center'>
         <Image
           src={logo}
@@ -64,78 +64,90 @@ function NavigationBar() {
           width={40}
           height={40}
         />
-        <ul className='flex ml-2 lg:ml-12'>
-          {leftMenu.map((item, index) => (
-            <li className='mr-3 lg:mr-6 cursor-pointer' key={index}>
-              <Tooltip
-                placement='bottom'
-                overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
-              >
-                <Link
-                  href={id === 0 ? '/auth/signin' : item.dest(id)}
+        {profile.id > 0 ? (
+
+          <ul className='flex ml-2 lg:ml-12'>
+            {leftMenu.map((item, index) => (
+              <li className='mr-3 lg:mr-6 cursor-pointer' key={index}>
+                <Tooltip
+                  placement='bottom'
+                  overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
                 >
-                  <span
-                    className='text-3xl lg:text-4xl'
-                    title={t(`app.menu.${item.alt}`)}
+                  <Link
+                    href={id === 0 ? '/auth/auth-v2' : item.dest(id)}
                   >
-                    {item.emoji}
-                  </span>
-                </Link>
-              </Tooltip>
-            </li>
-          ))}
-        </ul>
+                    <span
+                      className='text-3xl lg:text-4xl'
+                      title={t(`app.menu.${item.alt}`)}
+                    >
+                      {item.emoji}
+                    </span>
+                  </Link>
+                </Tooltip>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          null
+        )}
       </div>
-      <ul className='flex'>
-
-        <li className='mr-6'>
-          <Tooltip
-            placement='bottom'
-            overlay={<span>{t('app.menu.search.title')}</span>}
-          >
-            <button
-              className='text-3xl lg:text-4xl'
-              title={t('app.menu.search.title')}
-              onClick={() => {
-                setVisible(true)
-              }}
+      {profile.id > 0 ? (
+        <ul className='flex'>
+          <li className='mr-6'>
+            <Tooltip
+              placement='bottom'
+              overlay={<span>{t('app.menu.search.title')}</span>}
             >
-              🔍
-            </button>
-          </Tooltip>
-        </li>
-
-        <li className='mr-6'>
-          <Tooltip
-            placement='bottom'
-            overlay={<span>{t('app.menu.settings')}</span>}
-          >
-            <Link
-              href={id === 0 ? '/auth/signin' : `/dash/${id}/settings`}
-            >
-              <a
+              <button
                 className='text-3xl lg:text-4xl'
-                title={t('app.menu.settings')}
+                title={t('app.menu.search.title')}
+                onClick={() => {
+                  setVisible(true)
+                }}
               >
-                🛠
-              </a>
-            </Link>
-          </Tooltip>
-        </li>
-        <li className='mr-6' onClick={onLogout}>
-          <Tooltip
-            placement='bottom'
-            overlay={<span>{t('app.menu.logout')}</span>}
-          >
-            <span
-              className='text-3xl lg:text-4xl'
-              title={t('app.menu.logout')}
+                🔍
+              </button>
+            </Tooltip>
+          </li>
+
+          <li className='mr-6'>
+            <Tooltip
+              placement='bottom'
+              overlay={<span>{t('app.menu.settings')}</span>}
             >
-              👋
-            </span>
-          </Tooltip>
-        </li>
-      </ul>
+              <Link
+                href={id === 0 ? '/auth/auth-v2' : `/dash/${id}/settings`}
+              >
+                <a
+                  className='text-3xl lg:text-4xl'
+                  title={t('app.menu.settings')}
+                >
+                  🛠
+                </a>
+              </Link>
+            </Tooltip>
+          </li>
+          <li className='mr-6' onClick={onLogout}>
+            <Tooltip
+              placement='bottom'
+              overlay={<span>{t('app.menu.logout')}</span>}
+            >
+              <span
+                className='text-3xl lg:text-4xl'
+                title={t('app.menu.logout')}
+              >
+                👋
+              </span>
+            </Tooltip>
+          </li>
+        </ul>
+      ) : (
+        <Link href='/auth/auth-v2'>
+        <h2 className=' dark:text-white font-bold'>
+          {t('app.slogan')}
+        </h2>
+        </Link>
+      )}
       <SearchBar visible={visible} onClose={onSearchbarClose} />
     </nav>
   )

@@ -99,10 +99,10 @@ function Reactions(props: ReactionsProps) {
             )}
           >
             <button
-              className='inline-flex py-4 px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
+              className='inline-flex py-1 px-2 lg:py-4 lg:px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
               onClick={() => {
                 if (uid <= 0) {
-                  navigate('/auth/signin')
+                  navigate('/auth/auth-v2')
                   return
                 }
                 if (k.done) {
@@ -133,7 +133,7 @@ function Reactions(props: ReactionsProps) {
               }}
             >
               <span className='text-2xl'>{k.symbol}</span>
-              <span className='text-2xl ml-2'>{k.count}</span>
+              <span className='text-2xl ml-2 dark:text-white'>{k.count}</span>
             </button>
           </Tooltip>
         ))}

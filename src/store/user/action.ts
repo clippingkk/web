@@ -174,7 +174,7 @@ function* signupAction(action: TSignupAction) {
       avatarUrl: uploadedResponse.filePath,
     })
 
-    yield call(action.navigate as any, '/auth/signin')
+    yield call(action.navigate as any, '/auth/auth-v2')
   } catch (e: any) {
     swal({
       title: "Oops",

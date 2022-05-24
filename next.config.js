@@ -8,7 +8,7 @@ module.exports = {
   //   defaultLocale: 'zhCN'
   // },
   images: {
-    domains: ['ck-cdn.annatarhe.cn', 'img1.doubanio.com'],
+    domains: ['ck-cdn.annatarhe.cn', 'img1.doubanio.com', 'avatars.githubusercontent.com'],
   },
   excludeFile: (str) => /__tests__/.test(str),
   env: {
