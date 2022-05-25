@@ -9,7 +9,11 @@ function EmojiPicker(props: EmojiPickerProps) {
 
   useEffect(() => {
     import('emoji-mart').then((EmojiMart) => {
-      new EmojiMart.Picker({ ...props, data, ref })
+      new EmojiMart.Picker({
+         ...props,
+          // data: data as any,
+          //  ref 
+        })
     })
   }, [])
 
