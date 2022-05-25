@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.5...v4.0.6) (2022-05-25)
+
+
+### Bug Fixes
+
+* **auth:** remove walletconnect ([abdca09](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/abdca0989c6cc1e893db8aa0638ba358e5809818))
+
 ### [4.0.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.4...v4.0.5) (2022-05-24)
 
 
