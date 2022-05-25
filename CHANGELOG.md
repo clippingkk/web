@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.7...v4.0.8) (2022-05-25)
+
+
+### Bug Fixes
+
+* **deps:** add package json ([d56a05e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d56a05efb976c9737e5e74309cb3955278a3cb1b))
+* **deps:** remove yarn ([1656f19](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1656f199f22a3c6a7ef01a95f2971292f38118af))
+* **deps:** update deps ([3a5f429](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3a5f4298608955d7c6bbdf32878c353a1d04799f))
+* **emoji:** fix picker ([95b237c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/95b237c9b4fbf7833999d854bc13169cb8b2b06a))
+
 ### [4.0.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.6...v4.0.7) (2022-05-25)
 
 
