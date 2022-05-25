@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.6...v4.0.7) (2022-05-25)
+
+
+### Bug Fixes
+
+* **gql:** fix gql ([49bf675](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/49bf6758550e84b84478aff178dd9ccd3b435eea))
+
 ### [4.0.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.5...v4.0.6) (2022-05-25)
 
 
