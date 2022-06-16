@@ -22,10 +22,10 @@ function Preview(props: PreviewProps) {
   const [errMsg, setErrMsg] = useState('')
   const [currentTheme, setCurrentTheme] = useState(KonzertThemeMap.young.id)
 
-  const onImageLoad = useCallback((e) => {
+  const onImageLoad = useCallback((e: any) => {
     setLoading(false)
   }, [])
-  const onImageError = useCallback((e) => {
+  const onImageError = useCallback((e: any) => {
     toast.error(e.toString())
     setLoading(false)
     setErrMsg('')

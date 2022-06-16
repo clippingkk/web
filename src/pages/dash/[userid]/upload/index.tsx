@@ -18,7 +18,7 @@ import { UserContent } from '../../../../store/user/type'
 
 function useSwitcher() {
   const [isOn, setIsOn] = useState(true)
-  const onSwitchChange = useCallback(checked => {
+  const onSwitchChange = useCallback((checked: boolean) => {
     setIsOn(checked)
   }, [])
 

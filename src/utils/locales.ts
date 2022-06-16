@@ -1,32 +1,13 @@
 import i18n from 'i18next'
 import languageDetector from 'i18next-browser-languagedetector'
-import resourcesToBackend from 'i18next-resources-to-backend'
 import {initReactI18next} from 'react-i18next'
 import zhCN from '../locales/zhCN.yml'
 import ko from '../locales/ko.yml'
 import en from '../locales/en.yml'
 
-
-// const zhCN = import('../locales/zhCN.yml').default
-// const en = import('../locales/en.yml').default
-// const ko = import('../locales/ko.yml').default
-// setTimeout(() => {
-//   const language = localStorage.getItem('i18nextLngLong')
-//   i18n.changeLanguage(language || 'en')
-// })
-
-// console.log(import('../locales/zhCN.yml'))
-
 i18n
   .use(languageDetector)
   .use(initReactI18next)
-  // .use(resourcesToBackend((lng, ns, cb) => {
-  //   import(`../locales/${lng}.yml`).then(res => {
-  //     cb(null, res)
-  //   }).catch(err => {
-  //     cb(err, null)
-  //   })
-  // }))
   .init({
     resources: {
       en: {
@@ -39,9 +20,10 @@ i18n
         translation: ko
       }
     },
-    fallbackLng: 'zhCN',
-    // fallbackLng: 'en',
-
+    react: {
+      useSuspense: false
+    },
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false
     }

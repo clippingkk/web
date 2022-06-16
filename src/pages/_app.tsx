@@ -25,6 +25,7 @@ import '../utils/locales'
 import '../utils/leancloud'
 import { initParseFromLS } from '../store/user/user'
 import { AUTH_LOGIN } from '../store/user/type'
+import { appWithTranslation } from 'next-i18next'
 import { NextPage } from 'next'
 
 type NextPageWithLayout = NextPage & {
@@ -44,9 +45,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       store.dispatch({ type: AUTH_LOGIN, token: nt.token, profile: nt.profile })
     }
   }, [])
-  
-  const C: any = Component
-  const content = getLayout(<C {...pageProps} />)
+
+  // useSSR((window as any).initialI18nStore, (window as any).initialLanguage)
+
+  const content = getLayout(<Component {...pageProps} />)
   return (
     <Provider store={store}>
       <SWRConfig
@@ -75,7 +77,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 MyApp.getInitialProps = async (appContext: AppContext) => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(appContext);
-
   return { ...appProps }
 }
 

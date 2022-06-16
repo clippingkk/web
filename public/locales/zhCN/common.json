@@ -1,0 +1,255 @@
+{
+	"app": {
+	  "fold": "折叠",
+	  "unfold": "展开",
+	  "common": {
+		"loading": "加载中...",
+		"closed": "广场功能暂未开放哦~",
+		"cancel": "取消",
+		"doUpdate": "更新",
+		"done": "完成",
+		"delete": "删除",
+		"bind": "绑定",
+		"bound": "已绑定"
+	  },
+	  "slogan": "整理, 展示, 复盘, 进步",
+	  "go": "立即体验！",
+	  "menu": {
+		"read": "已读",
+		"square": "广场",
+		"upload": "上传",
+		"my": "我的信息",
+		"settings": "设置",
+		"logout": "退出",
+		"search": {
+		  "title": "搜索",
+		  "placeholder": "父亲, 士大夫, 人民...",
+		  "empty": "没有数据"
+		}
+	  },
+	  "public": {
+		"readings": "大家在读",
+		"readers": "这些朋友爱读书",
+		"clippings": "用户书摘",
+		"hideReasons": "由于隐私问题，并不展示用户书摘内容"
+	  },
+	  "book": {
+		"title": "书摘",
+		"share": "分享这本书",
+		"readingDuration": "这本书看了 {{ count }} 天",
+		"readingDuration_plural": "这本书看了 {{ count }} 天"
+	  },
+	  "auth": {
+		"signin": "登陆",
+		"signup": "注册",
+		"phone": "手机",
+		"username": "用户名",
+		"avatar": "头像",
+		"email": "邮箱",
+		"pwd": "密码",
+		"bio": "个人简介",
+		"submit": "搞快点",
+		"endpoint": "API 地址",
+		"name": "用户名",
+		"hookUrl": "hook 地址",
+		"notionPageId": "notion page id",
+		"notionToken": "notion 机器人 token",
+		"domain": "域名",
+		"code": {
+		  "placeholder": "手机中的验证码"
+		},
+		"info": {
+		  "smsSent": "验证码已发送"
+		},
+		"errors": {
+		  "pnLen": "手机号不合法",
+		  "verifyCodeLen": "验证码不合法",
+		  "codeLen": "验证码长度不够哦"
+		}
+	  },
+	  "authCallback": {
+		"logged": "Cool, 已经创建完成啦",
+		"prevAccountTip": "之前是否有过账户需要绑定？",
+		"createAccountDirectly": "没，直接登陆吧",
+		"toBind": "有， 需要绑定之前的账户"
+	  },
+	  "home": {
+		"reading": "正在读",
+		"title": "我的书籍",
+		"unchecked": "未分类图书",
+		"notfound": "什么！你竟然还没有读书笔记？",
+		"uploadTip": "还不快点我上传"
+	  },
+	  "clipping": {
+		"update": "书目更新",
+		"updatePlaceholder": "搜索需要匹配的图书",
+		"updateCandidatesCount": "共: {{ count }}",
+		"updateSelectedTip": "已选中新书: {{ title }}",
+		"shares": "图片分享",
+		"link": "豆瓣读书",
+		"at": "摘录于",
+		"preview": "预览",
+		"save": "保存",
+		"visible": "是否对他人可见",
+		"sidebar": {
+		  "prev": "上一条",
+		  "next": "下一条"
+		},
+		"reactions": {
+		  "removeSuccess": "已移除自己的态度",
+		  "addSuccess": "已表达自己的态度",
+		  "actionRejected": "操作失败，请稍后重试哦~"
+		},
+		"comments": {
+		  "placeholder": "你觉得这段摘录怎么样？写下来分享给其他朋友吧~",
+		  "title": "评论",
+		  "count": "个字, 至少为 40 个字. 学而不思则惘.",
+		  "submit": "提交",
+		  "tip": {
+			"tooShort": "太短了，再多想想？",
+			"success": "搞定，已经分享给其他朋友了"
+		  }
+		}
+	  },
+	  "square": {
+		"title": "广场"
+	  },
+	  "upload": {
+		"tip": "把 My Clippings.txt 拖进来",
+		"dropHere": "松开鼠标",
+		"help": {
+		  "title": "什么是 My Clippings.txt",
+		  "content": "将 kindle 插入电脑，点击进入 kindle，<br />在目录中寻找 `documents` 双击进入，<br />找到文件名为 `My Clippings.txt` 的即可.<br /> 视频和图片准备中"
+		},
+		"private": {
+		  "on": "您上传的内容可以公开（可能被其他人看到）",
+		  "off": "您上传的内容对他人隐藏（不能被其他人看到）"
+		},
+		"errors": {
+		  "fileTitle": "Oops",
+		  "fileNotFound": "请务必提供 kindle 中的 My Clipping.txt 哦",
+		  "unknown": "哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \\n annatarhe@gmail.com",
+		  "parse": "解析出错，您需要进入上传页面手动上传"
+		},
+		"tips": {
+		  "done": "所有数据已经同步完成",
+		  "extracting": "解析中",
+		  "extractingText": "正在拼命解析中，请稍等...",
+		  "parsedInfoTitle": "解析成功，下次登陆将会自动同步到服务器",
+		  "parsedInfoContent": "解析成功，下次登陆将会自动同步到服务器",
+		  "backUpload": "后台同步中..."
+		},
+		"yesText": "牛逼！你上传完成了！",
+		"progress": {
+		  "none": "无",
+		  "parsing": "解析文件中",
+		  "searchingBook": "正在匹配书目",
+		  "uploading": "正在同步书摘",
+		  "done": "完成",
+		  "error": "错误",
+		  "message": {
+			"open": "请等待结束，勿关闭此页面"
+		  }
+		}
+	  },
+	  "profile": {
+		"collected": "已收集 {{ count }} 条记录",
+		"collected_plural": "已收集 {{ count }} 条记录",
+		"records": "{{ count }} 条记录",
+		"records_plural": "{{ count }} 条记录",
+		"rssTip": "支持粘贴此 RSS 链接到 RSS 阅读器中",
+		"yearlyReportTip": "年度阅读报告",
+		"recents": "最近动态",
+		"wechatBind": "微信小程序绑定",
+		"wechatBindTip": "使用 clippingKK 小程序 个人中心扫码即可绑定",
+		"phoneBind": "绑定手机号",
+		"phoneBinded": "绑定成功",
+		"externalAccountList": "外部账户",
+		"fans": {
+		  "follow": "追踪",
+		  "unfollow": "不再追踪"
+		},
+		"editor": {
+		  "title": "更新我的个人信息",
+		  "updated": "已更新",
+		  "max4line": "最大仅支持 4 行文字",
+		  "invalid": "内容有错误"
+		},
+		"report": {
+		  "yearlyTitle": "年度报告"
+		}
+	  },
+	  "settings": {
+		"title": "全局配置(网站)",
+		"theme": "黑暗模式",
+		"webhook": {
+		  "title": "Web Hook",
+		  "submit": "提交",
+		  "docLink": "文档在这里"
+		},
+		"export": {
+		  "title": "导出数据",
+		  "success": "已导出",
+		  "flomo": {
+			"title": "Flomo",
+			"submit": "导出至 flomo"
+		  },
+		  "notion": {
+			"title": "Notion",
+			"submit": "导出至 notion"
+		  }
+		},
+		"domain": {
+		  "title": "域名路由"
+		},
+		"danger": {
+		  "removeAccount": "删除账户",
+		  "removeButton": "删除我的账户",
+		  "removeAccountDone": "账户已删除",
+		  "removeAccountDoneTip": "24 小时内不再登陆，则账户数据会被永久删除"
+		}
+	  },
+	  "index": {
+		"features": {
+		  "open": {
+			"title": "开放",
+			"f1": "导出到 Notion",
+			"f2": "导出到 Flomo",
+			"f2Desc": "在设置页面复制 flomo 连接",
+			"f3": "Web Hook",
+			"f4": "网页分享组件",
+			"f4Desc": "在详情页点击 `复制 HTML`"
+		  },
+		  "modern": {
+			"title": "现代",
+			"f1": "架构",
+			"f1Desc": "现代软件架构上组织的产品，非常自豪~",
+			"f2": "代码",
+			"f2Desc": "优雅的代码质量",
+			"f3": "思维模式",
+			"f3Desc": "最重要的 —— 思维模式。 我们是真正的阅读者，有着不一样的思维模式（和而不同）"
+		  },
+		  "sense": {
+			"title": "产品洞见",
+			"f1": "iOS 小组件",
+			"f1Desc": "我们为您的 iPhone 桌面提供小组件，方便随时 review 曾经的阅读状况",
+			"f2": "隐私",
+			"f2Desc": "我们真心关注您的隐私情况 —— 您可屏蔽书摘的对外访问情况",
+			"f3": "交流",
+			"f3Desc": "您可留下一些深思熟虑和其他阅读者共同交流"
+		  },
+		  "reading4": {
+			"title": "使长阅读再次伟大",
+			"f1": "多平台",
+			"f1Desc": "iOS, 微信小程序",
+			"f2": "追随师者",
+			"f2Desc": "其他读者可以方便地追踪您的阅读轨迹",
+			"f3": "命令行",
+			"f3Desc": "我们提供命令行解析文件",
+			"f4": "自由",
+			"f4Desc": "也许是为数不多愿意分享自己阅读感知的地方了"
+		  }
+		}
+	  }
+	}
+  }

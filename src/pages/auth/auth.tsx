@@ -51,48 +51,50 @@ function AuthPage(props: AuthPageProps) {
   return (
     <section className='anna-page-container flex h-screen items-center justify-center'>
       <Card className='with-slide-in'>
-        <div className='flex items-center justify-center flex-col mb-4'>
-          <Image
-            src={logo}
-            alt="clippingkk logo"
-            // className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
-            width={96}
-            height={96}
-          />
+        <>
+          <div className='flex items-center justify-center flex-col mb-4'>
+            <Image
+              src={logo}
+              alt="clippingkk logo"
+              // className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
+              width={96}
+              height={96}
+            />
 
-        </div>
-        <div className='w-full flex items-center justify-center rounded'>
-          <Link
-            href="/auth/phone"
-          >
-            <a
-              className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('phone') ? 'bg-indigo-400' : ''}`}
+          </div>
+          <div className='w-full flex items-center justify-center rounded'>
+            <Link
+              href="/auth/phone"
             >
-              {t('app.auth.phone')}
-            </a>
-          </Link>
+              <a
+                className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('phone') ? 'bg-indigo-400' : ''}`}
+              >
+                {t('app.auth.phone')}
+              </a>
+            </Link>
 
-          <Link
-            href="/auth/auth-v2"
-          // getProps={checkIsCurrentPath}
-          >
-            <a className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('signin') ? 'bg-indigo-400' : ''}`}>
-              {t('app.auth.signin')}
+            <Link
+              href="/auth/auth-v2"
+            // getProps={checkIsCurrentPath}
+            >
+              <a className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('signin') ? 'bg-indigo-400' : ''}`}>
+                {t('app.auth.signin')}
+              </a>
+            </Link>
+          </div>
+          <hr className='my-2' />
+          {props.children}
+          <hr className='my-2' />
+          <div className='flex items-center justify-center'>
+            <a
+              href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
+              onClick={onGithubClick}
+              title='github login'
+            >
+              <GithubLogo />
             </a>
-          </Link>
-        </div>
-        <hr className='my-2' />
-        {props.children}
-        <hr className='my-2' />
-        <div className='flex items-center justify-center'>
-          <a
-            href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
-            onClick={onGithubClick}
-            title='github login'
-          >
-            <GithubLogo />
-          </a>
-        </div>
+          </div>
+        </>
       </Card>
     </section>
   )

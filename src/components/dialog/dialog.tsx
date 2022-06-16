@@ -22,11 +22,13 @@ class InnerDialog extends React.PureComponent<dialogProps> {
           className='bg-gray-200 with-fade-in'
           onClick={this.stopBuble}
         >
+          <>
           <h3 className='mb-4 text-2xl text-center'>{this.props.title}</h3>
           <hr />
           <div>
             {this.props.children}
           </div>
+          </>
         </Card>
       </div>
     )

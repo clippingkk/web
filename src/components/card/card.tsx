@@ -4,6 +4,7 @@ type cardProps = {
   className?: string
   style?: Object
   onClick?: (e: React.MouseEvent) => void
+  children?: React.ReactElement
 }
 
 class Card extends React.PureComponent<cardProps> {

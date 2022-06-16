@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom';
-import { usePopper } from 'react-popper';
+// import { usePopper } from 'react-popper';
 
 import styles from './style.module.css'
 
@@ -12,28 +12,28 @@ type TooltipProps = {
 }
 
 
-function Tooltip2(props: TooltipProps) {
-  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
-  const { styles, attributes } = usePopper(referenceElement, popperElement);
-  return (
-    <React.Fragment>
-      <div className={props.className} ref={setReferenceElement}>
-        {props.children}
-      </div>
-      {ReactDOM.createPortal(
-        <div
-          ref={setPopperElement}
-          style={styles.popper}
-          {...attributes.popper}
-        >
-          {props.overlay}
-        </div>,
-        document.querySelector('#toast')!
-      )}
-    </React.Fragment>
-  )
-}
+// function Tooltip2(props: TooltipProps) {
+//   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+//   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
+//   const { styles, attributes } = usePopper(referenceElement, popperElement);
+//   return (
+//     <React.Fragment>
+//       <div className={props.className} ref={setReferenceElement}>
+//         {props.children}
+//       </div>
+//       {ReactDOM.createPortal(
+//         <div
+//           ref={setPopperElement}
+//           style={styles.popper}
+//           {...attributes.popper}
+//         >
+//           {props.overlay}
+//         </div>,
+//         document.querySelector('#toast')!
+//       )}
+//     </React.Fragment>
+//   )
+// }
 
 function Tooltip(props: TooltipProps) {
   return (

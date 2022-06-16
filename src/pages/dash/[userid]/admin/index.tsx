@@ -63,38 +63,40 @@ function AdminPanel() {
     <div>
       <Head>
         <title>homeless book list</title>
-        </Head>
+      </Head>
       <Card>
-        <h3 className='text-3xl mb-8 text-center'>无家可归的书目们</h3>
-        <input
-          type="number"
-          value={offset}
-          onChange={(e) => setOffset(~~e.target.value)}
-          placeholder="offset"
-        />
-        {data ? (
-          <table {...getTableProps()} className='table-fixed w-full'>
-            <thead>
-              {headerGroups.map(headerGroup => (
-                // eslint-disable-next-line react/jsx-key
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
-                    // eslint-disable-next-line react/jsx-key
-                    <th {...column.getHeaderProps()} className='border-gray-300 border-2 p-4 text-lg'>{column.render("Header")}</th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row, i) => {
-                prepareRow(row)
-                return (<HomelessBookTableRow row={row} key={row.id} />)
-              })}
-            </tbody>
-          </table>
-        ) : (
+        <>
+          <h3 className='text-3xl mb-8 text-center'>无家可归的书目们</h3>
+          <input
+            type="number"
+            value={offset}
+            onChange={(e) => setOffset(~~e.target.value)}
+            placeholder="offset"
+          />
+          {data ? (
+            <table {...getTableProps()} className='table-fixed w-full'>
+              <thead>
+                {headerGroups.map(headerGroup => (
+                  // eslint-disable-next-line react/jsx-key
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map(column => (
+                      // eslint-disable-next-line react/jsx-key
+                      <th {...column.getHeaderProps()} className='border-gray-300 border-2 p-4 text-lg'>{column.render("Header")}</th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {rows.map((row, i) => {
+                  prepareRow(row)
+                  return (<HomelessBookTableRow row={row} key={row.id} />)
+                })}
+              </tbody>
+            </table>
+          ) : (
             loading ? (<span>loading</span>) : (<span>no more</span>)
           )}
+        </>
       </Card>
     </div>
   )

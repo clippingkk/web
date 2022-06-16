@@ -14,7 +14,7 @@ import OGWithIndex from '../components/og/og-with-index'
 import Features from './index/Features'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../services/wenqu'
 
-export const getStaticProps: GetStaticProps<{ preloadPublicData: publicData, books: WenquBook[] }> = async () => {
+export const getStaticProps: GetStaticProps<{ preloadPublicData: publicData, books: WenquBook[] }> = async ({ locale }) => {
   const data = await client.query<publicData>({
     query: fetchTopQuery,
     fetchPolicy: 'network-only'
@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps<{ preloadPublicData: publicData, boo
   return {
     props: {
       preloadPublicData: data.data,
-      books: booksServerData
+      books: booksServerData,
     },
     revalidate: true
   }
