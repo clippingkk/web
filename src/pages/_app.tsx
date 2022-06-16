@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { ReactElement, ReactNode, useEffect } from 'react'
 import App from 'next/app'
 import type { AppProps, AppContext } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
@@ -25,9 +25,18 @@ import '../utils/locales'
 import '../utils/leancloud'
 import { initParseFromLS } from '../store/user/user'
 import { AUTH_LOGIN } from '../store/user/type'
+import { NextPage } from 'next'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const getLayout = (Component as any).getLayout || ((page: any) => page)
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout || ((page: any) => page)
   useEffect(() => {
     const nt = initParseFromLS()
     // 初次加载
@@ -35,10 +44,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       store.dispatch({ type: AUTH_LOGIN, token: nt.token, profile: nt.profile })
     }
   }, [])
-
-  const content = getLayout(
-    <Component {...pageProps} />
-  )
+  
+  const C: any = Component
+  const content = getLayout(<C {...pageProps} />)
   return (
     <Provider store={store}>
       <SWRConfig
