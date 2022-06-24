@@ -62,3 +62,4 @@ dist.zip
 dist-dev
 __generated__
 .next
+src/schema/generated.tsx

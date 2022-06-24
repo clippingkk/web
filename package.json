@@ -15,7 +15,8 @@
     "release": "npm run release:base --",
     "release:pre": "npm run release:base -- --prerelease alpha",
     "coveralls:backup": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "coveralls": "exit 0"
+    "coveralls": "exit 0",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "repository": {
     "type": "git",
@@ -62,7 +63,7 @@
     "enzyme": "^3.11.0",
     "eslint": "8.16.0",
     "eslint-config-next": "^12.0.4",
-    "graphql": "^16.3.0",
+    "graphql": "^16.5.0",
     "graphql-tag": "^2.12.3",
     "husky": "^8.0.1",
     "ignore-loader": "^0.1.2",
@@ -76,12 +77,18 @@
     "redux-mock-store": "^1.5.4",
     "standard-version": "^9.0.0",
     "typescript": "^4.7.2",
-    "yaml-loader": "^0.8.0"
+    "yaml-loader": "^0.8.0",
+    "@graphql-codegen/typescript": "2.5.1",
+    "@graphql-codegen/typescript-operations": "2.4.2",
+    "@graphql-codegen/typescript-react-apollo": "3.2.16",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/cli": "2.6.2"
   },
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "@emoji-mart/data": "^1.0.1",
     "@fingerprintjs/fingerprintjs": "^3.0.0",
+    "@graphql-codegen/cli": "^2.6.2",
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
     "@sentry/react": "^7.1.1",
