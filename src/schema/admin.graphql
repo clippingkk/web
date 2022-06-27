@@ -1,5 +1,5 @@
 query uncheckBooksQuery($pagination: PaginationLegacy!) {
-    adminDashboard(pagination: $pagination) {
+  adminDashboard(pagination: $pagination) {
     uncheckedBooks {
       title
     }
