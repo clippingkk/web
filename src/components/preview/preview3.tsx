@@ -55,13 +55,13 @@ function Preview(props: PreviewProps) {
       onOk={props.onOk}
       title={t('app.clipping.preview')}
     >
-      <section className='flex flex-col'>
+      <section className='flex flex-col mt-2'>
         <div className='w-full'>
           <img
             src={shareURL}
             onLoad={onImageLoad}
             onError={onImageError}
-            className={styles['preview-image'] + ' transition-all duration-300'}
+            className={'h-[812px] w-[375px] rounded'}
             alt={t('app.common.loading')}
           />
           {/* {loading && (
@@ -71,16 +71,17 @@ function Preview(props: PreviewProps) {
 
         <footer className='w-full mt-4 flex flex-col'>
           <ThemePicker
-          current={currentTheme}
-          onChange={(t) => {
-            setCurrentTheme(t)
-          }}
-           />
+            current={currentTheme}
+            onChange={(t) => {
+              setCurrentTheme(t)
+            }}
+          />
           <a
             href={shareURL}
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
-            className='text-white text-lg w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow'
-            target='_blank' rel="noreferrer"
+            className='text-white text-lg w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow hover:scale-105 duration-150'
+            target='_blank'
+            rel="noreferrer"
           >
             {t('app.clipping.save')}
           </a>

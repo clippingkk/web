@@ -133,7 +133,7 @@ function NavigationBar() {
               overlay={<span>{t('app.menu.logout')}</span>}
             >
               <span
-                className='text-3xl lg:text-4xl'
+                className='text-3xl lg:text-4xl cursor-pointer'
                 title={t('app.menu.logout')}
               >
                 👋

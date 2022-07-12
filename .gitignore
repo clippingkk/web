@@ -63,3 +63,4 @@ dist-dev
 __generated__
 .next
 src/schema/generated.tsx
+.swc

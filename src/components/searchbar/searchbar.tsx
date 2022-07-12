@@ -95,34 +95,34 @@ function SearchBar(props: SearchBarProps) {
   return ReactDOM.createPortal(
     (
       <div
-        className='fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-40 flex-col backdrop-blur-lg with-fade-in'
+        className='fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-40 flex-col backdrop-blur-2xl with-fade-in'
         onClick={props.onClose}
       >
         <div className='w-full items-center flex flex-col max-h-screen'>
-          <div className='p-4 container flex justify-center items-center mt-10' onClick={noop}>
-            <label htmlFor="search" className='text-4xl bg-white p-8 pr-2 rounded-l dark:bg-gray-300' >🔍</label>
+          <div className='p-4 mx-8 lg:mx-0 container flex justify-center items-center mt-10' onClick={noop}>
+            <label htmlFor="search" className='text-4xl pl-8 h-full bg-white pr-2 rounded-l dark:bg-gray-300 flex items-center justify-center' >🔍</label>
             <input
               type="text"
               name='search'
-              className='w-80 lg:w-1/3 py-8 px-4 rounded-r focus:outline-none text-4xl dark:bg-gray-300'
+              className='py-8 px-4 w-80 lg:w-144 rounded-r focus:outline-none text-xl lg:text-4xl dark:bg-gray-300 border-none focus:shadow-none focus:border-transparent focus-visible:outline-none'
               autoFocus
               onChange={debounce(onInputChange, 300)}
               placeholder={t('app.menu.search.placeholder')}
             />
           </div>
-          <div className='flex flex-col w-80 lg:w-1/3 flex-1' onClick={noop}>
+          <div className='flex flex-col flex-1 container' onClick={noop}>
             {called && !loading && data?.search.clippings.length === 0 && (
-              <div className='w-full bg-gray-300 flex items-center justify-center py-8 flex-col'>
+              <div className='w-full flex items-center justify-center py-8 flex-col'>
                 <span className='text-5xl mb-4'>😭</span>
-                <span className='text-base'>{t('app.menu.search.empty')}</span>
+                <span className='text-base dark:text-gray-100'>{t('app.menu.search.empty')}</span>
               </div>
             )}
-            <ul className='list-none overflow-y-auto py-4' style={{
+            <ul className='list-none overflow-y-auto py-4 mx-8 lg:mx-0' style={{
               maxHeight: '80vh'
             }}>
               {data?.search.clippings.map(c => (
                 <li
-                  className='dark:bg-gray-300 bg-gray-400 mt-4 list-none with-fade-in rounded '
+                  className='dark:bg-gray-300 bg-gray-400 mt-4 list-none with-slide-in rounded'
                   key={c.id}
                 >
                   <Link

@@ -12,7 +12,7 @@ function ThemePicker(props: ThemePickerProps) {
       {Object.values(KonzertThemeMap)
         .map(k => (
           <div
-            className={`flex-1 mx-2 flex justify-center items-center`}
+            className={`flex-1 mx-2 first:ml-0 last:mr-0 flex justify-center items-center`}
             key={k.id}
             onClick={(e: any) => {
               e.preventDefault()
