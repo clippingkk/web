@@ -12,25 +12,28 @@ type MetamaskBindButtonProps = {
 }
 
 function MetamaskBindButton(props: MetamaskBindButtonProps) {
+  const { t } = useTranslation()
   const router = useRouter()
   const [doBind, doBindResult] = useMutation<bindWeb3Address, bindWeb3AddressVariables>(bindWeb3Mutation)
   const isActivating = hooks.useIsActivating()
   const isActive = hooks.useIsActive()
   const account = hooks.useAccount()
-  const err = hooks.useError()
   const client = useApolloClient()
   const onMetamaskLogin = useCallback(async () => {
     const resp = await metaMask.activate()
-    await metaMask.deactivate()
+    // if (metaMask.deactivate) {
+    //   await metaMask.deactivate()
+    // }
     // const resp = await metaMask.connectEagerly()
   }, [])
 
   useEffect(() => {
-    if (!err) {
-      return
-    }
-    toast.error('metamask: ' + err.message)
-  }, [err])
+    void metaMask.connectEagerly().catch((err) => {
+      console.debug('Failed to connect eagerly to metamask')
+      toast.error('metamask: ' + err.message)
+    })
+
+  }, [])
 
   useEffect(() => {
     if (!account) {
@@ -54,8 +57,7 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
       }).catch((err: any) => {
         toast.error(err.message)
       })
-  }, [account, client, doBind, router])
-  const { t } = useTranslation()
+  }, [account, client, doBind, router, t])
   return (
     <WithLoading
       loading={doBindResult.loading}

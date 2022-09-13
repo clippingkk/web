@@ -8,7 +8,7 @@ import { URLS } from './chains'
 //   Object.keys(URLS).map((chainId) => Number(chainId))
 // )
 
-const [metaMask, hooks] = initializeConnector<MetaMask>((actions) => new MetaMask(actions))
+const [metaMask, hooks] = initializeConnector<MetaMask>((actions) => new MetaMask({ actions }))
 
 
 const LoginWelcomeText = 'Welcome to the ClippingKK~ \n It`s your nonce: '

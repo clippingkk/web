@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ExternalLinkIcon } from '@heroicons/react/solid'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 
 type featureColorPattern = {
   title: string[]
@@ -83,7 +83,7 @@ function FeatureSection(props: FeatureSectionType) {
                 rel="noreferrer"
               >
                 {x.feature}
-                <ExternalLinkIcon className=' h-4 w-4 lg:h-5 lg:w-5 inline-block mb-2 lg:mb-8' />
+                <ArrowTopRightOnSquareIcon className=' h-4 w-4 lg:h-5 lg:w-5 inline-block mb-2 lg:mb-8' />
               </a>
             ) : (
               <h4 className={props.colorPattern.rows[i]}>

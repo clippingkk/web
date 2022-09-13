@@ -64,3 +64,6 @@ __generated__
 .next
 src/schema/generated.tsx
 .swc
+
+# Sentry
+.sentryclirc

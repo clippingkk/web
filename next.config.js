@@ -1,7 +1,16 @@
 const { i18n } = require('./next-i18next.config')
-module.exports = {
+const { withSentryConfig } = require('@sentry/nextjs')
+
+const sentryWebpackPluginOptions = {
+  silent: true,
+};
+
+const config = {
   i18n,
-  strictMode: true,
+//  strictMode: true,
+  sentry: {
+    hideSourceMaps: true
+  },
   // experimental: {
   //   runtime: 'edge',
   // },
@@ -12,7 +21,7 @@ module.exports = {
   images: {
     domains: ['ck-cdn.annatarhe.cn', 'img1.doubanio.com', 'avatars.githubusercontent.com'],
   },
-  excludeFile: (str) => /__tests__/.test(str),
+//  excludeFile: (str) => /__tests__/.test(str),
   env: {
     'DEV': process.env.NODE_ENV !== 'production',
     'infuraKey': process.env.infuraKey || ''
@@ -38,3 +47,5 @@ module.exports = {
   },
   // swcMinify: true
 }
+
+module.exports = withSentryConfig(config, sentryWebpackPluginOptions)
