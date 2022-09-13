@@ -95,24 +95,30 @@ function AuthByMetamask(props: AuthByMetamaskProps) {
   const isActivating = hooks.useIsActivating()
   const isActive = hooks.useIsActive()
   const account = hooks.useAccount()
-  const err = hooks.useError()
+  // const err = hooks.useError()
   const onMetamaskLogin = useCallback(async () => {
 
     // if (isMobile()) {
     //   onWeb3Login()
     // } else {
-      const resp = await metaMask.activate()
+    const resp = await metaMask.activate()
+    if (metaMask.deactivate) {
       await metaMask.deactivate()
+    }
     // }
     // const resp = await metaMask.connectEagerly()
   }, [])
 
   useEffect(() => {
-    if (!err) {
-      return
-    }
-    toast.error('metamask: ' + err.message)
-  }, [err])
+    // if (!err) {
+    //   return
+    // }
+    // toast.error('metamask: ' + err.message)
+    void metaMask.connectEagerly().catch((err) => {
+      console.debug('Failed to connect eagerly to metamask')
+      toast.error('metamask: ' + err.message)
+    })
+  }, [])
 
   useEffect(() => {
     if (!account) {
