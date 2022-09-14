@@ -83,7 +83,8 @@ const httpLink = new HttpLink({
 
 
 export const client = new ApolloClient({
-  cache: new InMemoryCache({ }),
+  ssrMode: typeof window === 'undefined',
+  cache: new InMemoryCache({}),
   link: errorLink.concat(authLink.concat(httpLink)),
   connectToDevTools: !!process.env.DEV,
 })

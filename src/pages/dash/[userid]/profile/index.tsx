@@ -28,7 +28,6 @@ import { unfollowUser, unfollowUserVariables } from '../../../../schema/mutation
 import { toast } from 'react-toastify'
 
 import styles from './profile.module.css'
-import { useRouter } from 'next/router'
 import DashboardContainer from '../../../../components/dashboard-container/container';
 import Link from 'next/link';
 import OGWithUserProfile from '../../../../components/og/og-with-user-profile';
@@ -61,7 +60,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
       })
     }
     return c
-  }, [data?.me.analysis.monthly.length])
+  }, [data?.me.analysis.monthly])
 
   const year = (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
