@@ -86,5 +86,5 @@ export const client = new ApolloClient({
   ssrMode: typeof window === 'undefined',
   cache: new InMemoryCache({}),
   link: errorLink.concat(authLink.concat(httpLink)),
-  connectToDevTools: !!process.env.DEV,
+  connectToDevTools: process.env.DEV === 'true',
 })

@@ -1,3 +1,4 @@
+// @ts-check
 const { i18n } = require('./next-i18next.config')
 const { withSentryConfig } = require('@sentry/nextjs')
 
@@ -5,6 +6,10 @@ const sentryWebpackPluginOptions = {
   silent: true,
 };
 
+
+/**
+ * @type {import('next').NextConfig}
+ **/
 const config = {
   i18n,
 //  strictMode: true,
@@ -23,8 +28,8 @@ const config = {
   },
 //  excludeFile: (str) => /__tests__/.test(str),
   env: {
-    'DEV': process.env.NODE_ENV !== 'production',
-    'infuraKey': process.env.infuraKey || ''
+    DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
+    infuraKey: process.env.infuraKey || ''
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push({
@@ -48,4 +53,6 @@ const config = {
   // swcMinify: true
 }
 
-module.exports = withSentryConfig(config, sentryWebpackPluginOptions)
+// FIXME: 暂时关掉， leancloud cloud engine do not support yet
+// module.exports = withSentryConfig(config, sentryWebpackPluginOptions)
+module.exports = config
