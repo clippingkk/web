@@ -1,5 +1,6 @@
 build:
   - echo 'build...'
+  - echo $SENTRY_AUTH_TOKEN
   - mkdir ~/.npm-global
   - export PATH=~/.npm-global/bin:$PATH
   - npm config set prefix '~/.npm-global'
