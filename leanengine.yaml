@@ -3,7 +3,7 @@ build:
   - mkdir ~/.npm-global
   - export PATH=~/.npm-global/bin:$PATH
   - npm config set prefix '~/.npm-global'
-  - npm install -g pnpm
+  # - npm install -g pnpm
   - npm config set registry https://registry.npmmirror.com
   # - pnpm config set store-dir ~/.pnpm-store
   - export NODE_OPTIONS=--openssl-legacy-provider
