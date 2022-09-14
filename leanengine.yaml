@@ -5,10 +5,11 @@ build:
   - npm config set prefix '~/.npm-global'
   - npm install -g pnpm
   - npm config set registry https://registry.npmmirror.com
-  - pnpm config set store-dir ~/.pnpm-store
+  # - pnpm config set store-dir ~/.pnpm-store
   - export NODE_OPTIONS=--openssl-legacy-provider
   - npm install -g apollo graphql
-  - pnpm install
+  - yarn
+  # - pnpm install
   - npm run gql 
   - npm run build
   - export PORT=$LEANCLOUD_APP_PORT
