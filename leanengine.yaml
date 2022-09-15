@@ -1,3 +1,4 @@
+exposeEnvironmentsOnBuild: true
 build:
   - echo 'build...'
   - mkdir ~/.npm-global
