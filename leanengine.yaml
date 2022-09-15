@@ -9,7 +9,7 @@ build:
   # - pnpm config set store-dir ~/.pnpm-store
   - export NODE_OPTIONS=--openssl-legacy-provider
   - npm install -g apollo graphql
-  - yarn
+  - yarn install --force
   # - pnpm install
   - npm run gql 
   - npm run build
