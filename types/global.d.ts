@@ -19,3 +19,4 @@ declare module '*.yml' {
 declare module 'react-dark-mode-toggle';
 declare module 'colorthief';
 declare module 'react-apple-signin-auth';
+declare module '@emoji-mart/react';
