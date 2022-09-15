@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { useEffect, useRef } from 'react'
 import data from '@emoji-mart/data'
 
