@@ -54,5 +54,5 @@ const config = {
 }
 
 // FIXME: 暂时关掉， leancloud cloud engine do not support yet
-// module.exports = withSentryConfig(config, sentryWebpackPluginOptions)
-module.exports = config
+module.exports = withSentryConfig(config, sentryWebpackPluginOptions)
+// module.exports = config
