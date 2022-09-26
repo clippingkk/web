@@ -2,6 +2,7 @@ import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/clien
 import { onError } from "@apollo/client/link/error"
 import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
 import swal from 'sweetalert'
+import profile from '../utils/profile'
 
 export interface IBaseResponseData {
   status: Number
@@ -66,6 +67,14 @@ const authLink = new ApolloLink((operation, forward) => {
   return forward(operation)
 })
 
+type GraphQLResponseError = {
+  name: string
+  response: Response
+  result: { code: number, error: string }
+  statusCode: number
+  message: string
+}
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     swal({
@@ -74,7 +83,22 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       text: graphQLErrors[0].message,
     })
   }
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+  let ne = networkError as GraphQLResponseError
+
+  if (ne) {
+    console.log(`[Network error]: ${ne}`)
+    if (ne.statusCode && ne.statusCode === 401) {
+      updateToken('')
+      profile.onLogout()
+    }
+    swal({
+      icon: 'error',
+      title: `${ne.statusCode}: ${ne.name}`,
+      text: ne.result.error
+    })
+  }
+
+
 });
 
 const httpLink = new HttpLink({
