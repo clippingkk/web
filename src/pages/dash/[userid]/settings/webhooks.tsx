@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import { useSelector } from 'react-redux'
@@ -120,8 +121,10 @@ function WebHooks() {
           {rows.map(row => {
             prepareRow(row)
             return (
-              // eslint-disable-next-line react/jsx-key
-              <tr {...row.getRowProps()} className='table-row with-fade-in'>
+              <tr
+                {...row.getRowProps()}
+                className='table-row with-fade-in'
+              >
                 {row.cells.map(cell => {
                   if (cell.column.Header === 'action') {
                     return (
