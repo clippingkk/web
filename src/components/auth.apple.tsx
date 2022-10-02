@@ -11,6 +11,7 @@ import LoadingIcon from './icons/loading.svg'
 import WithLoading from './with-loading'
 
 type AuthAppleProps = {
+  disabled?: boolean
 }
 
 const authOptions = {
@@ -62,10 +63,13 @@ function AuthByAppleButton(props: AuthAppleProps) {
     appleAuthResponse.data?.loginByApple
   )
 
-  const disabled = appleAuthResponse.loading
+  const loading = appleAuthResponse.loading
 
   return (
-    <WithLoading loading={disabled}>
+    <WithLoading
+     loading={loading}
+     disabled={props.disabled}
+    >
       <AppleSignin
         authOptions={authOptions}
         uiType="dark"

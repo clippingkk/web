@@ -94,7 +94,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     swal({
       icon: 'error',
       title: `${ne.statusCode}: ${ne.name}`,
-      text: ne.result.error
+      text: ne.result?.error
     })
   }
 

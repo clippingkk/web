@@ -44,7 +44,7 @@ function AuthV2(props: AuthV2Props) {
             <div>
               <h2 className='text-2xl dark:text-gray-100 mb-4'>Login by ...</h2>
               <AuthByMetamask />
-              <AuthByAppleButton />
+              <AuthByAppleButton disabled />
               <AuthByGithub />
 
               <div className='mt-4'>

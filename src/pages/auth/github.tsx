@@ -1,7 +1,5 @@
 import { useLazyQuery } from '@apollo/client';
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
-import { toGithubLogin } from '../../store/user/type';
 import githubLoginQuery from '../../schema/login.graphql'
 import { githubLogin, githubLoginVariables } from '../../schema/__generated__/githubLogin';
 import { useAuthSuccessed } from '../../hooks/hooks';
@@ -30,7 +28,7 @@ function GithubOAuth() {
   return (
     <main className='w-full h-full from-blue-400 to-purple-400 bg-gradient-to-br via-green-400 min-h-screen flex justify-center items-center'>
       <p className='p-10 bg-gray-300 bg-opacity-40 rounded text-4xl backdrop-blur-lg'>
-      authing
+        authing
       </p>
     </main>
   )
