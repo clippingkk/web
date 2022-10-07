@@ -7,6 +7,7 @@ import OGWithAuth from '../../components/og/og-with-auth'
 import AuthByAppleButton from '../../components/auth.apple'
 import AuthByMetamask from '../../components/auth.metamask'
 import AuthByGithub from '../../components/auth.github'
+import Link from 'next/link'
 
 type AuthV2Props = {
 }
@@ -43,6 +44,13 @@ function AuthV2(props: AuthV2Props) {
 
             <div>
               <h2 className='text-2xl dark:text-gray-100 mb-4'>Login by ...</h2>
+              <Link
+                href='/auth/phone'
+                className='mt-4 w-full text-center'
+              >
+                Phone Number
+              </Link>
+              <hr className='my-4' />
               <AuthByMetamask />
               <AuthByAppleButton disabled />
               <AuthByGithub />
