@@ -80,6 +80,7 @@ specifiers:
   react-test-renderer: ^18.2.0
   react-toastify: ^9.0.8
   react-transition-group: ^4.4.5
+  react-turnstile: ^1.0.4
   recharts: 2.1.12
   redux: ^4.2.0
   redux-mock-store: ^1.5.4
@@ -140,6 +141,7 @@ dependencies:
   react-table: 7.8.0_react@18.2.0
   react-toastify: 9.0.8_react-dom@18.2.0+react@18.2.0
   react-transition-group: 4.4.5_react-dom@18.2.0+react@18.2.0
+  react-turnstile: 1.0.4_react-dom@18.2.0+react@18.2.0
   recharts: 2.1.12_react-dom@18.2.0+react@18.2.0
   redux: 4.2.0
   redux-saga: 1.2.1
@@ -10568,6 +10570,16 @@ packages:
       dom-helpers: 5.2.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /react-turnstile/1.0.4_react-dom@18.2.0+react@18.2.0:
+    resolution: {integrity: sha512-Pdu2uHg38tQN0buHADknR8xNzIVVGXQHigaHZeXOvtv1tRXDCA0hYfxDS0D8IyWjB+DHwN0bIcraouXOG8/pOA==}
+    peerDependencies:
+      react: '>= 17.0.0'
+      react-dom: '>= 17.0.0'
+    dependencies:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false

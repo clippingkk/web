@@ -5,7 +5,7 @@ kindle viewer website
 ## Notes
 
 ```bash
-$ apollo client:download-schema --endpoint="http://localhost:19654/api/v2/graphql" --header="Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJleHAiOjE2Nzk3MTgzNzYsImlhdCI6MTY2NDE2NjM3NiwiaXNzIjoiY2stc2VydmVyQCJ9.X1X-LZoGePwbUauCwUwDJa6aEsmKHiXWB7fkT2ht0TM"
+$ apollo client:download-schema --endpoint="http://localhost:19654/api/v2/graphql" --header="Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE2ODAyMzg5NTUsImlhdCI6MTY2NDY4Njk1NSwiaXNzIjoiY2stc2VydmVyQCJ9.n5DKJnhACf65Cu-yYZP700rOLgadgLTBHPIxmAo8lAo"
 $ mv schema.json src/schema/
 $ apollo codegen:generate --target=typescript --localSchemaFile="./src/schema/schema.json" --includes="./src/schema/**/*.graphql" --useReadOnlyTypes
 ```
