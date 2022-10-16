@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -193,6 +194,9 @@ function NewbiePage(props: NewbiePageProps) {
 NewbiePage.getLayout = function getLayout(page: React.ReactElement) {
   return (
     <DashboardContainer>
+      <Head>
+        <title>Welcome to clippings~</title>
+      </Head>
       {page}
     </DashboardContainer>
   )

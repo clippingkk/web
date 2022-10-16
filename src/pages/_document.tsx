@@ -67,7 +67,7 @@ class DocumentTop extends Document {
           {/* <div id="app"></div> */}
           <div id="dialog"></div>
           <div id="toast"></div>
-          <div id='searchbar'></div>
+          <div id='searchbar' className='raycast'></div>
           <NextScript />
         </body>
       </Html>

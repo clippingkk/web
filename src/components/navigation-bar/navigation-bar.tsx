@@ -143,9 +143,9 @@ function NavigationBar() {
         </ul>
       ) : (
         <Link href='/auth/auth-v2'>
-        <h2 className=' dark:text-white font-bold'>
-          {t('app.slogan')}
-        </h2>
+          <h2 className='text-white font-bold'>
+            {t('app.slogan')}
+          </h2>
         </Link>
       )}
       <SearchBar visible={visible} onClose={onSearchbarClose} />
