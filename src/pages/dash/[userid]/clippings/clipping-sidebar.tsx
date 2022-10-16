@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { UserContent } from '../../../../store/user/type'
 import { useTranslation } from 'react-i18next'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 
 import styles from './clipping.module.css'
 import Link from 'next/link'

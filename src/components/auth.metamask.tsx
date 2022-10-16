@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client'
 import React, { useCallback, useEffect, useRef } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 // import WalletConnectProvider from "@walletconnect/web3-provider"
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import { authByWeb3, authByWeb3Variables } from '../schema/__generated__/authByWeb3'

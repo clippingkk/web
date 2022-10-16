@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useBackgroundImage } from '../../hooks/theme'
 import logo from '../../assets/logo.png'
@@ -13,6 +13,7 @@ import { OTPChannel } from '../../../__generated__/globalTypes'
 import OTPBox from '../../components/auth/otp-box'
 import { doLoginV3, doLoginV3Variables } from '../../schema/auth/__generated__/doLoginV3'
 import { useLoginV3Successed } from '../../hooks/hooks'
+import { toast } from 'react-hot-toast'
 
 type AuthV2Props = {
 }
@@ -21,18 +22,24 @@ function AuthV2(props: AuthV2Props) {
   const bg = useBackgroundImage()
 
   const [validEmail, setValidEmail] = useState('')
-  const [phase, setPhase] = useState(1)
+  const [phase, setPhase] = useState(0)
 
   const [doSendOtp, {
     loading: isSendingOtp
   }] = useMutation<sendOTP, sendOTPVariables>(sendOtpMutation)
 
   const onEmailSubmit = useCallback((email: string, turnstileToken: string) => {
-    doSendOtp({
+    toast.promise(doSendOtp({
       variables: {
         channel: OTPChannel.Email,
         address: email,
         cfTurnstileToken: turnstileToken
+      }
+    }), {
+      loading: 'Loading',
+      success: 'OTP sent by email',
+      error(err: Error) {
+        return err.toString()
       }
     }).then((res) => {
       setValidEmail(email)
@@ -46,14 +53,22 @@ function AuthV2(props: AuthV2Props) {
   ] = useMutation<doLoginV3, doLoginV3Variables>(loginV3Mutation)
 
   const onOTPConfirmed = useCallback((otp: string) => {
-    loginV3({
-      variables: {
-        payload: {
-          email: validEmail,
-          otp: otp
+    toast.promise(
+      loginV3({
+        variables: {
+          payload: {
+            email: validEmail,
+            otp: otp
+          }
         }
-      }
-    })
+      }), {
+      loading: 'Loading',
+      success: 'Logged',
+      error(err) {
+         console.log('errrrrrrrrrrrrrrrr')
+         return 'Error'
+    }
+    }).catch(err => {})
   }, [loginV3, validEmail])
 
   useLoginV3Successed(loginV3Response.called, loginV3Response.loading, loginV3Response.error, loginV3Response.data?.loginV3)

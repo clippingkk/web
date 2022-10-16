@@ -7,7 +7,7 @@ import updateProfileMutation from '../../../../schema/mutations/update-profile.g
 import FieldInput from '../../../../components/input'
 import FieldTextarea from '../../../../components/textarea'
 import { updateProfile, updateProfileVariables } from '../../../../schema/mutations/__generated__/updateProfile'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { uploadImage } from '../../../../services/misc'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'

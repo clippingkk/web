@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import * as sentry from '@sentry/react'
 import AV from 'leancloud-storage'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 
 type BindPhoneProps = {

@@ -1,4 +1,4 @@
-import { takeLatest, call, delay } from "@redux-saga/core/effects"
+import { takeLatest, call, delay } from "redux-saga/effects"
 import { log } from '../../utils/sentry'
 import { EXTRA_AND_UPLOAD_FILE_TO_SERVER, TClippingsFile } from "./type"
 import { create } from "../../services/clippings";

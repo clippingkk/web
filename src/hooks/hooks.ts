@@ -7,7 +7,6 @@ import { auth_auth } from "../schema/__generated__/auth"
 import { useDispatch } from "react-redux"
 import { AUTH_LOGIN } from "../store/user/type"
 import { signup } from "../schema/__generated__/signup"
-import swal from "sweetalert"
 import { updateToken } from "../services/ajax"
 import { authByPhone_authByPhone } from "../schema/mutations/__generated__/authByPhone"
 import { USER_TOKEN_KEY } from "../constants/storage"
@@ -17,6 +16,7 @@ import { loginByApple, loginByApple_loginByApple } from "../schema/auth/__genera
 import { bindAppleUnique_bindAppleUnique } from "../schema/auth/__generated__/bindAppleUnique"
 import { bindWeb3Address_bindWeb3Address } from "../schema/__generated__/bindWeb3Address"
 import { doLoginV3_loginV3 } from "../schema/auth/__generated__/doLoginV3"
+import toast from "react-hot-toast"
 
 export function useAuthBy3rdPartSuccessed(
   called: boolean,
@@ -242,13 +242,13 @@ export function useSignupSuccess(result: MutationResult<signup>) {
         avatarUrl: me.avatar,
       })
       // redirect
-      swal({
-        title: '请去邮箱确认',
-        text: `欢迎你哦~ ${me.name}，现在需要去邮箱点一下刚刚发你的确认邮件。\n 如果有问题可以发邮件： iamhele1994@gmail.com`,
-        icon: 'success'
-      }).then(() => {
-        navigate('/auth/auth-v2')
-      })
+      toast.success(
+        `欢迎你哦~ ${me.name}，现在需要去邮箱点一下刚刚发你的确认邮件。\n 如果有问题可以发邮件： iamhele1994@gmail.com`,
+        {
+          duration: 10_000
+        }
+      )
+      navigate('/auth/auth-v2')
     }
   }, [result])
 }

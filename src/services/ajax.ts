@@ -1,8 +1,8 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client'
 import { onError } from "@apollo/client/link/error"
 import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
-import swal from 'sweetalert'
 import profile from '../utils/profile'
+import toast from 'react-hot-toast'
 
 export interface IBaseResponseData {
   status: Number
@@ -37,11 +37,7 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
 
     return response.data as T
   } catch (e) {
-    swal({
-      title: 'Oops',
-      text: '请求挂了... 一会儿再试试',
-      icon: 'info'
-    })
+    toast.error('请求挂了... 一会儿再试试')
     return Promise.reject(e)
   }
 }
@@ -77,11 +73,12 @@ type GraphQLResponseError = {
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    swal({
-      icon: 'error',
-      title: graphQLErrors[0].message,
-      text: graphQLErrors[0].message,
-    })
+    // swal({
+    //   icon: 'error',
+    //   title: graphQLErrors[0].message,
+    //   text: graphQLErrors[0].message,
+    // })
+    toast.error(graphQLErrors[0].message)
   }
   let ne = networkError as GraphQLResponseError
 
@@ -91,14 +88,13 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       updateToken('')
       profile.onLogout()
     }
-    swal({
-      icon: 'error',
-      title: `${ne.statusCode}: ${ne.name}`,
-      text: ne.result?.error
-    })
+    toast.error(`${ne.statusCode}: ${ne.name}`)
+    // swal({
+    //   icon: 'error',
+    //   title: `${ne.statusCode}: ${ne.name}`,
+    //   text: ne.result?.error
+    // })
   }
-
-
 });
 
 const httpLink = new HttpLink({

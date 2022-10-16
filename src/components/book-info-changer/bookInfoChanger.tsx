@@ -7,7 +7,7 @@ import Dialog from '../dialog/dialog'
 import updateClippingBookIdMutation from '../../schema/updateClippingBook.graphql'
 import BookCandidate from './bookCandidate'
 import { updateClippingBookId, updateClippingBookIdVariables } from '../../schema/__generated__/updateClippingBookId'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 
 type BookInfoChangerProps = {
   clippingID: number

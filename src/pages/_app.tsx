@@ -4,7 +4,6 @@ import type { AppProps, AppContext } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
 import { SWRConfig } from 'swr'
 import { Provider } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
 
 import '../utils/mixpanel'
 import '../utils/sentry'
@@ -13,7 +12,6 @@ import AppContainer from '../components/AppContainer'
 import { client, request } from '../services/ajax'
 import store from '../store/index'
 
-import 'react-toastify/dist/ReactToastify.css'
 import 'react-phone-input-2/lib/style.css'
 // import 'emoji-mart/css/emoji-mart.css'
 import '../styles/react-animation.css'
@@ -26,8 +24,8 @@ import '../utils/locales'
 import '../utils/leancloud'
 import { initParseFromLS } from '../store/user/user'
 import { AUTH_LOGIN } from '../store/user/type'
-import { appWithTranslation } from 'next-i18next'
 import { NextPage } from 'next'
+import { Toaster } from 'react-hot-toast'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -61,8 +59,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <AppContainer>
             {content}
           </AppContainer>
-          <ToastContainer
-            theme={'light'}
+          <Toaster
+            position='top-center'
           />
         </ApolloProvider>
       </SWRConfig>

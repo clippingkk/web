@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import BindPhone from '../../../../components/bind-phone'
 import Dialog from '../../../../components/dialog/dialog'
 import bindPhoneMutation from '../../../../schema/mutations/bind-phone.graphql'

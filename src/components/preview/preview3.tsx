@@ -3,7 +3,7 @@ import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping
 import Dialog from '../dialog/dialog'
 import { WenquBook } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
 import ThemePicker from './theme-picker'
 import styles from './preview.module.css'

@@ -1,5 +1,5 @@
 import { UPDATE_CLIPPING_BOOK, TClippingBookUpdateAction } from "./type";
-import { takeLatest, call } from "@redux-saga/core/effects";
+import { takeLatest } from "redux-saga/effects";
 import { updateClippingBook } from "../../services/books";
 import updateClippingBookIdMutation from '../../schema/updateClippingBook.graphql'
 import swal from "sweetalert";

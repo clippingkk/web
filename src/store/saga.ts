@@ -1,4 +1,4 @@
-import { all } from "@redux-saga/core/effects";
+import { all } from "redux-saga/effects";
 import { usersAction } from './user/action'
 import { extraAndUploadAction } from "./clippings/creator";
 import { doUpdateClipping } from "./clippings/update";

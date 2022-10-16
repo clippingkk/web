@@ -1,7 +1,7 @@
 import { useApolloClient, useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { hooks, metaMask, signDataByWeb3 } from '../../utils/wallet'
 import bindWeb3Mutation from '../../schema/bindWeb3.graphql'
 import { bindWeb3Address, bindWeb3AddressVariables } from '../../schema/__generated__/bindWeb3Address'

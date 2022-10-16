@@ -25,7 +25,7 @@ import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { API_HOST } from '../../../../constants/config'
 import { followUser, followUserVariables } from '../../../../schema/mutations/__generated__/followUser'
 import { unfollowUser, unfollowUserVariables } from '../../../../schema/mutations/__generated__/unfollowUser'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 
 import styles from './profile.module.css'
 import DashboardContainer from '../../../../components/dashboard-container/container';

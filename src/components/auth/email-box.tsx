@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Turnstile from "react-turnstile"
+import swal from 'sweetalert'
 import { CF_TURNSTILE_SITE_KEY } from '../../constants/config'
 import { REGEX_EMAIL } from '../../services/regex'
 
@@ -10,11 +11,12 @@ type EmailBoxProps = {
 
 function EmailBox(props: EmailBoxProps) {
   const [email, setEmail] = useState('')
-  const [turnstileToken, setTurnstileToken] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState('ttt')
 
   return (
     <form
-      onSubmit={() => {
+      onSubmit={(e) => {
+        e.preventDefault()
         if (props.loading) {
           return
         }

@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next"
 import { UploadStep } from "../services/uploader"
 import { createClippings, createClippingsVariables } from "../schema/mutations/__generated__/createClippings"
 import { wenquRequest, WenquSearchResponse } from "../services/wenqu"
-import swal from 'sweetalert'
 import createClippingsQuery from '../schema/mutations/create-clippings.graphql'
 import { extraFile } from "../store/clippings/creator"
 import ClippingTextParser, { TClippingItem } from "../store/clippings/parser"
 import { useSelector } from "react-redux"
 import { TGlobalStore } from "../store"
-import { toast } from "react-toastify"
+import swal from 'sweetalert'
+import { toast } from 'react-hot-toast'
 
 const localClippingsStashKey = 'app.stash.clippings'
 
@@ -171,8 +171,7 @@ export function useSyncClippingsToServer() {
       return
     }
 
-    // TODO: add locking
-    toast.info(t('app.upload.tips.backUpload'))
+    const tl = toast.loading(t('app.upload.tips.backUpload'))
 
     const requests = stashClippings.map((s => exec({
       variables: {
@@ -183,11 +182,11 @@ export function useSyncClippingsToServer() {
 
     Promise.all(requests)
       .then(() => {
-        toast.success(t('app.upload.tips.done'))
+        toast.success(t('app.upload.tips.done'), { id: tl })
         localStorage.removeItem(localClippingsStashKey)
       })
       .catch(e => {
-        toast.error(e.toString())
+        toast.error(e.toString(), { id: tl })
       })
       .finally(() => {
         client.resetStore()

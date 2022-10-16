@@ -1,7 +1,7 @@
 import { useLazyQuery, useMutation } from '@apollo/client'
 import React, { useCallback, useEffect } from 'react'
 import AppleSignin, { useScript, appleAuthHelpers } from 'react-apple-signin-auth'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { AppleAuthResponse } from '../services/apple'
 import loginByAppleMutation from '../schema/auth/apple.graphql'
 import { loginByApple, loginByAppleVariables } from '../schema/auth/__generated__/loginByApple'

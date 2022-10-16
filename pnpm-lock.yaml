@@ -71,6 +71,7 @@ specifiers:
   react-apple-signin-auth: ^1.0.9
   react-auth-code-input: ^3.2.1
   react-dom: ^18.2.0
+  react-hot-toast: ^2.4.0
   react-i18next: ^11.18.6
   react-markdown: ^8.0.3
   react-phone-input-2: ^2.15.1
@@ -80,7 +81,6 @@ specifiers:
   react-switch: ^7.0.0
   react-table: ^7.8.0
   react-test-renderer: ^18.2.0
-  react-toastify: ^9.0.8
   react-transition-group: ^4.4.5
   react-turnstile: ^1.0.4
   recharts: 2.1.12
@@ -135,6 +135,7 @@ dependencies:
   react-apple-signin-auth: 1.0.9_react-dom@18.2.0+react@18.2.0
   react-auth-code-input: 3.2.1_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-hot-toast: 2.4.0_react-dom@18.2.0+react@18.2.0
   react-i18next: 11.18.6_e49030d8a7237b1fcef41c6afa03cd9e
   react-markdown: 8.0.3_2b7cc62bf342db2e3fe04a94b3d283aa
   react-phone-input-2: 2.15.1_react-dom@18.2.0+react@18.2.0
@@ -143,7 +144,6 @@ dependencies:
   react-select: 5.4.0_6e179bcfa059383957def6541d74469b
   react-switch: 7.0.0_react-dom@18.2.0+react@18.2.0
   react-table: 7.8.0_react@18.2.0
-  react-toastify: 9.0.8_react-dom@18.2.0+react@18.2.0
   react-transition-group: 4.4.5_react-dom@18.2.0+react@18.2.0
   react-turnstile: 1.0.4_react-dom@18.2.0+react@18.2.0
   recharts: 2.1.12_react-dom@18.2.0+react@18.2.0
@@ -4599,11 +4599,6 @@ packages:
     engines: {node: '>=0.8'}
     dev: false
 
-  /clsx/1.2.1:
-    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
-    engines: {node: '>=6'}
-    dev: false
-
   /cmdk/0.1.20_6e179bcfa059383957def6541d74469b:
     resolution: {integrity: sha512-b05kPE+9jmGRibOf2h34d1ybCFfYYOiwsyylDtvhI0ptDSJ/gbPDQSq6DySL4b74ZnK/JH/WVP3UPuAYXRPypg==}
     peerDependencies:
@@ -6840,6 +6835,12 @@ packages:
       ignore: 5.2.0
       merge2: 1.4.1
       slash: 3.0.0
+
+  /goober/2.1.11:
+    resolution: {integrity: sha512-5SS2lmxbhqH0u9ABEWq7WPU69a4i2pYcHeCxqaNq6Cw3mnrF0ghWNM4tEGid4dKy8XNIAUbuThuozDHHKJVh3A==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dev: false
 
   /got/11.8.5:
     resolution: {integrity: sha512-o0Je4NvQObAuZPHLFoRSkdG2lTgtcynqymzg2Vupdx6PorhaT5MCbIyXG6d4D94kk8ZG57QeosgdiqfJWhEhlQ==}
@@ -10554,6 +10555,20 @@ packages:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
     dev: false
 
+  /react-hot-toast/2.4.0_react-dom@18.2.0+react@18.2.0:
+    resolution: {integrity: sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      goober: 2.1.11
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - csstype
+    dev: false
+
   /react-i18next/11.18.6_e49030d8a7237b1fcef41c6afa03cd9e:
     resolution: {integrity: sha512-yHb2F9BiT0lqoQDt8loZ5gWP331GwctHz9tYQ8A2EIEUu+CcEdjBLQWli1USG3RdWQt3W+jqQLg/d4rrQR96LA==}
     peerDependencies:
@@ -10825,17 +10840,6 @@ packages:
       react-shallow-renderer: 16.15.0_react@18.2.0
       scheduler: 0.23.0
     dev: true
-
-  /react-toastify/9.0.8_react-dom@18.2.0+react@18.2.0:
-    resolution: {integrity: sha512-EwM+teWt49HSHx+67qI08yLAW1zAsBxCXLCsUfxHYv1W7/R3ZLhrqKalh7j+kjgPna1h5LQMSMwns4tB4ww2yQ==}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      clsx: 1.2.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    dev: false
 
   /react-transition-group/2.9.0_react-dom@18.2.0+react@18.2.0:
     resolution: {integrity: sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==}
