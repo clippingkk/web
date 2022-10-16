@@ -8,6 +8,7 @@ import AuthByAppleButton from '../../components/auth.apple'
 import AuthByMetamask from '../../components/auth.metamask'
 import AuthByGithub from '../../components/auth.github'
 import Link from 'next/link'
+import { DevicePhoneMobileIcon } from '@heroicons/react/24/solid'
 
 type AuthV2Props = {
 }
@@ -46,9 +47,13 @@ function AuthV2(props: AuthV2Props) {
               <h2 className='text-2xl dark:text-gray-100 mb-4'>Login by ...</h2>
               <Link
                 href='/auth/phone'
-                className='mt-4 w-full text-center'
               >
-                Phone Number
+                <a
+                  className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300 mt-4'
+                >
+                  <DevicePhoneMobileIcon className='h-6 w-6 mr-2 inline-block' />
+                  Phone Number
+                </a>
               </Link>
               <hr className='my-4' />
               <AuthByMetamask />

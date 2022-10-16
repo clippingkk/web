@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import OTPInput from 'react-auth-code-input'
 import ButtonSimple from '../button/button-simple'
 
 
 type OTPBoxProps = {
+  autoValidate?: boolean
   loading: boolean
   onSubmit(val: string): void
 }
@@ -13,14 +14,12 @@ function OTPBox(props: OTPBoxProps) {
   // read from clipboard
   const [otp, setOtp] = useState('')
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (otp.length !== 6) {
       return
     }
     props.onSubmit(otp)
-  }
-
-  console.log(otp)
+  }, [otp, props])
 
   return (
     <div className='w-full with-fade-in'>
@@ -34,7 +33,6 @@ function OTPBox(props: OTPBoxProps) {
 
       <OTPInput
         onChange={(val: string) => {
-          console.log('vvvv', val)
           setOtp(val)
         }}
         allowedCharacters='numeric'

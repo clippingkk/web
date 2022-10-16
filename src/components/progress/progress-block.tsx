@@ -8,22 +8,29 @@ type ProgressBlockProps = {
 }
 
 function ProgressBlock(props: ProgressBlockProps) {
-  const blocks = useMemo<number[]>(() => {
-    return new Array(props.max).fill(0)
-  }, [props.max])
+  const progress = useMemo(() => {
+    const p = (props.value / props.max) * 100
+    if (Number.isNaN(p)) {
+      return 1
+    }
+    if (p === 0) {
+      return 1
+    }
+    if (p >= 100) {
+      return 100
+    }
+    return p
+  }, [props.value, props.max])
 
   return (
     <div className={`w-full h-4 ${props.className}`}>
       <div className='w-full h-full bg-gray-400 rounded flex'>
-        {blocks.map((k, i) => (
           <div
-            key={i}
-            className={` border-r h-full border-gray-500 last:border-r-0 ${i < props.value ? 'bg-blue-600' : ''}`}
+            className={` transition-all duration-200 border-r h-full border-gray-500 last:border-r-0 bg-blue-500 rounded`}
             style={{
-              width: `calc(100% / ${props.max})`
+              width: `${progress}%`
             }}
           />
-        ))}
       </div>
       {props.children}
     </div>

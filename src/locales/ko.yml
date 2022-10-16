@@ -49,6 +49,9 @@ app:
         notionPageId: notion page id
         notionToken: notion bot token
         domain: Domain
+        legacyTip: 과거에 휴대폰 또는 제3자를 이용하여 로그인한 사용자는 아래 버튼을 클릭하여 로그인하십시오.
+        accountTip: 계정에 대해 질문이 있는 경우 annatar.he+ck@gmail.com으로 이메일을 보내주십시오. 걱정하지 마세요. 🫡
+        legacyLogin: 기존 로그인
         code:
             placeholder: 휴대폰의 인증 코드
         info:

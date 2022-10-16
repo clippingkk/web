@@ -49,6 +49,9 @@ app:
         notionPageId: notion page id
         notionToken: notion 机器人 token
         domain: 域名
+        legacyTip: 过去使用手机或者第三方登录的朋友请点击下面的按钮通过以往的方式登录
+        accountTip: 如果对于账户有任何疑问，请发邮件给 annatar.he+ck@gmail.com 不必担心，我们很乐意收到邮件 🫡
+        legacyLogin: 旧版登录
         code:
             placeholder: 手机中的验证码
         info:

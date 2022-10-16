@@ -11,7 +11,7 @@ type EmailBoxProps = {
 
 function EmailBox(props: EmailBoxProps) {
   const [email, setEmail] = useState('')
-  const [turnstileToken, setTurnstileToken] = useState('ttt')
+  const [turnstileToken, setTurnstileToken] = useState('')
 
   return (
     <form
@@ -43,6 +43,7 @@ function EmailBox(props: EmailBoxProps) {
         <Turnstile
           sitekey={CF_TURNSTILE_SITE_KEY}
           onVerify={t => setTurnstileToken(t)}
+          className='mx-auto'
         />
       </fieldset>
       <div className='w-full mt-4'>

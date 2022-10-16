@@ -14,12 +14,21 @@ import OTPBox from '../../components/auth/otp-box'
 import { doLoginV3, doLoginV3Variables } from '../../schema/auth/__generated__/doLoginV3'
 import { useLoginV3Successed } from '../../hooks/hooks'
 import { toast } from 'react-hot-toast'
+import { toastPromiseDefaultOption } from '../../services/misc'
+import Divider from '../../components/divider/divider'
+import ButtonSimple from '../../components/button/button-simple'
+import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
+import { useRouter } from 'next/router'
 
-type AuthV2Props = {
+type AuthV3Props = {
 }
 
-function AuthV2(props: AuthV2Props) {
+function AuthV3(props: AuthV3Props) {
   const bg = useBackgroundImage()
+  const { t } = useTranslation()
+  const { back } = useRouter()
 
   const [validEmail, setValidEmail] = useState('')
   const [phase, setPhase] = useState(0)
@@ -35,13 +44,7 @@ function AuthV2(props: AuthV2Props) {
         address: email,
         cfTurnstileToken: turnstileToken
       }
-    }), {
-      loading: 'Loading',
-      success: 'OTP sent by email',
-      error(err: Error) {
-        return err.toString()
-      }
-    }).then((res) => {
+    }), toastPromiseDefaultOption).then((res) => {
       setValidEmail(email)
       setPhase(1)
     })
@@ -61,14 +64,7 @@ function AuthV2(props: AuthV2Props) {
             otp: otp
           }
         }
-      }), {
-      loading: 'Loading',
-      success: 'Logged',
-      error(err) {
-         console.log('errrrrrrrrrrrrrrrr')
-         return 'Error'
-    }
-    }).catch(err => {})
+      }), toastPromiseDefaultOption)
   }, [loginV3, validEmail])
 
   useLoginV3Successed(loginV3Response.called, loginV3Response.loading, loginV3Response.error, loginV3Response.data?.loginV3)
@@ -88,7 +84,18 @@ function AuthV2(props: AuthV2Props) {
         <div
           className='flex w-full h-full backdrop-blur-xl bg-black bg-opacity-30 justify-center items-center'
         >
-          <div className='p-12 rounded backdrop-blur-xl shadow bg-opacity-10 bg-blue-400'>
+          <div className='p-12 rounded backdrop-blur-xl shadow bg-opacity-10 bg-blue-400 w-128 container'>
+            <div>
+              <button
+                className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300 -translate-x-8'
+                onClick={() => {
+                  back()
+                }}
+              >
+                <ArrowUturnLeftIcon className=' w-6 h-6' />
+                <span className='ml-2 inline-block'>Back</span>
+              </button>
+            </div>
             <div className='flex justify-center items-center flex-col mb-4'>
               <Image
                 src={logo}
@@ -108,15 +115,35 @@ function AuthV2(props: AuthV2Props) {
             )}
             {phase === 1 && (
               <OTPBox
+                autoValidate
                 onSubmit={onOTPConfirmed}
                 loading={loginV3Response.loading}
               />
             )}
+            <div className='w-full'>
+              <hr className='my-8' />
+              <p className='text-white mb-2'>
+                {t('app.auth.legacyTip')}
+              </p>
+              <Link href='/auth/auth-v2'>
+                <a
+                  className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'
+                >
+                  {t('app.auth.legacyLogin')}
+                </a>
+              </Link>
+
+              <hr className='my-4' />
+              <p className='text-white'>
+                {t('app.auth.accountTip')}
+              </p>
+            </div>
           </div>
+
         </div>
       </section>
     </React.Fragment>
   )
 }
 
-export default AuthV2
+export default AuthV3

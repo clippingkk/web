@@ -2,15 +2,20 @@ import { useMutation } from '@apollo/client'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import ButtonSimple from '../../../../components/button/button-simple'
 import DashboardContainer from '../../../../components/dashboard-container/container'
 import GithubBindButton from '../../../../components/externalAccount/github.bind'
 import MetamaskBindButton from '../../../../components/externalAccount/metamask.bind'
+import FieldInput from '../../../../components/input'
 import ProgressBlock from '../../../../components/progress/progress-block'
 import updateUserProfileMutation from '../../../../schema/mutations/update-profile.graphql'
 import { updateProfile, updateProfileVariables } from '../../../../schema/mutations/__generated__/updateProfile'
+import { toastPromiseDefaultOption, uploadImage } from '../../../../services/misc'
 import { TGlobalStore } from '../../../../store'
+import { delay } from '../../../../utils/timer'
 
 type NewbiePageProps = {
 }
@@ -26,12 +31,12 @@ function NewbiePage(props: NewbiePageProps) {
   // 6. update avatar / select nft ?
   // 7. optional. respect query parameters
 
+  const { t } = useTranslation()
+
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const [doUpdateUserProfile, doUpdateResponse] = useMutation<updateProfile, updateProfileVariables>(updateUserProfileMutation)
 
-  const [doUpdateUserProfile] = useMutation<updateProfile, updateProfileVariables>(updateUserProfileMutation)
-
-  const [phase, setPhase] = useState(1)
-
+  const [phase, setPhase] = useState(0)
   const [newName, setNewName] = useState('')
   const [newDomain, setNewDomain] = useState('')
 
@@ -42,17 +47,14 @@ function NewbiePage(props: NewbiePageProps) {
     if (newName.length > 32) {
       return true
     }
+    if (/[<>\\+\ ]/.test(newName)) {
+      return true
+    }
     return false
   }, [newName])
 
   const newDomainSubmitDisabled = useMemo(() => {
-    if (newDomain.length < 3) {
-      return true
-    }
-    if (newDomain.length > 32) {
-      return true
-    }
-    return false
+    return !(/[a-z\.]{3,32}/.test(newDomain))
   }, [newDomain])
 
   const { push: navigate } = useRouter()
@@ -61,24 +63,23 @@ function NewbiePage(props: NewbiePageProps) {
     if (phase < 6) {
       return
     }
-    // jump to home
     const userUniqueID = newDomain ? newDomain : uid
-    // TODO: maybe redirect to upload page is better ?
     navigate(`/dash/${userUniqueID}/upload`)
   }, [phase, uid, navigate, newDomain])
 
+  const [avatar, setAvatar] = useState<File | null>(null)
+
   return (
     <div className='w-full h-full pt-10'>
-      <h2 className='text-3xl text-center'>Update my profile</h2>
-
+      <h2 className='text-3xl text-center dark:text-white'>Update my profile</h2>
       <div className='mt-4'>
         <ProgressBlock
           value={phase + 1}
-          max={5}
+          max={6}
         >
           <div>
-            <h3 className='w-full text-center mt-2 block'>
-              Progress: {phase + 1} / 5
+            <h3 className='w-full text-center mt-2 block dark:text-white'>
+              Progress: {phase + 1} / 6
             </h3>
             <hr className=' mt-8 mb-20 w-full' />
           </div>
@@ -87,8 +88,15 @@ function NewbiePage(props: NewbiePageProps) {
 
       <div className='w-96 mt-28 flex justify-center items-center mx-auto'>
         {phase === 0 && (
-          <div className='w-full'>
-            <h5 className='text-center text-lg mb-2'>Choose my name</h5>
+          <div className='w-full with-fade-in'>
+            <h5 className='text-center text-lg mb-2 dark:text-white'>Choose my name</h5>
+            <span className=' w-full text-center mb-2 block dark:text-white'>
+              <kbd className='px-1 py-2 bg-pink-400 rounded mr-1'>&lt;</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded mr-1'>&gt;</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded mr-1'>\</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded mr-1'>+</kbd>
+              not allowed
+            </span>
             <input
               type="text"
               maxLength={32}
@@ -103,15 +111,17 @@ function NewbiePage(props: NewbiePageProps) {
               className='w-full px-2 py-4 rounded'
             />
             <ButtonSimple
+              loading={doUpdateResponse.loading}
               onClick={() => {
-                // TODO: more check
-                doUpdateUserProfile({
-                  variables: {
-                    name: newName
-                  }
-                }).then(res => {
+                toast.promise(
+                  doUpdateUserProfile({
+                    variables: {
+                      name: newName
+                    }
+                  }),
+                  toastPromiseDefaultOption
+                ).then(res => {
                   setPhase(1)
-                  // TODO: set default newDomain
                   setNewDomain(newName.toLowerCase())
                 })
               }}
@@ -122,10 +132,10 @@ function NewbiePage(props: NewbiePageProps) {
         )}
 
         {phase === 1 && (
-          <div className='w-full'>
+          <div className='w-full with-fade-in'>
             <div className='w-full mb-4'>
-              <h5 className='text-center text-lg mb-2'>choose my domain</h5>
-              <span className=' w-full text-center block'>TODO: rules here</span>
+              <h5 className='text-center text-lg mb-2 dark:text-white'>choose my domain</h5>
+              <span className=' w-full text-center block dark:text-white'>TODO: rules here</span>
             </div>
             <input
               type="text"
@@ -142,13 +152,16 @@ function NewbiePage(props: NewbiePageProps) {
             />
             <ButtonSimple
               disabled={newDomainSubmitDisabled}
+              loading={doUpdateResponse.loading}
               onClick={() => {
-                // TODO: more check
-                doUpdateUserProfile({
-                  variables: {
-                    domain: newDomain
-                  }
-                }).then(res => {
+                toast.promise(
+                  doUpdateUserProfile({
+                    variables: {
+                      domain: newDomain
+                    }
+                  }),
+                  toastPromiseDefaultOption
+                ).then(res => {
                   setPhase(2)
                 })
               }}
@@ -176,7 +189,44 @@ function NewbiePage(props: NewbiePageProps) {
         )}
         {phase === 5 && (
           <div>
-            TODO: setup avatar or NFT
+            <FieldInput
+              type='file'
+              name='avatar'
+              onChange={e => {
+                if (!e.target.files) {
+                  return
+                }
+                const f = e.target.files[0]
+                setAvatar(f)
+              }}
+              inputProps={{
+                accept: "image/png, image/jpeg"
+              }}
+              value={undefined}
+            />
+            <ButtonSimple
+              loading={doUpdateResponse.loading}
+              disabled={avatar === null}
+              onClick={async () => {
+                if (!avatar) {
+                  return
+                }
+                const tl = toast.loading('uploading avatar...')
+                try {
+                  const resp = await uploadImage(avatar)
+                  await doUpdateUserProfile({
+                    variables: {
+                      avatar: resp.filePath
+                    }
+                  })
+                  setPhase(p => p + 1)
+                  toast.success(t('app.profile.editor.updated'), { id: tl })
+                } catch (e: any) {
+                  toast.error(e.toString(), { id: tl })
+                }
+              }}
+              text='Confirm my avatar'
+            />
           </div>
         )}
 

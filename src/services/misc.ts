@@ -1,3 +1,4 @@
+import { delay } from "../utils/timer";
 import { request } from "./ajax";
 
 export type TUploadResponse = {
@@ -11,4 +12,10 @@ export function uploadImage(file: File): Promise<TUploadResponse> {
     method: 'POST',
     body: fd
   })
+}
+
+export const toastPromiseDefaultOption = {
+  loading: 'Loading',
+  success: 'Success',
+  error: (err: Error) => err.toString()
 }
