@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import OTPInput from 'react-auth-code-input'
+import ButtonSimple from '../button/button-simple'
+
 
 type OTPBoxProps = {
+  loading: boolean
   onSubmit(val: string): void
 }
 
@@ -16,22 +20,33 @@ function OTPBox(props: OTPBoxProps) {
     props.onSubmit(otp)
   }
 
-  return (
-    <div>
-      <p>tips: sent, please check your email. if not, please find in spam box</p>
+  console.log(otp)
 
-      <input
-        maxLength={6}
-        value={otp}
-        onChange={e => {
-          const val = e.target.value.trim()
-          // check if number is
+  return (
+    <div className='w-full with-fade-in'>
+      <p
+        className='text-white text-center mb-4'
+      >
+        OTP sent, please check your email
+        <br />
+        if not, please find in spam box
+      </p>
+
+      <OTPInput
+        onChange={(val: string) => {
+          console.log('vvvv', val)
           setOtp(val)
         }}
+        allowedCharacters='numeric'
+        inputClassName='w-12 h-24 mr-4 last:mr-0 text-center text-2xl'
+        containerClassName='w-full'
       />
-      <button onClick={onSubmit}>
-        submit
-      </button>
+
+      <ButtonSimple
+        onClick={onSubmit}
+        disabled={props.loading || otp.length !== 6}
+        text='Confirm'
+      />
     </div>
   )
 }

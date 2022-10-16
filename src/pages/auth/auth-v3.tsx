@@ -21,7 +21,7 @@ function AuthV2(props: AuthV2Props) {
   const bg = useBackgroundImage()
 
   const [validEmail, setValidEmail] = useState('')
-  const [phase, setPhase] = useState(0)
+  const [phase, setPhase] = useState(1)
 
   const [doSendOtp, {
     loading: isSendingOtp
@@ -94,6 +94,7 @@ function AuthV2(props: AuthV2Props) {
             {phase === 1 && (
               <OTPBox
                 onSubmit={onOTPConfirmed}
+                loading={loginV3Response.loading}
               />
             )}
           </div>

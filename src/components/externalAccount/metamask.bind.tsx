@@ -9,6 +9,7 @@ import WithLoading from '../with-loading'
 import { useTranslation } from 'react-i18next'
 
 type MetamaskBindButtonProps = {
+  onBound?: (address: string) => void
 }
 
 function MetamaskBindButton(props: MetamaskBindButtonProps) {
@@ -53,11 +54,14 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
         }).then(r => {
           toast.success(t('app.common.bound'))
           client.resetStore()
+          if (props.onBound) {
+            props.onBound(account)
+          }
         })
       }).catch((err: any) => {
         toast.error(err.message)
       })
-  }, [account, client, doBind, router, t])
+  }, [account, doBind])
   return (
     <WithLoading
       loading={doBindResult.loading}
