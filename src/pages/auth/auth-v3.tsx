@@ -1,19 +1,62 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import Image from 'next/image'
 import { useBackgroundImage } from '../../hooks/theme'
 import logo from '../../assets/logo.png'
 import Head from 'next/head'
 import OGWithAuth from '../../components/og/og-with-auth'
-import AuthByAppleButton from '../../components/auth.apple'
-import AuthByMetamask from '../../components/auth.metamask'
-import AuthByGithub from '../../components/auth.github'
-import Link from 'next/link'
+import EmailBox from '../../components/auth/email-box'
+import { useMutation } from '@apollo/client'
+import sendOtpMutation from '../../schema/auth/otp.graphql'
+import loginV3Mutation from '../../schema/auth/loginv3.graphql'
+import { sendOTP, sendOTPVariables } from '../../schema/auth/__generated__/sendOTP'
+import { OTPChannel } from '../../../__generated__/globalTypes'
+import OTPBox from '../../components/auth/otp-box'
+import { doLoginV3, doLoginV3Variables } from '../../schema/auth/__generated__/doLoginV3'
+import { useLoginV3Successed } from '../../hooks/hooks'
 
 type AuthV2Props = {
 }
 
 function AuthV2(props: AuthV2Props) {
   const bg = useBackgroundImage()
+
+  const [validEmail, setValidEmail] = useState('')
+  const [phase, setPhase] = useState(0)
+
+  const [doSendOtp, {
+    loading: isSendingOtp
+  }] = useMutation<sendOTP, sendOTPVariables>(sendOtpMutation)
+
+  const onEmailSubmit = useCallback((email: string, turnstileToken: string) => {
+    doSendOtp({
+      variables: {
+        channel: OTPChannel.Email,
+        address: email,
+        cfTurnstileToken: turnstileToken
+      }
+    }).then((res) => {
+      setValidEmail(email)
+      setPhase(1)
+    })
+  }, [doSendOtp])
+
+  const [
+    loginV3,
+    loginV3Response
+  ] = useMutation<doLoginV3, doLoginV3Variables>(loginV3Mutation)
+
+  const onOTPConfirmed = useCallback((otp: string) => {
+    loginV3({
+      variables: {
+        payload: {
+          email: validEmail,
+          otp: otp
+        }
+      }
+    })
+  }, [loginV3, validEmail])
+
+  useLoginV3Successed(loginV3Response.called, loginV3Response.loading, loginV3Response.error, loginV3Response.data?.loginV3)
 
   return (
     <React.Fragment>
@@ -42,11 +85,17 @@ function AuthV2(props: AuthV2Props) {
               <h1 className='text-center font-bold text-3xl dark:text-gray-100 mt-4'>ClippingKK</h1>
             </div>
 
-            <div>
-              TODO: email
-            </div>
-
-
+            {phase === 0 && (
+              <EmailBox
+                onEmailSubmit={onEmailSubmit}
+                loading={isSendingOtp}
+              />
+            )}
+            {phase === 1 && (
+              <OTPBox
+                onSubmit={onOTPConfirmed}
+              />
+            )}
           </div>
         </div>
       </section>

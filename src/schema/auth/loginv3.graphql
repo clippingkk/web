@@ -1,5 +1,5 @@
-query loginByApple($payload: appleVerifyPayload!) {
-  loginByApple(payload: $payload) {
+mutation doLoginV3($payload: LoginV3Payload!) {
+  loginV3(payload: $payload) {
     user {
       id
       name
@@ -16,5 +16,6 @@ query loginByApple($payload: appleVerifyPayload!) {
     }
     token
     noAccountFrom3rdPart
+	isNewUser
   }
 }

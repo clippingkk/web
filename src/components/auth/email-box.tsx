@@ -1,29 +1,41 @@
 import React, { useState } from 'react'
 import Turnstile from "react-turnstile"
+import { CF_TURNSTILE_SITE_KEY } from '../../constants/config'
 
 type EmailBoxProps = {
+  loading: boolean
   onEmailSubmit(email: string, turnstileToken: string): void
 }
 
 function EmailBox(props: EmailBoxProps) {
   // email box
-  const [turnstileVisible, setTurnstileVisible] = useState(false)
+  const [email, setEmail] = useState('')
   const [turnstileToken, setTurnstileToken] = useState('')
 
   return (
-    <form>
+    <form
+      onSubmit={() => {
+        if (props.loading) {
+          return
+        }
+        props.onEmailSubmit(email, turnstileToken)
+      }}
+    >
       <fieldset>
         <label htmlFor="email">email</label>
-        <input type="email" name="" />
+        <input type="email" value={email} onChange={e => setEmail(e.target.value.trim())} />
       </fieldset>
       <fieldset>
         <Turnstile
-          sitekey=''
+          sitekey={CF_TURNSTILE_SITE_KEY}
           onVerify={t => setTurnstileToken(t)}
         />
       </fieldset>
       <div>
-        <button type='submit'>next</button>
+        <button
+          type='submit'
+          disabled={props.loading}
+        >next</button>
       </div>
     </form>
   )
