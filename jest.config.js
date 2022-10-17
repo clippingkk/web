@@ -88,7 +88,7 @@ module.exports = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  // preset: null,
+  preset: 'ts-jest',
 
   // Run tests from one or more projects
   // projects: null,
@@ -121,7 +121,7 @@ module.exports = {
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
   setupFiles: [
-    "./test/setup.js"
+    "./test/setup.ts"
   ],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test

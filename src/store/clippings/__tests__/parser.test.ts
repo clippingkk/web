@@ -2,7 +2,7 @@ import ClippingTextParser from '../parser'
 import fs from 'fs'
 import path from 'path'
 
-function readFile(p) {
+function readFile(p: string) {
   return fs.readFileSync(path.resolve(__dirname, p)).toString()
 }
 
@@ -41,10 +41,10 @@ Happiness in marriage is entirely a matter of chance. If the dispositions of the
 `
   const p = new ClippingTextParser(f)
   expect(p.execute()).toMatchInlineSnapshot(`
-    Array [
-      Object {
+    [
+      {
         "bookId": "0",
-        "content": "Happiness in marriage is entirely a matter of chance. If the dispositions of the parties are ever so well known to each other or ever so similar beforehand, it does not advance their felicity in the least. They always continue to grow sufficiently unlike afterwards to have their share of vexation; and it is better to know as little as possible of the defects of the person with whom you are to pass your life.\\"",
+        "content": "Happiness in marriage is entirely a matter of chance. If the dispositions of the parties are ever so well known to each other or ever so similar beforehand, it does not advance their felicity in the least. They always continue to grow sufficiently unlike afterwards to have their share of vexation; and it is better to know as little as possible of the defects of the person with whom you are to pass your life."",
         "createdAt": "2019-04-17T08:44:37.000Z",
         "pageAt": "#305-308",
         "title": "Pride and Prejudice",
@@ -57,7 +57,7 @@ test('parser: ric', () => {
   const file = readFile('../__fixtures__/clippings_ric.txt')
   const parser = new ClippingTextParser(file)
   const result = parser.execute()
-  result.forEach(x => {
+  result.forEach((x) => {
     expect(x.bookId).toBeTruthy()
     expect(x.content).toBeTruthy()
     expect(x.pageAt).toBeTruthy()
@@ -67,12 +67,11 @@ test('parser: ric', () => {
   // c.Content == "" || c.BookID == "" || c.PageAt == ""
 })
 
-
 test('parser: xumeng', () => {
   const file = readFile('../__fixtures__/clippings_xm.txt')
   const parser = new ClippingTextParser(file)
   const result = parser.execute()
-  result.forEach(x => {
+  result.forEach((x) => {
     expect(x.bookId).toBeTruthy()
     expect(x.content).toBeTruthy()
     expect(x.pageAt).toBeTruthy()
