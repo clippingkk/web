@@ -4,6 +4,7 @@ query book($id: Int!, $pagination: PaginationLegacy!) {
         startReadingAt
         lastReadingAt
         isLastReadingBook
+        clippingsCount
         clippings {
             id
             bookID

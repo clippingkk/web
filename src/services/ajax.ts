@@ -3,6 +3,7 @@ import { onError } from "@apollo/client/link/error"
 import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
 import profile from '../utils/profile'
 import toast from 'react-hot-toast'
+import { offsetLimitPagination } from '@apollo/client/utilities'
 
 export interface IBaseResponseData {
   status: Number
@@ -104,7 +105,32 @@ const httpLink = new HttpLink({
 
 export const client = new ApolloClient({
   ssrMode: typeof window === 'undefined',
-  cache: new InMemoryCache({}),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          // featuredClippings: offsetLimitPagination(false)
+          featuredClippings: {
+            keyArgs: false,
+            merge(p = [], n) {
+              return [...p, ...n]
+            }
+          },
+        }
+      },
+      Book: {
+        keyFields: ["doubanId"],
+        fields: {
+          clippings: offsetLimitPagination()
+        }
+      },
+      User: {
+        fields: {
+          recents: offsetLimitPagination()
+        }
+      }
+    }
+  }),
   link: errorLink.concat(authLink.concat(httpLink)),
   connectToDevTools: process.env.DEV === 'true',
 })
