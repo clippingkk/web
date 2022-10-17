@@ -29,7 +29,8 @@ const config = {
 //  excludeFile: (str) => /__tests__/.test(str),
   env: {
     DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
-    infuraKey: process.env.infuraKey || ''
+    GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT),
+    infuraKey: JSON.stringify(process.env.infuraKey || '')
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push({

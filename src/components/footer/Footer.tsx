@@ -16,11 +16,10 @@ function Footer() {
   return (
     <footer className='flex items-center justify-around md:p-20 p-4 bg-gray-200 dark:bg-gray-700'>
       <div className='no-underline text-black dark:text-gray-300'>
-
         <p>
           Build with ❤ by AnnatarHe 
         </p>
-        <p>Version: dev</p>
+        <p>Version: {(process as any).env.GIT_COMMIT}</p>
       </div>
       <a
         href="https://annatarhe.com"
