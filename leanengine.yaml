@@ -1,7 +1,6 @@
 exposeEnvironmentsOnBuild: true
 build:
   - echo 'build...'
-  - git log -n 1 --pretty=format:'%H'
   - export GIT_COMMIT=$(echo $LEANCLOUD_VERSION_TAG)
   # - export GIT_COMMIT=$(git log -n 1 --pretty=format:'%H')
   - export SENTRY_RELEASE=$(echo $GIT_COMMIT)
