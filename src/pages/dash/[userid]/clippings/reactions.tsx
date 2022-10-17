@@ -102,7 +102,7 @@ function Reactions(props: ReactionsProps) {
               className='inline-flex py-1 px-2 lg:py-4 lg:px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
               onClick={() => {
                 if (uid <= 0) {
-                  navigate('/auth/auth-v2')
+                  navigate('/auth/auth-v3')
                   return
                 }
                 if (k.done) {

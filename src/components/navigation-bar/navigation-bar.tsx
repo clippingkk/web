@@ -74,7 +74,7 @@ function NavigationBar() {
                   overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
                 >
                   <Link
-                    href={id === 0 ? '/auth/auth-v2' : item.dest(id)}
+                    href={id === 0 ? '/auth/auth-v3' : item.dest(id)}
                   >
                     <span
                       className='text-3xl lg:text-4xl'
@@ -116,7 +116,7 @@ function NavigationBar() {
               overlay={<span>{t('app.menu.settings')}</span>}
             >
               <Link
-                href={id === 0 ? '/auth/auth-v2' : `/dash/${id}/settings`}
+                href={id === 0 ? '/auth/auth-v3' : `/dash/${id}/settings`}
               >
                 <a
                   className='text-3xl lg:text-4xl'
@@ -142,7 +142,7 @@ function NavigationBar() {
           </li>
         </ul>
       ) : (
-        <Link href='/auth/auth-v2'>
+        <Link href='/auth/auth-v3'>
           <h2 className='text-white font-bold'>
             {t('app.slogan')}
           </h2>

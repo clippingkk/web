@@ -50,7 +50,7 @@ function Hero() {
     if (id && id > 0) {
       return `/dash/${id}/home`
     }
-    return '/auth/auth-v2'
+    return '/auth/auth-v3'
   }, [id])
 
   return (

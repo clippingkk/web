@@ -248,7 +248,7 @@ export function useSignupSuccess(result: MutationResult<signup>) {
           duration: 10_000
         }
       )
-      navigate('/auth/auth-v2')
+      navigate('/auth/auth-v3')
     }
   }, [result])
 }

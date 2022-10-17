@@ -109,16 +109,16 @@ function AuthByMetamask(props: AuthByMetamaskProps) {
     // const resp = await metaMask.connectEagerly()
   }, [])
 
-  useEffect(() => {
-    // if (!err) {
-    //   return
-    // }
-    // toast.error('metamask: ' + err.message)
-    void metaMask.connectEagerly().catch((err) => {
-      console.debug('Failed to connect eagerly to metamask')
-      toast.error('metamask: ' + err.message)
-    })
-  }, [])
+  // useEffect(() => {
+  //   // if (!err) {
+  //   //   return
+  //   // }
+  //   // toast.error('metamask: ' + err.message)
+  //   void metaMask.connectEagerly().catch((err) => {
+  //     console.debug('Failed to connect eagerly to metamask')
+  //     toast.error('metamask: ' + err.message)
+  //   })
+  // }, [])
 
   useEffect(() => {
     if (!account) {

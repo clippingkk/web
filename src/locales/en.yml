@@ -51,6 +51,7 @@ app:
         domain: Domain
         legacyTip: Users who used mobile phones or third parties to log in in the past, please click the button below to log in.
         accountTip: If you have any questions about your account, please email annatar.he+ck@gmail.com Don't worry, we'd love to hear from you 🫡
+        loginWithPassword: Login with Password
         legacyLogin: Leacy Login
         code:
             placeholder: code from mobile phone sms

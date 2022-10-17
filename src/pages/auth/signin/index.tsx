@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import authQuery from '../../../schema/auth.graphql'
 import { useLazyQuery } from '@apollo/client'
@@ -12,6 +12,11 @@ import FieldInput from '../../../components/input'
 import * as Yup from 'yup'
 import AuthPage from '../auth'
 import OGWithAuth from '../../../components/og/og-with-auth'
+import Turnstile from 'react-turnstile'
+import { CF_TURNSTILE_SITE_KEY } from '../../../constants/config'
+import ButtonSimple from '../../../components/button/button-simple'
+import toast from 'react-hot-toast'
+import { toastPromiseDefaultOption } from '../../../services/misc'
 
 type TSigninProps = {
   path: string,
@@ -20,6 +25,7 @@ type TSigninProps = {
 function Signin(props: TSigninProps) {
   const [exec, resp] = useLazyQuery<auth, authVariables>(authQuery)
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.auth)
+  const [turnstileToken, setTurnstileToken] = useState('')
 
   const formik = useFormik({
     initialValues: {
@@ -32,19 +38,23 @@ function Signin(props: TSigninProps) {
     }),
     onSubmit(values) {
       if (!formik.isValid) return
-      exec({
-        variables: {
-          email: values.email,
-          password: values.pwd
-        }
-      })
+      toast.promise(
+        exec({
+          variables: {
+            email: values.email,
+            password: values.pwd,
+            cfTurnstileToken: turnstileToken
+          }
+        }),
+        toastPromiseDefaultOption
+      )
     }
   })
 
   useTitle('signin')
   const { t } = useTranslation()
 
-  const formDisabled = formik.isSubmitting || (!formik.isValid)
+  const formDisabled = formik.isSubmitting || (!formik.isValid) || turnstileToken === ''
 
   return (
     <form className='flex flex-col' onSubmit={formik.handleSubmit}>
@@ -66,11 +76,17 @@ function Signin(props: TSigninProps) {
         error={formik.errors.pwd}
         onChange={formik.handleChange}
       />
+      <Turnstile
+        sitekey={CF_TURNSTILE_SITE_KEY}
+        onVerify={t => setTurnstileToken(t)}
+        className='mx-auto'
+      />
       {resp.error && (
         <h5 className='bg-red-600 text-white p-4 rounded w-full text-xl'>{resp.error?.message}</h5>
       )}
       <button
-        className={'mt-4 text-gray-100 text-3xl rounded-lg p-4 duration-300 ' + (formDisabled ? 'bg-gray-400' : 'bg-blue-400 hover:bg-blue-600')}
+        className='text-white w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300 mt-4'
+        disabled={formDisabled}
         type="submit"
       >
         {t('app.auth.submit')}

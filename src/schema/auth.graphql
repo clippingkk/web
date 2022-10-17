@@ -1,5 +1,5 @@
-query auth($email: String!, $password: String!) {
-  auth(email: $email, pwd: $password) {
+query auth($email: String!, $password: String!, $cfTurnstileToken: String!) {
+  auth(email: $email, pwd: $password, cfTurnstileToken: $cfTurnstileToken) {
     user {
       id
       name

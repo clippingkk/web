@@ -84,7 +84,7 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
             <hr className='bg-gray-400 my-12' />
             <footer className='flex justify-between flex-col lg:flex-row mt-4'>
               {me.id === 0 && (
-                <Link href={`/auth/auth-v2`}>
+                <Link href={`/auth/auth-v3`}>
                   <a className='flex justify-start items-center w-full' >
                     <img
                       src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}

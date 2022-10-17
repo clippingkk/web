@@ -15,11 +15,9 @@ import { doLoginV3, doLoginV3Variables } from '../../schema/auth/__generated__/d
 import { useLoginV3Successed } from '../../hooks/hooks'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../services/misc'
-import Divider from '../../components/divider/divider'
-import ButtonSimple from '../../components/button/button-simple'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
-import { ArrowUturnLeftIcon } from '@heroicons/react/24/solid'
+import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/router'
 
 type AuthV3Props = {
@@ -73,7 +71,7 @@ function AuthV3(props: AuthV3Props) {
     <React.Fragment>
       <Head>
         <title>Login by ...</title>
-        <OGWithAuth urlPath='auth/auth-v2' />
+        <OGWithAuth urlPath='auth/auth-v3' />
       </Head>
       <section
         className='anna-page-container h-screen object-cover bg-center bg-cover'
@@ -85,9 +83,9 @@ function AuthV3(props: AuthV3Props) {
           className='flex w-full h-full backdrop-blur-xl bg-black bg-opacity-30 justify-center items-center'
         >
           <div className='p-12 rounded backdrop-blur-xl shadow bg-opacity-10 bg-blue-400 w-128 container'>
-            <div>
+            <div className='flex justify-between items-center mb-4'>
               <button
-                className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300 -translate-x-8'
+                className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300'
                 onClick={() => {
                   back()
                 }}
@@ -95,6 +93,14 @@ function AuthV3(props: AuthV3Props) {
                 <ArrowUturnLeftIcon className=' w-6 h-6' />
                 <span className='ml-2 inline-block'>Back</span>
               </button>
+              <Link href='/auth/signin'>
+                <a
+                  className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300'
+                >
+                  <ArrowUturnRightIcon className='w-6 h-6' />
+                  <span className='ml-2 inline-block'>{t('app.auth.loginWithPassword')}</span>
+                </a>
+              </Link>
             </div>
             <div className='flex justify-center items-center flex-col mb-4'>
               <Image
