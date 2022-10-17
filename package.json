@@ -14,8 +14,7 @@
     "release:base": "standard-version --commit-all",
     "release": "npm run release:base --",
     "release:pre": "npm run release:base -- --prerelease alpha",
-    "coveralls:backup": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "coveralls": "exit 0",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "repository": {
