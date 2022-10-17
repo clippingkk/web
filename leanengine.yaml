@@ -2,8 +2,10 @@ exposeEnvironmentsOnBuild: true
 build:
   - echo 'build...'
   - git log -n 1 --pretty=format:'%H'
-  - export GIT_COMMIT=$(git log -n 1 --pretty=format:'%H')
-  - export SENTRY_RELEASE=$(git log -n 1 --pretty=format:'%H')
+  - export GIT_COMMIT=$(echo $LEANCLOUD_VERSION_TAG)
+  # - export GIT_COMMIT=$(git log -n 1 --pretty=format:'%H')
+  - export SENTRY_RELEASE=$(echo $GIT_COMMIT)
+  # - export SENTRY_RELEASE=$(git log -n 1 --pretty=format:'%H')
   - mkdir ~/.npm-global
   - export PATH=~/.npm-global/bin:$PATH
   - npm config set prefix '~/.npm-global'
