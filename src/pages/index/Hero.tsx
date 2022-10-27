@@ -64,8 +64,8 @@ function Hero() {
       <div className='w-full h-full backdrop-blur-xl bg-black dark:bg-opacity-40 bg-opacity-10 flex flex-col justify-center'>
         <div className={styles.titleField + ' my-8 mx-8 md:my-20 md:mx-20 flex items-center justify-center flex-col md:flex-row'}>
           <div className='flex-1 mb-8'>
-            <h1 className={styles.title + ' mx-0 my-0 font-light text-white font-lxgw'}>ClippingKK</h1>
-            <h4 className='text-white text-3xl font-lxgw'>{t('app.slogan')}</h4>
+            <h1 className='text-9xl mx-0 my-0 font-light font-lxgw bg-clip-text from-orange-300 to-indigo-400 text-transparent bg-gradient-to-br'>ClippingKK</h1>
+            <h4 className='text-3xl font-lxgw bg-clip-text from-green-300 to-indigo-400 text-transparent bg-gradient-to-br'>{t('app.slogan')}</h4>
             <div className={styles.platformSection}>
               <Link
                 href={goLinkUrl}

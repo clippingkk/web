@@ -17,12 +17,12 @@ const colorPatterns: featureColorPattern[] = [
       'bg-gradient-to-r'
     ],
     rows: [
-      'text-green-400',
-      'text-green-600',
-      'text-green-400',
-      'text-green-600',
-      'text-green-400',
-      'text-green-600',
+      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-orange-400 to-teal-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-teal-400 to-pink-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-purple-400 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
     ]
   }, {
     title: [
@@ -33,10 +33,10 @@ const colorPatterns: featureColorPattern[] = [
       'bg-gradient-to-r'
     ],
     rows: [
-      'text-blue-400',
-      'text-blue-600',
-      'text-blue-400',
-      'text-blue-600',
+      'from-blue-300 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-orange-400 to-pink-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-pink-400 to-red-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-purple-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
     ]
   }, {
     title: [
@@ -47,10 +47,10 @@ const colorPatterns: featureColorPattern[] = [
       'bg-gradient-to-r'
     ],
     rows: [
-      'text-indigo-400',
-      'text-indigo-600',
-      'text-indigo-800',
-      'text-indigo-900',
+      'from-blue-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-green-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-orange-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-purple-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
     ]
   }
 ]
@@ -69,7 +69,7 @@ type FeatureSectionType = {
 function FeatureSection(props: FeatureSectionType) {
   return (
     <div className='flex items-center w-full justify-around py-16 lg:flex-row flex-col'>
-      <h3 className={'lg:text-8xl text-4xl text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible ' + props.colorPattern.title.join(' ')}>
+      <h3 className={'lg:text-7xl text-4xl text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible ' + props.colorPattern.title.join(' ')}>
         {props.title}
       </h3>
       <ul className='text-3xl lg:text-6xl lg:ml-12 ml-6'>
@@ -83,7 +83,7 @@ function FeatureSection(props: FeatureSectionType) {
                 rel="noreferrer"
               >
                 {x.feature}
-                <ArrowTopRightOnSquareIcon className=' h-4 w-4 lg:h-5 lg:w-5 inline-block mb-2 lg:mb-8' />
+                <ArrowTopRightOnSquareIcon className=' text-blue-400 h-4 w-4 lg:h-5 lg:w-5 inline-block mb-2 lg:mb-8' />
               </a>
             ) : (
               <h4 className={props.colorPattern.rows[i]}>

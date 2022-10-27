@@ -46,6 +46,8 @@ export const getStaticProps: GetStaticProps<{ preloadPublicData: publicData, boo
     props: {
       preloadPublicData: data.data,
       books: booksServerData,
+      // preloadPublicData: { public: {clippings: [], users: []}},
+      // books: [],
     },
     revalidate: true
   }

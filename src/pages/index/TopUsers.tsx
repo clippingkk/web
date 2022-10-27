@@ -5,7 +5,6 @@ import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import HideUntilLoaded from '../../components/SimpleAnimation/HideUntilLoaded'
 import styles from './tops.module.css'
 
-
 type TopUsersProps = {
   users?: readonly publicData_public_users[]
 }
@@ -15,7 +14,10 @@ function TopUsers(props: TopUsersProps) {
   if (!props.users) {
     return null
   }
-  const users = props.users.map(x => ({
+  const users = props
+  .users
+  .filter(x => x.avatar !== 'null')
+  .map(x => ({
     ...x,
     avatar: x.avatar.startsWith('http') ? x.avatar : `${CDN_DEFAULT_DOMAIN}/${x.avatar}`
   }))
@@ -32,7 +34,10 @@ function TopUsers(props: TopUsersProps) {
             key={u.id}
           >
             <div className={'mx-4 flex flex-col justify-center items-center with-slide-in ' + styles['user-item']}>
-              <img src={u.avatar} className='w-16 h-16 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover' />
+              <img
+                src={u.avatar}
+                className='w-16 h-16 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover'
+              />
               <span className={'font-light block duration-300 opacity-0 mt-4 overflow-hidden dark:text-gray-200 ' + styles['user-name']}>{u.name}</span>
             </div>
           </HideUntilLoaded>

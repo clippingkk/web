@@ -110,7 +110,7 @@ function AuthV3(props: AuthV3Props) {
                 width={96}
                 height={96}
               />
-              <h1 className='text-center font-bold text-3xl dark:text-gray-100 mt-4'>ClippingKK</h1>
+              <h1 className='text-center font-bold text-3xl mt-4 font-lxgw bg-clip-text from-orange-300 to-indigo-400 text-transparent bg-gradient-to-br'>ClippingKK</h1>
             </div>
 
             {phase === 0 && (
