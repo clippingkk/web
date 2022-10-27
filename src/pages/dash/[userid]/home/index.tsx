@@ -17,6 +17,8 @@ import { useSyncClippingsToServer } from '../../../../hooks/my-file'
 import styles from './home.module.css'
 import { useRouter } from 'next/router';
 import DashboardContainer from '../../../../components/dashboard-container/container';
+import PageLoading from '../../../../components/loading/loading';
+import HomePageSkeleton from './skeleton';
 
 const STEP = 10
 
@@ -68,9 +70,7 @@ function HomePage() {
   const books = useMultipBook(data?.books.map(x => x.doubanId) || [])
 
   if (!data) {
-    return (
-      <div>loading</div>
-    )
+    return (<HomePageSkeleton />)
   }
 
   return (
