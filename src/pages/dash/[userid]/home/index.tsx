@@ -74,13 +74,15 @@ function HomePage() {
   }
 
   return (
-    <section className={`${styles.home} page`}>
+    <section className='h-full page'>
       <Head>
         <title>{userProfile.name} clippings</title>
       </Head>
       {data.me.recents.length > 0 && (
-        <div className='mt-8'>
-          <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.reading')}</h2>
+        <div className='mt-8 with-slide-in'>
+          <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>
+            {t('app.home.reading')}
+          </h2>
           <ReadingBook clipping={data.me.recents[0]} uid={uid} />
         </div>
       )}
@@ -95,7 +97,7 @@ function HomePage() {
         </Link>
       </header>
 
-      <div className={styles.clippings}>
+      <div className='flex flex-wrap items-center justify-center'>
         {loading && (
           <div className='my-12 mx-6'>
             loading

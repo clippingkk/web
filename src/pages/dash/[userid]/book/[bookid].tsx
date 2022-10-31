@@ -92,7 +92,7 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
   }
 
   return (
-    <section className={`${styles.bookPage} page anna-fade-in`}>
+    <section className='page anna-fade-in'>
       <Head>
         <title>{bookData.title} - clippingkk</title>
         <OGWithBook book={bookData} domain={domain} />

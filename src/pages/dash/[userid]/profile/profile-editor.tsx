@@ -68,22 +68,23 @@ function ProfileEditor(props: ProfileEditorProps) {
       // 因为不能重复填写
       const domain = props.domain.length > 2 ? '' : vals.domain
 
-      doUpdate({
-        variables: {
-          name: vals.name !== '' ? vals.name : null,
-          avatar: avatarUrl !== '' ? avatarUrl : null,
-          bio: vals.bio !== '' ? vals.bio : null,
-          domain
-        }
-      }).then(() => {
+      try {
+        await doUpdate({
+          variables: {
+            name: vals.name !== '' ? vals.name : null,
+            avatar: avatarUrl !== '' ? avatarUrl : null,
+            bio: vals.bio !== '' ? vals.bio : null,
+            domain
+          }
+        })
         formik.resetForm()
         setVisible(false)
         client.resetStore()
         toast.success(t('app.profile.editor.updated'))
-      }).catch(err => {
+      } catch (err: any) {
         console.error(err)
         toast.error(err)
-      })
+      }
     }
   })
 
