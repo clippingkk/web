@@ -5,7 +5,7 @@ import styles from './dialog.module.css'
 
 type dialogProps = {
   onCancel: (e: React.MouseEvent) => void
-  onOk: (e: React.MouseEvent) => void
+  onOk?: (e: React.MouseEvent) => void
   title: string
   children: JSX.Element
 }

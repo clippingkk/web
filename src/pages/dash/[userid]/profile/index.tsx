@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import Head from 'next/head'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -7,7 +7,7 @@ import Card from '../../../../components/card/card';
 import Divider from '../../../../components/divider/divider';
 import ClippingItem from '../../../../components/clipping-item/clipping-item';
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import profileQuery from '../../../../schema/profile.graphql'
 import followMutation from '../../../../schema/mutations/follow.graphql'
 import unfollowMutation from '../../../../schema/mutations/unfollow.graphql'
@@ -34,13 +34,21 @@ import OGWithUserProfile from '../../../../components/og/og-with-user-profile';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { client } from '../../../../services/ajax';
 import CliApiToken from './cli-api';
+import NFTGallary from '../../../../components/nfts/nft-gallary';
+import Dialog from '../../../../components/dialog/dialog';
+import { useUpdateProfileMutation } from '../../../../schema/generated';
+import { toastPromiseDefaultOption } from '../../../../services/misc';
 
 function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // 优先使用本地数据，服务端数据只是为了 seo
   const data = serverResponse.profileServerData
 
+  const [isPickingAvatar, setIsPickingAvatar] = useState(false)
+
   const [doFollow, { loading: followLoading }] = useMutation<followUser, followUserVariables>(followMutation)
   const [doUnfollow, { loading: unfollowLoading }] = useMutation<unfollowUser, unfollowUserVariables>(unfollowMutation)
+
+  const [doUpdate, { client: apolloClient }] = useUpdateProfileMutation()
 
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   usePageTrack('profile', {
@@ -89,7 +97,9 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
             <Avatar
               img={data?.me.avatar ?? ''}
               name={data?.me.name}
+              editable={uid === data.me.id}
               className='w-16 h-16 mr-12 lg:w-32 lg:h-32'
+              onClick={() => setIsPickingAvatar(true)}
             />
             <div className={styles.info}>
               <div className='flex items-center'>
@@ -199,6 +209,28 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
           )}
         </React.Fragment>
       </MasonryContainer>
+      {isPickingAvatar && (
+        <Dialog
+          title={t('app.auth.avatar')}
+          onCancel={() => setIsPickingAvatar(false)}
+        >
+          <NFTGallary
+            uid={uid}
+            onPick={(nft, realImage) => {
+              setIsPickingAvatar(false)
+              toast.promise(doUpdate({
+                variables: {
+                  avatar: realImage
+                }
+              }), toastPromiseDefaultOption)
+              .then(() => {
+                // client.resetStore()
+                // apolloClient.clearStore()
+              })
+            }}
+          />
+        </Dialog>
+      )}
     </section>
   )
 }

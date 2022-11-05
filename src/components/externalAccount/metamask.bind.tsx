@@ -29,14 +29,6 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
   }, [])
 
   useEffect(() => {
-    void metaMask.connectEagerly().catch((err) => {
-      console.debug('Failed to connect eagerly to metamask')
-      toast.error('metamask: ' + err.message)
-    })
-
-  }, [])
-
-  useEffect(() => {
     if (!account) {
       return
     }

@@ -1,0 +1,24 @@
+query fetchMyNFTs($uid: Int!) {
+  me(id: $uid) {
+    id
+    nfts {
+      count
+      edges {
+        tokenID
+        tokenAddress
+        ownerOf
+        blockNumber
+        blockNumberMinted
+        tokenHash
+        amount
+        contractType
+        name
+        symbol
+        tokenURI
+        metadata
+        lastTokenURISync
+        lastMetadataSync
+      }
+    }
+  }
+}
