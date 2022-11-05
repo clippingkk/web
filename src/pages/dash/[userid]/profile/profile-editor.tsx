@@ -133,22 +133,6 @@ function ProfileEditor(props: ProfileEditorProps) {
                 error={formik.errors.domain}
                 value={formik.values.domain}
               />
-              <FieldInput
-                type='file'
-                name='avatar'
-                error={formik.errors.avatar}
-                onChange={e => {
-                  if (!e.target.files) {
-                    return
-                  }
-                  const f = e.target.files[0]
-                  formik.setFieldValue('avatar', f)
-                }}
-                inputProps={{
-                  accept: "image/png, image/jpeg"
-                }}
-                value={undefined}
-              />
               <FieldTextarea
                 name='bio'
                 onChange={formik.handleChange}

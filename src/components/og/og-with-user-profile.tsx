@@ -2,7 +2,6 @@ import React from 'react'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import { profile_me } from '../../schema/__generated__/profile'
 import logo from '../../assets/logo.png'
-import avatar from '../avatar/avatar'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 
 type OGWithUserProfileProps = {

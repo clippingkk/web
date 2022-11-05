@@ -12,7 +12,7 @@ const sentryWebpackPluginOptions = {
  **/
 const config = {
   i18n,
-//  strictMode: true,
+  //  strictMode: true,
   sentry: {
     hideSourceMaps: true
   },
@@ -24,9 +24,15 @@ const config = {
   //   defaultLocale: 'zhCN'
   // },
   images: {
-    domains: ['ck-cdn.annatarhe.cn', 'img1.doubanio.com', 'avatars.githubusercontent.com'],
+    domains: [
+      'ck-cdn.annatarhe.cn',
+      'img1.doubanio.com',
+      'avatars.githubusercontent.com',
+      'metadata.ens.domains',
+      'gateway.moralisipfs.com'
+    ],
   },
-//  excludeFile: (str) => /__tests__/.test(str),
+  //  excludeFile: (str) => /__tests__/.test(str),
   env: {
     DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
     GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT),
