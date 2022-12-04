@@ -64,7 +64,7 @@ function IndexPage({ preloadPublicData, books }: InferGetStaticPropsType<typeof 
         <OGWithIndex />
       </Head>
       <Hero />
-      <div className='py-4 anna-page-container'>
+      <div className='py-4 from-sky-100 to-green-200 bg-gradient-to-br dark:from-sky-900 dark:to-gray-800'>
         <TopBooks books={books} />
         <TopClippings clippings={data?.public.clippings} />
         <TopUsers users={data?.public.users} />

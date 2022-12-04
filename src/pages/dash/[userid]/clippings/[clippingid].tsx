@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 // import { changeBackground } from '../../../../store/app/type'
 import { useDispatch, useSelector } from 'react-redux'
 import Card from '../../../../components/card/card'
@@ -29,6 +29,9 @@ import styles from './clipping.module.css'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
 import Head from 'next/head'
 import Image from 'next/image'
+import { changeBackground } from '../../../../store/app/type'
+import { useSetAtom } from 'jotai'
+import { appBackgroundAtom } from '../../../../store/global'
 function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { clippingid } = useRouter().query as { clippingid: string }
 
@@ -50,14 +53,16 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
   }, [])
 
   const localBook = useSingleBook(clipping?.clipping.bookID, !!serverResponse.bookServerData)
-  // useEffect(() => {
-  //   if (!book) {
-  //     return
-  //   }
-  //   dispatch(changeBackground(book.image))
-  // }, [book])
 
   const book = serverResponse.bookServerData || localBook
+
+  const setBg = useSetAtom(appBackgroundAtom)
+  useEffect(() => {
+    if (!book) {
+      return
+    }
+    setBg(book.image)
+  },[book, setBg])
   const { t } = useTranslation()
 
   const clippingAt = useLocalTime(clipping?.clipping.createdAt)

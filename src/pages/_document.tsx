@@ -9,7 +9,6 @@ class DocumentTop extends Document {
     return initialProps
   }
   render() {
-
     const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 
     return (

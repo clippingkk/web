@@ -23,7 +23,7 @@ function HideUntilLoaded(props: HideUntilLoadedProps) {
   }, [props.imageToLoad])
   if (errored) {
     return (
-      <span>error msg</span>
+      props.children
     )
   }
 

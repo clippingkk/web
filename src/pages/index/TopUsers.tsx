@@ -15,12 +15,12 @@ function TopUsers(props: TopUsersProps) {
     return null
   }
   const users = props
-  .users
-  .filter(x => x.avatar !== 'null')
-  .map(x => ({
-    ...x,
-    avatar: x.avatar.startsWith('http') ? x.avatar : `${CDN_DEFAULT_DOMAIN}/${x.avatar}`
-  }))
+    .users
+    .filter(x => x.avatar && x.avatar !== 'null')
+    .map(x => ({
+      ...x,
+      avatar: x.avatar.startsWith('http') ? x.avatar : `${CDN_DEFAULT_DOMAIN}/${x.avatar}`
+    }))
   return (
     <div>
       <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>
@@ -37,6 +37,7 @@ function TopUsers(props: TopUsersProps) {
               <img
                 src={u.avatar}
                 className='w-16 h-16 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover'
+                alt={u.name}
               />
               <span className={'font-light block duration-300 opacity-0 mt-4 overflow-hidden dark:text-gray-200 ' + styles['user-name']}>{u.name}</span>
             </div>

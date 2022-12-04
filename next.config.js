@@ -16,9 +16,10 @@ const config = {
   sentry: {
     hideSourceMaps: true
   },
-  // experimental: {
-  //   runtime: 'edge',
-  // },
+  experimental: {
+    // runtime: 'experimental-edge',
+    // swcPlugins: [['@swc-jotai/debug-label', {}]],
+  },
   // i18n: {
   //   locales: ['default', 'zhCN', 'en', 'ko'],
   //   defaultLocale: 'zhCN'

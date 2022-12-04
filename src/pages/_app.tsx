@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode, useEffect } from 'react'
+import { Provider as JotaiProvider } from 'jotai'
 import App from 'next/app'
 import type { AppProps, AppContext } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
@@ -49,22 +50,24 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   const content = getLayout(<Component {...pageProps} />)
   return (
-    <Provider store={store}>
-      <SWRConfig
-        value={{
-          fetcher: request
-        }}
-      >
-        <ApolloProvider client={client}>
-          <AppContainer>
-            {content}
-          </AppContainer>
-          <Toaster
-            position='top-center'
-          />
-        </ApolloProvider>
-      </SWRConfig>
-    </Provider>
+    <JotaiProvider>
+      <Provider store={store}>
+        <SWRConfig
+          value={{
+            fetcher: request
+          }}
+        >
+          <ApolloProvider client={client}>
+            <AppContainer>
+              {content}
+            </AppContainer>
+            <Toaster
+              position='top-center'
+            />
+          </ApolloProvider>
+        </SWRConfig>
+      </Provider>
+    </JotaiProvider>
   )
 }
 
