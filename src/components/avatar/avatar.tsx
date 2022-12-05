@@ -21,7 +21,7 @@ function Avatar(props: AvatarProps) {
 
   const { ref, isHovering } = useHover<HTMLDivElement>()
 
-  if (props.img === '' || !props.img.startsWith('http')) {
+  if (props.img === '') {
     return (
       <div className={' rounded-full bg-gray-500 animate-pulse ' + cls} />
     )
