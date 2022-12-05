@@ -16,4 +16,5 @@ build:
   - npm install --production=false --force
   # - pnpm install --production=false --force
   - npm run gql 
+  - npm run codegen
   - npm run build
