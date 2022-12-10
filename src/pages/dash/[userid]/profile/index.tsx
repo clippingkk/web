@@ -38,6 +38,8 @@ import NFTGallary from '../../../../components/nfts/nft-gallary';
 import Dialog from '../../../../components/dialog/dialog';
 import { useUpdateProfileMutation } from '../../../../schema/generated';
 import { toastPromiseDefaultOption } from '../../../../services/misc';
+import { Button, Group } from '@mantine/core';
+import AvatarPicker from '../../../../components/profile/avatar-picker';
 
 function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // 优先使用本地数据，服务端数据只是为了 seo
@@ -210,26 +212,18 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
         </React.Fragment>
       </MasonryContainer>
       {isPickingAvatar && (
-        <Dialog
-          title={t('app.auth.avatar')}
+        <AvatarPicker
           onCancel={() => setIsPickingAvatar(false)}
-        >
-          <NFTGallary
-            uid={uid}
-            onPick={(nft, realImage) => {
-              setIsPickingAvatar(false)
-              toast.promise(doUpdate({
-                variables: {
-                  avatar: realImage
-                }
-              }), toastPromiseDefaultOption)
-              .then(() => {
-                // client.resetStore()
-                // apolloClient.clearStore()
-              })
-            }}
-          />
-        </Dialog>
+          onSubmit={(nextAvatar) => {
+            return doUpdate({
+              variables: {
+                avatar: nextAvatar
+              }
+            });
+          }}
+          opened={isPickingAvatar}
+          uid={uid}
+        />
       )}
     </section>
   )

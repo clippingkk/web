@@ -1,13 +1,13 @@
 import React from 'react'
+import { createGetInitialProps } from '@mantine/next'
 // eslint-disable-next-line @next/next/no-document-import-in-page
-import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 
+const getInitialProps = createGetInitialProps();
+
 class DocumentTop extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
-    const initialProps = await Document.getInitialProps(ctx)
-    return initialProps
-  }
+  static getInitialProps = getInitialProps
   render() {
     const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 

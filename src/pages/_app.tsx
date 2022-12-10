@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode, useEffect } from 'react'
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core'
 import { Provider as JotaiProvider } from 'jotai'
 import App from 'next/app'
 import type { AppProps, AppContext } from 'next/app'
@@ -27,6 +28,7 @@ import { initParseFromLS } from '../store/user/user'
 import { AUTH_LOGIN } from '../store/user/type'
 import { NextPage } from 'next'
 import { Toaster } from 'react-hot-toast'
+import { useDarkModeStatus } from '../hooks/theme'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -46,27 +48,39 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     }
   }, [])
 
+
+  const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
+
   // useSSR((window as any).initialI18nStore, (window as any).initialLanguage)
 
   const content = getLayout(<Component {...pageProps} />)
   return (
     <JotaiProvider>
-      <Provider store={store}>
-        <SWRConfig
-          value={{
-            fetcher: request
-          }}
-        >
-          <ApolloProvider client={client}>
-            <AppContainer>
-              {content}
-            </AppContainer>
-            <Toaster
-              position='top-center'
-            />
-          </ApolloProvider>
-        </SWRConfig>
-      </Provider>
+      <ColorSchemeProvider
+        colorScheme={isDarkTheme ? 'dark' : 'light'}
+        toggleColorScheme={t => {
+          onDarkThemeChange(t === 'dark')
+        }}
+      >
+        <MantineProvider theme={{ colorScheme: isDarkTheme ? 'dark' : 'light' }}>
+          <Provider store={store}>
+            <SWRConfig
+              value={{
+                fetcher: request
+              }}
+            >
+              <ApolloProvider client={client}>
+                <AppContainer>
+                  {content}
+                </AppContainer>
+                <Toaster
+                  position='top-center'
+                />
+              </ApolloProvider>
+            </SWRConfig>
+          </Provider>
+        </MantineProvider>
+      </ColorSchemeProvider>
     </JotaiProvider>
   )
 }

@@ -6,7 +6,7 @@ type WenquErrorResponse = {
   error: string
 }
 
-export async function wenquRequest<T>(url: string, options: RequestInit = {}): Promise<T> {
+export async function wenquRequest<T extends object>(url: string, options: RequestInit = {}): Promise<T> {
   options.headers = {
     ...(options.headers || {}),
     'X-Simple-Check': WENQU_SIMPLE_TOKEN
