@@ -19,6 +19,8 @@ app:
         my: My Profile
         settings: Settings
         logout: Logout
+        loginByQRCode:
+            title: Login by QRCode
         search:
             title: Search
             placeholder: Empire, faith, free...

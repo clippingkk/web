@@ -19,6 +19,8 @@ app:
         my: 내 정보
         settings: 설정
         logout: 그만두 다
+        loginByQRCode:
+            title: qrcode로 로그인
         search:
             title: 검색
             placeholder: 군대, 위엄, 사랑...

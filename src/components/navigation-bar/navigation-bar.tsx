@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import Image from 'next/image'
 import { useDispatch, useSelector } from 'react-redux'
 import { execLogout, TUserState, UserContent } from '../../store/user/type'
@@ -11,6 +11,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import SearchBar, { useCtrlP } from '../searchbar/searchbar'
+import { Modal } from '@mantine/core'
+import LoginByQRCode from './login-by-qrcode'
 
 const leftMenu = [
   {
@@ -52,6 +54,8 @@ function NavigationBar() {
     setVisible(false)
   }, [])
 
+  const [loginByQRCodeModalVisible, setLoginByQRCodeModalVisible] = useState(false)
+
   const { t } = useTranslation()
 
   return (
@@ -65,7 +69,6 @@ function NavigationBar() {
           height={40}
         />
         {profile.id > 0 ? (
-
           <ul className='flex ml-2 lg:ml-12'>
             {leftMenu.map((item, index) => (
               <li className='mr-3 lg:mr-6 cursor-pointer' key={index}>
@@ -93,6 +96,23 @@ function NavigationBar() {
       </div>
       {profile.id > 0 ? (
         <ul className='flex'>
+          <li className='mr-6'>
+            <Tooltip
+              placement='bottom'
+              overlay={<span>{t('app.menu.loginByQRCode.title')}</span>}
+            >
+              <button
+                className='text-3xl lg:text-4xl'
+                title={t('app.menu.loginByQRCode.title')}
+                onClick={() => {
+                  setLoginByQRCodeModalVisible(true)
+                }}
+              >
+                📱
+              </button>
+            </Tooltip>
+          </li>
+
           <li className='mr-6'>
             <Tooltip
               placement='bottom'
@@ -149,6 +169,16 @@ function NavigationBar() {
         </Link>
       )}
       <SearchBar visible={visible} onClose={onSearchbarClose} />
+      <Modal
+        withCloseButton={false}
+        opened={loginByQRCodeModalVisible}
+        onClose={() => { setLoginByQRCodeModalVisible(false) }}
+        centered
+        overlayBlur={6}
+      >
+        <LoginByQRCode />
+      </Modal>
+
     </nav>
   )
 }

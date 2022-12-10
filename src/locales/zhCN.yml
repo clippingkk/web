@@ -19,6 +19,8 @@ app:
         my: 我的信息
         settings: 设置
         logout: 退出
+        loginByQRCode:
+            title: 扫码登陆
         search:
             title: 搜索
             placeholder: 父亲, 士大夫, 人民...
