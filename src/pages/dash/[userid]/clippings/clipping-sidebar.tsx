@@ -4,7 +4,6 @@ import Switch from '../../../../components/switcher'
 import Card from '../../../../components/card/card'
 import { toggleClippingVisible, toggleClippingVisibleVariables } from '../../../../schema/mutations/__generated__/toggleClippingVisible'
 import toggleClippingVisibleMutation from '../../../../schema/mutations/toggle-clipping-visible.graphql'
-import { updateClippingBook } from '../../../../store/clippings/type'
 import { fetchClipping_clipping } from '../../../../schema/__generated__/fetchClipping'
 import { WenquBook } from '../../../../services/wenqu'
 import { useDispatch } from 'react-redux'
@@ -118,7 +117,6 @@ function ClippingSidebar(props: ClippingSidebarProps) {
               }}
               onConfirm={newBookId => {
                 setUpdateClippingBookId(-1)
-                console.log(1)
                 return Promise.resolve(1)
               }}
             />

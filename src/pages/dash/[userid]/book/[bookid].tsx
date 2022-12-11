@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import BookInfo from '../../../../components/book-info/book-info';
 import ClippingItem from '../../../../components/clipping-item/clipping-item';
-import ListFooter from '../../../../components/list-footer/list-footer';
 import Divider from '../../../../components/divider/divider';
 import { changeBackground } from '../../../../store/app/type';
 import { useDispatch } from 'react-redux';
@@ -15,7 +14,6 @@ import { queryMyIdByDomain, queryMyIdByDomainVariables } from '../../../../schem
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { IN_APP_CHANNEL } from '../../../../services/channel';
-import styles from './book.module.css'
 import { useRouter } from 'next/router'
 import DashboardContainer from '../../../../components/dashboard-container/container';
 import OGWithBook from '../../../../components/og/og-with-book';

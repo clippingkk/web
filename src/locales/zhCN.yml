@@ -10,7 +10,7 @@ app:
         delete: 删除
         bind: 绑定
         bound: 已绑定
-    slogan: 整理, 展示, 复盘, 进步
+    slogan: 整理, 复盘, 表达, 做人
     go: 立即体验！
     menu:
         read: 已读

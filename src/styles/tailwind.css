@@ -71,4 +71,8 @@
   .with-slide-in {
     animation: animation-slide-in 0.35s;
   }
+
+  .default-bg-gridient {
+    @apply from-sky-100 to-green-200 bg-gradient-to-br dark:from-sky-900 dark:to-gray-800;
+  }
 }

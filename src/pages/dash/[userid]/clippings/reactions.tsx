@@ -8,12 +8,10 @@ import { reactionRemove, reactionRemoveVariables } from '../../../../schema/__ge
 import { ReactionTarget } from '../../../../../__generated__/globalTypes'
 import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../../../store'
-import Dialog from '../../../../components/dialog/dialog'
 import Tooltip from '../../../../components/tooltip/Tooltip'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import { fetchClipping_clipping_reactionData, fetchClipping_clipping_reactionData_symbolCounts } from '../../../../schema/__generated__/fetchClipping'
 import EmojiPicker from '../../../../components/emoji-picker'
 
@@ -33,14 +31,13 @@ type ReactionCellProps = {
 function ReactionCell(props: ReactionCellProps) {
   const { push: navigate } = useRouter()
   return (
-            <button
-              className='inline-flex py-4 px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
-              onClick={props.onClick}
-            >
-              <span className='text-2xl'>{props.symbol}</span>
-              <span className='text-2xl ml-2'>{props.count}</span>
-            </button>
-
+    <button
+      className='inline-flex py-4 px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
+      onClick={props.onClick}
+    >
+      <span className='text-2xl'>{props.symbol}</span>
+      <span className='text-2xl ml-2'>{props.count}</span>
+    </button>
   )
 }
 
@@ -58,7 +55,7 @@ function Reactions(props: ReactionsProps) {
 
   const symbolCounts = useMemo<fetchClipping_clipping_reactionData_symbolCounts[]>(() => {
     if (!props.reactions?.symbolCounts) {
-    return []
+      return []
     }
     const s = [...props.reactions.symbolCounts]
 

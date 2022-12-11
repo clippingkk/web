@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Head from 'next/head'
 import Avatar from '../../../components/avatar/avatar'
@@ -77,26 +77,39 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
 
   const { t } = useTranslation()
 
+  const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
+    if (books.length === 0) {
+      return undefined
+    }
+    return {
+      // backgroundImage: `url(https://picsum.photos/${width}/${height}/?blur=10)`
+      backgroundImage: `url(${books[0].image})`,
+    }
+  }, [books])
+
   return (
-    <div className='w-full anna-page-container pb-28 flex justify-center items-center h-min-screen'>
+    <div
+      className='w-full anna-page-container flex justify-center items-center h-min-screen bg-no-repeat bg-cover bg-center'
+      style={containerStyle}
+    >
       <Head>
         <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
         <OGWithReport data={data} year={year} books={books} />
       </Head>
-      <div className='w-full min-h-screen'>
-          <a
-            className='flex sticky top-0 left-0 w-full p-4 bg-opacity-10 dark:bg-opacity-10 bg-gray-200 dark:bg-gray-700 backdrop-blur-lg items-center justify-around z-50'
-            href='https://clippingkk.annatarhe.com'
-          >
-            <Image
-              src={logo}
-              alt="clippingkk logo"
-              height={64}
-              width={64}
-            />
-            <span className=' text-gray-700 dark:text-gray-200 ml-8'>{t('app.slogan')}</span>
-          </a>
-        <div className='container anna-page-container m-auto'>
+      <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60 pb-28'>
+        <a
+          className='flex sticky top-0 left-0 w-full p-4 bg-opacity-80 dark:bg-opacity-80 bg-gray-200 dark:bg-gray-800 backdrop-blur-lg items-center justify-around z-50'
+          href='https://clippingkk.annatarhe.com'
+        >
+          <Image
+            src={logo}
+            alt="clippingkk logo"
+            height={64}
+            width={64}
+          />
+          <span className=' text-gray-700 dark:text-gray-200 ml-8'>{t('app.slogan')}</span>
+        </a>
+        <div className='container m-auto'>
           <div className='flex justify-center items-center flex-col mt-8 mb-1'>
             <Avatar
               img={data?.reportYearly.user.avatar ?? ''}
@@ -136,7 +149,6 @@ type serverSideProps = {
   reportInfoServerData: fetchYearlyReport
   booksServerData: WenquBook[]
 }
-
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
   const uid = ~~(context.query?.uid ?? -1) as number

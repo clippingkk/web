@@ -10,7 +10,7 @@ app:
         delete: 삭제
         bind: 묶다
         bound: 경계
-    slogan: 정리, 표시, 검토, 진행
+    slogan: 조직하고, 검토하고, 설교하고, 인간답게
     go: 지금 시도하십시오!
     menu:
         read: 읽었다

@@ -1,5 +1,4 @@
 import { WenquBook, WenquSearchResponse, wenquRequest } from "../services/wenqu"
-import useSWR from "swr"
 import { useEffect, useRef, useState } from "react"
 
 type bookRequestReturn = {

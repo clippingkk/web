@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
 import ThemePicker from './theme-picker'
 import styles from './preview.module.css'
+import { Blockquote, Divider, Paper, Text, Title } from '@mantine/core'
 
 type PreviewProps = {
   onCancel: () => void
@@ -55,8 +56,8 @@ function Preview(props: PreviewProps) {
       onOk={props.onOk}
       title={t('app.clipping.preview')}
     >
-      <section className='flex flex-col mt-2'>
-        <div className='w-full'>
+      <section className='flex mt-2'>
+        <div>
           <img
             src={shareURL}
             onLoad={onImageLoad}
@@ -69,23 +70,35 @@ function Preview(props: PreviewProps) {
           )} */}
         </div>
 
-        <footer className='w-full mt-4 flex flex-col'>
-          <ThemePicker
-            current={currentTheme}
-            onChange={(t) => {
-              setCurrentTheme(t)
-            }}
-          />
+        <aside className='mt-2 flex flex-col ml-4'>
+          <Paper className='w-128'>
+            <Blockquote cite={props.book?.author} className='font-lxgw'>
+              {props.clipping.content}
+            </Blockquote>
+          </Paper>
+
+          <Divider className='my-10' />
+
+          <div className='w-full'>
+            <Title order={6} className='mb-4'>Theme</Title>
+            <ThemePicker
+              className='w-full'
+              current={currentTheme}
+              onChange={(t) => {
+                setCurrentTheme(t)
+              }}
+            />
+          </div>
           <a
             href={shareURL}
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
-            className='text-white text-lg w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow hover:scale-105 duration-150'
+            className='text-white text-lg w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow hover:shadow-2xl duration-150'
             target='_blank'
             rel="noreferrer"
           >
             {t('app.clipping.save')}
           </a>
-        </footer>
+        </aside>
       </section>
     </Dialog>
   )

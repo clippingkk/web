@@ -27,13 +27,6 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
               className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300 max-w-xs'
               alt={book.title}
             />
-            {/* <Image
-            src={book.image}
-            className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300'
-            height={320}
-            width={384}
-            alt={book.title}
-          /> */}
           </HideUntilLoaded>
         </div>
 

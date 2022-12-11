@@ -6,23 +6,23 @@ export enum UTPService {
 export const KonzertThemeMap = {
   classic: {
     id: 0,
-    name: '经典',
+    name: 'Classic',
   },
   colorful: {
     id: 1,
-    name: '彩色',
+    name: 'Colorful',
   },
   dark: {
     id: 2,
-    name: '暗黑',
+    name: 'Noir',
   },
   young: {
     id: 3,
-    name: '青春',
+    name: 'Young',
   },
   light: {
     id: 4,
-    name: '亮丽',
+    name: 'Bright',
   }
 }
 
