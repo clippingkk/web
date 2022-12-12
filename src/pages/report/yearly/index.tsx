@@ -14,66 +14,42 @@ import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { client } from '../../../services/ajax'
 import logo from '../../../assets/logo.png'
+import ReportBookSection from '../../../components/reports/report-book-section'
+import { Blockquote, Divider } from '@mantine/core'
 
 type ReportBookItemTypes = {
   book: WenquBook
   reportDataBook: readonly fetchYearlyReport_reportYearly_books[]
 }
 
-function ReportBookItem(props: ReportBookItemTypes) {
-  const b = props.book
-  const books = props.reportDataBook
-  const clippingsCount = books.find(v => ~~v.doubanId === b.doubanId)?.clippingsCount ?? 0
-  const bookClippings = books.find(v => ~~v.doubanId === b.doubanId)?.clippings
+type PageContainerProps = {
+  bgImage?: string
+  children: React.ReactElement
+}
 
-  const sampleClipping = bookClippings ?
-    bookClippings[Math.floor(Math.random() * bookClippings.length)].content :
-    ''
-
+function PageContainer(props: PageContainerProps) {
+  const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
+    return {
+      backgroundImage: `url(${props.bgImage})`,
+    }
+  }, [props.bgImage])
   return (
-    <div
-      className='flex flex-col justify-center items-center w-full xl:w-1/2'
+    <section
+      className='flex w-screen h-screen justify-center items-center flex-col bg-cover bg-center bg-no-repeat'
+      style={containerStyle}
     >
-      <PublicBookItem book={b} />
-      <span className='dark:text-gray-200 text-xl'>
-        摘录了 {clippingsCount} 条书摘
-      </span>
-
-      <p className='italic text-gray-700 dark:text-gray-200 my-4 text-center w-full px-8'>
-        {sampleClipping}
-      </p>
-      <hr className='my-4 w-full border-gray-300 dark:border-gray-700' />
-    </div>
+      <div className='w-screen h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60 flex justify-center items-center flex-col '>
+        {props.children}
+      </div>
+    </section>
   )
 }
 
 function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const searchParams = useRouter().query
-
-  useEffect(() => {
-    if (
-      !searchParams.uid
-    ) {
-      // show toast
-      return
-    }
-  }, [searchParams])
-
   const year = ~~(searchParams.year || new Date().getFullYear())
-
-  const { data: localReportInfo, loading } = useQuery<fetchYearlyReport, fetchYearlyReportVariables>(fetchReportYearlyQuery, {
-    variables: {
-      uid: ~~(searchParams.uid || -1),
-      year
-    },
-    skip: !!props.reportInfoServerData
-  })
-
-  const data = props.reportInfoServerData ?? localReportInfo
-
-  const { books: localBooks, loading: bookDataLoading } = useMultipBook(data?.reportYearly.books.map(x => x.doubanId) || [], !!props.booksServerData)
-
-  const books = props.booksServerData ?? localBooks
+  const data = props.reportInfoServerData
+  const books = props.booksServerData
 
   const { t } = useTranslation()
 
@@ -87,59 +63,103 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
     }
   }, [books])
 
+  const defaultBgImage = useMemo(() => {
+    if (books.length === 0) {
+      return undefined
+    }
+    return books[0].image
+  }, [books])
+
+  const randomQuote = useMemo(() => {
+    const bkss = data.reportYearly.books
+    if (bkss.length === 0) {
+      return {}
+    }
+    const cks = bkss[Math.floor(Math.random() * bkss.length)]
+    const bk = books.find(x => x.doubanId.toString() === cks.doubanId)
+    if (cks.clippings.length === 0 || !bk) {
+      return {}
+    }
+    const ck = cks.clippings[Math.floor(Math.random() * cks.clippings.length)]
+    return {
+      book: bk,
+      clipping: ck
+    }
+  }, [books, data.reportYearly.books])
+
+  if (!searchParams) {
+    return null
+  }
+
   return (
     <div
       className='w-full anna-page-container flex justify-center items-center h-min-screen bg-no-repeat bg-cover bg-center'
-      style={containerStyle}
     >
       <Head>
         <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
         <OGWithReport data={data} year={year} books={books} />
       </Head>
       <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60 pb-28'>
-        <a
-          className='flex sticky top-0 left-0 w-full p-4 bg-opacity-80 dark:bg-opacity-80 bg-gray-200 dark:bg-gray-800 backdrop-blur-lg items-center justify-around z-50'
-          href='https://clippingkk.annatarhe.com'
-        >
-          <Image
-            src={logo}
-            alt="clippingkk logo"
-            height={64}
-            width={64}
-          />
-          <span className=' text-gray-700 dark:text-gray-200 ml-8'>{t('app.slogan')}</span>
-        </a>
-        <div className='container m-auto'>
-          <div className='flex justify-center items-center flex-col mt-8 mb-1'>
-            <Avatar
-              img={data?.reportYearly.user.avatar ?? ''}
-              name={data?.reportYearly.user.name}
-              className='w-24 h-24'
-            />
-            <span className='text-2xl dark:text-gray-200'>{data?.reportYearly.user.name}</span>
-          </div>
-          <p className='text-2xl dark:text-gray-200 w-full text-center mb-4'>
-            {year === (new Date().getFullYear()) ? '今' : year}年共读了 {data?.reportYearly.books.length} 本书
-          </p>
-          <ul className='flex justify-center items-center flex-wrap'>
-            {books.map(b => (
-              <ReportBookItem
-                key={b.id}
-                book={b}
-                reportDataBook={data.reportYearly.books || []}
+        <PageContainer bgImage={defaultBgImage}>
+          <div className=' container relative h-full flex items-center flex-col justify-center'>
+            <Blockquote
+              cite={randomQuote.book?.author}
+              className=' text-xl md:text-3xl xl:text-6xl font-lxgw'
+              classNames={{
+                body: 'leading-loose'
+              }}
+            >
+              {randomQuote.clipping?.content}
+            </Blockquote>
+            <div className=' flex justify-center flex-col text-center'>
+              <Avatar
+                img={data?.reportYearly.user.avatar ?? ''}
+                name={data?.reportYearly.user.name}
+                className='w-24 h-24 mx-auto'
               />
-            ))}
-          </ul>
-
-          <p className='text-sm text-gray-700 dark:text-gray-200 w-full text-center px-8'>
-            使用电脑浏览器打开
+              <span className='text-2xl dark:text-gray-200 my-4 xl:my-10'>{data?.reportYearly.user.name}</span>
+              <p className='text-2xl dark:text-gray-200 w-full text-center mb-4'>
+                {year === (new Date().getFullYear()) ? '今' : year}年共读了 {data?.reportYearly.books.length} 本书
+              </p>
+            </div>
+            <Divider />
             <a
-              href="https://clippingkk.annatarhe.com"
-              className='text-gray-700 dark:text-gray-200 mx-2'
-            >https://clippingkk.annatarhe.com</a>
-            拖入 kindle 文件即可同步
-          </p>
+              className='flex justify-between items-center w-full absolute bottom-10 left-0 right-0'
+              href='https://clippingkk.annatarhe.com'
+            >
+              <Image
+                src={logo}
+                alt="clippingkk logo"
+                height={64}
+                width={64}
+              />
+              <span className=' text-gray-700 dark:text-gray-200 ml-8'>{t('app.slogan')}</span>
+            </a>
+
+          </div>
+        </PageContainer>
+        <div className='w-full'>
+          {books.map(b => (
+            <PageContainer
+              key={b.id}
+              bgImage={b.image}
+            >
+              <ReportBookSection
+                book={b}
+                reportDataBook={data.reportYearly.books.find(x => x.doubanId === b.doubanId.toString())}
+              />
+            </PageContainer>
+          ))}
         </div>
+
+        <p className='text-sm text-gray-700 dark:text-gray-200 w-full text-center px-8'>
+          使用电脑浏览器打开
+          <a
+            href="https://clippingkk.annatarhe.com"
+            className='text-gray-700 dark:text-gray-200 mx-2'
+          >https://clippingkk.annatarhe.com</a>
+          拖入 kindle 文件即可同步
+        </p>
       </div>
     </div>
   )
