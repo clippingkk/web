@@ -1,5 +1,6 @@
 import { Blockquote, Divider, HoverCard, Rating, Title, Tooltip } from '@mantine/core'
 import React, { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import TextTransition, { presets } from "react-text-transition"
 import { fetchYearlyReport_reportYearly_books } from '../../schema/__generated__/fetchYearlyReport'
 import { WenquBook } from '../../services/wenqu'
@@ -11,13 +12,7 @@ type ReportBookSectionProps = {
 }
 
 function ReportBookSection(props: ReportBookSectionProps) {
-    const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
-        return {
-            // backgroundImage: `url(https://picsum.photos/${width}/${height}/?blur=10)`
-            backgroundImage: `url(${props.book.image})`,
-        }
-    }, [props.book.image])
-
+    const { t } = useTranslation()
     const [currentClippingIdx, setCurrentClippingIdx] = useState(0)
 
     useEffect(() => {
@@ -37,19 +32,27 @@ function ReportBookSection(props: ReportBookSectionProps) {
     }, [props.reportDataBook])
 
     return (
-        <div className='container mx-auto flex flex-col'>
-            <div className='flex'>
-                <PublicBookItem book={props.book} />
-                <div className=' w-1/2 dark:text-white text-gray-900'>
-                    <Title order={2} className=''>
+        <div className='container mx-auto flex flex-col py-8'>
+            <div className='flex justify-center lg:flex-row flex-col'>
+                <div className=' w-72 mx-auto lg:ml-0 lg:mr-8'>
+                    <PublicBookItem book={props.book} />
+                </div>
+                <div className='w-full px-10 lg:px-0 lg:w-1/2 dark:text-white text-gray-900'>
+                    <Title order={2} className=' text-2xl lg:text-4xl'>
                         {props.book.title}
                     </Title>
                     <Rating value={props.book.rating / 2} readOnly className='my-4' />
                     <span>{props.book.author}</span>
-                    <Divider className='my-10' />
+                    <Title
+                        order={4}
+                        className='mt-1 lg:mt-4 font-normal text-sm lg:text-base'
+                    >
+                        {t('app.report.clippingCountOnBook', { count: props.reportDataBook?.clippingsCount })}
+                    </Title>
+                    <Divider className='my-4 lg:my-10' />
                     <HoverCard width={560} shadow='lg'>
                         <HoverCard.Target>
-                            <p className=' line-clamp-6'>
+                            <p className=' text-sm lg:text-base line-clamp-6'>
                                 {props.book.summary}
                             </p>
                         </HoverCard.Target>
@@ -62,20 +65,13 @@ function ReportBookSection(props: ReportBookSectionProps) {
                 </div>
             </div>
 
-            <div>
+            <div className='mt-6 container px-10 lg:px-auto pb-4'>
                 <TextTransition
-                    springConfig={presets.wobbly}
+                    springConfig={presets.default}
+                    className='font-lxgw text-lg md:text-3xl 2xl:text-5xl !leading-loose dark:text-white'
                 >
-                    <Blockquote
-                        className='font-lxgw text-lg md:text-3xl 2xl:text-6xl leading-loose'
-                        classNames={{
-                            body: 'leading-loose'
-                        }}
-                    >
-                        {props.reportDataBook?.clippings[currentClippingIdx].content}
-                    </Blockquote>
+                    {props.reportDataBook?.clippings[currentClippingIdx].content}
                 </TextTransition>
-
             </div>
         </div>
     )

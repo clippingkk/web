@@ -215,4 +215,6 @@ app:
                 f3Desc: 我们提供命令行解析文件
                 f4: 自由
                 f4Desc: 也许是为数不多愿意分享自己阅读感知的地方了
+    report:
+        clippingCountOnBook: "我摘录了 {{count}} 条句子"
 

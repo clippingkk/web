@@ -215,4 +215,6 @@ app:
                 f3Desc: 명령줄 구문 분석 파일을 제공합니다.
                 f4: 무료
                 f4Desc: 아마도 그들의 독서 인식을 기꺼이 공유할 수 있는 몇 안 되는 장소 중 하나일 것입니다.
+    report:
+        clippingCountOnBook: "{{count}} 장을 발췌했습니다"
 

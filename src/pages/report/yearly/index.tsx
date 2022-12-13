@@ -1,13 +1,10 @@
-import { useQuery } from '@apollo/client'
 import Image from 'next/image'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Head from 'next/head'
 import Avatar from '../../../components/avatar/avatar'
-import PublicBookItem from '../../../components/public-book-item/public-book-item'
-import { useMultipBook } from '../../../hooks/book'
 import fetchReportYearlyQuery from '../../../schema/report.graphql'
-import { fetchYearlyReport, fetchYearlyReportVariables, fetchYearlyReport_reportYearly_books } from '../../../schema/__generated__/fetchYearlyReport'
+import { fetchYearlyReport, fetchYearlyReportVariables, fetchYearlyReport_reportYearly_books, fetchYearlyReport_reportYearly_books_clippings } from '../../../schema/__generated__/fetchYearlyReport'
 import { useRouter } from 'next/router'
 import OGWithReport from '../../../components/og/og-with-report'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
@@ -16,11 +13,7 @@ import { client } from '../../../services/ajax'
 import logo from '../../../assets/logo.png'
 import ReportBookSection from '../../../components/reports/report-book-section'
 import { Blockquote, Divider } from '@mantine/core'
-
-type ReportBookItemTypes = {
-  book: WenquBook
-  reportDataBook: readonly fetchYearlyReport_reportYearly_books[]
-}
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 
 type PageContainerProps = {
   bgImage?: string
@@ -35,10 +28,10 @@ function PageContainer(props: PageContainerProps) {
   }, [props.bgImage])
   return (
     <section
-      className='flex w-screen h-screen justify-center items-center flex-col bg-cover bg-center bg-no-repeat'
+      className='flex w-screen min-h-screen justify-center items-center flex-col bg-cover bg-center bg-no-repeat'
       style={containerStyle}
     >
-      <div className='w-screen h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60 flex justify-center items-center flex-col '>
+      <div className='w-screen min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60 flex justify-center items-center flex-col '>
         {props.children}
       </div>
     </section>
@@ -53,39 +46,39 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
 
   const { t } = useTranslation()
 
-  const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
-    if (books.length === 0) {
-      return undefined
-    }
-    return {
-      // backgroundImage: `url(https://picsum.photos/${width}/${height}/?blur=10)`
-      backgroundImage: `url(${books[0].image})`,
-    }
-  }, [books])
+  const [randomQuote, setRandomQuote] = useState<{ book: WenquBook, clipping: fetchYearlyReport_reportYearly_books_clippings } | null>(null)
 
-  const defaultBgImage = useMemo(() => {
-    if (books.length === 0) {
-      return undefined
+  useEffect(() => {
+    function flushQuote() {
+      const bkss = data.reportYearly.books
+      if (bkss.length === 0) {
+        setRandomQuote(null)
+        return
+      }
+      const cks = bkss[Math.floor(Math.random() * bkss.length)]
+      const bk = books.find(x => x.doubanId.toString() === cks.doubanId)
+      if (cks.clippings.length === 0 || !bk) {
+        setRandomQuote(null)
+        return
+      }
+      const ck = cks.clippings[Math.floor(Math.random() * cks.clippings.length)]
+      setRandomQuote({
+        book: bk,
+        clipping: ck
+      })
     }
-    return books[0].image
-  }, [books])
-
-  const randomQuote = useMemo(() => {
-    const bkss = data.reportYearly.books
-    if (bkss.length === 0) {
-      return {}
-    }
-    const cks = bkss[Math.floor(Math.random() * bkss.length)]
-    const bk = books.find(x => x.doubanId.toString() === cks.doubanId)
-    if (cks.clippings.length === 0 || !bk) {
-      return {}
-    }
-    const ck = cks.clippings[Math.floor(Math.random() * cks.clippings.length)]
-    return {
-      book: bk,
-      clipping: ck
+    flushQuote()
+    const t = setInterval(() => {
+      flushQuote()
+    }, 10_000)
+    return () => {
+      clearInterval(t)
     }
   }, [books, data.reportYearly.books])
+
+  const defaultBgImage = useMemo(() => {
+    return randomQuote?.book.image
+  }, [randomQuote])
 
   if (!searchParams) {
     return null
@@ -99,17 +92,19 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
         <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
         <OGWithReport data={data} year={year} books={books} />
       </Head>
-      <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60 pb-28'>
+      <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
         <PageContainer bgImage={defaultBgImage}>
-          <div className=' container relative h-full flex items-center flex-col justify-center'>
+          <div className=' container relative h-screen flex items-center flex-col justify-center'>
             <Blockquote
-              cite={randomQuote.book?.author}
-              className=' text-xl md:text-3xl xl:text-6xl font-lxgw'
+              cite={` —— 「${randomQuote?.book.title}」  ${randomQuote?.book.author}`}
+              className='font-lxgw text-black dark:text-white transition-all duration-300'
               classNames={{
-                body: 'leading-loose'
+                cite: ' text-base text-right text-black dark:text-white',
+                icon: 'text-black dark:text-white',
+                body: ' text-2xl md:text-3xl xl:text-5xl leading-loose'
               }}
             >
-              {randomQuote.clipping?.content}
+              {randomQuote?.clipping.content}
             </Blockquote>
             <div className=' flex justify-center flex-col text-center'>
               <Avatar
@@ -124,7 +119,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
             </div>
             <Divider />
             <a
-              className='flex justify-between items-center w-full absolute bottom-10 left-0 right-0'
+              className='flex justify-between items-center w-full absolute bottom-10 left-0 right-0 px-8 lg:px-0'
               href='https://clippingkk.annatarhe.com'
             >
               <Image
@@ -152,14 +147,22 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
           ))}
         </div>
 
-        <p className='text-sm text-gray-700 dark:text-gray-200 w-full text-center px-8'>
-          使用电脑浏览器打开
-          <a
-            href="https://clippingkk.annatarhe.com"
-            className='text-gray-700 dark:text-gray-200 mx-2'
-          >https://clippingkk.annatarhe.com</a>
-          拖入 kindle 文件即可同步
-        </p>
+        <PageContainer>
+          <div>
+            <h2 className='text-gray-700 text-xl lg:text-3xl 2xl:text-6xl dark:text-gray-200 mb-8 text-center'>{t('app.slogan')}</h2>
+            <p className='text-sm lg:text-lg 2xl:text-xl text-gray-700 dark:text-gray-500 w-full text-center px-8'>
+              使用电脑浏览器打开
+              <a
+                href="https://clippingkk.annatarhe.com"
+                className='text-gray-700 dark:text-gray-200 mx-2 hover:underline'
+              >
+                https://clippingkk.annatarhe.com
+                <ArrowTopRightOnSquareIcon className=' w-4 h-4 inline-block ml-1 mb-4' />
+              </a>
+              拖入 kindle 文件即可同步
+            </p>
+          </div>
+        </PageContainer>
       </div>
     </div>
   )

@@ -1,3 +1,4 @@
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import React from 'react'
 
 function ICPInfo() {
@@ -17,9 +18,17 @@ function Footer() {
     <footer className='flex items-center justify-around md:p-20 p-4 bg-gray-200 dark:bg-gray-700'>
       <div className='no-underline text-black dark:text-gray-300'>
         <p>
-          Build with ❤ by AnnatarHe 
+          Build with ❤ by AnnatarHe
         </p>
         <p>Version: {(process as any).env.GIT_COMMIT}</p>
+        <p>
+          Host on
+          <a
+            href="https://www.leancloud.cn/"
+            className=' inline-block ml-1 hover:underline'>
+            Leancloud <ArrowTopRightOnSquareIcon className='w-4 h-4 inline-block mb-4' />
+          </a>
+        </p>
       </div>
       <a
         href="https://annatarhe.com"
@@ -27,7 +36,7 @@ function Footer() {
         className='no-underline text-black dark:text-gray-300' rel="noreferrer"
       >
         &copy; AnnatarHe
-        </a>
+      </a>
     </footer>
   )
 }
