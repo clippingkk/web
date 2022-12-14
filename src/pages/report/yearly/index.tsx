@@ -97,11 +97,11 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
           <div className=' container relative h-screen flex items-center flex-col justify-center'>
             <Blockquote
               cite={` —— 「${randomQuote?.book.title}」  ${randomQuote?.book.author}`}
-              className='font-lxgw text-black dark:text-white transition-all duration-300'
+              className='font-lxgw leading-loose text-black dark:text-white transition-all duration-300'
               classNames={{
                 cite: ' text-base text-right text-black dark:text-white',
                 icon: 'text-black dark:text-white',
-                body: ' text-2xl md:text-3xl xl:text-5xl leading-loose'
+                body: ' text-2xl md:text-3xl xl:text-5xl !leading-loose'
               }}
             >
               {randomQuote?.clipping.content}
