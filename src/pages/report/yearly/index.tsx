@@ -83,13 +83,14 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
   if (!searchParams) {
     return null
   }
+  const metaTitle = `${data?.reportYearly.user.name} 在 ${year} 年共读了 ${data?.reportYearly.books.length} 本书 - Clippingkk - kindle 书摘管理`
 
   return (
     <div
       className='w-full anna-page-container flex justify-center items-center h-min-screen bg-no-repeat bg-cover bg-center'
     >
       <Head>
-        <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
+        <title>{metaTitle}</title>
         <OGWithReport data={data} year={year} books={books} />
         {books.map(x => (
           <link key={x.id} as='image' rel='preload' href={x.image} />

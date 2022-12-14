@@ -1,7 +1,8 @@
 import { Blockquote, Divider, HoverCard, Rating, Title, Tooltip } from '@mantine/core'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import TextTransition, { presets } from "react-text-transition"
+import autoAnimate from '@formkit/auto-animate'
 import { fetchYearlyReport_reportYearly_books } from '../../schema/__generated__/fetchYearlyReport'
 import { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
@@ -30,6 +31,14 @@ function ReportBookSection(props: ReportBookSectionProps) {
             clearInterval(t)
         }
     }, [props.reportDataBook])
+
+    const cksDOM = useRef<HTMLDivElement | null>(null)
+    useEffect(() => {
+        if (!cksDOM.current) {
+            return;
+        }
+        autoAnimate(cksDOM.current)
+    }, [])
 
     return (
         <div className='container mx-auto flex flex-col py-8'>
@@ -65,13 +74,14 @@ function ReportBookSection(props: ReportBookSectionProps) {
                 </div>
             </div>
 
-            <div className='mt-6 container px-10 lg:px-auto pb-4'>
-                <TextTransition
-                    springConfig={presets.default}
+            <div className='mt-6 container px-10 lg:px-auto pb-4' ref={cksDOM}>
+                <div
+                    key={props.reportDataBook?.clippings[currentClippingIdx].id}
+                    // springConfig={presets.default}
                     className='font-lxgw text-lg md:text-3xl 2xl:text-5xl !leading-loose dark:text-white'
                 >
                     {props.reportDataBook?.clippings[currentClippingIdx].content}
-                </TextTransition>
+                </div>
             </div>
         </div>
     )
