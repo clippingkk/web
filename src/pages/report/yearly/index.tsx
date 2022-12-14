@@ -14,6 +14,8 @@ import logo from '../../../assets/logo.png'
 import ReportBookSection from '../../../components/reports/report-book-section'
 import { Blockquote, Divider } from '@mantine/core'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
+import ReportHero from '../../../components/reports/report-hero'
+import { useBackgroundImage } from '../../../hooks/theme'
 
 type PageContainerProps = {
   bgImage?: string
@@ -76,9 +78,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
     }
   }, [books, data.reportYearly.books])
 
-  const defaultBgImage = useMemo(() => {
-    return randomQuote?.book.image
-  }, [randomQuote])
+  const defaultBgImage = useBackgroundImage()
 
   if (!searchParams) {
     return null
@@ -97,18 +97,11 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
       </Head>
       <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
         <PageContainer bgImage={defaultBgImage}>
-          <div className=' container relative h-screen flex items-center flex-col justify-center'>
-            <Blockquote
-              cite={` —— 「${randomQuote?.book.title}」  ${randomQuote?.book.author}`}
-              className='font-lxgw leading-loose text-black dark:text-white transition-all duration-300'
-              classNames={{
-                cite: ' text-base text-right text-black dark:text-white',
-                icon: 'text-black dark:text-white',
-                body: ' text-2xl md:text-3xl xl:text-5xl !leading-loose'
-              }}
-            >
-              {randomQuote?.clipping.content}
-            </Blockquote>
+          <div className=' container relative min-h-screen flex items-center flex-col justify-center'>
+            <ReportHero
+              books={books}
+              clippings={data.reportYearly.books ?? []}
+            />
             <div className=' flex justify-center flex-col text-center'>
               <Avatar
                 img={data?.reportYearly.user.avatar ?? ''}
