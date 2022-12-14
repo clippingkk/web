@@ -91,6 +91,9 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
       <Head>
         <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
         <OGWithReport data={data} year={year} books={books} />
+        {books.map(x => (
+          <link key={x.id} as='image' rel='preload' href={x.image} />
+        ))}
       </Head>
       <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
         <PageContainer bgImage={defaultBgImage}>
