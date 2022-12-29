@@ -2,7 +2,7 @@
 
 ## package manager
 
-we use yarn
+we use pnpm
 
 kindle viewer website
 

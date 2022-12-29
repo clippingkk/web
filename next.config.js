@@ -1,5 +1,5 @@
 // @ts-check
-const { i18n } = require('./next-i18next.config')
+// const { i18n } = require('./next-i18next.config')
 // const { withSentryConfig } = require('@sentry/nextjs')
 
 const sentryWebpackPluginOptions = {
@@ -11,7 +11,7 @@ const sentryWebpackPluginOptions = {
  * @type {import('next').NextConfig}
  **/
 const config = {
-  i18n,
+  // i18n,
   //  strictMode: true,
   sentry: {
     hideSourceMaps: true
@@ -59,6 +59,10 @@ const config = {
     return config
   },
   // swcMinify: true
+}
+
+if (process.env.IS_FLY_IO) {
+  config.output = 'standalone'
 }
 
 // FIXME: 暂时关掉， leancloud cloud engine do not support yet
