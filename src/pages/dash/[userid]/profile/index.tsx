@@ -36,10 +36,10 @@ import { client } from '../../../../services/ajax';
 import CliApiToken from './cli-api';
 import NFTGallary from '../../../../components/nfts/nft-gallary';
 import Dialog from '../../../../components/dialog/dialog';
-import { useUpdateProfileMutation } from '../../../../schema/generated';
+import { ProfileQuery, ProfileQueryVariables, useProfileQuery, useUpdateProfileMutation } from '../../../../schema/generated';
 import { toastPromiseDefaultOption } from '../../../../services/misc';
-import { Button, Group } from '@mantine/core';
 import AvatarPicker from '../../../../components/profile/avatar-picker';
+import PersonalActivity from '../../../../components/profile/activity';
 
 function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // 优先使用本地数据，服务端数据只是为了 seo
@@ -181,16 +181,10 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
             </div>
           </div>
 
-          <div className='w-full h-64 mt-6'>
-            <ResponsiveContainer>
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="count" fill="#0277d7" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className='w-full mt-6'>
+            <PersonalActivity
+              data={data.me.analysis.daily}
+            />
           </div>
         </div>
       </Card>
@@ -228,13 +222,13 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
 }
 
 type serverSideProps = {
-  profileServerData: profile
+  profileServerData: ProfileQuery
 }
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
   const pathUid: string = (context.params?.userid as string) ?? ''
   const uid = parseInt(pathUid)
-  const profileResponse = await client.query<profile, profileVariables>({
+  const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
     query: profileQuery,
     fetchPolicy: 'network-only',
     variables: {

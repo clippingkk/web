@@ -13,9 +13,9 @@ const sentryWebpackPluginOptions = {
 const config = {
   // i18n,
   //  strictMode: true,
-  sentry: {
-    hideSourceMaps: true
-  },
+  // sentry: {
+  //   hideSourceMaps: true
+  // },
   experimental: {
     // runtime: 'experimental-edge',
     // swcPlugins: [['@swc-jotai/debug-label', {}]],
