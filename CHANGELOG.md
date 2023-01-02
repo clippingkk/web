@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.0.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.0.0...v5.0.1) (2023-01-02)
+
+
+### Features
+
+* **deps:** update deps ([ef83311](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ef83311e419483dc5ba21cf6d4b1c9cf314d4113))
+* **deps:** upgrade next to 13 ([4853d89](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4853d89e2c8f0d2f6f1e77ecabdbc13894cf6b93))
+* **profile:** add daily activity to profile page ([2bacbde](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2bacbde52da51be17a35ddfeaad9eda941552ce0))
+
+
+### Bug Fixes
+
+* **ci:** fix ci name ([a19e830](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a19e8304b054f206d4b59461d0d3f0dc7e322fc0))
+
 ## [5.0.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v4.0.8...v5.0.0) (2022-12-29)
 
 
