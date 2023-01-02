@@ -72,7 +72,8 @@ type GraphQLResponseError = {
   message: string
 }
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError((errData) => {
+  const { graphQLErrors, networkError } = errData
   if (graphQLErrors) {
     // swal({
     //   icon: 'error',
@@ -101,7 +102,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const httpLink = new HttpLink({
   uri: API_HOST + '/api/v2/graphql',
 })
-
 
 export const client = new ApolloClient({
   ssrMode: typeof window === 'undefined',

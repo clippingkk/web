@@ -1,5 +1,9 @@
 overwrite: true
 schema: src/schema/schema.json
+# schema:
+#   - "http://127.0.0.1:19654/api/v2/graphql":
+#       headers:
+#         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE2ODAyMzg5NTUsImlhdCI6MTY2NDY4Njk1NSwiaXNzIjoiY2stc2VydmVyQCJ9.n5DKJnhACf65Cu-yYZP700rOLgadgLTBHPIxmAo8lAo"
 documents: "src/schema/**/*.graphql"
 generates:
   src/schema/generated.tsx:

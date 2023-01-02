@@ -39,10 +39,10 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.6.2",
-    "@graphql-codegen/introspection": "2.2.1",
-    "@graphql-codegen/typescript": "2.7.3",
-    "@graphql-codegen/typescript-operations": "2.5.3",
-    "@graphql-codegen/typescript-react-apollo": "3.3.3",
+    "@graphql-codegen/introspection": "2.2.3",
+    "@graphql-codegen/typescript": "2.8.6",
+    "@graphql-codegen/typescript-operations": "2.5.11",
+    "@graphql-codegen/typescript-react-apollo": "3.3.7",
     "@jest/globals": "^29.2.0",
     "@swc-jotai/debug-label": "^0.0.6",
     "@tailwindcss/forms": "^0.5.3",
@@ -79,17 +79,18 @@
     "standard-version": "^9.5.0",
     "ts-jest": "^29.0.3",
     "typescript": "^4.8.3",
+    "undici": "5.5.1",
     "yaml-loader": "^0.8.0"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.9",
+    "@apollo/client": "^3.7.3",
     "@emoji-mart/data": "^1.0.6",
     "@emoji-mart/react": "^1.0.1",
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
     "@fingerprintjs/fingerprintjs": "^3.3.6",
     "@formkit/auto-animate": "^1.0.0-beta.5",
-    "@graphql-codegen/cli": "^2.12.0",
+    "@graphql-codegen/cli": "^2.16.2",
     "@headlessui/react": "^1.7.1",
     "@heroicons/react": "^2.0.11",
     "@mantine/core": "^5.9.3",
@@ -110,6 +111,7 @@
     "body-scroll-lock": "4.0.0-beta.0",
     "cmdk": "^0.1.20",
     "dayjs": "^1.11.5",
+    "echarts": "^5.4.1",
     "emoji-mart": "^5.2.2",
     "formik": "^2.2.9",
     "i18next": "^21.9.1",
@@ -148,8 +150,8 @@
     "redux-saga": "^1.2.1",
     "sitemap": "^7.1.1",
     "sweetalert": "^2.1.2",
-    "swr": "^1.3.0",
-    "tailwindcss": "^3.1.8",
+    "swr": "^2.0.0",
+    "tailwindcss": "^3.2.4",
     "web3": "^1.7.5",
     "yup": "1.0.0-beta.7"
   },
@@ -175,5 +177,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "undici": "5.5.1"
+    }
   }
 }
