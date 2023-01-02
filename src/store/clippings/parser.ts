@@ -125,7 +125,7 @@ class ClippingTextParser {
   private trimSymbols(s: string): string {
     return s.replace(/^(，|。|！|@|【】|——)+/, '')
       .replace(/(，|。|！|@|【】|——)+$/, '')
-      .trim()
+      .trim();
   }
 
   private exactContent() {

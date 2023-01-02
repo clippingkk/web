@@ -18,15 +18,13 @@ function NotFound() {
       </h2>
       <Link
         href="/"
-      >
-        <a
-          className="px-4 py-2 bg-blue-700 text-white rounded-lg shadow-lg mt-4 hover:bg-blue-500 duration-150"
-        >
+        className="px-4 py-2 bg-blue-700 text-white rounded-lg shadow-lg mt-4 hover:bg-blue-500 duration-150">
+        
           Back To Home
-        </a>
+        
       </Link>
     </div>
-  )
+  );
 }
 
 export default NotFound

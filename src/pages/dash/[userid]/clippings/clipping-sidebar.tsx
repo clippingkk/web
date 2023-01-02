@@ -180,14 +180,11 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             <li className='w-full mb-4'>
               <Link
                 href={siblingLink.prev}
-              >
-                <a
-                  className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
-                  title={t('app.clipping.sidebar.prev')}
-                >
+                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
+                title={t('app.clipping.sidebar.prev')}>
 
-                  {t('app.clipping.sidebar.prev')}
-                </a>
+                {t('app.clipping.sidebar.prev')}
+
               </Link>
             </li>
           )}
@@ -195,21 +192,18 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             <li className='w-full mb-4'>
               <Link
                 href={siblingLink.next}
-              >
-                <a
-                  className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
-                  title={t('app.clipping.sidebar.next')}
-                >
+                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
+                title={t('app.clipping.sidebar.next')}>
 
-                  {t('app.clipping.sidebar.next')}
-                </a>
+                {t('app.clipping.sidebar.next')}
+
               </Link>
             </li>
           )}
         </ul>
       </div>
     </Card>
-  )
+  );
 }
 
 export default ClippingSidebar

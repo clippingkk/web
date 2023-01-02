@@ -65,18 +65,18 @@ function AuthPage(props: AuthPageProps) {
           <div className='w-full flex items-center justify-center rounded'>
             <Link
               href="/auth/phone"
-            >
-              <a
-                className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('phone') ? 'bg-indigo-400' : ''}`}
-              >
-                {t('app.auth.phone')}
-              </a>
+              className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('phone') ? 'bg-indigo-400' : ''}`}>
+
+              {t('app.auth.phone')}
+
             </Link>
 
-            <Link href="/auth/signin">
-              <a className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('signin') ? 'bg-indigo-400' : ''}`}>
-                {t('app.auth.signin')}
-              </a>
+            <Link
+              href="/auth/signin"
+              className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${pathname.endsWith('signin') ? 'bg-indigo-400' : ''}`}>
+
+              {t('app.auth.signin')}
+
             </Link>
           </div>
           <hr className='my-2' />
@@ -94,7 +94,7 @@ function AuthPage(props: AuthPageProps) {
         </>
       </Card>
     </section>
-  )
+  );
 }
 
 export default AuthPage

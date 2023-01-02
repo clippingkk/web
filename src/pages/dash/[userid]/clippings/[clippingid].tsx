@@ -89,16 +89,16 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
             <hr className='bg-gray-400 my-12' />
             <footer className='flex justify-between flex-col lg:flex-row mt-4'>
               {me.id === 0 && (
-                <Link href={`/auth/auth-v3`}>
-                  <a className='flex justify-start items-center w-full' >
-                    <img
-                      src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
-                      className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover inline-block'
-                      alt={creator.name}
-                    />
-                    <span className='ml-4 text-gray-700 dark:text-gray-200 font-light'>{creator?.name}</span>
-                  </a>
-                </Link>
+                (<Link href={`/auth/auth-v3`} className='flex justify-start items-center w-full'>
+
+                  <img
+                    src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
+                    className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover inline-block'
+                    alt={creator.name}
+                  />
+                  <span className='ml-4 text-gray-700 dark:text-gray-200 font-light'>{creator?.name}</span>
+
+                </Link>)
               )}
               <time className='lg:text-base text-sm font-light w-full text-gray-700 flex items-center justify-end'>
                 {t('app.clipping.at')}: {clippingAt}
@@ -149,7 +149,7 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
           />
         )}
     </div>
-  )
+  );
 }
 
 type serverSideProps = {

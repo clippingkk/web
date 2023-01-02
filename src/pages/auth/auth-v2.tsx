@@ -47,13 +47,9 @@ function AuthV2(props: AuthV2Props) {
               <h2 className='text-2xl dark:text-gray-100 mb-4'>Login by ...</h2>
               <Link
                 href='/auth/phone'
-              >
-                <a
-                  className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300 mt-4'
-                >
-                  <DevicePhoneMobileIcon className='h-6 w-6 mr-2 inline-block' />
-                  Phone Number
-                </a>
+                className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300 mt-4'>
+
+                <DevicePhoneMobileIcon className='h-6 w-6 mr-2 inline-block' />Phone Number
               </Link>
               <hr className='my-4' />
               <AuthByMetamask />
@@ -75,7 +71,7 @@ function AuthV2(props: AuthV2Props) {
         </div>
       </section>
     </React.Fragment>
-  )
+  );
 }
 
 export default AuthV2

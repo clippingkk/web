@@ -76,9 +76,7 @@ function NavigationBar() {
                   placement='bottom'
                   overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
                 >
-                  <Link
-                    href={id === 0 ? '/auth/auth-v3' : item.dest(id)}
-                  >
+                  <Link href={id === 0 ? '/auth/auth-v3' : item.dest(id)} legacyBehavior>
                     <span
                       className='text-3xl lg:text-4xl'
                       title={t(`app.menu.${item.alt}`)}
@@ -137,13 +135,11 @@ function NavigationBar() {
             >
               <Link
                 href={id === 0 ? '/auth/auth-v3' : `/dash/${id}/settings`}
-              >
-                <a
-                  className='text-3xl lg:text-4xl'
-                  title={t('app.menu.settings')}
-                >
+                className='text-3xl lg:text-4xl'
+                title={t('app.menu.settings')}>
+                
                   🛠
-                </a>
+                
               </Link>
             </Tooltip>
           </li>
@@ -162,7 +158,7 @@ function NavigationBar() {
           </li>
         </ul>
       ) : (
-        <Link href='/auth/auth-v3'>
+        <Link href='/auth/auth-v3' legacyBehavior>
           <h2 className='text-white font-bold'>
             {t('app.slogan')}
           </h2>
@@ -180,7 +176,7 @@ function NavigationBar() {
       </Modal>
 
     </nav>
-  )
+  );
 }
 
 export default NavigationBar

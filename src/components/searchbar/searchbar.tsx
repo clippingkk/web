@@ -127,13 +127,11 @@ function SearchBar(props: SearchBarProps) {
                 >
                   <Link
                     href={`/dash/${profile.domain.length > 3 ? profile.domain : profile.id}/clippings/${c.id}`}
-                  >
-                    <a
-                      className='block py-8 px-4 duration-150 hover:bg-blue-200 rounded transition-colors'
-                      onClick={props.onClose}
-                    >
-                      <p className='text-xl leading-normal'>{c.content}</p>
-                    </a>
+                    className='block py-8 px-4 duration-150 hover:bg-blue-200 rounded transition-colors'
+                    onClick={props.onClose}>
+
+                    <p className='text-xl leading-normal'>{c.content}</p>
+
                   </Link>
                 </li>
               ))}
@@ -143,7 +141,7 @@ function SearchBar(props: SearchBarProps) {
       </div>
     ),
     document.querySelector('#searchbar') as Element
-  )
+  );
 }
 
 export default SearchBar

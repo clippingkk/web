@@ -35,33 +35,31 @@ function TopClippings(props: TopClippingsProps) {
           >
             <Link
               href={`/dash/${c.creator.domain.length > 2 ? c.creator.domain : c.creator.id}/clippings/${c.id}?iac=${IN_APP_CHANNEL.clippingFromUser}`}
-            >
-              <a
-                className={`h-96 max-w-4xl w-full p-8 bg-gradient-to-br from-yellow-300 to-red-400 dark:from-gray-500 dark:to-gray-700 rounded-lg flex flex-col justify-between dark:text-gray-200 hover:scale-105 transform duration-300 with-slide-in`}
-              >
-                <div>
-                  <p
-                    className={`text-xl leading-relaxed font-lxgw ${styles.clippingText}`}
-                  >
-                    {c.content}
-                  </p>
+              className={`h-96 max-w-4xl w-full p-8 bg-gradient-to-br from-yellow-300 to-red-400 dark:from-gray-500 dark:to-gray-700 rounded-lg flex flex-col justify-between dark:text-gray-200 hover:scale-105 transform duration-300 with-slide-in`}>
+
+              <div>
+                <p
+                  className={`text-xl leading-relaxed font-lxgw ${styles.clippingText}`}
+                >
+                  {c.content}
+                </p>
+              </div>
+              <div className='flex justify-between items-center'>
+                <div className='flex items-center '>
+                  <SimpleAvatar avatar={c.creator.avatar} />
+                  <span className='ml-2'>{c.creator.name}</span>
                 </div>
-                <div className='flex justify-between items-center'>
-                  <div className='flex items-center '>
-                    <SimpleAvatar avatar={c.creator.avatar} />
-                    <span className='ml-2'>{c.creator.name}</span>
-                  </div>
-                  <div className='ml-4'>
-                    <span className='text-right font-lxgw'>{c.title}</span>
-                  </div>
+                <div className='ml-4'>
+                  <span className='text-right font-lxgw'>{c.title}</span>
                 </div>
-              </a>
+              </div>
+
             </Link>
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default TopClippings

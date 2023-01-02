@@ -93,13 +93,13 @@ function AuthV3(props: AuthV3Props) {
                 <ArrowUturnLeftIcon className=' w-6 h-6' />
                 <span className='ml-2 inline-block'>Back</span>
               </button>
-              <Link href='/auth/signin'>
-                <a
-                  className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300'
-                >
-                  <ArrowUturnRightIcon className='w-6 h-6' />
-                  <span className='ml-2 inline-block'>{t('app.auth.loginWithPassword')}</span>
-                </a>
+              <Link
+                href='/auth/signin'
+                className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300'>
+
+                <ArrowUturnRightIcon className='w-6 h-6' />
+                <span className='ml-2 inline-block'>{t('app.auth.loginWithPassword')}</span>
+
               </Link>
             </div>
             <div className='flex justify-center items-center flex-col mb-4'>
@@ -131,12 +131,12 @@ function AuthV3(props: AuthV3Props) {
               <p className='text-white mb-2'>
                 {t('app.auth.legacyTip')}
               </p>
-              <Link href='/auth/auth-v2'>
-                <a
-                  className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'
-                >
-                  {t('app.auth.legacyLogin')}
-                </a>
+              <Link
+                href='/auth/auth-v2'
+                className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'>
+
+                {t('app.auth.legacyLogin')}
+
               </Link>
 
               <hr className='my-4' />
@@ -149,7 +149,7 @@ function AuthV3(props: AuthV3Props) {
         </div>
       </section>
     </React.Fragment>
-  )
+  );
 }
 
 export default AuthV3

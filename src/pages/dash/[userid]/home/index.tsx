@@ -90,10 +90,10 @@ function HomePage() {
         <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.title')}</h2>
         <Link
           href={`/dash/${uid}/unchecked`}
-        >
-          <a className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-colors hover:bg-blue-700'>
-            {t('app.home.unchecked')}
-          </a>
+          className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-colors hover:bg-blue-700'>
+
+          {t('app.home.unchecked')}
+
         </Link>
       </header>
 
@@ -143,7 +143,7 @@ function HomePage() {
         hasMore={!reachEnd}
       />
     </section>
-  )
+  );
 
 }
 

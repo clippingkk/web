@@ -54,7 +54,7 @@ function NewbiePage(props: NewbiePageProps) {
   }, [newName])
 
   const newDomainSubmitDisabled = useMemo(() => {
-    return !(/[a-z\.]{3,32}/.test(newDomain))
+    return !(/[a-z\.]{3,32}/.test(newDomain));
   }, [newDomain])
 
   const { push: navigate } = useRouter()

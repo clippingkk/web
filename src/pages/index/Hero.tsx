@@ -69,12 +69,10 @@ function Hero() {
             <div className={styles.platformSection}>
               <Link
                 href={goLinkUrl}
-              >
-                <a
-                  className={'w-fit py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center'}
-                >
-                  {t('app.go')}
-                </a>
+                className={'w-fit py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center'}>
+
+                {t('app.go')}
+
               </Link>
             </div>
           </div>
@@ -84,7 +82,7 @@ function Hero() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Hero
