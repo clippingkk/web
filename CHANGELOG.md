@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.0.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.0.1...v5.0.2) (2023-01-07)
+
+
+### Features
+
+* **styles:** update styles ([5ee8a31](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5ee8a311688526f645e0f00253f2c0d1eede9172))
+
 ### [5.0.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.0.0...v5.0.1) (2023-01-02)
 
 
