@@ -8,6 +8,7 @@ import WebHooks from './webhooks'
 import { useDarkModeStatus } from '../../../../hooks/theme'
 import DashboardContainer from '../../../../components/dashboard-container/container'
 import AccountRemoveButton from './account-remove'
+import { Paper } from '@mantine/core'
 
 type SettingsPageProps = {
 }
@@ -76,7 +77,7 @@ function SettingsPage(props: SettingsPageProps) {
     >
       <Head>
         <title>setting page</title>
-        </Head>
+      </Head>
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'> 🛠 {t('app.settings.title')}</h3>
       <GlobalSettings />
 
@@ -85,18 +86,22 @@ function SettingsPage(props: SettingsPageProps) {
       </h3>
       <Exports />
 
-      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
-        {t('app.settings.webhook.title')}
-        <a
-          href="https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae"
-          target='_blank'
-          referrerPolicy='no-referrer'
-          className='text-gray-800 dark:text-gray-200 text-sm ml-4 hover:underline' rel="noreferrer"
-        >
-          {t('app.settings.webhook.docLink')}
-        </a>
-      </h3>
-      <WebHooks />
+      <div className='w-full'>
+        <div className='mx-4 lg:mx-20'>
+          <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8 text-center'>
+            {t('app.settings.webhook.title')}
+            <a
+              href="https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae"
+              target='_blank'
+              referrerPolicy='no-referrer'
+              className='text-gray-800 dark:text-gray-200 text-sm ml-4 hover:underline' rel="noreferrer"
+            >
+              {t('app.settings.webhook.docLink')}
+            </a>
+          </h3>
+          <WebHooks />
+        </div>
+      </div>
 
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
         {t('app.settings.danger.removeAccount')}

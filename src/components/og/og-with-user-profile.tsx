@@ -3,9 +3,10 @@ import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import { profile_me } from '../../schema/__generated__/profile'
 import logo from '../../assets/logo.png'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
+import { ProfileQuery, User } from '../../schema/generated'
 
 type OGWithUserProfileProps = {
-  profile?: profile_me
+  profile?: ProfileQuery['me']
 }
 
 function OGWithUserProfile(props: OGWithUserProfileProps) {

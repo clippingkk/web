@@ -5,6 +5,7 @@ import { WenquBook } from '../../services/wenqu'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp';
 import { useTranslation } from 'react-i18next';
 import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
+import { Rating } from '@mantine/core';
 
 type TBookInfoProp = {
   uid: number
@@ -31,7 +32,10 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
         </div>
 
         <div>
-          <h2 className='my-4 text-4xl font-bold'>{book.title}</h2>
+          <div className='flex items-center flex-column lg:flex-row'>
+          <h2 className='my-4 text-4xl font-bold mr-2'>{book.title}</h2>
+          <Rating readOnly value={book.rating / 2} />
+          </div>
           <h5 className='my-4 text-2xl'>{book.author}</h5>
           {duration && (
             <h5 className='my-4 text-lg'>

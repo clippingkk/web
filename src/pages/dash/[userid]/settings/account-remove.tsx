@@ -8,6 +8,7 @@ import mutationDeleteAccount from '../../../../schema/mutations/accountDelete.gr
 import { plainLogout } from '../../../../store/user/action'
 import { USER_LOGOUT } from '../../../../store/user/type'
 import { useRouter } from 'next/router'
+import { Button } from '@mantine/core'
 
 type AccountRemoveButtonProps = {
 }
@@ -15,7 +16,7 @@ type AccountRemoveButtonProps = {
 function AccountRemoveButton(props: AccountRemoveButtonProps) {
   const { t } = useTranslation()
   const [doDelete] = useMutation(mutationDeleteAccount)
-  const { replace } = useRouter() 
+  const { replace } = useRouter()
 
   const dispatch = useDispatch()
 
@@ -36,12 +37,16 @@ function AccountRemoveButton(props: AccountRemoveButtonProps) {
       console.error(err)
       toast.error(err)
     }
-  }, [dispatch, doDelete, t])
+  }, [dispatch, doDelete, replace, t])
 
   return (
-    <button className='bg-red-400 px-4 py-2' onClick={doDeleteMyAccount}>
+    <Button
+      variant="gradient"
+      className='bg-gradient-to-br from-orange-400 to-red-500'
+      onClick={doDeleteMyAccount}
+    >
       {t('app.settings.danger.removeButton')}
-    </button>
+    </Button>
   )
 }
 

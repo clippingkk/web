@@ -16,6 +16,7 @@ import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../servic
 import OGWithSquare from '../../../../components/og/og-with-square-page'
 import { LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
 import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size'
+import { Divider } from '@mantine/core'
 
 function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   usePageTrack('square')
@@ -47,7 +48,7 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
     if (reachEnd.current) {
       return
     }
-    fetchMore({
+    return fetchMore({
       variables: {
         pagination: {
           limit: APP_API_STEP_LIMIT,
@@ -65,7 +66,8 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
         <title>square - clippingkk</title>
         <OGWithSquare books={serverResponse.books} />
       </Head>
-      <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'>Square</h2>
+      <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'> 🪩 Square</h2>
+      <Divider className='w-full' />
       <Masonry
         items={(data.featuredClippings ?? []) as fetchSquareData_featuredClippings[]}
         columnCount={masonaryColumnCount}

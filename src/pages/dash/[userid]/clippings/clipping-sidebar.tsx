@@ -15,6 +15,7 @@ import { toast } from 'react-hot-toast'
 import styles from './clipping.module.css'
 import Link from 'next/link'
 import BookInfoChanger from '../../../../components/book-info-changer/bookInfoChanger'
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid'
 
 type ClippingSidebarProps = {
   clipping: fetchClipping_clipping | undefined
@@ -180,9 +181,9 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             <li className='w-full mb-4'>
               <Link
                 href={siblingLink.prev}
-                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
+                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
                 title={t('app.clipping.sidebar.prev')}>
-
+                  <ArrowUpIcon className='w-4 h-4 mr-2' />
                 {t('app.clipping.sidebar.prev')}
 
               </Link>
@@ -192,11 +193,10 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             <li className='w-full mb-4'>
               <Link
                 href={siblingLink.next}
-                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
+                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
                 title={t('app.clipping.sidebar.next')}>
-
+                  <ArrowDownIcon className='w-4 h-4 mr-2' />
                 {t('app.clipping.sidebar.next')}
-
               </Link>
             </li>
           )}

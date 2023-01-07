@@ -17,6 +17,8 @@ import { WebHookStep } from '../../../../../__generated__/globalTypes'
 import { createNewWebHook, createNewWebHookVariables } from '../../../../schema/mutations/__generated__/createNewWebHook'
 import { deleteAWebHook, deleteAWebHookVariables } from '../../../../schema/mutations/__generated__/deleteAWebHook'
 import { useTranslation } from 'react-i18next'
+import { Button, Table } from '@mantine/core'
+import { toastPromiseDefaultOption } from '../../../../services/misc'
 
 const webhookColumns: Column<fetchMyWebHooks_me_webhooks>[] = [{
   Header: 'id',
@@ -57,7 +59,7 @@ function WebHooks() {
       if (vals.hookUrl.length <= 3 || !formik.isValid) {
         return
       }
-      createMutation({
+      return createMutation({
         variables: {
           step: WebHookStep.onCreateClippings,
           hookUrl: vals.hookUrl
@@ -68,8 +70,6 @@ function WebHooks() {
         client.resetStore()
         refetch()
         setVisible(false)
-      }).catch(e => {
-        toast.error(e.toString())
       })
     }
   })
@@ -87,90 +87,89 @@ function WebHooks() {
 
   return (
     <div className='w-full text-center'>
-      <table {...getTableProps()} className='table-auto mx-auto dark:text-white'>
-        <thead className='w-full'>
-          {headerGroups.map(headerGroup => (
-            // eslint-disable-next-line react/jsx-key
-            <tr
-              {...headerGroup.getHeaderGroupProps()}
-              className='table-row'
-            >
-              {headerGroup.headers.map(column => (
-                // eslint-disable-next-line react/jsx-key
-                <th
-                  {...column.getHeaderProps()}
-                  className='table-cell py-2 px-8 dark:border-white border-gray-300 border-2'
-                >
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()} className='table-row-group'>
-          {rows.length === 0 && (
-            <tr className='table-row'>
-              <td
-                className='table-cell py-2 px-4 border-2 text-base my-4'
-                colSpan={webhookColumns.length}
-              >
-                {t('app.menu.search.empty')}
-              </td>
-            </tr>
-          )}
-          {rows.map(row => {
-            prepareRow(row)
-            return (
+      <div className=' mx-4 lg:mx-20'>
+        <Table {...getTableProps()}>
+          <thead>
+            {headerGroups.map(headerGroup => (
+              // eslint-disable-next-line react/jsx-key
               <tr
-                {...row.getRowProps()}
-                className='table-row with-fade-in'
+                {...headerGroup.getHeaderGroupProps()}
               >
-                {row.cells.map(cell => {
-                  if (cell.column.Header === 'action') {
+                {headerGroup.headers.map(column => (
+                  // eslint-disable-next-line react/jsx-key
+                  <th
+                    {...column.getHeaderProps()}
+                  >
+                    {column.render('Header')}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.length === 0 && (
+              <tr>
+                <td
+                  colSpan={webhookColumns.length}
+                >
+                  {t('app.menu.search.empty')}
+                </td>
+              </tr>
+            )}
+            {rows.map(row => {
+              prepareRow(row)
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  className='with-fade-in'
+                >
+                  {row.cells.map(cell => {
+                    if (cell.column.Header === 'action') {
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                        >
+                          <Button
+                            variant="gradient"
+                            className='bg-gradient-to-br from-orange-400 to-red-500'
+                            onClick={() => {
+                              deleteMutation({
+                                variables: {
+                                  id: cell.row.values.id
+                                }
+                              }).then(() => {
+                                client.resetStore()
+                                toast.success(t('app.common.done'))
+                              })
+                            }}
+                          >{t('app.common.delete')}</Button>
+                        </td>
+                      )
+                    }
                     return (
+                      // eslint-disable-next-line react/jsx-key
                       <td
                         {...cell.getCellProps()}
-                        className='table-cell py-2 px-4 border-2'
                       >
-                        <button
-                          className='from-red-400 to-red-600 py-4 px-8 rounded hover:shadow-lg bg-gradient-to-br duration-300 dark:text-gray-200 hover:scale-110 transform focus:outline-none m-4'
-                          onClick={() => {
-                            deleteMutation({
-                              variables: {
-                                id: cell.row.values.id
-                              }
-                            }).then(() => {
-                              client.resetStore()
-                              toast.success(t('app.common.done'))
-                            }).catch(err => {
-                              toast.error(err.toString())
-                            })
-                          }}
-                        >{t('app.common.delete')}</button>
+                        {cell.render('Cell')}
                       </td>
                     )
-                  }
-                  return (
-                    // eslint-disable-next-line react/jsx-key
-                    <td
-                      {...cell.getCellProps()}
-                      className='table-cell py-2 px-4 border-2'
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  )
-                })}
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-      <button
-        className='from-blue-400 to-blue-600 py-4 px-8 rounded hover:shadow-lg bg-gradient-to-br duration-300 dark:text-gray-200 hover:scale-110 transform focus:outline-none mx-4 mt-4'
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </Table>
+      </div>
+      <Button
+        variant="gradient"
+        className='bg-gradient-to-br from-indigo-400 to-cyan-500'
         onClick={() => {
           setVisible(true)
         }}
-      >New</button>
+      >
+        New
+      </Button>
 
       {visible && (
         <Dialog
@@ -190,13 +189,15 @@ function WebHooks() {
               <div
                 className='w-full text-right'
               >
-                <button
-                  className='w-64 bg-blue-400 rounded py-4 hover:bg-blue-500 duration-150 disabled:bg-gray-400'
+                <Button
+                  variant="gradient"
+                  className='bg-gradient-to-br from-indigo-400 to-cyan-500'
                   disabled={formik.values.hookUrl.length <= 3 || !formik.isValid}
+                  loading={formik.isSubmitting}
                   type='submit'
                 >
                   {t('app.settings.webhook.submit')}
-                </button>
+                </Button>
               </div>
 
             </form>

@@ -1,17 +1,12 @@
 import React, { useMemo, useState } from 'react'
 import Head from 'next/head'
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-} from 'recharts'
 import Card from '../../../../components/card/card';
-import Divider from '../../../../components/divider/divider';
 import ClippingItem from '../../../../components/clipping-item/clipping-item';
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import { useMutation } from '@apollo/client'
 import profileQuery from '../../../../schema/profile.graphql'
 import followMutation from '../../../../schema/mutations/follow.graphql'
 import unfollowMutation from '../../../../schema/mutations/unfollow.graphql'
-import { profile, profileVariables } from '../../../../schema/__generated__/profile';
 import WechatBindButton from './bind';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
@@ -34,12 +29,10 @@ import OGWithUserProfile from '../../../../components/og/og-with-user-profile';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { client } from '../../../../services/ajax';
 import CliApiToken from './cli-api';
-import NFTGallary from '../../../../components/nfts/nft-gallary';
-import Dialog from '../../../../components/dialog/dialog';
-import { ProfileQuery, ProfileQueryVariables, useProfileQuery, useUpdateProfileMutation } from '../../../../schema/generated';
-import { toastPromiseDefaultOption } from '../../../../services/misc';
 import AvatarPicker from '../../../../components/profile/avatar-picker';
 import PersonalActivity from '../../../../components/profile/activity';
+import { ProfileQuery, ProfileQueryVariables, useUpdateProfileMutation } from '../../../../schema/generated';
+import { Divider, Text } from '@mantine/core';
 
 function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // 优先使用本地数据，服务端数据只是为了 seo
@@ -57,7 +50,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
     userId: data.me.id
   })
 
-  useTitle(data?.me.name)
+  useTitle(data.me.name)
   const { t } = useTranslation()
 
   const chartData = useMemo(() => {
@@ -66,11 +59,11 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
       const date = dayjs().startOf('month').subtract(i, 'month').format('YYYY-MM')
       c.push({
         date,
-        count: data?.me.analysis.monthly.find(x => x.date === date)?.count ?? 0
+        count: data.me.analysis.monthly.find(x => x.date === date)?.count ?? 0
       })
     }
     return c
-  }, [data?.me.analysis.monthly])
+  }, [data.me.analysis.monthly])
 
   const year = (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
@@ -84,20 +77,20 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
     if (!isInMyPage) {
       return false
     }
-    return !!data?.me.wechatOpenid
+    return !!data.me.wechatOpenid
   }, [data, uid, isInMyPage])
 
   return (
     <section>
       <Head>
-        <title>{data?.me.name}`s profile</title>
-        <OGWithUserProfile profile={data?.me} />
+        <title>{data.me.name}`s profile</title>
+        <OGWithUserProfile profile={data.me} />
       </Head>
-      <Card className='flex items-center justify-center py-12 w-full lg:w-4/5 mx-auto mt-20 anna-fade-in bg-gray-200 bg-opacity-75'>
+      <div className='flex rounded items-center justify-center py-12 w-full mx-auto mt-20 anna-fade-in bg-gradient-to-br from-indigo-100 to-indigo-200'>
         <div className='flex flex-col items-center justify-center w-full'>
           <div className='w-full flex items-center justify-center'>
             <Avatar
-              img={data?.me.avatar ?? ''}
+              img={data.me.avatar ?? ''}
               name={data?.me.name}
               editable={uid === data.me.id}
               className='w-16 h-16 mr-12 lg:w-32 lg:h-32'
@@ -187,13 +180,17 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
             />
           </div>
         </div>
-      </Card>
+      </div>
 
-      <Divider title={t('app.profile.recents')} />
+      <Divider
+        label={<Text className=' dark:text-gray-100'>{t('app.profile.recents')}</Text>}
+        labelPosition='center'
+        className='my-8'
+      />
 
       <MasonryContainer className='anna-fade-in'>
         <React.Fragment>
-          {data?.me.recents.map(
+          {data.me.recents.map(
             (item => <ClippingItem
               key={item.id}
               item={item}
@@ -228,18 +225,27 @@ type serverSideProps = {
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
   const pathUid: string = (context.params?.userid as string) ?? ''
   const uid = parseInt(pathUid)
-  const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
-    query: profileQuery,
-    fetchPolicy: 'network-only',
-    variables: {
-      id: Number.isNaN(uid) ? -1 : uid,
-      domain: Number.isNaN(uid) ? pathUid : null
-    },
-  })
-  return {
-    props: {
-      profileServerData: profileResponse.data,
-    },
+  try {
+    const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
+      query: profileQuery,
+      fetchPolicy: 'network-only',
+      variables: {
+        id: Number.isNaN(uid) ? -1 : uid,
+        domain: Number.isNaN(uid) ? pathUid : null
+      },
+    })
+    return {
+      props: {
+        profileServerData: profileResponse.data,
+      },
+    }
+  } catch (err) {
+    return {
+      redirect: {
+        destination: `/dash/${uid}/profile/404`,
+        permanent: false
+      }
+    }
   }
 }
 

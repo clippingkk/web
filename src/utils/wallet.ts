@@ -10,7 +10,6 @@ import { URLS } from './chains'
 
 const [metaMask, hooks] = initializeConnector<MetaMask>((actions) => new MetaMask({ actions }))
 
-
 const LoginWelcomeText = 'Welcome to the ClippingKK~ \n It`s your nonce: '
 
 async function signDataByWeb3(address: string) {

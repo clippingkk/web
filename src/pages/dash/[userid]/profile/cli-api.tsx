@@ -1,10 +1,10 @@
 import { useMutation } from '@apollo/client'
 import { CommandLineIcon } from '@heroicons/react/24/outline'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useStore } from 'react-redux'
 import { toast } from 'react-hot-toast'
 import Dialog from '../../../../components/dialog/dialog'
 import q from '../../../../schema/claimAPIToken.graphql'
+import { Prism } from '@mantine/prism'
 import { claimCliAPIToken, claimCliAPITokenVariables } from '../../../../schema/__generated__/claimCliAPIToken'
 import { getLocalToken } from '../../../../services/ajax'
 
@@ -38,7 +38,12 @@ function CliApiToken(props: CliApiTokenProps) {
       return ''
     }
 
-    return `ck-cli --token="${k}" parse --input My\ Clippings.txt --output http`
+    return `
+ck-cli 
+  --token="${k}" 
+  parse
+  --input My\ Clippings.txt
+  --output http`
   }, [data?.claimAPIKey])
 
   const onCopyToClipboard = useCallback(() => {
@@ -79,11 +84,9 @@ function CliApiToken(props: CliApiTokenProps) {
             </a>
             <br />
             2. run
-            <pre className='overflow-y-auto text-xl'>
-              <code className=' whitespace-pre-wrap w-full'>
+            <Prism language='bash'>
                 {cliScriptExample}
-              </code>
-            </pre>
+            </Prism>
             <button
               onClick={onCopyToClipboard}
               className='text-xl py-2 px-4 rounded bg-blue-500 text-white hover:scale-110 transform duration-300'

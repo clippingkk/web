@@ -9,6 +9,7 @@ import { ExportDestination } from '../../../../../__generated__/globalTypes'
 import FieldInput from '../../../../components/input'
 import { exportDataTo, exportDataToVariables } from '../../../../schema/mutations/__generated__/exportDataTo'
 import exportDataMutation from '../../../../schema/mutations/export-data.graphql'
+import { Button } from '@mantine/core'
 
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)
@@ -44,12 +45,13 @@ function ExportToFlomo() {
   })
   return (
     <React.Fragment>
-      <button
-        className='from-blue-400 to-blue-600 py-4 px-8 rounded hover:shadow-lg bg-gradient-to-br duration-300 dark:text-gray-200 hover:scale-110 transform focus:outline-none mx-4'
+      <Button
+        variant="gradient"
+        className='bg-gradient-to-br from-indigo-400 to-cyan-500'
         onClick={() => setVisible(true)}
       >
         flomo
-    </button>
+      </Button>
       {visible && (
         <Dialog
           title={t('app.settings.export.flomo.title')}
@@ -68,12 +70,14 @@ function ExportToFlomo() {
                 className='w-full text-right'
               >
 
-                <button
-                  className='w-64 bg-blue-400 rounded py-4 hover:bg-blue-500 duration-150'
+                <Button
+                  // className='w-64 bg-blue-400 rounded py-4 hover:bg-blue-500 duration-150'
+                  variant="gradient"
+                  className='bg-gradient-to-br from-indigo-400 to-cyan-500'
                   type='submit'
                 >
                   {t('app.settings.export.flomo.submit')}
-                </button>
+                </Button>
               </div>
 
             </form>

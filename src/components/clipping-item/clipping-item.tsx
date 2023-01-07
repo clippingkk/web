@@ -10,9 +10,10 @@ import { IN_APP_CHANNEL } from '../../services/channel';
 
 import styles from './clipping-item.module.css'
 import Link from 'next/link';
+import { Clipping } from '../../schema/generated';
 
 type TClippingItemProps = {
-  item: book_book_clippings
+  item: Pick< Clipping, 'id' | 'bookID' | 'title' | 'content' | 'createdAt' | 'pageAt'>
   book?: WenquBook
   domain: string
   inAppChannel: IN_APP_CHANNEL
