@@ -5,13 +5,7 @@ import logo from '../../assets/logo.png'
 import Head from 'next/head'
 import OGWithAuth from '../../components/og/og-with-auth'
 import EmailBox from '../../components/auth/email-box'
-import { useMutation } from '@apollo/client'
-import sendOtpMutation from '../../schema/auth/otp.graphql'
-import loginV3Mutation from '../../schema/auth/loginv3.graphql'
-import { sendOTP, sendOTPVariables } from '../../schema/auth/__generated__/sendOTP'
-import { OTPChannel } from '../../../__generated__/globalTypes'
 import OTPBox from '../../components/auth/otp-box'
-import { doLoginV3, doLoginV3Variables } from '../../schema/auth/__generated__/doLoginV3'
 import { useLoginV3Successed } from '../../hooks/hooks'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../services/misc'
@@ -19,6 +13,7 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/router'
+import { OtpChannel, useDoLoginV3Mutation, useSendOtpMutation } from '../../schema/generated'
 
 type AuthV3Props = {
 }
@@ -33,12 +28,12 @@ function AuthV3(props: AuthV3Props) {
 
   const [doSendOtp, {
     loading: isSendingOtp
-  }] = useMutation<sendOTP, sendOTPVariables>(sendOtpMutation)
+  }] = useSendOtpMutation()
 
   const onEmailSubmit = useCallback((email: string, turnstileToken: string) => {
     toast.promise(doSendOtp({
       variables: {
-        channel: OTPChannel.Email,
+        channel: OtpChannel.Email,
         address: email,
         cfTurnstileToken: turnstileToken
       }
@@ -51,7 +46,7 @@ function AuthV3(props: AuthV3Props) {
   const [
     loginV3,
     loginV3Response
-  ] = useMutation<doLoginV3, doLoginV3Variables>(loginV3Mutation)
+  ] = useDoLoginV3Mutation()
 
   const onOTPConfirmed = useCallback((otp: string) => {
     toast.promise(

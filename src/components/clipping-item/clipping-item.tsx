@@ -1,8 +1,6 @@
 import React from 'react'
 import Card from '../card/card';
-import { book_book_clippings } from '../../schema/__generated__/book'
 import { WenquBook } from '../../services/wenqu';
-import { fetchSquareData_featuredClippings_creator } from '../../schema/__generated__/fetchSquareData';
 import { useTranslation } from 'react-i18next';
 import Avatar from '../avatar/avatar';
 import ClippingContent from '../clipping-content';
@@ -10,14 +8,14 @@ import { IN_APP_CHANNEL } from '../../services/channel';
 
 import styles from './clipping-item.module.css'
 import Link from 'next/link';
-import { Clipping } from '../../schema/generated';
+import { Clipping, User } from '../../schema/generated';
 
 type TClippingItemProps = {
-  item: Pick< Clipping, 'id' | 'bookID' | 'title' | 'content' | 'createdAt' | 'pageAt'>
+  item: Pick< Clipping, 'id' | 'bookID' | 'title' | 'content'>
   book?: WenquBook
   domain: string
   inAppChannel: IN_APP_CHANNEL
-  creator?: fetchSquareData_featuredClippings_creator
+  creator?: Pick<User, 'avatar' | 'id' | 'name' | 'clippingsCount'>
 }
 
 function ClippingItem({ domain, item, book, creator, inAppChannel }: TClippingItemProps) {

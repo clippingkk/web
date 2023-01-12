@@ -1,14 +1,8 @@
 import { useMutation } from '@apollo/client'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useCallback, useMemo, useState } from 'react'
-import BindPhone from '../../../components/bind-phone'
-import LoadingIcon from '../../../components/icons/loading.svg'
-import OGWithAuth from '../../../components/og/og-with-auth'
 import { useAuthBy3rdPartSuccessed } from '../../../hooks/hooks'
-import bindAppleUniqueMutation from '../../../schema/auth/apple.bind.graphql'
-import { bindAppleUnique, bindAppleUniqueVariables } from '../../../schema/auth/__generated__/bindAppleUnique'
-import AuthPage from '../auth'
+import { useBindAppleUniqueMutation } from '../../../schema/generated'
 import AuthCallbackPageContainer from './layout'
 
 type AuthCallbackAppleProps = {
@@ -26,7 +20,7 @@ function AuthCallbackApple(props: AuthCallbackAppleProps) {
     }
   }, [r.query])
 
-  const [doBind, doBindResult] = useMutation<bindAppleUnique, bindAppleUniqueVariables>(bindAppleUniqueMutation)
+  const [doBind, doBindResult] = useBindAppleUniqueMutation()
 
   const onAuthCallback = useCallback((pn: string, code: string) => {
     return doBind({

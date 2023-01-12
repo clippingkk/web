@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import ListFooter from '../../../../components/list-footer/list-footer';
-import homeListQuery from '../../../../schema/books.graphql'
 import { useQuery } from '@apollo/client';
-import { books, booksVariables } from '../../../../schema/__generated__/books';
 import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../../../store';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +17,7 @@ import { useRouter } from 'next/router';
 import DashboardContainer from '../../../../components/dashboard-container/container';
 import PageLoading from '../../../../components/loading/loading';
 import HomePageSkeleton from './skeleton';
+import { useBooksQuery } from '../../../../schema/generated';
 
 const STEP = 10
 
@@ -56,7 +55,7 @@ function HomePage() {
   useSyncClippingsToServer()
 
   const [reachEnd, setReachEnd] = useState(false)
-  const { data, fetchMore, loading, called } = useQuery<books, booksVariables>(homeListQuery, {
+  const { data, fetchMore, loading, called } = useBooksQuery({
     variables: {
       id: uid,
       pagination: {

@@ -6,11 +6,6 @@ import { changeBackground } from '../../../../store/app/type';
 import { useDispatch } from 'react-redux';
 import Head from 'next/head'
 import { usePageTrack } from '../../../../hooks/tracke';
-import { useQuery } from '@apollo/client';
-import bookQuery from '../../../../schema/book.graphql'
-import myIdByDomainQuery from '../../../../schema/myIdByDomain.graphql'
-import { book, bookVariables, book_book_clippings } from '../../../../schema/__generated__/book'
-import { queryMyIdByDomain, queryMyIdByDomainVariables } from '../../../../schema/__generated__/queryMyIdByDomain'
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { IN_APP_CHANNEL } from '../../../../services/channel';
@@ -21,6 +16,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu';
 import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size';
 import { Masonry, useInfiniteLoader } from 'masonic';
+import { Clipping, useBookQuery, useQueryMyIdByDomainQuery } from '../../../../schema/generated';
 
 function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { userid: domain, bookid } = useRouter().query as { userid: string, bookid: string }
@@ -31,7 +27,7 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
   const bookData = serverResponse.bookServerData
 
   const hasMore = useRef(true)
-  const { data: clippingsData, fetchMore, loading } = useQuery<book, bookVariables>(bookQuery, {
+  const { data: clippingsData, fetchMore, loading } = useBookQuery({
     variables: {
       id: ~~bookid,
       pagination: {
@@ -59,7 +55,7 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
     return result || undefined
   }, [clippingsData?.book.startReadingAt, clippingsData?.book.lastReadingAt])
 
-  const mappedMyData = useQuery<queryMyIdByDomain, queryMyIdByDomainVariables>(myIdByDomainQuery, {
+  const mappedMyData = useQueryMyIdByDomainQuery({
     variables: {
       domain
     },
@@ -104,7 +100,7 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
       <Divider title={t('app.book.title')} />
       <div>
         <Masonry
-          items={(clippingsData?.book.clippings ?? []) as book_book_clippings[]}
+          items={(clippingsData?.book.clippings ?? []) as Clipping[]}
           columnCount={masonaryColumnCount}
           columnGutter={30}
           onRender={maybeLoadMore}

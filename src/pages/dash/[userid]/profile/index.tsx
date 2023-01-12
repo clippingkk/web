@@ -3,10 +3,6 @@ import Head from 'next/head'
 import Card from '../../../../components/card/card';
 import ClippingItem from '../../../../components/clipping-item/clipping-item';
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
-import { useMutation } from '@apollo/client'
-import profileQuery from '../../../../schema/profile.graphql'
-import followMutation from '../../../../schema/mutations/follow.graphql'
-import unfollowMutation from '../../../../schema/mutations/unfollow.graphql'
 import WechatBindButton from './bind';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
@@ -18,8 +14,6 @@ import MasonryContainer from '../../../../components/masonry-container'
 import ProfileBindPhone from './bind-phone'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { API_HOST } from '../../../../constants/config'
-import { followUser, followUserVariables } from '../../../../schema/mutations/__generated__/followUser'
-import { unfollowUser, unfollowUserVariables } from '../../../../schema/mutations/__generated__/unfollowUser'
 import { toast } from 'react-hot-toast'
 
 import styles from './profile.module.css'
@@ -31,7 +25,7 @@ import { client } from '../../../../services/ajax';
 import CliApiToken from './cli-api';
 import AvatarPicker from '../../../../components/profile/avatar-picker';
 import PersonalActivity from '../../../../components/profile/activity';
-import { ProfileQuery, ProfileQueryVariables, useUpdateProfileMutation } from '../../../../schema/generated';
+import { ProfileDocument, ProfileQuery, ProfileQueryVariables, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '../../../../schema/generated';
 import { Divider, Text } from '@mantine/core';
 
 function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -40,8 +34,8 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
 
   const [isPickingAvatar, setIsPickingAvatar] = useState(false)
 
-  const [doFollow, { loading: followLoading }] = useMutation<followUser, followUserVariables>(followMutation)
-  const [doUnfollow, { loading: unfollowLoading }] = useMutation<unfollowUser, unfollowUserVariables>(unfollowMutation)
+  const [doFollow, { loading: followLoading }] = useFollowUserMutation()
+  const [doUnfollow, { loading: unfollowLoading }] = useUnfollowUserMutation()
 
   const [doUpdate, { client: apolloClient }] = useUpdateProfileMutation()
 
@@ -132,7 +126,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
                     if (followLoading || unfollowLoading) {
                       return
                     }
-                    const params: followUserVariables = { targetUserID: data.me.id }
+                    const params = { targetUserID: data.me.id }
                     let mutationJob: Promise<any>
                     if (data?.me.isFan) {
                       mutationJob = doUnfollow({
@@ -227,7 +221,7 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   const uid = parseInt(pathUid)
   try {
     const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
-      query: profileQuery,
+      query: ProfileDocument,
       fetchPolicy: 'network-only',
       variables: {
         id: Number.isNaN(uid) ? -1 : uid,

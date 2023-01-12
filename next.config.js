@@ -16,10 +16,10 @@ const config = {
   // sentry: {
   //   hideSourceMaps: true
   // },
-  experimental: {
+  // experimental: {
     // runtime: 'experimental-edge',
     // swcPlugins: [['@swc-jotai/debug-label', {}]],
-  },
+  // },
   // i18n: {
   //   locales: ['default', 'zhCN', 'en', 'ko'],
   //   defaultLocale: 'zhCN'
@@ -38,25 +38,6 @@ const config = {
     DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
     GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT),
     infuraKey: JSON.stringify(process.env.infuraKey || '')
-  },
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    config.module.rules.push({
-      test: /\.(graphql|gql)$/,
-      loader: 'graphql-tag/loader',
-    })
-    config.module.rules.push({
-      test: /\.ya?ml$/,
-      type: 'json',
-      options: { asJSON: true },
-      loader: 'yaml-loader',
-    })
-    config.module.rules.push(
-      {
-        test: /__tests__\/\.*\.[j|t]sx?$/,
-        loader: 'ignore-loader'
-      }
-    )
-    return config
   },
   // swcMinify: true
 }

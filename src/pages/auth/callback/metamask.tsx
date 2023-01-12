@@ -2,8 +2,7 @@ import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useAuthBy3rdPartSuccessed } from '../../../hooks/hooks'
-import bindWeb3Mutation from '../../../schema/bindWeb3.graphql'
-import { bindWeb3Address, bindWeb3AddressVariables } from '../../../schema/__generated__/bindWeb3Address'
+import { useBindWeb3AddressMutation } from '../../../schema/generated'
 import AuthCallbackPageContainer from './layout'
 
 type AuthCallbackMetamaskProps = {
@@ -19,7 +18,7 @@ function AuthCallbackMetamask(props: AuthCallbackMetamaskProps) {
     }
   }, [r.query])
 
-  const [doBind, doBindResult] = useMutation<bindWeb3Address, bindWeb3AddressVariables>(bindWeb3Mutation)
+  const [doBind, doBindResult] = useBindWeb3AddressMutation()
 
   const onAuthCallback = useCallback((pn: string, code: string) => {
     return doBind({

@@ -3,26 +3,20 @@ import * as sentry from '@sentry/react'
 import { useEffect } from "react"
 import profile from "../utils/profile"
 import { ApolloError, MutationResult } from "@apollo/client"
-import { auth_auth } from "../schema/__generated__/auth"
 import { useDispatch } from "react-redux"
 import { AUTH_LOGIN } from "../store/user/type"
-import { signup } from "../schema/__generated__/signup"
 import { updateToken } from "../services/ajax"
-import { authByPhone_authByPhone } from "../schema/mutations/__generated__/authByPhone"
 import { USER_TOKEN_KEY } from "../constants/storage"
 import { useRouter } from "next/router"
-import { authByWeb3_loginByWeb3 } from "../schema/__generated__/authByWeb3"
-import { loginByApple, loginByApple_loginByApple } from "../schema/auth/__generated__/loginByApple"
-import { bindAppleUnique_bindAppleUnique } from "../schema/auth/__generated__/bindAppleUnique"
-import { bindWeb3Address_bindWeb3Address } from "../schema/__generated__/bindWeb3Address"
-import { doLoginV3_loginV3 } from "../schema/auth/__generated__/doLoginV3"
 import toast from "react-hot-toast"
+import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from "../schema/generated"
 
 export function useAuthBy3rdPartSuccessed(
   called: boolean,
   loading: boolean,
   error?: ApolloError,
-  authResponse?: authByWeb3_loginByWeb3 | loginByApple_loginByApple | bindAppleUnique_bindAppleUnique | bindWeb3Address_bindWeb3Address
+  // authResponse?: authByWeb3_loginByWeb3 | loginByApple_loginByApple | bindAppleUnique_bindAppleUnique | bindWeb3Address_bindWeb3Address
+  authResponse?: Pick<AuthByWeb3Query['loginByWeb3'], 'user' | 'token'>
 ) {
   // const navigate = useNavigate()
   const { push: navigate } = useRouter()
@@ -78,7 +72,7 @@ export function useLoginV3Successed(
   called: boolean,
   loading: boolean,
   error?: ApolloError,
-  authResponse?: doLoginV3_loginV3
+  authResponse?: DoLoginV3Mutation['loginV3']
 ) {
   const { push: navigate } = useRouter()
   const dispatch = useDispatch()
@@ -133,7 +127,7 @@ export function useAuthByPhoneSuccessed(
   called: boolean,
   loading: boolean,
   error?: ApolloError,
-  authResponse?: authByPhone_authByPhone
+  authResponse?: AuthByPhoneMutation['authByPhone']
 ) {
   // const navigate = useNavigate()
   const { push: navigate } = useRouter()
@@ -186,7 +180,7 @@ export function useAuthSuccessed(
   called: boolean,
   loading: boolean,
   error?: ApolloError,
-  authResponse?: auth_auth
+  authResponse?: AuthQuery['auth']
 ) {
   const { push: navigate } = useRouter()
   const dispatch = useDispatch()
@@ -217,7 +211,7 @@ export function useAuthSuccessed(
   }, [called, loading, error, authResponse])
 }
 
-export function useSignupSuccess(result: MutationResult<signup>) {
+export function useSignupSuccess(result: MutationResult<SignupMutation>) {
   const { push: navigate } = useRouter()
   useEffect(() => {
     const { called, error, data, loading } = result

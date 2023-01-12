@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../../../components/avatar/avatar'
-import { fetchClipping_clipping_comments } from '../../../../schema/__generated__/fetchClipping'
+import { Comment as CommentData, User } from '../../../../schema/generated'
 
 type CommentProps = {
-  comment: fetchClipping_clipping_comments
+  comment: Pick<CommentData, 'id' | 'content'> & { creator: Pick<User, 'name' | 'avatar' >}
 }
 
 function Comment(props: CommentProps) {

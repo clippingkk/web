@@ -1,11 +1,9 @@
-import { useLazyQuery } from '@apollo/client';
 import React, { useEffect } from 'react'
-import githubLoginQuery from '../../schema/login.graphql'
-import { githubLogin, githubLoginVariables } from '../../schema/__generated__/githubLogin';
 import { useAuthSuccessed } from '../../hooks/hooks';
+import { useGithubLoginLazyQuery } from '../../schema/generated';
 
 function GithubOAuth() {
-  const [exec, resp] = useLazyQuery<githubLogin, githubLoginVariables>(githubLoginQuery)
+  const [exec, resp] = useGithubLoginLazyQuery()
 
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.githubAuth)
   useEffect(() => {

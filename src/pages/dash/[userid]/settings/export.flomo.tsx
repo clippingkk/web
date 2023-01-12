@@ -5,16 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
 import Dialog from '../../../../components/dialog/dialog'
-import { ExportDestination } from '../../../../../__generated__/globalTypes'
 import FieldInput from '../../../../components/input'
-import { exportDataTo, exportDataToVariables } from '../../../../schema/mutations/__generated__/exportDataTo'
-import exportDataMutation from '../../../../schema/mutations/export-data.graphql'
 import { Button } from '@mantine/core'
+import { ExportDestination, useExportDataToMutation } from '../../../../schema/generated'
 
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
-  const [mutate] = useMutation<exportDataTo, exportDataToVariables>(exportDataMutation)
+  const [mutate] = useExportDataToMutation()
   const formik = useFormik({
     initialValues: {
       endpoint: '',
@@ -31,7 +29,7 @@ function ExportToFlomo() {
 
       mutate({
         variables: {
-          destination: ExportDestination.flomo,
+          destination: ExportDestination.Flomo,
           args: vals.endpoint
         }
       }).then(() => {

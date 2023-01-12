@@ -1,10 +1,8 @@
 import { UPDATE_CLIPPING_BOOK, TClippingBookUpdateAction } from "./type";
 import { takeLatest } from "redux-saga/effects";
-import { updateClippingBook } from "../../services/books";
-import updateClippingBookIdMutation from '../../schema/updateClippingBook.graphql'
 import swal from "sweetalert";
 import { client } from "../../services/ajax";
-import { updateClippingBookId, updateClippingBookIdVariables } from "../../schema/__generated__/updateClippingBookId";
+import { UpdateClippingBookIdDocument, UpdateClippingBookIdMutation, UpdateClippingBookIdMutationVariables } from "../../schema/generated";
 
 export function* doUpdateClipping() {
   yield takeLatest(UPDATE_CLIPPING_BOOK, updateClippingBookSaga)
@@ -29,8 +27,8 @@ function* updateClippingBookSaga(action: TClippingBookUpdateAction) {
     return
   }
 
-  yield client.mutate<updateClippingBookId, updateClippingBookIdVariables>({
-    mutation: updateClippingBookIdMutation,
+  yield client.mutate<UpdateClippingBookIdMutation, UpdateClippingBookIdMutationVariables>({
+    mutation: UpdateClippingBookIdDocument,
     variables: {
       cid: clippingId,
       doubanId: ~~bookId

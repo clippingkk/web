@@ -1,4 +1,4 @@
-import { fetchClipping_clipping } from "../../schema/__generated__/fetchClipping"
+import { Clipping } from "../../schema/generated"
 import { WenquBook } from "../../services/wenqu"
 
 export type BasicUserInfo = {
@@ -18,7 +18,7 @@ export type PostShareConfig = {
   padding: number,
   baseTextSize: number
   textFont: string[]
-  clipping: fetchClipping_clipping
+  clipping: Clipping
   bookInfo: WenquBook
 }
 

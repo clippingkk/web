@@ -3,8 +3,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Head from 'next/head'
 import Avatar from '../../../components/avatar/avatar'
-import fetchReportYearlyQuery from '../../../schema/report.graphql'
-import { fetchYearlyReport, fetchYearlyReportVariables, fetchYearlyReport_reportYearly_books, fetchYearlyReport_reportYearly_books_clippings } from '../../../schema/__generated__/fetchYearlyReport'
 import { useRouter } from 'next/router'
 import OGWithReport from '../../../components/og/og-with-report'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
@@ -16,6 +14,7 @@ import { Blockquote, Divider } from '@mantine/core'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import ReportHero from '../../../components/reports/report-hero'
 import { useBackgroundImage } from '../../../hooks/theme'
+import { Clipping, FetchYearlyReportDocument, FetchYearlyReportQuery, FetchYearlyReportQueryVariables } from '../../../schema/generated'
 
 type PageContainerProps = {
   bgImage?: string
@@ -48,7 +47,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
 
   const { t } = useTranslation()
 
-  const [randomQuote, setRandomQuote] = useState<{ book: WenquBook, clipping: fetchYearlyReport_reportYearly_books_clippings } | null>(null)
+  const [randomQuote, setRandomQuote] = useState<{ book: WenquBook, clipping: Pick<Clipping, 'id' | 'content'> } | null>(null)
 
   useEffect(() => {
     function flushQuote() {
@@ -166,7 +165,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
 }
 
 type serverSideProps = {
-  reportInfoServerData: fetchYearlyReport
+  reportInfoServerData: FetchYearlyReportQuery
   booksServerData: WenquBook[]
 }
 
@@ -174,8 +173,8 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   const uid = ~~(context.query?.uid ?? -1) as number
   const year = ~~(context.query?.year ?? new Date().getFullYear())
   // const uid = ~~(context.params?.userid ?? -1) as number
-  const reportInfoResponse = await client.query<fetchYearlyReport, fetchYearlyReportVariables>({
-    query: fetchReportYearlyQuery,
+  const reportInfoResponse = await client.query<FetchYearlyReportQuery, FetchYearlyReportQueryVariables>({
+    query: FetchYearlyReportDocument,
     fetchPolicy: 'network-only',
     variables: {
       uid,

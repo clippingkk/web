@@ -1,12 +1,12 @@
 import React from 'react'
-import { publicData_public_users } from '../../schema/__generated__/publicData'
 import { useTranslation } from 'react-i18next'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import HideUntilLoaded from '../../components/SimpleAnimation/HideUntilLoaded'
 import styles from './tops.module.css'
+import { User } from '../../schema/generated'
 
 type TopUsersProps = {
-  users?: readonly publicData_public_users[]
+  users?: Pick<User, 'id' | 'avatar' | 'name'>[]
 }
 
 function TopUsers(props: TopUsersProps) {

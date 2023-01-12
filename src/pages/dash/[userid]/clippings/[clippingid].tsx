@@ -3,9 +3,6 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Card from '../../../../components/card/card'
 import Preview from '../../../../components/preview/preview3'
-import fetchClippingQuery from '../../../../schema/clipping.graphql'
-import { useQuery } from '@apollo/client'
-import { fetchClipping, fetchClippingVariables } from '../../../../schema/__generated__/fetchClipping'
 import { useSingleBook } from '../../../../hooks/book'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
@@ -28,14 +25,13 @@ import DashboardContainer from '../../../../components/dashboard-container/conta
 import styles from './clipping.module.css'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
 import Head from 'next/head'
-import Image from 'next/image'
-import { changeBackground } from '../../../../store/app/type'
 import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '../../../../store/global'
+import { Clipping, FetchClippingDocument, FetchClippingQuery, FetchClippingQueryVariables, useFetchClippingQuery } from '../../../../schema/generated'
 function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { clippingid } = useRouter().query as { clippingid: string }
 
-  const { data: clippingLocalData } = useQuery<fetchClipping, fetchClippingVariables>(fetchClippingQuery, {
+  const { data: clippingLocalData } = useFetchClippingQuery({
     variables: {
       id: ~~clippingid
     },
@@ -153,15 +149,15 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
 }
 
 type serverSideProps = {
-  clippingServerData: fetchClipping
+  clippingServerData: FetchClippingQuery
   bookServerData: WenquBook | null
 }
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
   const cid = ~~(context.params?.clippingid ?? -1) as number
   // const uid = ~~(context.params?.userid ?? -1) as number
-  const clippingsResponse = await client.query<fetchClipping, fetchClippingVariables>({
-    query: fetchClippingQuery,
+  const clippingsResponse = await client.query<FetchClippingQuery, FetchClippingQueryVariables>({
+    query: FetchClippingDocument,
     fetchPolicy: 'network-only',
     variables: {
       id: ~~cid

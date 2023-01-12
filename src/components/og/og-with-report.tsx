@@ -1,11 +1,11 @@
 import React from 'react'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import { fetchYearlyReport } from '../../schema/__generated__/fetchYearlyReport'
+import { FetchYearlyReportQuery } from '../../schema/generated'
 import { WenquBook } from '../../services/wenqu'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 
 type OGWithReportProps = {
-  data?: fetchYearlyReport
+  data?: FetchYearlyReportQuery
   books: WenquBook[]
   year: number
 }

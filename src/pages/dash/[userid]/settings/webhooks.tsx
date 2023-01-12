@@ -1,26 +1,18 @@
 /* eslint-disable react/jsx-key */
 import React, { useState } from 'react'
-import { useMutation, useQuery } from '@apollo/client'
 import { useSelector } from 'react-redux'
 import { Column, useTable } from 'react-table'
-import fetchMyWebHooksQuery from '../../../../schema/fetchMyWebhooks.graphql'
-import deleteWebHookMutation from '../../../../schema/mutations/webhook.delete.graphql'
-import createNewWebHookMutation from '../../../../schema/mutations/webhook.create.graphql'
-import { fetchMyWebHooks, fetchMyWebHooksVariables, fetchMyWebHooks_me_webhooks } from '../../../../schema/__generated__/fetchMyWebHooks'
 import { TGlobalStore } from '../../../../store'
 import Dialog from '../../../../components/dialog/dialog'
 import FieldInput from '../../../../components/input'
 import { useFormik } from 'formik'
 import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
-import { WebHookStep } from '../../../../../__generated__/globalTypes'
-import { createNewWebHook, createNewWebHookVariables } from '../../../../schema/mutations/__generated__/createNewWebHook'
-import { deleteAWebHook, deleteAWebHookVariables } from '../../../../schema/mutations/__generated__/deleteAWebHook'
 import { useTranslation } from 'react-i18next'
 import { Button, Table } from '@mantine/core'
-import { toastPromiseDefaultOption } from '../../../../services/misc'
+import { useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, WebHookItem, WebHookStep } from '../../../../schema/generated'
 
-const webhookColumns: Column<fetchMyWebHooks_me_webhooks>[] = [{
+const webhookColumns: Column<WebHookItem>[] = [{
   Header: 'id',
   accessor: 'id'
 }, {
@@ -35,7 +27,7 @@ const webhookColumns: Column<fetchMyWebHooks_me_webhooks>[] = [{
 
 function WebHooks() {
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
-  const { data: webhooksResp, client, refetch } = useQuery<fetchMyWebHooks, fetchMyWebHooksVariables>(fetchMyWebHooksQuery, {
+  const { data: webhooksResp, client, refetch } = useFetchMyWebHooksQuery({
     variables: {
       id: uid
     },
@@ -44,8 +36,8 @@ function WebHooks() {
 
   const { t } = useTranslation()
 
-  const [createMutation] = useMutation<createNewWebHook, createNewWebHookVariables>(createNewWebHookMutation)
-  const [deleteMutation] = useMutation<deleteAWebHook, deleteAWebHookVariables>(deleteWebHookMutation)
+  const [createMutation] = useCreateNewWebHookMutation()
+  const [deleteMutation] = useDeleteAWebHookMutation()
 
   const [visible, setVisible] = useState(false)
   const formik = useFormik({
@@ -61,7 +53,7 @@ function WebHooks() {
       }
       return createMutation({
         variables: {
-          step: WebHookStep.onCreateClippings,
+          step: WebHookStep.OnCreateClippings,
           hookUrl: vals.hookUrl
         }
       }).then(() => {
@@ -80,7 +72,7 @@ function WebHooks() {
     headerGroups,
     rows,
     prepareRow
-  } = useTable<fetchMyWebHooks_me_webhooks>({
+  } = useTable<WebHookItem>({
     columns: webhookColumns,
     data: webhooksResp?.me.webhooks ?? [] as any
   })

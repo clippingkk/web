@@ -1,6 +1,4 @@
 import React from 'react'
-import { publicData_public_books } from '../../schema/__generated__/publicData'
-import { useMultipBook } from '../../hooks/book'
 import { useTranslation } from 'react-i18next'
 import PublicBookItem from '../../components/public-book-item/public-book-item'
 import { WenquBook } from '../../services/wenqu'

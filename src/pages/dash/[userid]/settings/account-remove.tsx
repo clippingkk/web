@@ -4,18 +4,18 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-hot-toast'
 import swal from 'sweetalert'
-import mutationDeleteAccount from '../../../../schema/mutations/accountDelete.graphql'
 import { plainLogout } from '../../../../store/user/action'
 import { USER_LOGOUT } from '../../../../store/user/type'
 import { useRouter } from 'next/router'
 import { Button } from '@mantine/core'
+import { useDeleteMyAccountMutation } from '../../../../schema/generated'
 
 type AccountRemoveButtonProps = {
 }
 
 function AccountRemoveButton(props: AccountRemoveButtonProps) {
   const { t } = useTranslation()
-  const [doDelete] = useMutation(mutationDeleteAccount)
+  const [doDelete] = useDeleteMyAccountMutation()
   const { replace } = useRouter()
 
   const dispatch = useDispatch()

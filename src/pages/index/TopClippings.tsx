@@ -2,14 +2,14 @@ import Link from 'next/link'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import { publicData_public_clippings } from '../../schema/__generated__/publicData'
+import { Clipping, User } from '../../schema/generated'
 import { IN_APP_CHANNEL } from '../../services/channel'
 import styles from './top-clippings.module.css'
 
 // const styles = require('').default
 
 type TopClippingsProps = {
-  clippings: readonly publicData_public_clippings[]
+  clippings: (Pick<Clipping, 'id' | 'title' | 'content'> & { creator: Pick<User, 'domain' | 'id' | 'name' | 'avatar'>}) []
 }
 
 function SimpleAvatar({ avatar }: any) {

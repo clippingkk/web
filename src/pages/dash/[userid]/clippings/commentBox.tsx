@@ -1,11 +1,10 @@
 import { useApolloClient, useMutation } from '@apollo/client'
 import React, { useCallback, useState } from 'react'
 import { UserContent } from '../../../../store/user/type'
-import createCommentMutation from '../../../../schema/mutations/create-comment.graphql'
-import { createComment, createCommentVariables } from '../../../../schema/mutations/__generated__/createComment'
 import swal from 'sweetalert'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../../../components/avatar/avatar'
+import { useCreateCommentMutation } from '../../../../schema/generated'
 
 type CommentBoxProps = {
   clippingID: number
@@ -17,7 +16,7 @@ const COMMENT_MIN_LEN = 40
 function CommentBox(props: CommentBoxProps) {
   const [content, setContent] = useState('')
 
-  const [createCommentAction, { loading }] = useMutation<createComment, createCommentVariables>(createCommentMutation)
+  const [createCommentAction, { loading }] = useCreateCommentMutation()
   const client = useApolloClient()
 
   const { t } = useTranslation()

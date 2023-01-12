@@ -4,18 +4,17 @@ import { useTranslation } from 'react-i18next'
 import Head from 'next/head'
 import Avatar from '../../../components/avatar/avatar'
 import PublicBookItem from '../../../components/public-book-item/public-book-item'
-import fetchReportYearlyQuery from '../../../schema/report.graphql'
-import { fetchYearlyReport, fetchYearlyReportVariables, fetchYearlyReport_reportYearly_books } from '../../../schema/__generated__/fetchYearlyReport'
 import { useRouter } from 'next/router'
 import OGWithReport from '../../../components/og/og-with-report'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { client } from '../../../services/ajax'
 import logo from '../../../assets/logo.png'
+import { FetchClippingQueryVariables, FetchYearlyReportDocument, FetchYearlyReportQuery, FetchYearlyReportQueryVariables } from '../../../schema/generated'
 
 type ReportBookItemTypes = {
   book: WenquBook
-  reportDataBook: readonly fetchYearlyReport_reportYearly_books[]
+  reportDataBook: FetchYearlyReportQuery['reportYearly']['books']
 }
 
 function ReportBookItem(props: ReportBookItemTypes) {
@@ -126,7 +125,7 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
 }
 
 type serverSideProps = {
-  reportInfoServerData: fetchYearlyReport
+  reportInfoServerData: FetchYearlyReportQuery
   booksServerData: WenquBook[]
 }
 
@@ -134,8 +133,8 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   const uid = ~~(context.query?.uid ?? -1) as number
   const year = ~~(context.query?.year ?? new Date().getFullYear())
   // const uid = ~~(context.params?.userid ?? -1) as number
-  const reportInfoResponse = await client.query<fetchYearlyReport, fetchYearlyReportVariables>({
-    query: fetchReportYearlyQuery,
+  const reportInfoResponse = await client.query<FetchYearlyReportQuery, FetchYearlyReportQueryVariables>({
+    query: FetchYearlyReportDocument,
     fetchPolicy: 'network-only',
     variables: {
       uid,

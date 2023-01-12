@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { useMutation, useApolloClient } from '@apollo/client'
-import syncHomelessBook from '../../../../schema/mutations/sync-homeless-books.graphql'
 import swal from 'sweetalert'
+import { SyncHomelessBookDocument } from '../../../../schema/generated'
 
 type HomelessBookSyncInputProps = {
   bookName: string
@@ -12,7 +12,7 @@ function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
   const [doubanId, setDoubanId] = useState('')
   const onConfirm = useCallback(() => {
     client.mutate({
-      mutation: syncHomelessBook,
+      mutation: SyncHomelessBookDocument,
       variables: {
         title: props.bookName,
         doubanID: doubanId

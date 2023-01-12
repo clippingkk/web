@@ -2,9 +2,6 @@ import React, { useCallback, useState } from 'react'
 import { useApolloClient, useMutation } from '@apollo/client'
 import Switch from '../../../../components/switcher'
 import Card from '../../../../components/card/card'
-import { toggleClippingVisible, toggleClippingVisibleVariables } from '../../../../schema/mutations/__generated__/toggleClippingVisible'
-import toggleClippingVisibleMutation from '../../../../schema/mutations/toggle-clipping-visible.graphql'
-import { fetchClipping_clipping } from '../../../../schema/__generated__/fetchClipping'
 import { WenquBook } from '../../../../services/wenqu'
 import { useDispatch } from 'react-redux'
 import { UserContent } from '../../../../store/user/type'
@@ -16,16 +13,17 @@ import styles from './clipping.module.css'
 import Link from 'next/link'
 import BookInfoChanger from '../../../../components/book-info-changer/bookInfoChanger'
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid'
+import { Clipping, User, useToggleClippingVisibleMutation } from '../../../../schema/generated'
 
 type ClippingSidebarProps = {
-  clipping: fetchClipping_clipping | undefined
+  clipping?: Pick<Clipping, 'id' | 'visible' | 'content' | 'title' | 'createdAt' | 'nextClipping' | 'prevClipping'> & { creator: Pick<User, 'id' | 'name' | 'domain'> }
   book: WenquBook | null
   me: UserContent
   inAppChannel: IN_APP_CHANNEL
   onTogglePreviewVisible: () => void
 }
 
-function getSiblingLink(iac: IN_APP_CHANNEL, domain: string, clipping?: fetchClipping_clipping) {
+function getSiblingLink(iac: IN_APP_CHANNEL, domain: string, clipping?: Pick<Clipping, 'prevClipping' | 'nextClipping'>) {
   let prev = '', next = ''
   if (!clipping) {
     return { prev, next }
@@ -51,7 +49,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
   const { t } = useTranslation()
   const client = useApolloClient()
   const dispatch = useDispatch()
-  const [execToggleClipping] = useMutation<toggleClippingVisible, toggleClippingVisibleVariables>(toggleClippingVisibleMutation)
+  const [execToggleClipping] = useToggleClippingVisibleMutation()
 
   const [updateClippingBookId, setUpdateClippingBookId] = useState(-1)
 

@@ -1,7 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import fetchTopQuery from '../schema/public.graphql'
-import { publicData } from '../schema/__generated__/publicData'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Footer from '../components/footer/Footer'
 import { usePageTrack } from '../hooks/tracke'
@@ -13,12 +11,14 @@ import TopUsers from './index/TopUsers'
 import OGWithIndex from '../components/og/og-with-index'
 import Features from './index/Features'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../services/wenqu'
+import { PublicData, PublicDataDocument, PublicDataQuery } from '../schema/generated'
 
-export const getStaticProps: GetStaticProps<{ preloadPublicData: publicData, books: WenquBook[] }> = async ({ locale }) => {
-  const data = await client.query<publicData>({
-    query: fetchTopQuery,
+export const getStaticProps: GetStaticProps<{ preloadPublicData: PublicDataQuery, books: WenquBook[] }> = async ({ locale }) => {
+  const data = await client.query<PublicDataQuery>({
+    query: PublicDataDocument,
     fetchPolicy: 'network-only'
   })
+
 
   const dbIds = data.
     data.

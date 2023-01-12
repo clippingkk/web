@@ -1,8 +1,7 @@
 import { client } from "../services/ajax"
-import meQuery from '../schema/profile.graphql'
-import { profile, profileVariables } from "../schema/__generated__/profile"
 import store from "../store"
 import { AUTH_LOGIN } from "../store/user/type"
+import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from "../schema/generated"
 
 class MyProfile {
   private _token = ''
@@ -33,8 +32,8 @@ class MyProfile {
     if (this.uid === -1) {
       return
     }
-    client.query<profile, profileVariables>({
-      query: meQuery,
+    client.query<ProfileQuery, ProfileQueryVariables>({
+      query: ProfileDocument,
       variables: {
         id: this.uid
       }

@@ -11,8 +11,7 @@ import GithubBindButton from '../../../../components/externalAccount/github.bind
 import MetamaskBindButton from '../../../../components/externalAccount/metamask.bind'
 import FieldInput from '../../../../components/input'
 import ProgressBlock from '../../../../components/progress/progress-block'
-import updateUserProfileMutation from '../../../../schema/mutations/update-profile.graphql'
-import { updateProfile, updateProfileVariables } from '../../../../schema/mutations/__generated__/updateProfile'
+import { useUpdateProfileMutation } from '../../../../schema/generated'
 import { toastPromiseDefaultOption, uploadImage } from '../../../../services/misc'
 import { TGlobalStore } from '../../../../store'
 import { delay } from '../../../../utils/timer'
@@ -34,7 +33,7 @@ function NewbiePage(props: NewbiePageProps) {
   const { t } = useTranslation()
 
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
-  const [doUpdateUserProfile, doUpdateResponse] = useMutation<updateProfile, updateProfileVariables>(updateUserProfileMutation)
+  const [doUpdateUserProfile, doUpdateResponse] = useUpdateProfileMutation()
 
   const [phase, setPhase] = useState(0)
   const [newName, setNewName] = useState('')

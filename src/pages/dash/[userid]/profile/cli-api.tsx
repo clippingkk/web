@@ -3,16 +3,15 @@ import { CommandLineIcon } from '@heroicons/react/24/outline'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Dialog from '../../../../components/dialog/dialog'
-import q from '../../../../schema/claimAPIToken.graphql'
 import { Prism } from '@mantine/prism'
-import { claimCliAPIToken, claimCliAPITokenVariables } from '../../../../schema/__generated__/claimCliAPIToken'
 import { getLocalToken } from '../../../../services/ajax'
+import { useClaimCliApiTokenMutation } from '../../../../schema/generated'
 
 type CliApiTokenProps = {
 }
 
 function CliApiToken(props: CliApiTokenProps) {
-  const [doClaim, { data }] = useMutation<claimCliAPIToken, claimCliAPITokenVariables>(q)
+  const [doClaim, { data }] = useClaimCliApiTokenMutation()
   // TODO: request publick api token
   const [visible, setVisible] = useState(false)
 

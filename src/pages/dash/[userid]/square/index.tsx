@@ -2,9 +2,7 @@ import { useQuery } from '@apollo/client'
 import React, { useRef } from 'react'
 import Head from 'next/head'
 import { useTranslation } from 'react-i18next'
-import fetchSquareDataQuery from '../../../../schema/square.graphql'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
-import { fetchSquareData, fetchSquareDataVariables, fetchSquareData_featuredClippings } from '../../../../schema/__generated__/fetchSquareData'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
 import { useMultipBook } from '../../../../hooks/book'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
@@ -17,6 +15,7 @@ import OGWithSquare from '../../../../components/og/og-with-square-page'
 import { LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
 import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size'
 import { Divider } from '@mantine/core'
+import { FetchSquareDataDocument, FetchSquareDataQuery, FetchSquareDataQueryVariables, useFetchSquareDataQuery } from '../../../../schema/generated'
 
 function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   usePageTrack('square')
@@ -27,7 +26,7 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
 
   const reachEnd = useRef(false)
 
-  const { data: localData, loading, fetchMore } = useQuery<fetchSquareData, fetchSquareDataVariables>(fetchSquareDataQuery, {
+  const { data: localData, loading, fetchMore } = useFetchSquareDataQuery({
     variables: {
       pagination: {
         limit: APP_API_STEP_LIMIT,
@@ -41,7 +40,7 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
   // ssr 的数据用来做 seo
   const books = useMultipBook(data?.featuredClippings.map(x => x.bookID) || [])
 
-  const maybeLoadMore = useInfiniteLoader<fetchSquareData_featuredClippings, LoadMoreItemsCallback<fetchSquareData_featuredClippings>>((startIndex, stopIndex, currentItems) => {
+  const maybeLoadMore = useInfiniteLoader<FetchSquareDataQuery['featuredClippings'][0], LoadMoreItemsCallback<FetchSquareDataQuery['featuredClippings'][0]>>((startIndex, stopIndex, currentItems) => {
     if (currentItems.length >= 200) {
       reachEnd.current = true
     }
@@ -69,7 +68,7 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
       <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'> 🪩 Square</h2>
       <Divider className='w-full' />
       <Masonry
-        items={(data.featuredClippings ?? []) as fetchSquareData_featuredClippings[]}
+        items={(data.featuredClippings ?? [])}
         columnCount={masonaryColumnCount}
         columnGutter={30}
         onRender={maybeLoadMore}
@@ -92,13 +91,13 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
 }
 
 type serverSideProps = {
-  squareServerData: fetchSquareData
+  squareServerData: FetchSquareDataQuery
   books: WenquBook[]
 }
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
-  const squareResponse = await client.query<fetchSquareData, fetchSquareDataVariables>({
-    query: fetchSquareDataQuery,
+  const squareResponse = await client.query<FetchSquareDataQuery, FetchSquareDataQueryVariables>({
+    query: FetchSquareDataDocument,
     variables: {
       pagination: {
         limit: APP_API_STEP_LIMIT,

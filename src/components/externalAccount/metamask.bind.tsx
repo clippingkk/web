@@ -3,10 +3,9 @@ import { useRouter } from 'next/router'
 import React, { useCallback, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { hooks, metaMask, signDataByWeb3 } from '../../utils/wallet'
-import bindWeb3Mutation from '../../schema/bindWeb3.graphql'
-import { bindWeb3Address, bindWeb3AddressVariables } from '../../schema/__generated__/bindWeb3Address'
 import WithLoading from '../with-loading'
 import { useTranslation } from 'react-i18next'
+import { useBindWeb3AddressMutation } from '../../schema/generated'
 
 type MetamaskBindButtonProps = {
   onBound?: (address: string) => void
@@ -15,7 +14,7 @@ type MetamaskBindButtonProps = {
 function MetamaskBindButton(props: MetamaskBindButtonProps) {
   const { t } = useTranslation()
   const router = useRouter()
-  const [doBind, doBindResult] = useMutation<bindWeb3Address, bindWeb3AddressVariables>(bindWeb3Mutation)
+  const [doBind, doBindResult] = useBindWeb3AddressMutation()
   const isActivating = hooks.useIsActivating()
   const isActive = hooks.useIsActive()
   const account = hooks.useAccount()

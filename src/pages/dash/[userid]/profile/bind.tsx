@@ -3,15 +3,14 @@ import React, { useState } from 'react'
 // import { QRNormal, QRImage } from 'react-qrbtf'
 import {QRCodeSVG} from 'qrcode.react'
 import Dialog from '../../../../components/dialog/dialog'
-import wechatBindKeyQuery from '../../../../schema/bind.graphql'
-import { wechatBind } from '../../../../schema/__generated__/wechatBind'
 import { useTranslation } from 'react-i18next'
+import { useWechatBindQuery } from '../../../../schema/generated'
 
 type WechatBindButtonProps = {
 }
 
 function BindQRCode() {
-  const { data } = useQuery<wechatBind, null>(wechatBindKeyQuery)
+  const { data } = useWechatBindQuery()
   if (!data) {
     return null
   }

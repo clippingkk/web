@@ -3,15 +3,14 @@ import { useFormik } from 'formik'
 import React, { useCallback, useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import Dialog from '../../../../components/dialog/dialog'
-import updateProfileMutation from '../../../../schema/mutations/update-profile.graphql'
 import FieldInput from '../../../../components/input'
 import FieldTextarea from '../../../../components/textarea'
-import { updateProfile, updateProfileVariables } from '../../../../schema/mutations/__generated__/updateProfile'
 import { toast } from 'react-hot-toast'
 import { uploadImage } from '../../../../services/misc'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
 import ExternalAccountList from '../../../../components/externalAccount/list'
+import { useUpdateProfileMutation } from '../../../../schema/generated'
 
 type ProfileEditorProps = {
   uid: number
@@ -29,7 +28,7 @@ function ProfileEditor(props: ProfileEditorProps) {
     }
   }, [withProfileEditor])
 
-  const [doUpdate, { client }] = useMutation<updateProfile, updateProfileVariables>(updateProfileMutation)
+  const [doUpdate, { client }] = useUpdateProfileMutation()
   const { t } = useTranslation()
   const formik = useFormik({
     initialValues: {

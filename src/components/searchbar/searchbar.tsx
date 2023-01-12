@@ -1,8 +1,5 @@
-import { useLazyQuery } from '@apollo/client'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import searchQueryDoc from '../../schema/search.graphql'
-import { searchQuery, searchQueryVariables } from '../../schema/__generated__/searchQuery'
 import { TGlobalStore } from '../../store'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +7,7 @@ import { debounce } from '../../utils/debounce'
 import Link from 'next/link'
 import ReactDOM from 'react-dom'
 import { UserContent } from '../../store/user/type'
+import { useSearchQueryLazyQuery } from '../../schema/generated'
 
 type SearchBarProps = {
   visible: boolean
@@ -64,7 +62,7 @@ export function useCtrlP() {
 function SearchBar(props: SearchBarProps) {
   const { visible } = props
   const { t } = useTranslation()
-  const [doQuery, { data, loading, called }] = useLazyQuery<searchQuery, searchQueryVariables>(searchQueryDoc)
+  const [doQuery, { data, loading, called }] = useSearchQueryLazyQuery()
   const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const noop = useCallback((e: React.MouseEvent) => {
     e.stopPropagation()

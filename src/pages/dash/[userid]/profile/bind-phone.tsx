@@ -1,11 +1,9 @@
-import { useMutation } from '@apollo/client'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import BindPhone from '../../../../components/bind-phone'
 import Dialog from '../../../../components/dialog/dialog'
-import bindPhoneMutation from '../../../../schema/mutations/bind-phone.graphql'
-import { bindUserPhone, bindUserPhoneVariables } from '../../../../schema/mutations/__generated__/bindUserPhone'
+import { useBindUserPhoneMutation } from '../../../../schema/generated'
 
 type BindPhoneProps = {
 }
@@ -13,7 +11,7 @@ type BindPhoneProps = {
 function ProfileBindPhone(props: BindPhoneProps) {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
-  const [doAuth, doAuthResponse] = useMutation<bindUserPhone, bindUserPhoneVariables>(bindPhoneMutation)
+  const [doAuth, doAuthResponse] = useBindUserPhoneMutation()
 
   useEffect(() => {
     if (!doAuthResponse.called) {

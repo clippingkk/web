@@ -4,6 +4,7 @@ mutation bindWeb3Address($phone: String, $code: String, $payload: web3VerifyPayl
       id
       name
       email
+      phone
       password
       avatar
       checked

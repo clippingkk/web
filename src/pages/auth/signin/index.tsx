@@ -1,9 +1,5 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
-import authQuery from '../../../schema/auth.graphql'
-import { useLazyQuery } from '@apollo/client'
-import { auth } from '../../../schema/__generated__/auth'
-import { authVariables } from '../../../schema/__generated__/auth'
 import { useAuthSuccessed } from '../../../hooks/hooks';
 import { useTitle } from '../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
@@ -17,13 +13,14 @@ import { CF_TURNSTILE_SITE_KEY } from '../../../constants/config'
 import ButtonSimple from '../../../components/button/button-simple'
 import toast from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../services/misc'
+import { useAuthLazyQuery } from '../../../schema/generated';
 
 type TSigninProps = {
   path: string,
 }
 
 function Signin(props: TSigninProps) {
-  const [exec, resp] = useLazyQuery<auth, authVariables>(authQuery)
+  const [exec, resp] = useAuthLazyQuery()
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.auth)
   const [turnstileToken, setTurnstileToken] = useState('')
 

@@ -1,12 +1,12 @@
 import React from 'react'
-import { fetchYearlyReport_reportYearly_books } from '../../schema/__generated__/fetchYearlyReport'
+import { FetchYearlyReportQuery } from '../../schema/generated'
 import { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
 import styles from './report-hero.module.css'
 
 type ReportHeroProps = {
     books: WenquBook[]
-    clippings: readonly fetchYearlyReport_reportYearly_books[]
+    clippings: FetchYearlyReportQuery['reportYearly']['books']
 }
 
 function ReportHero(props: ReportHeroProps) {

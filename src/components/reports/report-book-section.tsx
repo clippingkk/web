@@ -1,15 +1,14 @@
 import { Blockquote, Divider, HoverCard, Rating, Title, Tooltip } from '@mantine/core'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import TextTransition, { presets } from "react-text-transition"
 import autoAnimate from '@formkit/auto-animate'
-import { fetchYearlyReport_reportYearly_books } from '../../schema/__generated__/fetchYearlyReport'
 import { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
+import { FetchYearlyReportQuery } from '../../schema/generated'
 
 type ReportBookSectionProps = {
     book: WenquBook
-    reportDataBook?: fetchYearlyReport_reportYearly_books
+    reportDataBook?: FetchYearlyReportQuery['reportYearly']['books'][0]
 }
 
 function ReportBookSection(props: ReportBookSectionProps) {

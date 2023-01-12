@@ -1,9 +1,9 @@
 import i18n from 'i18next'
 import languageDetector from 'i18next-browser-languagedetector'
 import {initReactI18next} from 'react-i18next'
-import zhCN from '../locales/zhCN.yml'
-import ko from '../locales/ko.yml'
-import en from '../locales/en.yml'
+import zhCN from '../locales/zhCN.json'
+import ko from '../locales/ko.json'
+import en from '../locales/en.json'
 
 i18n
   .use(languageDetector)

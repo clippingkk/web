@@ -1,14 +1,11 @@
-import { useLazyQuery, useMutation } from '@apollo/client'
 import React, { useCallback, useEffect } from 'react'
 import AppleSignin, { useScript, appleAuthHelpers } from 'react-apple-signin-auth'
 import { toast } from 'react-hot-toast'
 import { AppleAuthResponse } from '../services/apple'
-import loginByAppleMutation from '../schema/auth/apple.graphql'
-import { loginByApple, loginByAppleVariables } from '../schema/auth/__generated__/loginByApple'
 import { useRouter } from 'next/router'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
-import LoadingIcon from './icons/loading.svg'
 import WithLoading from './with-loading'
+import { useLoginByAppleLazyQuery } from '../schema/generated'
 
 type AuthAppleProps = {
   disabled?: boolean
@@ -35,7 +32,7 @@ function AuthAppleButton(props: any) {
 
 function AuthByAppleButton(props: AuthAppleProps) {
   const router = useRouter()
-  const [doAppleAuth, appleAuthResponse] = useLazyQuery<loginByApple, loginByAppleVariables>(loginByAppleMutation)
+  const [doAppleAuth, appleAuthResponse] = useLoginByAppleLazyQuery()
 
   const onSuccess = useCallback(async (resp: AppleAuthResponse) => {
     const { code, id_token, state } = resp.authorization
@@ -67,8 +64,8 @@ function AuthByAppleButton(props: AuthAppleProps) {
 
   return (
     <WithLoading
-     loading={loading}
-     disabled={props.disabled}
+      loading={loading}
+      disabled={props.disabled}
     >
       <AppleSignin
         authOptions={authOptions}

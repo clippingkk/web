@@ -13,6 +13,7 @@ mutation bindAppleUnique(
 			name
 			email
 			password
+			phone
 			avatar
 			checked
 			createdAt

@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
-import { useQuery } from '@apollo/client'
 import { useTable, Row } from 'react-table'
-import uncheckBooksRawQuery from '../../../../schema/admin.graphql'
 import Card from '../../../../components/card/card'
 import HomelessBookSyncInput from './sync-input'
-import { uncheckBooksQuery, uncheckBooksQueryVariables } from '../../../../schema/__generated__/uncheckBooksQuery'
 import DashboardContainer from '../../../../components/dashboard-container/container'
+import { useUncheckBooksQueryQuery } from '../../../../schema/generated'
 
 const homelessBookColumn = [
   {
@@ -40,7 +38,7 @@ function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
 function AdminPanel() {
   const [offset, setOffset] = useState(0)
 
-  const { data, loading } = useQuery<uncheckBooksQuery, uncheckBooksQueryVariables>(uncheckBooksRawQuery, {
+  const { data, loading } = useUncheckBooksQueryQuery({
     variables: {
       pagination: {
         limit: 50,

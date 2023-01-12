@@ -1,7 +1,4 @@
 import React, { useMemo } from 'react'
-import { useQuery } from '@apollo/client'
-import queryFetchExternalAccount from '../../schema/external-account.graphql'
-import { fetchExternalAccount, fetchExternalAccountVariables } from '../../schema/__generated__/fetchExternalAccount'
 import MetamaskLogo from '../icons/metamask.logo.svg'
 import IconAppleLogo from '../icons/apple.logo.svg'
 import GithubLogo from '../icons/github.logo.svg'
@@ -9,13 +6,14 @@ import MetamaskBindButton from './metamask.bind'
 import AppleLoginBind from './apple.bind'
 import GithubBindButton from './github.bind'
 import { useTranslation } from 'react-i18next'
+import { useFetchExternalAccountQuery } from '../../schema/generated'
 
 type ExternalAccountListProps = {
   uid: number
 }
 
 function ExternalAccountList(props: ExternalAccountListProps) {
-  const { data } = useQuery<fetchExternalAccount, fetchExternalAccountVariables>(queryFetchExternalAccount, {
+  const { data } = useFetchExternalAccountQuery({
     variables: {
       id: props.uid
     }

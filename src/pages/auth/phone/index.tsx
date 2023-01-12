@@ -1,18 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
-import authByPhoneMutation from '../../../schema/mutations/auth-phone.graphql'
-import { useMutation } from '@apollo/client'
-import { authByPhone, authByPhoneVariables } from '../../../schema/mutations/__generated__/authByPhone'
 import { useAuthByPhoneSuccessed } from '../../../hooks/hooks'
 import BindPhone from '../../../components/bind-phone'
 import AuthPage from '../auth'
 import OGWithAuth from '../../../components/og/og-with-auth'
+import { useAuthByPhoneMutation } from '../../../schema/generated'
 
 type AuthPhoneProps = {
 }
 
 function AuthPhone(props: AuthPhoneProps) {
-  const [doAuth, doAuthResponse] = useMutation<authByPhone, authByPhoneVariables>(authByPhoneMutation)
+  const [doAuth, doAuthResponse] = useAuthByPhoneMutation()
 
   useAuthByPhoneSuccessed(doAuthResponse.called, doAuthResponse.loading, doAuthResponse.error, doAuthResponse.data?.authByPhone)
 

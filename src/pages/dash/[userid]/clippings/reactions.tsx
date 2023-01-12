@@ -1,25 +1,19 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { Picker } from 'emoji-mart'
-import reactionCreateMutation from '../../../../schema/reaction-create.graphql'
-import reactionRemoveMutation from '../../../../schema/reaction-remove.graphql'
 import { useApolloClient, useMutation } from '@apollo/client'
-import { reactionCreate, reactionCreateVariables } from '../../../../schema/__generated__/reactionCreate'
-import { reactionRemove, reactionRemoveVariables } from '../../../../schema/__generated__/reactionRemove'
-import { ReactionTarget } from '../../../../../__generated__/globalTypes'
 import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../../../store'
 import Tooltip from '../../../../components/tooltip/Tooltip'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-import { fetchClipping_clipping_reactionData, fetchClipping_clipping_reactionData_symbolCounts } from '../../../../schema/__generated__/fetchClipping'
 import EmojiPicker from '../../../../components/emoji-picker'
+import { FetchClippingQuery, Reaction, ReactionData, ReactionTarget, useReactionCreateMutation, useReactionRemoveMutation } from '../../../../schema/generated'
 
 const avaliableReactions = ["👍", "❤️", "⭐️", "🐶", "😱"]
 
 type ReactionsProps = {
   cid: number
-  reactions?: fetchClipping_clipping_reactionData
+  reactions?: FetchClippingQuery['clipping']['reactionData']
 }
 
 type ReactionCellProps = {
@@ -44,8 +38,8 @@ function ReactionCell(props: ReactionCellProps) {
 function Reactions(props: ReactionsProps) {
   const [pickerVisible, setPickerVisible] = useState(false)
   const client = useApolloClient()
-  const [doReactionCreate] = useMutation<reactionCreate, reactionCreateVariables>(reactionCreateMutation)
-  const [doReactionRemove] = useMutation<reactionRemove, reactionRemoveVariables>(reactionRemoveMutation)
+  const [doReactionCreate] = useReactionCreateMutation()
+  const [doReactionRemove] = useReactionRemoveMutation()
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   const togglePicker = useCallback(() => {
     setPickerVisible(s => !s)
@@ -53,7 +47,7 @@ function Reactions(props: ReactionsProps) {
   const { t } = useTranslation()
   const { push: navigate } = useRouter()
 
-  const symbolCounts = useMemo<fetchClipping_clipping_reactionData_symbolCounts[]>(() => {
+  const symbolCounts = useMemo(() => {
     if (!props.reactions?.symbolCounts) {
       return []
     }
@@ -117,7 +111,7 @@ function Reactions(props: ReactionsProps) {
                 }
                 doReactionCreate({
                   variables: {
-                    target: ReactionTarget.clipping,
+                    target: ReactionTarget.Clipping,
                     targetId: props.cid,
                     symbol: k.symbol,
                   }

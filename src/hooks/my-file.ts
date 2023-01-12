@@ -1,16 +1,15 @@
-import { useApolloClient, useMutation } from "@apollo/client"
+import { useApolloClient } from "@apollo/client"
 import { useState, useRef, useCallback, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { UploadStep } from "../services/uploader"
-import { createClippings, createClippingsVariables } from "../schema/mutations/__generated__/createClippings"
 import { wenquRequest, WenquSearchResponse } from "../services/wenqu"
-import createClippingsQuery from '../schema/mutations/create-clippings.graphql'
 import { extraFile } from "../store/clippings/creator"
 import ClippingTextParser, { TClippingItem } from "../store/clippings/parser"
 import { useSelector } from "react-redux"
 import { TGlobalStore } from "../store"
 import swal from 'sweetalert'
 import { toast } from 'react-hot-toast'
+import { useCreateClippingsMutation } from "../schema/generated"
 
 const localClippingsStashKey = 'app.stash.clippings'
 
@@ -26,7 +25,7 @@ export function useUploadData(
   const wenquSearchResult = useRef(new Map<string, number>())
   const client = useApolloClient()
 
-  const [exec] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
+  const [exec] = useCreateClippingsMutation()
   const onUpload = useCallback(async (e: React.DragEvent, v: boolean) => {
     e.preventDefault()
     const file = e.dataTransfer.items[0]
@@ -150,7 +149,7 @@ export function useUploadData(
 export function useSyncClippingsToServer() {
   const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   const { t } = useTranslation()
-  const [exec, { client }] = useMutation<createClippings, createClippingsVariables>(createClippingsQuery)
+  const [exec, { client }] = useCreateClippingsMutation()
   useEffect(() => {
     if (!id) {
       return

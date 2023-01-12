@@ -1,12 +1,12 @@
 import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
-import { fetchClipping_clipping } from '../../schema/__generated__/fetchClipping'
 import { WenquBook } from '../../services/wenqu'
 import logo from '../../assets/logo.png'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
+import { Clipping, User } from '../../schema/generated'
 
 type OGWithClippingProps = {
-  clipping?: fetchClipping_clipping
+  clipping?: Pick<Clipping, 'id' | 'title' | 'content'> & { creator: Pick<User, 'id' | 'name'>}
   book: WenquBook | null
 }
 

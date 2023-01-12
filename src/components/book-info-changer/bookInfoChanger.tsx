@@ -1,13 +1,12 @@
-import { useApolloClient, useMutation } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useBookSearch } from '../../hooks/book'
 import { WenquBook } from '../../services/wenqu'
 import Dialog from '../dialog/dialog'
-import updateClippingBookIdMutation from '../../schema/updateClippingBook.graphql'
 import BookCandidate from './bookCandidate'
-import { updateClippingBookId, updateClippingBookIdVariables } from '../../schema/__generated__/updateClippingBookId'
 import { toast } from 'react-hot-toast'
+import { useUpdateClippingBookIdMutation } from '../../schema/generated'
 
 type BookInfoChangerProps = {
   clippingID: number
@@ -22,9 +21,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
   const [selectedBook, setSelectedBook] = useState<WenquBook | null>(null)
   const candidates = useBookSearch(bookName, 0)
   const client = useApolloClient()
-  const [doUpdate] = useMutation<updateClippingBookId, updateClippingBookIdVariables>(
-    updateClippingBookIdMutation,
-  )
+  const [ doUpdate ] = useUpdateClippingBookIdMutation()
 
   const onSubmit = useCallback(() => {
     if (!selectedBook) {

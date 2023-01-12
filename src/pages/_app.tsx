@@ -57,14 +57,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const content = getLayout(<Component {...pageProps} />)
   return (
     <JotaiProvider>
-      <ColorSchemeProvider
-        colorScheme={isDarkTheme ? 'dark' : 'light'}
-        toggleColorScheme={t => {
-          onDarkThemeChange(t === 'dark')
-        }}
-      >
-        <MantineProvider theme={{ colorScheme: isDarkTheme ? 'dark' : 'light' }}>
-          <Provider store={store}>
+      <Provider store={store}>
+        <ColorSchemeProvider
+          colorScheme={isDarkTheme ? 'dark' : 'light'}
+          toggleColorScheme={t => {
+            onDarkThemeChange(t === 'dark')
+          }}
+        >
+          <MantineProvider theme={{ colorScheme: isDarkTheme ? 'dark' : 'light' }}>
             <SWRConfig
               value={{
                 fetcher: request
@@ -79,9 +79,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 />
               </ApolloProvider>
             </SWRConfig>
-          </Provider>
-        </MantineProvider>
-      </ColorSchemeProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </Provider>
     </JotaiProvider>
   )
 }

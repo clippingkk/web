@@ -3,9 +3,7 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import { toast } from 'react-hot-toast'
 // import WalletConnectProvider from "@walletconnect/web3-provider"
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
-import { authByWeb3, authByWeb3Variables } from '../schema/__generated__/authByWeb3'
 import { metaMask, hooks, signDataByWeb3 } from '../utils/wallet'
-import authByWeb3Query from '../schema/authByWeb3.graphql'
 import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/router'
 import LoadingIcon from './icons/loading.svg'
@@ -13,6 +11,7 @@ import WithLoading from './with-loading'
 // import WalletConnect from '@walletconnect/client'
 // import QRCodeModal from '@walletconnect/qrcode-modal'
 import { isMobile } from '../utils/device'
+import { useAuthByWeb3LazyQuery } from '../schema/generated'
 
 type AuthByMetamaskProps = {
 }
@@ -91,7 +90,7 @@ type AuthByMetamaskProps = {
 function AuthByMetamask(props: AuthByMetamaskProps) {
   const router = useRouter()
   // const { wc, onWeb3Login } = useWalletConnect()
-  const [doAuth, doAuthData] = useLazyQuery<authByWeb3, authByWeb3Variables>(authByWeb3Query)
+  const [doAuth, doAuthData] =useAuthByWeb3LazyQuery()
   const isActivating = hooks.useIsActivating()
   const isActive = hooks.useIsActive()
   const account = hooks.useAccount()
