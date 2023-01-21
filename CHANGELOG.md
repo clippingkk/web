@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.0.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.0.3...v5.0.4) (2023-01-21)
+
+
+### Features
+
+* **policy:** add support page and add blurHash ([cf01533](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cf01533d68dd82c096622d2d86a4d7e68dc7820e))
+
+
+### Bug Fixes
+
+* **ci:** fix ci ([a6f733d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a6f733d6b37cd97a70dd5425fd6f56edcf0d7fd4))
+* **ci:** fix test ([c6db718](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c6db7186464c7d9d0dac9a8afe62644e5495c884))
+
 ### [5.0.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.0.2...v5.0.3) (2023-01-07)
 
 
