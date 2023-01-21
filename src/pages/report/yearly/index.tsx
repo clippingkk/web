@@ -17,14 +17,26 @@ import { useBackgroundImage } from '../../../hooks/theme'
 import { Clipping, FetchYearlyReportDocument, FetchYearlyReportQuery, FetchYearlyReportQueryVariables } from '../../../schema/generated'
 
 type PageContainerProps = {
-  bgImage?: string
+  bgImage?: string | { src: string, blurHash: string }
   children: React.ReactElement
 }
 
 function PageContainer(props: PageContainerProps) {
   const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
+    let backgroundImage: string | undefined
+    let bgImg = props.bgImage
+    if (!bgImg) {
+      return undefined
+    }
+    if (typeof bgImg === 'string') {
+      backgroundImage = `url(${bgImg})`;
+    }
+
+    if (typeof bgImg === 'object') {
+      backgroundImage =  `url(${bgImg.src})`;
+    }
     return {
-      backgroundImage: `url(${props.bgImage})`,
+      backgroundImage
     }
   }, [props.bgImage])
   return (

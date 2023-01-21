@@ -25,7 +25,7 @@ function AuthV2(props: AuthV2Props) {
       <section
         className='anna-page-container h-screen object-cover bg-center bg-cover'
         style={{
-          backgroundImage: `url(${bg})`
+          backgroundImage: `url(${bg.src})`
         }}
       >
         <div

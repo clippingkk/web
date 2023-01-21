@@ -81,6 +81,7 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
     threshold: 3,
     totalItems: clippingsData?.book.clippingsCount
   })
+
   if (!bookData) {
     return null
   }

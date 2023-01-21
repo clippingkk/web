@@ -1,5 +1,5 @@
-query profile($id: Int!, $domain: String) {
-  me(id: $id, domain: $domain) {
+query profile($id: Int!, $domain: String, $pagination: MeQueryPagination) {
+  me(id: $id, domain: $domain, pagination: $pagination) {
     id
     name
     email

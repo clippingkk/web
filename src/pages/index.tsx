@@ -19,7 +19,6 @@ export const getStaticProps: GetStaticProps<{ preloadPublicData: PublicDataQuery
     fetchPolicy: 'network-only'
   })
 
-
   const dbIds = data.
     data.
     public.

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import ListFooter from '../../../../components/list-footer/list-footer';
-import { useQuery } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../../../store';
 import { useTranslation } from 'react-i18next';
@@ -12,10 +11,8 @@ import BookCover from '../../../../components/book-cover/book-cover';
 import ReadingBook from './reading-book';
 import { UserContent } from '../../../../store/user/type';
 import { useSyncClippingsToServer } from '../../../../hooks/my-file'
-import styles from './home.module.css'
 import { useRouter } from 'next/router';
 import DashboardContainer from '../../../../components/dashboard-container/container';
-import PageLoading from '../../../../components/loading/loading';
 import HomePageSkeleton from './skeleton';
 import { useBooksQuery } from '../../../../schema/generated';
 
@@ -122,20 +119,16 @@ function HomePage() {
           }
           fetchMore({
             variables: {
+              id: uid,
               pagination: {
                 limit: 10,
                 offset: data.books.length
               }
             },
-            updateQuery: (prev, { fetchMoreResult }) => {
-              if (!fetchMoreResult || fetchMoreResult.books.length === 0) {
-                setReachEnd(true)
-                return prev
-              }
-              return {
-                ...prev,
-                books: [...prev.books, ...fetchMoreResult.books] as any
-              }
+          }).then(res => {
+            console.log('fetch more result', res)
+            if (res.data.books.length === 0) {
+              setReachEnd(true)
             }
           })
         }}

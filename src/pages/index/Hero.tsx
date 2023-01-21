@@ -43,7 +43,7 @@ function VideoTipsArea() {
 function Hero() {
   const { t } = useTranslation()
   const bg = useBackgroundImage()
-  
+
   const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
 
   const goLinkUrl = useMemo(() => {
@@ -57,7 +57,7 @@ function Hero() {
     <div
       className={'flex flex-col justify-center h-screen w-full max-h-screen bg-cover'}
       style={{
-        backgroundImage: `url(${bg})`,
+        backgroundImage: `url(${bg.src})`,
         maxWidth: '100vw'
       }}
     >
