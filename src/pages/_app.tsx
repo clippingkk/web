@@ -15,6 +15,7 @@ import AppContainer from '../components/AppContainer'
 import { client, request } from '../services/ajax'
 import store from '../store/index'
 
+import '../styles/devices.min.css'
 import 'react-phone-input-2/lib/style.css'
 // import 'emoji-mart/css/emoji-mart.css'
 import '../styles/react-animation.css'

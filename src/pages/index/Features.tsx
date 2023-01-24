@@ -1,6 +1,11 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
+import FeaturesOpen from './Features-Open'
+import FeatureWidget from './Feature-Widget'
+import FeatureModern from './Feature-Modern'
+import FeatureSense from './Feature-Sense'
+import FeatureReborn from './Feature-Reborn'
 
 type featureColorPattern = {
   title: string[]
@@ -108,7 +113,8 @@ function Features() {
   return (
     <div className='w-full flex justify-center flex-col p-10'>
       <h2 className='text-3xl text-center dark:text-gray-100'>Feature List</h2>
-      <FeatureSection
+      <FeaturesOpen />
+      {/* <FeatureSection
         title={t('app.index.features.open.title')}
         colorPattern={colorPatterns[0]}
         items={[{
@@ -126,8 +132,10 @@ function Features() {
           link: 'https://web-widget-script.pages.dev/',
           desc: t('app.index.features.open.f4Desc'),
         }]}
-      />
-      <FeatureSection
+      /> */}
+      <FeatureWidget />
+      <FeatureModern />
+      {/* <FeatureSection
         colorPattern={colorPatterns[1]}
         title={t('app.index.features.modern.title')}
         items={[{
@@ -140,8 +148,9 @@ function Features() {
           feature: t('app.index.features.modern.f3'),
           desc: t('app.index.features.modern.f3Desc'),
         }]}
-      />
-      <FeatureSection
+      /> */}
+      <FeatureSense />
+      {/* <FeatureSection
         colorPattern={colorPatterns[2]}
         title={t('app.index.features.sense.title')}
         items={[{
@@ -155,8 +164,9 @@ function Features() {
           feature: t('app.index.features.sense.f3'),
           desc: t('app.index.features.sense.f3Desc'),
         }]}
-      />
-      <FeatureSection
+      /> */}
+      <FeatureReborn />
+      {/* <FeatureSection
         colorPattern={colorPatterns[0]}
         title={t('app.index.features.reading4.title')}
         items={[{
@@ -173,7 +183,7 @@ function Features() {
           feature: t('app.index.features.reading4.f4'),
           desc: t('app.index.features.reading4.f4Desc'),
         }]}
-      />
+      /> */}
     </div>
   )
 }

@@ -5,6 +5,7 @@ import styles from './Hero.module.css'
 import { useBackgroundImage } from '../../hooks/theme'
 import { useSelector } from 'react-redux';
 import { TGlobalStore } from '../../store';
+import { useGoAuthLink } from '../../hooks/hooks'
 
 function useLoad() {
   const [loaded, setLoaded] = useState(false)
@@ -44,14 +45,7 @@ function Hero() {
   const { t } = useTranslation()
   const bg = useBackgroundImage()
 
-  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
-
-  const goLinkUrl = useMemo(() => {
-    if (id && id > 0) {
-      return `/dash/${id}/home`
-    }
-    return '/auth/auth-v3'
-  }, [id])
+  const goLinkUrl = useGoAuthLink()
 
   return (
     <div
@@ -64,15 +58,13 @@ function Hero() {
       <div className='w-full h-full backdrop-blur-xl bg-black dark:bg-opacity-40 bg-opacity-10 flex flex-col justify-center'>
         <div className={styles.titleField + ' my-8 mx-8 md:my-20 md:mx-20 flex items-center justify-center flex-col md:flex-row'}>
           <div className='flex-1 mb-8'>
-            <h1 className='text-9xl mx-0 my-0 font-light font-lxgw bg-clip-text from-orange-300 to-indigo-400 text-transparent bg-gradient-to-br'>ClippingKK</h1>
-            <h4 className='text-3xl font-lxgw bg-clip-text from-green-300 to-indigo-400 text-transparent bg-gradient-to-br'>{t('app.slogan')}</h4>
+            <h1 className='text-8xl m-0 font-extrabold font-lxgw bg-clip-text from-orange-300 to-sky-400 text-transparent bg-gradient-to-br'>ClippingKK</h1>
+            <h4 className='text-3xl mt-4 font-lxgw bg-clip-text from-green-300 to-indigo-400 text-transparent bg-gradient-to-br'>{t('app.slogan')}</h4>
             <div className={styles.platformSection}>
               <Link
                 href={goLinkUrl}
-                className={'w-fit py-4 px-12 text-6xl rounded-lg block font-light text-white my-6 hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center'}>
-
+                className={'w-fit py-4 px-12 text-6xl rounded-lg block font-extrabold text-white my-6 hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center'}>
                 {t('app.go')}
-
               </Link>
             </div>
           </div>
