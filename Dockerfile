@@ -27,6 +27,8 @@ RUN apk add --no-cache curl \
 FROM node:alpine AS runner
 WORKDIR /app
 
+ARG GIT_COMMIT
+ENV GIT_COMMIT=$GIT_COMMIT
 ENV NODE_ENV production
 
 RUN addgroup -g 1001 -S nodejs
