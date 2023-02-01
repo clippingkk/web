@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@annatarhe/blurhash-react': ^0.0.1
   '@apollo/client': ^3.7.3
   '@emoji-mart/data': ^1.0.6
   '@emoji-mart/react': ^1.0.1
@@ -111,6 +112,7 @@ specifiers:
   yup: 1.0.0-beta.7
 
 dependencies:
+  '@annatarhe/blurhash-react': 0.0.1_react@18.2.0
   '@apollo/client': 3.7.3_gdcq4dv6opitr3wbfwyjmanyra
   '@emoji-mart/data': 1.0.6
   '@emoji-mart/react': 1.0.1_7bfolod3fxggxsuqg7r6agi3si
@@ -230,6 +232,15 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.17
+
+  /@annatarhe/blurhash-react/0.0.1_react@18.2.0:
+    resolution: {integrity: sha512-odWO4vMcCQ1qOCzA09L+775B/RQeC/7OaJbSWncOLLTdH9+lxK+kyL8BVIqeUS+Ep0ri+PacALrkEUNOb+LCDQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      blurhash: 2.0.4
+      react: 18.2.0
+    dev: false
 
   /@apollo/client/3.7.3_gdcq4dv6opitr3wbfwyjmanyra:
     resolution: {integrity: sha512-nzZ6d6a4flLpm3pZOGpuAUxLlp9heob7QcCkyIqZlCLvciUibgufRfYTwfkWCc4NaGHGSZyodzvfr79H6oUwGQ==}

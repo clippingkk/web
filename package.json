@@ -70,6 +70,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@annatarhe/blurhash-react": "^0.0.1",
     "@apollo/client": "^3.7.3",
     "@emoji-mart/data": "^1.0.6",
     "@emoji-mart/react": "^1.0.1",
