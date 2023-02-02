@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react'
-import AppleSignin, { useScript, appleAuthHelpers } from 'react-apple-signin-auth'
+import React, { useCallback } from 'react'
+import AppleSignin from 'react-apple-signin-auth'
 import { toast } from 'react-hot-toast'
 import { AppleAuthResponse } from '../services/apple'
 import { useRouter } from 'next/router'
@@ -87,5 +87,4 @@ function AuthByAppleButton(props: AuthAppleProps) {
   )
 }
 
-// export default AuthAppleButton
 export default AuthByAppleButton

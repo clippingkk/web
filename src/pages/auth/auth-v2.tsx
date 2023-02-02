@@ -53,7 +53,7 @@ function AuthV2(props: AuthV2Props) {
               </Link>
               <hr className='my-4' />
               <AuthByMetamask />
-              <AuthByAppleButton disabled />
+              <AuthByAppleButton />
               <AuthByGithub />
 
               <div className='mt-4'>
