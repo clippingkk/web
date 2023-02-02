@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.0.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.0.5...v5.0.6) (2023-02-02)
+
+
+### Features
+
+* **apple:** enable sign in with apple ([ee1b37c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ee1b37cf6ed7dd24725e8ad538785f19896d7f62))
+* **image:** add experimental image loader ([64223ec](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/64223ec50b4250940bc7e4ed04d9e3341c32120a))
+
 ### [5.0.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.0.4...v5.0.5) (2023-01-24)
 
 
