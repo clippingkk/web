@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.1.0...v5.1.1) (2023-02-10)
+
+
+### Bug Fixes
+
+* **report:** change to png export ([12822b8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/12822b8f39c8b7b019bbffa0d3821669d225a45f))
+
 ## [5.1.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.0.8...v5.1.0) (2023-02-10)
 
 
