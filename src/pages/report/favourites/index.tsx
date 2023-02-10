@@ -10,7 +10,7 @@ import useSWR from 'swr'
 import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 import SpinnerIcon from '../../../components/loading/spinner'
 
-import { toPng } from 'html-to-image'
+import { toJpeg } from 'html-to-image'
 import download from 'downloadjs'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../services/misc'
@@ -136,7 +136,7 @@ function ReportFavouritesPage(props: ReportFavouritesPageProps) {
     }
 
     return toast.promise(
-      toPng(contentDOM.current).then(res => 
+      toJpeg(contentDOM.current).then(res => 
         download(res, 'my-favourites-books.png')
       )
       , toastPromiseDefaultOption)
