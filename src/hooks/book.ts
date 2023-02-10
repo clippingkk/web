@@ -1,5 +1,6 @@
 import { WenquBook, WenquSearchResponse, wenquRequest } from "../services/wenqu"
 import { useEffect, useRef, useState } from "react"
+import useSWR from 'swr'
 
 type bookRequestReturn = {
   books: WenquBook[]
@@ -114,18 +115,8 @@ export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestR
 }
 
 export function useBookSearch(query: string, offset: number) {
-  const [books, setBooks] = useState<WenquSearchResponse | null>(null)
-  useEffect(() => {
-    if (query.length < 3) {
-      return
-    }
+  const bs = useSWR<WenquSearchResponse>(query.length > 1 ? `/books/search?query=${query}&limit=50&offset=${offset}` : null, wenquRequest)
 
-    wenquRequest<WenquSearchResponse>(`/books/search?query=${query}&limit=50&offset=${offset}`)
-      .then(bs => {
-        setBooks(bs)
-      })
-  }, [query, offset])
-
-  return books
+  return bs.data
 }
 

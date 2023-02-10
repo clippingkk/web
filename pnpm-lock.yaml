@@ -34,6 +34,7 @@ specifiers:
   '@tailwindcss/forms': ^0.5.3
   '@tailwindcss/line-clamp': ^0.4.2
   '@testing-library/react': ^13.4.0
+  '@types/downloadjs': ^1.4.3
   '@types/emoji-mart': ^3.0.9
   '@types/jest': ^29.2.5
   '@types/mixpanel-browser': ^2.38.0
@@ -55,6 +56,7 @@ specifiers:
   coveralls: ^3.1.1
   cross-fetch: ^3.1.5
   dayjs: ^1.11.5
+  downloadjs: ^1.4.7
   echarts: ^5.4.1
   emoji-mart: ^5.2.2
   eslint: 8.23.1
@@ -63,6 +65,7 @@ specifiers:
   framer-motion: ^8.5.0
   graphql: ^16.6.0
   graphql-tag: ^2.12.6
+  html-to-image: ^1.11.11
   husky: ^8.0.1
   i18next: ^21.9.1
   i18next-browser-languagedetector: ^6.1.5
@@ -144,10 +147,12 @@ dependencies:
   body-scroll-lock: 4.0.0-beta.0
   cmdk: 0.1.20_nylzxt5ale4dsv666zkb25cgtm
   dayjs: 1.11.5
+  downloadjs: 1.4.7
   echarts: 5.4.1
   emoji-mart: 5.2.2
   formik: 2.2.9_react@18.2.0
   framer-motion: 8.5.0_biqbaboplfbrettd7655fr4n2y
+  html-to-image: 1.11.11
   i18next: 21.9.1
   i18next-browser-languagedetector: 6.1.5
   i18next-resources-to-backend: 1.0.0
@@ -197,6 +202,7 @@ devDependencies:
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.4
   '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.2.4
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
+  '@types/downloadjs': 1.4.3
   '@types/emoji-mart': 3.0.9
   '@types/jest': 29.2.5
   '@types/mixpanel-browser': 2.38.0
@@ -3893,6 +3899,10 @@ packages:
       '@types/ms': 0.7.31
     dev: false
 
+  /@types/downloadjs/1.4.3:
+    resolution: {integrity: sha512-MjJepFle/tLtT2/jmDNth6ZnwWzEhm40L+olE5HKR70ISUCfgT55eqreeHldAzFLY2HDUGsn8zgyto8KygN0CA==}
+    dev: true
+
   /@types/emoji-mart/3.0.9:
     resolution: {integrity: sha512-qdBo/2Y8MXaJ/2spKjDZocuq79GpnOhkwMHnK2GnVFa8WYFgfA+ei6sil3aeWQPCreOKIx9ogPpR5+7MaOqYAA==}
     dependencies:
@@ -6361,6 +6371,10 @@ packages:
       minimatch: 3.1.2
     dev: true
 
+  /downloadjs/1.4.7:
+    resolution: {integrity: sha512-LN1gO7+u9xjU5oEScGFKvXhYf7Y/empUIIEAGBs1LzUq/rg5duiDrkuH5A2lQGd5jfMOb9X9usDa2oVXwJ0U/Q==}
+    dev: false
+
   /dset/3.1.2:
     resolution: {integrity: sha512-g/M9sqy3oHe477Ar4voQxWtaPIFw1jTdKZuomOjhCcBx9nHUNn0pu6NopuFFrTh/TRZIKEj+76vLWFu9BNKk+Q==}
     engines: {node: '>=4'}
@@ -7966,6 +7980,10 @@ packages:
       react: 18.2.0
       react-property: 2.0.0
       style-to-js: 1.1.0
+    dev: false
+
+  /html-to-image/1.11.11:
+    resolution: {integrity: sha512-9gux8QhvjRO/erSnDPv28noDZcPZmYE7e1vFsBLKLlRlKDSqNJYebj6Qz1TGd5lsRV+X+xYyjCKjuZdABinWjA==}
     dev: false
 
   /html-tokenize/2.0.1:
