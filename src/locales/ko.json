@@ -85,7 +85,7 @@
       "title": "내 책들",
       "unchecked": "분류되지 않은 책",
       "notfound": "뭐! 아직 메모를 읽지 않았습니까?",
-      "uploadTip": "还不快点我上传"
+      "uploadTip": "업로드하려면 나를 클릭하세요."
     },
     "clipping": {
       "update": "책 업데이트",
