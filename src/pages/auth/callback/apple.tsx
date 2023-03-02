@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useAuthBy3rdPartSuccessed } from '../../../hooks/hooks'
-import { useBindAppleUniqueMutation } from '../../../schema/generated'
+import { AppleLoginPlatforms, useBindAppleUniqueMutation } from '../../../schema/generated'
 import AuthCallbackPageContainer from './layout'
 
 type AuthCallbackAppleProps = {
@@ -16,7 +16,7 @@ function AuthCallbackApple(props: AuthCallbackAppleProps) {
       code: '',
       idToken: r.query.i as string,
       state: '',
-      platform: 'web'
+      platform: AppleLoginPlatforms.Web
     }
   }, [r.query])
 

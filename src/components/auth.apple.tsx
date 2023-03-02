@@ -5,7 +5,7 @@ import { AppleAuthResponse } from '../services/apple'
 import { useRouter } from 'next/router'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import WithLoading from './with-loading'
-import { useLoginByAppleLazyQuery } from '../schema/generated'
+import { AppleLoginPlatforms, useLoginByAppleLazyQuery } from '../schema/generated'
 
 type AuthAppleProps = {
   disabled?: boolean
@@ -42,7 +42,7 @@ function AuthByAppleButton(props: AuthAppleProps) {
           code: code,
           idToken: id_token,
           state: state,
-          platform: 'web'
+          platform: AppleLoginPlatforms.Web,
         }
       }
     })
