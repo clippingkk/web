@@ -37,11 +37,11 @@ class DocumentTop extends Document {
             content="rgba(33, 150, 243, 0.9)"
             media="(prefers-color-scheme: dark)"
           /> */}
-          <link href="https://cdn.annatarhe.com" rel='preconnect' crossOrigin='true' />
-          <link href="https://ck-cdn.annatarhe.cn" rel='preconnect' crossOrigin='true' />
-          <link href="https://clippingkk-api.annatarhe.com" rel='preconnect' crossOrigin='true' />
-          <link href="https://wenqu.annatarhe.cn" rel='preconnect' crossOrigin='true' />
-          <link href="https://bam.nr-data.net" rel="preconnect" crossOrigin='true' />
+          <link href="https://cdn.annatarhe.com" rel='preconnect' crossOrigin='use-credentials' />
+          <link href="https://ck-cdn.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
+          <link href="https://clippingkk-api.annatarhe.com" rel='preconnect' crossOrigin='use-credentials' />
+          <link href="https://wenqu.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
+          <link href="https://bam.nr-data.net" rel="preconnect" crossOrigin='use-credentials' />
 
           <link rel="apple-touch-icon" sizes="57x57" href={faviconPrefix + "/apple-icon-57x57.png"} />
           <link rel="apple-touch-icon" sizes="60x60" href={faviconPrefix + "/apple-icon-60x60.png"} />
