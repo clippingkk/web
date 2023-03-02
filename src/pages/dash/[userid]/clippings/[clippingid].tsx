@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 // import { changeBackground } from '../../../../store/app/type'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Card from '../../../../components/card/card'
 import Preview from '../../../../components/preview/preview3'
 import { useSingleBook } from '../../../../hooks/book'
@@ -27,7 +27,7 @@ import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../servic
 import Head from 'next/head'
 import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '../../../../store/global'
-import { Clipping, FetchClippingDocument, FetchClippingQuery, FetchClippingQueryVariables, useFetchClippingQuery } from '../../../../schema/generated'
+import { FetchClippingDocument, FetchClippingQuery, FetchClippingQueryVariables, useFetchClippingQuery } from '../../../../schema/generated'
 function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { clippingid } = useRouter().query as { clippingid: string }
 
@@ -58,7 +58,7 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
       return
     }
     setBg(book.image)
-  },[book, setBg])
+  }, [book, setBg])
   const { t } = useTranslation()
 
   const clippingAt = useLocalTime(clipping?.clipping.createdAt)
@@ -70,7 +70,7 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
         <title>{book?.title ?? clipping.clipping.title}</title>
         <OGWithClipping clipping={clipping?.clipping} book={book} />
       </Head>
-      <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20 with-slide-in'>
+      <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20 flex-col lg:flex-row with-slide-in'>
         <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
           <>
             <h1 className='lg:text-3xl text-xl font-bold my-2'>{clipping?.clipping.title}</h1>
@@ -86,14 +86,12 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
             <footer className='flex justify-between flex-col lg:flex-row mt-4'>
               {me.id === 0 && (
                 (<Link href={`/auth/auth-v3`} className='flex justify-start items-center w-full'>
-
                   <img
                     src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
                     className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover inline-block'
                     alt={creator.name}
                   />
                   <span className='ml-4 text-gray-700 dark:text-gray-200 font-light'>{creator?.name}</span>
-
                 </Link>)
               )}
               <time className='lg:text-base text-sm font-light w-full text-gray-700 flex items-center justify-end'>
@@ -103,15 +101,13 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
           </>
         </Card>
         {/** 再加一个作者简介 */}
-        {me.id !== 0 && (
-          <ClippingSidebar
-            clipping={clipping?.clipping}
-            book={book}
-            onTogglePreviewVisible={togglePreviewVisible}
-            me={me}
-            inAppChannel={parseInt(iac) as IN_APP_CHANNEL}
-          />
-        )}
+        <ClippingSidebar
+          clipping={clipping?.clipping}
+          book={book}
+          onTogglePreviewVisible={togglePreviewVisible}
+          me={me}
+          inAppChannel={parseInt(iac) as IN_APP_CHANNEL}
+        />
       </div>
 
       {

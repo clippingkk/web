@@ -2,6 +2,12 @@
   "app": {
     "fold": "Fold",
     "unfold": "Unfold",
+    "payment": {
+      "required": "Limit exceeded, please upgrade to a premium account"
+    },
+    "ai": {
+      "clippingHelp": "AI-generated narration for the segment"
+    },
     "common": {
       "loading": "Loading...",
       "closed": "This feature is still under heavy development",
@@ -98,6 +104,7 @@
       "preview": "Preview",
       "save": "Save",
       "visible": "Visible(public to others ?)",
+      "aiSummary": "AI Explain",
       "sidebar": {
         "prev": "previous clipping",
         "next": "next clipping"

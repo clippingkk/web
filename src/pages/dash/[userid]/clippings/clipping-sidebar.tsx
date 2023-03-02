@@ -8,12 +8,12 @@ import { UserContent } from '../../../../store/user/type'
 import { useTranslation } from 'react-i18next'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { toast } from 'react-hot-toast'
-
-import styles from './clipping.module.css'
 import Link from 'next/link'
 import BookInfoChanger from '../../../../components/book-info-changer/bookInfoChanger'
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid'
+import { ArrowDownIcon, ArrowUpIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 import { Clipping, User, useToggleClippingVisibleMutation } from '../../../../schema/generated'
+import { Button } from '@mantine/core'
+import ClippingAISummaryModal from '../../../../components/clipping-item/aiSummary'
 
 type ClippingSidebarProps = {
   clipping?: Pick<Clipping, 'id' | 'visible' | 'content' | 'title' | 'createdAt' | 'nextClipping' | 'prevClipping'> & { creator: Pick<User, 'id' | 'name' | 'domain'> }
@@ -48,8 +48,8 @@ function ClippingSidebar(props: ClippingSidebarProps) {
 
   const { t } = useTranslation()
   const client = useApolloClient()
-  const dispatch = useDispatch()
   const [execToggleClipping] = useToggleClippingVisibleMutation()
+  const [aiSummaryVisible, setAISummaryVisible] = useState(false)
 
   const [updateClippingBookId, setUpdateClippingBookId] = useState(-1)
 
@@ -60,13 +60,6 @@ function ClippingSidebar(props: ClippingSidebarProps) {
 
     setUpdateClippingBookId(clipping.id)
   }, [clipping?.id])
-
-  // const updateClipping = useCallback(() => {
-  //   if (!clipping) {
-  //     return
-  //   }
-  //   dispatch(updateClippingBook(clipping.id))
-  // }, [clipping])
 
   const onCopyEmbedHtml = useCallback(() => {
     const template = `
@@ -98,28 +91,52 @@ function ClippingSidebar(props: ClippingSidebarProps) {
 
   const siblingLink = getSiblingLink(props.inAppChannel, clippingDomain, clipping)
   return (
-    <Card className='flex-1 hidden lg:block'>
+    <Card className='flex-1'>
       <div className='flex w-full h-full flex-col justify-between items-center'>
         <ul className={'w-full p-0 list-none'}>
           <li className='w-full mb-4'>
-            <button
-              className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 '
-              onClick={updateClipping}
-            >
-              {t('app.clipping.update')}
-            </button>
-            <BookInfoChanger
-              clippingID={clipping?.id ?? -1}
-              visible={updateClippingBookId >= 0}
-              onClose={() => {
-                setUpdateClippingBookId(-1)
+            <Button
+              variant='gradient'
+              className='bg-gradient-to-r from-indigo-600 to-cyan-700 w-full'
+              leftIcon={
+                <ChatBubbleLeftRightIcon className=' w-4 h-4' />
+              }
+              onClick={() => {
+                setAISummaryVisible(true)
               }}
-              onConfirm={newBookId => {
-                setUpdateClippingBookId(-1)
-                return Promise.resolve(1)
+            >
+              {t('app.clipping.aiSummary')}
+            </Button>
+            <ClippingAISummaryModal
+              open={aiSummaryVisible}
+              cid={clipping?.id}
+              onClose={() => {
+                setAISummaryVisible(false)
               }}
             />
           </li>
+
+          {me.id === clipping?.creator.id && (
+            <li className='w-full mb-4'>
+              <button
+                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 '
+                onClick={updateClipping}
+              >
+                {t('app.clipping.update')}
+              </button>
+              <BookInfoChanger
+                clippingID={clipping?.id ?? -1}
+                visible={updateClippingBookId >= 0}
+                onClose={() => {
+                  setUpdateClippingBookId(-1)
+                }}
+                onConfirm={newBookId => {
+                  setUpdateClippingBookId(-1)
+                  return Promise.resolve(1)
+                }}
+              />
+            </li>
+          )}
 
           <li className='w-full mb-4'>
             <button
@@ -181,7 +198,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 href={siblingLink.prev}
                 className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
                 title={t('app.clipping.sidebar.prev')}>
-                  <ArrowUpIcon className='w-4 h-4 mr-2' />
+                <ArrowUpIcon className='w-4 h-4 mr-2' />
                 {t('app.clipping.sidebar.prev')}
 
               </Link>
@@ -193,7 +210,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 href={siblingLink.next}
                 className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
                 title={t('app.clipping.sidebar.next')}>
-                  <ArrowDownIcon className='w-4 h-4 mr-2' />
+                <ArrowDownIcon className='w-4 h-4 mr-2' />
                 {t('app.clipping.sidebar.next')}
               </Link>
             </li>
