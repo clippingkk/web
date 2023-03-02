@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.2.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.2.1...v5.2.2) (2023-03-02)
+
+
+### Features
+
+* **ssr:** add cache for wenqu ([4b5d34c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4b5d34c5bd7b2339df58b9c67f0f26350d2de04a))
+
 ### [5.2.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.2.0...v5.2.1) (2023-03-02)
 
 
