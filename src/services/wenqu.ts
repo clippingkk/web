@@ -6,6 +6,8 @@ type WenquErrorResponse = {
   error: string
 }
 
+const cache = new Map<string, any>()
+
 export async function wenquRequest<T extends object>(url: string, options: RequestInit = {}): Promise<T> {
   options.headers = {
     ...(options.headers || {}),
@@ -14,18 +16,22 @@ export async function wenquRequest<T extends object>(url: string, options: Reque
   options.credentials = 'include'
   options.mode = 'cors'
 
+  if (cache.has(url)) {
+    return cache.get(url) as T
+  }
+
   try {
     const response: T | WenquErrorResponse = await fetch(WENQU_API_HOST + url, options).then(res => res.json())
     if ('error' in response) {
       throw new Error(response.error)
     }
+    cache.set(url, response)
     return response
   } catch (e) {
     Sentry.captureException(e)
     return Promise.reject(e)
   }
 }
-
 
 export interface WenquBookCoverImageInfo {
   id: number;
