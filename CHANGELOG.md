@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.2.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.1.1...v5.2.0) (2023-03-02)
+
+
+### Features
+
+* **ai:** add ai explain to clipping ([c31e5c9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c31e5c92aa0bba97199e0575400e80d7f7e4ab67))
+* **app:** upgrade deps ([45fc4cc](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/45fc4cc2cac8de37ad90b0c1323d4aade23cfa84))
+
+
+### Bug Fixes
+
+* **locales:** update ko ([02dbe90](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/02dbe903031329db3e1bc475c4f9710176f9ccdc))
+
 ### [5.1.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.1.0...v5.1.1) (2023-02-10)
 
 
