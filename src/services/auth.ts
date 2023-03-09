@@ -3,11 +3,9 @@ import { UserContent, TUserSignupData } from '../store/user/type'
 import { IHttpClippingItem, IClippingItem } from './clippings';
 import * as sentry from '@sentry/react'
 
-interface ILoginResponse extends IBaseResponseData {
-  data: {
+type ILoginResponse = {
     profile: UserContent,
     token: string
-  }
 }
 
 interface IUserProfileResponse {

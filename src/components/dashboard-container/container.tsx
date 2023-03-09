@@ -8,7 +8,12 @@ import { appBackgroundAtom } from '../../store/global'
 
 const defaultBg = require('../../assets/bg.jpg').default
 
-function DashboardContainer(props: any) {
+type DashboardContainerProps = {
+  header?: React.ReactNode
+  children?: React.ReactNode
+}
+
+function DashboardContainer(props: DashboardContainerProps) {
   const bg = useAtomValue(appBackgroundAtom)
   const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
     if (!bg) {
@@ -25,7 +30,7 @@ function DashboardContainer(props: any) {
   return (
     <section className={'min-h-screen w-full flex flex-col anna-page-container bg-no-repeat bg-cover'} style={containerStyle}>
       <div className=' min-h-screen w-full flex flex-col  backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
-        <NavigationBar />
+        {props.header ?? <NavigationBar />}
         <div className=' container flex-col flex m-auto'>
           {props.children}
         </div>

@@ -170,7 +170,7 @@ function NavigationBar() {
         opened={loginByQRCodeModalVisible}
         onClose={() => { setLoginByQRCodeModalVisible(false) }}
         centered
-        overlayBlur={6}
+        overlayProps={{ blur: 6 }}
       >
         <LoginByQRCode />
       </Modal>

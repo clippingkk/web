@@ -1,4 +1,4 @@
-import { request, IBaseResponseData } from './ajax'
+import { request } from './ajax'
 
 export type IVersionItem = {
     id: number,
@@ -7,10 +7,6 @@ export type IVersionItem = {
     info: string,
     url: string,
     createdAt: string
-}
-
-export interface IVersionListResponse extends IBaseResponseData {
-    data: IVersionItem[]
 }
 
 export async function getVersions(platform: string): Promise<IVersionItem[]> {

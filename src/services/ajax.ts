@@ -4,11 +4,12 @@ import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/confi
 import profile from '../utils/profile'
 import toast from 'react-hot-toast'
 import { offsetLimitPagination } from '@apollo/client/utilities'
+import { QueryClient } from '@tanstack/react-query'
 
-export interface IBaseResponseData {
+export interface IBaseResponseData<T> {
   status: Number
   msg: string
-  data: any
+  data: T
 }
 
 export function getLocalToken() {
@@ -31,7 +32,7 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
   options.mode = 'cors'
 
   try {
-    const response: IBaseResponseData = await fetch(API_HOST + '/api' + url, options).then(res => res.json())
+    const response: IBaseResponseData<T> = await fetch(API_HOST + '/api' + url, options).then(res => res.json())
     if (response.status >= 400) {
       throw new Error(response.msg)
     }
@@ -153,3 +154,7 @@ function simpleDistArrayMerge(existings: {__ref: string}[] = [], incoming: {__re
     return acc
   }, [] as any[])
 }
+
+
+export const reactQueryClient = new QueryClient({
+})

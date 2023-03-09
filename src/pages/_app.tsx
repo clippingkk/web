@@ -8,6 +8,7 @@ import '../styles/cmdk-raycast.css'
 
 import React, { ReactElement, ReactNode, useEffect } from 'react'
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { Provider as JotaiProvider } from 'jotai'
 import App from 'next/app'
 import type { AppProps, AppContext } from 'next/app'
@@ -20,7 +21,7 @@ import '../utils/sentry'
 import '../utils/echarts'
 
 import AppContainer from '../components/AppContainer'
-import { client, request } from '../services/ajax'
+import { client, reactQueryClient, request } from '../services/ajax'
 import store from '../store/index'
 
 import '../prefers-dark'
@@ -58,6 +59,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const content = getLayout(<Component {...pageProps} />)
   return (
     <JotaiProvider>
+
       <Provider store={store}>
         <ColorSchemeProvider
           colorScheme={isDarkTheme ? 'dark' : 'light'}
@@ -71,14 +73,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 fetcher: request
               }}
             >
-              <ApolloProvider client={client}>
-                <AppContainer>
-                  {content}
-                </AppContainer>
-                <Toaster
-                  position='top-center'
-                />
-              </ApolloProvider>
+              <QueryClientProvider client={reactQueryClient}>
+                <ApolloProvider client={client}>
+                  <AppContainer>
+                    {content}
+                  </AppContainer>
+                  <Toaster
+                    position='top-center'
+                  />
+                </ApolloProvider>
+              </QueryClientProvider>
             </SWRConfig>
           </MantineProvider>
         </ColorSchemeProvider>

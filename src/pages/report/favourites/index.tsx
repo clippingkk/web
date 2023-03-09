@@ -69,7 +69,9 @@ function FavBookCard(
         title={k}
         centered
         size='xl'
-        overlayBlur={4}
+        overlayProps={{
+          blur: 4
+        }}
       >
         <div>
           <Input
