@@ -5,8 +5,7 @@ import BookCover from '../../../components/book-cover/book-cover'
 import OGWithIndex from '../../../components/og/og-with-index'
 import OGWithReport from '../../../components/og/og-with-report'
 import PublicBookItem from '../../../components/public-book-item/public-book-item'
-import { useSingleBook } from '../../../hooks/book'
-import useSWR from 'swr'
+import { useBookSearch, useSingleBook } from '../../../hooks/book'
 import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 import SpinnerIcon from '../../../components/loading/spinner'
 
@@ -28,7 +27,8 @@ function FavBookCard(
   const b = useSingleBook(dbid.toString())
   const [selecting, setSelecting] = useState(false)
   const [searchingText, setSearchingText] = useState('')
-  const bs = useSWR<WenquSearchResponse>(searchingText.length > 1 ? `/books/search?query=${searchingText}&limit=50&offset=0` : null, wenquRequest)
+
+  const bs = useBookSearch(searchingText, 0)
 
   return (
     <div className='w-96 mx-auto'>
@@ -138,7 +138,7 @@ function ReportFavouritesPage(props: ReportFavouritesPageProps) {
     }
 
     return toast.promise(
-      toPng(contentDOM.current).then(res => 
+      toPng(contentDOM.current).then(res =>
         download(res, 'my-favourites-books.png')
       )
       , toastPromiseDefaultOption)

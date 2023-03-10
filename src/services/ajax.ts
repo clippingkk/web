@@ -146,7 +146,7 @@ export const client = new ApolloClient({
   connectToDevTools: process.env.DEV === 'true',
 })
 
-function simpleDistArrayMerge(existings: {__ref: string}[] = [], incoming: {__ref: string}[] = []) {
+function simpleDistArrayMerge(existings: { __ref: string }[] = [], incoming: { __ref: string }[] = []) {
   return [...existings, ...incoming].reduce((acc, x) => {
     if (acc.findIndex((z: any) => z.__ref === x.__ref) === -1) {
       acc.push(x)
@@ -155,6 +155,10 @@ function simpleDistArrayMerge(existings: {__ref: string}[] = [], incoming: {__re
   }, [] as any[])
 }
 
-
 export const reactQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      keepPreviousData: true,
+    }
+  }
 })

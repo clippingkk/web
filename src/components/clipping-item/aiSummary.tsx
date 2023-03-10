@@ -60,8 +60,10 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
       centered
       size='auto'
       title={t('app.clipping.aiSummary')}
-      overlayBlur={10}
-      overlayOpacity={0.7}
+      overlayProps={{
+        blur: 10,
+        opacity: 0.7
+      }}
     >
       <div className='relative'>
         <LoadingOverlay

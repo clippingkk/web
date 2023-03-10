@@ -8,12 +8,13 @@ import '../styles/cmdk-raycast.css'
 
 import React, { ReactElement, ReactNode, useEffect } from 'react'
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core'
-import { QueryClientProvider } from '@tanstack/react-query'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Provider as JotaiProvider } from 'jotai'
 import App from 'next/app'
 import type { AppProps, AppContext } from 'next/app'
 import { ApolloProvider } from '@apollo/client'
-import { SWRConfig } from 'swr'
 import { Provider } from 'react-redux'
 
 import '../utils/mixpanel'
@@ -32,6 +33,7 @@ import { AUTH_LOGIN } from '../store/user/type'
 import { NextPage } from 'next'
 import { Toaster } from 'react-hot-toast'
 import { useDarkModeStatus } from '../hooks/theme'
+import { reactQueryPersister } from '../services/storage'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -68,22 +70,22 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           }}
         >
           <MantineProvider theme={{ colorScheme: isDarkTheme ? 'dark' : 'light' }}>
-            <SWRConfig
-              value={{
-                fetcher: request
+            <PersistQueryClientProvider
+              client={reactQueryClient}
+              persistOptions={{
+                persister: reactQueryPersister
               }}
             >
-              <QueryClientProvider client={reactQueryClient}>
-                <ApolloProvider client={client}>
-                  <AppContainer>
-                    {content}
-                  </AppContainer>
-                  <Toaster
-                    position='top-center'
-                  />
-                </ApolloProvider>
-              </QueryClientProvider>
-            </SWRConfig>
+              <ApolloProvider client={client}>
+                <AppContainer>
+                  {content}
+                </AppContainer>
+                <Toaster
+                  position='top-center'
+                />
+              </ApolloProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </PersistQueryClientProvider>
           </MantineProvider>
         </ColorSchemeProvider>
       </Provider>

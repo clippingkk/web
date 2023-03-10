@@ -72,7 +72,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
           <p
             className='bg-gradient-to-br from-orange-600 to-orange-800 rounded p-2'
           >{t('app.clipping.updateCandidatesCount', {
-            count: candidates?.count ?? 0
+            count: candidates.data?.count ?? 0
           })}</p>
           <p
             className='bg-gradient-to-br from-teal-600 to-teal-800 rounded p-2 mt-2'
@@ -85,7 +85,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
               maxHeight: '70vh'
             }}
           >
-            {candidates?.books.map(x => (
+            {candidates.data?.books.map(x => (
               <BookCandidate
                 key={x.id}
                 book={x}

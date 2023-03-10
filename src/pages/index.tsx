@@ -3,17 +3,19 @@ import Head from 'next/head'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Footer from '../components/footer/Footer'
 import { usePageTrack } from '../hooks/tracke'
-import { client } from '../services/ajax'
+import { client, reactQueryClient } from '../services/ajax'
 import Hero from './index/Hero'
 import TopBooks from './index/TopBooks'
 import TopClippings from './index/TopClippings'
 import TopUsers from './index/TopUsers'
 import OGWithIndex from '../components/og/og-with-index'
 import Features from './index/Features'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '../services/wenqu'
-import { PublicData, PublicDataDocument, PublicDataQuery } from '../schema/generated'
+import { wenquRequest, WenquSearchResponse } from '../services/wenqu'
+import { PublicDataDocument, PublicDataQuery } from '../schema/generated'
+import { dehydrate } from '@tanstack/react-query'
+import { useBookSearch, useMultipBook } from '../hooks/book'
 
-export const getStaticProps: GetStaticProps<{ preloadPublicData: PublicDataQuery, books: WenquBook[] }> = async ({ locale }) => {
+export const getStaticProps: GetStaticProps<{ preloadPublicData: PublicDataQuery }> = async ({ locale }) => {
   const data = await client.query<PublicDataQuery>({
     query: PublicDataDocument,
     fetchPolicy: 'network-only'
@@ -26,35 +28,32 @@ export const getStaticProps: GetStaticProps<{ preloadPublicData: PublicDataQuery
     map(x => x.doubanId).
     filter(x => x.length > 3) ?? []
 
-  let booksServerData: WenquBook[] = []
-
   if (dbIds.length >= 1) {
-    const query = dbIds.join('&dbIds=')
-    const books = await wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`)
-    const bsBooks = dbIds.reduce<WenquBook[]>((acc, cur) => {
-      const bb = books.books.find(x => x.doubanId.toString() === cur)
-      if (bb) {
-        acc.push(bb)
-      }
-      return acc
-    }, [])
-    booksServerData.push(...bsBooks)
+    await reactQueryClient.prefetchQuery({
+      queryKey: ['wenqu', 'books', 'dbIds', dbIds],
+      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
+    })
   }
 
   return {
     props: {
+      dehydratedState: dehydrate(reactQueryClient),
       preloadPublicData: data.data,
-      books: booksServerData,
-      // preloadPublicData: { public: {clippings: [], users: []}},
-      // books: [],
     },
     revalidate: true
   }
 }
 
-function IndexPage({ preloadPublicData, books }: InferGetStaticPropsType<typeof getStaticProps>) {
+function IndexPage({ preloadPublicData }: InferGetStaticPropsType<typeof getStaticProps>) {
   usePageTrack('index')
   const data = preloadPublicData
+
+  const dbIds = data.
+    public.
+    books.
+    map(x => x.doubanId).
+    filter(x => x.length > 3) ?? []
+  const bs = useMultipBook(dbIds)
 
   return (
     <div>
@@ -64,7 +63,7 @@ function IndexPage({ preloadPublicData, books }: InferGetStaticPropsType<typeof 
       </Head>
       <Hero />
       <div className='py-4 from-sky-100 to-green-200 bg-gradient-to-br dark:from-sky-900 dark:to-gray-800'>
-        <TopBooks books={books} />
+        <TopBooks books={bs.books ?? []} />
         <TopClippings clippings={data?.public.clippings} />
         <TopUsers users={data?.public.users} />
         <Features />
