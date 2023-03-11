@@ -29,8 +29,7 @@ jobs:
         cache: pnpm
     - name: Install dependencies
       run: pnpm install
-    - run: pnpm add -g apollo graphql
-    - run: pnpm run gql
+    - run: pnpm run codegen
     - run: pnpm run coveralls
       env:
         COVERALLS_REPO_TOKEN : ${{ secrets.CODEALLS_REPO_TOKEN }}

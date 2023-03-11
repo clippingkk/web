@@ -8,7 +8,6 @@
     "build": "next build",
     "start": "next start -p $LEANCLOUD_APP_PORT",
     "lint": "next lint",
-    "gql": "apollo client:codegen --target=typescript --localSchemaFile=\"./src/schema/schema.json\" --includes=\"./src/schema/**/*.graphql\" --useReadOnlyTypes",
     "test": "jest",
     "test:update": "npm test -- --updateSnapshot",
     "release:base": "standard-version --commit-all",

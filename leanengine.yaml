@@ -12,9 +12,7 @@ build:
   - npm config set registry https://registry.npmmirror.com
   # - pnpm config set store-dir ~/.pnpm-store
   - export NODE_OPTIONS=--openssl-legacy-provider
-  - npm install -g apollo graphql
   - npm install --production=false --force
   # - pnpm install --production=false --force
-  - npm run gql 
   - npm run codegen
   - npm run build

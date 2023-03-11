@@ -6,7 +6,7 @@ WORKDIR /app
 COPY types package.json package-lock.json pnpm-lock.yaml codegen.yml next-env.d.ts next.config.js next-i18next.config.js postcss.config.js tailwind.config.js tsconfig.json ./
 RUN pnpm install --frozen-lockfile --force
 COPY ./src ./src
-RUN npm install -g apollo graphql && npm run gql && npm run codegen
+RUN npm run codegen
 
 FROM node:alpine AS builder
 WORKDIR /app
