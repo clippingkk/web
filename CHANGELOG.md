@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.3.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.2.2...v5.3.0) (2023-03-11)
+
+
+### Features
+
+* **payment:** disable payment for now ([c323523](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c32352329c1a66f97b465349cddce4e8658e461c))
+* **payment:** update payment success and cancel pages ([806c270](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/806c2706d8f568eee6bf054d8ef6685300c714dd))
+* **premier:** add premier feature ([e7a3ef7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e7a3ef754e2c0ff9fed6bffc78cdef7163a56f7e))
+* **query:** use react query to save data ([cf9750b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cf9750b38990a7f48dd3f0ffb1889145d91b4ad4))
+
 ### [5.2.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.2.1...v5.2.2) (2023-03-02)
 
 
