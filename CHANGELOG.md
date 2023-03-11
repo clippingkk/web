@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.1...v5.3.2) (2023-03-11)
+
+
+### Bug Fixes
+
+* **ci:** fix node ci ([1444239](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1444239a33a65321cae33bf1b279e13aadcc79f1))
+* **ci:** remove legacy apollo codegen ([0669c92](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0669c92a7f92bf9f76637ef7ffefeb62acb70497))
+
 ### [5.3.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.0...v5.3.1) (2023-03-11)
 
 
