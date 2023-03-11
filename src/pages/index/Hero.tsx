@@ -68,6 +68,7 @@ function Hero() {
                 {t('app.go')}
               </Link>
 
+              {false && (
                 <Button
                   component={Link}
                   href='/pricing'
@@ -76,6 +77,7 @@ function Hero() {
                 >
                   😎 Premier
                 </Button>
+              )}
             </div>
           </div>
 
