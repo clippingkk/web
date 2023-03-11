@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { useQueries, useQuery } from "@tanstack/react-query"
 
 // 3 days
-const duration3Days = 1000 * 60 * 60 * 24 * 3
+export const duration3Days = 1000 * 60 * 60 * 24 * 3
 
 type bookRequestReturn = {
   books: WenquBook[]

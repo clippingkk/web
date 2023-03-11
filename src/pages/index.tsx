@@ -13,7 +13,7 @@ import Features from './index/Features'
 import { wenquRequest, WenquSearchResponse } from '../services/wenqu'
 import { PublicDataDocument, PublicDataQuery } from '../schema/generated'
 import { dehydrate } from '@tanstack/react-query'
-import { useBookSearch, useMultipBook } from '../hooks/book'
+import { duration3Days, useBookSearch, useMultipBook } from '../hooks/book'
 
 export const getStaticProps: GetStaticProps<{ preloadPublicData: PublicDataQuery }> = async ({ locale }) => {
   const data = await client.query<PublicDataQuery>({
@@ -32,6 +32,8 @@ export const getStaticProps: GetStaticProps<{ preloadPublicData: PublicDataQuery
     await reactQueryClient.prefetchQuery({
       queryKey: ['wenqu', 'books', 'dbIds', dbIds],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
+      staleTime: duration3Days,
+      cacheTime: duration3Days,
     })
   }
 

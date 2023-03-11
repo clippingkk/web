@@ -228,6 +228,10 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
         domain: Number.isNaN(uid) ? pathUid : null
       },
     })
+    context.res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59'
+    )
     return {
       props: {
         profileServerData: profileResponse.data,

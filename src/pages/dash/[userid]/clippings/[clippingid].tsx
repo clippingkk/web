@@ -3,7 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../../../../components/card/card'
 import Preview from '../../../../components/preview/preview3'
-import { useSingleBook } from '../../../../hooks/book'
+import { duration3Days, useSingleBook } from '../../../../hooks/book'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -19,7 +19,7 @@ import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { CDN_DEFAULT_DOMAIN } from '../../../../constants/config'
 import OGWithClipping from '../../../../components/og/og-with-clipping'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { client } from '../../../../services/ajax'
+import { client, reactQueryClient } from '../../../../services/ajax'
 import DashboardContainer from '../../../../components/dashboard-container/container'
 
 import styles from './clipping.module.css'
@@ -28,17 +28,9 @@ import Head from 'next/head'
 import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '../../../../store/global'
 import { FetchClippingDocument, FetchClippingQuery, FetchClippingQueryVariables, useFetchClippingQuery } from '../../../../schema/generated'
+import { dehydrate } from '@tanstack/react-query'
 function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { clippingid } = useRouter().query as { clippingid: string }
-
-  const { data: clippingLocalData } = useFetchClippingQuery({
-    variables: {
-      id: ~~clippingid
-    },
-    // skip: !!serverResponse.clippingServerData
-  })
-
-  const clipping = clippingLocalData || serverResponse.clippingServerData
+  const clipping = serverResponse.clippingServerData
 
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
@@ -48,9 +40,7 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
     setSharePreviewVisible(v => !v)
   }, [])
 
-  const localBook = useSingleBook(clipping?.clipping.bookID, !!serverResponse.bookServerData)
-
-  const book = serverResponse.bookServerData || localBook
+  const book = useSingleBook(clipping.clipping.bookID)
 
   const setBg = useSetAtom(appBackgroundAtom)
   useEffect(() => {
@@ -146,7 +136,6 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
 
 type serverSideProps = {
   clippingServerData: FetchClippingQuery
-  bookServerData: WenquBook | null
 }
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
@@ -161,23 +150,23 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
   })
 
   const bookID = clippingsResponse.data.clipping.bookID
-
-  let book: WenquBook | null
-  if (bookID.length <= 3) {
-    book = null
-  } else {
-    // const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-    book = await wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`).then(bs => {
-      if (bs.count !== 1) {
-        return null
-      }
-      return bs.books[0]
+  if (bookID && bookID.length > 3) {
+    await reactQueryClient.prefetchQuery({
+      queryKey: ['wenqu', 'books', 'dbId', bookID],
+      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
+      staleTime: duration3Days,
+      cacheTime: duration3Days,
     })
   }
+
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
   return {
     props: {
+      dehydratedState: dehydrate(reactQueryClient),
       clippingServerData: clippingsResponse.data,
-      bookServerData: book
     },
   }
 }

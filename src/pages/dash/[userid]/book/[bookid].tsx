@@ -17,6 +17,9 @@ import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../servic
 import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size';
 import { Masonry, useInfiniteLoader } from 'masonic';
 import { Clipping, useBookQuery, useQueryMyIdByDomainQuery } from '../../../../schema/generated';
+import { reactQueryClient } from '../../../../services/ajax';
+import { duration3Days, useSingleBook } from '../../../../hooks/book';
+import { dehydrate } from '@tanstack/react-query';
 
 function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { userid: domain, bookid } = useRouter().query as { userid: string, bookid: string }
@@ -24,7 +27,7 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
     bookId: bookid
   })
   const dispatch = useDispatch()
-  const bookData = serverResponse.bookServerData
+  const bookData = useSingleBook(bookid)
 
   const hasMore = useRef(true)
   const { data: clippingsData, fetchMore, loading } = useBookQuery({
@@ -125,27 +128,25 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
 
 
 type serverSideProps = {
-  bookServerData: WenquBook | null
 }
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
   const dbId = context.params?.bookid ?? ''
-  if (dbId.length <= 3) {
-    return {
-      props: {
-        bookServerData: null
-      }
-    }
+  if (dbId && dbId.length > 3) {
+    await reactQueryClient.prefetchQuery({
+      queryKey: ['wenqu', 'books', 'dbId', dbId],
+      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
+      staleTime: duration3Days,
+      cacheTime: duration3Days,
+    })
   }
-  const book = await wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`).then(bs => {
-    if (bs.count !== 1) {
-      return null
-    }
-    return bs.books[0]
-  })
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
   return {
     props: {
-      bookServerData: book
+      dehydratedState: dehydrate(reactQueryClient),
     },
   }
 }
@@ -159,4 +160,3 @@ BookPage.getLayout = function getLayout(page: React.ReactElement) {
 }
 
 export default BookPage
-

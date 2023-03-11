@@ -4,18 +4,19 @@ import Head from 'next/head'
 import { useTranslation } from 'react-i18next'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
-import { useMultipBook } from '../../../../hooks/book'
+import { duration3Days, useMultipBook } from '../../../../hooks/book'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { APP_API_STEP_LIMIT } from '../../../../constants/config'
 import DashboardContainer from '../../../../components/dashboard-container/container'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { client } from '../../../../services/ajax'
+import { client, reactQueryClient } from '../../../../services/ajax'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
 import OGWithSquare from '../../../../components/og/og-with-square-page'
 import { LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
 import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size'
 import { Divider } from '@mantine/core'
 import { FetchSquareDataDocument, FetchSquareDataQuery, FetchSquareDataQueryVariables, useFetchSquareDataQuery } from '../../../../schema/generated'
+import { dehydrate } from '@tanstack/react-query'
 
 function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   usePageTrack('square')
@@ -63,7 +64,7 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
     <section className='flex items-center justify-center flex-col'>
       <Head>
         <title>square - clippingkk</title>
-        <OGWithSquare books={serverResponse.books} />
+        <OGWithSquare books={books.books ?? []} />
       </Head>
       <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'> 🪩 Square</h2>
       <Divider className='w-full' />
@@ -92,7 +93,6 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
 
 type serverSideProps = {
   squareServerData: FetchSquareDataQuery
-  books: WenquBook[]
 }
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
@@ -111,18 +111,24 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
     map(x => x.bookID).
     filter(x => x.length > 3) ?? []
 
-  let booksServerData: WenquBook[] = []
-
   if (dbIds.length >= 1) {
-    const query = dbIds.join('&dbIds=')
-    const books = await wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`)
-    booksServerData.push(...books.books)
+    await reactQueryClient.prefetchQuery({
+      queryKey: ['wenqu', 'books', 'dbIds', dbIds],
+      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
+      staleTime: duration3Days,
+      cacheTime: duration3Days,
+    })
   }
+
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
 
   return {
     props: {
+      dehydratedState: dehydrate(reactQueryClient),
       squareServerData: squareResponse.data,
-      books: booksServerData
     }
   }
 }
