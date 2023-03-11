@@ -10,6 +10,20 @@
     src: url('https://ck-cdn.annatarhe.cn/zAl2wwQDdDuuw3awwl6Xnj6MpmUxx7Ef/LXGWWenKai-Regular.woff2')
       format('woff2');
   }
+  @font-face {
+    font-family: LxgwWenKai;
+    font-weight: 200;
+    font-display: swap;
+    src: url('https://ck-cdn.annatarhe.cn/g8M7oFH3omghKVLi9XESurcKOSoRPUlA/LXGWWenKai-Light.ttf')
+      format('woff2');
+  }
+  @font-face {
+    font-family: LxgwWenKai;
+    font-weight: 700;
+    font-display: swap;
+    src: url('https://ck-cdn.annatarhe.cn/wKbu3YPhn5aPwizOsNgvszyjOhJWnrQV/LXGWWenKai-Bold.woff2')
+      format('woff2');
+  }
 }
 
 @layer utilities {

@@ -126,7 +126,6 @@ function HomePage() {
               }
             },
           }).then(res => {
-            console.log('fetch more result', res)
             if (res.data.books.length === 0) {
               setReachEnd(true)
             }

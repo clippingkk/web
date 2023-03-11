@@ -16,9 +16,9 @@ function BookCover({ book, domain }: TBookCoverProps) {
   }
 
   return (
-    (<Link
+    <Link
       href={`/dash/${domain}/book/${book.doubanId}`}
-      className={styles.cover + ' bg-transparent flex flex-col items-center content-center transition-all duration-300 rounded hover:bg-opacity-75 hover:bg-gray-300 hover:shadow-lg animate__fadeInDown w-128 h-156 overflow-visible'}>
+      className={styles.cover + ' bg-transparent flex flex-col items-center content-center transition-all duration-300 rounded hover:bg-opacity-75 hover:bg-gray-300 hover:shadow-lg animate__fadeInDown w-128 h-156 overflow-visible font-lxgw'}>
 
       <HideUntilLoaded
         imageToLoad={book.image}
@@ -42,8 +42,7 @@ function BookCover({ book, domain }: TBookCoverProps) {
         <h3 className='m-0 dark:text-gray-200'>{book.title}</h3>
         <h5 className='my-4 mx-0 dark:text-gray-500'>{book.author}</h5>
       </div>
-
-    </Link>)
+    </Link>
   );
 }
 

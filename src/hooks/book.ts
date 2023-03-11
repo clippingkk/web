@@ -1,6 +1,6 @@
 import { WenquBook, WenquSearchResponse, wenquRequest } from "../services/wenqu"
 import { useMemo } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { useQueries, useQuery } from "@tanstack/react-query"
 
 // 3 days
 const duration3Days = 1000 * 60 * 60 * 24 * 3
@@ -26,21 +26,33 @@ export function useSingleBook(doubanId?: string, skip?: boolean): WenquBook | nu
 }
 
 export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestReturn {
-  const dbIds = useMemo(() => {
-    return doubanIds.filter(x => x.length > 3)
+  const chunkedDbIds = useMemo(() => {
+    const result: string[][] = [[]]
+    const validSet = doubanIds.filter(x => x.length > 3)
+
+    const chunkSize = 50
+    for (let i = 0; i < validSet.length; i += chunkSize) {
+      result.push(validSet.slice(i, i + chunkSize));
+    }
+    return result
   }, [doubanIds])
 
-  const bs = useQuery({
+  const bbs = useQueries({
+    queries: chunkedDbIds.map(dbIds => ({
     queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-    queryFn: (ctx) => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`, { signal: ctx.signal }),
+    queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
     enabled: dbIds.length > 0 && !skip,
     staleTime: duration3Days,
     cacheTime: duration3Days,
+    }))
   })
 
   return {
-    books: bs.data?.books ?? [],
-    loading: bs.isLoading
+    books: bbs.reduce((acc, bs) => {
+      acc.push(...(bs.data?.books ?? []))
+      return acc
+    }, [] as WenquBook[]),
+    loading: bbs.every(bs => bs.isLoading)
   }
 }
 
