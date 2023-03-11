@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.0...v5.3.1) (2023-03-11)
+
+
+### Bug Fixes
+
+* **book:** fix book load when larger than 50, and update font ([238c29b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/238c29be465a2999148cee9c8b361996ac23695c))
+
 ## [5.3.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.2.2...v5.3.0) (2023-03-11)
 
 
