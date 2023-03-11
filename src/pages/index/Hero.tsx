@@ -68,19 +68,14 @@ function Hero() {
                 {t('app.go')}
               </Link>
 
-              <Button
-                component={Link}
-                href='/pricing'
-                className='text-xl ml-4'
-                rightIcon={<ChevronRightIcon className='w-4 h-4' />}
-              >
-                😎 Premier
-              </Button>
-              {/* <Link
-               href='/pricing'
-               className=''
-              >Pricing</Link> */}
-
+                <Button
+                  component={Link}
+                  href='/pricing'
+                  className='text-xl ml-4'
+                  rightIcon={<ChevronRightIcon className='w-4 h-4' />}
+                >
+                  😎 Premier
+                </Button>
             </div>
           </div>
 

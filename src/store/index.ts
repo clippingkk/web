@@ -25,7 +25,6 @@ const store = configureStore({
 })
 
 saga.run(rootSaga)
-const nt = initParseFromLS()
-
+initParseFromLS()
 
 export default store

@@ -6,6 +6,7 @@
   @font-face {
     font-family: LxgwWenKai;
     font-weight: 400;
+    font-display: swap;
     src: url('https://ck-cdn.annatarhe.cn/zAl2wwQDdDuuw3awwl6Xnj6MpmUxx7Ef/LXGWWenKai-Regular.woff2')
       format('woff2');
   }

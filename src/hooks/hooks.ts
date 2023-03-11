@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react"
 import profile from "../utils/profile"
 import { ApolloError, MutationResult } from "@apollo/client"
 import { useDispatch, useSelector } from "react-redux"
-import { AUTH_LOGIN } from "../store/user/type"
+import { AUTH_LOGIN, UserContent } from "../store/user/type"
 import { updateToken } from "../services/ajax"
 import { USER_TOKEN_KEY } from "../constants/storage"
 import { useRouter } from "next/router"
@@ -249,14 +249,14 @@ export function useSignupSuccess(result: MutationResult<SignupMutation>) {
 }
 
 export function useGoAuthLink() {
-  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
 
   const goLinkUrl = useMemo(() => {
-    if (id && id > 0) {
-      return `/dash/${id}/home`
+    if (profile && profile.id > 0) {
+      return `/dash/${profile.domain.length > 1 ? profile.domain : profile.id}/home`
     }
     return '/auth/auth-v3'
-  }, [id])
+  }, [profile])
 
   return goLinkUrl
 }

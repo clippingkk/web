@@ -37,9 +37,11 @@ function AvatarPicker(props: AvatarPickerProps) {
     return (
         <Modal
             title={t('app.auth.avatar')}
-            overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
-            overlayOpacity={0.55}
-            overlayBlur={6}
+            overlayProps={{
+              opacity: 0.5,
+              blur: 6,
+              color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
+            }}
             onClose={onCancel}
             opened={opened}
         >
