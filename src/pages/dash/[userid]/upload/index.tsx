@@ -86,7 +86,7 @@ function UploaderPage() {
       <ClippingsUploadHelp />
       {step !== UploadStep.None && (
         <LoadingModal
-          stepAt={step}
+          stepAt={step as UploadStep}
           count={count}
           at={at}
           message={messages[0]}
