@@ -1,3 +1,4 @@
+import { ArrowDownTrayIcon } from '@heroicons/react/24/solid'
 import React, { useCallback } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -56,7 +57,7 @@ function AppContainer(props: AppContainerProps) {
       onDragOver={stopDragOver}
       onDrop={onDropEnd}
     >
-      <React.Fragment>
+      <>
         {props.children}
         {isDraging && (
           <div
@@ -65,12 +66,15 @@ function AppContainer(props: AppContainerProps) {
               setIsDraging(false)
             }}
           >
-            <p className='text-6xl p-20 rounded text-blue-400 font-bold bg-purple-600 opacity-50'>
-              {t('app.upload.dropHere')}
-            </p>
+            <div className='p-20 rounded text-blue-400 font-bold bg-purple-600 bg-opacity-80 flex justify-center items-center flex-col'>
+              <ArrowDownTrayIcon className='w-16 h-16 text-black dark:text-white' />
+              <p className='text-6xl font-lxgw font-bold mt-8'>
+                {t('app.upload.dropHere')}
+              </p>
+            </div>
           </div>
         )}
-      </React.Fragment>
+      </>
     </div>
   )
 }

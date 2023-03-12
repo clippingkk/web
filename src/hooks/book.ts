@@ -26,33 +26,56 @@ export function useSingleBook(doubanId?: string, skip?: boolean): WenquBook | nu
 }
 
 export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestReturn {
+  const validDoubanIdList = useMemo(() => {
+    return doubanIds
+      .filter(x => x.length > 3)
+      .reduce<string[]>((acc, x) => {
+        if (!acc.includes(x)) {
+          acc.push(x)
+        }
+        return acc
+      }, [])
+  }, [doubanIds])
   const chunkedDbIds = useMemo(() => {
     const result: string[][] = [[]]
-    const validSet = doubanIds.filter(x => x.length > 3)
-
     const chunkSize = 50
-    for (let i = 0; i < validSet.length; i += chunkSize) {
-      result.push(validSet.slice(i, i + chunkSize));
+    for (let i = 0; i < validDoubanIdList.length; i += chunkSize) {
+      result.push(validDoubanIdList.slice(i, i + chunkSize));
     }
     return result
-  }, [doubanIds])
+  }, [validDoubanIdList])
 
   const bbs = useQueries({
     queries: chunkedDbIds.map(dbIds => ({
-    queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-    queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
-    enabled: dbIds.length > 0 && !skip,
-    staleTime: duration3Days,
-    cacheTime: duration3Days,
+      queryKey: ['wenqu', 'books', 'dbIds', dbIds],
+      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
+      enabled: dbIds.length > 0 && !skip,
+      staleTime: duration3Days,
+      cacheTime: duration3Days,
     }))
   })
 
-  return {
-    books: bbs.reduce((acc, bs) => {
-      acc.push(...(bs.data?.books ?? []))
+  const isLoading = bbs.every(bs => bs.isLoading)
+  // reorder
+  const books = useMemo<WenquBook[]>(() => {
+    if (isLoading) {
+      return []
+    }
+    const bsList = bbs
+      .filter(x => x.data?.books)
+      .map(x => x.data?.books).flat() as WenquBook[]
+    return validDoubanIdList.reduce<WenquBook[]>((acc, dbId) => {
+      const tb = bsList.find(x => x.doubanId.toString() === dbId)
+      if (tb) {
+        acc.push(tb)
+      }
       return acc
-    }, [] as WenquBook[]),
-    loading: bbs.every(bs => bs.isLoading)
+    }, [])
+  }, [isLoading, bbs, validDoubanIdList])
+
+  return {
+    books,
+    loading: isLoading
   }
 }
 

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import OGWithReport from '../../../components/og/og-with-report'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { client } from '../../../services/ajax'
+import { client, reactQueryClient } from '../../../services/ajax'
 import logo from '../../../assets/logo.png'
 import ReportBookSection from '../../../components/reports/report-book-section'
 import { Blockquote, Divider } from '@mantine/core'
@@ -15,6 +15,8 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import ReportHero from '../../../components/reports/report-hero'
 import { useBackgroundImage } from '../../../hooks/theme'
 import { Clipping, FetchYearlyReportDocument, FetchYearlyReportQuery, FetchYearlyReportQueryVariables } from '../../../schema/generated'
+import { dehydrate } from '@tanstack/react-query'
+import { duration3Days, useMultipBook } from '../../../hooks/book'
 
 type PageContainerProps = {
   bgImage?: string | { src: string, blurHash: string }
@@ -55,7 +57,12 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
   const searchParams = useRouter().query
   const year = ~~(searchParams.year || new Date().getFullYear())
   const data = props.reportInfoServerData
-  const books = props.booksServerData
+  const dbIds = data.
+    reportYearly.
+    books.
+    map(x => x.doubanId).
+    filter(x => x.length > 3) ?? []
+  const { books } = useMultipBook(dbIds)
 
   const { t } = useTranslation()
 
@@ -178,7 +185,6 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
 
 type serverSideProps = {
   reportInfoServerData: FetchYearlyReportQuery
-  booksServerData: WenquBook[]
 }
 
 export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
@@ -201,25 +207,24 @@ export const getServerSideProps: GetServerSideProps<serverSideProps> = async (co
     map(x => x.doubanId).
     filter(x => x.length > 3) ?? []
 
-  let booksServerData: WenquBook[] = []
-
   if (dbIds.length >= 1) {
-    const query = dbIds.join('&dbIds=')
-    const books = await wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`)
-    const bsBooks = dbIds.reduce<WenquBook[]>((acc, cur) => {
-      const bb = books.books.find(x => x.doubanId.toString() === cur)
-      if (bb) {
-        acc.push(bb)
-      }
-      return acc
-    }, [])
-    booksServerData.push(...bsBooks)
+    await reactQueryClient.prefetchQuery({
+      queryKey: ['wenqu', 'books', 'dbIds', dbIds],
+      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
+      staleTime: duration3Days,
+      cacheTime: duration3Days,
+    })
   }
+
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
 
   return {
     props: {
+      dehydratedState: dehydrate(reactQueryClient),
       reportInfoServerData: reportInfoResponse.data,
-      booksServerData
     },
   }
 }

@@ -60,7 +60,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const content = getLayout(<Component {...pageProps} />)
   return (
     <JotaiProvider>
-
       <Provider store={store}>
         <ColorSchemeProvider
           colorScheme={isDarkTheme ? 'dark' : 'light'}
