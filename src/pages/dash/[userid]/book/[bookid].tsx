@@ -20,6 +20,7 @@ import { Clipping, useBookQuery, useQueryMyIdByDomainQuery } from '../../../../s
 import { reactQueryClient } from '../../../../services/ajax';
 import { duration3Days, useSingleBook } from '../../../../hooks/book';
 import { dehydrate } from '@tanstack/react-query';
+import BookPageSkeleton from './skeleton';
 
 function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { userid: domain, bookid } = useRouter().query as { userid: string, bookid: string }
@@ -86,13 +87,13 @@ function BookPage(serverResponse: InferGetServerSidePropsType<typeof getServerSi
   })
 
   if (!bookData) {
-    return null
+    return <BookPageSkeleton />
   }
 
   return (
     <section className='page anna-fade-in'>
       <Head>
-        <title>{bookData.title} - clippingkk</title>
+        <title>{bookData?.title} - clippingkk</title>
         <OGWithBook book={bookData} domain={domain} />
       </Head>
       <BookInfo

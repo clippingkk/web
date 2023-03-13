@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import Card from '../card/card';
 import { WenquBook } from '../../services/wenqu'
 import BlurhashView from '@annatarhe/blurhash-react'
@@ -7,6 +7,9 @@ import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp';
 import { useTranslation } from 'react-i18next';
 import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
 import { Rating, Tooltip } from '@mantine/core';
+import Preview from '../preview/preview3';
+import BookSharePreview from '../preview/preview-book';
+import { ShareIcon } from '@heroicons/react/24/solid';
 
 type TBookInfoProp = {
   uid: number
@@ -17,9 +20,14 @@ type TBookInfoProp = {
 
 function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
   const { t } = useTranslation()
+  const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
+
+  const togglePreviewVisible = useCallback(() => {
+    setSharePreviewVisible(v => !v)
+  }, [])
   return (
     <Card className='mt-20 flex p-12 bg-blue-200 bg-opacity-50 flex-col md:flex-row'>
-      <React.Fragment>
+      <>
         <div className='mr-12 w-full h-full'>
           <BlurhashView
             blurhashValue={book.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
@@ -46,16 +54,25 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
               })}
             </h5>
           )}
-          <a
-            href={getUTPLink(UTPService.book, { uid, bid: book.id, theme: KonzertThemeMap.dark.id, })}
-            target='_blank'
-            className='bg-blue-400 py-2 px-4 mb-2 inline-block hover:underline' rel="noreferrer"
+          <button
+            onClick={() => togglePreviewVisible()}
+            className='bg-blue-400 hover:bg-blue-500 py-2 px-4 mb-2 inline-block rounded hover:shadow duration-300 transition-all flex items-center'
           >
             {t('app.book.share')}
-          </a>
+            <ShareIcon className='w-4 h-4 ml-1' />
+          </button>
           <p className='font-light leading-relaxed text-lg'>{book.summary}</p>
         </div>
-      </React.Fragment>
+
+        <BookSharePreview
+          onCancel={togglePreviewVisible}
+          onOk={togglePreviewVisible}
+          background={book.image}
+          opened={sharePreviewVisible}
+          book={book}
+          uid={uid}
+        />
+      </>
     </Card>
   )
 }

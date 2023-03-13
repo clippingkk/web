@@ -80,7 +80,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
         <title>{data.me.name}`s profile</title>
         <OGWithUserProfile profile={data.me} />
       </Head>
-      <div className='flex rounded items-center justify-center py-12 w-full mx-auto mt-20 anna-fade-in bg-gradient-to-br from-indigo-100 to-indigo-200'>
+      <div className='flex rounded items-center justify-center py-12 w-full mx-auto mt-20 anna-fade-in bg-gray-500 bg-opacity-50 backdrop-blur shadow-2xl'>
         <div className='flex flex-col items-center justify-center w-full'>
           <div className='w-full flex items-center justify-center'>
             <Avatar
@@ -92,7 +92,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
             />
             <div className={styles.info}>
               <div className='flex items-center'>
-                <h3 className='text-2xl'>{data?.me.name}</h3>
+                <h3 className='text-2xl font-lxgw font-bold dark:text-gray-100'>{data?.me.name}</h3>
                 {data?.me.phone === '' && isInMyPage && (
                   <ProfileBindPhone />
                 )}
@@ -106,7 +106,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
                 )}
                 <CliApiToken />
               </div>
-              <h5 className='text-lg text-gray-800'>
+              <h5 className='text-lg text-gray-800 dark:text-gray-300'>
                 {t('app.profile.collected', { count: data?.me.clippingsCount })}
               </h5>
               <div className='mb-4'>

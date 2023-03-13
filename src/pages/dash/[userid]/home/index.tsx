@@ -86,10 +86,9 @@ function HomePage() {
         <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.title')}</h2>
         <Link
           href={`/dash/${uid}/unchecked`}
-          className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-colors hover:bg-blue-700'>
+          className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-all hover:bg-blue-700 rounded hover:shadow'>
 
           {t('app.home.unchecked')}
-
         </Link>
       </header>
 

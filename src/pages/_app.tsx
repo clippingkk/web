@@ -54,7 +54,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
 
   const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
-
   // useSSR((window as any).initialI18nStore, (window as any).initialLanguage)
 
   const content = getLayout(<Component {...pageProps} />)

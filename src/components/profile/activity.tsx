@@ -2,6 +2,9 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import * as echarts from 'echarts'
 import { ProfileQuery } from '../../schema/generated'
 import dayjs from 'dayjs'
+import { useDarkModeStatus } from '../../hooks/theme'
+import { useTheme } from '@emotion/react'
+import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 
 type PersonalActivityProps = {
   data: ProfileQuery['me']['analysis']['daily']
@@ -104,15 +107,20 @@ function PersonalActivity(props: PersonalActivityProps) {
     }
   }, [])
 
+
+  const { colorScheme } = useMantineColorScheme()
+
+  console.log('xxxx', colorScheme)
+
   useEffect(() => {
-    ins.current = echarts.init(dom.current!)
+    ins.current = echarts.init(dom.current!, colorScheme)
     ins.current.setOption(opts)
     ins.current.resize()
     return () => {
       ins.current?.dispose()
       ins.current = null
     }
-  }, [])
+  }, [colorScheme])
   useEffect(() => {
     ins.current?.setOption(opts)
   }, [opts])
