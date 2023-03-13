@@ -1,7 +1,7 @@
-import { Divider, Highlight, Text, Title } from '@mantine/core'
+'use client';
+import { Divider, Text, Title } from '@mantine/core'
 import Head from 'next/head'
 import React from 'react'
-import DashboardContainer from '../../../components/dashboard-container/container'
 import { usePageTrack } from '../../../hooks/tracke'
 
 type PolicySupportPageProps = {
@@ -32,14 +32,6 @@ function PolicySupportPage(props: PolicySupportPageProps) {
         </a>
       </div>
     </section>
-  )
-}
-
-PolicySupportPage.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <DashboardContainer>
-      {page}
-    </DashboardContainer>
   )
 }
 
