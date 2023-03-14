@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.3...v5.3.4) (2023-03-14)
+
+
+### Features
+
+* **book:** add book share modal ([a4de606](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a4de606929de3c5ebc7794f652cacc671015e411))
+
 ### [5.3.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.2...v5.3.3) (2023-03-12)
 
 ### [5.3.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.1...v5.3.2) (2023-03-11)
