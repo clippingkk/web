@@ -159,7 +159,7 @@ function BindPhone(props: BindPhoneProps) {
                 onCodeEnd(e)
               }
             }}
-            placeholder={t('app.auth.code.placeholder')}
+            placeholder={t('app.auth.code.placeholder') ?? ''}
             maxLength={6}
             onBlur={onCodeEnd}
             className='w-96 bg-white dark:bg-gray-700 bg-opacity-90 mx-auto mt-4 py-2 px-4 focus:outline-none'

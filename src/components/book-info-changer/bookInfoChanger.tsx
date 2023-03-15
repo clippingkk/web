@@ -64,7 +64,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
             value={bookName}
             onChange={e => setBookName(e.target.value)}
             className='w-full px-2 py-4 rounded dark:bg-gray-200 text-lg my-2 mx-auto'
-            placeholder={t('app.clipping.updatePlaceholder')}
+            placeholder={t('app.clipping.updatePlaceholder') ?? ''}
           />
         </div>
 

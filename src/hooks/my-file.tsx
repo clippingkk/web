@@ -9,11 +9,12 @@ import { extraFile } from "../store/clippings/creator"
 import ClippingTextParser, { TClippingItem } from "../store/clippings/parser"
 import { useSelector } from "react-redux"
 import { TGlobalStore } from "../store"
-import swal from 'sweetalert'
 import { toast } from 'react-hot-toast'
 import { useCreateClippingsMutation } from "../schema/generated"
 import { reactQueryClient } from "../services/ajax"
+import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { duration3Days } from "./book"
+import { notifications } from "@mantine/notifications"
 
 const localClippingsStashKey = 'app.stash.clippings'
 
@@ -65,7 +66,8 @@ const uploadProcessMachine = createMachine({
     },
   },
 
-  initial: "none"
+  initial: "none",
+  predictableActionArguments: true,
 })
 
 export function useUploadData(
@@ -87,11 +89,6 @@ export function useUploadData(
     const file = e.dataTransfer.items[0]
 
     if (file.kind !== 'file' || file.type !== 'text/plain') {
-      swal({
-        title: t('app.upload.errors.fileTitle'),
-        text: t('app.upload.errors.fileNotFound'),
-        icon: 'error',
-      })
       return
     }
     let str = ''
@@ -163,10 +160,10 @@ export function useUploadData(
       // 这里会覆盖之前的数据，后续可以考虑是不是弄个队列
       localStorage.setItem(localClippingsStashKey, JSON.stringify(chunkedData))
       send('Next')
-      await swal({
-        icon: 'success',
+      notifications.show({
+        icon: (<CheckCircleIcon className="w-4 h-4" />),
         title: t('app.upload.tips.parsedInfoTitle'),
-        content: t('app.upload.tips.parsedInfoContent'),
+        message: t('app.upload.tips.parsedInfoContent'),
       })
       return
     }

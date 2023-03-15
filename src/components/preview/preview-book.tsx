@@ -73,7 +73,7 @@ function BookSharePreview(props: BookSharePreviewProps) {
             onLoad={onImageLoad}
             onError={onImageError}
             className={'h-[812px] w-[375px] rounded'}
-            alt={t('app.common.loading')}
+            alt={t('app.common.loading') ?? 'loading'}
           />
           {/* {loading && (
             <span>{t('app.common.loading')}</span>

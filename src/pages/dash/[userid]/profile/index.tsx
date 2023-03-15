@@ -120,7 +120,7 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
               {!isInMyPage && (
                 <button
                   className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6 mr-4'
-                  title={t(`app.profile.fans.${data?.me.isFan ? 'un' : ''}follow`)}
+                  title={t(`app.profile.fans.${data?.me.isFan ? 'un' : ''}follow`) ?? ''}
                   disabled={followLoading || unfollowLoading}
                   onClick={() => {
                     if (followLoading || unfollowLoading) {
@@ -151,16 +151,14 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
               <Link
                 href={`/report/yearly?uid=${data?.me.id}&year=${year}`}
                 className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
-                title={t('app.profile.yearlyReportTip')}>
-
+                title={t('app.profile.yearlyReportTip') ?? ''}>
                 {t('app.profile.report.yearlyTitle')}
-
               </Link>
               <a
                 href={`${API_HOST}/api/rss/user/${data?.me.id}/clippings`}
                 target='_blank'
                 className='ml-4 px-4 py-2 rounded hover:bg-blue-400'
-                title={t('app.profile.rssTip')}
+                title={t('app.profile.rssTip') ?? ''}
                 rel="noreferrer"
               >
                 RSS

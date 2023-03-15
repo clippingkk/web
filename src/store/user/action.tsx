@@ -10,24 +10,15 @@ import {
   TUserSignupDataInput,
   AUTH_GITHUB_ACTION
 } from "./type";
-import swal from 'sweetalert'
 import * as authAPI from '../../services/auth'
 import { uploadImage, TUploadResponse } from "../../services/misc"
 import { USER_TOKEN_KEY } from "../../constants/storage"
 import mixpanel from "mixpanel-browser"
 import { updateToken } from "../../services/ajax";
 import profile from "../../utils/profile";
-
-function mobileAlert(): Promise<any> {
-  if (screen.width > 720) {
-    return Promise.resolve(null)
-  }
-  return swal({
-    title: '敬告',
-    text: '手机体验很差哦，建议切换到电脑访问： https://kindle.annatarhe.com',
-    icon: 'info'
-  })
-}
+import { notifications } from "@mantine/notifications";
+import { NoSymbolIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-hot-toast";
 
 type TLoginAction = {
   type: string
@@ -51,24 +42,14 @@ type TSignupAction = {
 function* githubLoginAction(action: TGithubLoginAction) {
   const { code } = action
 
-  swal({
-    title: 'loading',
-    text: 'loading',
-    icon: 'info',
-    buttons: [false],
-    closeOnClickOutside: false,
-    closeOnEsc: false,
-  })
+  const loadingToastId = toast.loading('Loading')
 
   try {
     const response: TUserState = yield call(authAPI.githubLogin, code)
     yield call(postLogin, response, action.navigate)
+    toast.success('logged in', { id: loadingToastId })
   } catch (e: any) {
-    swal({
-      title: "Oops",
-      text: e.toString(),
-      icon: 'error'
-    })
+    toast.error(e.toString(), { id: loadingToastId })
   }
 }
 
@@ -94,60 +75,36 @@ function* postLogin(response: TUserState, navigate: (url: string) => void) {
   });
 
   yield put({ type: AUTH_LOGIN, ...response })
+  // notifications.show({
+  //   icon: (<NoSymbolIcon className="w-4 h-4" />),
+  //   title: "Oops",
+  //   message: e.toString(),
+  // })
 
-  yield call(swal, {
-    title: '哇，登陆了',
-    text: `欢迎你哦~ ${response.profile.name}`,
-    icon: 'success'
-  })
-
+  toast.success(`欢迎你哦~ ${response.profile.name}`)
   mixpanel.track('login')
-
   yield call(navigate as any, `/dash/${response.profile.id}/home`)
 }
 
 function* loginAction(action: TLoginAction): IterableIterator<any> {
-  yield call(mobileAlert)
-
   const { email, pwd } = action
 
-  swal({
-    title: 'loading',
-    text: 'loading',
-    icon: 'info',
-    buttons: [false],
-    closeOnClickOutside: false,
-    closeOnEsc: false,
-  })
-
+  const loadingToastId = toast.loading('Loading')
   try {
     const response = yield call(authAPI.login as any, email, pwd)
     const res = response as any
     yield call(updateToken, res.token)
     yield call(postLogin as any, response, action.navigate)
+    toast.success('logged in', { id: loadingToastId })
   } catch (e: any) {
-    swal({
-      title: "Oops",
-      text: e.toString(),
-      icon: 'error'
-    })
+    toast.error(e.toString(), { id: loadingToastId })
   }
 }
 
 function* signupAction(action: TSignupAction) {
-  yield call(mobileAlert)
 
   const { signup } = action
-
-  swal({
-    title: 'loading',
-    text: 'loading',
-    icon: 'info',
-    buttons: [false],
-    closeOnClickOutside: false,
-    closeOnEsc: false,
-  })
-
+  const loadingToastId = toast.loading('Loading')
 
   try {
     const uploadedResponse: TUploadResponse = yield call(uploadImage, signup.avatarFile)
@@ -160,11 +117,12 @@ function* signupAction(action: TSignupAction) {
       fp: Math.random().toString()
     })
 
-    yield call(swal, {
-      title: '请去邮箱确认',
-      text: `欢迎你哦~ ${signup.name}，现在需要去邮箱点一下刚刚发你的确认邮件。\n 如果有问题可以发邮件： iamhele1994@gmail.com`,
-      icon: 'success'
-    })
+    toast.success('请去邮箱确认', { id: loadingToastId, duration: 10_000 })
+    // yield call(swal, {
+    //   title: '',
+    //   text: `欢迎你哦~ ${signup.name}，现在需要去邮箱点一下刚刚发你的确认邮件。\n 如果有问题可以发邮件： iamhele1994@gmail.com`,
+    //   icon: 'success'
+    // })
 
     mixpanel.track('signup', {
       email: signup.email.trim(),
@@ -174,22 +132,15 @@ function* signupAction(action: TSignupAction) {
 
     yield call(action.navigate as any, '/auth/auth-v3')
   } catch (e: any) {
-    swal({
-      title: "Oops",
-      text: e.toString(),
-      icon: 'error'
-    })
+    toast.error(e.toString(), { id: loadingToastId })
   }
 }
 
 function* logoutAction(action: any) {
   profile.onLogout()
   yield put({ type: USER_LOGOUT })
-  yield call(swal, {
-    title: 'Logout',
-    text: '下次再见哦~',
-    icon: 'info'
-  })
+
+  toast.success(`Bye bye`)
   mixpanel.track("logout")
   yield call(action.navigate as any, '/')
 }

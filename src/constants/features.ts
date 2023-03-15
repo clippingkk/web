@@ -1,3 +1,3 @@
 export const AppFeatures = {
-  enablePremiumPayment: false
+  enablePremiumPayment: true
 }

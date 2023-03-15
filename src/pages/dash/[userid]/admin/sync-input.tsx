@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react'
-import { useMutation, useApolloClient } from '@apollo/client'
-import swal from 'sweetalert'
-import { SyncHomelessBookDocument } from '../../../../schema/generated'
+import { useApolloClient } from '@apollo/client'
+import { SyncHomelessBookDocument, useSyncHomelessBookMutation } from '../../../../schema/generated'
+import { toast } from 'react-hot-toast'
+import { toastPromiseDefaultOption } from '../../../../services/misc'
 
 type HomelessBookSyncInputProps = {
   bookName: string
@@ -10,24 +11,15 @@ type HomelessBookSyncInputProps = {
 function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
   const client = useApolloClient()
   const [doubanId, setDoubanId] = useState('')
+  const [doSyncHomelessBook] = useSyncHomelessBookMutation()
   const onConfirm = useCallback(() => {
-    client.mutate({
-      mutation: SyncHomelessBookDocument,
+    toast.promise(doSyncHomelessBook({
       variables: {
         title: props.bookName,
         doubanID: doubanId
       }
-    }).then(res => {
+    }), toastPromiseDefaultOption).then(() => {
       client.resetStore()
-      swal({
-        icon: 'success',
-        title: 'updated'
-      })
-    }).catch(err => {
-      swal({
-        icon: 'error',
-        title: 'error'
-      })
     })
   }, [doubanId, client])
 

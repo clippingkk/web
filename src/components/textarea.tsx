@@ -22,7 +22,7 @@ function FieldTextarea(props: FieldTextareaProps) {
         {...props.inputProps}
         className={`text-2xl p-4 border-2 lg:w-144 w-96 bg-gray-400 focus:outline-none ` + (props.error ? 'border-red-400' : 'border-transparent')}
         value={props.value}
-        placeholder={t(`app.auth.${props.name}`)}
+        placeholder={t(`app.auth.${props.name}`) ?? ''}
         name={props.name}
         onChange={props.onChange}
       />

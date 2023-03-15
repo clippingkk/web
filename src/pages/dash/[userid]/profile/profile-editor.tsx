@@ -101,7 +101,7 @@ function ProfileEditor(props: ProfileEditorProps) {
       <button
         className='text-2xl ml-4 p-2 transform transition-all hover:scale-110 duration-300 hover:bg-blue-400 hover:bg-opacity-50 focus:outline-none'
         onClick={() => setVisible(true)}
-        title={t('app.profile.editor.title')}
+        title={t('app.profile.editor.title') ?? ''}
       >⚙</button>
       {visible && (
         <Dialog

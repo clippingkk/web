@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import Card from '../../components/card/card'
 import Link from 'next/link'
 import Image from 'next/image'
-import swal from 'sweetalert';
 import { GithubClientID, SignInWithAppleOptions } from '../../constants/config';
 import { usePageTrack, useActionTrack } from '../../hooks/tracke';
 import profile from '../../utils/profile';
@@ -21,22 +20,10 @@ type AuthPageProps = {
   children: React.ReactElement
 }
 
-function showMobileAlert() {
-  if (screen.width > 720) {
-    return Promise.resolve(null)
-  }
-  return swal({
-    title: '敬告',
-    text: '手机体验很差哦，建议切换到电脑访问： https://kindle.annatarhe.com',
-    icon: 'info'
-  })
-}
-
 function AuthPage(props: AuthPageProps) {
   usePageTrack('auth')
   const { push: navigate, pathname } = useRouter()
   useEffect(() => {
-    showMobileAlert()
     const uid = profile.uid
     if (uid && uid > 0) {
       navigate(`/dash/${uid}/home`)

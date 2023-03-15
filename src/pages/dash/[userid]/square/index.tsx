@@ -21,7 +21,7 @@ import { dehydrate } from '@tanstack/react-query'
 function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   usePageTrack('square')
   const { t } = useTranslation()
-  useTitle(t('app.square.title'))
+  useTitle(t('app.square.title') ?? '')
 
   const masonaryColumnCount = useMasonaryColumnCount()
 

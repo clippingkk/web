@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Turnstile from "react-turnstile"
-import swal from 'sweetalert'
 import { CF_TURNSTILE_SITE_KEY } from '../../constants/config'
 import { REGEX_EMAIL } from '../../services/regex'
 

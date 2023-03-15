@@ -8,6 +8,7 @@ import '../styles/cmdk-raycast.css'
 
 import React, { ReactElement, ReactNode, useEffect } from 'react'
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Provider as JotaiProvider } from 'jotai'
@@ -67,6 +68,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           }}
         >
           <MantineProvider theme={{ colorScheme: isDarkTheme ? 'dark' : 'light' }}>
+            <Notifications />
             <PersistQueryClientProvider
               client={reactQueryClient}
               persistOptions={{

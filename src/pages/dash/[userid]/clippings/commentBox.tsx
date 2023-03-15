@@ -1,10 +1,11 @@
 import { useApolloClient, useMutation } from '@apollo/client'
 import React, { useCallback, useState } from 'react'
 import { UserContent } from '../../../../store/user/type'
-import swal from 'sweetalert'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../../../components/avatar/avatar'
 import { useCreateCommentMutation } from '../../../../schema/generated'
+import { toast } from 'react-hot-toast'
+import { toastPromiseDefaultOption } from '../../../../services/misc'
 
 type CommentBoxProps = {
   clippingID: number
@@ -23,35 +24,29 @@ function CommentBox(props: CommentBoxProps) {
 
   const onSubmit = useCallback(() => {
     if (content.length < COMMENT_MIN_LEN) {
-      swal({
-        icon: 'error',
-        text: t('app.clipping.comments.tip.tooShort')
-      })
+      toast.error(t('app.clipping.comments.tip.tooShort'))
       return
     }
 
-    createCommentAction({
+    return toast.promise(createCommentAction({
       variables: {
         cid: props.clippingID,
         content: content
       }
-    }).then(() => {
-      swal({
-        icon: 'success',
-        text: t('app.clipping.comments.tip.success')
-      })
+    }), toastPromiseDefaultOption).then(() => {
       client.resetStore()
     })
+    // text: t('app.clipping.comments.tip.success')
   }, [content, createCommentAction, props.clippingID, t, client])
 
   return (
     <div className='flex container flex-col lg:flex-row'>
       <div className='flex flex-row lg:flex-col my-4 lg:mb-0 items-center'>
         <Avatar
-         img={props.me.avatar}
-         name={props.me.name}
-         className='w-12 h-12 lg:h-24 lg:w-24'
-          />
+          img={props.me.avatar}
+          name={props.me.name}
+          className='w-12 h-12 lg:h-24 lg:w-24'
+        />
         <h5 className='w-24 lg:mt-4 text-center'>{props.me.name}</h5>
       </div>
 
@@ -60,7 +55,7 @@ function CommentBox(props: CommentBoxProps) {
           rows={8}
           value={content}
           onChange={e => setContent(e.target.value)}
-          placeholder={t('app.clipping.comments.placeholder')}
+          placeholder={t('app.clipping.comments.placeholder') ?? ''}
         />
         <div className='w-full flex-col lg:flex-row flex items-center justify-between px-4 mt-4'>
           <small>{content.length} {t('app.clipping.comments.count')}</small>

@@ -79,7 +79,7 @@ function NavigationBar() {
                   <Link href={id === 0 ? '/auth/auth-v3' : item.dest(id)} legacyBehavior>
                     <span
                       className='text-3xl lg:text-4xl'
-                      title={t(`app.menu.${item.alt}`)}
+                      title={t(`app.menu.${item.alt}`) ?? ''}
                     >
                       {item.emoji}
                     </span>
@@ -101,7 +101,7 @@ function NavigationBar() {
             >
               <button
                 className='text-3xl lg:text-4xl'
-                title={t('app.menu.loginByQRCode.title')}
+                title={t('app.menu.loginByQRCode.title') ?? ''}
                 onClick={() => {
                   setLoginByQRCodeModalVisible(true)
                 }}
@@ -118,7 +118,7 @@ function NavigationBar() {
             >
               <button
                 className='text-3xl lg:text-4xl'
-                title={t('app.menu.search.title')}
+                title={t('app.menu.search.title') ?? ''}
                 onClick={() => {
                   setVisible(true)
                 }}
@@ -136,7 +136,7 @@ function NavigationBar() {
               <Link
                 href={id === 0 ? '/auth/auth-v3' : `/dash/${id}/settings`}
                 className='text-3xl lg:text-4xl'
-                title={t('app.menu.settings')}>
+                title={t('app.menu.settings') ?? 'setting'}>
                 
                   🛠
                 
@@ -150,7 +150,7 @@ function NavigationBar() {
             >
               <span
                 className='text-3xl lg:text-4xl cursor-pointer'
-                title={t('app.menu.logout')}
+                title={t('app.menu.logout') ?? 'logout'}
               >
                 👋
               </span>

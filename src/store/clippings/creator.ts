@@ -2,8 +2,8 @@ import { takeLatest, call, delay } from "redux-saga/effects"
 import { log } from '../../utils/sentry'
 import { EXTRA_AND_UPLOAD_FILE_TO_SERVER, TClippingsFile } from "./type"
 import { create } from "../../services/clippings";
-import swal from "sweetalert";
 import ClippingTextParser, { TClippingItem } from "./parser";
+import { toast } from "react-hot-toast";
 
 export function* extraAndUploadAction() {
   yield takeLatest(EXTRA_AND_UPLOAD_FILE_TO_SERVER, extraAndUpload)
@@ -66,14 +66,7 @@ function parseData(file: string): TClippingItem[] {
 function* extraAndUpload(action: TClippingsFile) {
   const { file } = action
 
-  const loading: any = swal({
-    title: '解析中',
-    text: '正在拼命解析中，请稍等...',
-    icon: 'info',
-    buttons: [false],
-    closeOnClickOutside: false,
-    closeOnEsc: false,
-  })
+  const loading = toast.loading('解析中')
 
   const str: string = yield call(extraFile, file)
 
@@ -97,19 +90,11 @@ function* extraAndUpload(action: TClippingsFile) {
     }
   } catch (e: any) {
     console.error(e)
-    yield call(swal, {
-      title: e.toString(),
-      text: '哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \n iamhele1994@gmail.com',
-      icon: 'error'
-    })
+    yield call(toast.error, e.toString(), { id: loading })
     return
   }
 
-  yield call(swal, {
-    title: 'Yes!',
-    text: '牛逼！你上传完成了！',
-    icon: 'success'
-  })
+  toast.success( '牛逼！你上传完成了！', { id: loading})
   const uid = sessionStorage.getItem("uid")
   yield call(action.navigate as any, `/dash/${uid}/home`)
   return

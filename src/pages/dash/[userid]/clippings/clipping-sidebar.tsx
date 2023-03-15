@@ -12,7 +12,7 @@ import Link from 'next/link'
 import BookInfoChanger from '../../../../components/book-info-changer/bookInfoChanger'
 import { ArrowDownIcon, ArrowUpIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 import { Clipping, User, useToggleClippingVisibleMutation } from '../../../../schema/generated'
-import { Button } from '@mantine/core'
+import { Button, Tooltip } from '@mantine/core'
 import ClippingAISummaryModal from '../../../../components/clipping-item/aiSummary'
 
 type ClippingSidebarProps = {
@@ -194,25 +194,30 @@ function ClippingSidebar(props: ClippingSidebarProps) {
         <ul className='w-full list-none p-0'>
           {siblingLink.prev && (
             <li className='w-full mb-4'>
-              <Link
-                href={siblingLink.prev}
-                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
-                title={t('app.clipping.sidebar.prev')}>
-                <ArrowUpIcon className='w-4 h-4 mr-2' />
-                {t('app.clipping.sidebar.prev')}
-
-              </Link>
+              <Tooltip label={t('app.clipping.sidebar.prev')}>
+                <Link
+                  href={siblingLink.prev}
+                  className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
+                >
+                  <ArrowUpIcon className='w-4 h-4 mr-2' />
+                  {t('app.clipping.sidebar.prev')}
+                </Link>
+              </Tooltip>
             </li>
           )}
           {siblingLink.next && (
             <li className='w-full mb-4'>
-              <Link
-                href={siblingLink.next}
-                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
-                title={t('app.clipping.sidebar.next')}>
-                <ArrowDownIcon className='w-4 h-4 mr-2' />
-                {t('app.clipping.sidebar.next')}
-              </Link>
+              <Tooltip
+                label={t('app.clipping.sidebar.next')}
+              >
+                <Link
+                  href={siblingLink.next}
+                  className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
+                >
+                  <ArrowDownIcon className='w-4 h-4 mr-2' />
+                  {t('app.clipping.sidebar.next')}
+                </Link>
+              </Tooltip>
             </li>
           )}
         </ul>

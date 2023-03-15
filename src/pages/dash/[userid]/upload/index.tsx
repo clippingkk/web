@@ -62,7 +62,7 @@ function UploaderPage() {
     <section className={styles.uploader}>
       <Head>
         <title>同步用户书摘</title>
-        </Head>
+      </Head>
       <div
         className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-blue-800 bg-opacity-25 ${styles.box}`}
         onDragOver={stopDragOver}
@@ -77,9 +77,11 @@ function UploaderPage() {
         <label className='w-full flex items-center justify-around'>
           <span className='lg:text-xl dark:text-gray-300'>
             <AnimateOnChange>
-            {t(`app.upload.private.${isOn ? 'on' : 'off'}`)}
+              <>
+                {t(`app.upload.private.${isOn ? 'on' : 'off'}`) ?? ''}
+              </>
             </AnimateOnChange>
-            </span>
+          </span>
           <Switch onChange={onSwitchChange} checked={isOn} />
         </label>
       </div>
