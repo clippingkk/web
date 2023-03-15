@@ -8,6 +8,7 @@ import { TGlobalStore } from '../../store';
 import { useGoAuthLink } from '../../hooks/hooks'
 import { Button } from '@mantine/core'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
+import { AppFeatures } from '../../constants/features'
 
 function useLoad() {
   const [loaded, setLoaded] = useState(false)
@@ -68,14 +69,14 @@ function Hero() {
                 {t('app.go')}
               </Link>
 
-              {false && (
+              {AppFeatures.enablePremiumPayment && (
                 <Button
                   component={Link}
                   href='/pricing'
                   className='text-xl ml-4'
                   rightIcon={<ChevronRightIcon className='w-4 h-4' />}
                 >
-                  😎 Premier
+                  😎 Premium
                 </Button>
               )}
             </div>

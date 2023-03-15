@@ -53,7 +53,7 @@ function PaymentSuccessPage(props: PaymentSuccessPageProps) {
       <Text
         className=' text-2xl mt-20'
       >
-        Welcome to join Premier
+        Welcome to join Premium
       </Text>
       <Link
         href={homeLink}

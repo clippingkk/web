@@ -8,8 +8,8 @@ import NavigateGuide from '../../components/navigation-bar/navigate-guide'
 import OGWithPricing from '../../components/og/og-with-pricing'
 import FreePlanFeatures from '../../components/pricing/free-plan-features'
 import PlanCard from '../../components/pricing/plan-card'
-import PremierPlanFeatures from '../../components/pricing/premier-plan-features'
-import { StripePremierPriceId } from '../../constants/config'
+import PremiumPlanFeatures from '../../components/pricing/premium-plan-features'
+import { StripePremiumPriceId } from '../../constants/config'
 import { getPaymentSubscription } from '../../services/payment'
 
 type PricingPageProps = {
@@ -17,8 +17,8 @@ type PricingPageProps = {
 
 function PricingPage(props: PricingPageProps) {
   const { data } = useQuery({
-    queryKey: ['payment-subscription', StripePremierPriceId],
-    queryFn: () => getPaymentSubscription(StripePremierPriceId)
+    queryKey: ['payment-subscription', StripePremiumPriceId],
+    queryFn: () => getPaymentSubscription(StripePremiumPriceId)
   })
 
   return (
@@ -45,20 +45,20 @@ function PricingPage(props: PricingPageProps) {
         />
         <PlanCard
           title={(
-            <h2 className='text-5xl'>Premier</h2>
+            <h2 className='text-5xl'>Premium</h2>
           )}
           description='Aim for highest'
           features={
-            <PremierPlanFeatures>
+            <PremiumPlanFeatures>
               <div className='w-full'>
                 <Link
                   href={data?.checkoutUrl ?? '/'}
                   className=' block py-4 rounded-md text-center bg-gradient-to-br from-orange-600 to-sky-700 w-full hover:scale-105 transition-all duration-300'
                 >
-                  Upgrade to Premier
+                  Upgrade to Premium
                 </Link>
               </div>
-            </PremierPlanFeatures>
+            </PremiumPlanFeatures>
           }
         />
       </div>
@@ -68,7 +68,7 @@ function PricingPage(props: PricingPageProps) {
 
 PricingPage.getLayout = function getLayout(page: React.ReactElement) {
   return (
-    <DashboardContainer header={<NavigateGuide title='Premier' />}>
+    <DashboardContainer header={<NavigateGuide title='Premium' />}>
       <Head>
         <title>ClippingKK - kindle 书摘管理</title>
         <OGWithPricing />

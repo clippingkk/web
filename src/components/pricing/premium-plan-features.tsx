@@ -3,11 +3,11 @@ import React from 'react'
 import CommonFeatures from './common-features'
 import FreePlanFeatures from './free-plan-features'
 
-type PremierPlanFeaturesProps = {
+type PremiumPlanFeaturesProps = {
   children?: React.ReactNode
 }
 
-function PremierPlanFeatures(props: PremierPlanFeaturesProps) {
+function PremiumPlanFeatures(props: PremiumPlanFeaturesProps) {
   return (
     <ul className=' text-xl'>
       <li className='mb-4'>
@@ -28,4 +28,4 @@ function PremierPlanFeatures(props: PremierPlanFeaturesProps) {
   )
 }
 
-export default PremierPlanFeatures
+export default PremiumPlanFeatures
