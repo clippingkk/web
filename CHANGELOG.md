@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.4...v5.3.5) (2023-03-15)
+
+
+### Features
+
+* **stripe:** add stripe intergation ([6583c23](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6583c23be08ce5d71dab8c4a6e9a7a94f05ea5d3))
+
 ### [5.3.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.3...v5.3.4) (2023-03-14)
 
 
