@@ -2,7 +2,8 @@ import { Button, Divider } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 import Head from 'next/head'
 import Link from 'next/link'
-import React from 'react'
+import React, { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import DashboardContainer from '../../components/dashboard-container/container'
 import NavigateGuide from '../../components/navigation-bar/navigate-guide'
 import OGWithPricing from '../../components/og/og-with-pricing'
@@ -10,7 +11,10 @@ import FreePlanFeatures from '../../components/pricing/free-plan-features'
 import PlanCard from '../../components/pricing/plan-card'
 import PremiumPlanFeatures from '../../components/pricing/premium-plan-features'
 import { StripePremiumPriceId } from '../../constants/config'
+import { useProfileQuery } from '../../schema/generated'
 import { getPaymentSubscription } from '../../services/payment'
+import { TGlobalStore } from '../../store'
+import { UserContent } from '../../store/user/type'
 
 type PricingPageProps = {
 }
@@ -20,6 +24,24 @@ function PricingPage(props: PricingPageProps) {
     queryKey: ['payment-subscription', StripePremiumPriceId],
     queryFn: () => getPaymentSubscription(StripePremiumPriceId)
   })
+
+  const pid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+
+  const { data: p } = useProfileQuery({
+    variables: {
+      id: pid
+    },
+    skip: pid < 1,
+  })
+
+  const isPremium = useMemo(() => {
+    const endAt = p?.me.premiumEndAt
+    if (!endAt) {
+      return false
+    }
+
+    return new Date(endAt).getTime() > new Date().getTime()
+  }, [p?.me.premiumEndAt])
 
   return (
     <div className='w-full'>
@@ -32,8 +54,8 @@ function PricingPage(props: PricingPageProps) {
               <div className='w-full justify-center'>
                 <Button
                   component={Link}
-                  href='/auth/auth-v3'
-                  className=' bg-gradient-to-br from-orange-600 to-sky-700 w-full'
+                  href={p ? `/dash/${p.me.id}/home` : '/auth/auth-v3'}
+                  className=' bg-gradient-to-br from-orange-500 to-sky-500 w-full'
                 >
                   <span className=' py-8 text-2xl'>
                     Login
@@ -51,12 +73,21 @@ function PricingPage(props: PricingPageProps) {
           features={
             <PremiumPlanFeatures>
               <div className='w-full'>
-                <Link
-                  href={data?.checkoutUrl ?? '/'}
-                  className=' block py-4 rounded-md text-center bg-gradient-to-br from-orange-600 to-sky-700 w-full hover:scale-105 transition-all duration-300'
-                >
-                  Upgrade to Premium
-                </Link>
+                {isPremium ? (
+                  <Link
+                    href={`/dash/${p?.me.id}/home`}
+                    className=' block py-4 rounded-md text-center bg-gradient-to-br from-orange-500 to-sky-500 w-full hover:scale-105 transition-all duration-300'
+                  >
+                    Home
+                  </Link>
+                ) : (
+                  <Link
+                    href={data?.checkoutUrl ?? '/'}
+                    className=' block py-4 rounded-md text-center bg-gradient-to-br from-orange-500 to-sky-500 w-full hover:scale-105 transition-all duration-300'
+                  >
+                    Upgrade to Premium
+                  </Link>
+                )}
               </div>
             </PremiumPlanFeatures>
           }

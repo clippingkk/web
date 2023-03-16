@@ -1,0 +1,20 @@
+query fetchOrders($id: Int!, $domain: String) {
+  me(id: $id, domain: $domain) {
+    id
+    premiumEndAt
+    orderList {
+      id
+      subscriptionId
+      status
+      orders {
+        id
+        orderID
+        sku
+        subscriptionId
+        orderCreatedAt
+        amount
+        currency
+      }
+    }
+  }
+}

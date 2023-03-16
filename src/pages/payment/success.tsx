@@ -12,16 +12,13 @@ import { useAtomValue } from 'jotai'
 import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../store'
 import { UserContent } from '../../store/user/type'
+import LoadingIcon from '../../components/icons/loading.svg'
 
 type PaymentSuccessPageProps = {
 }
 
 function PaymentSuccessPage(props: PaymentSuccessPageProps) {
   const sessionId = useRouter().query.sessionId as string
-
-  useEffect(() => {
-    party.confetti(document.querySelector('body')!)
-  }, [])
 
   // use server response
   const { data, isLoading } = useQuery({
@@ -36,6 +33,13 @@ function PaymentSuccessPage(props: PaymentSuccessPageProps) {
       toast.error('got error, your payment might not been process conrdly')
     },
   })
+
+  useEffect(() => {
+    if (!data || data.paymentStatus != 'paid') {
+      return
+    }
+    party.confetti(document.querySelector('body')!)
+  }, [data])
   const p = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
 
   const homeLink = useMemo(() => {
@@ -47,20 +51,28 @@ function PaymentSuccessPage(props: PaymentSuccessPageProps) {
 
   return (
     <div className=' w-full h-full flex flex-col items-center justify-center dark:text-gray-100 pt-20'>
-      <Text
-        className=' text-6xl'
-      >Congratulation! </Text>
-      <Text
-        className=' text-2xl mt-20'
-      >
-        Welcome to join Premium
-      </Text>
-      <Link
-        href={homeLink}
-        className='mt-8'
-      >
-        go to my profile
-      </Link>
+      {isLoading ? (
+        <div>
+          <LoadingIcon className='animate-spin' />
+        </div>
+      ) : (
+        <>
+          <Text
+            className=' text-6xl'
+          >Congratulation! </Text>
+          <Text
+            className=' text-2xl mt-20'
+          >
+            Welcome to join Premium
+          </Text>
+          <Link
+            href={homeLink}
+            className='mt-8'
+          >
+            go to my profile
+          </Link>
+        </>
+      )}
     </div>
   )
 }

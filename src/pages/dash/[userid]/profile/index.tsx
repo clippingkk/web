@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react'
 import Head from 'next/head'
-import Card from '../../../../components/card/card';
 import ClippingItem from '../../../../components/clipping-item/clipping-item';
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import WechatBindButton from './bind';

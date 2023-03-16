@@ -6,6 +6,7 @@ query publicData {
       bio
       name
       domain
+      premiumEndAt
     }
     books {
       doubanId
@@ -20,6 +21,7 @@ query publicData {
         name
         avatar
         domain
+        premiumEndAt
       }
     }
   }

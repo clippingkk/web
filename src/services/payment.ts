@@ -17,3 +17,14 @@ export function getPaymentOrderInfo(sessionId: string) {
     paymentStatus: string
   }>(`/v2/payment-order-info?sessionId=${sessionId}`)
 }
+
+export function cancelPaymentSubscription(subscriptionId: string) {
+  return request<{
+  }>(`/v2/payment/subscription/cancel`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ subscriptionId })
+  })
+}

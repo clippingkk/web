@@ -38,6 +38,7 @@ query fetchClipping($id: Int!) {
       name
       avatar
       domain
+      premiumEndAt
     }
     comments {
       id

@@ -9,6 +9,7 @@ import { useDarkModeStatus } from '../../../../hooks/theme'
 import DashboardContainer from '../../../../components/dashboard-container/container'
 import AccountRemoveButton from './account-remove'
 import { Paper } from '@mantine/core'
+import OrdersTable from './orders'
 
 type SettingsPageProps = {
 }
@@ -80,6 +81,10 @@ function SettingsPage(props: SettingsPageProps) {
       </Head>
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'> 🛠 {t('app.settings.title')}</h3>
       <GlobalSettings />
+      <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
+        {t('app.settings.orders')}
+      </h3>
+      <OrdersTable />
 
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
         {t('app.settings.export.title')}
