@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.5...v5.3.6) (2023-03-16)
+
+
+### Features
+
+* **book:** use blurhash to show placeholder of book image ([1517e26](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1517e26d69107b8733a4ef19ac7eb70f475bda8f))
+* **premium:** add premium payment and check support in client ([f24975d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f24975d0baf1911ef6531c5dfef812e03ca868d8))
+
 ### [5.3.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.4...v5.3.5) (2023-03-15)
 
 
