@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.6...v5.3.7) (2023-03-18)
+
+
+### Features
+
+* **locales:** fix locales for en, zh and ko ([734b332](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/734b33276896234a8d070a86c84a9f543407f677))
+* **user:** add premium badge ([cd9496e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cd9496e6984c95c62ff129e5efa8dae9170347df))
+
 ### [5.3.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.5...v5.3.6) (2023-03-16)
 
 
