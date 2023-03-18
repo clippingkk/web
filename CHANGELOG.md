@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.7...v5.3.8) (2023-03-18)
+
+
+### Features
+
+* **app:** add progressbar on route change ([5ac1ccd](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5ac1ccd494a2cc42d3b774d48b649f1a23205f4f))
+
 ### [5.3.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.6...v5.3.7) (2023-03-18)
 
 
