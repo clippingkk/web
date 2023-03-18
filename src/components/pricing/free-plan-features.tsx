@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import CommonFeatures from './common-features'
 
 type FreePlanFeaturesProps = {
@@ -6,20 +7,21 @@ type FreePlanFeaturesProps = {
 }
 
 function FreePlanFeatures(props: FreePlanFeaturesProps) {
+  const { t } = useTranslation()
   return (
     <ul className=' text-xl'>
       <li className='mb-4'>
-        ✅ Up to 2000 clippings
+        {t('app.plan.free.features.storage')}
       </li>
       <li className='mb-4'>
-        ✅ Free first 10 AI call
+        {t('app.plan.free.features.ai')}
       </li>
       <CommonFeatures />
       <li className='mb-4'>
-        ✅ Access via iOS app
+        {t('app.plan.free.features.ios')}
       </li>
       <li className='mb-4'>
-        ✅ Email supports
+        {t('app.plan.free.features.support')}
       </li>
       {props.children}
     </ul>

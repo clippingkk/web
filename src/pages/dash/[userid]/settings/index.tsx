@@ -82,7 +82,7 @@ function SettingsPage(props: SettingsPageProps) {
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'> 🛠 {t('app.settings.title')}</h3>
       <GlobalSettings />
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
-        {t('app.settings.orders')}
+        {t('app.settings.orders.title')}
       </h3>
       <OrdersTable />
 

@@ -201,6 +201,12 @@
         "submit": "Submit",
         "docLink": "documentation"
       },
+      "orders": {
+        "title": "Orders",
+        "orderId": "Order ID",
+        "amount": "Amount",
+        "currency": "Currency"
+      },
       "export": {
         "title": "Export",
         "success": "exported",
@@ -267,6 +273,38 @@
     },
     "report": {
       "clippingCountOnBook": "Quoted {{count}} clippings"
+    },
+    "plan": {
+      "free": {
+        "name": "Free Plan",
+        "description": "Good for everyone",
+        "goto": "Login",
+        "features": {
+          "storage": "✅ Up to 2000 clippings",
+          "ai": "✅ First 10 AI calls free",
+          "ios": "✅ Access to iOS widget",
+          "support": "✅ Email support"
+        }
+      },
+      "premium": {
+        "name": "Premium Plan",
+        "description": "Aim for highest",
+        "goto": "Go Premium",
+        "features": {
+          "dev": {
+            "webhook": "✅ Support webhook",
+            "ci": {
+              "title": "Continuous Integration",
+              "description": "✅ For developers, our advanced integrations, including Github Action, simplify the clipping collection process."
+            }
+          },
+          "storage": "✅ Unlimited clippings uploads",
+          "ai": "✅ First 1000 AI calls free every month",
+          "ios": "✅ Access to iOS widget",
+          "rss": "✅ RSS access",
+          "support": "✅ Email support"
+        }
+      }
     }
   }
 }

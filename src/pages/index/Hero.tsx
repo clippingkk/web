@@ -76,7 +76,7 @@ function Hero() {
                   className='text-xl ml-4'
                   rightIcon={<ChevronRightIcon className='w-4 h-4' />}
                 >
-                  😎 Premium
+                  😎 {t('app.plan.premium.name')}
                 </Button>
               )}
             </div>

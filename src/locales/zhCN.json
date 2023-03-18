@@ -197,9 +197,15 @@
       "title": "全局配置(网站)",
       "theme": "黑暗模式",
       "webhook": {
-        "title": "Web Hook",
+        "title": "Webhook",
         "submit": "提交",
         "docLink": "文档在这里"
+      },
+      "orders": {
+        "title": "账单",
+        "orderId": "订单号",
+        "amount": "金额",
+        "currency": "货币单位"
       },
       "export": {
         "title": "导出数据",
@@ -267,6 +273,38 @@
     },
     "report": {
       "clippingCountOnBook": "我摘录了 {{count}} 条句子"
+    },
+    "plan": {
+      "free": {
+        "name": "Free Plan",
+        "description": "Good for everyone",
+        "goto": "Login",
+        "features": {
+          "storage": "✅ 高达 2000 个剪贴",
+          "ai": "✅ 首次 10 个 AI 调用免费",
+          "ios": "✅ iOS 小部件访问",
+          "support": "✅ 电子邮件支持"
+        }
+      },
+      "premium": {
+        "name": "Premium Plan",
+        "description": "Aim for highest",
+        "goto": "Go Premium",
+        "features": {
+          "dev": {
+            "webhook": "✅ Webhook 支持",
+            "ci": {
+              "title": "Continuous Integration",
+              "description": "✅ 对于开发人员，我们提供高级集成，包括 Github Action 等，以简化剪贴收集过程。"
+            }
+          },
+          "storage": "✅ 无限制剪贴上传",
+          "ai": "✅ 每月前 1000 个 AI 调用免费",
+          "ios": "✅ iOS 小部件访问权限",
+          "rss": "✅ 通过 RSS 访问摘录",
+          "support": "✅ Email 支持"
+        }
+      }
     }
   }
 }

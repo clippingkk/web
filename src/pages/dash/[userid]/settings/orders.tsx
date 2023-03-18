@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 import { cancelPaymentSubscription } from '../../../../services/payment'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../../services/misc'
+import { useTranslation } from 'react-i18next'
 
 
 type SubscriptionOrderListProps = {
@@ -15,7 +16,7 @@ type SubscriptionOrderListProps = {
 }
 
 function SubscriptionOrderList(props: SubscriptionOrderListProps) {
-
+  const { t } = useTranslation()
   const { orders } = props
   const columnHelper = createColumnHelper<Order>()
 
@@ -24,15 +25,15 @@ function SubscriptionOrderList(props: SubscriptionOrderListProps) {
     getCoreRowModel: getCoreRowModel(),
     columns: [
       columnHelper.accessor('orderID', {
-        header: '订阅 ID',
+        header: t('app.settings.orders.orderId') ?? '',
         cell: (info) => info.getValue(),
       }),
       columnHelper.accessor('amount', {
-        header: '金额',
+        header: t('app.settings.orders.amount') ?? '',
         cell: (info) => info.getValue() / 100,
       }),
       columnHelper.accessor('currency', {
-        header: '货币',
+        header: t('app.settings.orders.currency') ?? '',
       })
     ]
   })
@@ -85,14 +86,14 @@ function OrdersTable(props: OrdersTableProps) {
       refetch()
     }
   })
-
+  const { t } = useTranslation()
   return (
     <div className='w-full px-20'>
       {(orderList?.me.orderList ?? []).map(o => (
         <div key={o.id} className='with-fade-in'>
           <div className='flex justify-between'>
             <div className='flex items-center'>
-              <h3 className='dark:text-gray-100 mr-2'>{o.subscriptionId}</h3>
+              <h3 className='dark:text-gray-100 mr-2 ml-3'>{o.subscriptionId}</h3>
               <Badge color={o.status !== SubscriptionStatus.Canceled ? 'green' : undefined}>
                 {o.status}
               </Badge>
@@ -101,7 +102,7 @@ function OrdersTable(props: OrdersTableProps) {
               onClick={() => mutate(o.subscriptionId)}
               disabled={o.status === SubscriptionStatus.Canceled || isLoading}
             >
-              Cancel
+              {t('app.common.cancel')}
             </Button>
           </div>
           <SubscriptionOrderList orders={o.orders} />
