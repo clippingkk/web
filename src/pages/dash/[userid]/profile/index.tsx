@@ -26,6 +26,7 @@ import AvatarPicker from '../../../../components/profile/avatar-picker';
 import PersonalActivity from '../../../../components/profile/activity';
 import { ProfileDocument, ProfileQuery, ProfileQueryVariables, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '../../../../schema/generated';
 import { Divider, Text } from '@mantine/core';
+import UserName from '../../../../components/profile/user-name';
 
 function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // 优先使用本地数据，服务端数据只是为了 seo
@@ -91,7 +92,10 @@ function Profile(serverResponse: InferGetServerSidePropsType<typeof getServerSid
             />
             <div className={styles.info}>
               <div className='flex items-center'>
-                <h3 className='text-2xl font-lxgw font-bold dark:text-gray-100'>{data?.me.name}</h3>
+                <UserName
+                  name={data.me.name}
+                  premiumEndAt={data.me.premiumEndAt}
+                />
                 {data?.me.phone === '' && isInMyPage && (
                   <ProfileBindPhone />
                 )}
