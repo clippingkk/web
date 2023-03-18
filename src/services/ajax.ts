@@ -7,7 +7,7 @@ import { offsetLimitPagination } from '@apollo/client/utilities'
 import { QueryClient } from '@tanstack/react-query'
 
 export interface IBaseResponseData<T> {
-  status: Number
+  status: number
   msg: string
   data: T
 }
