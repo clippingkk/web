@@ -7,6 +7,7 @@ import '../styles/tailwind.css'
 import '../styles/cmdk-raycast.css'
 
 import React, { ReactElement, ReactNode, useEffect } from 'react'
+import NextNProgress from 'nextjs-progressbar'
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
@@ -76,6 +77,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               }}
             >
               <ApolloProvider client={client}>
+                <NextNProgress />
                 <AppContainer>
                   {content}
                 </AppContainer>

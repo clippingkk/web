@@ -71,6 +71,7 @@ function SquarePage(serverResponse: InferGetServerSidePropsType<typeof getServer
       <Masonry
         items={(data.featuredClippings ?? [])}
         columnCount={masonaryColumnCount}
+        className='with-slide-in'
         columnGutter={30}
         onRender={maybeLoadMore}
         render={(row) => {
