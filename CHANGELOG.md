@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.9...v5.3.10) (2023-03-19)
+
+
+### Features
+
+* **book:** update book change info modal styles ([27374ee](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/27374eed759696df93110bf5aa4614f8a4682430))
+* **pricing:** update pricing page styles ([6f7224f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6f7224f50936d54dead5867f4d69fe6f49bff835))
+
+
+### Bug Fixes
+
+* **auth:** fix auth revalidate issue ([3ca33b8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3ca33b81217d7cf36490a0cd7b7c74750395aaed))
+
 ### [5.3.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.8...v5.3.9) (2023-03-18)
 
 ### [5.3.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.7...v5.3.8) (2023-03-18)
