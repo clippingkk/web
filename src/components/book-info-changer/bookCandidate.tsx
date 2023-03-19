@@ -1,6 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
+import BlurhashImage from '@annatarhe/blurhash-react'
 import { WenquBook } from '../../services/wenqu'
+import { Rating, Tooltip } from '@mantine/core'
 
 type BookCandidateProps = {
   book: WenquBook
@@ -12,18 +14,26 @@ function BookCandidate(props: BookCandidateProps) {
   const { book, selected } = props
   return (
     <div
-     className={'rounded flex p-2 cursor-pointer hover:shadow hover:bg-gray-300 transition-colors duration-150 ' + (selected ? 'shadow bg-gray-300' : '') }
-     onClick={() => props.onSelecte(book)}
-     >
-      <Image
-        src={book.image}
-        height={192}
+      className={'rounded flex p-2 cursor-pointer hover:shadow hover:bg-gray-300 transition-colors duration-150 ' + (selected ? 'shadow bg-gray-300' : '')}
+      onClick={() => props.onSelecte(book)}
+    >
+      <BlurhashImage
         width={135}
+        height={192}
+        src={book.image}
         alt={book.title}
         className='rounded'
+        blurhashValue={book.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
       />
       <div className='ml-4 w-144'>
-        <h3 className='text-3xl'>{book.title}</h3>
+        <h3 className='text-3xl inline-block'>
+          {book.title}
+          <div className='inline-block'>
+            <Tooltip label={`douban: ${book.rating}/10`}>
+              <Rating readOnly value={book.rating / 2} />
+            </Tooltip>
+          </div>
+        </h3>
         <h4 className='text-lg'>{book.originTitle}</h4>
         <h4 className='text-sm'>{book.author}</h4>
         <h5>{book.press}</h5>

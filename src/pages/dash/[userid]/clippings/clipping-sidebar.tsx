@@ -125,6 +125,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 {t('app.clipping.update')}
               </button>
               <BookInfoChanger
+                bookName={clipping.title}
                 clippingID={clipping?.id ?? -1}
                 visible={updateClippingBookId >= 0}
                 onClose={() => {

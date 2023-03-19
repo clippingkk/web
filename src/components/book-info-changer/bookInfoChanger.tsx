@@ -1,15 +1,18 @@
 import { useApolloClient } from '@apollo/client'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useBookSearch } from '../../hooks/book'
 import { WenquBook } from '../../services/wenqu'
-import Dialog from '../dialog/dialog'
 import BookCandidate from './bookCandidate'
 import { toast } from 'react-hot-toast'
 import { useUpdateClippingBookIdMutation } from '../../schema/generated'
+import { Input, Modal } from '@mantine/core'
+import LoadingIcon from '../icons/loading.svg'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 type BookInfoChangerProps = {
   clippingID: number
+  bookName?: string
   visible: boolean
   onClose: () => void
   onConfirm: (bookDoubanId: string) => Promise<any>
@@ -21,7 +24,15 @@ function BookInfoChanger(props: BookInfoChangerProps) {
   const [selectedBook, setSelectedBook] = useState<WenquBook | null>(null)
   const candidates = useBookSearch(bookName, 0)
   const client = useApolloClient()
-  const [ doUpdate ] = useUpdateClippingBookIdMutation()
+  const [doUpdate] = useUpdateClippingBookIdMutation()
+
+  // set inital value
+  useEffect(() => {
+    if (!props.bookName) {
+      return
+    }
+    setBookName(props.bookName)
+  }, [props.bookName])
 
   const onSubmit = useCallback(() => {
     if (!selectedBook) {
@@ -43,48 +54,63 @@ function BookInfoChanger(props: BookInfoChangerProps) {
     })
   }, [selectedBook?.id, props.clippingID])
 
-  if (!props.visible) {
-    return null
-  }
+  console.log(candidates)
 
   return (
-    <Dialog
-      onCancel={() => {
+    <Modal
+      centered
+      onClose={() => {
         setBookName('')
         props.onClose()
       }}
-      onOk={() => { }}
+      opened={props.visible}
+      size='xl'
       title={t('app.clipping.update')}
+      overlayProps={{
+        blur: 16,
+        opacity: 0.7,
+      }}
     >
-      <div>
+      <Modal.Body>
         <div>
-          <input
+          <Input
+            icon={<MagnifyingGlassIcon className='w-4 h-4 ml-2' />}
             type='search'
             max={64}
             value={bookName}
             onChange={e => setBookName(e.target.value)}
-            className='w-full px-2 py-4 rounded dark:bg-gray-200 text-lg my-2 mx-auto'
+            size='xl'
             placeholder={t('app.clipping.updatePlaceholder') ?? ''}
           />
         </div>
-
         <div>
           <p
-            className='bg-gradient-to-br from-orange-600 to-orange-800 rounded p-2'
+            className='bg-gradient-to-br p-2'
           >{t('app.clipping.updateCandidatesCount', {
             count: candidates.data?.count ?? 0
           })}</p>
           <p
-            className='bg-gradient-to-br from-teal-600 to-teal-800 rounded p-2 mt-2'
+            className='bg-gradient-to-br p-2 mt-2'
           >{t('app.clipping.updateSelectedTip', {
             title: selectedBook?.title ?? 'null'
           })}</p>
           <ul
             className=' overflow-y-auto'
             style={{
-              maxHeight: '70vh'
+              maxHeight: '65vh'
             }}
           >
+            {candidates.isFetching && (
+              <div className='w-full flex justify-center items-center h-96'>
+                <LoadingIcon className=' animate-spin' />
+              </div>
+            )}
+            {candidates.isFetched && !candidates.isLoading && candidates.data?.count === 0 && (
+              <div className='w-full flex justify-center items-center h-96 flex-col'>
+                  <span className=' text-9xl'>🤨</span>
+                  <p className='mt-2'>{t('app.menu.search.empty')}</p>
+              </div>
+            )}
             {candidates.data?.books.map(x => (
               <BookCandidate
                 key={x.id}
@@ -104,15 +130,15 @@ function BookInfoChanger(props: BookInfoChangerProps) {
 
         <div>
           <button
-            className='text-white text-2xl w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow disabled:from-gray-200 disabled:to-gray-300'
+            className='text-white text-2xl w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow disabled:from-gray-200 disabled:to-gray-300 hover:shadow-lg duration-300 transition-all'
             disabled={!selectedBook}
             onClick={onSubmit}
           >
-            ok
+            {t('app.common.doUpdate')}
           </button>
         </div>
-      </div>
-    </Dialog>
+      </Modal.Body>
+    </Modal>
   )
 }
 
