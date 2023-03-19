@@ -91,10 +91,8 @@ function AuthV3(props: AuthV3Props) {
               <Link
                 href='/auth/signin'
                 className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300'>
-
                 <ArrowUturnRightIcon className='w-6 h-6' />
                 <span className='ml-2 inline-block'>{t('app.auth.loginWithPassword')}</span>
-
               </Link>
             </div>
             <div className='flex justify-center items-center flex-col mb-4'>

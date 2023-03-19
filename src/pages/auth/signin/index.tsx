@@ -10,7 +10,6 @@ import AuthPage from '../auth'
 import OGWithAuth from '../../../components/og/og-with-auth'
 import Turnstile from 'react-turnstile'
 import { CF_TURNSTILE_SITE_KEY } from '../../../constants/config'
-import ButtonSimple from '../../../components/button/button-simple'
 import toast from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../services/misc'
 import { useAuthLazyQuery } from '../../../schema/generated';
@@ -35,7 +34,7 @@ function Signin(props: TSigninProps) {
     }),
     onSubmit(values) {
       if (!formik.isValid) return
-      toast.promise(
+      return toast.promise(
         exec({
           variables: {
             email: values.email,
