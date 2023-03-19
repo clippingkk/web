@@ -1,0 +1,13 @@
+@keyframes gradient {
+    0% {background-position: 0%}
+    100% {background-position: 100%}
+}
+.card-bg-free {
+  background: radial-gradient(circle at 50% 50%,#aab1e2, rgba(118, 142, 220, 1))
+}
+.card-bg-premium {
+    background: linear-gradient(45deg, rgba(0,212,255,0.35),rgba(212, 255, 0, 0.35), rgba(221, 174, 211, 0.35), rgba(210, 231, 22, 0.35), rgba(0,212,255,0.75), rgba(20, 119, 139, 0.95));
+    background-size: 600% 100%;
+    animation: gradient 16s linear infinite;
+    animation-direction: alternate;
+}

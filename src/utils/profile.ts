@@ -65,3 +65,11 @@ class MyProfile {
 }
 
 export default new MyProfile()
+
+export function getMyHomeLink(p?: Pick<ProfileQuery['me'], 'id' | 'domain'>) {
+  if (!p) {
+    return '/auth/auth-v3'
+  }
+  const id = p.domain.length > 2 ? p.domain : p.id
+  return `/dash/${id}/home`
+}

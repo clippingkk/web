@@ -9,6 +9,7 @@ import { cancelPaymentSubscription } from '../../../../services/payment'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../../services/misc'
 import { useTranslation } from 'react-i18next'
+import Link from 'next/link'
 
 
 type SubscriptionOrderListProps = {
@@ -39,7 +40,7 @@ function SubscriptionOrderList(props: SubscriptionOrderListProps) {
   })
 
   return (
-    <Table>
+    <Table className=' dark:text-gray-100'>
       <thead>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
@@ -89,7 +90,14 @@ function OrdersTable(props: OrdersTableProps) {
   const { t } = useTranslation()
   return (
     <div className='w-full px-20'>
-      {(orderList?.me.orderList ?? []).map(o => (
+      {orderList?.me.orderList.length === 0 && (
+        <div className='flex justify-center'>
+        <Link href='/pricing' className=' bg-gradient-to-br from-indigo-200 to-sky-300 px-4 py-2 rounded hover:shadow-lg duration-300 transition-all'>
+          {t('app.plan.premium.goto')}
+        </Link>
+        </div>
+      )}
+      {( orderList?.me.orderList ?? []).map(o => (
         <div key={o.id} className='with-fade-in'>
           <div className='flex justify-between'>
             <div className='flex items-center'>
