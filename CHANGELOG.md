@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.11...v5.3.12) (2023-05-02)
+
+
+### Features
+
+* **deps:** upgrade to pnpm@8 ([8259117](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8259117735359d79724ee32f6901308c4148dc7b))
+
 ### [5.3.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.10...v5.3.11) (2023-05-02)
 
 
