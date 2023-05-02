@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.10...v5.3.11) (2023-05-02)
+
+
+### Features
+
+* **deps:** update deps ([fd48369](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fd483697a68231028e13638bd83c4e45f14a1636))
+* **deps:** upgrade deps ([05762bb](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/05762bb9ae9ec5fcf10848c7f2899370993ae957))
+* **font:** update font to latest ([be62c12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/be62c12a57173de79674059d7048e951521082c0))
+
 ### [5.3.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.9...v5.3.10) (2023-03-19)
 
 
