@@ -37,7 +37,7 @@ function ClippingsUploadHelp() {
         >
           <div
            className='p-4 lg:text-xl dark:text-gray-300'
-           dangerouslySetInnerHTML={{ __html: t('app.upload.help.content')}}
+           dangerouslySetInnerHTML={{ __html: t('app.upload.help.content') ?? ''}}
           >
             {/* {t('app.upload.help.content')} */}
           </div>
