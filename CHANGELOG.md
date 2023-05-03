@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.12...v5.3.13) (2023-05-03)
+
+
+### Bug Fixes
+
+* **app:** add default value ([1beedae](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1beedaecf42630033318f6cf9b05beea43a182bb))
+
 ### [5.3.12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.11...v5.3.12) (2023-05-02)
 
 
