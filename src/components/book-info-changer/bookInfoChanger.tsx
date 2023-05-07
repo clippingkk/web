@@ -54,8 +54,6 @@ function BookInfoChanger(props: BookInfoChangerProps) {
     })
   }, [selectedBook?.id, props.clippingID])
 
-  console.log(candidates)
-
   return (
     <Modal
       centered

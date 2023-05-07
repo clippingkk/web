@@ -6,7 +6,6 @@ import Tooltip from '../../../../components/tooltip/Tooltip'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
-import EmojiPicker from '../../../../components/emoji-picker'
 import { FetchClippingQuery, Reaction, ReactionData, ReactionTarget, useReactionCreateMutation, useReactionRemoveMutation } from '../../../../schema/generated'
 
 const avaliableReactions = ["👍", "❤️", "⭐️", "🐶", "😱"]

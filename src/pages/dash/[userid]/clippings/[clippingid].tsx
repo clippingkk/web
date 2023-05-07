@@ -21,6 +21,7 @@ import OGWithClipping from '../../../../components/og/og-with-clipping'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { client, reactQueryClient } from '../../../../services/ajax'
 import DashboardContainer from '../../../../components/dashboard-container/container'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import styles from './clipping.module.css'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
@@ -30,7 +31,15 @@ import { appBackgroundAtom } from '../../../../store/global'
 import { FetchClippingDocument, FetchClippingQuery, FetchClippingQueryVariables, useFetchClippingQuery } from '../../../../schema/generated'
 import { dehydrate } from '@tanstack/react-query'
 function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const clipping = serverResponse.clippingServerData
+  // const cid = ~~(context.params?.clippingid ?? -1) as number
+  const cid = ~~(useRouter().query.clippingid!)
+
+  const clientClipping = useFetchClippingQuery({
+    variables: {
+      id: ~~cid
+    },
+  })
+  const clipping = clientClipping.data || serverResponse.clippingServerData
 
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
@@ -52,8 +61,10 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
   const { t } = useTranslation()
 
   const clippingAt = useLocalTime(clipping?.clipping.createdAt)
-
   const creator = clipping?.clipping.creator
+
+  const [commentListRef] = useAutoAnimate()
+
   return (
     <div className={`${styles.clipping} page anna-fade-in`}>
       <Head>
@@ -106,10 +117,11 @@ function ClippingPage(serverResponse: InferGetServerSidePropsType<typeof getServ
             <Card>
               <>
                 <h3 className='text-2xl lg:text-4xl font-light lg:mb-4'>{t('app.clipping.comments.title')}</h3>
+                <ul ref={commentListRef}>
                 {clipping?.clipping.comments.map(m => (
                   <Comment key={m.id} comment={m} />
                 ))}
-
+                </ul>
                 {clipping && me && (
                   <CommentBox me={me} clippingID={clipping?.clipping.id} />
                 )}

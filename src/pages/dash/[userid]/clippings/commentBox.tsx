@@ -6,6 +6,7 @@ import Avatar from '../../../../components/avatar/avatar'
 import { useCreateCommentMutation } from '../../../../schema/generated'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../../services/misc'
+import { Button } from '@mantine/core'
 
 type CommentBoxProps = {
   clippingID: number
@@ -32,9 +33,11 @@ function CommentBox(props: CommentBoxProps) {
       variables: {
         cid: props.clippingID,
         content: content
-      }
+      },
+      refetchQueries: ['fetchClipping'],
     }), toastPromiseDefaultOption).then(() => {
       client.resetStore()
+      setContent('')
     })
     // text: t('app.clipping.comments.tip.success')
   }, [content, createCommentAction, props.clippingID, t, client])
@@ -60,14 +63,14 @@ function CommentBox(props: CommentBoxProps) {
         <div className='w-full flex-col lg:flex-row flex items-center justify-between px-4 mt-4'>
           <small>{content.length} {t('app.clipping.comments.count')}</small>
 
-          <button
-            className={`focus:outline-none px-8 py-4 rounded ${content.length > COMMENT_MIN_LEN ? 'bg-blue-400' : 'bg-gray-500'}`}
-            disabled={content.length < COMMENT_MIN_LEN || loading}
+          <Button
+            color='blue'
+            loading={loading}
+            disabled={content.length < COMMENT_MIN_LEN}
             onClick={onSubmit}
           >
-            {loading && '🎠'}
             {t('app.clipping.comments.submit')}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
