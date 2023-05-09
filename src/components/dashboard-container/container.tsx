@@ -1,8 +1,8 @@
+'use client';
 import React, { useMemo } from 'react'
 import NavigationBar from '../navigation-bar/navigation-bar'
 import Footer from '../footer/Footer'
 
-import styles from './container.module.css'
 import { useAtomValue } from 'jotai'
 import { appBackgroundAtom } from '../../store/global'
 

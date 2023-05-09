@@ -6,13 +6,12 @@ import { execLogout, TUserState, UserContent } from '../../store/user/type'
 import { TGlobalStore } from '../../store'
 import { useTranslation } from 'react-i18next';
 import Tooltip from '../tooltip/Tooltip';
-import styles from './navigation-bar.module.css'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import SearchBar, { useCtrlP } from '../searchbar/searchbar'
 import { Modal } from '@mantine/core'
 import LoginByQRCode from './login-by-qrcode'
+import styles from './navigation-bar.module.css'
 
 const leftMenu = [
   {
@@ -43,9 +42,9 @@ function NavigationBar() {
   const id = profile.domain.length > 2 ? profile.domain : profile.id
 
   const dispatch = useDispatch()
-  const { push } = useRouter()
 
   const onLogout = useCallback(() => {
+    const push = () => {}
     dispatch(execLogout(push))
   }, [])
 
@@ -144,6 +143,7 @@ function NavigationBar() {
             </Tooltip>
           </li>
           <li className='mr-6' onClick={onLogout}>
+            <Link href={'/'}>
             <Tooltip
               placement='bottom'
               overlay={<span>{t('app.menu.logout')}</span>}
@@ -155,6 +155,7 @@ function NavigationBar() {
                 👋
               </span>
             </Tooltip>
+            </Link>
           </li>
         </ul>
       ) : (

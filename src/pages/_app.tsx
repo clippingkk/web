@@ -29,12 +29,12 @@ import store from '../store/index'
 import '../prefers-dark'
 import '../utils/locales'
 import '../utils/leancloud'
-import { initParseFromLS } from '../store/user/user'
 import { AUTH_LOGIN } from '../store/user/type'
 import { NextPage } from 'next'
 import { Toaster } from 'react-hot-toast'
 import { useDarkModeStatus } from '../hooks/theme'
 import { reactQueryPersister } from '../services/storage'
+import { initParseFromLS } from '../utils/storage'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode

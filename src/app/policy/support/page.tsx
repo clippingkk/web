@@ -1,8 +1,8 @@
+'use client'
 import { Divider, Highlight, Text, Title } from '@mantine/core'
-import Head from 'next/head'
 import React from 'react'
-import DashboardContainer from '../../../components/dashboard-container/container'
 import { usePageTrack } from '../../../hooks/tracke'
+import { Metadata } from 'next'
 
 type PolicySupportPageProps = {
 }
@@ -11,10 +11,6 @@ function PolicySupportPage(props: PolicySupportPageProps) {
   usePageTrack('support')
   return (
     <section className='page p-20 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200'>
-      <Head>
-        <title>ClippingKK support information</title>
-      </Head>
-
       <div>
         {/* <h1 className='text-center font-bold text-3xl'></h1> */}
         <Title className=' text-center'>
@@ -32,14 +28,6 @@ function PolicySupportPage(props: PolicySupportPageProps) {
         </a>
       </div>
     </section>
-  )
-}
-
-PolicySupportPage.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <DashboardContainer>
-      {page}
-    </DashboardContainer>
   )
 }
 

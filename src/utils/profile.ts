@@ -1,5 +1,6 @@
-import { client } from "../services/ajax"
+'use client';
 import store from "../store"
+import { client } from "../services/ajax"
 import { AUTH_LOGIN } from "../store/user/type"
 import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from "../schema/generated"
 

@@ -1,7 +1,6 @@
+'use client';
 import { ArrowDownTrayIcon } from '@heroicons/react/24/solid'
-import React, { useCallback } from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useUploadData } from '../hooks/my-file'
