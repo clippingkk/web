@@ -1,5 +1,5 @@
 import { WENQU_SIMPLE_TOKEN, WENQU_API_HOST } from "../constants/config"
-import * as Sentry from '@sentry/react'
+// import * as Sentry from '@sentry/react'
 
 type WenquErrorResponse = {
   code: number
@@ -8,7 +8,7 @@ type WenquErrorResponse = {
 
 const cache = new Map<string, any>()
 
-export async function wenquRequest<T extends object>(url: string, options: RequestInit = {}): Promise<T> {
+export async function wenquRequest<T = any>(url: string, options: RequestInit = {}): Promise<T> {
   options.headers = {
     ...(options.headers || {}),
     'X-Simple-Check': WENQU_SIMPLE_TOKEN
@@ -21,14 +21,14 @@ export async function wenquRequest<T extends object>(url: string, options: Reque
   }
 
   try {
-    const response: T | WenquErrorResponse = await fetch(WENQU_API_HOST + url, options).then(res => res.json())
+    const response: (T & { error: any }) | WenquErrorResponse = await fetch(WENQU_API_HOST + url, options).then(res => res.json())
     if ('error' in response) {
       throw new Error(response.error)
     }
     cache.set(url, response)
     return response
   } catch (e) {
-    Sentry.captureException(e)
+    // Sentry.captureException(e)
     return Promise.reject(e)
   }
 }

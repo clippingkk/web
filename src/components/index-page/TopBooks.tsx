@@ -1,6 +1,7 @@
+'use client';
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import PublicBookItem from '../../components/public-book-item/public-book-item'
+import PublicBookItem from '../public-book-item/public-book-item'
 import { WenquBook } from '../../services/wenqu'
 
 type TopBooksProps = {

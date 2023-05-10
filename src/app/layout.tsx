@@ -20,6 +20,7 @@ import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 import ClientOnlyProviders from './providers';
 import { Metadata } from 'next'
 import Script from 'next/script'
+import { metadata as indexPageMetadata} from '../components/og/og-with-index'
 
 const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 type LayoutProps = {
@@ -27,6 +28,7 @@ type LayoutProps = {
 }
 
 export const metadata: Metadata = {
+  ...indexPageMetadata,
   'themeColor': [{
     media: '(prefers-color-scheme: light)',
     color: 'rgba(33, 150, 243, 0.9)'

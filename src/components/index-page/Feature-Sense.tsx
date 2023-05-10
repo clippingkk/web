@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Image from 'next/image'
 import LockIcon from '../../assets/lock-security-protection-secure-safety-password-svgrepo-com.svg'
 import iOSWidgetImage from '../../assets/ios_widget.png'
-import DeviceIPhoneX from '../../components/device/iPhoneX'
+import DeviceIPhoneX from '../device/iPhoneX'
 
 type FeatureSenseProps = {
 }

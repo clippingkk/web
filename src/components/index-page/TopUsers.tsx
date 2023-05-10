@@ -1,7 +1,8 @@
+'use client';
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import HideUntilLoaded from '../../components/SimpleAnimation/HideUntilLoaded'
+import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
 import styles from './tops.module.css'
 import { User } from '../../schema/generated'
 

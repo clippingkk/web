@@ -2,11 +2,10 @@ import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import logo from '../../assets/logo.png'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
+import { Metadata } from 'next'
 
 type OGWithIndexProps = {
 }
-
-function OGWithIndex(props: OGWithIndexProps) {
   const url = APP_URL_ORIGIN
 
   const metaTitle = `Clippingkk - kindle 书摘管理`
@@ -14,6 +13,8 @@ function OGWithIndex(props: OGWithIndexProps) {
 
   const logoLink = APP_URL_ORIGIN + logo.src
 
+
+function OGWithIndex(props: OGWithIndexProps) {
   return (
     <React.Fragment>
       <meta property="og:url" content={url} />
@@ -37,6 +38,29 @@ function OGWithIndex(props: OGWithIndexProps) {
       />
     </React.Fragment>
   )
+}
+
+export const metadata: Metadata = {
+  title: metaTitle,
+  description:desc,
+  keywords: 'clippingkk, 书摘, 首页, kindle',
+  authors: [{ name: 'AnnatarHe' }],
+  openGraph: {
+    url: APP_URL_ORIGIN,
+    type: 'website',
+    title: metaTitle,
+    images: APP_URL_ORIGIN + logo.src,
+    description: desc,
+    siteName: 'clippingkk',
+  },
+  twitter: {
+    card: 'summary',
+    site: 'AnnatarHe',
+    creator: 'AnnatarHe',
+    title: metaTitle,
+    description: desc,
+    images: APP_URL_ORIGIN + logo.src,
+  }
 }
 
 export default OGWithIndex

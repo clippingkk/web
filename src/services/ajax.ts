@@ -30,9 +30,17 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
   }
   options.credentials = 'include'
   options.mode = 'cors'
+  if (!options.next) {
+    options.next = {
+      revalidate: 60 * 60
+    }
+  }
+
+  const finalUrl = url.startsWith('http') ? url : `${API_HOST}/api${url}`
 
   try {
-    const response: IBaseResponseData<T> = await fetch(API_HOST + '/api' + url, options).then(res => res.json())
+    const response: IBaseResponseData<T> = await fetch(finalUrl, options)
+      .then(res => res.json())
     if (response.status >= 400) {
       throw new Error(response.msg)
     }
@@ -42,6 +50,15 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
     toast.error('请求挂了... 一会儿再试试')
     return Promise.reject(e)
   }
+}
+
+function apolloFetcher(url: string, options: RequestInit = {}) {
+  if (!options.next) {
+    options.next = {
+      revalidate: 60 * 60 * 2000
+    }
+  }
+  return fetch(url, options)
 }
 
 export function updateToken(t: string) {
@@ -102,6 +119,7 @@ const errorLink = onError((errData) => {
 
 const httpLink = new HttpLink({
   uri: API_HOST + '/api/v2/graphql',
+  fetch: apolloFetcher,
 })
 
 export const client = new ApolloClient({
