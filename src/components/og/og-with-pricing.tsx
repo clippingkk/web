@@ -2,18 +2,35 @@ import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import logo from '../../assets/logo.png'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
+import { Metadata } from 'next'
 
 type OGWithPricingProps = {
 }
+const url = APP_URL_ORIGIN
+const metaTitle = `Clippingkk - kindle 书摘管理`
+const desc = 'ClippingKK 帮助用户整理 kindle 中的笔记到可控制，可展示的界面中，并且使得这些笔记可以在用户手机中展示，时常可以温故知新，时常想想之前的话语'
+const logoLink = APP_URL_ORIGIN + logo.src
+
+export const metadata: Metadata = {
+  title: metaTitle,
+  description: desc,
+  openGraph: {
+    url,
+    type: 'website',
+    title: metaTitle,
+    description: desc,
+    siteName: 'ClippingKK',
+  },
+  twitter: {
+    card: 'summary',
+    site: '@AnnatarHe',
+    creator: '@AnnatarHe',
+    title: metaTitle,
+    description: desc,
+  },
+}
 
 function OGWithPricing(props: OGWithPricingProps) {
-  const url = APP_URL_ORIGIN
-
-  const metaTitle = `Clippingkk - kindle 书摘管理`
-  const desc = 'ClippingKK 帮助用户整理 kindle 中的笔记到可控制，可展示的界面中，并且使得这些笔记可以在用户手机中展示，时常可以温故知新，时常想想之前的话语'
-
-  const logoLink = APP_URL_ORIGIN + logo.src
-
   return (
     <React.Fragment>
       <meta property="og:url" content={url} />
@@ -25,7 +42,7 @@ function OGWithPricing(props: OGWithPricingProps) {
       <meta property="article:author" content='AnntarHe' />
 
       <meta name='description' content={desc} />
-      <meta name='keyword' content={`clippingkk, 书摘, 首页, kindle` } />
+      <meta name='keyword' content={`clippingkk, 书摘, 首页, kindle`} />
       <MetaTwitterCard
         card={TwitterCardType.summary}
         site='AnnatarHe'

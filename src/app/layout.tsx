@@ -20,7 +20,7 @@ import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 import ClientOnlyProviders from './providers';
 import { Metadata } from 'next'
 import Script from 'next/script'
-import { metadata as indexPageMetadata} from '../components/og/og-with-index'
+import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 
 const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 type LayoutProps = {
@@ -82,7 +82,6 @@ const Layout = (props: LayoutProps) => {
     <html>
       <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}' />
       <body>
-        {/* <div id="app"></div> */}
         <ClientOnlyProviders>
           <>
             <AppContainer>

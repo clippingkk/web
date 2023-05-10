@@ -1,4 +1,4 @@
-query fetchMyNFTs($uid: Int!) {
+query fetchMyNFTs($uid: Int) {
   me(id: $uid) {
     id
     nfts {

@@ -1,4 +1,4 @@
-query profile($id: Int!, $domain: String, $pagination: MeQueryPagination) {
+query profile($id: Int, $domain: String, $pagination: MeQueryPagination) {
   me(id: $id, domain: $domain, pagination: $pagination) {
     id
     name

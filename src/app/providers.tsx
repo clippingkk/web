@@ -23,15 +23,14 @@ type ClientOnlyProvidersProps = {
 }
 
 function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
+  const { children } = props
   const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
   useLayoutInit()
 
   const cache = useGluedEmotionCache();
   return (
     <JotaiProvider>
-
       <Provider store={store}>
-
         <ColorSchemeProvider
           colorScheme={isDarkTheme ? 'dark' : 'light'}
           toggleColorScheme={t => {
@@ -47,7 +46,9 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
                 }}
               >
                 <ApolloProvider client={client}>
-                  {props.children}
+                  {/* <I18nextProvider i18n={{}}> */}
+                  {children}
+                  {/* </I18nextProvider> */}
                 </ApolloProvider>
               </PersistQueryClientProvider>
             </MantineProvider>

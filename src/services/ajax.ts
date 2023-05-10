@@ -98,17 +98,21 @@ const errorLink = onError((errData) => {
     //   title: graphQLErrors[0].message,
     //   text: graphQLErrors[0].message,
     // })
-    toast.error(graphQLErrors[0].message)
+    if (typeof window !== 'undefined') {
+      toast.error(graphQLErrors[0].message)
+    }
   }
   let ne = networkError as GraphQLResponseError
 
   if (ne) {
     console.log(`[Network error]: ${ne}`)
-    if (ne.statusCode && ne.statusCode === 401) {
-      updateToken('')
-      profile.onLogout()
+    if (typeof window !== 'undefined') {
+      if (ne.statusCode && ne.statusCode === 401) {
+        updateToken('')
+        profile.onLogout()
+      }
+      toast.error(`${ne.statusCode}: ${ne.name}`)
     }
-    toast.error(`${ne.statusCode}: ${ne.name}`)
     // swal({
     //   icon: 'error',
     //   title: `${ne.statusCode}: ${ne.name}`,

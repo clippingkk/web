@@ -1,16 +1,17 @@
+'use client';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { Button } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
-import { useRouter } from 'next/router'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useProfileQuery } from '../../schema/generated'
 import { TGlobalStore } from '../../store'
-import styles from './navigation-bar.module.css'
 import UserName from '../profile/user-name'
 import { getMyHomeLink } from '../../utils/profile'
+import { useRouter } from 'next/navigation'
+import styles from './navigation-bar.module.css'
 
 type NavigateGuideProps = {
   title?: string
