@@ -1,17 +1,13 @@
+'use client'
 import { Button, Input, Modal } from '@mantine/core'
-import Head from 'next/head'
 import React, { useCallback, useRef, useState } from 'react'
-import BookCover from '../../../components/book-cover/book-cover'
-import OGWithIndex from '../../../components/og/og-with-index'
-import OGWithReport from '../../../components/og/og-with-report'
-import PublicBookItem from '../../../components/public-book-item/public-book-item'
-import { useBookSearch, useSingleBook } from '../../../hooks/book'
-import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
-import SpinnerIcon from '../../../components/loading/spinner'
-
+import BlurhashView from '@annatarhe/blurhash-react';
 import { toPng } from 'html-to-image'
 import download from 'downloadjs'
 import { toast } from 'react-hot-toast'
+import { useBookSearch, useSingleBook } from '../../../hooks/book'
+import PublicBookItem from '../../../components/public-book-item/public-book-item'
+import SpinnerIcon from '../../../components/loading/spinner'
 import { toastPromiseDefaultOption } from '../../../services/misc'
 
 type ReportFavouritesPageProps = {
@@ -42,9 +38,13 @@ function FavBookCard(
           </div>
           {b ? (
             <div className={'relative transition-all duration-300 rounded transform hover:scale-110 shadow-2xl with-slide-in'}>
-              <img
+              <BlurhashView
+                blurhashValue={b.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
                 src={b.image}
+                height={576}
+                width={320}
                 className='object-cover rounded w-full h-144'
+                alt={b.title}
               />
               <div className={'absolute bottom-0 left-0 w-full py-8 px-4 text-white rounded-b backdrop-blur-2xl bg-gray-700 bg-opacity-60'}>
                 <h2 className='text-2xl text-right'>{b.title}</h2>
@@ -148,10 +148,6 @@ function ReportFavouritesPage(props: ReportFavouritesPageProps) {
     <div
       className='w-full anna-page-container flex justify-center items-center h-min-screen bg-no-repeat bg-cover bg-center'
     >
-      <Head>
-        <title>My favourites books</title>
-        <OGWithIndex />
-      </Head>
       <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
         <div
           ref={contentDOM}

@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -52,18 +53,17 @@ function PageContainer(props: PageContainerProps) {
     </section>
   )
 }
+type ReportYearlyProps = {
+  uid: number
+  year: number
+  reportInfoServerData: FetchYearlyReportQuery
+  dbIds: string[]
+}
 
-function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const searchParams = useRouter().query
-  const year = ~~(searchParams.year || new Date().getFullYear())
-  const data = props.reportInfoServerData
-  const dbIds = data.
-    reportYearly.
-    books.
-    map(x => x.doubanId).
-    filter(x => x.length > 3) ?? []
+function ReportYearly(props: ReportYearlyProps) {
+  const { year, dbIds, reportInfoServerData: data} = props
+
   const { books } = useMultipBook(dbIds)
-
   const { t } = useTranslation()
 
   const [randomQuote, setRandomQuote] = useState<{ book: WenquBook, clipping: Pick<Clipping, 'id' | 'content'> } | null>(null)
@@ -98,22 +98,19 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
 
   const defaultBgImage = useBackgroundImage()
 
-  if (!searchParams) {
-    return null
-  }
   const metaTitle = `${data?.reportYearly.user.name} 在 ${year} 年共读了 ${data?.reportYearly.books.length} 本书 - Clippingkk - kindle 书摘管理`
 
   return (
     <div
       className='w-full anna-page-container flex justify-center items-center h-min-screen bg-no-repeat bg-cover bg-center'
     >
-      <Head>
+      {/* <Head>
         <title>{metaTitle}</title>
         <OGWithReport data={data} year={year} books={books} />
         {books.map(x => (
           <link key={x.id} as='image' rel='preload' href={x.image} />
         ))}
-      </Head>
+      </Head> */}
       <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
         <PageContainer bgImage={defaultBgImage}>
           <div className=' container relative min-h-screen flex items-center flex-col justify-center'>

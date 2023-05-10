@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,6 +12,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { client } from '../../../services/ajax'
 import logo from '../../../assets/logo.png'
 import { FetchClippingQueryVariables, FetchYearlyReportDocument, FetchYearlyReportQuery, FetchYearlyReportQueryVariables } from '../../../schema/generated'
+import { useMultipBook } from '../../../hooks/book'
 
 type ReportBookItemTypes = {
   book: WenquBook
@@ -23,7 +25,7 @@ function ReportBookItem(props: ReportBookItemTypes) {
   const clippingsCount = books.find(v => ~~v.doubanId === b.doubanId)?.clippingsCount ?? 0
   const bookClippings = books.find(v => ~~v.doubanId === b.doubanId)?.clippings
 
-  const sampleClipping = bookClippings ?
+  const sampleClipping = bookClippings && bookClippings.length > 0 ?
     bookClippings[Math.floor(Math.random() * bookClippings.length)].content :
     ''
 
@@ -44,13 +46,20 @@ function ReportBookItem(props: ReportBookItemTypes) {
   )
 }
 
-function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const searchParams = useRouter().query
-  const year = ~~(searchParams.year || new Date().getFullYear())
-  const data = props.reportInfoServerData
-  const books = props.booksServerData
+type ReportYearlyProps = {
+  uid: number
+  year: number
+  reportInfoServerData: FetchYearlyReportQuery
+  dbIds: string[]
+}
+
+function ReportYearly(props: ReportYearlyProps) {
+  const { year, dbIds, reportInfoServerData: data} = props
 
   const { t } = useTranslation()
+
+  const bs = useMultipBook(dbIds)
+  const books = bs.books
 
   const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
     if (books.length === 0) {
@@ -62,19 +71,11 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
     }
   }, [books])
 
-  if (!searchParams) {
-    return null
-  }
-
   return (
     <div
       className='w-full anna-page-container flex justify-center items-center h-min-screen bg-no-repeat bg-cover bg-center'
       style={containerStyle}
     >
-      <Head>
-        <title>{`${data?.reportYearly.user.name} 的 ${year} 年读书数据`}</title>
-        <OGWithReport data={data} year={year} books={books} />
-      </Head>
       <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60 pb-28'>
         <a
           className='flex sticky top-0 left-0 w-full p-4 bg-opacity-80 dark:bg-opacity-80 bg-gray-200 dark:bg-gray-800 backdrop-blur-lg items-center justify-around z-50'
@@ -122,54 +123,6 @@ function ReportYearly(props: InferGetServerSidePropsType<typeof getServerSidePro
       </div>
     </div>
   )
-}
-
-type serverSideProps = {
-  reportInfoServerData: FetchYearlyReportQuery
-  booksServerData: WenquBook[]
-}
-
-export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
-  const uid = ~~(context.query?.uid ?? -1) as number
-  const year = ~~(context.query?.year ?? new Date().getFullYear())
-  // const uid = ~~(context.params?.userid ?? -1) as number
-  const reportInfoResponse = await client.query<FetchYearlyReportQuery, FetchYearlyReportQueryVariables>({
-    query: FetchYearlyReportDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      uid,
-      year
-    },
-  })
-  // const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-  const dbIds = reportInfoResponse.
-    data.
-    reportYearly.
-    books.
-    map(x => x.doubanId).
-    filter(x => x.length > 3) ?? []
-
-  let booksServerData: WenquBook[] = []
-
-  if (dbIds.length >= 1) {
-    const query = dbIds.join('&dbIds=')
-    const books = await wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${query}`)
-    const bsBooks = dbIds.reduce<WenquBook[]>((acc, cur) => {
-      const bb = books.books.find(x => x.doubanId.toString() === cur)
-      if (bb) {
-        acc.push(bb)
-      }
-      return acc
-    }, [])
-    booksServerData.push(...bsBooks)
-  }
-
-  return {
-    props: {
-      reportInfoServerData: reportInfoResponse.data,
-      booksServerData
-    },
-  }
 }
 
 export default ReportYearly

@@ -30,11 +30,6 @@ async function Page() {
   const d = dehydrate(reactQueryClient)
   return (
     <div>
-      {/* <Head>
-        <title>ClippingKK - kindle 书摘管理</title>
-        <OGWithIndex />
-      </Head> */}
-
       <Hydrate state={d}>
         <IndexPage
           hydratedStates={d}
