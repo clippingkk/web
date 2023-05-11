@@ -1,5 +1,3 @@
-import { Router, useRouter } from "next/router"
-
 export const EXTRA_AND_UPLOAD_FILE_TO_SERVER = 'clippings.EXTRA_AND_UPLOAD_FILE_TO_SERVER'
 
 export type TClippingsFile = {

@@ -3,9 +3,10 @@ import * as sentry from '@sentry/react'
 import { IUserToken, USER_TOKEN_KEY } from '../constants/storage'
 
 export function initParseFromLS() {
-  if (!process.browser) {
+  if (typeof window === 'undefined') {
     return 
   }
+
   const authInfo = localStorage.getItem(USER_TOKEN_KEY)
   if (!authInfo) {
     return

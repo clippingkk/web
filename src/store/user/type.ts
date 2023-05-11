@@ -16,6 +16,7 @@ export type UserContent = {
   wechatOpenid: string
   domain: string
   bio: string
+  premiumEndAt?: string
 }
 
 export type TUserState = {

@@ -1,5 +1,4 @@
 import { useApolloClient, useMutation } from '@apollo/client'
-import { useRouter } from 'next/router'
 import React, { useCallback, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { hooks, metaMask, signDataByWeb3 } from '../../utils/wallet'
@@ -13,7 +12,6 @@ type MetamaskBindButtonProps = {
 
 function MetamaskBindButton(props: MetamaskBindButtonProps) {
   const { t } = useTranslation()
-  const router = useRouter()
   const [doBind, doBindResult] = useBindWeb3AddressMutation()
   const isActivating = hooks.useIsActivating()
   const isActive = hooks.useIsActive()
