@@ -15,6 +15,9 @@ export async function wenquRequest<T = any>(url: string, options: RequestInit = 
   }
   options.credentials = 'include'
   options.mode = 'cors'
+  options.next = {
+    revalidate: 60 * 60 * 24 // 24 hours
+  }
 
   if (cache.has(url)) {
     return cache.get(url) as T

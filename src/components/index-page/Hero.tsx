@@ -44,9 +44,16 @@ function VideoTipsArea() {
   )
 }
 
-function Hero() {
+type HeroProps = {
+  bgInfo: {
+    src: string;
+    blurHash: string;
+  }
+}
+
+function Hero(props: HeroProps) {
   const { t } = useTranslation()
-  const bg = useBackgroundImage()
+  const bg = props.bgInfo
 
   const goLinkUrl = useGoAuthLink()
 

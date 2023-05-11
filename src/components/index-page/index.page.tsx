@@ -11,6 +11,10 @@ import { usePageTrack } from '../../hooks/tracke';
 
 type IndexPageProps = {
   publicData?: PublicDataQuery
+  bgInfo: {
+    src: string;
+    blurHash: string;
+  }
   hydratedStates: any
 }
 
@@ -27,7 +31,7 @@ function IndexPage(props: IndexPageProps) {
 
   return (
     <>
-      <Hero />
+      <Hero bgInfo={props.bgInfo} />
       <div className='py-4 from-sky-100 to-green-200 bg-gradient-to-br dark:from-sky-900 dark:to-gray-800'>
         <TopBooks books={bs.books ?? []} />
         <TopClippings clippings={data?.public.clippings ?? []} />

@@ -32,7 +32,7 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
   options.mode = 'cors'
   if (!options.next) {
     options.next = {
-      revalidate: 60 * 60
+      revalidate: 30 // 30 seconds
     }
   }
 

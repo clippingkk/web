@@ -6,7 +6,9 @@ import { PublicDataDocument, PublicDataQuery } from '../schema/generated'
 import { duration3Days } from '../hooks/book'
 import IndexPage from '../components/index-page/index.page'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
+import { useBackgroundImageServer } from '../hooks/theme.server'
 
+export const revalidate = 60 * 60 * 24 * 3 // 3 day
 
 async function Page() {
   const data = await client.query<PublicDataQuery>({
@@ -28,10 +30,12 @@ async function Page() {
     cacheTime: duration3Days,
   })
   const d = dehydrate(reactQueryClient)
+  const bgInfo = useBackgroundImageServer()
   return (
     <div>
       <Hydrate state={d}>
         <IndexPage
+        bgInfo={bgInfo}
           hydratedStates={d}
           publicData={data.data}
         />
