@@ -20,7 +20,6 @@ import { Provider } from 'react-redux'
 
 import '../utils/mixpanel'
 import '../utils/sentry'
-import '../utils/echarts'
 
 import AppContainer from '../components/AppContainer'
 import { client, reactQueryClient, request } from '../services/ajax'

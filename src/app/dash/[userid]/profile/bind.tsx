@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client'
 import React, { useState } from 'react'
 // import { QRNormal, QRImage } from 'react-qrbtf'
 import {QRCodeSVG} from 'qrcode.react'

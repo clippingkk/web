@@ -93,6 +93,7 @@
     "@mantine/nprogress": "^6.0.10",
     "@mantine/prism": "^6.0.10",
     "@mantine/spotlight": "^6.0.10",
+    "@next/bundle-analyzer": "^13.4.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@sentry/nextjs": "^7.51.0",
     "@sentry/react": "^7.51.0",

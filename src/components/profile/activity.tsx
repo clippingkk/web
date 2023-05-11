@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import * as echarts from 'echarts'
+// import * as echarts from 'echarts'
 import { ProfileQuery } from '../../schema/generated'
 import dayjs from 'dayjs'
-import { useDarkModeStatus } from '../../hooks/theme'
-import { useTheme } from '@emotion/react'
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import echarts from '../../utils/echarts'
 
 type PersonalActivityProps = {
   data: ProfileQuery['me']['analysis']['daily']

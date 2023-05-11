@@ -1,14 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
-import { useBackgroundImage, useBackgroundImageServer } from '../../../hooks/theme'
 import logo from '../../../assets/logo.png'
-import Head from 'next/head'
-import OGWithAuth from '../../../components/og/og-with-auth'
 import AuthByAppleButton from '../../../components/auth.apple'
 import AuthByMetamask from '../../../components/auth.metamask'
 import AuthByGithub from '../../../components/auth.github'
 import Link from 'next/link'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/solid'
+import { useBackgroundImageServer } from '../../../hooks/theme.server'
 
 type AuthV2Props = {
 }

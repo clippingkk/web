@@ -2,10 +2,28 @@ import React from 'react'
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '../../../../schema/generated'
 import { client } from '../../../../services/ajax'
 import ProfilePageContent from './content'
+import { Metadata } from 'next'
 
 type PageProps = {
   params: { userid: string }
   searchParams: { with_profile_editor?: string }
+}
+
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  const pathUid: string = params.userid
+  const uid = parseInt(pathUid)
+  const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
+    query: ProfileDocument,
+    fetchPolicy: 'network-only',
+    variables: {
+      id: Number.isNaN(uid) ? -1 : uid,
+      domain: Number.isNaN(uid) ? pathUid : null
+    },
+  })
+  return {
+    title: `${profileResponse.data.me.name}'s profile`,
+    // TODO
+  }
 }
 
 async function Page(props: PageProps) {

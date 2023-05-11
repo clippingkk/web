@@ -5,7 +5,9 @@
 const sentryWebpackPluginOptions = {
   silent: true,
 };
-
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 /**
  * @type {import('next').NextConfig}
@@ -48,4 +50,4 @@ if (process.env.IS_FLY_IO) {
 
 // FIXME: 暂时关掉， leancloud cloud engine do not support yet
 // module.exports = withSentryConfig(config, sentryWebpackPluginOptions)
-module.exports = config
+module.exports = withBundleAnalyzer(config)

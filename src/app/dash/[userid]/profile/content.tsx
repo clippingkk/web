@@ -1,6 +1,5 @@
 'use client';
 import React, { useMemo, useState } from 'react'
-import Head from 'next/head'
 import ClippingItem from '../../../../components/clipping-item/clipping-item';
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import WechatBindButton from './bind';
@@ -15,7 +14,6 @@ import ProfileBindPhone from './bind-phone'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { API_HOST } from '../../../../constants/config'
 import { toast } from 'react-hot-toast'
-import styles from './profile.module.css'
 import Link from 'next/link';
 import OGWithUserProfile from '../../../../components/og/og-with-user-profile';
 import CliApiToken from './cli-api';
@@ -24,6 +22,7 @@ import PersonalActivity from '../../../../components/profile/activity';
 import { ProfileQuery, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '../../../../schema/generated';
 import { Divider, Text } from '@mantine/core';
 import UserName from '../../../../components/profile/user-name';
+import styles from './profile.module.css'
 
 type ProfilePageContentProps = {
   userid: string
@@ -79,10 +78,6 @@ function ProfilePageContent(props: ProfilePageContentProps) {
 
   return (
     <section>
-      <Head>
-        <title>{data.me.name}`s profile</title>
-        <OGWithUserProfile profile={data.me} />
-      </Head>
       <div className='flex rounded items-center justify-center py-12 w-full mx-auto mt-20 anna-fade-in bg-gray-500 bg-opacity-50 backdrop-blur shadow-2xl'>
         <div className='flex flex-col items-center justify-center w-full'>
           <div className='w-full flex items-center justify-center'>
