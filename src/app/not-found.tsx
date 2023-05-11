@@ -1,10 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
-import { usePageTrack } from '../hooks/tracke'
+import { Metadata } from 'next';
+// import { usePageTrack } from '../hooks/tracke'
+
+export const metadata: Metadata = {
+  title: '404',
+}
 
 function NotFound() {
-  usePageTrack('notfound')
+  // usePageTrack('notfound')
   return (
     <div className='flex justify-center items-center flex-col w-screen h-screen dark:bg-gray-800'>
       <Head>
