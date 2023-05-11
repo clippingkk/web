@@ -1,5 +1,6 @@
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
+// export const API_HOST = 'https://clippingkk-api.annatarhe.com'
 export const API_HOST = __DEV__ ?
   'http://127.0.0.1:19654' :
   'https://clippingkk-api.annatarhe.com'

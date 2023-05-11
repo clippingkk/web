@@ -75,8 +75,6 @@ function OrdersTable(props: OrdersTableProps) {
   const p = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const uid = p.id
 
-  console.log('ppp', p)
-
   const { data: orderList, refetch } = useFetchOrdersQuery({
     variables: {
       id: uid

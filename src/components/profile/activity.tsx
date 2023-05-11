@@ -109,8 +109,6 @@ function PersonalActivity(props: PersonalActivityProps) {
 
   const { colorScheme } = useMantineColorScheme()
 
-  console.log('xxxx', colorScheme)
-
   useEffect(() => {
     ins.current = echarts.init(dom.current!, colorScheme)
     ins.current.setOption(opts)

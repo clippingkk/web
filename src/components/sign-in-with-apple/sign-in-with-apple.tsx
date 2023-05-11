@@ -29,11 +29,9 @@ function SignInWithApple(props: SignInWithAppleProps) {
     }
     function onAppleSignInSuccess(data: any) {
       console.log(data)
-
     }
     function onAppleSignInFail(err: any) {
       console.log(err)
-
     }
 
     dom.addEventListener('load', onScriptLoad)

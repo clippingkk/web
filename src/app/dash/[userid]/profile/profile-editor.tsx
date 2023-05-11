@@ -10,6 +10,7 @@ import { uploadImage } from '../../../../services/misc'
 import { useTranslation } from 'react-i18next'
 import ExternalAccountList from '../../../../components/externalAccount/list'
 import { useUpdateProfileMutation } from '../../../../schema/generated'
+import { Button } from '@mantine/core'
 
 type ProfileEditorProps = {
   uid: number
@@ -42,7 +43,7 @@ function ProfileEditor(props: ProfileEditorProps) {
       name: Yup.string(),
       bio: Yup.string().max(255),
       domain: Yup.string().min(3).max(32).trim().lowercase().matches(/^\w+[\.|-]?\w+$/),
-      avatar: Yup.mixed()
+      avatar: Yup.mixed().optional().nullable()
     }),
     async onSubmit(vals) {
       // pre upload image here
@@ -147,18 +148,19 @@ function ProfileEditor(props: ProfileEditorProps) {
                 <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-sm px-4 py-2 mr-4' onClick={onEditCancel}>
                   {t('app.common.cancel')}
                 </button>
-                <button
+                <Button
                   className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2 disabled:text-gray-500'
                   type='submit'
                   disabled={(!formik.isValid) || (
-                    formik.values.name === '' &&
-                    formik.values.bio === '' &&
-                    (!formik.values.avatar) &&
-                    (props.domain.length > 2 ? true : formik.values.domain.length < 3)
+                    false
+                    // formik.values.name === '' &&
+                    // formik.values.bio === '' &&
+                    // (!formik.values.avatar) &&
+                    // (props.domain.length > 2 ? true : formik.values.domain.length < 3)
                   )}
                 >
                   {t('app.common.doUpdate')}
-                </button>
+                </Button>
               </div>
             </form>
 
