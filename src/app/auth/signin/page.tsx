@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import Head from 'next/head'
 import { useAuthSuccessed } from '../../../hooks/hooks';
@@ -6,7 +7,6 @@ import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
 import FieldInput from '../../../components/input'
 import * as Yup from 'yup'
-import AuthPage from '../auth'
 import OGWithAuth from '../../../components/og/og-with-auth'
 import Turnstile from 'react-turnstile'
 import { CF_TURNSTILE_SITE_KEY } from '../../../constants/config'
@@ -88,14 +88,6 @@ function Signin(props: TSigninProps) {
         {t('app.auth.submit')}
       </button>
     </form>
-  )
-}
-
-Signin.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <AuthPage>
-      {page}
-    </AuthPage>
   )
 }
 

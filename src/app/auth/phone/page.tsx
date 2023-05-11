@@ -1,8 +1,9 @@
+'use client'
 import React from 'react'
 import Head from 'next/head'
 import { useAuthByPhoneSuccessed } from '../../../hooks/hooks'
 import BindPhone from '../../../components/bind-phone'
-import AuthPage from '../auth'
+import AuthPage from '../signin/layout'
 import OGWithAuth from '../../../components/og/og-with-auth'
 import { useAuthByPhoneMutation } from '../../../schema/generated'
 
@@ -16,10 +17,10 @@ function AuthPhone(props: AuthPhoneProps) {
 
   return (
     <React.Fragment>
-      <Head>
+      {/* <Head>
         <title>手机登陆</title>
         <OGWithAuth urlPath='auth/phone' />
-      </Head>
+      </Head> */}
       <BindPhone
         onFinalCheck={(pn, code) => doAuth({ variables: { phone: pn, code } })}
       />

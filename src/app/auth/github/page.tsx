@@ -1,6 +1,7 @@
+'use client'
 import React, { useEffect } from 'react'
-import { useAuthSuccessed } from '../../hooks/hooks';
-import { useGithubLoginLazyQuery } from '../../schema/generated';
+import { useAuthSuccessed } from '../../../hooks/hooks';
+import { useGithubLoginLazyQuery } from '../../../schema/generated';
 
 function GithubOAuth() {
   const [exec, resp] = useGithubLoginLazyQuery()

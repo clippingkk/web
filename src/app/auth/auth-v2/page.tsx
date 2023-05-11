@@ -1,12 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
-import { useBackgroundImage } from '../../hooks/theme'
-import logo from '../../assets/logo.png'
+import { useBackgroundImage, useBackgroundImageServer } from '../../../hooks/theme'
+import logo from '../../../assets/logo.png'
 import Head from 'next/head'
-import OGWithAuth from '../../components/og/og-with-auth'
-import AuthByAppleButton from '../../components/auth.apple'
-import AuthByMetamask from '../../components/auth.metamask'
-import AuthByGithub from '../../components/auth.github'
+import OGWithAuth from '../../../components/og/og-with-auth'
+import AuthByAppleButton from '../../../components/auth.apple'
+import AuthByMetamask from '../../../components/auth.metamask'
+import AuthByGithub from '../../../components/auth.github'
 import Link from 'next/link'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/solid'
 
@@ -14,14 +14,14 @@ type AuthV2Props = {
 }
 
 function AuthV2(props: AuthV2Props) {
-  const bg = useBackgroundImage()
+  const bg = useBackgroundImageServer()
 
   return (
     <React.Fragment>
-      <Head>
+      {/* <Head>
         <title>Login by ...</title>
         <OGWithAuth urlPath='auth/auth-v2' />
-      </Head>
+      </Head> */}
       <section
         className='anna-page-container h-screen object-cover bg-center bg-cover'
         style={{

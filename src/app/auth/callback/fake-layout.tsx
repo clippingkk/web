@@ -17,10 +17,10 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
   const { t } = useTranslation()
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>登陆</title>
         <OGWithAuth urlPath='auth/auth-v2' />
-      </Head>
+      </Head> */}
       <div className='anna-page-container flex h-screen items-center justify-center relative flex-col px-4 lg:px-0'>
         <div
           className={'duration-150 container ' + (willBind ? 'opacity-50 ' : '')}
@@ -66,7 +66,6 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
           </div>
         )}
       </div>
-      {/* {props.children} */}
     </>
   )
 }

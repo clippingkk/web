@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { GithubClientID } from '../constants/config'
 import { useActionTrack } from '../hooks/tracke'

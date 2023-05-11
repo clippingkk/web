@@ -54,6 +54,10 @@ const bgs = [
     blurHash: 'UXHVb*WA9FRk.AkCRjRk00WWxtayR.WUt6oe',
   }
 ]
+export function useBackgroundImageServer() {
+  const idx = Math.floor(Math.random() * bgs.length)
+  return bgs[idx]
+}
 
 export function useBackgroundImage() {
   const [bgIdx, setBgIdx] = useState(0)

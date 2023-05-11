@@ -1,26 +1,26 @@
-import { useMutation } from '@apollo/client'
-import { useRouter } from 'next/router'
+'use client'
 import React, { useCallback, useMemo, useState } from 'react'
-import { useAuthBy3rdPartSuccessed } from '../../../hooks/hooks'
-import { AppleLoginPlatforms, useBindAppleUniqueMutation } from '../../../schema/generated'
-import AuthCallbackPageContainer from './layout'
+import { useAuthBy3rdPartSuccessed } from '../../../../hooks/hooks'
+import { useBindWeb3AddressMutation } from '../../../../schema/generated'
+import AuthCallbackPageContainer from '../fake-layout'
 
-type AuthCallbackAppleProps = {
+type AuthCallbackMetamaskProps = {
+  address: string
+  signature: string
+  text: string
 }
 
-function AuthCallbackApple(props: AuthCallbackAppleProps) {
-  const r = useRouter()
-
+function AuthCallbackMetamask(props: AuthCallbackMetamaskProps) {
+  const { address, signature, text } = props
   const requestPayload = useMemo(() => {
     return {
-      code: '',
-      idToken: r.query.i as string,
-      state: '',
-      platform: AppleLoginPlatforms.Web
+      address,
+      signature,
+      text: decodeURIComponent(text)
     }
-  }, [r.query])
+  }, [address, signature, text])
 
-  const [doBind, doBindResult] = useBindAppleUniqueMutation()
+  const [doBind, doBindResult] = useBindWeb3AddressMutation()
 
   const onAuthCallback = useCallback((pn: string, code: string) => {
     return doBind({
@@ -36,7 +36,7 @@ function AuthCallbackApple(props: AuthCallbackAppleProps) {
     doBindResult.called,
     doBindResult.loading,
     doBindResult.error,
-    doBindResult.data?.bindAppleUnique
+    doBindResult.data?.bindWeb3Address
   )
 
   return (
@@ -54,4 +54,4 @@ function AuthCallbackApple(props: AuthCallbackAppleProps) {
   )
 }
 
-export default AuthCallbackApple
+export default AuthCallbackMetamask

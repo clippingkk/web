@@ -1,11 +1,11 @@
-import { useLazyQuery } from '@apollo/client'
+'use client';
 import React, { useCallback, useEffect, useRef } from 'react'
 import { toast } from 'react-hot-toast'
 // import WalletConnectProvider from "@walletconnect/web3-provider"
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import { metaMask, hooks, signDataByWeb3 } from '../utils/wallet'
 import MetamaskLogo from './icons/metamask.logo.svg'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import LoadingIcon from './icons/loading.svg'
 import WithLoading from './with-loading'
 // import WalletConnect from '@walletconnect/client'
@@ -90,7 +90,7 @@ type AuthByMetamaskProps = {
 function AuthByMetamask(props: AuthByMetamaskProps) {
   const router = useRouter()
   // const { wc, onWeb3Login } = useWalletConnect()
-  const [doAuth, doAuthData] =useAuthByWeb3LazyQuery()
+  const [doAuth, doAuthData] = useAuthByWeb3LazyQuery()
   const isActivating = hooks.useIsActivating()
   const isActive = hooks.useIsActive()
   const account = hooks.useAccount()

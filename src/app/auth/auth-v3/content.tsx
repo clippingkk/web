@@ -1,24 +1,25 @@
+'use client'
 import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { useBackgroundImage } from '../../hooks/theme'
-import logo from '../../assets/logo.png'
+import { useBackgroundImage } from '../../../hooks/theme'
+import logo from '../../../assets/logo.png'
 import Head from 'next/head'
-import OGWithAuth from '../../components/og/og-with-auth'
-import EmailBox from '../../components/auth/email-box'
-import OTPBox from '../../components/auth/otp-box'
-import { useLoginV3Successed } from '../../hooks/hooks'
+import OGWithAuth from '../../../components/og/og-with-auth'
+import EmailBox from '../../../components/auth/email-box'
+import OTPBox from '../../../components/auth/otp-box'
+import { useLoginV3Successed } from '../../../hooks/hooks'
 import { toast } from 'react-hot-toast'
-import { toastPromiseDefaultOption } from '../../services/misc'
+import { toastPromiseDefaultOption } from '../../../services/misc'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from '@heroicons/react/24/solid'
-import { useRouter } from 'next/router'
-import { OtpChannel, useDoLoginV3Mutation, useSendOtpMutation } from '../../schema/generated'
+import { useRouter } from 'next/navigation'
+import { OtpChannel, useDoLoginV3Mutation, useSendOtpMutation } from '../../../schema/generated'
 
 type AuthV3Props = {
 }
 
-function AuthV3(props: AuthV3Props) {
+function AuthV3Content(props: AuthV3Props) {
   const bg = useBackgroundImage()
   const { t } = useTranslation()
   const { back } = useRouter()
@@ -64,10 +65,10 @@ function AuthV3(props: AuthV3Props) {
 
   return (
     <React.Fragment>
-      <Head>
+      {/* <Head>
         <title>Login by ...</title>
         <OGWithAuth urlPath='auth/auth-v3' />
-      </Head>
+      </Head> */}
       <section
         className='anna-page-container h-screen object-cover bg-center bg-cover'
         style={{
@@ -145,4 +146,4 @@ function AuthV3(props: AuthV3Props) {
   );
 }
 
-export default AuthV3
+export default AuthV3Content
