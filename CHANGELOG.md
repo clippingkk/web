@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.4.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.13...v5.4.0) (2023-05-11)
+
+
+### Features
+
+* **app:** add integration with app dir. migrated policy pages ([2d6855e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2d6855e6b7d668371678c004f91c085c577423e6))
+* **app:** migrate index page to app dir ([0d8324b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0d8324bc98a52f08e1f5b758151bb51d31f155cc))
+* **auth:** migrate auth to app dir ([76d04e5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/76d04e520878967fbba7be190cd07063ab90f28f))
+* **comment:** update comment animation and fix update issue ([620e0bc](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/620e0bc39b91457616a9936a8bc0ca99cdadba34))
+* **dash:** migrate dashboard to app dir ([860c2a0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/860c2a0b6abe3dc86377f761b3ae57018aab1c51))
+* **i18n:** support dynamic load for locale languages ([fc909d4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fc909d43e95579a0f72fda00e714ec5a18fcc1cc))
+* **pricing:** migrate pricing page to app dir ([b903867](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b90386713bb6febe464ddfd711418a009c9bcacd))
+* **report:** migrate report page to app dir ([7621a1c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7621a1cc0200a634cb4f3192c8f661eb7699b003))
+
 ### [5.3.13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.12...v5.3.13) (2023-05-03)
 
 
