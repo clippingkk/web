@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.4.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.1...v5.4.2) (2023-05-11)
+
+
+### Features
+
+* **api:** update api cache revalidate time ([2a9c184](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2a9c184da7fb18ba2b70a87bd36091ffa08de0ab))
+
+
+### Bug Fixes
+
+* **profile:** profile editor has looser check ([b5631ee](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b5631ee8fd06e928ad03c8ed8cd18358f9cacfc0))
+
 ### [5.4.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.0...v5.4.1) (2023-05-11)
 
 ## [5.4.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.3.13...v5.4.0) (2023-05-11)
