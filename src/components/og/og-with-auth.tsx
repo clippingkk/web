@@ -2,18 +2,42 @@ import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import logo from '../../assets/logo.png'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
+import { Metadata } from 'next'
 
 type OGWithAuthProps = {
   urlPath: string
 }
 
+const metaTitle = `登陆 - 书摘 - clippingkk`
+
+const logoLink = APP_URL_ORIGIN + logo.src
+const desc = '书摘 kindle'
+
+
+export function generateMetadata(urlPath: string): Metadata {
+  const url = `${APP_URL_ORIGIN}/${urlPath}`
+  return {
+    title: metaTitle,
+    description: desc,
+    openGraph: {
+      url,
+      type: 'website',
+      title: metaTitle,
+      description: desc,
+      siteName: 'ClippingKK',
+    },
+    twitter: {
+      card: 'summary',
+      site: '@AnnatarHe',
+      creator: '@AnnatarHe',
+      title: metaTitle,
+      description: desc,
+    },
+  }
+}
+
 function OGWithAuth(props: OGWithAuthProps) {
   const url = `${APP_URL_ORIGIN}/${props.urlPath}`
-
-  const metaTitle = `登陆 - 书摘 - clippingkk`
-
-  const logoLink = APP_URL_ORIGIN + logo.src
-  const desc = '书摘 kindle'
 
   return (
     <React.Fragment>

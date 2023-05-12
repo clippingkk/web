@@ -6,13 +6,12 @@ import { Metadata } from 'next'
 
 type OGWithIndexProps = {
 }
-  const url = APP_URL_ORIGIN
+const url = APP_URL_ORIGIN
 
-  const metaTitle = `Clippingkk - kindle 书摘管理`
-  const desc = 'ClippingKK 帮助用户整理 kindle 中的笔记到可控制，可展示的界面中，并且使得这些笔记可以在用户手机中展示，时常可以温故知新，时常想想之前的话语'
+const metaTitle = `Clippingkk - kindle 书摘管理`
+const desc = 'ClippingKK 帮助用户整理 kindle 中的笔记到可控制，可展示的界面中，并且使得这些笔记可以在用户手机中展示，时常可以温故知新，时常想想之前的话语'
 
-  const logoLink = APP_URL_ORIGIN + logo.src
-
+const logoLink = APP_URL_ORIGIN + logo.src
 
 function OGWithIndex(props: OGWithIndexProps) {
   return (
@@ -26,7 +25,7 @@ function OGWithIndex(props: OGWithIndexProps) {
       <meta property="article:author" content='AnntarHe' />
 
       <meta name='description' content={desc} />
-      <meta name='keyword' content={`clippingkk, 书摘, 首页, kindle` } />
+      <meta name='keyword' content={`clippingkk, 书摘, 首页, kindle`} />
       <MetaTwitterCard
         card={TwitterCardType.summary}
         site='AnnatarHe'
@@ -42,7 +41,7 @@ function OGWithIndex(props: OGWithIndexProps) {
 
 export const metadata: Metadata = {
   title: metaTitle,
-  description:desc,
+  description: desc,
   keywords: 'clippingkk, 书摘, 首页, kindle',
   authors: [{ name: 'AnnatarHe' }],
   openGraph: {

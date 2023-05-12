@@ -13,14 +13,13 @@ const homelessBookColumn = [
   },
 ]
 
-
 type homelessBookTableItem = {
   name: string
 }
 
 function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
   return (
-    <tr {...row.getRowProps()} key={row.id}>
+    <tr {...row.getRowProps()} key={row.id} className='hover:bg-gray-300'>
       {row.cells.map(cell => {
         return (
           <React.Fragment key={cell.row.id}>

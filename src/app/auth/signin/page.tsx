@@ -1,18 +1,14 @@
 import { Metadata } from 'next'
 import React from 'react'
 import SigninPageContent from './content'
+import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
 
 type PageProps = {
 }
 
-export const metadata: Metadata = {
-  title: 'signin',
+export function generateMetadata(urlPath: string): Metadata {
+  return authGenerateMetadata('auth/signin')
 }
-
-// <Head>
-//   <title>登陆</title>
-//   <OGWithAuth urlPath='auth/auth-v2' />
-// </Head>
 
 function Page(props: PageProps) {
   return (

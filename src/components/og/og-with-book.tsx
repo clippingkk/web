@@ -3,10 +3,36 @@ import { APP_URL_ORIGIN } from '../../constants/config'
 import { WenquBook } from '../../services/wenqu'
 import logo from '../../assets/logo.png'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
+import { Metadata } from 'next'
 
 type OGWithBookProps = {
   domain: string
   book: WenquBook | null
+}
+export function generateMetadata(uid: string, book?: WenquBook | null): Metadata {
+  const url = `${APP_URL_ORIGIN}/dash/${uid}/book/${book?.doubanId}`
+  const bookTitle = book?.title
+  const metaTitle = `${bookTitle} - 书摘 - clippingkk`
+
+  const logoLink = book?.image ?? (APP_URL_ORIGIN + logo.src)
+  return {
+    title: metaTitle,
+    description: book?.title,
+    openGraph: {
+      type: 'website',
+      url,
+      title: metaTitle,
+      description: book?.title,
+      siteName: 'ClippingKK',
+    },
+    twitter: {
+      card: 'summary',
+      site: '@AnnatarHe',
+      creator: '@AnnatarHe',
+      title: metaTitle,
+      description: book?.title,
+    }
+  }
 }
 
 function OGWithBook(props: OGWithBookProps) {

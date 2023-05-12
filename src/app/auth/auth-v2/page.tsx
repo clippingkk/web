@@ -7,19 +7,18 @@ import AuthByGithub from '../../../components/auth.github'
 import Link from 'next/link'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/solid'
 import { useBackgroundImageServer } from '../../../hooks/theme.server'
+import { Metadata } from 'next'
+import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
 
-type AuthV2Props = {
+export function generateMetadata(urlPath: string): Metadata {
+  return authGenerateMetadata('auth/auth-v2')
 }
 
-function AuthV2(props: AuthV2Props) {
+function AuthV2() {
   const bg = useBackgroundImageServer()
 
   return (
     <React.Fragment>
-      {/* <Head>
-        <title>Login by ...</title>
-        <OGWithAuth urlPath='auth/auth-v2' />
-      </Head> */}
       <section
         className='anna-page-container h-screen object-cover bg-center bg-cover'
         style={{

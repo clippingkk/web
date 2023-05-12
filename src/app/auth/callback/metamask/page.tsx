@@ -1,5 +1,11 @@
 import React from 'react'
 import AuthCallbackMetamask from './content'
+import { Metadata } from 'next'
+import { generateMetadata as authGenerateMetadata } from '../../../../components/og/og-with-auth'
+
+export function generateMetadata(urlPath: string): Metadata {
+  return authGenerateMetadata('auth/callback/metamask')
+}
 
 type AppleCallbackPageProps = {
   params: {}

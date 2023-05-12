@@ -1,16 +1,13 @@
 import React from 'react'
 import AuthV3Content from './content'
 import { Metadata } from 'next'
+import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
 
-type PageProps = {
+export function generateMetadata(urlPath: string): Metadata {
+  return authGenerateMetadata('auth/auth-v3')
 }
 
-export const metadata: Metadata = {
-  title: 'Login by...'
-  // TODO: 
-        // <OGWithAuth urlPath='auth/auth-v3' />
-}
-function Page(props: PageProps) {
+function Page() {
   return (
     <AuthV3Content />
   )

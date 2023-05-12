@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Head from 'next/head'
 import Link from 'next/link'
 import ListFooter from '../../../../components/list-footer/list-footer';
 import { useSelector } from 'react-redux';
@@ -13,7 +12,6 @@ import ReadingBook from './reading-book';
 import { UserContent } from '../../../../store/user/type';
 import { useSyncClippingsToServer } from '../../../../hooks/my-file'
 import { useRouter } from 'next/navigation';
-import DashboardContainer from '../../../../components/dashboard-container/container';
 import HomePageSkeleton from './skeleton';
 import { useBooksQuery } from '../../../../schema/generated';
 
@@ -76,9 +74,6 @@ function HomePageContent(props: HomePageContentProps) {
 
   return (
     <section className='h-full page'>
-      <Head>
-        <title>{userProfile.name} clippings</title>
-      </Head>
       {data.me.recents.length > 0 && (
         <div className='mt-8 with-slide-in'>
           <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>
@@ -139,15 +134,6 @@ function HomePageContent(props: HomePageContentProps) {
       />
     </section>
   );
-
 }
 
-
-HomePageContent.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <DashboardContainer>
-      {page}
-    </DashboardContainer>
-  )
-}
 export default HomePageContent

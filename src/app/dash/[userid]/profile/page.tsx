@@ -1,5 +1,6 @@
 import React from 'react'
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '../../../../schema/generated'
+import { generateMetadata as profileGenerateMetadata } from '../../../../components/og/og-with-user-profile'
 import { client } from '../../../../services/ajax'
 import ProfilePageContent from './content'
 import { Metadata } from 'next'
@@ -20,10 +21,9 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
       domain: Number.isNaN(uid) ? pathUid : null
     },
   })
-  return {
-    title: `${profileResponse.data.me.name}'s profile`,
-    // TODO
-  }
+  return profileGenerateMetadata({
+    profile: profileResponse.data.me
+  })
 }
 
 async function Page(props: PageProps) {
