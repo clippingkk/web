@@ -12,10 +12,6 @@ import { generateMetadata as squareGenerateMetadata } from '../../../../componen
 type PageProps = {
 }
 
-export const metadata: Metadata = {
-  title: 'Square'
-}
-
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const squareResponse = await client.query<FetchSquareDataQuery, FetchSquareDataQueryVariables>({
     query: FetchSquareDataDocument,

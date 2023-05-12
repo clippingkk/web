@@ -1,7 +1,6 @@
 'use client';
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react'
-import Head from 'next/head'
 // import ReactMarkdown from 'react-markdown'
 import { usePageTrack } from '../../../hooks/tracke'
 
@@ -9,9 +8,6 @@ function PrivacyPolicy() {
   usePageTrack('privacy')
   return (
     <section className='page p-20'>
-      <Head>
-        <title>ClippingKK's privacy policy</title>
-      </Head>
       <h1>Privacy Policy</h1>
       <p>Effective date: October 07, 2018</p>
 

@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from 'react'
-import Head from 'next/head'
 import { useTable, Row } from 'react-table'
 import Card from '../../../../components/card/card'
 import HomelessBookSyncInput from './sync-input'

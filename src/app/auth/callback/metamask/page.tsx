@@ -3,7 +3,7 @@ import AuthCallbackMetamask from './content'
 import { Metadata } from 'next'
 import { generateMetadata as authGenerateMetadata } from '../../../../components/og/og-with-auth'
 
-export function generateMetadata(urlPath: string): Metadata {
+export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/callback/metamask')
 }
 

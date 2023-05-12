@@ -16,15 +16,9 @@ import ClippingContent from '../../../../../components/clipping-content'
 import ClippingSidebar from './clipping-sidebar'
 import { IN_APP_CHANNEL } from '../../../../../services/channel'
 import { CDN_DEFAULT_DOMAIN } from '../../../../../constants/config'
-import OGWithClipping from '../../../../../components/og/og-with-clipping'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { client, reactQueryClient } from '../../../../../services/ajax'
-import DashboardContainer from '../../../../../components/dashboard-container/container'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import styles from './clipping.module.css'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../../services/wenqu'
-import Head from 'next/head'
 import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '../../../../../store/global'
 import { FetchClippingDocument, FetchClippingQuery, FetchClippingQueryVariables, useFetchClippingQuery } from '../../../../../schema/generated'
@@ -71,10 +65,6 @@ function ClippingPageContent(props: ClippingPageProps) {
 
   return (
     <div className={`${styles.clipping} page anna-fade-in`}>
-      <Head>
-        <title>{book?.title ?? clipping.clipping.title}</title>
-        <OGWithClipping clipping={clipping?.clipping} book={book} />
-      </Head>
       <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20 flex-col lg:flex-row with-slide-in'>
         <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
           <>

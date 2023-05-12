@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from 'react'
-import Head from 'next/head'
 import { useAuthSuccessed } from '../../../hooks/hooks';
 import { useTitle } from '../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'

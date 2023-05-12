@@ -1,20 +1,18 @@
 import React from 'react'
 import Link from 'next/link'
-import Head from 'next/head'
 import { Metadata } from 'next';
-// import { usePageTrack } from '../hooks/tracke'
 
 export const metadata: Metadata = {
-  title: '404',
+  title: 'not found',
 }
 
 function NotFound() {
   // usePageTrack('notfound')
   return (
     <div className='flex justify-center items-center flex-col w-screen h-screen dark:bg-gray-800'>
-      <Head>
+      {/* <Head>
         <title>not found - clippingkk</title>
-      </Head>
+      </Head> */}
       <h1 className='text-6xl font-light dark:text-gray-200 mb-4'>
         404
       </h1>

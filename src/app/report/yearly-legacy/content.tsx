@@ -2,7 +2,6 @@
 import Image from 'next/image'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import Head from 'next/head'
 import Avatar from '../../../components/avatar/avatar'
 import PublicBookItem from '../../../components/public-book-item/public-book-item'
 import OGWithReport from '../../../components/og/og-with-report'

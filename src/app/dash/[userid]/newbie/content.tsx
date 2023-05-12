@@ -1,6 +1,5 @@
 'use client'
 import { useMutation } from '@apollo/client'
-import Head from 'next/head'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'

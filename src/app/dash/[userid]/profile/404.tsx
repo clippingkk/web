@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import React from 'react'
 import DashboardContainer from '../../../../components/dashboard-container/container'
 
@@ -8,9 +7,9 @@ type Profile404PageProps = {
 function Profile404Page(props: Profile404PageProps) {
   return (
     <section>
-      <Head>
+      {/* <Head>
         <title>profile not found</title>
-      </Head>
+      </Head> */}
       <div className=' flex justify-center items-center dark:text-white text-lg mt-10'>
         user not found
       </div>

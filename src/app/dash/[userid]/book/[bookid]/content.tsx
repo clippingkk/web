@@ -5,7 +5,6 @@ import ClippingItem from '../../../../../components/clipping-item/clipping-item'
 import Divider from '../../../../../components/divider/divider';
 import { changeBackground } from '../../../../../store/app/type';
 import { useDispatch } from 'react-redux';
-import Head from 'next/head'
 import { usePageTrack } from '../../../../../hooks/tracke';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';

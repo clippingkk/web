@@ -2,12 +2,6 @@
 import React, { useEffect } from 'react'
 import { useAuthSuccessed } from '../../../hooks/hooks';
 import { useGithubLoginLazyQuery } from '../../../schema/generated';
-import { Metadata } from 'next'
-import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
-
-export function generateMetadata(urlPath: string): Metadata {
-  return authGenerateMetadata('auth/github')
-}
 
 function GithubOAuthContent() {
   const [exec, resp] = useGithubLoginLazyQuery()

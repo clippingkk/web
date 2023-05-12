@@ -8,7 +8,7 @@ type AppleCallbackPageProps = {
   searchParams: { i: string }
 }
 
-export function generateMetadata(urlPath: string): Metadata {
+export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/callback/apple')
 }
 

@@ -6,7 +6,7 @@ import { generateMetadata as authGenerateMetadata } from '../../../components/og
 type PageProps = {
 }
 
-export function generateMetadata(urlPath: string): Metadata {
+export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/signin')
 }
 

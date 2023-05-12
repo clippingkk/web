@@ -10,13 +10,12 @@ import { useBackgroundImageServer } from '../../../hooks/theme.server'
 import { Metadata } from 'next'
 import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
 
-export function generateMetadata(urlPath: string): Metadata {
+export async function generateMetadata(): Promise<Metadata> {
   return authGenerateMetadata('auth/auth-v2')
 }
 
-function AuthV2() {
+function AuthV2Page() {
   const bg = useBackgroundImageServer()
-
   return (
     <React.Fragment>
       <section
@@ -71,4 +70,4 @@ function AuthV2() {
   );
 }
 
-export default AuthV2
+export default AuthV2Page
