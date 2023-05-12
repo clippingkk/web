@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.4.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.2...v5.4.3) (2023-05-12)
+
+
+### Features
+
+* **auth:** redirect to home page if authed already ([9be8200](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9be82007675b61cc1f7d385ea13be34bab5d6a5d))
+* **seo:** add seo for pages ([ef8544a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ef8544a2ea9106a0fb92c833a7132bf0ef240dc7))
+
 ### [5.4.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.1...v5.4.2) (2023-05-11)
 
 
