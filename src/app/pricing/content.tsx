@@ -20,7 +20,7 @@ function PricingContent(props: PricingContentProps) {
   const { t } = useTranslation();
 
   const pid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['payment-subscription', StripePremiumPriceId],
     queryFn: () => getPaymentSubscription(StripePremiumPriceId),
     enabled: pid > 0,

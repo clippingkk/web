@@ -28,7 +28,7 @@
   },
   "homepage": "https://git.annatarhe.com/annatarhe/kindle.annatarhe.com#readme",
   "engines": {
-    "node": "*"
+    "node": "18"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^3.3.1",
@@ -86,6 +86,7 @@
     "@formkit/auto-animate": "1.0.0-beta.6",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
+    "@lexical/react": "^0.10.0",
     "@mantine/core": "^6.0.10",
     "@mantine/dropzone": "^6.0.10",
     "@mantine/form": "^6.0.10",
@@ -129,6 +130,7 @@
     "js-sha256": "^0.9.0",
     "jsencrypt": "^3.2.1",
     "leancloud-storage": "^4.13.2",
+    "lexical": "^0.10.0",
     "lottie-web": "^5.9.6",
     "masonic": "^3.7.0",
     "mixpanel-browser": "^2.47.0",
@@ -182,5 +184,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "packageManager": "pnpm@8.4.0"
 }

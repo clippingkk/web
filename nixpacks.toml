@@ -1,0 +1,5 @@
+[phases.build]
+cmds = ['pnpm install --frozen-lockfile --force', 'npm run codegen', 'npm run build']
+
+[start]
+cmd = 'npm run start'
