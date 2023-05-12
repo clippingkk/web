@@ -1,6 +1,9 @@
 [build]
 builder = "nixpacks"
 
+[phases.setup]
+nixPkgs = ["glibc", "musl", "jemalloc"]
+
 [deploy]
 startCommand = "npm run start"
 # healthcheckPath = "/"
