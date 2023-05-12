@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run codegen && next build",
-    "start": "next start -p $LEANCLOUD_APP_PORT",
+    "start": "next start -p $PORT",
     "lint": "next lint",
     "test": "jest",
     "test:update": "npm test -- --updateSnapshot",

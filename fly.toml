@@ -9,6 +9,7 @@ processes = []
   NODE_ENV = "production"
   IS_FLY_IO = 1
   LEANCLOUD_APP_PORT = 3000
+  PORT = 3000
 
 [experimental]
   allowed_public_ports = []
