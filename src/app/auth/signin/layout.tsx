@@ -23,13 +23,13 @@ type AuthPageProps = {
 
 function AuthPage(props: AuthPageProps) {
   usePageTrack('auth')
-  const { push: navigate } = useRouter()
-  useEffect(() => {
-    const uid = profile.uid
-    if (uid && uid > 0) {
-      navigate(`/dash/${uid}/home`)
-    }
-  }, [])
+  // const { push: navigate } = useRouter()
+  // useEffect(() => {
+  //   const uid = profile.uid
+  //   if (uid && uid > 0) {
+  //     navigate(`/dash/${uid}/home`)
+  //   }
+  // }, [])
 
   const { t } = useTranslation()
 

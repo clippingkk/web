@@ -1,4 +1,5 @@
 import mixpanel from "mixpanel-browser"
+import Cookies from 'js-cookie'
 import * as sentry from '@sentry/react'
 import { useEffect, useMemo } from "react"
 import profile from "../utils/profile"
@@ -59,6 +60,8 @@ export function useAuthBy3rdPartSuccessed(
     mixpanel.identify(me.id.toString())
     mixpanel.track('login')
     updateToken(profile.token)
+    Cookies.set('token', profile.token, { expires: 365 })
+    Cookies.set('uid', profile.uid.toString(), { expires: 365 })
     dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
     // redirect
     mixpanel.track('login')
@@ -114,6 +117,8 @@ export function useLoginV3Successed(
     mixpanel.identify(me.id.toString())
     mixpanel.track('loginV3')
     updateToken(profile.token)
+    Cookies.set('token', profile.token, { expires: 365 })
+    Cookies.set('uid', profile.uid.toString(), { expires: 365 })
     dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
     // redirect
     mixpanel.track('loginV3')
@@ -165,6 +170,8 @@ export function useAuthByPhoneSuccessed(
     mixpanel.identify(me.id.toString())
     mixpanel.track('login')
     updateToken(profile.token)
+    Cookies.set('token', profile.token, { expires: 365 })
+    Cookies.set('uid', profile.uid.toString(), { expires: 365 })
     dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
     // redirect
     mixpanel.track('login')
@@ -174,8 +181,6 @@ export function useAuthByPhoneSuccessed(
     }, 0)
   }, [called, loading, error, authResponse])
 }
-
-
 
 export function useAuthSuccessed(
   called: boolean,
@@ -203,6 +208,8 @@ export function useAuthSuccessed(
       });
       mixpanel.track('login')
       updateToken(profile.token)
+      Cookies.set('token', profile.token, { expires: 365 })
+      Cookies.set('uid', profile.uid.toString(), { expires: 365 })
       dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
       // redirect
       setTimeout(() => {

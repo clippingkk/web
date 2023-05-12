@@ -14,6 +14,8 @@ import toast from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../services/misc'
 import { useAuthLazyQuery } from '../../../schema/generated';
 
+const isProd = process.env.NODE_ENV === 'production'
+
 function SigninPageContent() {
   const [exec, resp] = useAuthLazyQuery()
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.auth)
@@ -46,7 +48,10 @@ function SigninPageContent() {
   useTitle('signin')
   const { t } = useTranslation()
 
-  const formDisabled = formik.isSubmitting || (!formik.isValid) || turnstileToken === ''
+  let formDisabled = formik.isSubmitting || (!formik.isValid) || turnstileToken === ''
+  if (!isProd) {
+    formDisabled = false
+  }
 
   return (
     <form className='flex flex-col' onSubmit={formik.handleSubmit}>
@@ -64,11 +69,13 @@ function SigninPageContent() {
         error={formik.errors.pwd}
         onChange={formik.handleChange}
       />
-      <Turnstile
-        sitekey={CF_TURNSTILE_SITE_KEY}
-        onVerify={t => setTurnstileToken(t)}
-        className='mx-auto'
-      />
+      {isProd && (
+        <Turnstile
+          sitekey={CF_TURNSTILE_SITE_KEY}
+          onVerify={t => setTurnstileToken(t)}
+          className='mx-auto'
+        />
+      )}
       {resp.error && (
         <h5 className='bg-red-600 text-white p-4 rounded w-full text-xl'>{resp.error?.message}</h5>
       )}

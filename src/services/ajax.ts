@@ -5,6 +5,7 @@ import profile from '../utils/profile'
 import toast from 'react-hot-toast'
 import { offsetLimitPagination } from '@apollo/client/utilities'
 import { QueryClient } from '@tanstack/react-query'
+import { getLanguage } from '../utils/locales'
 
 export interface IBaseResponseData<T> {
   status: number
@@ -25,7 +26,8 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
   if (token) {
     options.headers = {
       ...(options.headers || {}),
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'X-Accept-Language': getLanguage()
     }
   }
   options.credentials = 'include'
@@ -74,7 +76,8 @@ const authLink = new ApolloLink((operation, forward) => {
     return {
       headers: {
         ...headers,
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
+        'X-Accept-Language': getLanguage()
       }
     }
   })

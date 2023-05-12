@@ -12,6 +12,7 @@ import SearchBar, { useCtrlP } from '../searchbar/searchbar'
 import { Modal } from '@mantine/core'
 import LoginByQRCode from './login-by-qrcode'
 import styles from './navigation-bar.module.css'
+import Cookies from 'js-cookie'
 
 const leftMenu = [
   {
@@ -44,6 +45,8 @@ function NavigationBar() {
   const dispatch = useDispatch()
 
   const onLogout = useCallback(() => {
+    Cookies.remove('token')
+    Cookies.remove('uid')
     const push = () => {}
     dispatch(execLogout(push))
   }, [])

@@ -3,7 +3,6 @@ declare var __VERSION__: string
 declare var WebViewJavascriptBridge: any
 declare var WVJBCallbacks: any
 
-
 // graphql.d.ts file
 declare module '*.graphql' {
   import { DocumentNode } from 'graphql'
