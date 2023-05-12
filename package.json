@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run codegen && next build",
     "start": "next start -p $LEANCLOUD_APP_PORT",
     "lint": "next lint",
     "test": "jest",
@@ -157,6 +157,7 @@
     "react-turnstile": "^1.1.0",
     "redux": "^4.2.1",
     "redux-saga": "^1.2.3",
+    "sharp": "^0.32.1",
     "tailwindcss": "^3.3.2",
     "web3": "^1.10.0",
     "xstate": "^4.37.2",
