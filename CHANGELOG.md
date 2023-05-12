@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.4.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.3...v5.4.4) (2023-05-12)
+
+
+### Bug Fixes
+
+* **auth:** fix SEO issue in auth pages ([001018c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/001018cab348e309ca0eb2b09b927f010d4d1ff5))
+
 ### [5.4.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.2...v5.4.3) (2023-05-12)
 
 
