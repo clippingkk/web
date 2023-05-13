@@ -7,6 +7,9 @@ dependencies:
   '@apollo/client':
     specifier: ^3.7.14
     version: 3.7.14(graphql@16.6.0)(react-dom@18.2.0)(react@18.2.0)
+  '@apollo/experimental-nextjs-app-support':
+    specifier: ^0.1.0
+    version: 0.1.0(@apollo/client@3.7.14)(next@13.4.1)(react@18.2.0)
   '@emoji-mart/data':
     specifier: ^1.1.2
     version: 1.1.2
@@ -459,6 +462,20 @@ packages:
       ts-invariant: 0.10.3
       tslib: 2.5.0
       zen-observable-ts: 1.2.5
+    dev: false
+
+  /@apollo/experimental-nextjs-app-support@0.1.0(@apollo/client@3.7.14)(next@13.4.1)(react@18.2.0):
+    resolution: {integrity: sha512-RBDzsZLHYBnbPkh3NVlIZUxynO2ASbCpO7JEmcZRZIzMbCMpH6wXmPrenD6hxOEgLxWzxS2F3q5VlTGXtmb3ww==}
+    peerDependencies:
+      '@apollo/client': '>= 3.8.0-alpha.13'
+      next: ^13.4.1
+      react: ^18
+    dependencies:
+      '@apollo/client': 3.7.14(graphql@16.6.0)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.1(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      superjson: 1.12.3
+      ts-invariant: 0.10.3
     dev: false
 
   /@ardatan/relay-compiler@12.0.0(graphql@16.6.0):
@@ -6070,7 +6087,6 @@ packages:
     engines: {node: '>=12.13'}
     dependencies:
       is-what: 4.1.8
-    dev: true
 
   /core-js-pure@3.25.1:
     resolution: {integrity: sha512-7Fr74bliUDdeJCBMxkkIuQ4xfxn/SwrVg+HkJUAoNEXVqYLv55l6Af0dJ5Lq2YBUW9yKqSkLXaS5SYPK6MGa/A==}
@@ -8712,7 +8728,6 @@ packages:
   /is-what@4.1.8:
     resolution: {integrity: sha512-yq8gMao5upkPoGEU9LsB2P+K3Kt8Q3fQFCGyNCWOAnJAMzEXVV9drYb0TXr42TTliLLhKIBvulgAXgtLLnwzGA==}
     engines: {node: '>=12.13'}
-    dev: true
 
   /is-windows@1.0.2:
     resolution: {integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==}
@@ -12884,7 +12899,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       copy-anything: 3.0.3
-    dev: true
 
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}

@@ -1,9 +1,9 @@
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
-// export const API_HOST = 'https://clippingkk-api.annatarhe.com'
-export const API_HOST = __DEV__ ?
-  'http://127.0.0.1:19654' :
-  'https://clippingkk-api.annatarhe.com'
+export const API_HOST = 'https://clippingkk-api.annatarhe.com'
+// export const API_HOST = __DEV__ ?
+//   'http://127.0.0.1:19654' :
+//   'https://clippingkk-api.annatarhe.com'
 
 export const WENQU_API_HOST = 'https://wenqu.annatarhe.cn/api/v1'
 export const WENQU_SIMPLE_TOKEN = '500ae25e22b5de1b6c44a7d78908e7b7cc63f97b55ea9cdc50aa8fcd84b1fcba'

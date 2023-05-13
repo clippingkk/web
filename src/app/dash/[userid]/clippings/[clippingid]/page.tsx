@@ -1,12 +1,13 @@
 import React from 'react'
 import { duration3Days } from '../../../../../hooks/book'
 import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument } from '../../../../../schema/generated'
-import { client, reactQueryClient } from '../../../../../services/ajax'
+import { reactQueryClient } from '../../../../../services/ajax'
 import { wenquRequest, WenquSearchResponse } from '../../../../../services/wenqu'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
 import ClippingPageContent from './content'
 import { generateMetadata as clippingGenerateMetadata } from '../../../../../components/og/og-with-clipping'
 import { Metadata } from 'next'
+import { getApolloServerClient } from '../../../../../services/apollo.server'
 
 type PageProps = {
   params: { clippingid: string, userid: string }
@@ -15,6 +16,8 @@ type PageProps = {
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { clippingid, userid } = props.params
   const cid = ~~clippingid
+
+  const client = getApolloServerClient()
   const clippingsResponse = await client.query<FetchClippingQuery, FetchClippingQueryVariables>({
     query: FetchClippingDocument,
     fetchPolicy: 'network-only',
@@ -42,6 +45,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 async function Page(props: PageProps) {
   const { clippingid, userid } = props.params
   const cid = ~~clippingid
+  const client = getApolloServerClient()
   const clippingsResponse = await client.query<FetchClippingQuery, FetchClippingQueryVariables>({
     query: FetchClippingDocument,
     fetchPolicy: 'network-only',

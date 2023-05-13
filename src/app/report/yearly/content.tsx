@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Avatar from '../../../components/avatar/avatar'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { client, reactQueryClient } from '../../../services/ajax'
+import { reactQueryClient } from '../../../services/ajax'
 import logo from '../../../assets/logo.png'
 import ReportBookSection from '../../../components/reports/report-book-section'
 import { Blockquote, Divider } from '@mantine/core'
@@ -175,52 +175,6 @@ function ReportYearly(props: ReportYearlyProps) {
       </div>
     </div>
   )
-}
-
-type serverSideProps = {
-  reportInfoServerData: FetchYearlyReportQuery
-}
-
-export const getServerSideProps: GetServerSideProps<serverSideProps> = async (context) => {
-  const uid = ~~(context.query?.uid ?? -1) as number
-  const year = ~~(context.query?.year ?? new Date().getFullYear())
-  // const uid = ~~(context.params?.userid ?? -1) as number
-  const reportInfoResponse = await client.query<FetchYearlyReportQuery, FetchYearlyReportQueryVariables>({
-    query: FetchYearlyReportDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      uid,
-      year
-    },
-  })
-  // const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-  const dbIds = reportInfoResponse.
-    data.
-    reportYearly.
-    books.
-    map(x => x.doubanId).
-    filter(x => x.length > 3) ?? []
-
-  if (dbIds.length >= 1) {
-    await reactQueryClient.prefetchQuery({
-      queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
-      staleTime: duration3Days,
-      cacheTime: duration3Days,
-    })
-  }
-
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  )
-
-  return {
-    props: {
-      dehydratedState: dehydrate(reactQueryClient),
-      reportInfoServerData: reportInfoResponse.data,
-    },
-  }
 }
 
 export default ReportYearly

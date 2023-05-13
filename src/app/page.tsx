@@ -1,16 +1,18 @@
 import React from 'react'
 import Footer from '../components/footer/Footer'
-import { client, reactQueryClient } from '../services/ajax'
+import { reactQueryClient } from '../services/ajax'
 import { wenquRequest, WenquSearchResponse } from '../services/wenqu'
 import { PublicDataDocument, PublicDataQuery } from '../schema/generated'
 import { duration3Days } from '../hooks/book'
 import IndexPage from '../components/index-page/index.page'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
 import { useBackgroundImageServer } from '../hooks/theme.server'
+import { getApolloServerClient } from '../services/apollo.server'
 
 export const revalidate = 60 * 60 * 24 * 3 // 3 day
 
 async function Page() {
+  const client = getApolloServerClient()
   const data = await client.query<PublicDataQuery>({
     query: PublicDataDocument,
     fetchPolicy: 'network-only'

@@ -1,9 +1,9 @@
 import React from 'react'
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '../../../../schema/generated'
 import { generateMetadata as profileGenerateMetadata } from '../../../../components/og/og-with-user-profile'
-import { client } from '../../../../services/ajax'
 import ProfilePageContent from './content'
 import { Metadata } from 'next'
+import { getApolloServerClient } from '../../../../services/apollo.server'
 
 type PageProps = {
   params: { userid: string }
@@ -13,6 +13,8 @@ type PageProps = {
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const pathUid: string = params.userid
   const uid = parseInt(pathUid)
+
+  const client = getApolloServerClient()
   const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
     query: ProfileDocument,
     fetchPolicy: 'network-only',
@@ -29,6 +31,8 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 async function Page(props: PageProps) {
   const pathUid: string = props.params.userid
   const uid = parseInt(pathUid)
+
+  const client = getApolloServerClient()
   const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
     query: ProfileDocument,
     fetchPolicy: 'network-only',

@@ -2,20 +2,19 @@ import React from 'react'
 import { APP_API_STEP_LIMIT } from '../../../../constants/config'
 import { duration3Days } from '../../../../hooks/book'
 import { FetchSquareDataQuery, FetchSquareDataQueryVariables, FetchSquareDataDocument } from '../../../../schema/generated'
-import { client, reactQueryClient } from '../../../../services/ajax'
+import { reactQueryClient } from '../../../../services/ajax'
 import { wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
 import SquarePageContent from './content'
 import { Metadata } from 'next'
 import { generateMetadata as squareGenerateMetadata } from '../../../../components/og/og-with-square-page'
+import { getApolloServerClient } from '../../../../services/apollo.server'
 
 type PageProps = {
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  return {
-    title: 'Square'
-  }
+  const client = getApolloServerClient()
   const squareResponse = await client.query<FetchSquareDataQuery, FetchSquareDataQueryVariables>({
     query: FetchSquareDataDocument,
     variables: {
@@ -42,6 +41,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 }
 
 async function Page(props: PageProps) {
+  const client = getApolloServerClient()
   const squareResponse = await client.query<FetchSquareDataQuery, FetchSquareDataQueryVariables>({
     query: FetchSquareDataDocument,
     variables: {

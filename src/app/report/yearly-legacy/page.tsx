@@ -1,12 +1,13 @@
 import React from 'react'
 import ReportYearly from './content'
-import { client, reactQueryClient } from '../../../services/ajax'
+import { reactQueryClient } from '../../../services/ajax'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
 import { duration3Days } from '../../../hooks/book'
 import { FetchYearlyReportQuery, FetchYearlyReportQueryVariables, FetchYearlyReportDocument } from '../../../schema/generated'
 import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 import { generateMetadata as generateReportMetadata } from '../../../components/og/og-with-report'
 import { Metadata } from 'next'
+import { getApolloServerClient } from '../../../services/apollo.server'
 
 type YearlyLegacyPageProps = {
   params: {}
@@ -17,6 +18,8 @@ type YearlyLegacyPageProps = {
 export async function generateMetadata(props: YearlyLegacyPageProps): Promise<Metadata> {
   const uid = ~~props.searchParams.uid
   const year = props.searchParams.year ? ~~props.searchParams.year : new Date().getFullYear()
+
+  const client = getApolloServerClient()
   const reportInfoResponse = await client.query<FetchYearlyReportQuery, FetchYearlyReportQueryVariables>({
     query: FetchYearlyReportDocument,
     fetchPolicy: 'network-only',
@@ -39,6 +42,8 @@ export async function generateMetadata(props: YearlyLegacyPageProps): Promise<Me
 async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
   const uid = ~~props.searchParams.uid
   const year = props.searchParams.year ? ~~props.searchParams.year : new Date().getFullYear()
+
+  const client = getApolloServerClient()
   // const uid = ~~(context.params?.userid ?? -1) as number
   const reportInfoResponse = await client.query<FetchYearlyReportQuery, FetchYearlyReportQueryVariables>({
     query: FetchYearlyReportDocument,

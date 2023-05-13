@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { offsetLimitPagination } from '@apollo/client/utilities'
 import { QueryClient } from '@tanstack/react-query'
 import { getLanguage } from '../utils/locales'
+import { NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
 
 export interface IBaseResponseData<T> {
   status: number
@@ -129,55 +130,19 @@ const httpLink = new HttpLink({
   fetch: apolloFetcher,
 })
 
-export const client = new ApolloClient({
-  ssrMode: typeof window === 'undefined',
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          // featuredClippings: offsetLimitPagination(false)
-          featuredClippings: {
-            keyArgs: false,
-            merge(p = [], n) {
-              return [...p, ...n]
-            }
-          },
-          books: {
-            keyArgs: ['doubanId'],
-            merge(p = [], n) {
-              return [...p, ...n]
-            }
-          }
-        }
-      },
-      Book: {
-        keyFields: ["doubanId"],
-        fields: {
-          clippings: {
-            merge: simpleDistArrayMerge
-          }
-        }
-      },
-      User: {
-        fields: {
-          recents: {
-            merge: simpleDistArrayMerge
-          }
-        }
-      }
-    }
-  }),
-  link: errorLink.concat(authLink.concat(httpLink)),
-  connectToDevTools: process.env.DEV === 'true',
-})
+export function makeApolloClient() {
+  const links: ApolloLink[] = []
+  if (typeof window === 'undefined') {
+    links.push(new SSRMultipartLink({ stripDefer: true }))
+  }
+  links.push(errorLink, authLink, httpLink)
 
-function simpleDistArrayMerge(existings: { __ref: string }[] = [], incoming: { __ref: string }[] = []) {
-  return [...existings, ...incoming].reduce((acc, x) => {
-    if (acc.findIndex((z: any) => z.__ref === x.__ref) === -1) {
-      acc.push(x)
-    }
-    return acc
-  }, [] as any[])
+  return new ApolloClient({
+    ssrMode: typeof window === 'undefined',
+    cache: new NextSSRInMemoryCache(),
+    link: ApolloLink.from(links),
+    connectToDevTools: process.env.DEV === 'true',
+  })
 }
 
 export const reactQueryClient = new QueryClient({

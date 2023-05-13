@@ -15,8 +15,10 @@ import { Provider } from 'react-redux';
 import store from '../store';
 import { ApolloProvider } from '@apollo/client';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { reactQueryClient, client } from '../services/ajax';
+import { reactQueryClient, makeApolloClient } from '../services/ajax';
 import { reactQueryPersister } from '../services/storage';
+import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
+import InitProvider from './init.provider';
 
 type ClientOnlyProvidersProps = {
   children: React.ReactNode
@@ -45,11 +47,13 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
                   persister: reactQueryPersister
                 }}
               >
-                <ApolloProvider client={client}>
+                <ApolloNextAppProvider makeClient={makeApolloClient}>
                   {/* <I18nextProvider i18n={{}}> */}
-                  {children}
+                  <InitProvider>
+                    {children}
+                  </InitProvider>
                   {/* </I18nextProvider> */}
-                </ApolloProvider>
+                </ApolloNextAppProvider>
               </PersistQueryClientProvider>
             </MantineProvider>
           </CacheProvider>

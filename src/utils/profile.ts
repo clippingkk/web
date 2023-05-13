@@ -1,8 +1,8 @@
 'use client';
 import store from "../store"
-import { client } from "../services/ajax"
 import { AUTH_LOGIN } from "../store/user/type"
 import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from "../schema/generated"
+import { makeApolloClient } from "../services/ajax";
 
 class MyProfile {
   private _token = ''
@@ -23,24 +23,6 @@ class MyProfile {
     if (u) {
       this._uid = ~~u
     }
-
-    setTimeout(() => {
-      this.initProfileData()
-    }, 10)
-  }
-
-  private initProfileData() {
-    if (this.uid === -1) {
-      return
-    }
-    client.query<ProfileQuery, ProfileQueryVariables>({
-      query: ProfileDocument,
-      variables: {
-        id: this.uid
-      }
-    }).then((res) => {
-      store.dispatch({ type: AUTH_LOGIN, profile: res.data.me, token: this.token })
-    })
   }
 
   get token(): string {
