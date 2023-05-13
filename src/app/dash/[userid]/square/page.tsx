@@ -13,6 +13,9 @@ type PageProps = {
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  return {
+    title: 'Square'
+  }
   const squareResponse = await client.query<FetchSquareDataQuery, FetchSquareDataQueryVariables>({
     query: FetchSquareDataDocument,
     variables: {
