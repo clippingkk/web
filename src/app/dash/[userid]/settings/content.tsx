@@ -1,21 +1,30 @@
 'use client'
 import React from 'react'
-import Select from 'react-select'
 import { useTranslation } from 'react-i18next'
 import SimpleSwitcher from './simple-switcher'
 import Exports from './exports'
 import WebHooks from './webhooks'
 import { useDarkModeStatus } from '../../../../hooks/theme'
 import AccountRemoveButton from './account-remove'
-import { Paper } from '@mantine/core'
+import { Paper, Select } from '@mantine/core'
 import OrdersTable from './orders'
 
 type SettingsPageProps = {
 }
 
+const langOptions = [{
+  label: 'English',
+  value: 'en'
+}, {
+  label: '简体中文',
+  value: 'zh'
+}, {
+  label: '한국어',
+  value: 'ko'
+}]
+
 function GlobalSettings() {
   const { t, i18n } = useTranslation()
-  const langOptions = Object.keys(i18n.store.data).map(x => ({ value: x, label: x }))
   const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
   return (
     <div className='w-full'>
@@ -27,11 +36,11 @@ function GlobalSettings() {
           Language:
         </label>
         <Select
-          options={langOptions}
+          data={langOptions}
           className='w-64'
-          value={langOptions.find(x => x.value === i18n.language)}
-          onChange={(v: any) => {
-            i18n.changeLanguage(v.value)
+          value={langOptions.find(x => x.value === i18n.language)?.value}
+          onChange={(v) => {
+            i18n.changeLanguage(v!)
           }}
         />
       </div>
