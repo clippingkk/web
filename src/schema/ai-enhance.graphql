@@ -1,0 +1,10 @@
+mutation aiEnhanceComment(
+	$promptId: Int!
+	$bookName: String
+	$clippingId: Int
+	$content: String!
+) {
+	aiEnhanceComment(promptId: $promptId, bookName: $bookName, clippingId: $clippingId, content: $content) {
+		content
+	}
+}

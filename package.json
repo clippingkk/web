@@ -87,7 +87,6 @@
     "@formkit/auto-animate": "1.0.0-beta.6",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
-    "@lexical/react": "^0.10.0",
     "@mantine/core": "^6.0.10",
     "@mantine/dropzone": "^6.0.10",
     "@mantine/form": "^6.0.10",

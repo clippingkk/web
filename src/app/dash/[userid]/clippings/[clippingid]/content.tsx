@@ -117,7 +117,7 @@ function ClippingPageContent(props: ClippingPageProps) {
                 ))}
                 </ul>
                 {clipping && me && (
-                  <CommentBox me={me} clippingID={clipping?.clipping.id} />
+                  <CommentBox me={me} book={book} clipping={clipping?.clipping} />
                 )}
               </>
             </Card>

@@ -3,13 +3,17 @@ import React, { useCallback, useState } from 'react'
 import { UserContent } from '../../../../../store/user/type'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../../../../components/avatar/avatar'
-import { useCreateCommentMutation } from '../../../../../schema/generated'
+import { Clipping, useCreateCommentMutation } from '../../../../../schema/generated'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../../../services/misc'
 import { Button } from '@mantine/core'
+import MarkdownEditor from '../../../../../components/markdown-editor/markdown-editor'
+import AICommentEnhancer from '../../../../../components/ai/enhance-comment'
+import { WenquBook } from '../../../../../services/wenqu'
 
 type CommentBoxProps = {
-  clippingID: number
+  book: WenquBook | null
+  clipping: Pick<Clipping, 'id' | 'content'>
   me: UserContent
 }
 
@@ -31,7 +35,7 @@ function CommentBox(props: CommentBoxProps) {
 
     return toast.promise(createCommentAction({
       variables: {
-        cid: props.clippingID,
+        cid: props.clipping.id,
         content: content
       },
       refetchQueries: ['fetchClipping'],
@@ -40,7 +44,7 @@ function CommentBox(props: CommentBoxProps) {
       setContent('')
     })
     // text: t('app.clipping.comments.tip.success')
-  }, [content, createCommentAction, props.clippingID, t, client])
+  }, [content, createCommentAction, props.clipping.id, t, client])
 
   return (
     <div className='flex container flex-col lg:flex-row'>
@@ -54,17 +58,29 @@ function CommentBox(props: CommentBoxProps) {
       </div>
 
       <div className='flex flex-1 lg:ml-8 flex-col justify-center items-end'>
-        <textarea className='w-full rounded border-none focus:scale-105 transition-transform duration-75 focus:outline-none p-4 text-lg dark:bg-gray-700 dark:text-gray-200'
-          rows={8}
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          placeholder={t('app.clipping.comments.placeholder') ?? ''}
-        />
-        <div className='w-full flex-col lg:flex-row flex items-center justify-between px-4 mt-4'>
-          <small>{content.length} {t('app.clipping.comments.count')}</small>
-
+        <div className='w-full'>
+          <MarkdownEditor
+            value={content}
+            onValueChange={setContent}
+          />
+        </div>
+        <div className='w-full flex-col lg:flex-row flex items-center justify-between mt-4'>
+          {content.length > COMMENT_MIN_LEN ? (
+            <AICommentEnhancer
+              bookName={props.book?.title}
+              clippingId={props.clipping.id}
+              comment={content}
+              onAccept={(newComment) => {
+                toast.success('Accept AI enhanced comment!')
+                setContent(newComment)
+              }}
+            />
+          ) : (
+            <small>{content.length} {t('app.clipping.comments.count')}</small>
+          )}
           <Button
             color='blue'
+            className='bg-sky-500'
             loading={loading}
             disabled={content.length < COMMENT_MIN_LEN}
             onClick={onSubmit}

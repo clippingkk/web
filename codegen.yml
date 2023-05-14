@@ -11,6 +11,8 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
+    config:
+      withHooks: true
   ./src/schema/schema.json:
     plugins:
       - "introspection"
