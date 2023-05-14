@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.5.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.4...v5.5.0) (2023-05-14)
+
+
+### Features
+
+* **ai:** add AI enhanced comment function ([9873f69](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9873f69fcef3c6b05c3cdc1e63d9b0d82d59e312))
+* **ci:** add config file for railway ([dd532a9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/dd532a913c2f3e869b8c7841b97dd58c630b318f))
+* **ci:** add railway.app config ([2d0b179](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2d0b179f85b67030bfc9af5b2e07f7a2559576d3))
+
+
+### Bug Fixes
+
+* **apollo:** integration with ssr apollo ([9d08380](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9d083801439056187bf8bb450b768274a970ab05))
+* **app:** fix config ([00324cf](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/00324cfe99b2fe6f9a142bbb2d04cee4c814b085))
+* **ci:** fix build script and add sharp for image optimization ([e2e66ea](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e2e66ea626c595c33f1ee1cebe29c38e196f3ef6))
+* **ci:** remove dockerfile ([b215169](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b2151696bf3ffbc97b3e8f112b533d0b0c6c2ef8))
+* **ci:** remove go file ([d820d6b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d820d6b55cd1434ecfad755bc36a8131d18321ee))
+* **deploy:** add sharp packages to build phase ([1e2a33a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1e2a33afbb2c6f3e78870e52f4b29a9a3ae360d4))
+* **deploy:** listen PORT instead ([066325a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/066325a8f7cf7ae30e4a0691a2abbcb03dfffbdd))
+* **deploy:** skip health check ([515ed82](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/515ed828c76c402c5d8439a7c6c32e1126c05aa2))
+* **square:** fix client side render issue ([a727703](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a7277038b719f5b60309a9ffd66106e01cabdc5f))
+
 ### [5.4.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.3...v5.4.4) (2023-05-12)
 
 
