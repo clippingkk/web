@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.5.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.5.0...v5.5.1) (2023-05-14)
+
+
+### Bug Fixes
+
+* **i18n:** fix language switcher ([0b14857](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0b148571abde7f0e26f2b7de95da153e4caa4ef5))
+
 ## [5.5.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.4.4...v5.5.0) (2023-05-14)
 
 
