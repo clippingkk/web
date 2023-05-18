@@ -12,14 +12,10 @@ type TBookCoverProps = {
 }
 
 function BookCover({ book, domain }: TBookCoverProps) {
-  if (!book) {
-    return null
-  }
-
   return (
     <Link
       href={`/dash/${domain}/book/${book.doubanId}`}
-      className={styles.cover + ' bg-transparent flex flex-col items-center content-center transition-all duration-300 rounded hover:bg-opacity-75 hover:bg-gray-300 hover:shadow-lg animate__fadeInDown w-128 h-156 overflow-visible font-lxgw'}>
+      className={styles.cover + ' bg-transparent flex flex-col items-center content-center transition-all duration-300 rounded hover:bg-opacity-75 hover:bg-gray-300 hover:shadow-lg animate__fadeInDown w-128 h-156 overflow-visible font-lxgw with-slide-in'}>
       <BlurhashView
         blurhashValue={book.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
         src={book.image}

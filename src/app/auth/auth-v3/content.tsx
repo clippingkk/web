@@ -1,18 +1,18 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { useBackgroundImage } from '../../../hooks/theme'
-import logo from '../../../assets/logo.png'
-import EmailBox from '../../../components/auth/email-box'
-import OTPBox from '../../../components/auth/otp-box'
-import { useLoginV3Successed } from '../../../hooks/hooks'
+import { useBackgroundImage } from '@/hooks/theme'
+import logo from '@/assets/logo.png'
+import EmailBox from '@/components/auth/email-box'
+import OTPBox from '@/components/auth/otp-box'
+import { useLoginV3Successed } from '@/hooks/hooks'
 import { toast } from 'react-hot-toast'
-import { toastPromiseDefaultOption } from '../../../services/misc'
+import { toastPromiseDefaultOption } from '@/services/misc'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/navigation'
-import { OtpChannel, useDoLoginV3Mutation, useSendOtpMutation } from '../../../schema/generated'
+import { OtpChannel, useDoLoginV3Mutation, useSendOtpMutation } from '@/schema/generated'
 
 type AuthV3Props = {
 }
@@ -63,10 +63,6 @@ function AuthV3Content(props: AuthV3Props) {
 
   return (
     <React.Fragment>
-      {/* <Head>
-        <title>Login by ...</title>
-        <OGWithAuth urlPath='auth/auth-v3' />
-      </Head> */}
       <section
         className='anna-page-container h-screen object-cover bg-center bg-cover'
         style={{
@@ -137,7 +133,6 @@ function AuthV3Content(props: AuthV3Props) {
               </p>
             </div>
           </div>
-
         </div>
       </section>
     </React.Fragment>

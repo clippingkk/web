@@ -1,14 +1,13 @@
 import React from 'react'
-import Image from 'next/image'
-import logo from '../../../assets/logo.png'
-import AuthByAppleButton from '../../../components/auth.apple'
-import AuthByMetamask from '../../../components/auth.metamask'
-import AuthByGithub from '../../../components/auth.github'
+import AuthByAppleButton from '@/components/auth.apple'
+import AuthByMetamask from '@/components/auth.metamask'
+import AuthByGithub from '@/components/auth.github'
 import Link from 'next/link'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/solid'
-import { useBackgroundImageServer } from '../../../hooks/theme.server'
+import { useBackgroundImageServer } from '@/hooks/theme.server'
 import { Metadata } from 'next'
-import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
+import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
+import CKLogo from '@/components/logo/CKLogo'
 
 export async function generateMetadata(): Promise<Metadata> {
   return authGenerateMetadata('auth/auth-v2')
@@ -29,13 +28,7 @@ function AuthV2Page() {
         >
           <div className='p-12 rounded backdrop-blur-xl shadow bg-opacity-10 bg-blue-400'>
             <div className='flex justify-center items-center flex-col mb-4'>
-              <Image
-                src={logo}
-                alt="clippingkk logo"
-                // className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
-                width={96}
-                height={96}
-              />
+              <CKLogo />
               <h1 className='text-center font-bold text-3xl dark:text-gray-100 mt-4'>ClippingKK</h1>
             </div>
 

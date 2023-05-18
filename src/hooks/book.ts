@@ -37,7 +37,7 @@ export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestR
       }, [])
   }, [doubanIds])
   const chunkedDbIds = useMemo(() => {
-    const result: string[][] = [[]]
+    const result: string[][] = []
     const chunkSize = 50
     for (let i = 0; i < validDoubanIdList.length; i += chunkSize) {
       result.push(validDoubanIdList.slice(i, i + chunkSize));

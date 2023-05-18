@@ -1,19 +1,19 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import ListFooter from '../../../../components/list-footer/list-footer';
+import ListFooter from '@/components/list-footer/list-footer';
 import { useSelector } from 'react-redux';
-import { TGlobalStore } from '../../../../store';
+import { TGlobalStore } from '@/store';
 import { useTranslation } from 'react-i18next';
-import { useMultipBook } from '../../../../hooks/book';
+import { useMultipBook } from '@/hooks/book';
 import NoContentAlert from './no-content';
-import BookCover from '../../../../components/book-cover/book-cover';
+import BookCover from '@/components/book-cover/book-cover';
 import ReadingBook from './reading-book';
-import { UserContent } from '../../../../store/user/type';
-import { useSyncClippingsToServer } from '../../../../hooks/my-file'
+import { UserContent } from '@/store/user/type';
+import { useSyncClippingsToServer } from '@/hooks/my-file'
 import { useRouter } from 'next/navigation';
 import HomePageSkeleton from './skeleton';
-import { useBooksQuery } from '../../../../schema/generated';
+import { useBooksQuery } from '@/schema/generated';
 
 const STEP = 10
 
@@ -54,6 +54,8 @@ function HomePageContent(props: HomePageContentProps) {
   })
   useSyncClippingsToServer()
 
+  const [bls, setBls] = useState<string[]>([])
+
   const [reachEnd, setReachEnd] = useState(false)
   const { data, fetchMore, loading, called } = useBooksQuery({
     variables: {
@@ -63,10 +65,14 @@ function HomePageContent(props: HomePageContentProps) {
         offset: 0
       },
     },
+    onCompleted(data) {
+      setBls(data.books.map(x => x.doubanId))
+    },
     skip: !uid,
   })
+
   const { t } = useTranslation()
-  const books = useMultipBook(data?.books.map(x => x.doubanId) || [])
+  const books = useMultipBook(bls)
 
   if (!data) {
     return (<HomePageSkeleton />)
@@ -120,14 +126,21 @@ function HomePageContent(props: HomePageContentProps) {
             variables: {
               id: uid,
               pagination: {
-                limit: 10,
-                offset: data.books.length
+                limit: STEP,
+                offset: bls.length
               }
             },
           }).then(res => {
             if (res.data.books.length === 0) {
               setReachEnd(true)
+              return
             }
+            setBls(
+              prev => Array.from(new Set([
+                ...prev,
+                ...res.data.books.map(x => x.doubanId)
+              ]))
+            )
           })
         }}
         hasMore={!reachEnd}

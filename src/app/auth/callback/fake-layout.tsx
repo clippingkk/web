@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import BindPhone from '../../../components/bind-phone'
 import LoadingIcon from '../../../components/icons/loading.svg'
 import OGWithAuth from '../../../components/og/og-with-auth'
+import { Button } from '@mantine/core'
 
 type AuthCallbackPageContainerProps = {
   doBind: () => Promise<any>
@@ -26,23 +27,22 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
           <h4 className=' text-xl lg:text-6xl mt-4 dark:text-gray-100'>
             {t('app.authCallback.prevAccountTip')}
           </h4>
-
           <div className='my-8 flex flex-col'>
-            <button
-              className='py-4 px-8 from-teal-400 via-teal-500 to-teal-400 bg-gradient-to-br rounded-lg text-3xl lg:text-8xl hover:shadow-lg hover:scale-105 duration-150'
+            <Button
+              className='h-20 from-teal-400 via-teal-500 to-teal-400 bg-gradient-to-br rounded-lg text-2xl lg:text-5xl duration-150'
               onClick={props.doBind}
             >
               {t('app.authCallback.createAccountDirectly')}
-            </button>
+            </Button>
             {!willBind && (
-              <button
-                className='py-4 px-8 from-blue-400 via-teal-400 to-orange-400 bg-gradient-to-br rounded-lg text-2xl lg:text-7xl hover:shadow-lg hover:scale-105 duration-150 mt-6'
+              <Button
+                className='h-20 from-blue-400 via-teal-400 to-orange-400 bg-gradient-to-br rounded-lg text-2xl lg:text-4xl hover:shadow-lg hover:scale-105 duration-150 mt-6'
                 onClick={() => {
                   setWillBind(true)
                 }}
               >
                 {t('app.authCallback.toBind')}
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -53,7 +53,6 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
             />
           </div>
         )}
-
         {props.loading && (
           <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center flex-col backdrop-blur-sm with-fade-in'>
             <LoadingIcon className='animate-spin' />

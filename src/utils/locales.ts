@@ -14,7 +14,7 @@ export function getLanguage() {
 
 // TODO: use new instance
 export function init() {
-  instance = i18n.createInstance({ debug: true })
+  instance = i18n.createInstance()
   instance
     .use(languageDetector)
     .use(initReactI18next)
