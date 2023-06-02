@@ -8,6 +8,7 @@ import { QueryClient } from '@tanstack/react-query'
 import { getLanguage } from '../utils/locales'
 import { NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
 import Cookies from 'js-cookie'
+import { cookies } from 'next/headers';
 
 export interface IBaseResponseData<T> {
   status: number
@@ -17,11 +18,12 @@ export interface IBaseResponseData<T> {
 
 export function getLocalToken() {
   let lToken = ''
-  if (document && document.cookie) {
+
+  if (typeof document !== 'undefined' && document.cookie) {
     lToken = Cookies.get('token') ?? ''
   }
 
-  if (!lToken) {
+  if (!lToken && typeof localStorage !== 'undefined') {
     lToken = localStorage.getItem('clippingkk-token') ?? ''
   }
 
@@ -30,7 +32,7 @@ export function getLocalToken() {
 
 // FIXME: 由于循环依赖的问题，这里避免引入 './profile'
 // 但是 profile 中有一样的初始化获取逻辑
-let token = (process.browser) ? getLocalToken() : ''
+let token = getLocalToken()
 // let token = localProfile?.token
 
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
