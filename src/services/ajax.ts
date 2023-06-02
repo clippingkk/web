@@ -1,12 +1,13 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client'
 import { onError } from "@apollo/client/link/error"
-import { API_HOST, WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
+import { API_HOST } from '../constants/config'
 import profile from '../utils/profile'
 import toast from 'react-hot-toast'
 import { offsetLimitPagination } from '@apollo/client/utilities'
 import { QueryClient } from '@tanstack/react-query'
 import { getLanguage } from '../utils/locales'
 import { NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
+import Cookies from 'js-cookie'
 
 export interface IBaseResponseData<T> {
   status: number
@@ -15,7 +16,16 @@ export interface IBaseResponseData<T> {
 }
 
 export function getLocalToken() {
-  return localStorage.getItem('clippingkk-token')
+  let lToken = ''
+  if (document && document.cookie) {
+    lToken = Cookies.get('token') ?? ''
+  }
+
+  if (!lToken) {
+    lToken = localStorage.getItem('clippingkk-token') ?? ''
+  }
+
+  return lToken
 }
 
 // FIXME: 由于循环依赖的问题，这里避免引入 './profile'

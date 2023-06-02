@@ -2,6 +2,8 @@
 // const { i18n } = require('./next-i18next.config')
 // const { withSentryConfig } = require('@sentry/nextjs')
 
+const isProd = process.env.NODE_ENV === 'production'
+
 const sentryWebpackPluginOptions = {
   silent: true,
 };
@@ -18,10 +20,11 @@ const config = {
   // sentry: {
   //   hideSourceMaps: true
   // },
-  // experimental: {
+  experimental: {
+    instrumentationHook: isProd,
     // runtime: 'experimental-edge',
     // swcPlugins: [['@swc-jotai/debug-label', {}]],
-  // },
+  },
   // i18n: {
   //   locales: ['default', 'zhCN', 'en', 'ko'],
   //   defaultLocale: 'zhCN'
