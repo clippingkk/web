@@ -9,7 +9,10 @@ import zh from '../locales/zhCN.json'
 let instance: typeof i18n | null = null
 
 export function getLanguage() {
-  return i18n.language
+  if (instance) {
+    return instance.language ?? 'en'
+  }
+  return i18n.language ?? 'en'
 }
 
 // TODO: use new instance

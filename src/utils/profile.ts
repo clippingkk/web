@@ -1,8 +1,6 @@
 'use client';
-import store from "../store"
-import { AUTH_LOGIN } from "../store/user/type"
-import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from "../schema/generated"
-import { makeApolloClient } from "../services/ajax";
+import { ProfileQuery } from "../schema/generated"
+import Cookies from "js-cookie";
 
 class MyProfile {
   private _token = ''
@@ -11,11 +9,18 @@ class MyProfile {
   static readonly UID_KEY = 'clippingkk-uid'
 
   constructor() {
-    if (!process.browser) {
+    if (typeof localStorage === 'undefined') {
       return
     }
-    const t = localStorage.getItem(MyProfile.TOKEN_KEY)
-    const u = localStorage.getItem(MyProfile.UID_KEY)
+    let t = localStorage.getItem(MyProfile.TOKEN_KEY)
+    let u = localStorage.getItem(MyProfile.UID_KEY)
+
+    if (!t) {
+      t = Cookies.get('token') ?? ''
+    }
+    if (!u) {
+      u = Cookies.get('uid') ?? null
+    }
 
     if (t) {
       this._token = t
@@ -42,6 +47,10 @@ class MyProfile {
   }
 
   onLogout() {
+    this._token = ''
+    this._uid = -1
+    Cookies.remove('token')
+    Cookies.remove('uid')
     localStorage.clear()
     sessionStorage.clear()
   }

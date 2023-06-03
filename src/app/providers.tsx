@@ -9,11 +9,9 @@ import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import React from 'react'
 import { Provider as JotaiProvider } from 'jotai'
 import { useGluedEmotionCache } from '../hooks/emotion';
-import { useLayoutInit } from '../hooks/init';
 import { useDarkModeStatus } from '../hooks/theme';
 import { Provider } from 'react-redux';
 import store from '../store';
-import { ApolloProvider } from '@apollo/client';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { reactQueryClient, makeApolloClient } from '../services/ajax';
 import { reactQueryPersister } from '../services/storage';
@@ -28,7 +26,6 @@ type ClientOnlyProvidersProps = {
 function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const { children } = props
   const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
-  useLayoutInit()
   const cache = useGluedEmotionCache();
   const instance = init()
   return (

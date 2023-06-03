@@ -1,4 +1,4 @@
-import { Button, Modal } from '@mantine/core'
+import { Button, LoadingOverlay, Modal } from '@mantine/core'
 import { useAiEnhanceCommentMutation } from '../../schema/generated'
 import React, { useCallback, useState } from 'react'
 import MarkdownPreview from '../markdown-editor/md-preview'
@@ -73,18 +73,21 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
         </Button>
       </Button.Group>
       <Modal
-        opened={opened}
+        opened={opened || loading}
         onClose={() => setOpened(false)}
         title="Enhanced Comment"
         size="lg"
         centered>
+        <LoadingOverlay
+          visible={loading}
+        />
         <MarkdownPreview
-          value={data?.aiEnhanceComment.content ?? ''}
+          value={data?.aiEnhanceComment.content ?? '## Loading'}
         />
         <div className='flex justify-end w-full '>
           <Button
-           onClick={() => setOpened(false)}
-           className=' bg-gray-300 text-black mr-4'
+            onClick={() => setOpened(false)}
+            className='bg-gray-300 text-black mr-4'
           >
             Cancel
           </Button>

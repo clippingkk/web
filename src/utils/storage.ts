@@ -1,15 +1,51 @@
 import mixpanel from 'mixpanel-browser'
 import * as sentry from '@sentry/react'
 import { IUserToken, USER_TOKEN_KEY } from '../constants/storage'
+import Cookies from 'js-cookie'
+import { makeApolloClient, updateToken } from '../services/ajax'
+import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '../schema/generated'
+import profile from './profile'
+import { ApolloClient } from '@apollo/client'
 
-export function initParseFromLS() {
-  if (typeof window === 'undefined') {
-    return 
+export async function initParseFromLS(ac: ApolloClient<object>) {
+  if (typeof localStorage === 'undefined') {
+    return
   }
 
-  const authInfo = localStorage.getItem(USER_TOKEN_KEY)
+  let authInfo = localStorage.getItem(USER_TOKEN_KEY)
   if (!authInfo) {
-    return
+    // try to parse from cookies
+    const cookieToken = Cookies.get('token')
+    const uid = Cookies.get('uid')
+    if (!cookieToken || !uid) {
+      return
+    }
+    updateToken(cookieToken)
+    try {
+      const ps = await ac.query<ProfileQuery, ProfileQueryVariables>({
+        query: ProfileDocument,
+        variables: {
+          id: ~~uid
+        }
+      })
+      const payload = {
+        profile: ps.data.me,
+        token: cookieToken,
+        createdAt: Date.now()
+      }
+      const payloadString = JSON.stringify(payload)
+      localStorage.setItem(USER_TOKEN_KEY, payloadString)
+      authInfo = payloadString
+    } catch (e) {
+      // any error occurs, just erase cookies and local storage.
+      localStorage.removeItem(USER_TOKEN_KEY)
+      Cookies.remove('token')
+      Cookies.remove('uid')
+      profile.onLogout()
+    }
+    if (!authInfo) {
+      return
+    }
   }
 
   const auth: IUserToken = JSON.parse(authInfo)

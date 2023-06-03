@@ -13,6 +13,8 @@ import { Modal } from '@mantine/core'
 import LoginByQRCode from './login-by-qrcode'
 import styles from './navigation-bar.module.css'
 import Cookies from 'js-cookie'
+import { getMyHomeLink } from '../../utils/profile'
+import LoggedNavigationBar from './authed'
 
 const leftMenu = [
   {
@@ -42,15 +44,6 @@ function NavigationBar() {
 
   const id = profile.domain.length > 2 ? profile.domain : profile.id
 
-  const dispatch = useDispatch()
-
-  const onLogout = useCallback(() => {
-    Cookies.remove('token')
-    Cookies.remove('uid')
-    const push = () => {}
-    dispatch(execLogout(push))
-  }, [])
-
   const { visible, setVisible } = useCtrlP()
   const onSearchbarClose = useCallback(() => {
     setVisible(false)
@@ -59,6 +52,7 @@ function NavigationBar() {
   const [loginByQRCodeModalVisible, setLoginByQRCodeModalVisible] = useState(false)
 
   const { t } = useTranslation()
+  const homeLink = getMyHomeLink(profile)
 
   return (
     <nav className={styles.navbar + ' bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl with-slide-in'}>
@@ -95,72 +89,12 @@ function NavigationBar() {
         )}
       </div>
       {profile.id > 0 ? (
-        <ul className='flex'>
-          <li className='mr-6'>
-            <Tooltip
-              placement='bottom'
-              overlay={<span>{t('app.menu.loginByQRCode.title')}</span>}
-            >
-              <button
-                className='text-3xl lg:text-4xl'
-                title={t('app.menu.loginByQRCode.title') ?? ''}
-                onClick={() => {
-                  setLoginByQRCodeModalVisible(true)
-                }}
-              >
-                📱
-              </button>
-            </Tooltip>
-          </li>
-
-          <li className='mr-6'>
-            <Tooltip
-              placement='bottom'
-              overlay={<span>{t('app.menu.search.title')}</span>}
-            >
-              <button
-                className='text-3xl lg:text-4xl'
-                title={t('app.menu.search.title') ?? ''}
-                onClick={() => {
-                  setVisible(true)
-                }}
-              >
-                🔍
-              </button>
-            </Tooltip>
-          </li>
-
-          <li className='mr-6'>
-            <Tooltip
-              placement='bottom'
-              overlay={<span>{t('app.menu.settings')}</span>}
-            >
-              <Link
-                href={id === 0 ? '/auth/auth-v3' : `/dash/${id}/settings`}
-                className='text-3xl lg:text-4xl'
-                title={t('app.menu.settings') ?? 'setting'}>
-                
-                  🛠
-                
-              </Link>
-            </Tooltip>
-          </li>
-          <li className='mr-6' onClick={onLogout}>
-            <Link href={'/'}>
-            <Tooltip
-              placement='bottom'
-              overlay={<span>{t('app.menu.logout')}</span>}
-            >
-              <span
-                className='text-3xl lg:text-4xl cursor-pointer'
-                title={t('app.menu.logout') ?? 'logout'}
-              >
-                👋
-              </span>
-            </Tooltip>
-            </Link>
-          </li>
-        </ul>
+        <LoggedNavigationBar
+          onSearch={() => setVisible(true)}
+          uidOrDomain={id}
+          onPhoneLogin={() => setLoginByQRCodeModalVisible(true)}
+          profile={profile}
+        />
       ) : (
         <Link href='/auth/auth-v3' legacyBehavior>
           <h2 className='text-white font-bold'>
@@ -178,7 +112,6 @@ function NavigationBar() {
       >
         <LoginByQRCode />
       </Modal>
-
     </nav>
   );
 }
