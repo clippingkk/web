@@ -2,11 +2,11 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useApolloClient, useMutation } from '@apollo/client'
 import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../../../../store'
-import Tooltip from '../../../../../components/tooltip/Tooltip'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 import { FetchClippingQuery, Reaction, ReactionData, ReactionTarget, useReactionCreateMutation, useReactionRemoveMutation } from '../../../../../schema/generated'
+import { Chip, Tooltip } from '@mantine/core'
 
 const avaliableReactions = ["👍", "❤️", "⭐️", "🐶", "😱"]
 
@@ -73,23 +73,12 @@ function Reactions(props: ReactionsProps) {
       <div className='relative inline-block w-full'>
         {symbolCounts.map(k => (
           <Tooltip
-            className='inline-block w-min'
+            className='inline-block w-min ml-1 first:ml-0'
             key={k.symbol}
-            placement='top'
-            overlay={k.recently.length > 0 ? (
-              <div>
-                {k.recently.map(x => (
-                  <span key={x.id}>
-                    {x.creator.name}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <div>waiting for your feedback</div>
-            )}
+            label={k.recently.map(x => x.creator.name).join(', ')}
           >
-            <button
-              className='inline-flex py-1 px-2 lg:py-4 lg:px-8 rounded-3xl hover:bg-gray-300 hover:bg-opacity-70 duration-300 transition-colors items-center justify-center'
+            <Chip
+              checked={false}
               onClick={() => {
                 if (uid <= 0) {
                   navigate('/auth/auth-v3')
@@ -122,9 +111,9 @@ function Reactions(props: ReactionsProps) {
                 })
               }}
             >
-              <span className='text-2xl'>{k.symbol}</span>
-              <span className='text-2xl ml-2 dark:text-white'>{k.count}</span>
-            </button>
+              <span className='text-xl'>{k.symbol}</span>
+              <span className='text-xl ml-2 dark:text-white'>{k.count}</span>
+            </Chip>
           </Tooltip>
         ))}
       </div>

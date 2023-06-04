@@ -9,34 +9,39 @@ import Tooltip from '../tooltip/Tooltip';
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import SearchBar, { useCtrlP } from '../searchbar/searchbar'
-import { Modal } from '@mantine/core'
+import { Modal, clsx } from '@mantine/core'
 import LoginByQRCode from './login-by-qrcode'
 import styles from './navigation-bar.module.css'
 import Cookies from 'js-cookie'
 import { getMyHomeLink } from '../../utils/profile'
 import LoggedNavigationBar from './authed'
+import { ArrowUpTrayIcon, BookOpenIcon, Squares2X2Icon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { useSelectedLayoutSegment } from 'next/navigation'
 
 const leftMenu = [
   {
-    emoji: '📙',
+    emoji: () => <BookOpenIcon className='w-6 h-6 dark:text-white' />,
     alt: 'read',
     dest: (id: number | string) => `/dash/${id}/home`,
+    targetSegment: 'home',
   },
   {
-    emoji: '🎪',
+    emoji: () => <Squares2X2Icon className='w-6 h-6 dark:text-white' />,
     alt: 'square',
     dest: (id: number | string) => `/dash/${id}/square`,
+    targetSegment: 'square',
   },
   {
-    emoji: '🎈',
+    emoji: () => <ArrowUpTrayIcon className='w-6 h-6 dark:text-white' />,
     alt: 'upload',
     dest: (id: number | string) => `/dash/${id}/upload`,
+    targetSegment: 'upload',
   },
-  {
-    emoji: '👼',
-    alt: 'my',
-    dest: (id: number | string) => `/dash/${id}/profile`,
-  },
+  // {
+  //   emoji: () => <UserCircleIcon className='w-6 h-6 dark:text-white' />,
+  //   alt: 'my',
+  //   dest: (id: number | string) => `/dash/${id}/profile`,
+  // },
 ]
 
 function NavigationBar() {
@@ -53,6 +58,9 @@ function NavigationBar() {
 
   const { t } = useTranslation()
   const homeLink = getMyHomeLink(profile)
+  const activeSegment = useSelectedLayoutSegment()
+
+  console.log('activeSegment', activeSegment)
 
   return (
     <nav className={styles.navbar + ' bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl with-slide-in'}>
@@ -60,27 +68,32 @@ function NavigationBar() {
         <Image
           src={logo}
           alt="clippingkk logo"
-          className='w-10 h-10 lg:w-20 lg:h-20 mr-2 lg:mr-12'
+          className='w-10 h-10 lg:w-20 lg:h-20 mr-2 lg:mr-12 rounded'
           width={40}
           height={40}
         />
         {profile.id > 0 ? (
-          <ul className='flex ml-2 lg:ml-12'>
+          <ul className='flex ml-2 lg:ml-6 with-slide-in'>
             {leftMenu.map((item, index) => (
-              <li className='mr-3 lg:mr-6 cursor-pointer' key={index}>
-                <Tooltip
-                  placement='bottom'
-                  overlay={<span>{t(`app.menu.${item.alt}`)}</span>}
+              <li
+                className={clsx('mr-3 dark:text-white flex items-center lg:mr-6 cursor-pointer px-4 py-2 rounded-full bg-gradient-to-br transition-all hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-gray-900 duration-150 hover:shadow-lg', {
+                  'from-indigo-500 via-purple-500 to-pink-500 text-gray-500 ': activeSegment === item.targetSegment
+                })}
+                key={index}
+              >
+                <Link
+                  className='flex items-center'
+                  href={id === 0 ? '/auth/auth-v3' : item.dest(id)}
                 >
-                  <Link href={id === 0 ? '/auth/auth-v3' : item.dest(id)} legacyBehavior>
+                  <>
+                    {item.emoji()}
                     <span
-                      className='text-3xl lg:text-4xl'
-                      title={t(`app.menu.${item.alt}`) ?? ''}
+                      className=' ml-2 lg:text-lg'
                     >
-                      {item.emoji}
+                      {t(`app.menu.${item.alt}`) ?? ''}
                     </span>
-                  </Link>
-                </Tooltip>
+                  </>
+                </Link>
               </li>
             ))}
           </ul>

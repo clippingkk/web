@@ -43,7 +43,7 @@ function MarkdownEditor(props: MarkdownEditorProps) {
         />
       </Tabs.Panel>
       <Tabs.Panel value="preview" pt="xs">
-        <div className='p-4 bg-gray-100 bg-opacity-90 rounded'>
+        <div className='p-4 bg-gray-100 bg-opacity-90 rounded min-h-[184px]'>
           <MarkdownPreview value={value} />
         </div>
       </Tabs.Panel>

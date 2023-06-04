@@ -5,10 +5,15 @@ import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux';
 import { UserContent, execLogout } from '../../store/user/type';
-import { Avatar, HoverCard, Menu } from '@mantine/core';
+import { Avatar, Button, HoverCard, Menu } from '@mantine/core';
 import { CogIcon } from '@heroicons/react/24/solid';
-import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftOnRectangleIcon, DevicePhoneMobileIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
+import { CDN_DEFAULT_DOMAIN } from '../../constants/config';
+import AvatarOnNavigationBar from './avatar';
+import { useIsPremium } from '../../hooks/profile';
+import { useProfileQuery } from '../../schema/generated';
+import PremiumBadge from '../premium/badge';
 
 type LoggedNavigationBarProps = {
   profile: UserContent
@@ -28,38 +33,27 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
     dispatch(execLogout(r.push))
   }, [])
 
+  const { data: p } = useProfileQuery({
+    variables: {
+      id: profile.id,
+    },
+  })
+
+  const isPremium = useIsPremium(p?.me.premiumEndAt)
+
+  const avatar = profile.avatar.startsWith('http') ? profile.avatar : `${CDN_DEFAULT_DOMAIN}/${profile.avatar}`
+
   return (
-    <ul className='flex'>
+    <ul className='flex with-slide-in'>
       <li className='mr-6'>
-        <Tooltip
-          placement='bottom'
-          overlay={<span>{t('app.menu.loginByQRCode.title')}</span>}
+        <button
+          onClick={onSearch}
+          className=' bg-white bg-opacity-50 backdrop-blur hover:bg-opacity-100 transition-all duration-150 flex items-center px-4 py-2 rounded-full text-gray-800 dark:text-white'
         >
-          <button
-            className='text-3xl lg:text-4xl'
-            title={t('app.menu.loginByQRCode.title') ?? ''}
-            onClick={onPhoneLogin}
-          >
-            📱
-          </button>
-        </Tooltip>
+          <MagnifyingGlassIcon className='w-6 h-6' />
+          <span className='ml-2'>{t('app.menu.search.title')}</span>
+        </button>
       </li>
-
-      <li className='mr-6'>
-        <Tooltip
-          placement='bottom'
-          overlay={<span>{t('app.menu.search.title')}</span>}
-        >
-          <button
-            className='text-3xl lg:text-4xl'
-            title={t('app.menu.search.title') ?? ''}
-            onClick={onSearch}
-          >
-            🔍
-          </button>
-        </Tooltip>
-      </li>
-
       <li className='mr-6'>
         <Tooltip
           placement='bottom'
@@ -74,7 +68,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
       </li>
       <li>
         <Menu
-         trigger='hover'
+          trigger='hover'
           width={200}
           transitionProps={{
             transition: 'scale-y'
@@ -82,9 +76,9 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
         >
           <Menu.Target>
             <Link href={`/dash/${uidOrDomain}/profile`}>
-              <Avatar
-                src={profile.avatar}
-                radius={'xl'}
+              <AvatarOnNavigationBar
+                avatarUrl={avatar}
+                isPremium={isPremium}
               />
             </Link>
           </Menu.Target>
@@ -97,13 +91,20 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
             <Menu.Item
               icon={(
                 <Avatar
-                size={24}
-                  src={profile.avatar}
+                  size={24}
+                  src={avatar}
                   radius={'xl'}
                 />
               )}
+              className='flex items-center'
             >
               {profile.name}
+            </Menu.Item>
+            <Menu.Item
+              icon={<DevicePhoneMobileIcon className='w-6 h-6' />}
+              onClick={onPhoneLogin}
+            >
+              {t('app.menu.loginByQRCode.title')}
             </Menu.Item>
             <Menu.Item
               icon={<CogIcon className='w-6 h-6' />}

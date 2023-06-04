@@ -1,5 +1,6 @@
 import { Badge } from '@mantine/core'
 import React, { useMemo } from 'react'
+import PremiumBadge from '../premium/badge'
 
 type UserNameProps = {
   name?: string
@@ -26,13 +27,7 @@ function UserName(props: UserNameProps) {
         {name}
       </h3>
       {isPremium && (
-        <Badge
-          variant="gradient"
-          gradient={{ from: 'indigo', to: 'cyan' }}
-          className='ml-2'
-        >
-          Premium
-        </Badge>
+        <PremiumBadge />
       )}
     </div>
   )
