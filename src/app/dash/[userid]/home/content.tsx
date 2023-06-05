@@ -100,9 +100,7 @@ function HomePageContent(props: HomePageContentProps) {
 
       <div className='flex flex-wrap items-center justify-center'>
         {loading && (
-          <div className='my-12 mx-6'>
-            loading
-          </div>
+          <HomePageSkeleton />
         )}
         {data.books.length === 0 && called && (
           <NoContentAlert domain={userDomain} />

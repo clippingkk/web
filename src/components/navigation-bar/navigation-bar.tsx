@@ -60,8 +60,6 @@ function NavigationBar() {
   const homeLink = getMyHomeLink(profile)
   const activeSegment = useSelectedLayoutSegment()
 
-  console.log('activeSegment', activeSegment)
-
   return (
     <nav className={styles.navbar + ' bg-gray-800 bg-opacity-50 dark:bg-opacity-80 sticky top-0 py-4 w-full flex justify-around items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl with-slide-in'}>
       <div className='flex justify-around items-center'>

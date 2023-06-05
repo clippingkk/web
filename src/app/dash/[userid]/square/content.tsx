@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
@@ -24,13 +24,14 @@ function SquarePageContent(props: SquarePageContentProps) {
 
   const reachEnd = useRef(false)
 
+  const [sqData, setSqData] = useState<FetchSquareDataQuery['featuredClippings']>(props.squareData.featuredClippings)
   const { data: localData, loading, fetchMore } = useFetchSquareDataQuery({
     variables: {
       pagination: {
         limit: APP_API_STEP_LIMIT,
       }
     },
-    // skip: !!serverResponse.squareServerData
+    skip: true
   })
 
   const data = localData ?? props.squareData
@@ -39,7 +40,7 @@ function SquarePageContent(props: SquarePageContentProps) {
   const books = useMultipBook(data?.featuredClippings.map(x => x.bookID) || [])
 
   const maybeLoadMore = useInfiniteLoader<FetchSquareDataQuery['featuredClippings'][0], LoadMoreItemsCallback<FetchSquareDataQuery['featuredClippings'][0]>>((startIndex, stopIndex, currentItems) => {
-    if (currentItems.length >= 200) {
+    if (sqData.length >= 200) {
       reachEnd.current = true
     }
     if (reachEnd.current) {
@@ -49,9 +50,21 @@ function SquarePageContent(props: SquarePageContentProps) {
       variables: {
         pagination: {
           limit: APP_API_STEP_LIMIT,
-          lastId: currentItems[currentItems.length - 1].id,
+          lastId: sqData[sqData.length - 1].id,
         }
       }
+    }).then(data => {
+      setSqData(
+        prev => [
+          ...prev,
+          ...data.data.featuredClippings
+        ]
+          .reduce<FetchSquareDataQuery['featuredClippings']>((acc, x) => {
+            if (!acc.find(y => y.id === x.id)) {
+              acc.push(x)
+            }
+            return acc
+          }, []))
     })
   }, {
     threshold: 3,
@@ -59,10 +72,10 @@ function SquarePageContent(props: SquarePageContentProps) {
 
   return (
     <section className='flex items-center justify-center flex-col'>
-      <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'> 🪩 Square</h2>
+      <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'> 🪩 {t('app.menu.square')}</h2>
       <Divider className='w-full' />
       <Masonry
-        items={(data.featuredClippings ?? [])}
+        items={sqData}
         columnCount={masonaryColumnCount}
         className='with-slide-in'
         columnGutter={30}
