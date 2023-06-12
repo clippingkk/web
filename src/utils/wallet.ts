@@ -1,26 +1,31 @@
-import { initializeConnector } from '@web3-react/core'
-import { MetaMask } from '@web3-react/metamask'
-import { Network } from '@web3-react/network'
-import Web3 from 'web3'
+import MetaMaskSDK from '@metamask/sdk';
 import { URLS } from './chains'
-
-const [metaMask, hooks] = initializeConnector<MetaMask>((actions) => new MetaMask({
-  actions,
-  options: {
-    mustBeMetaMask: true
-  }
-}))
 
 const LoginWelcomeText = 'Welcome to the ClippingKK~ \n It`s your nonce: '
 
-async function signDataByWeb3(address: string) {
-  if (!metaMask.provider) {
+async function signDataByWeb3() {
+  const m = new MetaMaskSDK()
+  const eth = m.getProvider()
+  if (!eth) {
     throw new Error('MetaMask is not connected')
   }
-  const web3 = new Web3(metaMask.provider as any)
+
+  const accounts = await eth.request<string[]>({ method: 'eth_requestAccounts', params: [] });
+
+  console.log('accounts', accounts)
+  if (!accounts) {
+    throw new Error('accounts not found')
+  }
+
+  const address = accounts[0]
   const nonce = Date.now()
   const text = LoginWelcomeText + nonce
-  const signature = await web3.eth.personal.sign(text, address, '')
+  const msg = text;
+  const signature = await eth.request<string>({
+    method: 'personal_sign',
+    params: [msg, address],
+  });
+
   return {
     address,
     signature,
@@ -29,7 +34,5 @@ async function signDataByWeb3(address: string) {
 }
 
 export {
-  metaMask,
-  hooks,
   signDataByWeb3
 }

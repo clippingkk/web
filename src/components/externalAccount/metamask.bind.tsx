@@ -1,7 +1,7 @@
 import { useApolloClient, useMutation } from '@apollo/client'
 import React, { useCallback, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { hooks, metaMask, signDataByWeb3 } from '../../utils/wallet'
+import { signDataByWeb3 } from '../../utils/wallet'
 import WithLoading from '../with-loading'
 import { useTranslation } from 'react-i18next'
 import { useBindWeb3AddressMutation } from '../../schema/generated'
@@ -13,30 +13,17 @@ type MetamaskBindButtonProps = {
 function MetamaskBindButton(props: MetamaskBindButtonProps) {
   const { t } = useTranslation()
   const [doBind, doBindResult] = useBindWeb3AddressMutation()
-  const isActivating = hooks.useIsActivating()
-  const isActive = hooks.useIsActive()
-  const account = hooks.useAccount()
   const client = useApolloClient()
   const onMetamaskLogin = useCallback(async () => {
-    const resp = await metaMask.activate()
-    // if (metaMask.deactivate) {
-    //   await metaMask.deactivate()
-    // }
-    // const resp = await metaMask.connectEagerly()
-  }, [])
-
-  useEffect(() => {
-    if (!account) {
-      return
-    }
-
-    signDataByWeb3(account)
+    let account = ''
+    return signDataByWeb3()
       .then(res => {
+        account = res.address!
         return doBind({
           variables: {
             payload: {
-              address: res.address,
-              signature: res.signature,
+              address: res.address!,
+              signature: res.signature!,
               text: res.text
             }
           }
@@ -50,7 +37,8 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
       }).catch((err: any) => {
         toast.error(err.message)
       })
-  }, [account, doBind])
+  }, [])
+
   return (
     <WithLoading
       loading={doBindResult.loading}

@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { toast } from 'react-hot-toast'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
-import { metaMask, hooks, signDataByWeb3 } from '../utils/wallet'
+import { signDataByWeb3 } from '../utils/wallet'
 import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/navigation'
 import LoadingIcon from './icons/loading.svg'
@@ -17,46 +17,15 @@ type AuthByMetamaskProps = {
 function AuthByMetamask(props: AuthByMetamaskProps) {
   const router = useRouter()
   const [doAuth, doAuthData] = useAuthByWeb3LazyQuery()
-  const isActivating = hooks.useIsActivating()
-  const isActive = hooks.useIsActive()
-  const account = hooks.useAccount()
   // const err = hooks.useError()
   const onMetamaskLogin = useCallback(async () => {
-    try {
-      if (metaMask.deactivate) {
-        await metaMask.deactivate()
-      }
-      const resp = await metaMask.activate()
-    } catch (e: any) {
-      //  e === { code: number, message: string}
-      toast.error(`metamask: ${e.code} ${e.message}`)
-    }
-
-  }, [])
-
-  // useEffect(() => {
-  //   // if (!err) {
-  //   //   return
-  //   // }
-  //   // toast.error('metamask: ' + err.message)
-  //   void metaMask.connectEagerly().catch((err) => {
-  //     console.debug('Failed to connect eagerly to metamask')
-  //     toast.error('metamask: ' + err.message)
-  //   })
-  // }, [])
-
-  useEffect(() => {
-    if (!account) {
-      return
-    }
-
-    signDataByWeb3(account)
+    return signDataByWeb3()
       .then(res => {
         return doAuth({
           variables: {
             payload: {
-              address: res.address,
-              signature: res.signature,
+              address: res.address!,
+              signature: res.signature!,
               text: res.text
             }
           }
@@ -69,7 +38,18 @@ function AuthByMetamask(props: AuthByMetamaskProps) {
       }).catch((err: any) => {
         toast.error(err.message)
       })
-  }, [account, doAuth, router])
+  }, [])
+
+  // useEffect(() => {
+  //   // if (!err) {
+  //   //   return
+  //   // }
+  //   // toast.error('metamask: ' + err.message)
+  //   void metaMask.connectEagerly().catch((err) => {
+  //     console.debug('Failed to connect eagerly to metamask')
+  //     toast.error('metamask: ' + err.message)
+  //   })
+  // }, [])
 
   useAuthBy3rdPartSuccessed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.loginByWeb3)
 
