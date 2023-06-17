@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.6.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.5.1...v5.6.0) (2023-06-17)
+
+
+### Features
+
+* **app:** upgrade nextjs to latest version ([9002456](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/900245600194e38742aaf43d393db27fb6afd116))
+* **cd:** add docker build ([#104](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/issues/104)) ([e71a7e7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e71a7e78b7b46ce9cadf27ef23b97bc0e4c436a8))
+* enable import alias, update styles and fix load books in home page ([cf7b751](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cf7b751bbee5a05ba03f40fe03a2116d123205b2))
+* **profile:** update menu bar styles and fix auth token issue ([a8574ef](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a8574efe0a3ee575b52b2065bae38df42b844f9e))
+* **trace:** enable performance tracing and cookie reader ([e5a4936](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e5a4936a0ba644caf20560c77ced0853b84b6da8))
+* **web3:** update packages and add new metamask sign support ([3ad1b46](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3ad1b4685c5fab9f98adb0e1a798ef91375d5a11))
+
+
+### Bug Fixes
+
+* **square:** fix square data load ([56d2a6e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/56d2a6efeec41139dfcc3098f572c6cc5428fb34))
+* **trace:** update trace config ([0efdda6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0efdda655da393a20e356e18c9299cfd5be837ac))
+
 ### [5.5.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.5.0...v5.5.1) (2023-05-14)
 
 
