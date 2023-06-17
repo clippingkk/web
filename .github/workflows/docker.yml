@@ -4,7 +4,6 @@
 name: Docker Deployment
 on:
   push:
-    branches: [ test-deploy ]
     tags: 
       - '*'
 
