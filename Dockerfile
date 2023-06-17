@@ -47,6 +47,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./
 USER nextjs
 
 EXPOSE 3000
-ENV NEXT_TELEMETRY_DISABLED 1
+# ENV NEXT_TELEMETRY_DISABLED 1
 
 CMD ["node", "server.js"]
