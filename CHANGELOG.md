@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.0...v5.6.1) (2023-06-23)
+
+
+### Features
+
+* **app:** update react-query dep and small fixes ([763d5d7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/763d5d78a501f9974283a2a356e2b9421d1d8e9c))
+
 ## [5.6.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.5.1...v5.6.0) (2023-06-17)
 
 
