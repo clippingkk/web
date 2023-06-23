@@ -12,6 +12,8 @@ FROM node:alpine AS builder
 WORKDIR /app
 ENV NODE_ENV production
 ENV IS_FLY_IO 1
+ARG GIT_COMMIT
+ENV GIT_COMMIT=$GIT_COMMIT
 
 COPY --from=deps /app/ ./
 RUN apk add --no-cache curl \

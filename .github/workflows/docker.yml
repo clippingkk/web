@@ -54,6 +54,8 @@ jobs:
     -
       name: Build and push
       uses: docker/build-push-action@v4
+      env:
+        GIT_COMMIT: ${{ github.sha }}
       with:
         push: true
         tags: ${{ steps.meta.outputs.tags }}

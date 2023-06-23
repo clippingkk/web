@@ -1,15 +1,18 @@
 'use client'
 import React, { useState } from 'react'
-import { useTable, Row } from 'react-table'
-import Card from '../../../../components/card/card'
+import { useReactTable, Row, getCoreRowModel, ColumnDef, flexRender } from '@tanstack/react-table'
 import HomelessBookSyncInput from './sync-input'
 import { useUncheckBooksQueryQuery } from '../../../../schema/generated'
+import { Box, NumberInput, Table } from '@mantine/core'
 
-const homelessBookColumn = [
+const homelessBookColumn: ColumnDef<homelessBookTableItem, any>[] = [
   {
-    Header: 'Name',
-    accessor: 'name', // accessor is the "key" in the data
+    header: 'Name',
+    accessorKey: 'name',
   },
+  {
+    header: 'Action'
+  }
 ]
 
 type homelessBookTableItem = {
@@ -18,15 +21,19 @@ type homelessBookTableItem = {
 
 function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
   return (
-    <tr {...row.getRowProps()} key={row.id} className='hover:bg-gray-300'>
-      {row.cells.map(cell => {
-        return (
-          <React.Fragment key={cell.row.id}>
-            <td {...cell.getCellProps()} className='border-gray-300 border-2 p-4 text-lg' key={0}>{cell.render("Cell")}</td>
-            <td {...cell.getCellProps()} className='border-gray-300 border-2 p-4 text-lg' key={1}>
-              <HomelessBookSyncInput bookName={cell.value} />
+    <tr key={row.id} className=''>
+      {row.getVisibleCells().map(cell => {
+        if (cell.column.columnDef.header === 'Action') {
+          return (
+            <td key={cell.id}>
+              <HomelessBookSyncInput bookName={cell.getValue<string>()} />
             </td>
-          </React.Fragment>
+          )
+        }
+        return (
+          <td key={cell.id}>
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </td>
         )
       })}
     </tr>
@@ -44,56 +51,55 @@ function AdminPanel() {
       }
     }
   })
-  const {
-    getTableProps,
-    getTableBodyProps,
-    rows,
-    prepareRow,
-    headerGroups
-  } = useTable<homelessBookTableItem>({
+  const table = useReactTable({
     data: data?.adminDashboard.uncheckedBooks.map(x => ({ name: x.title } as homelessBookTableItem)) || ([] as homelessBookTableItem[]),
-    columns: homelessBookColumn as any
+    getCoreRowModel: getCoreRowModel(),
+    columns: homelessBookColumn
   })
 
   return (
     <div>
-      {/* <Head>
-        <title>homeless book list</title>
-      </Head> */}
-      <Card>
+      <Box>
         <>
-          <h3 className='text-3xl mb-8 text-center'>无家可归的书目们</h3>
-          <input
+          <h3 className='text-3xl text-center dark:text-gray-50 my-8'>无家可归的书目们</h3>
+          <NumberInput
             type="number"
             value={offset}
-            onChange={(e) => setOffset(~~e.target.value)}
+            onChange={(val) => setOffset(~~val)}
             placeholder="offset"
+            className='my-4'
           />
           {data ? (
-            <table {...getTableProps()} className='table-fixed w-full'>
+            <Table
+             className='w-full'
+             striped
+             highlightOnHover
+            >
               <thead>
-                {headerGroups.map(headerGroup => (
+                {table.getHeaderGroups().map(headerGroup => (
                   // eslint-disable-next-line react/jsx-key
-                  <tr {...headerGroup.getHeaderGroupProps()}>
+                  <tr key={headerGroup.id}>
                     {headerGroup.headers.map(column => (
-                      // eslint-disable-next-line react/jsx-key
-                      <th {...column.getHeaderProps()} className='border-gray-300 border-2 p-4 text-lg'>{column.render("Header")}</th>
+                      <th className='' key={column.id}>
+                        {
+                          flexRender(column.column.columnDef.header, column.getContext())
+                        }
+                      </th>
                     ))}
                   </tr>
                 ))}
               </thead>
-              <tbody {...getTableBodyProps()}>
-                {rows.map((row, i) => {
-                  prepareRow(row)
+              <tbody>
+                {table.getRowModel().rows.map((row, i) => {
                   return (<HomelessBookTableRow row={row} key={row.id} />)
                 })}
               </tbody>
-            </table>
+            </Table>
           ) : (
             loading ? (<span>loading</span>) : (<span>no more</span>)
           )}
         </>
-      </Card>
+      </Box>
     </div>
   )
 }

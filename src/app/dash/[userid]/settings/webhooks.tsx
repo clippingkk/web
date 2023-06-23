@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Column, useTable } from 'react-table'
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { TGlobalStore } from '../../../../store'
 import Dialog from '../../../../components/dialog/dialog'
 import FieldInput from '../../../../components/input'
@@ -10,19 +10,19 @@ import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import { Button, Table } from '@mantine/core'
-import { useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, WebHookItem, WebHookStep } from '../../../../schema/generated'
+import { FetchMyWebHooksQuery, useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, WebHookItem, WebHookStep } from '../../../../schema/generated'
 
-const webhookColumns: Column<WebHookItem>[] = [{
-  Header: 'id',
-  accessor: 'id'
+const webhookColumns: ColumnDef<FetchMyWebHooksQuery['me']['webhooks'][0]>[] = [{
+  header: 'id',
+  accessorKey: 'id'
 }, {
-  Header: 'step',
-  accessor: 'step'
+  header: 'step',
+  accessorKey: 'step'
 }, {
-  Header: 'url',
-  accessor: 'hookUrl'
+  header: 'url',
+  accessorKey: 'hookUrl'
 }, {
-  Header: 'action',
+  header: 'action',
 }]
 
 function WebHooks() {
@@ -66,40 +66,32 @@ function WebHooks() {
     }
   })
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable<WebHookItem>({
+  const table = useReactTable({
     columns: webhookColumns,
-    data: webhooksResp?.me.webhooks ?? [] as any
+    getCoreRowModel: getCoreRowModel(),
+    data: webhooksResp?.me.webhooks ?? []
   })
 
   return (
     <div className='w-full text-center'>
       <div className=' mx-4 lg:mx-20'>
-        <Table {...getTableProps()}>
+        <Table>
           <thead>
-            {headerGroups.map(headerGroup => (
-              // eslint-disable-next-line react/jsx-key
-              <tr
-                {...headerGroup.getHeaderGroupProps()}
-              >
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
                 {headerGroup.headers.map(column => (
                   // eslint-disable-next-line react/jsx-key
                   <th
-                    {...column.getHeaderProps()}
+                    key={column.id}
                   >
-                    {column.render('Header')}
+                    {flexRender(column.column.columnDef.header, column.getContext())}
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.length === 0 && (
+          <tbody>
+            {table.getRowModel().rows.length === 0 && (
               <tr>
                 <td
                   colSpan={webhookColumns.length}
@@ -108,26 +100,23 @@ function WebHooks() {
                 </td>
               </tr>
             )}
-            {rows.map(row => {
-              prepareRow(row)
+            {table.getRowModel().rows.map(row => {
               return (
                 <tr
-                  {...row.getRowProps()}
+                  key={row.id}
                   className='with-fade-in'
                 >
-                  {row.cells.map(cell => {
-                    if (cell.column.Header === 'action') {
+                  {row.getVisibleCells().map(cell => {
+                    if (cell.column.columnDef.header === 'action') {
                       return (
-                        <td
-                          {...cell.getCellProps()}
-                        >
+                        <td key={cell.id}>
                           <Button
                             variant="gradient"
                             className='bg-gradient-to-br from-orange-400 to-red-500'
                             onClick={() => {
-                              deleteMutation({
+                              return deleteMutation({
                                 variables: {
-                                  id: cell.row.values.id
+                                  id: cell.row.getValue('id')
                                 }
                               }).then(() => {
                                 client.resetStore()
@@ -139,11 +128,8 @@ function WebHooks() {
                       )
                     }
                     return (
-                      // eslint-disable-next-line react/jsx-key
-                      <td
-                        {...cell.getCellProps()}
-                      >
-                        {cell.render('Cell')}
+                      <td key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     )
                   })}

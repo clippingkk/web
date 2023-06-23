@@ -20,13 +20,13 @@ function Footer() {
         <p>
           Build with ❤ by AnnatarHe
         </p>
-        <p>Version: {(process as any).env.GIT_COMMIT}</p>
+        <p>Version: {process.env.GIT_COMMIT}</p>
         <p>
           Host on
           <a
             href="https://www.leancloud.cn/"
             className=' inline-block ml-1 hover:underline'>
-            Leancloud <ArrowTopRightOnSquareIcon className='w-4 h-4 inline-block mb-4' />
+            Web Server <ArrowTopRightOnSquareIcon className='w-4 h-4 inline-block mb-4' />
           </a>
         </p>
       </div>

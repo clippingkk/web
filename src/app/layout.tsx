@@ -14,7 +14,7 @@ import '../prefers-dark'
 import '../utils/locales'
 import '../utils/leancloud'
 import { Toaster } from 'react-hot-toast'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 import ClientOnlyProviders from './providers';
 import { Metadata } from 'next'

@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react'
 import { useApolloClient } from '@apollo/client'
-import { SyncHomelessBookDocument, useSyncHomelessBookMutation } from '../../../../schema/generated'
+import { useSyncHomelessBookMutation } from '../../../../schema/generated'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../../services/misc'
+import { Button, Input } from '@mantine/core'
 
 type HomelessBookSyncInputProps = {
   bookName: string
@@ -24,18 +25,17 @@ function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
   }, [doubanId, client])
 
   return (
-    <div className='flex'>
-      <input
+    <div className='flex items-center'>
+      <Input
         value={doubanId}
         onChange={e => setDoubanId(e.target.value)}
-        type='number'
         placeholder='douban id'
-        className='p-2 rounded mr-2 focus:outline-none hover:border-b-2 border-blue-400 transition-all duration-300'
       />
-      <button
-        className='p-2 bg-blue-400 rounded hover:bg-blue-600 focus:outline-none'
+      <Button
+        className=''
+        variant='outline'
         onClick={onConfirm}
-      >confirm</button>
+      >confirm</Button>
     </div>
   )
 }
