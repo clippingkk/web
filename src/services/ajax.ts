@@ -1,12 +1,11 @@
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client'
+import { ApolloLink, HttpLink } from '@apollo/client'
 import { onError } from "@apollo/client/link/error"
 import { API_HOST } from '../constants/config'
 import profile from '../utils/profile'
 import toast from 'react-hot-toast'
-import { offsetLimitPagination } from '@apollo/client/utilities'
 import { QueryClient } from '@tanstack/react-query'
 import { getLanguage } from '../utils/locales'
-import { NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
+import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
 import Cookies from 'js-cookie'
 import { cookies } from 'next/headers';
 
@@ -149,13 +148,23 @@ export function makeApolloClient() {
   }
   links.push(errorLink, authLink, httpLink)
 
-  return new ApolloClient({
+  return new NextSSRApolloClient({
     ssrMode: typeof window === 'undefined',
     cache: new NextSSRInMemoryCache(),
     link: ApolloLink.from(links),
     connectToDevTools: process.env.DEV === 'true',
   })
+  // return new ApolloClient({
+  //   ssrMode: typeof window === 'undefined',
+  //   cache: new NextSSRInMemoryCache(),
+  //   link: ApolloLink.from(links),
+  //   connectToDevTools: process.env.DEV === 'true',
+  // })
 }
+
+// function makeSuspenseCache() {
+//   return new SuspenseCache();
+// }
 
 export const reactQueryClient = new QueryClient({
   defaultOptions: {

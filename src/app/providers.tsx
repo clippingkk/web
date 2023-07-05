@@ -46,7 +46,9 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
                     persister: reactQueryPersister
                   }}
                 >
-                  <ApolloNextAppProvider makeClient={makeApolloClient}>
+                  <ApolloNextAppProvider
+                    makeClient={makeApolloClient}
+                  >
                     {/* <I18nextProvider i18n={{}}> */}
                     <InitProvider>
                       {children}
