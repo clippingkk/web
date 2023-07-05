@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.1...v5.6.2) (2023-07-05)
+
+
+### Features
+
+* **app:** upgrade deps ([fa34744](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fa34744f3e42284bc632dbd155adf5fa10895cfa))
+
+
+### Bug Fixes
+
+* **clipping:** fix db book fetcher if book id is 0 ([e49ddbb](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e49ddbbc05673e421ae95d43770446779e1f82f0))
+
 ### [5.6.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.0...v5.6.1) (2023-06-23)
 
 
