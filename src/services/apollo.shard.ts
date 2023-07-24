@@ -27,13 +27,6 @@ export const apolloCacheConfig: InMemoryCacheConfig = {
   typePolicies: {
     Query: {
       fields: {
-        // featuredClippings: offsetLimitPagination(false)
-        featuredClippings: {
-          keyArgs: false,
-          merge(p = [], n) {
-            return [...p, ...n]
-          }
-        },
         books: {
           keyArgs: ['doubanId'],
           merge(p = [], n) {

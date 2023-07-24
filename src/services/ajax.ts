@@ -9,6 +9,7 @@ import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from '@ap
 import Cookies from 'js-cookie'
 import { cookies } from 'next/headers';
 import { cache } from 'react'
+import { apolloCacheConfig } from './apollo.shard'
 
 export interface IBaseResponseData<T> {
   status: number
@@ -151,7 +152,7 @@ export function makeApolloClient() {
 
   return new NextSSRApolloClient({
     ssrMode: typeof window === 'undefined',
-    cache: new NextSSRInMemoryCache(),
+    cache: new NextSSRInMemoryCache(apolloCacheConfig),
     link: ApolloLink.from(links),
     connectToDevTools: process.env.DEV === 'true',
   })
@@ -167,8 +168,8 @@ export function makeApolloClient() {
 //   return new SuspenseCache();
 // }
 
-export const getReactQueryClient = cache(
-  () => new QueryClient({
+export function createReactQueryClient() {
+  return new QueryClient({
     defaultOptions: {
       queries: {
         keepPreviousData: true,
@@ -176,4 +177,6 @@ export const getReactQueryClient = cache(
       },
     }
   })
-)
+}
+
+export const getReactQueryClient = cache(() => createReactQueryClient())

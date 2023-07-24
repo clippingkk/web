@@ -12,7 +12,7 @@ import ReadingBook from './reading-book';
 import { UserContent } from '@/store/user/type';
 import { useSyncClippingsToServer } from '@/hooks/my-file'
 import { useRouter } from 'next/navigation';
-import HomePageSkeleton from './skeleton';
+import HomePageSkeleton, { BooksSkeleton } from './skeleton';
 import { useBooksQuery } from '@/schema/generated';
 
 const STEP = 10
@@ -54,8 +54,6 @@ function HomePageContent(props: HomePageContentProps) {
   })
   useSyncClippingsToServer()
 
-  const [bls, setBls] = useState<string[]>([])
-
   const [reachEnd, setReachEnd] = useState(false)
   const { data, fetchMore, loading, called } = useBooksQuery({
     variables: {
@@ -65,11 +63,10 @@ function HomePageContent(props: HomePageContentProps) {
         offset: 0
       },
     },
-    onCompleted(data) {
-      setBls(data.books.map(x => x.doubanId))
-    },
     skip: !uid,
   })
+
+  const bls = data?.books.map(x => x.doubanId) ?? []
 
   const { t } = useTranslation()
   const books = useMultipBook(bls)
@@ -78,14 +75,16 @@ function HomePageContent(props: HomePageContentProps) {
     return (<HomePageSkeleton />)
   }
 
+  const recents = data.me.recents
+
   return (
     <section className='h-full page'>
-      {data.me.recents.length > 0 && (
+      {recents.length > 0 && (
         <div className='mt-8 with-slide-in'>
           <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>
             {t('app.home.reading')}
           </h2>
-          <ReadingBook clipping={data.me.recents[0]} uid={uid} />
+          <ReadingBook clipping={recents[0]} uid={uid} />
         </div>
       )}
       <header className='flex items-center justify-center my-10'>
@@ -116,6 +115,11 @@ function HomePageContent(props: HomePageContentProps) {
       </div>
 
       <ListFooter
+        loadingBlock={
+          <div className='w-full'>
+            <BooksSkeleton />
+          </div>
+        }
         loadMoreFn={() => {
           if (loading || !called || books.loading) {
             return
@@ -133,12 +137,6 @@ function HomePageContent(props: HomePageContentProps) {
               setReachEnd(true)
               return
             }
-            setBls(
-              prev => Array.from(new Set([
-                ...prev,
-                ...res.data.books.map(x => x.doubanId)
-              ]))
-            )
           })
         }}
         hasMore={!reachEnd}

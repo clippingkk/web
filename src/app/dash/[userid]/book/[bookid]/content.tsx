@@ -69,9 +69,10 @@ function BookPageContent(props: BookPageContentProps) {
   const masonaryColumnCount = useMasonaryColumnCount()
   const maybeLoadMore = useInfiniteLoader((startIndex, stopIndex, currentItems) => {
     if (!hasMore.current) {
-      return
+      return Promise.reject(1)
     }
-    fetchMore({
+    console.log('call fetchMore')
+    return fetchMore({
       variables: {
         id: ~~bookid,
         pagination: {
@@ -81,11 +82,12 @@ function BookPageContent(props: BookPageContentProps) {
       },
     })
   }, {
+    isItemLoaded: (index, items) => !!items[index],
     threshold: 3,
     totalItems: clippingsData?.book.clippingsCount
   })
 
-  if (!bookData) {
+  if (!bookData || !clippingsData) {
     return <BookPageSkeleton />
   }
 

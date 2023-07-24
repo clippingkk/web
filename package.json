@@ -185,5 +185,10 @@
       "last 1 safari version"
     ]
   },
+  "pnpm": {
+    "overrides": {
+      "@leancloud/platform-adapters-node": "1.5.3"
+    }
+  },
   "packageManager": "pnpm@8.4.0"
 }
