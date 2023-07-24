@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.3...v5.6.4) (2023-07-24)
+
+
+### Features
+
+* **app:** update deps ([1e64a98](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1e64a98fd9ef738da1338b3e6df206c360668792))
+* **app:** update react query api ([5f4f03d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5f4f03daf2c39fdd40384e46d79c007be81d4585))
+
+
+### Bug Fixes
+
+* **apollo:** fix apollo cache setting ([ebbab46](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ebbab469e2d577f9909d99deb6125b1d8e246c2e))
+
 ### [5.6.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.2...v5.6.3) (2023-07-05)
 
 
