@@ -1,8 +1,8 @@
 import React from 'react'
-import { duration3Days } from '../../../../../hooks/book'
-import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument } from '../../../../../schema/generated'
-import { reactQueryClient } from '../../../../../services/ajax'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../../services/wenqu'
+import { duration3Days } from '@/hooks/book'
+import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument } from '@/schema/generated'
+import { getReactQueryClient } from '@/services/ajax'
+import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
 import ClippingPageContent from './content'
 import { generateMetadata as clippingGenerateMetadata } from '@/components/og/og-with-clipping'
@@ -26,10 +26,11 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     },
   })
 
+  const rq = getReactQueryClient()
   const bookID = clippingsResponse.data.clipping.bookID
   let b: WenquBook | null = null
   if (bookID && bookID.length > 3) {
-    const bs = await reactQueryClient.fetchQuery({
+    const bs = await rq.fetchQuery({
       queryKey: ['wenqu', 'books', 'dbId', bookID],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
       staleTime: duration3Days,
@@ -58,8 +59,9 @@ async function Page(props: PageProps) {
   })
 
   const bookID = clippingsResponse.data.clipping.bookID
+  const rq = getReactQueryClient()
   if (bookID && bookID.length > 3) {
-    await reactQueryClient.prefetchQuery({
+    await rq.prefetchQuery({
       queryKey: ['wenqu', 'books', 'dbId', bookID],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
       staleTime: duration3Days,
@@ -67,7 +69,7 @@ async function Page(props: PageProps) {
     })
   }
 
-  const d = dehydrate(reactQueryClient)
+  const d = dehydrate(rq)
 
   return (
     <Hydrate state={d}>

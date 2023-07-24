@@ -1,12 +1,12 @@
 import React from 'react'
 import Footer from '../components/footer/Footer'
-import { reactQueryClient } from '../services/ajax'
+import { getReactQueryClient } from '../services/ajax'
 import { wenquRequest, WenquSearchResponse } from '../services/wenqu'
 import { PublicDataDocument, PublicDataQuery } from '../schema/generated'
 import { duration3Days } from '../hooks/book'
 import IndexPage from '../components/index-page/index.page'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
-import { useBackgroundImageServer } from '../hooks/theme.server'
+import { useBackgroundImageServer as getBackgroundImageServer } from '../hooks/theme.server'
 import { getApolloServerClient } from '../services/apollo.server'
 
 export const revalidate = 60 * 60 * 24 * 3 // 3 day
@@ -25,19 +25,20 @@ async function Page() {
     map(x => x.doubanId).
     filter(x => x.length > 3) ?? []
 
-  await reactQueryClient.prefetchQuery({
+  const rq = getReactQueryClient()
+  await rq.prefetchQuery({
     queryKey: ['wenqu', 'books', 'dbIds', dbIds],
     queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
     staleTime: duration3Days,
     cacheTime: duration3Days,
   })
-  const d = dehydrate(reactQueryClient)
-  const bgInfo = useBackgroundImageServer()
+  const d = dehydrate(rq)
+  const bgInfo = getBackgroundImageServer()
   return (
     <div>
       <Hydrate state={d}>
         <IndexPage
-        bgInfo={bgInfo}
+          bgInfo={bgInfo}
           hydratedStates={d}
           publicData={data.data}
         />

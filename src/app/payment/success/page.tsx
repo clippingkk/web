@@ -1,7 +1,7 @@
 import { Hydrate, dehydrate } from '@tanstack/react-query'
 import React from 'react'
 import { getPaymentOrderInfo } from '../../../services/payment'
-import { reactQueryClient } from '../../../services/ajax'
+import { getReactQueryClient } from '../../../services/ajax'
 import PaymentSuccessContent from './content'
 
 type PaymentSuccessPageProps = {
@@ -13,12 +13,14 @@ async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
   // const sessionId = useRouter().query.sessionId as string
   const { sessionId, uid } = props.searchParams
 
-  await reactQueryClient.prefetchQuery({
+  const rq = getReactQueryClient()
+
+  await rq.prefetchQuery({
     queryKey: ['payment', 'result', sessionId],
     queryFn: () => getPaymentOrderInfo(sessionId),
   })
 
-  const d = dehydrate(reactQueryClient)
+  const d = dehydrate(rq)
 
   // use server response
   const homeLink = `/dash/${uid}/home`

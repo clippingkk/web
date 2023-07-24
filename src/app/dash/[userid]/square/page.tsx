@@ -1,14 +1,14 @@
 import React from 'react'
-import { APP_API_STEP_LIMIT } from '../../../../constants/config'
-import { duration3Days } from '../../../../hooks/book'
-import { FetchSquareDataQuery, FetchSquareDataQueryVariables, FetchSquareDataDocument } from '../../../../schema/generated'
-import { reactQueryClient } from '../../../../services/ajax'
-import { wenquRequest, WenquSearchResponse } from '../../../../services/wenqu'
+import { APP_API_STEP_LIMIT } from '@/constants/config'
+import { duration3Days } from '@/hooks/book'
+import { FetchSquareDataQuery, FetchSquareDataQueryVariables, FetchSquareDataDocument } from '@/schema/generated'
+import { getReactQueryClient } from '@/services/ajax'
+import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
 import SquarePageContent from './content'
 import { Metadata } from 'next'
-import { generateMetadata as squareGenerateMetadata } from '../../../../components/og/og-with-square-page'
-import { getApolloServerClient } from '../../../../services/apollo.server'
+import { generateMetadata as squareGenerateMetadata } from '@/components/og/og-with-square-page'
+import { getApolloServerClient } from '@/services/apollo.server'
 
 type PageProps = {
 }
@@ -30,7 +30,9 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     map(x => x.bookID).
     filter(x => x.length > 3) ?? []
 
-  const bs = await reactQueryClient.fetchQuery({
+    const rq = getReactQueryClient()
+
+  const bs = await rq.fetchQuery({
     queryKey: ['wenqu', 'books', 'dbIds', dbIds],
     queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
     staleTime: duration3Days,
@@ -57,8 +59,10 @@ async function Page(props: PageProps) {
     map(x => x.bookID).
     filter(x => x.length > 3) ?? []
 
+    const rq = getReactQueryClient()
+
   if (dbIds.length >= 1) {
-    await reactQueryClient.prefetchQuery({
+    await rq.prefetchQuery({
       queryKey: ['wenqu', 'books', 'dbIds', dbIds],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
       staleTime: duration3Days,
@@ -66,7 +70,7 @@ async function Page(props: PageProps) {
     })
   }
 
-  const d = dehydrate(reactQueryClient)
+  const d = dehydrate(rq)
 
   return (
     <Hydrate state={d}>

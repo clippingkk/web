@@ -11,7 +11,7 @@ import { useSelector } from "react-redux"
 import { TGlobalStore } from "../store"
 import { toast } from 'react-hot-toast'
 import { useCreateClippingsMutation } from "../schema/generated"
-import { reactQueryClient } from "../services/ajax"
+import { getReactQueryClient } from "../services/ajax"
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { duration3Days } from "./book"
 import { notifications } from "@mantine/notifications"
@@ -129,7 +129,8 @@ export function useUploadData(
 
       try {
         const searchQuery = i.title
-        const resp = await reactQueryClient.fetchQuery({
+        const rq = getReactQueryClient()
+        const resp = await rq.fetchQuery({
           queryKey: ['wenqu', 'books', 'search', searchQuery, 50, 0],
           queryFn: (ctx) => wenquRequest<WenquSearchResponse>(`/books/search?query=${searchQuery}&limit=50&offset=0`, {
             signal: ctx.signal

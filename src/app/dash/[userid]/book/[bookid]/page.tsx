@@ -1,11 +1,11 @@
 import React from 'react'
-import { reactQueryClient } from '../../../../../services/ajax'
+import { getReactQueryClient } from '@/services/ajax'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
-import { duration3Days } from '../../../../../hooks/book'
-import { wenquRequest, WenquSearchResponse } from '../../../../../services/wenqu'
+import { duration3Days } from '@/hooks/book'
+import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import BookPageContent from './content'
 import { Metadata } from 'next'
-import { generateMetadata as bookGenerateMetadata } from '../../../../../components/og/og-with-book'
+import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
 
 type PageProps = {
   params: { bookid: string, userid: string }
@@ -14,7 +14,8 @@ type PageProps = {
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { bookid, userid } = props.params
   const dbId = bookid ?? ''
-  const bs = await reactQueryClient.fetchQuery({
+  const rq = getReactQueryClient()
+  const bs = await rq.fetchQuery({
     queryKey: ['wenqu', 'books', 'dbId', dbId],
     queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
     staleTime: duration3Days,
@@ -34,8 +35,9 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 async function Page(props: PageProps) {
   const { bookid, userid } = props.params
   const dbId = bookid ?? ''
+  const rq = getReactQueryClient()
   if (dbId && dbId.length > 3) {
-    await reactQueryClient.prefetchQuery({
+    await rq.prefetchQuery({
       queryKey: ['wenqu', 'books', 'dbId', dbId],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
       staleTime: duration3Days,
@@ -43,7 +45,7 @@ async function Page(props: PageProps) {
     })
   }
 
-  const d = dehydrate(reactQueryClient)
+  const d = dehydrate(rq)
 
   return (
     <Hydrate state={d}>

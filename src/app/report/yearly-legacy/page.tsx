@@ -1,6 +1,6 @@
 import React from 'react'
 import ReportYearly from './content'
-import { reactQueryClient } from '../../../services/ajax'
+import { getReactQueryClient } from '../../../services/ajax'
 import { Hydrate, dehydrate } from '@tanstack/react-query'
 import { duration3Days } from '../../../hooks/book'
 import { FetchYearlyReportQuery, FetchYearlyReportQueryVariables, FetchYearlyReportDocument } from '../../../schema/generated'
@@ -61,15 +61,16 @@ async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
     map(x => x.doubanId).
     filter(x => x.length > 3) ?? []
 
+    const rq = getReactQueryClient()
   if (dbIds.length >= 1) {
-    await reactQueryClient.prefetchQuery({
+    await rq.prefetchQuery({
       queryKey: ['wenqu', 'books', 'dbIds', dbIds],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
       staleTime: duration3Days,
       cacheTime: duration3Days,
     })
   }
-  const d = dehydrate(reactQueryClient)
+  const d = dehydrate(rq)
 
   return (
     <Hydrate state={d}>

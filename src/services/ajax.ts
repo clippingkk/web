@@ -8,6 +8,7 @@ import { getLanguage } from '../utils/locales'
 import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
 import Cookies from 'js-cookie'
 import { cookies } from 'next/headers';
+import { cache } from 'react'
 
 export interface IBaseResponseData<T> {
   status: number
@@ -166,10 +167,13 @@ export function makeApolloClient() {
 //   return new SuspenseCache();
 // }
 
-export const reactQueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      keepPreviousData: true,
+export const getReactQueryClient = cache(
+  () => new QueryClient({
+    defaultOptions: {
+      queries: {
+        keepPreviousData: true,
+        cacheTime: 60 * 60 * 3 // 3 hours
+      },
     }
-  }
-})
+  })
+)

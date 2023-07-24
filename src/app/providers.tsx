@@ -13,7 +13,7 @@ import { useDarkModeStatus } from '../hooks/theme';
 import { Provider } from 'react-redux';
 import store from '../store';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { reactQueryClient, makeApolloClient } from '../services/ajax';
+import { getReactQueryClient, makeApolloClient } from '../services/ajax';
 import { reactQueryPersister } from '../services/storage';
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
 import InitProvider from './init.provider';
@@ -28,6 +28,7 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
   const cache = useGluedEmotionCache();
   const instance = init()
+  const rq = getReactQueryClient()
   return (
     <I18nextProvider i18n={instance}>
       <JotaiProvider>
@@ -41,7 +42,7 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
             <CacheProvider value={cache}>
               <MantineProvider theme={{ colorScheme: isDarkTheme ? 'dark' : 'light' }}>
                 <PersistQueryClientProvider
-                  client={reactQueryClient}
+                  client={rq}
                   persistOptions={{
                     persister: reactQueryPersister
                   }}
