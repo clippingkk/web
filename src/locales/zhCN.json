@@ -105,6 +105,10 @@
       "save": "保存",
       "visible": "是否对他人可见",
       "aiSummary": "AI 解析",
+      "share": {
+        "excerptAt": "摘录于 {{ date }}",
+        "noBook": "没有书籍内容"
+      },
       "sidebar": {
         "prev": "上一条",
         "next": "下一条"

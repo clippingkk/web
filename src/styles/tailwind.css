@@ -53,9 +53,9 @@
     column-gap: 4rem;
   }
 
-  .font-lxgw {
+  /* .font-lxgw {
     font-family: LxgwWenKai;
-  }
+  } */
 
   @keyframes animation-fade-in {
     from {

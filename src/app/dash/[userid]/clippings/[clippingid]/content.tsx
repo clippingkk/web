@@ -1,28 +1,28 @@
 'use client';
 import React, { useState, useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import Card from '../../../../../components/card/card'
-import Preview from '../../../../../components/preview/preview3'
-import { duration3Days, useSingleBook } from '../../../../../hooks/book'
+import Card from '@/components/card/card'
+import Preview from '@/components/preview/preview4'
+import { duration3Days, useSingleBook } from '@/hooks/book'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { TGlobalStore } from '../../../../../store'
-import { UserContent } from '../../../../../store/user/type'
+import { TGlobalStore } from '@/store'
+import { UserContent } from '@/store/user/type'
 import CommentBox from './commentBox'
 import Comment from './comment'
-import { useLocalTime } from '../../../../../hooks/time'
+import { useLocalTime } from '@/hooks/time'
 import Reactions from './reactions'
-import ClippingContent from '../../../../../components/clipping-content'
+import ClippingContent from '@/components/clipping-content'
 import ClippingSidebar from './clipping-sidebar'
-import { IN_APP_CHANNEL } from '../../../../../services/channel'
-import { CDN_DEFAULT_DOMAIN } from '../../../../../constants/config'
+import { IN_APP_CHANNEL } from '@/services/channel'
+import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useSetAtom } from 'jotai'
+import { appBackgroundAtom } from '@/store/global'
+import { FetchClippingQuery, useFetchClippingQuery } from '@/schema/generated'
 
 import styles from './clipping.module.css'
-import { useSetAtom } from 'jotai'
-import { appBackgroundAtom } from '../../../../../store/global'
-import { FetchClippingDocument, FetchClippingQuery, FetchClippingQueryVariables, useFetchClippingQuery } from '../../../../../schema/generated'
-import { dehydrate } from '@tanstack/react-query'
+import { toast } from 'react-hot-toast';
 
 type ClippingPageProps = {
   cid: number
@@ -43,11 +43,15 @@ function ClippingPageContent(props: ClippingPageProps) {
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
 
-  const togglePreviewVisible = useCallback(() => {
-    setSharePreviewVisible(v => !v)
-  }, [])
-
   const book = useSingleBook(clipping.clipping.bookID)
+  const { t } = useTranslation()
+
+  const togglePreviewVisible = useCallback(() => {
+    if (!book) {
+      toast.error(t('app.clipping.share.noBook'))
+    }
+    setSharePreviewVisible(v => !v)
+  }, [book, t])
 
   const setBg = useSetAtom(appBackgroundAtom)
   useEffect(() => {
@@ -56,7 +60,6 @@ function ClippingPageContent(props: ClippingPageProps) {
     }
     setBg(book.image)
   }, [book, setBg])
-  const { t } = useTranslation()
 
   const clippingAt = useLocalTime(clipping?.clipping.createdAt)
   const creator = clipping?.clipping.creator

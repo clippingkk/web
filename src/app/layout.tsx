@@ -20,6 +20,31 @@ import ClientOnlyProviders from './providers';
 import { Metadata } from 'next'
 import Script from 'next/script'
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
+import { Lato } from 'next/font/google'
+import localFont from 'next/font/local'
+
+const lato = Lato({
+  display: 'swap',
+  variable: '--font-lato',
+  weight: ['100', '300', '400', '700', '900']
+})
+
+// const lxgw = localFont({
+//   src: [{
+//     path: '../src/assets/fonts/LXGWWenKai-Light.woff2',
+//     weight: '200',
+//   }, {
+//     path: '../src/assets/fonts/LXGWWenKai-Regular.woff2',
+//     weight: '400'
+//   }, {
+//     path: '../src/assets/fonts/LXGWWenKai-Bold.woff2',
+//     weight: '700'
+//   }],
+//   display: 'swap',
+//   variable: '--font-lxgw',
+//   fallback: ['Helvetica']
+// })
+
 
 const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 type LayoutProps = {
@@ -78,7 +103,12 @@ export function PreloadResources() {
 
 const Layout = (props: LayoutProps) => {
   return (
-    <html>
+    <html
+     className={`${lato.variable}`}
+     style={{
+      '--font-lxgw': 'LxgwWenKai',
+     }}
+    >
       <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}' />
       <body>
         <ClientOnlyProviders>

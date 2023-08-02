@@ -1,9 +1,32 @@
 import profile from "../utils/profile"
 import { API_HOST } from "../constants/config"
 
-export async function FetchQRCode(scene: string, page: string, width: number, isHyaline: boolean): Promise<HTMLImageElement> {
+export type RGBColor = {
+  r: number
+  g: number
+  b: number
+}
+
+export async function FetchQRCode(
+  scene: string,
+  page: string,
+  width: number,
+  isHyaline: boolean,
+  color?: RGBColor
+): Promise<HTMLImageElement> {
+
+  const params = new URLSearchParams({
+    scene: scene,
+    page: page,
+    width: width.toString(),
+    isHyaline: isHyaline ? 'true' : 'false',
+  })
+  if (color) {
+    params.set('color', `rgb(${color.r},${color.g},${color.b})`)
+  }
+
   return fetch(
-    `${API_HOST}/api/v1/mp/qrcode?scene=${encodeURIComponent(scene)}&page=${page}&width=${width}&isHyaline=${isHyaline}`, {
+    `${API_HOST}/api/v1/mp/qrcode?${params.toString()}`, {
     headers: {
       'Authorization': `Bearer ${profile.token}`,
     },

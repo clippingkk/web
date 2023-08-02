@@ -105,6 +105,10 @@
       "save": "Save",
       "visible": "Visible(public to others ?)",
       "aiSummary": "AI Explain",
+      "share": {
+        "excerptAt": "excerpt at {{ date }}",
+        "noBook": "no book available"
+      },
       "sidebar": {
         "prev": "previous clipping",
         "next": "next clipping"

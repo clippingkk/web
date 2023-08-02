@@ -16,6 +16,10 @@ module.exports = {
   // whitelist: ['mode-dark'],
   theme: {
     extend: {
+      fontFamily: {
+        lxgw: ['var(--font-lxgw)'],
+        lato: ['var(--font-lato)'],
+      },
       width: {
         '128': '32rem',
         '144': '36rem',
