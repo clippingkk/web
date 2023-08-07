@@ -4,6 +4,8 @@ import React from 'react'
 // import ReactMarkdown from 'react-markdown'
 import { usePageTrack } from '../../../hooks/tracke'
 
+export const runtime = 'edge'
+
 function PrivacyPolicy() {
   usePageTrack('privacy')
   return (

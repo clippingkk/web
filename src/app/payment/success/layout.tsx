@@ -7,6 +7,8 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
+export const runtime = 'edge'
+
 const Layout = (props: LayoutProps) => {
   return (
     <DashboardContainer header={<NavigateGuide title='Success' />}>

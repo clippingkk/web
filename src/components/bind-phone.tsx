@@ -5,6 +5,7 @@ import * as sentry from '@sentry/react'
 import AV from 'leancloud-storage'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { LeanCloudInit } from '../utils/leancloud'
 
 type BindPhoneProps = {
   onFinalCheck(phone: string, code: string): Promise<any>
@@ -18,6 +19,9 @@ function BindPhone(props: BindPhoneProps) {
   const [verifyCode, setVerifyCode] = useState('')
   const [code, setCode] = useState('')
   const { t } = useTranslation()
+  useEffect(() => {
+    LeanCloudInit()
+  },[])
 
   const onPhoneNumberFinish = useCallback(() => {
     // 还没输入，直接干掉好了

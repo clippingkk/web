@@ -2,7 +2,6 @@
 import '../utils/mixpanel'
 import '../prefers-dark'
 import { init } from '../utils/locales'
-import '../utils/leancloud'
 
 import { CacheProvider } from '@emotion/react';
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core';

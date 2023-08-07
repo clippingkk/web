@@ -12,7 +12,6 @@ import AppContainer from '../components/AppContainer'
 
 import '../prefers-dark'
 import '../utils/locales'
-import '../utils/leancloud'
 import { Toaster } from 'react-hot-toast'
 import React from 'react'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'

@@ -2,6 +2,8 @@ import React from 'react'
 import DashboardContainer from '../../../components/dashboard-container/container'
 import { Metadata } from 'next'
 
+export const runtime = 'edge'
+
 type LayoutProps = {
   children: React.ReactNode
 }
