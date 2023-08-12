@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.6...v5.6.7) (2023-08-12)
+
+
+### Bug Fixes
+
+* **app:** disable open telemetry ([051395f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/051395fd4d3fba115d70d42f1732f5f283e2526d))
+
 ### [5.6.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.5...v5.6.6) (2023-08-12)
 
 
