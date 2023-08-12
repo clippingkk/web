@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.4...v5.6.5) (2023-08-12)
+
+
+### Features
+
+* **app:** migrate some route to edge api ([dd8e890](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/dd8e890472478d80bbf7d11993c54c6108b5ae92))
+* **app:** update deps ([1a26c39](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1a26c39f5738b53e646bf79c82ce8a6595c300a6))
+
 ### [5.6.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.3...v5.6.4) (2023-07-24)
 
 
