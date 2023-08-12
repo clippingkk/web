@@ -1,22 +1,23 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Dialog from '../dialog/dialog'
 import { WenquBook } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
 import FileSaver from 'file-saver'
 import { toast } from 'react-hot-toast'
-import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
+import { KonzertThemeMap } from '../../services/utp'
 import ThemePicker from './theme-picker'
 import { Blockquote, Button, Divider, Paper, Text, Title } from '@mantine/core'
-import { Clipping, User } from '../../schema/generated'
+import { FetchClippingQuery } from '../../schema/generated'
 import Preview4Clipping from './preview4-clipping'
-import { toBlob, toPng } from 'html-to-image'
+import { toBlob } from 'html-to-image'
 import { useMutation } from '@tanstack/react-query'
 
 type PreviewProps = {
   onCancel: () => void
   onOk: () => void
   background: string
-  clipping: Omit<Clipping, 'aiSummary' | 'reactions' | 'source' | 'comments'>
+  // clipping: Omit<Clipping, 'aiSummary' | 'reactions' | 'source' | 'comments'>
+  clipping: FetchClippingQuery['clipping']
   book: WenquBook | null
 }
 

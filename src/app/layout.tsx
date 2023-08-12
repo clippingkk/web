@@ -20,9 +20,10 @@ import { Metadata } from 'next'
 import Script from 'next/script'
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { Lato } from 'next/font/google'
-import localFont from 'next/font/local'
+// import localFont from 'next/font/local'
 
 const lato = Lato({
+  subsets: ['latin'],
   display: 'swap',
   variable: '--font-lato',
   weight: ['100', '300', '400', '700', '900']
@@ -87,7 +88,6 @@ export const metadata: Metadata = {
   },
 }
 
-export function PreloadResources() {
   // maybe try: https://github.com/vercel/next.js/issues/48356
   // TODO:
 
@@ -97,8 +97,6 @@ export function PreloadResources() {
   // <link href="https://wenqu.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
   // <link href="https://bam.nr-data.net" rel="preconnect" crossOrigin='use-credentials' />
   // ReactDOM.preconnect('https://cdn.annatarhe.com', { crossOrigin: 'use-credentials' })
-  return null;
-}
 
 const Layout = (props: LayoutProps) => {
   return (
@@ -106,7 +104,7 @@ const Layout = (props: LayoutProps) => {
      className={`${lato.variable}`}
      style={{
       '--font-lxgw': 'LxgwWenKai',
-     }}
+     } as any}
     >
       <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}' />
       <body>

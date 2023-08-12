@@ -8,14 +8,11 @@ import { Avatar } from '@mantine/core'
 import { KonzertThemeMap } from '../../services/utp'
 import { Theme, themeList } from './theme.config'
 import { useTranslation } from 'react-i18next'
-import { useQuery } from '@tanstack/react-query'
-import { FetchQRCode } from '../../services/mp'
-
 
 const lxgwFontLanguages = ['zh', 'jp', 'ko']
 
 type Preview4ClippingProps = {
-  clipping: Omit<Clipping, 'aiSummary' | 'reactions' | 'source' | 'comments'>
+  clipping: Pick<Clipping, 'id' | 'title' | 'content' | 'createdAt'> & { creator: Pick<User, 'id' | 'name' | 'avatar'> }
   book: WenquBook | null
   theme: Theme
 }

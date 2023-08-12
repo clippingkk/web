@@ -7,7 +7,6 @@ import { QueryClient } from '@tanstack/react-query'
 import { getLanguage } from '../utils/locales'
 import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
 import Cookies from 'js-cookie'
-import { cookies } from 'next/headers';
 import { cache } from 'react'
 import { apolloCacheConfig } from './apollo.shard'
 
