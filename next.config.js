@@ -21,7 +21,7 @@ const config = {
   //   hideSourceMaps: true
   // },
   experimental: {
-    instrumentationHook: isProd,
+    // instrumentationHook: isProd,
     // runtime: 'experimental-edge',
     // swcPlugins: [['@swc-jotai/debug-label', {}]],
   },
