@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.5...v5.6.6) (2023-08-12)
+
+
+### Bug Fixes
+
+* **app:** upgrade apollo client and fix build issue ([0e526da](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0e526da6625daf08c4db833256d8e5ccebc669dd))
+
 ### [5.6.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.4...v5.6.5) (2023-08-12)
 
 
