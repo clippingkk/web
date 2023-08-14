@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.7...v5.6.8) (2023-08-14)
+
+
+### Features
+
+* **app:** recovery open telemetry but still disabled ([1704669](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/17046691ed18a619a9c95b30250377e3179b5375))
+* **app:** update graphql codegen cli ([82efdd6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/82efdd6bf86448da8e5e72a322b4268671e12245))
+
+
+### Bug Fixes
+
+* **preview:** fix preview avatar ([4cd18ae](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4cd18aeac44f106d5700564a826e1036f149b208))
+
 ### [5.6.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.6...v5.6.7) (2023-08-12)
 
 
