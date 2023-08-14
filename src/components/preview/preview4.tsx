@@ -22,7 +22,7 @@ type PreviewProps = {
 }
 
 function Preview(props: PreviewProps) {
-  const [currentTheme, setCurrentTheme] = useState(KonzertThemeMap.young.id)
+  const [currentTheme, setCurrentTheme] = useState(KonzertThemeMap.light.id)
 
   const { t } = useTranslation()
 

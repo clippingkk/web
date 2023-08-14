@@ -8,6 +8,8 @@ import { Avatar } from '@mantine/core'
 import { KonzertThemeMap } from '../../services/utp'
 import { Theme, themeList } from './theme.config'
 import { useTranslation } from 'react-i18next'
+import { original } from '@reduxjs/toolkit'
+import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 
 const lxgwFontLanguages = ['zh', 'jp', 'ko']
 
@@ -49,6 +51,13 @@ function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) 
       .format(new Date(clipping.createdAt))
   }, [clipping.createdAt])
 
+  const avatar = useMemo(() => {
+    const originalAvatar = clipping.creator.avatar
+    return originalAvatar.startsWith('http') ?
+      originalAvatar :
+      `${CDN_DEFAULT_DOMAIN}/${originalAvatar}`
+  }, [clipping.creator.avatar])
+
   return (
     <div
       ref={ref}
@@ -66,7 +75,7 @@ function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) 
         }}
       >
         <Avatar
-          src={clipping.creator.avatar}
+          src={avatar}
           size={50}
           alt={clipping.creator.name}
         />
