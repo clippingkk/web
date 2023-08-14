@@ -33,6 +33,10 @@ function Preview(props: PreviewProps) {
         return
       }
       const blob = await toBlob(previewDOM.current, {
+        pixelRatio: 3,
+        skipAutoScale: false,
+        canvasWidth: 375,
+        width: 375,
         cacheBust: true
       })
       if (!blob) {

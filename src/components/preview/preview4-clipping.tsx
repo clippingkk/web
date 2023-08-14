@@ -39,12 +39,12 @@ function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) 
   const qrcodeImage = null
 
   const isFontLXGW = useMemo(() => {
-    if (!book?.title) {
+    if (!clipping.content) {
       return false
     }
-    const lng = convert6393to1(franc(book.title))
+    const lng = convert6393to1(franc(clipping.content))
     return lxgwFontLanguages.includes(lng)
-  }, [book?.title])
+  }, [clipping.content])
 
   const createdAt = useMemo(() => {
     return new Intl.DateTimeFormat()
@@ -77,6 +77,7 @@ function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) 
         <Avatar
           src={avatar}
           size={50}
+          className='rounded-full shadow'
           alt={clipping.creator.name}
         />
         <h4 className='my-2 text-sm'>{clipping.creator.name}</h4>
