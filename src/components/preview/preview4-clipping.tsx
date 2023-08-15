@@ -3,13 +3,11 @@ import { franc } from 'franc-min'
 import convert6393to1 from 'iso-639-3-to-1'
 import { Clipping, User } from '../../schema/generated'
 import { WenquBook } from '../../services/wenqu'
-import Image from 'next/image'
 import { Avatar } from '@mantine/core'
-import { KonzertThemeMap } from '../../services/utp'
 import { Theme, themeList } from './theme.config'
 import { useTranslation } from 'react-i18next'
-import { original } from '@reduxjs/toolkit'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
+import { QRCodeSVG } from 'qrcode.react'
 
 const lxgwFontLanguages = ['zh', 'jp', 'ko']
 
@@ -22,22 +20,7 @@ type Preview4ClippingProps = {
 function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) {
   const { clipping, book, theme } = props
   const { t } = useTranslation()
-
   const themeConfig = themeList[theme]
-  // const { data: qrcodeImage } = useQuery({
-  //   queryKey: ['clipping', clipping.id, 'qrcode', [clipping.id, themeConfig.qrLineColor]],
-  //   queryFn: async () => {
-  //     return FetchQRCode(
-  //       `c=${clipping.id}`,
-  //       'pages/landing/landing',
-  //       90,
-  //       true,
-  //       themeConfig.qrLineColor
-  //     )
-  //   }
-  // })
-  const qrcodeImage = null
-
   const isFontLXGW = useMemo(() => {
     if (!clipping.content) {
       return false
@@ -118,17 +101,11 @@ function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) 
             {t('app.slogan')}
           </h3>
         </div>
-
-        {qrcodeImage && (
-          <Image
-            src={qrcodeImage}
-            alt='clipping'
-            width={90}
-            height={90}
-          />
-        )}
+        <QRCodeSVG
+          value={`https://clippingkk.com/dash/${clipping.creator.id}/clipping/${clipping.id}`}
+          size={90}
+        />
       </div>
-
     </div>
   )
 }

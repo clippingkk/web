@@ -38,7 +38,7 @@ export async function generateMetadata(props: YearlyLegacyPageProps): Promise<Me
   return generateReportMetadata(year, reportInfoResponse.data, bs.books)
 }
 
-async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
+async function YearlyPage(props: YearlyLegacyPageProps) {
   const uid = ~~props.searchParams.uid
   const year = props.searchParams.year ? ~~props.searchParams.year : new Date().getFullYear()
   // const uid = ~~(context.params?.userid ?? -1) as number
@@ -84,4 +84,4 @@ async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
   )
 }
 
-export default YearlyLegacyPage
+export default YearlyPage
