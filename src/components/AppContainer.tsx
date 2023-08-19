@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { useUploadData } from '../hooks/my-file'
 import { useActionTrack } from '../hooks/tracke'
 import { TGlobalStore } from '../store'
+import FloatingProgress from './progress/floating';
 
 type AppContainerProps = {
   children: React.ReactElement
@@ -13,7 +14,7 @@ type AppContainerProps = {
 
 function AppContainer(props: AppContainerProps) {
   const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
-  const { onUpload } = useUploadData(true, id > 0)
+  const { onUpload,step, at, count } = useUploadData(true, id > 0)
   const onUploadTrack = useActionTrack('upload')
   const { t } = useTranslation()
 
@@ -73,6 +74,7 @@ function AppContainer(props: AppContainerProps) {
             </div>
           </div>
         )}
+        <FloatingProgress step={step} at={at} count={count} />
       </>
     </div>
   )

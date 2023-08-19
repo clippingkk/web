@@ -1,4 +1,4 @@
-import { useApolloClient } from "@apollo/client"
+import { useApolloClient, useMutation } from "@apollo/client"
 import { createMachine } from 'xstate'
 import { useMachine } from '@xstate/react'
 import { useState, useRef, useCallback, useEffect } from "react"
@@ -15,8 +15,20 @@ import { getReactQueryClient } from "../services/ajax"
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { duration3Days } from "./book"
 import { notifications } from "@mantine/notifications"
+import { graphql } from '../gql'
+import { delay } from "../utils/timer"
+import { digestMessage } from '../utils/crypto'
+
+
+type digestedClippingItem = TClippingItem & { _digest?: string }
 
 const localClippingsStashKey = 'app.stash.clippings'
+
+const onSyncEndMutation = graphql(`
+  mutation onSyncEnd($startedAt: Int!) {
+    onCreateClippingEnd(startedAt: $startedAt)
+  }
+`)
 
 const uploadProcessMachine = createMachine({
   /** @xstate-layout N4IgpgJg5mDOIC5QFUAOAbA9gQwgBQCdMBjOWAWW2IAsBLAOzADp7NGBiAOTAA8AXANoAGALqJQqTLFp9abcSB6IAbMqFMAnACYAjAA4tG5TuUBWHQHZTAGhABPRHp1MALBvcaXpvcr1G9pgC+gbZoWLiEJGSUNAzMqNgEsGBcvIKiCpLSsvJIiog6GgDMTEJFOlrmfqZuyi4utg4Ipt6uJsqGFhYuRaYWesGhGDj4RKSwFFR0jEwJSSkAogREBMJieVkycvQKSgiFJWUVVRo1RvWNiPUl3e5OOjo9QloWgyBhI5Hjk7Ezc8nsABKcDA6XWEikW1yoD2B1K5Uq+lOtQu9kQWmeTC0bncQiERjKui0bw+ETG0SmcSYyUSvygACFMJgANapfhrTKQnI7PJ7DHqFxCDouEwYsw2NEINR6TTtHrlExOEnDMlRCYxabMGkEOmMlnsJYrDkbLnbXZXUwaJjKCz6Kp6FxaDoaS7NCwC9oWYrYjRCEXK8KjNU-TXUsC06YMpms4HJMGc7Jm3kWq02u36B1OwyuopaLSaDz+OrKYqvELvFVB74aqkAV0rDCgbPjJsT0Py+2K8OOSLOdQakp8+ZFZltWgCWiKbgDn3J6spM3rgcbBuWmFWGVbUJ5MIKXaOiOqKIHTRLznalrUll6pmJ5dJVYpv2YS5GK9joONELbO47cIPJx9qiTTdM4qiqPiLQuDaDozqq1YLswEBsCkH4tt+27mggXipraAQZo6zqukObSjhUE5ThocGPvOz5MGAa4EECILoSAmzclhZglDUvhFBofg6L0LqSn0HqqF6uZuH6OjBOWrAQHACgPl8T6agmmHJggAC0yiujp1EqbRoasIw6kcZpXQWJoQoZjoQouP0Og5oYrh1E6dlOno-RBPelaGSGVL-GAZlJruCAWPmBLFF5vSOtBrraKUOIxXoAQ2tOvmBv5NYzNqurRiF7Z8hoVl8UKebOqoBiuqYdSuB4XHKHxDxlkMWVzgFi4NvQUCFb+eyOq6xhWtBqgOUUEVeV6BkdTlSEoX1WFFEU6gRU60ETZUPgSk0JEaCYfTkbelEzcGc30Yxi2abVLjdti5gTS4MU1e6sqqFO442vxVGyUAA */
@@ -76,7 +88,7 @@ export function useUploadData(
 ) {
   const { t } = useTranslation()
   const [stepValue, send] = useMachine(uploadProcessMachine)
-  const step = stepValue.value
+  const step = stepValue.value as UploadStep
   const [count, setCount] = useState(-1)
   const [at, setAt] = useState(-1)
   const [messages, setMessages] = useState<string[]>([t('app.upload.progress.message.open')])
@@ -84,10 +96,12 @@ export function useUploadData(
   const client = useApolloClient()
 
   const [exec] = useCreateClippingsMutation()
+  const [onSyncEnd] = useMutation(onSyncEndMutation)
+
   const onUpload = useCallback(async (e: React.DragEvent, v: boolean) => {
     e.preventDefault()
     const file = e.dataTransfer.items[0]
-
+    const startedAt = Date.now()
     if (file.kind !== 'file' || file.type !== 'text/plain') {
       return
     }
@@ -101,7 +115,8 @@ export function useUploadData(
       setMessages(m => m.concat(e.toString()))
       return
     }
-    let parsedData: TClippingItem[]
+
+    let parsedData: digestedClippingItem[]
     try {
       const parser = new ClippingTextParser(str)
       parsedData = parser.execute()
@@ -112,8 +127,32 @@ export function useUploadData(
     }
 
     send('Next')
+
+    let uploadedClippings = new Set<string>()
+    const uploadedClippingValue = localStorage.getItem('app.uploaded.clippings')
+    if (uploadedClippingValue) {
+      try {
+        const v = JSON.parse(uploadedClippingValue) as string[]
+        uploadedClippings = new Set(v)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    const allDigests = await Promise.all(
+      parsedData.map(
+        i => digestMessage(JSON.stringify(i))
+      )
+    )
+    parsedData.forEach((i, index) => {
+      i._digest = allDigests[index]
+    })
+
+    // only uploaded clippings that have not been uploaded
+    parsedData = parsedData.filter((i) => !uploadedClippings.has(i._digest!))
+
     setCount(parsedData.length)
 
+    // get ready for book info
     for (let index in parsedData) {
       const i = parsedData[index]
       setAt(~~index)
@@ -148,14 +187,15 @@ export function useUploadData(
       }
     }
     send('Next')
-    const chunkedData = parsedData.reduce((result: (TClippingItem[])[], item: TClippingItem, index: number) => {
+    // cache
+    const chunkedData = parsedData.reduce((result, item, index) => {
       if (result[result.length - 1].length % 20 === 0 && index !== 0) {
         result.push([item])
       } else {
         result[result.length - 1].push(item)
       }
       return result
-    }, [[]] as TClippingItem[][])
+    }, [[]] as digestedClippingItem[][])
     setCount(chunkedData.length)
     if (!willSyncServer) {
       // 这里会覆盖之前的数据，后续可以考虑是不是弄个队列
@@ -178,7 +218,24 @@ export function useUploadData(
             visible: v
           }
         })
+
+        // skip uploaded clippings in next time
+        chunkedData.forEach(x => {
+          x.forEach(v => {
+            uploadedClippings.add(v._digest!)
+          })
+        })
       }
+      localStorage.setItem(
+        'app.uploaded.clippings', JSON.stringify(Array.from(uploadedClippings))
+      )
+
+      await onSyncEnd({
+        variables: {
+          startedAt: ~~(startedAt / 1000)
+        }
+      })
+
       setAt(chunkedData.length)
       toast.success(t('app.upload.tips.done'))
       send('Next')

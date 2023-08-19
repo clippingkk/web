@@ -12,7 +12,6 @@ async function signDataByWeb3() {
 
   const accounts = await eth.request<string[]>({ method: 'eth_requestAccounts', params: [] });
 
-  console.log('accounts', accounts)
   if (!accounts) {
     throw new Error('accounts not found')
   }
