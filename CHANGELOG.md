@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.8...v5.6.9) (2023-08-19)
+
+
+### Features
+
+* **preview:** update preview style ([19ce6f7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/19ce6f7b75282bf356830f4d5db2408d7d0cdccd))
+* **upload:** add background uploading bar and use website url as qrcode ([5b4de7b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5b4de7b19603be54de55afa647fc677fc31a4e0f))
+
 ### [5.6.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.7...v5.6.8) (2023-08-14)
 
 
