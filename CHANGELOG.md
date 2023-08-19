@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.9...v5.6.10) (2023-08-19)
+
+
+### Bug Fixes
+
+* **app:** add missing package ([17154dc](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/17154dc0f8e41e05170315a624703b93c93f92cb))
+
 ### [5.6.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.8...v5.6.9) (2023-08-19)
 
 
