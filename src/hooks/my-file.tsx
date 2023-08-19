@@ -212,6 +212,9 @@ export function useUploadData(
     try {
       for (let i = 0; i < chunkedData.length; i++) {
         setAt(i)
+        if (chunkedData[i].length === 0) {
+          continue
+        }
         await exec({
           variables: {
             payload: chunkedData[i].map(x => ({ ...x, bookID: x.bookId })),
