@@ -86,6 +86,7 @@
     "@emotion/server": "^11.11.0",
     "@fingerprintjs/fingerprintjs": "^3.4.2",
     "@formkit/auto-animate": "1.0.0-beta.6",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
     "@mantine/core": "^6.0.19",
