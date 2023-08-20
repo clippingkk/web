@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.10...v5.6.11) (2023-08-20)
+
+
+### Bug Fixes
+
+* **upload:** skip empty chunk when upload ([53e3924](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/53e39240328295a000ecb8f621617df070459339))
+
 ### [5.6.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.9...v5.6.10) (2023-08-19)
 
 
