@@ -8,7 +8,11 @@ export function middleware(request: NextRequest) {
     if (request.cookies.has('token')) {
       const uid = request.cookies.get('uid')?.value
       if (uid) {
-        return NextResponse.redirect(new URL(`/dash/${uid}/home`, request.url));
+        const nextUrl = new URL(`/dash/${uid}/home`, request.url)
+        nextUrl.protocol = 'https:'
+        nextUrl.host = 'clippingkk.annatarhe.com:443'
+        nextUrl.port = '443'
+        return NextResponse.redirect(nextUrl);
       }
     }
   }
