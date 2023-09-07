@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.11...v5.6.12) (2023-09-07)
+
+
+### Bug Fixes
+
+* **auth:** fix auth redirect check ([489f95a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/489f95a9cc9882d478f818a1886add967cf27160))
+* **share:** fix qrcode link ([eff9d18](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/eff9d1893e759a25537b3da29c0e54eb70370993))
+
 ### [5.6.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.10...v5.6.11) (2023-08-20)
 
 
