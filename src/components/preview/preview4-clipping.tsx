@@ -102,7 +102,7 @@ function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) 
           </h3>
         </div>
         <QRCodeSVG
-          value={`https://clippingkk.annatarhe.com/dash/${clipping.creator.id}/clipping/${clipping.id}`}
+          value={`https://clippingkk.annatarhe.com/dash/${clipping.creator.id}/clippings/${clipping.id}`}
           size={90}
         />
       </div>
