@@ -89,7 +89,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
               {profile.name}
             </Menu.Label>
             <Menu.Item
-              icon={(
+              leftSection={(
                 <Avatar
                   size={24}
                   src={avatar}
@@ -101,13 +101,13 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
               {profile.name}
             </Menu.Item>
             <Menu.Item
-              icon={<DevicePhoneMobileIcon className='w-6 h-6' />}
+              leftSection={<DevicePhoneMobileIcon className='w-6 h-6' />}
               onClick={onPhoneLogin}
             >
               {t('app.menu.loginByQRCode.title')}
             </Menu.Item>
             <Menu.Item
-              icon={<CogIcon className='w-6 h-6' />}
+              leftSection={<CogIcon className='w-6 h-6' />}
             >
               <Link href={`/dash/${uidOrDomain}/settings`}>
                 {t('app.menu.settings')}
@@ -118,7 +118,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
 
             <Menu.Item
               color='red'
-              icon={<ArrowLeftOnRectangleIcon className='w-6 h-6' />}
+              leftSection={<ArrowLeftOnRectangleIcon className='w-6 h-6' />}
               onClick={onLogout}
             >
               {t('app.menu.logout')}

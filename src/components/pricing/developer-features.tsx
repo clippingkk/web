@@ -1,6 +1,6 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import { Button, HoverCard, Text } from '@mantine/core'
-import { Prism } from '@mantine/prism'
+import { CodeHighlight } from '@mantine/code-highlight';
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -30,15 +30,13 @@ function DeveloperFeatures(props: DeveloperFeaturesProps) {
           <HoverCard.Dropdown className=' dark:text-gray-100'>
             <div className='flex flex-col'>
               <Text className='mb-2'>Command Line Interface</Text>
-              <Prism language='bash'>
-                {cliExample}
-              </Prism>
+              <CodeHighlight language='bash' code={cliExample} />
               <Button
                 component='a'
                 href='https://github.com/clippingkk/cli'
                 target='_blank'
                 className='mt-4'
-                rightIcon={<ArrowTopRightOnSquareIcon />}
+                rightSection={<ArrowTopRightOnSquareIcon />}
               >
                 Code
               </Button>

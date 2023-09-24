@@ -1,9 +1,8 @@
-import { useMutation } from '@apollo/client'
 import { CommandLineIcon } from '@heroicons/react/24/outline'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Dialog from '../../../../components/dialog/dialog'
-import { Prism } from '@mantine/prism'
+import { CodeHighlight } from '@mantine/code-highlight';
 import { getLocalToken } from '../../../../services/ajax'
 import { useClaimCliApiTokenMutation } from '../../../../schema/generated'
 
@@ -83,9 +82,7 @@ ck-cli
             </a>
             <br />
             2. run
-            <Prism language='bash'>
-                {cliScriptExample}
-            </Prism>
+            <CodeHighlight code={cliScriptExample} language='bash' />
             <button
               onClick={onCopyToClipboard}
               className='text-xl py-2 px-4 rounded bg-blue-500 text-white hover:scale-110 transform duration-300'

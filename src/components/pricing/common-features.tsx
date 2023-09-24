@@ -1,6 +1,5 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import { Button, HoverCard, Text } from '@mantine/core'
-import { Prism } from '@mantine/prism'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 

@@ -1,5 +1,12 @@
 import '../styles/devices.min.css'
 import 'react-phone-input-2/lib/style.css'
+
+
+import '@mantine/core/styles.css'
+import '@mantine/spotlight/styles.css'
+import '@mantine/notifications/styles.css'
+import '@mantine/code-highlight/styles.css'
+
 // import 'emoji-mart/css/emoji-mart.css'
 import '../styles/react-animation.css'
 import '../styles/global.css'
@@ -20,6 +27,8 @@ import { Metadata } from 'next'
 import Script from 'next/script'
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { Lato } from 'next/font/google'
+import { ColorSchemeScript, MantineProvider } from '@mantine/core'
+import { theme } from '../styles/mantine'
 // import localFont from 'next/font/local'
 
 const lato = Lato({
@@ -88,42 +97,47 @@ export const metadata: Metadata = {
   },
 }
 
-  // maybe try: https://github.com/vercel/next.js/issues/48356
-  // TODO:
+// maybe try: https://github.com/vercel/next.js/issues/48356
+// TODO:
 
-  // <link href="https://cdn.annatarhe.com" rel='preconnect' crossOrigin='use-credentials' />
-  // <link href="https://ck-cdn.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
-  // <link href="https://clippingkk-api.annatarhe.com" rel='preconnect' crossOrigin='use-credentials' />
-  // <link href="https://wenqu.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
-  // <link href="https://bam.nr-data.net" rel="preconnect" crossOrigin='use-credentials' />
-  // ReactDOM.preconnect('https://cdn.annatarhe.com', { crossOrigin: 'use-credentials' })
+// <link href="https://cdn.annatarhe.com" rel='preconnect' crossOrigin='use-credentials' />
+// <link href="https://ck-cdn.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
+// <link href="https://clippingkk-api.annatarhe.com" rel='preconnect' crossOrigin='use-credentials' />
+// <link href="https://wenqu.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
+// <link href="https://bam.nr-data.net" rel="preconnect" crossOrigin='use-credentials' />
+// ReactDOM.preconnect('https://cdn.annatarhe.com', { crossOrigin: 'use-credentials' })
 
 const Layout = (props: LayoutProps) => {
   return (
     <html
-     className={`${lato.variable}`}
-     style={{
-      '--font-lxgw': 'LxgwWenKai',
-     } as any}
+      className={`${lato.variable}`}
+      style={{
+        '--font-lxgw': 'LxgwWenKai',
+      } as any}
     >
+      <head>
+        <ColorSchemeScript />
+      </head>
       <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}' />
       <body>
-        <ClientOnlyProviders>
-          <>
-            <AppContainer>
-              <>
-                {props.children}
-                <div id="dialog"></div>
-                <div id="toast"></div>
-                <div id='searchbar' className='raycast'></div>
-              </>
-            </AppContainer>
-            <Toaster
-              position='top-center'
-            />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </>
-        </ClientOnlyProviders>
+        <MantineProvider theme={theme}>
+          <ClientOnlyProviders>
+            <>
+              <AppContainer>
+                <>
+                  {props.children}
+                  <div id="dialog"></div>
+                  <div id="toast"></div>
+                  <div id='searchbar' className='raycast'></div>
+                </>
+              </AppContainer>
+              <Toaster
+                position='top-center'
+              />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </>
+          </ClientOnlyProviders>
+        </MantineProvider>
       </body>
     </html>
   )

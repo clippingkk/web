@@ -68,7 +68,6 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
       <div className='relative'>
         <LoadingOverlay
           visible={loading}
-          overlayBlur={4}
         />
         <Tooltip
           label={errMsg?.includes('402') ? t('app.payment.required') : t('app.ai.clippingHelp')}
