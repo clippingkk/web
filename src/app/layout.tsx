@@ -1,8 +1,8 @@
+import '@mantine/core/styles.css';
 import '../styles/devices.min.css'
 import 'react-phone-input-2/lib/style.css'
 
-
-import '@mantine/core/styles.css'
+import '@mantine/core/styles.css';
 import '@mantine/spotlight/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/code-highlight/styles.css'

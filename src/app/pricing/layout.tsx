@@ -5,8 +5,6 @@ import NavigateGuide from '../../components/navigation-bar/navigate-guide'
 // import OGWithPricing from '../../components/og/og-with-pricing'
 // import page from '../page'
 
-export const runtime = 'edge'
-
 type LayoutProps = {
   children: React.ReactNode
 }

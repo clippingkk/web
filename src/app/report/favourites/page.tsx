@@ -5,8 +5,6 @@ import { Metadata } from 'next'
 
 type FavouritesPageProps = {
 }
-export const runtime = 'edge'
-
 export const metadata: Metadata = {
   ...indexPageMetadata,
   title: 'My favourites books',

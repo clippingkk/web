@@ -1,4 +1,4 @@
-import MetaMaskSDK from '@metamask/sdk';
+import { MetaMaskSDK } from '@metamask/sdk';
 import { URLS } from './chains'
 
 const LoginWelcomeText = 'Welcome to the ClippingKK~ \n It`s your nonce: '

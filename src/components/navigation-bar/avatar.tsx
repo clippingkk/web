@@ -13,7 +13,7 @@ function AvatarOnNavigationBar(props: AvatarOnNavigationBarProps) {
     <div
       className={clsx(isPremium && 'px-1 py-1 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400')}>
       <Avatar
-      size={12}
+        size={12}
         src={avatarUrl}
         radius={'xl'}
       />
