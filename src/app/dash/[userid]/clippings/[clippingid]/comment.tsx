@@ -47,7 +47,7 @@ function Comment(props: CommentProps) {
             onClick={() => {
               setIsFold(v => !v)
             }}
-            leftIcon={isFold ? <ArrowDownIcon className='w-4 h-4' /> : <ArrowUpIcon className='w-4 h-4' />}
+            leftSection={isFold ? <ArrowDownIcon className='w-4 h-4' /> : <ArrowUpIcon className='w-4 h-4' />}
           >
             {t(isFold ? 'unfold' : 'fold')}
           </Button>

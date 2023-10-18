@@ -63,7 +63,6 @@ function AdminPanel() {
         <>
           <h3 className='text-3xl text-center dark:text-gray-50 my-8'>无家可归的书目们</h3>
           <NumberInput
-            type="number"
             value={offset}
             onChange={(val) => setOffset(~~val)}
             placeholder="offset"

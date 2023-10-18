@@ -72,7 +72,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
       <Modal.Body>
         <div>
           <Input
-            icon={<MagnifyingGlassIcon className='w-4 h-4 ml-2' />}
+            leftSection={<MagnifyingGlassIcon className='w-4 h-4 ml-2' />}
             type='search'
             max={64}
             value={bookName}
