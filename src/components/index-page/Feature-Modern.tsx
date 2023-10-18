@@ -2,8 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import WebArchImage from '../../assets/web_arch.png'
-import { Prism } from '@mantine/prism'
-
+import { CodeHighlight } from '@mantine/code-highlight';
 
 type FeatureModernProps = {
 }
@@ -85,17 +84,16 @@ function FeatureModern(props: FeatureModernProps) {
             maxWidth: '100vw'
           }}
           >
-            <Prism
+            <CodeHighlight
               language='c'
-              noCopy
-              highlightLines={{
-                26: { color: 'blue' },
-                27: { color: 'blue' },
-                35: { color: 'blue' },
-              }}
-            >
-              {exampleCode}
-            </Prism>
+              withCopyButton={false}
+              // highlightLines={{
+              //   26: { color: 'blue' },
+              //   27: { color: 'blue' },
+              //   35: { color: 'blue' },
+              // }}
+              code={exampleCode}
+            />
           </div>
           <div className='flex justify-center flex-col items-center lg:items-start'>
             <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-gradient-to-br mt-12 lg:mt-0'}>

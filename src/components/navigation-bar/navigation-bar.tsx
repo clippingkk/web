@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import Image from 'next/image'
+import clsx from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { execLogout, TUserState, UserContent } from '../../store/user/type'
 // import Tooltip from 'rc-tooltip'
@@ -9,14 +10,13 @@ import Tooltip from '../tooltip/Tooltip';
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import SearchBar, { useCtrlP } from '../searchbar/searchbar'
-import { Modal, clsx } from '@mantine/core'
+import { Modal } from '@mantine/core'
 import LoginByQRCode from './login-by-qrcode'
-import styles from './navigation-bar.module.css'
-import Cookies from 'js-cookie'
 import { getMyHomeLink } from '../../utils/profile'
 import LoggedNavigationBar from './authed'
 import { ArrowUpTrayIcon, BookOpenIcon, Squares2X2Icon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { useSelectedLayoutSegment } from 'next/navigation'
+import styles from './navigation-bar.module.css'
 
 const leftMenu = [
   {

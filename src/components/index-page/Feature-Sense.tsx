@@ -22,8 +22,8 @@ function FeatureSense(props: FeatureSenseProps) {
             <Image
               src={iOSWidgetImage.src}
               alt={t('app.index.features.sense.f2')}
-              width={iOSWidgetImage.width / 2}
-              height={iOSWidgetImage.height / 2}
+              width={iOSWidgetImage.width / 3}
+              height={iOSWidgetImage.height / 3}
             />
           </DeviceIPhoneX>
           <div className='flex justify-center flex-col items-center lg:items-start'>

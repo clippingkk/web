@@ -4,7 +4,7 @@ import '../prefers-dark'
 import { init } from '../utils/locales'
 
 import { CacheProvider } from '@emotion/react';
-import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import React from 'react'
 import { Provider as JotaiProvider } from 'jotai'
 import { useGluedEmotionCache } from '../hooks/emotion';
@@ -12,7 +12,7 @@ import { useDarkModeStatus } from '../hooks/theme';
 import { Provider } from 'react-redux';
 import store from '../store';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { createReactQueryClient, getReactQueryClient, makeApolloClient } from '../services/ajax';
+import { createReactQueryClient, makeApolloClient } from '../services/ajax';
 import { reactQueryPersister } from '../services/storage';
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
 import InitProvider from './init.provider';
@@ -32,33 +32,24 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
     <I18nextProvider i18n={instance}>
       <JotaiProvider>
         <Provider store={store}>
-          <ColorSchemeProvider
-            colorScheme={isDarkTheme ? 'dark' : 'light'}
-            toggleColorScheme={t => {
-              onDarkThemeChange(t === 'dark')
-            }}
-          >
-            <CacheProvider value={cache}>
-              <MantineProvider theme={{ colorScheme: isDarkTheme ? 'dark' : 'light' }}>
-                <PersistQueryClientProvider
-                  client={rq}
-                  persistOptions={{
-                    persister: reactQueryPersister
-                  }}
+          <CacheProvider value={cache}>
+              <PersistQueryClientProvider
+                client={rq}
+                persistOptions={{
+                  persister: reactQueryPersister
+                }}
+              >
+                <ApolloNextAppProvider
+                  makeClient={makeApolloClient}
                 >
-                  <ApolloNextAppProvider
-                    makeClient={makeApolloClient}
-                  >
-                    {/* <I18nextProvider i18n={{}}> */}
-                    <InitProvider>
-                      {children}
-                    </InitProvider>
-                    {/* </I18nextProvider> */}
-                  </ApolloNextAppProvider>
-                </PersistQueryClientProvider>
-              </MantineProvider>
-            </CacheProvider>
-          </ColorSchemeProvider>
+                  {/* <I18nextProvider i18n={{}}> */}
+                  <InitProvider>
+                    {children}
+                  </InitProvider>
+                  {/* </I18nextProvider> */}
+                </ApolloNextAppProvider>
+              </PersistQueryClientProvider>
+          </CacheProvider>
         </Provider>
       </JotaiProvider>
     </I18nextProvider>

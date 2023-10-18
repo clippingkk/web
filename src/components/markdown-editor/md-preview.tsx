@@ -1,7 +1,7 @@
 import React from 'react'
 import { List, Title, Text, Blockquote } from '@mantine/core'
 import ReactMarkdown from 'react-markdown'
-import { Prism } from '@mantine/prism'
+import { CodeHighlight } from '@mantine/code-highlight';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 
 type MarkdownPreviewProps = {
@@ -37,9 +37,7 @@ function MarkdownPreview(props: MarkdownPreviewProps) {
             const match = /language-(\w+)/.exec(className || '')
             const lang = match ? match[1] : 'tsx'
             return (
-              <Prism language={lang as any} className='my-4'>
-                {String(children)}
-              </Prism>
+              <CodeHighlight code={String(children)} language={lang as any} className='my-4' />
             )
           },
           blockquote: ({ className, children, ...props }) => (

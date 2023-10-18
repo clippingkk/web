@@ -1,4 +1,5 @@
-import { Avatar, clsx } from '@mantine/core'
+import { Avatar } from '@mantine/core'
+import clsx from 'classnames'
 import React from 'react'
 
 type AvatarOnNavigationBarProps = {

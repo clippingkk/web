@@ -82,7 +82,7 @@ function Hero(props: HeroProps) {
                   component={Link}
                   href='/pricing'
                   className='text-xl ml-4'
-                  rightIcon={<ChevronRightIcon className='w-4 h-4' />}
+                  rightSection={<ChevronRightIcon className='w-4 h-4' />}
                 >
                   😎 {t('app.plan.premium.name')}
                 </Button>
