@@ -1,4 +1,4 @@
-FROM node:alpine AS deps
+FROM node:20-alpine AS deps
 # RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories
 RUN apk --no-cache --virtual build-dependencies add libc6-compat g++ make python3
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -8,7 +8,7 @@ RUN pnpm install --frozen-lockfile --force
 COPY ./src ./src
 RUN npm run codegen
 
-FROM node:alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 ENV NODE_ENV production
 ENV IS_FLY_IO 1
@@ -26,7 +26,7 @@ RUN apk add --no-cache curl \
   && cd .next/standalone \
   && node-prune
 
-FROM node:alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 
 ARG GIT_COMMIT
