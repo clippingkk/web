@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.1...v5.7.2) (2023-10-18)
+
+
+### Bug Fixes
+
+* **cd:** revert base node image to 20 ([ec1745c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ec1745c95e349474d681448bd18e0f6cc5a115e2))
+
 ### [5.7.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.0...v5.7.1) (2023-10-18)
 
 
