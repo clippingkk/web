@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.0...v5.7.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* **app:** fix mantine errors ([21b8096](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/21b80960dd8a736ff59914d5a77f8336638ed782))
+
 ## [5.7.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.6.12...v5.7.0) (2023-10-18)
 
 
