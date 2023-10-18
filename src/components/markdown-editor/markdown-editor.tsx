@@ -18,13 +18,13 @@ function MarkdownEditor(props: MarkdownEditorProps) {
     <Tabs defaultValue={'edit'}>
       <Tabs.List>
         <Tabs.Tab
-          icon={<PencilSquareIcon className='w-4 h-4' />}
+          leftSection={<PencilSquareIcon className='w-4 h-4' />}
           value='edit'
         >
           <Text>Edit</Text>
         </Tabs.Tab>
         <Tabs.Tab
-          icon={<DocumentTextIcon className='w-4 h-4' />}
+          leftSection={<DocumentTextIcon className='w-4 h-4' />}
           value='preview'
         >
           <Text>Preview</Text>
@@ -33,7 +33,7 @@ function MarkdownEditor(props: MarkdownEditorProps) {
       <Tabs.Panel value="edit" pt="xs">
         <Textarea
           minRows={8}
-          className='bg-gray-100 bg-opacity-90 rounded'
+          className='bg-gray-100 dark:bg-gray-900 bg-opacity-90 rounded'
           autosize
           maxRows={30}
           size='lg'

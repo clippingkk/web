@@ -1,5 +1,4 @@
-// import { Tooltip } from '@mantine/core'
-import Tooltip from '../tooltip/Tooltip';
+import { Tooltip } from '@mantine/core'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -56,8 +55,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
       </li>
       <li className='mr-6'>
         <Tooltip
-          placement='bottom'
-          overlay={<span>{t('app.menu.settings')}</span>}
+          label={<span>{t('app.menu.settings')}</span>}
         >
           <Link
             href={`/dash/${uidOrDomain}/settings`}

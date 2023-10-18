@@ -143,7 +143,6 @@
     "masonic": "^3.7.0",
     "mixpanel-browser": "^2.47.0",
     "next": "^13.5.5",
-    "next-i18next": "^14.0.3",
     "nextjs-progressbar": "^0.0.16",
     "parse-unit": "^1.0.1",
     "party-js": "^2.2.0",

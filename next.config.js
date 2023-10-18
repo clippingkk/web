@@ -1,5 +1,4 @@
 // @ts-check
-// const { i18n } = require('./next-i18next.config')
 // const { withSentryConfig } = require('@sentry/nextjs')
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -15,7 +14,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
  * @type {import('next').NextConfig}
  **/
 const config = {
-  // i18n,
   //  strictMode: true,
   // sentry: {
   //   hideSourceMaps: true
@@ -41,7 +39,7 @@ const config = {
   //  excludeFile: (str) => /__tests__/.test(str),
   env: {
     DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
-    GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT),
+    GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT || ''),
     infuraKey: JSON.stringify(process.env.infuraKey || '')
   },
   // swcMinify: true

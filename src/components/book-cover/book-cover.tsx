@@ -1,10 +1,9 @@
 import React from 'react'
 import { WenquBook } from '../../services/wenqu';
-import styles from './book-cover.module.css'
 import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded';
 import Link from 'next/link'
-import Image from 'next/image'
 import BlurhashView from '@annatarhe/blurhash-react';
+import styles from './book-cover.module.css'
 
 type TBookCoverProps = {
   book: WenquBook

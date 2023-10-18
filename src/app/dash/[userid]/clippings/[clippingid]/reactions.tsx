@@ -112,7 +112,7 @@ function Reactions(props: ReactionsProps) {
               }}
             >
               <span className='text-xl'>{k.symbol}</span>
-              <span className='text-xl ml-2 dark:text-white'>{k.count}</span>
+              <span className='text-xl ml-2'>{k.count}</span>
             </Chip>
           </Tooltip>
         ))}

@@ -3,7 +3,7 @@ FROM node:alpine AS deps
 RUN apk --no-cache --virtual build-dependencies add libc6-compat g++ make python3
 RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
-COPY types package.json package-lock.json pnpm-lock.yaml codegen.yml next-env.d.ts next.config.js next-i18next.config.js postcss.config.js tailwind.config.js tsconfig.json ./
+COPY types package.json package-lock.json pnpm-lock.yaml codegen.yml next-env.d.ts next.config.js postcss.config.js tailwind.config.js tsconfig.json ./
 RUN pnpm install --frozen-lockfile --force
 COPY ./src ./src
 RUN npm run codegen

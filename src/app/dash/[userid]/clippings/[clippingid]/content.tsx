@@ -20,7 +20,6 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '@/store/global'
 import { FetchClippingQuery, useFetchClippingQuery } from '@/schema/generated'
-
 import styles from './clipping.module.css'
 import { toast } from 'react-hot-toast';
 
@@ -71,7 +70,12 @@ function ClippingPageContent(props: ClippingPageProps) {
       <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20 flex-col lg:flex-row with-slide-in'>
         <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
           <>
-            <h1 className='lg:text-3xl text-xl font-bold my-2 font-lxgw'>{clipping?.clipping.title}</h1>
+            <h1 className='lg:text-3xl text-xl font-bold my-2 font-lxgw'>
+              {book?.title ?? clipping?.clipping.title}
+              <h6 className='text-gray-500 text-xs ml-4 inline-block dark:text-gray-300'>
+                {clipping.clipping.title}
+              </h6>
+            </h1>
             <h3 className='font-light lg:text-lg my-4 font-lxgw'>{book?.author}</h3>
             <hr className='bg-gray-400 my-12' />
             <ClippingContent

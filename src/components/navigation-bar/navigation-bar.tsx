@@ -6,7 +6,6 @@ import { execLogout, TUserState, UserContent } from '../../store/user/type'
 // import Tooltip from 'rc-tooltip'
 import { TGlobalStore } from '../../store'
 import { useTranslation } from 'react-i18next';
-import Tooltip from '../tooltip/Tooltip';
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import SearchBar, { useCtrlP } from '../searchbar/searchbar'

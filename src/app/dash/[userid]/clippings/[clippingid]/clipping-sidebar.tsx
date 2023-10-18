@@ -9,9 +9,9 @@ import { IN_APP_CHANNEL } from '@/services/channel'
 import { toast } from 'react-hot-toast'
 import Link from 'next/link'
 import BookInfoChanger from '@/components/book-info-changer/bookInfoChanger'
-import { ArrowDownIcon, ArrowUpIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
+import { ArrowDownIcon, ArrowUpIcon, SparklesIcon } from '@heroicons/react/24/solid'
 import { Clipping, User, useToggleClippingVisibleMutation } from '@/schema/generated'
-import { Button, Tooltip } from '@mantine/core'
+import { Button, NavLink, Tooltip } from '@mantine/core'
 import ClippingAISummaryModal from '@/components/clipping-item/aiSummary'
 
 type ClippingSidebarProps = {
@@ -96,9 +96,10 @@ function ClippingSidebar(props: ClippingSidebarProps) {
           <li className='w-full mb-4'>
             <Button
               variant='gradient'
-              className='bg-gradient-to-r from-indigo-600 to-cyan-700 w-full'
-              leftIcon={
-                <ChatBubbleLeftRightIcon className=' w-4 h-4' />
+              className='bg-gradient-to-r from-indigo-600 to-cyan-700 transition-all active:scale-95'
+              fullWidth
+              leftSection={
+                <SparklesIcon className=' w-4 h-4' />
               }
               onClick={() => {
                 setAISummaryVisible(true)
@@ -117,12 +118,14 @@ function ClippingSidebar(props: ClippingSidebarProps) {
 
           {me.id === clipping?.creator.id && (
             <li className='w-full mb-4'>
-              <button
-                className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 '
+              <Button
+                variant='gradient'
+                gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+                fullWidth
                 onClick={updateClipping}
               >
                 {t('app.clipping.update')}
-              </button>
+              </Button>
               <BookInfoChanger
                 bookName={clipping.title}
                 clippingID={clipping?.id ?? -1}
@@ -139,30 +142,37 @@ function ClippingSidebar(props: ClippingSidebarProps) {
           )}
 
           <li className='w-full mb-4'>
-            <button
-              className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 '
+            <Button
+              variant='gradient'
+              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+              fullWidth
               onClick={props.onTogglePreviewVisible}
             >
               {t('app.clipping.shares')}
-            </button>
+            </Button>
           </li>
           <li className='w-full mb-4'>
-            <a
+            <Button
+              component='a'
               href={`https://book.douban.com/subject/${book?.doubanId}`}
               target="_blank"
-              className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 '
               rel="noreferrer"
+              variant='gradient'
+              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+              fullWidth
             >
               {t('app.clipping.link')}
-            </a>
+            </Button>
           </li>
           <li className='w-full mb-4'>
-            <button
-              className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100'
+            <Button
+              variant='gradient'
+              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+              fullWidth
               onClick={onCopyEmbedHtml}
             >
               copy embed html
-            </button>
+            </Button>
           </li>
           {clipping?.creator.id === me.id && (
             <li className='w-full mb-4'>
@@ -195,13 +205,15 @@ function ClippingSidebar(props: ClippingSidebarProps) {
           {siblingLink.prev && (
             <li className='w-full mb-4'>
               <Tooltip label={t('app.clipping.sidebar.prev')}>
-                <Link
+                <NavLink
+                  component={Link}
                   href={siblingLink.prev}
-                  className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
-                >
-                  <ArrowUpIcon className='w-4 h-4 mr-2' />
-                  {t('app.clipping.sidebar.prev')}
-                </Link>
+                  className='active:scale-95 transition-all duration-150'
+                  leftSection={
+                    <ArrowUpIcon className='w-4 h-4 mr-2' />
+                  }
+                  label={t('app.clipping.sidebar.prev')}
+                />
               </Tooltip>
             </li>
           )}
@@ -210,13 +222,15 @@ function ClippingSidebar(props: ClippingSidebarProps) {
               <Tooltip
                 label={t('app.clipping.sidebar.next')}
               >
-                <Link
+                <NavLink
+                  component={Link}
                   href={siblingLink.next}
-                  className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center'
-                >
-                  <ArrowDownIcon className='w-4 h-4 mr-2' />
-                  {t('app.clipping.sidebar.next')}
-                </Link>
+                  className='active:scale-95 transition-all duration-150'
+                  leftSection={
+                    <ArrowDownIcon className='w-4 h-4 mr-2' />
+                  }
+                  label={t('app.clipping.sidebar.next')}
+                />
               </Tooltip>
             </li>
           )}
