@@ -12,5 +12,5 @@ module.exports = {
     },
     'tailwindcss': {},
     'autoprefixer': {},
-  }
+  },
 }
