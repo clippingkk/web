@@ -1,4 +1,4 @@
-import { Hydrate, dehydrate } from '@tanstack/react-query'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import React from 'react'
 import { getPaymentOrderInfo } from '../../../services/payment'
 import { getReactQueryClient } from '../../../services/ajax'
@@ -26,14 +26,14 @@ async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
   const homeLink = `/dash/${uid}/home`
 
   return (
-    <Hydrate state={d}>
+    <HydrationBoundary state={d}>
       <div className=' w-full h-full flex flex-col items-center justify-center dark:text-gray-100 pt-20'>
         <PaymentSuccessContent
           sessionId={sessionId}
           homeLink={homeLink}
         />
       </div>
-    </Hydrate>
+    </HydrationBoundary>
   )
 }
 

@@ -3,7 +3,7 @@ import { duration3Days } from '@/hooks/book'
 import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
-import { Hydrate, dehydrate } from '@tanstack/react-query'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import ClippingPageContent from './content'
 import { generateMetadata as clippingGenerateMetadata } from '@/components/og/og-with-clipping'
 import { Metadata } from 'next'
@@ -34,7 +34,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       queryKey: ['wenqu', 'books', 'dbId', bookID],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
       staleTime: duration3Days,
-      cacheTime: duration3Days,
+      gcTime: duration3Days,
     })
     b = bs.books.length === 1 ? bs.books[0] : null
   }
@@ -65,20 +65,20 @@ async function Page(props: PageProps) {
       queryKey: ['wenqu', 'books', 'dbId', bookID],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
       staleTime: duration3Days,
-      cacheTime: duration3Days,
+      gcTime: duration3Days,
     })
   }
 
   const d = dehydrate(rq)
 
   return (
-    <Hydrate state={d}>
+    <HydrationBoundary state={d}>
       <ClippingPageContent
         cid={cid}
         clipping={clippingsResponse.data}
         iac={props.searchParams.iac}
       />
-    </Hydrate>
+    </HydrationBoundary>
   )
 }
 

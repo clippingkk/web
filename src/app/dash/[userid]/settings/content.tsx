@@ -4,9 +4,8 @@ import { useTranslation } from 'react-i18next'
 import SimpleSwitcher from './simple-switcher'
 import Exports from './exports'
 import WebHooks from './webhooks'
-import { useDarkModeStatus } from '../../../../hooks/theme'
 import AccountRemoveButton from './account-remove'
-import { Paper, Select } from '@mantine/core'
+import { Select, useMantineColorScheme } from '@mantine/core'
 import OrdersTable from './orders'
 
 type SettingsPageProps = {
@@ -25,7 +24,7 @@ const langOptions = [{
 
 function GlobalSettings() {
   const { t, i18n } = useTranslation()
-  const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
+  const { colorScheme, setColorScheme } = useMantineColorScheme()
   return (
     <div className='w-full'>
       <div className='w-full flex items-center justify-around mb-4'>
@@ -55,20 +54,9 @@ function GlobalSettings() {
 
         <div className='w-64 text-right flex items-center justify-end'>
           <SimpleSwitcher
-            checked={isDarkTheme}
-            onChange={onDarkThemeChange}
+            checked={colorScheme === 'dark'}
+            onChange={(v) => setColorScheme(v ? 'dark' : 'light')}
           />
-          {/* <DarkSwitcher
-          checked={isDarkTheme}
-          onChange={onDarkThemeChange}
-          size={120}
-           /> */}
-          {/* <DarkModeSwitch
-            style={{ marginBottom: '2rem' }}
-            checked={isDarkTheme}
-            onChange={onDarkThemeChange}
-            size={120}
-          /> */}
         </div>
       </div>
     </div>

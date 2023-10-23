@@ -28,6 +28,7 @@ import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { Lato } from 'next/font/google'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import { theme } from '../styles/mantine'
+import { colorSchemeManager } from '../hooks/theme';
 // import localFont from 'next/font/local'
 
 const lato = Lato({
@@ -119,7 +120,7 @@ const Layout = (props: LayoutProps) => {
       </head>
       <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}' />
       <body>
-        <MantineProvider theme={theme}>
+        <MantineProvider theme={theme} colorSchemeManager={colorSchemeManager}>
           <ClientOnlyProviders>
             <>
               <AppContainer>

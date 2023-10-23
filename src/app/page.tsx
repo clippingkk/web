@@ -5,7 +5,7 @@ import { wenquRequest, WenquSearchResponse } from '../services/wenqu'
 import { PublicDataDocument, PublicDataQuery } from '../schema/generated'
 import { duration3Days } from '../hooks/book'
 import IndexPage from '../components/index-page/index.page'
-import { Hydrate, dehydrate } from '@tanstack/react-query'
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { useBackgroundImageServer as getBackgroundImageServer } from '../hooks/theme.server'
 import { getApolloServerClient } from '../services/apollo.server'
 
@@ -30,19 +30,19 @@ async function Page() {
     queryKey: ['wenqu', 'books', 'dbIds', dbIds],
     queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
     staleTime: duration3Days,
-    cacheTime: duration3Days,
+    gcTime: duration3Days,
   })
   const d = dehydrate(rq)
   const bgInfo = getBackgroundImageServer()
   return (
     <div>
-      <Hydrate state={d}>
+      <HydrationBoundary state={d}>
         <IndexPage
           bgInfo={bgInfo}
           hydratedStates={d}
           publicData={data.data}
         />
-      </Hydrate>
+      </HydrationBoundary>
       <Footer />
     </div>
   )

@@ -45,7 +45,7 @@ function AccountRemoveButton(props: AccountRemoveButtonProps) {
   return (
     <Button
       variant="gradient"
-      className='bg-gradient-to-br from-orange-400 to-red-500'
+      gradient={{ from: 'orange', to: 'red' }}
       onClick={doDeleteMyAccount}
     >
       {t('app.settings.danger.removeButton')}

@@ -1,5 +1,11 @@
 {
-	"cSpell.words": [
-		"mantine"
-	]
+  "cSpell.words": [
+    "mantine"
+  ],
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

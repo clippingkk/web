@@ -1,28 +1,22 @@
+'use client';
 import { useState, useEffect, useCallback } from "react"
 import { bgs } from "./theme.config"
+import { localStorageColorSchemeManager, useMantineColorScheme } from "@mantine/core";
 
 const darkModeClassName = 'dark'
 
-export function useDarkModeStatus() {
-  const [is, setIs] = useState(false)
-  useEffect(() => {
-    const isDarkTheme = document.querySelector('html')?.classList.contains(darkModeClassName)
-    setIs(isDarkTheme ?? false)
-  }, [])
-  const onDarkThemeChange = useCallback((v: boolean) => {
-    const html = document.querySelector('html')
-    if (html?.classList.contains(darkModeClassName)) {
-      html?.classList.remove(darkModeClassName)
-    } else {
-      html?.classList.add(darkModeClassName)
-    }
-    setIs(v)
-  }, [])
+export const colorSchemeManager = localStorageColorSchemeManager({ key: 'ck-color-scheme' });
 
-  return {
-    isDarkTheme: is,
-    onDarkThemeChange
-  }
+export function useDarkModeStatus() {
+  const { colorScheme } = useMantineColorScheme()
+  useEffect(() => {
+    if (colorScheme === 'dark') {
+      document.querySelector('html')?.classList.add(darkModeClassName)
+    }
+    if (colorScheme === 'light') {
+      document.querySelector('html')?.classList.remove(darkModeClassName)
+    }
+  }, [colorScheme])
 }
 
 export function useBackgroundImage() {

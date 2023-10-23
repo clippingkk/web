@@ -17,17 +17,23 @@ type PaymentSuccessContentProps = {
 
 function PaymentSuccessContent(props: PaymentSuccessContentProps) {
   const { sessionId, homeLink } = props
-  const { data, isLoading } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ['payment', 'result', sessionId],
     queryFn: () => getPaymentOrderInfo(sessionId),
     enabled: !!sessionId,
-    onSuccess() {
-      party.confetti(document.querySelector('body')!)
-    },
-    onError(err) {
-      toast.error('got error, your payment might not been process conrdly')
-    },
   })
+  useEffect(() => {
+    if (error) {
+      toast.error('got error, your payment might not been process conrdly')
+    }
+  }, [error])
+
+  useEffect(() => {
+    if (data) {
+      party.confetti(document.querySelector('body')!)
+    }
+  }, [data])
+
 
   useEffect(() => {
     if (!data || data.paymentStatus != 'paid') {

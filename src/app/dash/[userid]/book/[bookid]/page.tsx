@@ -1,6 +1,6 @@
 import React from 'react'
 import { getReactQueryClient } from '@/services/ajax'
-import { Hydrate, dehydrate } from '@tanstack/react-query'
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { duration3Days } from '@/hooks/book'
 import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import BookPageContent from './content'
@@ -19,7 +19,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     queryKey: ['wenqu', 'books', 'dbId', dbId],
     queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
     staleTime: duration3Days,
-    cacheTime: duration3Days,
+    gcTime: duration3Days,
   })
 
   const b = bs.books.length === 1 ? bs.books[0] : null
@@ -41,16 +41,16 @@ async function Page(props: PageProps) {
       queryKey: ['wenqu', 'books', 'dbId', dbId],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
       staleTime: duration3Days,
-      cacheTime: duration3Days,
+      gcTime: duration3Days,
     })
   }
 
   const d = dehydrate(rq)
 
   return (
-    <Hydrate state={d}>
+    <HydrationBoundary state={d}>
       <BookPageContent bookid={bookid} userid={userid} />
-    </Hydrate>
+    </HydrationBoundary>
   )
 }
 

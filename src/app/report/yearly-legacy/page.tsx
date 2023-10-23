@@ -1,7 +1,7 @@
 import React from 'react'
 import ReportYearly from './content'
 import { getReactQueryClient } from '../../../services/ajax'
-import { Hydrate, dehydrate } from '@tanstack/react-query'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import { duration3Days } from '../../../hooks/book'
 import { FetchYearlyReportQuery, FetchYearlyReportQueryVariables, FetchYearlyReportDocument } from '../../../schema/generated'
 import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
@@ -67,20 +67,20 @@ async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
       queryKey: ['wenqu', 'books', 'dbIds', dbIds],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
       staleTime: duration3Days,
-      cacheTime: duration3Days,
+      gcTime: duration3Days,
     })
   }
   const d = dehydrate(rq)
 
   return (
-    <Hydrate state={d}>
+    <HydrationBoundary state={d}>
       <ReportYearly
         uid={uid}
         year={year}
         reportInfoServerData={reportInfoResponse.data}
         dbIds={dbIds}
       />
-    </Hydrate>
+    </HydrationBoundary>
   )
 }
 

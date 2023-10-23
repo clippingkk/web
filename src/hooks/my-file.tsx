@@ -175,7 +175,7 @@ export function useUploadData(
             signal: ctx.signal
           }),
           staleTime: duration3Days,
-          cacheTime: duration3Days,
+          gcTime: duration3Days,
         })
         if (resp.count > 0) {
           i.bookId = resp.books[0].doubanId.toString()

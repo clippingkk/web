@@ -1,10 +1,8 @@
 'use client';
 import '../utils/mixpanel'
-import '../prefers-dark'
 import { init } from '../utils/locales'
 
 import { CacheProvider } from '@emotion/react';
-import { MantineProvider } from '@mantine/core';
 import React from 'react'
 import { Provider as JotaiProvider } from 'jotai'
 import { useGluedEmotionCache } from '../hooks/emotion';
@@ -24,7 +22,7 @@ type ClientOnlyProvidersProps = {
 
 function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const { children } = props
-  const { isDarkTheme, onDarkThemeChange } = useDarkModeStatus()
+  useDarkModeStatus()
   const cache = useGluedEmotionCache();
   const instance = init()
   const rq = createReactQueryClient()

@@ -27,7 +27,7 @@ function Preview(props: PreviewProps) {
   const { t } = useTranslation()
 
   const previewDOM = useRef(null)
-  const { isLoading, mutate: onSave } = useMutation({
+  const { isPending, mutate: onSave } = useMutation({
     mutationFn: async () => {
       if (!previewDOM.current) {
         return
@@ -88,7 +88,7 @@ function Preview(props: PreviewProps) {
           <div className='flex-1 w-full' />
           <Button
             onClick={() => onSave()}
-            loading={isLoading}
+            loading={isPending}
             variant='filled'
             className='bg-teal-400'
             color='teal'

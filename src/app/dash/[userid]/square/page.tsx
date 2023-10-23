@@ -4,7 +4,7 @@ import { duration3Days } from '@/hooks/book'
 import { FetchSquareDataQuery, FetchSquareDataQueryVariables, FetchSquareDataDocument } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
-import { Hydrate, dehydrate } from '@tanstack/react-query'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import SquarePageContent from './content'
 import { Metadata } from 'next'
 import { generateMetadata as squareGenerateMetadata } from '@/components/og/og-with-square-page'
@@ -36,7 +36,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     queryKey: ['wenqu', 'books', 'dbIds', dbIds],
     queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
     staleTime: duration3Days,
-    cacheTime: duration3Days,
+    gcTime: duration3Days,
   })
 
   return squareGenerateMetadata(bs.books)
@@ -66,16 +66,16 @@ async function Page(props: PageProps) {
       queryKey: ['wenqu', 'books', 'dbIds', dbIds],
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
       staleTime: duration3Days,
-      cacheTime: duration3Days,
+      gcTime: duration3Days,
     })
   }
 
   const d = dehydrate(rq)
 
   return (
-    <Hydrate state={d}>
+    <HydrationBoundary state={d}>
       <SquarePageContent squareData={squareResponse.data} />
-    </Hydrate>
+    </HydrationBoundary>
   )
 }
 

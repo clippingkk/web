@@ -16,7 +16,7 @@ export function useSingleBook(doubanId?: string, skip?: boolean): WenquBook | nu
     queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${doubanId}`),
     enabled: Boolean(doubanId && doubanId.length > 3) && !skip,
     staleTime: duration3Days,
-    cacheTime: duration3Days,
+    gcTime: duration3Days,
   })
   const books = bs.data?.books
   if (!books || books.length === 0) {
@@ -84,7 +84,7 @@ export function useBookSearch(query: string, offset: number) {
     }),
     enabled: query.length > 1,
     staleTime: duration3Days,
-    cacheTime: duration3Days,
+    gcTime: duration3Days,
   })
 }
 

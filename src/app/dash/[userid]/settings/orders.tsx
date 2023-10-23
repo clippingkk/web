@@ -82,7 +82,7 @@ function OrdersTable(props: OrdersTableProps) {
     skip: uid <= 0
   })
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (subscriptionId: string) =>
       toast.promise(
         cancelPaymentSubscription(subscriptionId), toastPromiseDefaultOption),
@@ -95,12 +95,18 @@ function OrdersTable(props: OrdersTableProps) {
     <div className='w-full px-20'>
       {orderList?.me.orderList.length === 0 && (
         <div className='flex justify-center'>
-        <Link href='/pricing' className=' bg-gradient-to-br from-indigo-200 to-sky-300 px-4 py-2 rounded hover:shadow-lg duration-300 transition-all'>
-          {t('app.plan.premium.goto')}
-        </Link>
+          <Button
+            component={Link}
+            href='/pricing'
+            variant='gradient'
+            gradient={{ from: 'indigo', to: 'cyan', deg: 105 }}
+            className='active:scale-95'
+          >
+            {t('app.plan.premium.goto')}
+          </Button>
         </div>
       )}
-      {( orderList?.me.orderList ?? []).map(o => (
+      {(orderList?.me.orderList ?? []).map(o => (
         <div key={o.id} className='with-fade-in'>
           <div className='flex justify-between'>
             <div className='flex items-center'>
@@ -111,7 +117,7 @@ function OrdersTable(props: OrdersTableProps) {
             </div>
             <Button
               onClick={() => mutate(o.subscriptionId)}
-              disabled={o.status === SubscriptionStatus.Canceled || isLoading}
+              disabled={o.status === SubscriptionStatus.Canceled || isPending}
             >
               {t('app.common.cancel')}
             </Button>

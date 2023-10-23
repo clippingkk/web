@@ -171,8 +171,7 @@ export function createReactQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        keepPreviousData: true,
-        cacheTime: 60 * 60 * 3 // 3 hours
+        gcTime: 60 * 60 * 3 // 3 hours
       },
     }
   })
