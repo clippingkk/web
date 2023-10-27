@@ -68,7 +68,6 @@ async function Page(props: PageProps) {
       gcTime: duration3Days,
     })
   }
-
   const d = dehydrate(rq)
 
   return (

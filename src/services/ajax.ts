@@ -171,6 +171,7 @@ export function createReactQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
+        staleTime: 60 * 60,
         gcTime: 60 * 60 * 3 // 3 hours
       },
     }

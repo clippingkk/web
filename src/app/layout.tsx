@@ -60,15 +60,15 @@ type LayoutProps = {
   children: React.ReactElement
 }
 
+export const viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'rgba(33, 150, 243, 0.9)' },
+    { media: '(prefers-color-scheme: dark)', color: 'rgba(30, 34, 31, 0.9)' },
+  ],
+}
+
 export const metadata: Metadata = {
   ...indexPageMetadata,
-  'themeColor': [{
-    media: '(prefers-color-scheme: light)',
-    color: 'rgba(33, 150, 243, 0.9)'
-  }, {
-    media: '(prefers-color-scheme: dark)',
-    color: 'rgba(30, 34, 31, 0.9)'
-  }],
   icons: {
     // <link rel="apple-touch-icon" sizes="57x57" href={faviconPrefix + "/apple-icon-57x57.png"} />
     // <link rel="apple-touch-icon" sizes="60x60" href={faviconPrefix + "/apple-icon-60x60.png"} />

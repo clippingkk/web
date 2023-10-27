@@ -69,6 +69,7 @@ async function Page(props: PageProps) {
       gcTime: duration3Days,
     })
   }
+  await new Promise(resolve => setTimeout(resolve, 3000000))
 
   const d = dehydrate(rq)
 

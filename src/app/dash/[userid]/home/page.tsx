@@ -21,13 +21,12 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       domain: Number.isNaN(uid) ? pathUid : null
     },
   })
-
   return profileGenerateMetadata({
     profile: profileResponse.data.me
   })
 }
 
-function Page(props: PageProps) {
+async function Page(props: PageProps) {
   const { userid } = props.params
   return (
     <HomePageContent userid={userid} />
