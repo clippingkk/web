@@ -92,8 +92,6 @@ function ReportYearly(props: ReportYearlyProps) {
 
   const defaultBgImage = useBackgroundImage()
 
-  const metaTitle = `${data?.reportYearly.user.name} 在 ${year} 年共读了 ${data?.reportYearly.books.length} 本书 - Clippingkk - kindle 书摘管理`
-
   return (
     <div
       className='w-full anna-page-container flex justify-center items-center h-min-screen bg-no-repeat bg-cover bg-center'

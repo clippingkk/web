@@ -32,12 +32,7 @@ type ClippingPageProps = {
 function ClippingPageContent(props: ClippingPageProps) {
   const { cid, clipping: clippingServerData, iac } = props
 
-  const clientClipping = useFetchClippingQuery({
-    variables: {
-      id: ~~cid
-    },
-  })
-  const clipping = clientClipping.data || clippingServerData
+  const clipping = clippingServerData
 
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)

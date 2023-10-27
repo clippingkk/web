@@ -1,8 +1,10 @@
 query fetchExternalAccount($id: Int, $domain: String) {
   me(id: $id, domain: $domain) {
 		id
+		devices {
+			iosDeviceToken
+		}
 		externalInfo {
-			iosDeviceId
 			githubBound
 			appleUnique
 			address

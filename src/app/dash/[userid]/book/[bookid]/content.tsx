@@ -71,7 +71,6 @@ function BookPageContent(props: BookPageContentProps) {
     if (!hasMore.current) {
       return Promise.reject(1)
     }
-    console.log('call fetchMore')
     return fetchMore({
       variables: {
         id: ~~bookid,
