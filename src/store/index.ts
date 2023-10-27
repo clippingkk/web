@@ -1,4 +1,3 @@
-'use client';
 import { combineReducers } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
@@ -23,6 +22,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ thunk: false }).prepend(saga);
   },
+  preloadedState: (window as any).__PRELOADED_STATE__
 })
 
 saga.run(rootSaga)

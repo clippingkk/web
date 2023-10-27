@@ -3,18 +3,15 @@ import Image from 'next/image'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../../components/avatar/avatar'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getReactQueryClient } from '../../../services/ajax'
+import { WenquBook } from '../../../services/wenqu'
 import logo from '../../../assets/logo.png'
 import ReportBookSection from '../../../components/reports/report-book-section'
 import { Blockquote, Divider } from '@mantine/core'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import ReportHero from '../../../components/reports/report-hero'
 import { useBackgroundImage } from '../../../hooks/theme'
-import { Clipping, FetchYearlyReportDocument, FetchYearlyReportQuery, FetchYearlyReportQueryVariables } from '../../../schema/generated'
-import { dehydrate } from '@tanstack/react-query'
-import { duration3Days, useMultipBook } from '../../../hooks/book'
+import { Clipping, FetchYearlyReportQuery } from '../../../schema/generated'
+import { useMultipBook } from '../../../hooks/book'
 
 type PageContainerProps = {
   bgImage?: string | { src: string, blurHash: string }
@@ -101,13 +98,6 @@ function ReportYearly(props: ReportYearlyProps) {
     <div
       className='w-full anna-page-container flex justify-center items-center h-min-screen bg-no-repeat bg-cover bg-center'
     >
-      {/* <Head>
-        <title>{metaTitle}</title>
-        <OGWithReport data={data} year={year} books={books} />
-        {books.map(x => (
-          <link key={x.id} as='image' rel='preload' href={x.image} />
-        ))}
-      </Head> */}
       <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
         <PageContainer bgImage={defaultBgImage}>
           <div className=' container relative min-h-screen flex items-center flex-col justify-center'>
@@ -139,7 +129,6 @@ function ReportYearly(props: ReportYearlyProps) {
               />
               <span className=' text-gray-700 dark:text-gray-200 ml-8'>{t('app.slogan')}</span>
             </a>
-
           </div>
         </PageContainer>
         <div className='w-full'>
