@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.2...v5.7.3) (2023-10-27)
+
+
+### Features
+
+* **app:** add more loading page ([767f581](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/767f581bfa7be01299dc733749277152ef915dd4))
+* **app:** upgrade react query to v5 and fix theme error ([651478f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/651478f80dff5f10f227f52c6be924672dfcffd2))
+* **app:** upgrade to next@14 and add skeleton for pages ([224197c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/224197cf21582f3dc6d921bab777cb7905937b34))
+
+
+### Bug Fixes
+
+* **setting:** fix ios device info query in setting page ([2f7775f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2f7775fc93eaa3fe3acf47155d53054ca28d1e9c))
+
 ### [5.7.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.1...v5.7.2) (2023-10-18)
 
 
