@@ -30,6 +30,7 @@ jobs:
     - name: Install dependencies
       run: pnpm install
     - run: pnpm run codegen
+    - run: pnpm run build # to make sure this version can be build
     - run: pnpm run coveralls
       env:
         COVERALLS_REPO_TOKEN : ${{ secrets.CODEALLS_REPO_TOKEN }}
