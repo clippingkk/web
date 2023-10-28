@@ -22,7 +22,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ thunk: false }).prepend(saga);
   },
-  preloadedState: (window as any).__PRELOADED_STATE__
+  preloadedState: typeof window !== 'undefined' ? (window as any).__PRELOADED_STATE__ : {}
 })
 
 saga.run(rootSaga)

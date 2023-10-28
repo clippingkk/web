@@ -8,8 +8,6 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
-export const runtime = 'edge'
-
 // export const metadata: Metadata = {
 //   title: 'ClippingKK support information',
 //   openGraph: {

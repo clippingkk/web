@@ -31,22 +31,20 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
       <JotaiProvider>
         <Provider store={store}>
           <CacheProvider value={cache}>
-              <PersistQueryClientProvider
-                client={rq}
-                persistOptions={{
-                  persister: reactQueryPersister
-                }}
+            <PersistQueryClientProvider
+              client={rq}
+              persistOptions={{
+                persister: reactQueryPersister
+              }}
+            >
+              <ApolloNextAppProvider
+                makeClient={makeApolloClient}
               >
-                <ApolloNextAppProvider
-                  makeClient={makeApolloClient}
-                >
-                  {/* <I18nextProvider i18n={{}}> */}
-                  <InitProvider>
-                    {children}
-                  </InitProvider>
-                  {/* </I18nextProvider> */}
-                </ApolloNextAppProvider>
-              </PersistQueryClientProvider>
+                <InitProvider>
+                  {children}
+                </InitProvider>
+              </ApolloNextAppProvider>
+            </PersistQueryClientProvider>
           </CacheProvider>
         </Provider>
       </JotaiProvider>
