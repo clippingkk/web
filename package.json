@@ -103,7 +103,7 @@
     "@mantine/spotlight": "^7.1.7",
     "@metamask/sdk": "^0.7.1",
     "@metamask/sdk-react": "^0.7.0",
-    "@next/bundle-analyzer": "^14.0.0",
+    "@next/bundle-analyzer": "^13.4.16",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/nextjs": "^7.75.1",
     "@sentry/react": "^7.75.1",
@@ -112,7 +112,6 @@
     "@tanstack/react-query": "^5.0.5",
     "@tanstack/react-query-persist-client": "^5.0.5",
     "@tanstack/react-table": "^8.10.7",
-    "@vercel/otel": "^0.3.0",
     "@web3-react/core": "8.2.0",
     "@web3-react/metamask": "8.2.1",
     "@web3-react/network": "8.2.0",
@@ -142,7 +141,7 @@
     "leancloud-storage": "^4.15.0",
     "masonic": "^3.7.0",
     "mixpanel-browser": "^2.47.0",
-    "next": "^14.0.0",
+    "next": "13.4.16",
     "nextjs-progressbar": "^0.0.16",
     "parse-unit": "^1.0.1",
     "party-js": "^2.2.0",
@@ -196,5 +195,5 @@
       "@leancloud/platform-adapters-node": "1.5.3"
     }
   },
-  "packageManager": "pnpm@8.4.0"
+  "packageManager": "pnpm@8.9.0"
 }
