@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.3...v5.7.4) (2023-10-28)
+
+
+### Bug Fixes
+
+* **app:** revert nextjs version to 13.4 to make the app buildable again ([1a2b492](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1a2b4921f55ce52ac6c8d708cb4bf80f11c57273))
+* **app:** upgrade next version to latest of 13.4 ([5c01c1c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5c01c1c904def0753490daf52312d5f523155ee0))
+* **loading:** add much more loading component ([53b65a2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/53b65a25a378ef5b4f548be4262dde3301ae1a66))
+
 ### [5.7.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.2...v5.7.3) (2023-10-27)
 
 
