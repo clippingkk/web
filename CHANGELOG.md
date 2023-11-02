@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.4...v5.7.5) (2023-11-02)
+
+
+### Bug Fixes
+
+* **admin:** fix admin page infinity reload and css order issue ([920ab21](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/920ab21fbed71bc3a829a14a6c5bb19787f9a793))
+* **ci:** remove useless ci file and add build step at master check ([e158284](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e158284a8c2fdf04840a0b38da2e076de9d57d23))
+
 ### [5.7.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.3...v5.7.4) (2023-10-28)
 
 
