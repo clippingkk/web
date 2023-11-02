@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useReactTable, Row, getCoreRowModel, ColumnDef, flexRender } from '@tanstack/react-table'
 import HomelessBookSyncInput from './sync-input'
 import { useUncheckBooksQueryQuery } from '../../../../schema/generated'
@@ -21,28 +21,27 @@ type homelessBookTableItem = {
 
 function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
   return (
-    <tr key={row.id} className=''>
+    <Table.Tr key={row.id} className=''>
       {row.getVisibleCells().map(cell => {
         if (cell.column.columnDef.header === 'Action') {
           return (
-            <td key={cell.id}>
-              <HomelessBookSyncInput bookName={cell.getValue<string>()} />
-            </td>
+            <Table.Td key={cell.id}>
+              <HomelessBookSyncInput bookName={cell.row.original.name} />
+            </Table.Td>
           )
         }
         return (
-          <td key={cell.id}>
+          <Table.Td key={cell.id}>
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </td>
+          </Table.Td>
         )
       })}
-    </tr>
+    </Table.Tr>
   )
 }
 
 function AdminPanel() {
   const [offset, setOffset] = useState(0)
-
   const { data, loading } = useUncheckBooksQueryQuery({
     variables: {
       pagination: {
@@ -51,8 +50,15 @@ function AdminPanel() {
       }
     }
   })
+  const tableData = useMemo(() => {
+    const bs = data?.adminDashboard.uncheckedBooks
+    if (!bs) {
+      return []
+    }
+    return bs.map(x => ({ name: x.title } as homelessBookTableItem)) || ([] as homelessBookTableItem[])
+  }, [data])
   const table = useReactTable({
-    data: data?.adminDashboard.uncheckedBooks.map(x => ({ name: x.title } as homelessBookTableItem)) || ([] as homelessBookTableItem[]),
+    data: tableData,
     getCoreRowModel: getCoreRowModel(),
     columns: homelessBookColumn
   })
@@ -63,6 +69,7 @@ function AdminPanel() {
         <>
           <h3 className='text-3xl text-center dark:text-gray-50 my-8'>无家可归的书目们</h3>
           <NumberInput
+            size='lg'
             value={offset}
             onChange={(val) => setOffset(~~val)}
             placeholder="offset"
@@ -70,29 +77,29 @@ function AdminPanel() {
           />
           {data ? (
             <Table
-             className='w-full'
-             striped
-             highlightOnHover
+              className='w-full'
+              striped
+              highlightOnHover
             >
-              <thead>
+              <Table.Thead>
                 {table.getHeaderGroups().map(headerGroup => (
                   // eslint-disable-next-line react/jsx-key
-                  <tr key={headerGroup.id}>
+                  <Table.Tr key={headerGroup.id}>
                     {headerGroup.headers.map(column => (
-                      <th className='' key={column.id}>
+                      <Table.Th className='' key={column.id}>
                         {
                           flexRender(column.column.columnDef.header, column.getContext())
                         }
-                      </th>
+                      </Table.Th>
                     ))}
-                  </tr>
+                  </Table.Tr>
                 ))}
-              </thead>
-              <tbody>
+              </Table.Thead>
+              <Table.Tbody>
                 {table.getRowModel().rows.map((row, i) => {
                   return (<HomelessBookTableRow row={row} key={row.id} />)
                 })}
-              </tbody>
+              </Table.Tbody>
             </Table>
           ) : (
             loading ? (<span>loading</span>) : (<span>no more</span>)

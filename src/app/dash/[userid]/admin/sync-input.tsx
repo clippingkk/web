@@ -21,6 +21,7 @@ function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
       }
     }), toastPromiseDefaultOption).then(() => {
       client.resetStore()
+      setDoubanId('')
     })
   }, [doubanId, client])
 
@@ -32,7 +33,7 @@ function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
         placeholder='douban id'
       />
       <Button
-        className=''
+        className='ml-2'
         variant='outline'
         onClick={onConfirm}
       >confirm</Button>

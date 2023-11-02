@@ -13,6 +13,7 @@ import { ArrowDownIcon, ArrowUpIcon, SparklesIcon } from '@heroicons/react/24/so
 import { Clipping, User, useToggleClippingVisibleMutation } from '@/schema/generated'
 import { Button, NavLink, Tooltip } from '@mantine/core'
 import ClippingAISummaryModal from '@/components/clipping-item/aiSummary'
+import { toastPromiseDefaultOption } from '../../../../../services/misc'
 
 type ClippingSidebarProps = {
   clipping?: Pick<Clipping, 'id' | 'visible' | 'content' | 'title' | 'createdAt' | 'nextClipping' | 'prevClipping'> & { creator: Pick<User, 'id' | 'name' | 'domain'> }
@@ -188,13 +189,16 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                     if (!clipping) {
                       return
                     }
-                    execToggleClipping({
-                      variables: {
-                        ids: [clipping.id]
-                      }
-                    }).then(() => {
-                      client.resetStore()
-                    })
+                    toast.promise(
+                      execToggleClipping({
+                        variables: {
+                          ids: [clipping.id]
+                        }
+                      }),
+                      toastPromiseDefaultOption)
+                      .then(res => {
+                        client.resetStore()
+                      })
                   }}
                 />
               </div>

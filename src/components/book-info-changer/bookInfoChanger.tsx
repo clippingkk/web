@@ -22,7 +22,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
   const { t } = useTranslation()
   const [bookName, setBookName] = useState('')
   const [selectedBook, setSelectedBook] = useState<WenquBook | null>(null)
-  const candidates = useBookSearch(bookName, 0)
+  const candidates = useBookSearch(bookName, 0, props.visible)
   const client = useApolloClient()
   const [doUpdate] = useUpdateClippingBookIdMutation()
 

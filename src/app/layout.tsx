@@ -1,16 +1,16 @@
 import '../styles/devices.min.css'
 import 'react-phone-input-2/lib/style.css'
 
-import '@mantine/core/styles.css';
-import '@mantine/spotlight/styles.css'
-import '@mantine/notifications/styles.css'
-import '@mantine/code-highlight/styles.css'
-
 // import 'emoji-mart/css/emoji-mart.css'
 import '../styles/react-animation.css'
 import '../styles/global.css'
 import '../styles/tailwind.css'
 import '../styles/cmdk-raycast.css'
+
+import '@mantine/core/styles.css';
+import '@mantine/spotlight/styles.css'
+import '@mantine/notifications/styles.css'
+import '@mantine/code-highlight/styles.css'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 

@@ -76,13 +76,13 @@ export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestR
   }
 }
 
-export function useBookSearch(query: string, offset: number) {
+export function useBookSearch(query: string, offset: number, visible = true) {
   return useQuery({
     queryKey: ['wenqu', 'books', 'search', query, 50, offset],
     queryFn: (ctx) => wenquRequest<WenquSearchResponse>(`/books/search?query=${query}&limit=50&offset=${offset}`, {
       signal: ctx.signal
     }),
-    enabled: query.length > 1,
+    enabled: query.length > 1 && visible,
     staleTime: duration3Days,
     gcTime: duration3Days,
   })
