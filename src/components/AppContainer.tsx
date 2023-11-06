@@ -61,12 +61,12 @@ function AppContainer(props: AppContainerProps) {
         {props.children}
         {isDraging && (
           <div
-            className='z-50 top-0 left-0 right-0 bottom-0 fixed bg-gray-900 bg-opacity-50 with-fade-in backdrop-blur-xl flex justify-center items-center'
+            className='z-50 top-0 left-0 right-0 bottom-0 fixed bg-slate-900 bg-opacity-50 with-fade-in backdrop-blur-xl flex justify-center items-center'
             onClick={() => {
               setIsDraging(false)
             }}
           >
-            <div className='p-20 rounded text-blue-400 font-bold bg-purple-600 bg-opacity-80 flex justify-center items-center flex-col'>
+            <div className='p-40 bg-gradient-to-br rounded text-slate-900 font-bold from-orange-500 to-teal-500 flex justify-center items-center flex-col'>
               <ArrowDownTrayIcon className='w-16 h-16 text-black dark:text-white' />
               <p className='text-6xl font-lxgw font-bold mt-8'>
                 {t('app.upload.dropHere')}
