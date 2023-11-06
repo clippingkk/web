@@ -5,7 +5,7 @@ import SimpleSwitcher from './simple-switcher'
 import Exports from './exports'
 import WebHooks from './webhooks'
 import AccountRemoveButton from './account-remove'
-import { Select, useMantineColorScheme } from '@mantine/core'
+import { Divider, Select, useMantineColorScheme } from '@mantine/core'
 import OrdersTable from './orders'
 
 type SettingsPageProps = {
@@ -69,19 +69,26 @@ function SettingsPageContent(props: SettingsPageProps) {
   const { t } = useTranslation()
   return (
     <div
-      className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-blue-800 bg-opacity-25`}
+      className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-slate-200 dark:bg-slate-800 bg-opacity-70`}
     >
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4'> 🛠 {t('app.settings.title')}</h3>
       <GlobalSettings />
+
+      <Divider w={'80%'} className='mt-8' />
+
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
         {t('app.settings.orders.title')}
       </h3>
       <OrdersTable />
 
+      <Divider w={'80%'} className='mt-8' />
+
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
         {t('app.settings.export.title')}
       </h3>
       <Exports />
+
+      <Divider w={'80%'} className='mt-8' />
 
       <div className='w-full'>
         <div className='mx-4 lg:mx-20'>
@@ -99,6 +106,8 @@ function SettingsPageContent(props: SettingsPageProps) {
           <WebHooks />
         </div>
       </div>
+
+      <Divider w={'80%'} className='mt-8' />
 
       <h3 className='text-gray-800 dark:text-gray-200 text-2xl mb-4 mt-8'>
         {t('app.settings.danger.removeAccount')}

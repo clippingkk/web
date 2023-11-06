@@ -3,7 +3,8 @@
     "fold": "折叠",
     "unfold": "展开",
     "payment": {
-      "required": "超过限额，请升级到高级帐户"
+      "required": "超过限额，请升级到高级帐户",
+      "webhookRequired": "Webhook 仅在高级计划中可用。 请升级到高级版"
     },
     "ai": {
       "clippingHelp": "AI 生成的对于该片段的讲解"

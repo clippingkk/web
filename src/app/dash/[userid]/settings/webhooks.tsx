@@ -9,8 +9,10 @@ import { useFormik } from 'formik'
 import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
-import { Button, Table } from '@mantine/core'
-import { FetchMyWebHooksQuery, useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, WebHookItem, WebHookStep } from '../../../../schema/generated'
+import { Button, Table, Tooltip } from '@mantine/core'
+import { FetchMyWebHooksQuery, useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, useProfileQuery, WebHookItem, WebHookStep } from '../../../../schema/generated'
+import { useIsPremium } from '../../../../hooks/profile'
+import WebhookTable from './components/webhook-table'
 
 const webhookColumns: ColumnDef<FetchMyWebHooksQuery['me']['webhooks'][0]>[] = [{
   header: 'id',
@@ -27,6 +29,16 @@ const webhookColumns: ColumnDef<FetchMyWebHooksQuery['me']['webhooks'][0]>[] = [
 
 function WebHooks() {
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+
+  const { data: me } = useProfileQuery({
+    variables: {
+      id: uid
+    },
+    skip: uid <= 0
+  })
+
+  const isPremium = useIsPremium(me?.me.premiumEndAt)
+
   const { data: webhooksResp, client, refetch } = useFetchMyWebHooksQuery({
     variables: {
       id: uid
@@ -37,7 +49,12 @@ function WebHooks() {
   const { t } = useTranslation()
 
   const [createMutation] = useCreateNewWebHookMutation()
-  const [deleteMutation] = useDeleteAWebHookMutation()
+  const [deleteMutation] = useDeleteAWebHookMutation({
+    onCompleted: () => {
+      refetch()
+      toast.success(t('app.common.done'))
+    }
+  })
 
   const [visible, setVisible] = useState(false)
   const formik = useFormik({
@@ -75,79 +92,29 @@ function WebHooks() {
   return (
     <div className='w-full text-center'>
       <div className=' mx-4 lg:mx-20'>
-        <Table>
-          <thead>
-            {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(column => (
-                  // eslint-disable-next-line react/jsx-key
-                  <th
-                    key={column.id}
-                  >
-                    {flexRender(column.column.columnDef.header, column.getContext())}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.length === 0 && (
-              <tr>
-                <td
-                  colSpan={webhookColumns.length}
-                >
-                  {t('app.menu.search.empty')}
-                </td>
-              </tr>
-            )}
-            {table.getRowModel().rows.map(row => {
-              return (
-                <tr
-                  key={row.id}
-                  className='with-fade-in'
-                >
-                  {row.getVisibleCells().map(cell => {
-                    if (cell.column.columnDef.header === 'action') {
-                      return (
-                        <td key={cell.id}>
-                          <Button
-                            variant="gradient"
-                            className='bg-gradient-to-br from-orange-400 to-red-500'
-                            onClick={() => {
-                              return deleteMutation({
-                                variables: {
-                                  id: cell.row.getValue('id')
-                                }
-                              }).then(() => {
-                                client.resetStore()
-                                toast.success(t('app.common.done'))
-                              })
-                            }}
-                          >{t('app.common.delete')}</Button>
-                        </td>
-                      )
-                    }
-                    return (
-                      <td key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </Table>
+        <WebhookTable
+          table={table}
+          onRowDelete={id => {
+            return deleteMutation({
+              variables: {
+                id
+              }
+            })
+          }}
+        />
       </div>
-      <Button
-        variant="gradient"
-        className='bg-gradient-to-br from-indigo-400 to-cyan-500'
-        onClick={() => {
-          setVisible(true)
-        }}
-      >
-        New
-      </Button>
+      <Tooltip label={!isPremium ? t('app.payment.webhookRequired') : null}>
+        <Button
+          variant="gradient"
+          className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+          disabled={!isPremium}
+          onClick={() => {
+            setVisible(true)
+          }}
+        >
+          New
+        </Button>
+      </Tooltip>
 
       {visible && (
         <Dialog
@@ -167,17 +134,18 @@ function WebHooks() {
               <div
                 className='w-full text-right'
               >
-                <Button
-                  variant="gradient"
-                  className='bg-gradient-to-br from-indigo-400 to-cyan-500'
-                  disabled={formik.values.hookUrl.length <= 3 || !formik.isValid}
-                  loading={formik.isSubmitting}
-                  type='submit'
-                >
-                  {t('app.settings.webhook.submit')}
-                </Button>
+                <Tooltip label={!isPremium ? t('app.payment.webhookRequired') : null}>
+                  <Button
+                    variant="gradient"
+                    className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+                    disabled={formik.values.hookUrl.length <= 3 || !formik.isValid || !isPremium}
+                    loading={formik.isSubmitting}
+                    type='submit'
+                  >
+                    {t('app.settings.webhook.submit')}
+                  </Button>
+                </Tooltip>
               </div>
-
             </form>
           </div>
         </Dialog>

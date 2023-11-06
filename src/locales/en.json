@@ -3,7 +3,8 @@
     "fold": "Fold",
     "unfold": "Unfold",
     "payment": {
-      "required": "Limit exceeded, please upgrade to a premium account"
+      "required": "Limit exceeded, please upgrade to a premium account",
+      "webhookRequired": "Webhook only available in premium plan. please upgrade to premium"
     },
     "ai": {
       "clippingHelp": "AI-generated narration for the segment"

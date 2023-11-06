@@ -28,7 +28,7 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
   return (
     <Card className='mt-20 flex p-12 bg-blue-200 bg-opacity-50 flex-col md:flex-row'>
       <>
-        <div className='mr-12 w-full h-full'>
+        <div className='mr-12 h-full'>
           <BlurhashView
             blurhashValue={book.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
             src={book.image}
@@ -56,7 +56,7 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
           )}
           <button
             onClick={() => togglePreviewVisible()}
-            className='bg-blue-400 hover:bg-blue-500 py-2 px-4 mb-2 inline-block rounded hover:shadow duration-300 transition-all flex items-center'
+            className='bg-blue-400 hover:bg-blue-500 py-2 px-4 mb-2 rounded hover:shadow duration-300 transition-all flex items-center'
           >
             {t('app.book.share')}
             <ShareIcon className='w-4 h-4 ml-1' />

@@ -121,12 +121,12 @@ function SearchBar(props: SearchBarProps) {
         }}>
           {data?.search.clippings.map(c => (
             <li
-              className='dark:bg-gray-300 bg-gray-400 mt-4 list-none with-slide-in rounded'
+              className='dark:bg-slate-800 bg-slate-400 mt-4 list-none hover:dark:bg-slate-900 hover:bg-slate-500 with-slide-in rounded duration-150 transition-all active:scale-95'
               key={c.id}
             >
               <Link
                 href={`/dash/${profile.domain.length > 3 ? profile.domain : profile.id}/clippings/${c.id}`}
-                className='block py-8 px-4 duration-150 hover:bg-blue-200 rounded transition-colors'
+                className='block py-8 px-4'
                 onClick={props.onClose}>
 
                 <p className='text-xl leading-normal'>{c.content}</p>

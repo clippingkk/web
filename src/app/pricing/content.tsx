@@ -54,7 +54,10 @@ function PricingContent(props: PricingContentProps) {
                 <Button
                   component={Link}
                   href={p ? `/dash/${p.me.id}/home` : '/auth/auth-v3'}
-                  className=' bg-gradient-to-br from-sky-400 to-sky-500 w-full shadow-xl'
+                  fullWidth
+                  variant='gradient'
+                  gradient={{ from: 'indigo', to: 'cyan' }}
+                  size='lg'
                 >
                   <span className=' py-8 text-2xl'>
                     {t('app.plan.free.goto')}
@@ -66,7 +69,7 @@ function PricingContent(props: PricingContentProps) {
         />
         <PlanCard
           title={(
-            <h2 className='text-5xl'>{t('app.plan.premium.name')}</h2>
+            <h2 className='text-5xl font-bold text-transparent bg-clip-text dark:from-teal-200 dark:to-indigo-400 bg-gradient-to-br from-teal-600 to-indigo-700'>{t('app.plan.premium.name')}</h2>
           )}
           plan='premium'
           description={t('app.plan.premium.description')}
