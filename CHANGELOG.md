@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.5...v5.7.6) (2023-11-06)
+
+
+### Bug Fixes
+
+* **app:** update page styles ([1b6c46e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1b6c46e1c9d943e635d55bc4767e6b8bc8ca17c2))
+* **drag:** update drag zone styles ([d9f807e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d9f807e18191199cf401cbc4bb9a656686e0df11))
+
 ### [5.7.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.4...v5.7.5) (2023-11-02)
 
 
