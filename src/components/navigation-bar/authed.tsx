@@ -1,4 +1,4 @@
-import { Tooltip } from '@mantine/core'
+import { Box, Divider, Tooltip } from '@mantine/core'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -65,65 +65,67 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
         </Tooltip>
       </li>
       <li>
-        <Menu
-          trigger='hover'
+        <HoverCard
+          withArrow
           width={200}
           transitionProps={{
             transition: 'scale-y'
           }}
         >
-          <Menu.Target>
+          <HoverCard.Target>
             <Link href={`/dash/${uidOrDomain}/profile`}>
               <AvatarOnNavigationBar
                 avatarUrl={avatar}
                 isPremium={isPremium}
               />
             </Link>
-          </Menu.Target>
-          <Menu.Dropdown className='text-lg'>
-            <Menu.Label
-              className='text-lg'
-            >
-              {profile.name}
-            </Menu.Label>
-            <Menu.Item
-              leftSection={(
-                <Avatar
-                  size={24}
-                  src={avatar}
-                  radius={'xl'}
-                />
-              )}
-              className='flex items-center'
-            >
-              {profile.name}
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<DevicePhoneMobileIcon className='w-6 h-6' />}
-              onClick={onPhoneLogin}
-            >
-              {t('app.menu.loginByQRCode.title')}
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<CogIcon className='w-6 h-6' />}
-            >
-              <Link href={`/dash/${uidOrDomain}/settings`}>
+          </HoverCard.Target>
+          <HoverCard.Dropdown className='text-lg'>
+            <Box>
+              <Button
+                fullWidth
+                leftSection={(
+                  <Avatar
+                    size={24}
+                    src={avatar}
+                    radius={'xl'}
+                  />
+                )}
+                className='flex items-center'
+              >
+                {profile.name}
+              </Button>
+              <Button
+              className='my-2'
+                fullWidth
+                leftSection={<DevicePhoneMobileIcon className='w-6 h-6' />}
+                onClick={onPhoneLogin}
+              >
+                {t('app.menu.loginByQRCode.title')}
+              </Button>
+              <Button
+                component={Link}
+                href={`/dash/${uidOrDomain}/settings`}
+                leftSection={<CogIcon className='w-6 h-6' />}
+                fullWidth
+              >
                 {t('app.menu.settings')}
-              </Link>
-            </Menu.Item>
+              </Button>
 
-            <Menu.Divider />
+              <Divider my={4} />
 
-            <Menu.Item
-              color='red'
-              leftSection={<ArrowLeftOnRectangleIcon className='w-6 h-6' />}
-              onClick={onLogout}
-            >
-              {t('app.menu.logout')}
-            </Menu.Item>
+              <Button
+                color='red'
+                fullWidth
+                leftSection={<ArrowLeftOnRectangleIcon className='w-6 h-6' />}
+                onClick={onLogout}
+              >
+                {t('app.menu.logout')}
+              </Button>
+            </Box>
 
-          </Menu.Dropdown>
-        </Menu>
+          </HoverCard.Dropdown>
+        </HoverCard>
       </li>
     </ul>
   )
