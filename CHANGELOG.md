@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.6...v5.7.7) (2023-11-08)
+
+
+### Features
+
+* **navigation:** update avatar dropdown in navigation bar ([3459820](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3459820e146fd0d1956e746b7678aa6b5baf825c))
+* **profile:** make `my recent clippings` can fully load from server ([25ce11a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/25ce11a9a9841caeb65e268aa7eb4d05145ce555))
+* **signin:** update signin page styles ([a814d76](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a814d76b7ebee82073aa267a35da3f2e7570a8c7))
+
 ### [5.7.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.5...v5.7.6) (2023-11-06)
 
 
