@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo, useState } from 'react'
+import React, { Suspense, useMemo, useState } from 'react'
 import ClippingItem from '../../../../components/clipping-item/clipping-item';
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import WechatBindButton from './bind';
@@ -23,6 +23,9 @@ import { ProfileQuery, useFollowUserMutation, useUnfollowUserMutation, useUpdate
 import { Divider, Text } from '@mantine/core';
 import UserName from '../../../../components/profile/user-name';
 import styles from './profile.module.css'
+import { Masonry } from 'masonic';
+import ClippingList from './clipping-list';
+import Loading from '../../../loading';
 
 type ProfilePageContentProps = {
   userid: string
@@ -181,18 +184,10 @@ function ProfilePageContent(props: ProfilePageContentProps) {
         className='my-8'
       />
 
-      <MasonryContainer className='anna-fade-in'>
-        <React.Fragment>
-          {data.me.recents.map(
-            (item => <ClippingItem
-              key={item.id}
-              item={item}
-              domain={data.me.domain.length > 2 ? data.me.domain : data.me.id.toString()}
-              inAppChannel={IN_APP_CHANNEL.clippingFromUser}
-            />)
-          )}
-        </React.Fragment>
-      </MasonryContainer>
+      <Suspense fallback={<Loading />}>
+        <ClippingList uid={uid} userDomain={data?.me.domain} />
+      </Suspense>
+
       {isPickingAvatar && (
         <AvatarPicker
           onCancel={() => setIsPickingAvatar(false)}

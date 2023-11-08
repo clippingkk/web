@@ -4,6 +4,8 @@ import { toast } from 'react-hot-toast'
 import BindPhone from '../../../../components/bind-phone'
 import Dialog from '../../../../components/dialog/dialog'
 import { useBindUserPhoneMutation } from '../../../../schema/generated'
+import { Button, Tooltip } from '@mantine/core'
+import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 
 type BindPhoneProps = {
 }
@@ -29,14 +31,16 @@ function ProfileBindPhone(props: BindPhoneProps) {
     setVisible(false)
   }, [doAuthResponse])
 
-
   return (
     <React.Fragment>
-      <button
-        className='text-2xl ml-4 p-2 transform transition-all hover:scale-110 duration-300 hover:bg-blue-400 hover:bg-opacity-50 focus:outline-none'
-        onClick={() => setVisible(true)}
-        title={t('app.profile.phoneBind') ?? ''}
-      > {t('app.profile.phoneBind')} </button>
+      <Tooltip label={t('app.profile.phoneBind')}>
+        <Button
+          bg={'transparent'}
+          onClick={() => setVisible(true)}
+        >
+          <DevicePhoneMobileIcon className='w-6 h-6' />
+        </Button>
+      </Tooltip>
       {visible && (
         <Dialog
           title={t('app.profile.editor.title')}

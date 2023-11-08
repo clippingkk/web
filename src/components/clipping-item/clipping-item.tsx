@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { Clipping, User } from '../../schema/generated';
 
 type TClippingItemProps = {
+  className?: string
   item: Pick< Clipping, 'id' | 'bookID' | 'title' | 'content'>
   book?: WenquBook
   domain: string
@@ -18,14 +19,15 @@ type TClippingItemProps = {
   creator?: Pick<User, 'avatar' | 'id' | 'name' | 'clippingsCount'>
 }
 
-function ClippingItem({ domain, item, book, creator, inAppChannel }: TClippingItemProps) {
+function ClippingItem(props: TClippingItemProps) {
+  const { domain, item, book, creator, inAppChannel, className = '' } = props
   const { t } = useTranslation()
   return (
     <Link
       href={`/dash/${domain}/clippings/${item.id}?iac=${inAppChannel}`}
       key={item.id}
-      className='block mx-2 md:mx-0'>
-
+      className={'block mx-2 md:mx-0 ' + className}
+      >
       <Card className={styles.clipping + ' lg:p-10 p-2 hover:shadow-2xl transition-all duration-300'} style={{ margin: '1rem 0' }}>
         <>
           <h3 className='lg:text-3xl text-xl font-lxgw'>

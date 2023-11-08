@@ -10,7 +10,8 @@ import { uploadImage } from '../../../../services/misc'
 import { useTranslation } from 'react-i18next'
 import ExternalAccountList from '../../../../components/externalAccount/list'
 import { useUpdateProfileMutation } from '../../../../schema/generated'
-import { Button } from '@mantine/core'
+import { Button, Tooltip } from '@mantine/core'
+import { CogIcon } from '@heroicons/react/24/solid'
 
 type ProfileEditorProps = {
   uid: number
@@ -100,11 +101,15 @@ function ProfileEditor(props: ProfileEditorProps) {
 
   return (
     <React.Fragment>
-      <button
-        className='text-2xl ml-4 p-2 transform transition-all hover:scale-110 duration-300 hover:bg-blue-400 hover:bg-opacity-50 focus:outline-none'
-        onClick={() => setVisible(true)}
-        title={t('app.profile.editor.title') ?? ''}
-      >⚙</button>
+      <Tooltip label={t('app.profile.editor.title')}>
+        <Button
+          onClick={() => setVisible(true)}
+          bg='transparent'
+          title={t('app.profile.editor.title') ?? ''}
+        >
+          <CogIcon className='w-6 h-6' />
+        </Button>
+      </Tooltip>
       {visible && (
         <Dialog
           title={t('app.profile.editor.title')}

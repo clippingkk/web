@@ -43,6 +43,17 @@ export const apolloCacheConfig: InMemoryCacheConfig = {
         }
       }
     },
+    ClippingListResponse: {
+      fields: {
+        items: {
+          // merge: (existing = [], incoming) => {
+          //   console.log('on the fk merge', existing, incoming)
+          //   return [...existing, ...incoming]
+          // }
+          merge: simpleDistArrayMerge
+        }
+      }
+    },
     User: {
       fields: {
         recents: {

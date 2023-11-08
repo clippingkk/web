@@ -97,7 +97,7 @@ function SearchBar(props: SearchBarProps) {
       closeOnEscape
       centered
       withCloseButton={false}
-      className='dark:bg-gray-900 bg-gray-100'
+      className='dark:bg-slate-900 bg-slate-100'
     >
       <Input
         onChange={onInputChange}
@@ -128,9 +128,7 @@ function SearchBar(props: SearchBarProps) {
                 href={`/dash/${profile.domain.length > 3 ? profile.domain : profile.id}/clippings/${c.id}`}
                 className='block py-8 px-4'
                 onClick={props.onClose}>
-
                 <p className='text-xl leading-normal'>{c.content}</p>
-
               </Link>
             </li>
           ))}

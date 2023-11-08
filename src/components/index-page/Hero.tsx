@@ -73,7 +73,7 @@ function Hero(props: HeroProps) {
             <div className='flex items-end my-6'>
               <Link
                 href={goLinkUrl}
-                className={'w-fit py-4 px-12 text-6xl rounded-lg block font-extrabold text-white hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center'}>
+                className={'w-fit py-4 px-12 text-6xl rounded-lg block font-extrabold text-white hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center active:scale-95'}>
                 {t('app.go')}
               </Link>
 
@@ -81,7 +81,7 @@ function Hero(props: HeroProps) {
                 <Button
                   component={Link}
                   href='/pricing'
-                  className='text-xl ml-4'
+                  className='text-xl ml-4 transition-all active:scale-95 duration-150'
                   rightSection={<ChevronRightIcon className='w-4 h-4' />}
                 >
                   😎 {t('app.plan.premium.name')}

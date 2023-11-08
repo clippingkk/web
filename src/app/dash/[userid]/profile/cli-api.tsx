@@ -5,6 +5,7 @@ import Dialog from '../../../../components/dialog/dialog'
 import { CodeHighlight } from '@mantine/code-highlight';
 import { getLocalToken } from '../../../../services/ajax'
 import { useClaimCliApiTokenMutation } from '../../../../schema/generated'
+import { Button, Tooltip } from '@mantine/core';
 
 type CliApiTokenProps = {
 }
@@ -51,12 +52,16 @@ ck-cli
 
   return (
     <div>
-      <CommandLineIcon
-        onClick={() => {
-          setVisible(true)
-        }}
-        className='w-12 h-12 text-2xl ml-4 p-2 transform transition-all hover:scale-110 duration-300 hover:bg-blue-400 hover:bg-opacity-50 focus:outline-none cursor-pointer'
-      />
+      <Tooltip label={'CLI'}>
+        <Button
+          onClick={() => {
+            setVisible(true)
+          }}
+          bg={'transparent'}
+        >
+          <CommandLineIcon className='w-6 h-6' />
+        </Button>
+      </Tooltip>
       {visible && (
         <Dialog
           onCancel={() => {
