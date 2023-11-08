@@ -37,7 +37,6 @@ function AuthV2Page() {
               <Link
                 href='/auth/phone'
                 className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300 mt-4'>
-
                 <DevicePhoneMobileIcon className='h-6 w-6 mr-2 inline-block' />Phone Number
               </Link>
               <hr className='my-4' />

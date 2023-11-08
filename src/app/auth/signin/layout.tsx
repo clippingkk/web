@@ -36,7 +36,7 @@ function AuthPage(props: AuthPageProps) {
   const onGithubClick = useActionTrack('login:github')
 
   return (
-    <section className='anna-page-container flex h-screen items-center justify-center'>
+    <section className=' from-teal-100 to-green-300 bg-gradient-to-br dark:from-teal-900 dark:to-slate-900 flex h-screen items-center justify-center'>
       <Card className='with-slide-in'>
         <>
           <div className='flex items-center justify-center flex-col mb-4'>

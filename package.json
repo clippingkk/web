@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "npm run codegen && next build",
+    "build": "npm run codegen && next build --experimental-app-only --experimental-turbo",
     "start": "next start -p $PORT",
     "lint": "next lint",
     "test": "jest",

@@ -9,9 +9,9 @@ export function middleware(request: NextRequest) {
       const uid = request.cookies.get('uid')?.value
       if (uid) {
         const nextUrl = new URL(`/dash/${uid}/home`, request.url)
-        nextUrl.protocol = 'https:'
-        nextUrl.host = 'clippingkk.annatarhe.com:443'
-        nextUrl.port = '443'
+        nextUrl.protocol = url.protocol
+        nextUrl.host = url.host
+        nextUrl.port = url.port
         return NextResponse.redirect(nextUrl);
       }
     }
