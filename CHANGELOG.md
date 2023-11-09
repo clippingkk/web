@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.8...v5.7.9) (2023-11-09)
+
+
+### Bug Fixes
+
+* **ci:** remove turbo build for production ([005e4a8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/005e4a8359cafaa65a32c44920c02e7edc6eac3c))
+
 ### [5.7.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.7...v5.7.8) (2023-11-09)
 
 
