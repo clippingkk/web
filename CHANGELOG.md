@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.9...v5.7.10) (2023-11-12)
+
+
+### Bug Fixes
+
+* **style:** disable tailwind default preflight style ([cf7aaf9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cf7aaf96f1e3a67ba93aed2a9833286890919fe3))
+
 ### [5.7.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.8...v5.7.9) (2023-11-09)
 
 
