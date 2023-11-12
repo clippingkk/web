@@ -1,7 +1,7 @@
 module.exports = {
-  corePlugins: {
-    preflight: false,
-  },
+  // corePlugins: {
+  //   preflight: false,
+  // },
   darkMode: 'class',
   // future: {
   //   removeDeprecatedGapUtilities: true,

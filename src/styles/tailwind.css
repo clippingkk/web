@@ -1,4 +1,10 @@
-@tailwind base;
+/* 
+ * make the normalize.css lower priority
+ * https://github.com/orgs/mantinedev/discussions/1672
+ */
+@layer tailwind {
+  @tailwind base;
+}
 @tailwind components;
 @tailwind utilities;
 
