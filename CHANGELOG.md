@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.10...v5.7.11) (2023-11-12)
+
+
+### Bug Fixes
+
+* **style:** add normlize.css back and remove unused styles ([0ff5884](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0ff5884d3adfd14c129784906f894a2ec4f8674f))
+
 ### [5.7.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.9...v5.7.10) (2023-11-12)
 
 
