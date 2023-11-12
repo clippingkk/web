@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.11...v5.7.12) (2023-11-12)
+
+
+### Bug Fixes
+
+* **style:** make tailwind works with mantine ([1536190](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/153619005f708efa3042f8bf52bb307dc1219323))
+
 ### [5.7.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.10...v5.7.11) (2023-11-12)
 
 
