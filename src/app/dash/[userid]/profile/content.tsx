@@ -15,7 +15,6 @@ import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { API_HOST } from '../../../../constants/config'
 import { toast } from 'react-hot-toast'
 import Link from 'next/link';
-import OGWithUserProfile from '../../../../components/og/og-with-user-profile';
 import CliApiToken from './cli-api';
 import AvatarPicker from '../../../../components/profile/avatar-picker';
 import PersonalActivity from '../../../../components/profile/activity';
@@ -23,9 +22,8 @@ import { ProfileQuery, useFollowUserMutation, useUnfollowUserMutation, useUpdate
 import { Divider, Text } from '@mantine/core';
 import UserName from '../../../../components/profile/user-name';
 import styles from './profile.module.css'
-import { Masonry } from 'masonic';
 import ClippingList from './clipping-list';
-import Loading from '../../../loading';
+import Loading from '../square/loading';
 
 type ProfilePageContentProps = {
   userid: string

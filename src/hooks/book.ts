@@ -55,7 +55,7 @@ export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestR
     }))
   })
 
-  const isLoading = bbs.every(bs => bs.isLoading)
+  const isLoading = useMemo(() => bbs.every(bs => bs.isLoading), [bbs.map(x => x.isLoading)])
   // reorder
   const books = useMemo<WenquBook[]>(() => {
     const bsList = bbs
@@ -68,7 +68,7 @@ export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestR
       }
       return acc
     }, [])
-  }, [bbs, validDoubanIdList])
+  }, [JSON.stringify(bbs.map(x => x.data?.books)), validDoubanIdList])
 
   return {
     books,

@@ -143,7 +143,7 @@ function ReportYearly(props: ReportYearlyProps) {
           ))}
         </div>
 
-        <PageContainer>
+        <PageContainer bgImage={defaultBgImage}>
           <div>
             <h2 className='text-gray-700 text-xl lg:text-3xl 2xl:text-6xl dark:text-gray-200 mb-8 text-center'>{t('app.slogan')}</h2>
             <p className='text-sm lg:text-lg 2xl:text-xl text-gray-700 dark:text-gray-500 w-full text-center px-8'>

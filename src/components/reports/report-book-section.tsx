@@ -60,7 +60,7 @@ function ReportBookSection(props: ReportBookSectionProps) {
             {t('app.report.clippingCountOnBook', { count: props.reportDataBook?.clippingsCount })}
           </Title>
           <Divider className='my-4 lg:my-10' />
-          <HoverCard width={560} shadow='lg'>
+          <HoverCard width={560} shadow='lg' withArrow>
             <HoverCard.Target>
               <p className=' text-sm lg:text-base line-clamp-6'>
                 {props.book.summary}
