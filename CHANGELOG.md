@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.12...v5.7.13) (2023-11-16)
+
+
+### Features
+
+* **home:** update home page styles ([ae2df96](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ae2df9681d3554701230ed9f20f68d404d86d0c0))
+
+
+### Bug Fixes
+
+* **report:** fix infinity rerender issue in report page and update styles ([69ea906](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/69ea9061010962cb40f6f71941596f617cd69214))
+* **wenqu:** set wenqu book additional info as optional ([bb98ad8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/bb98ad8c78d31a677e6bceb01dbbe63d6538f2f3))
+
 ### [5.7.12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.11...v5.7.12) (2023-11-12)
 
 
