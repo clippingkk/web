@@ -1,15 +1,15 @@
 'use client';
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import styles from './Hero.module.css'
-import { useBackgroundImage } from '../../hooks/theme'
-import { useSelector } from 'react-redux';
-import { TGlobalStore } from '../../store';
 import { useGoAuthLink } from '../../hooks/hooks'
 import { Button } from '@mantine/core'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import { AppFeatures } from '../../constants/features'
+import styles from './Hero.module.css'
+import PureImages from '../backgrounds/pure-images';
+import Image from 'next/image';
+import buttonStyles from '../../components/button/lighten.module.css';
 
 function useLoad() {
   const [loaded, setLoaded] = useState(false)
@@ -51,21 +51,27 @@ type HeroProps = {
   }
 }
 
+import bgLightsPng from '../../assets/bg-lights.png'
+
 function Hero(props: HeroProps) {
   const { t } = useTranslation()
-  const bg = props.bgInfo
-
+  // const { bgInfo: bg } = props
   const goLinkUrl = useGoAuthLink()
 
   return (
     <div
-      className={'flex flex-col justify-center h-screen w-full max-h-screen bg-cover'}
+      className={'h-screen w-full max-h-screen bg-cover relative'}
       style={{
-        backgroundImage: `url(${bg.src})`,
         maxWidth: '100vw'
       }}
     >
-      <div className='w-full h-full backdrop-blur-xl bg-black dark:bg-opacity-40 bg-opacity-10 flex flex-col justify-center'>
+      <div className='relative h-full w-full'>
+        <PureImages
+          lightingColor={'rgb(2, 6, 23)'}
+        />
+        <Image src={bgLightsPng} alt='bg-lights' className='absolute top-0 left-0 w-full h-full object-cover' />
+      </div>
+      <div className='w-[100vw] h-[100vh] backdrop-blur-xl bg-black dark:bg-opacity-40 bg-opacity-10 flex flex-col justify-center absolute top-0 left-0'>
         <div className={styles.titleField + ' my-8 mx-8 md:my-20 md:mx-20 flex items-center justify-center flex-col md:flex-row'}>
           <div className='flex-1 mb-8'>
             <h1 className='text-8xl m-0 font-extrabold bg-clip-text from-orange-300 to-sky-400 text-transparent bg-gradient-to-br font-lato pb-2'>ClippingKK</h1>
@@ -73,7 +79,7 @@ function Hero(props: HeroProps) {
             <div className='flex items-end my-6'>
               <Link
                 href={goLinkUrl}
-                className={'w-fit py-4 px-12 text-6xl rounded-lg block font-extrabold text-white hover:shadow-2xl bg-gradient-to-br from-blue-500 to-purple-700 text-center active:scale-95'}>
+                className={buttonStyles.lightenButton}>
                 {t('app.go')}
               </Link>
 
@@ -81,7 +87,9 @@ function Hero(props: HeroProps) {
                 <Button
                   component={Link}
                   href='/pricing'
-                  className='text-xl ml-4 transition-all active:scale-95 duration-150'
+                  variant='gradient'
+                  gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+                  className='text-xl ml-6 transition-all active:scale-95 duration-150'
                   rightSection={<ChevronRightIcon className='w-4 h-4' />}
                 >
                   😎 {t('app.plan.premium.name')}

@@ -20,7 +20,7 @@ function BookCover({ book, domain }: TBookCoverProps) {
         src={book.image}
         height={384}
         width={320}
-        className={styles.image + ' rounded-sm shadow-lg duration-300 transition-transform w-72 h-96'}
+        className={styles.image + ' rounded-sm shadow-2xl duration-300 transition-transform w-72 h-96'}
         alt={book.title}
       />
       <div className='flex-col flex content-center items-center mt-4'>
