@@ -112,7 +112,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                 {t('app.menu.settings')}
               </Button>
 
-              <Divider my={4} />
+              <Divider my={12} />
 
               <Button
                 color='red'

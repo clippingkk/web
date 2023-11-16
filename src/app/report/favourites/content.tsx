@@ -39,7 +39,7 @@ function FavBookCard(
           {b ? (
             <div className={'relative transition-all duration-300 rounded transform hover:scale-110 shadow-2xl with-slide-in'}>
               <BlurhashView
-                blurhashValue={b.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
+                blurhashValue={b.edges?.imageInfo?.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
                 src={b.image}
                 height={576}
                 width={320}

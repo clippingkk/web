@@ -98,7 +98,7 @@ function HomePageContent(props: HomePageContentProps) {
       </header>
 
       <div className='flex flex-wrap items-center justify-center'>
-        {loading && (
+        {loading && data.books.length === 0 && !called && (
           <HomePageSkeleton />
         )}
         {data.books.length === 0 && called && (

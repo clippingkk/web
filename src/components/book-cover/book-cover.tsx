@@ -16,7 +16,7 @@ function BookCover({ book, domain }: TBookCoverProps) {
       href={`/dash/${domain}/book/${book.doubanId}`}
       className={styles.cover + ' bg-transparent flex flex-col items-center content-center rounded active:scale-95 w-128 overflow-visible font-lxgw with-slide-in'}>
       <BlurhashView
-        blurhashValue={book.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
+        blurhashValue={book.edges?.imageInfo?.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
         src={book.image}
         height={384}
         width={320}

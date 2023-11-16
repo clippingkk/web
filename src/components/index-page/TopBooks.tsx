@@ -15,7 +15,7 @@ function TopBooks(props: TopBooksProps) {
       <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>
         {t('app.public.readings')}
       </h2>
-      <div className='flex py-8 md:px-12 flex-wrap justify-center items-center'>
+      <div className='flex gap-8 py-8 md:px-12 flex-wrap justify-center items-center'>
         {props.books.map(b => <PublicBookItem key={b.id} book={b} />)}
       </div>
     </div>

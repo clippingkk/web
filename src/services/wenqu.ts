@@ -46,7 +46,7 @@ export interface WenquBookCoverImageInfo {
 }
 
 export interface WenquBookEdge {
-  imageInfo: WenquBookCoverImageInfo;
+  imageInfo?: WenquBookCoverImageInfo;
 }
 
 export interface WenquBook {

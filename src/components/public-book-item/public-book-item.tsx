@@ -12,7 +12,7 @@ function PublicBookItem(props: PublicBookItemProps) {
   return (
     <div className={'relative transition-all duration-300 rounded transform hover:scale-110 shadow-2xl with-slide-in'}>
       <BlurhashView
-        blurhashValue={book.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
+        blurhashValue={book.edges?.imageInfo?.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
         src={book.image}
         height={384}
         width={288}

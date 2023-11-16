@@ -30,7 +30,7 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
       <>
         <div className='mr-12 h-full'>
           <BlurhashView
-            blurhashValue={book.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
+            blurhashValue={book.edges?.imageInfo?.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
             src={book.image}
             height={384}
             width={320}

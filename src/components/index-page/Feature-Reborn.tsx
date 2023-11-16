@@ -87,7 +87,7 @@ function FeatureReborn(props: FeatureRebornProps) {
 
       <Link
         href={goLinkUrl}
-        className={'w-full py-8 text-6xl rounded-lg block text-white my-6 hover:shadow-2xl bg-gradient-to-br from-sky-300 to-teal-400 text-center font-extrabold'}
+        className={'w-full py-8 text-6xl rounded-lg block text-white my-6 hover:shadow-2xl bg-gradient-to-br from-sky-300 to-teal-400 text-center font-extrabold active:scale-95 duration-150 transition-all dark:from-slate-700 dark:to-slate-950'}
       >
         {t('app.go')}
       </Link>

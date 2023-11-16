@@ -23,7 +23,7 @@ function BookCandidate(props: BookCandidateProps) {
         src={book.image}
         alt={book.title}
         className='rounded'
-        blurhashValue={book.edges?.imageInfo.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
+        blurhashValue={book.edges?.imageInfo?.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
       />
       <div className='ml-4 w-144'>
         <h3 className='text-3xl inline-block'>
