@@ -5,6 +5,7 @@ const LoginWelcomeText = 'Welcome to the ClippingKK~ \n It`s your nonce: '
 
 async function signDataByWeb3() {
   const m = new MetaMaskSDK()
+  await m.init()
   const eth = m.getProvider()
   if (!eth) {
     throw new Error('MetaMask is not connected')
