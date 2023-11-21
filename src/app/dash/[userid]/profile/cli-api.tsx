@@ -52,7 +52,11 @@ ck-cli
 
   return (
     <div>
-      <Tooltip label={'CLI'}>
+      <Tooltip
+        label={'CLI'}
+        withArrow
+        transitionProps={{ transition: 'pop', duration: 200 }}
+      >
         <Button
           onClick={() => {
             setVisible(true)

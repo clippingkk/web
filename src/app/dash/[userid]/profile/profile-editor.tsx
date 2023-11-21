@@ -101,7 +101,11 @@ function ProfileEditor(props: ProfileEditorProps) {
 
   return (
     <React.Fragment>
-      <Tooltip label={t('app.profile.editor.title')}>
+      <Tooltip
+        label={t('app.profile.editor.title')}
+        withArrow
+        transitionProps={{ transition: 'pop', duration: 200 }}
+      >
         <Button
           onClick={() => setVisible(true)}
           bg='transparent'

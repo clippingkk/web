@@ -19,7 +19,7 @@ import CliApiToken from './cli-api';
 import AvatarPicker from '../../../../components/profile/avatar-picker';
 import PersonalActivity from '../../../../components/profile/activity';
 import { ProfileQuery, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '../../../../schema/generated';
-import { Divider, Text } from '@mantine/core';
+import { Divider, Text, Tooltip } from '@mantine/core';
 import UserName from '../../../../components/profile/user-name';
 import styles from './profile.module.css'
 import ClippingList from './clipping-list';
@@ -156,15 +156,20 @@ function ProfilePageContent(props: ProfilePageContentProps) {
                 title={t('app.profile.yearlyReportTip') ?? ''}>
                 {t('app.profile.report.yearlyTitle')}
               </Link>
-              <a
-                href={`${API_HOST}/api/rss/user/${data?.me.id}/clippings`}
-                target='_blank'
-                className='ml-4 px-4 py-2 rounded hover:bg-blue-400'
-                title={t('app.profile.rssTip') ?? ''}
-                rel="noreferrer"
+              <Tooltip
+                label={t('app.profile.rssTip') ?? ''}
+                withArrow
+                transitionProps={{ transition: 'pop', duration: 200 }}
               >
-                RSS
-              </a>
+                <a
+                  href={`${API_HOST}/api/rss/user/${data?.me.id}/clippings`}
+                  target='_blank'
+                  className='ml-4 px-4 py-2 rounded hover:bg-blue-400'
+                  rel="noreferrer"
+                >
+                  RSS
+                </a>
+              </Tooltip>
             </div>
           </div>
 

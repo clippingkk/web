@@ -33,7 +33,11 @@ function ProfileBindPhone(props: BindPhoneProps) {
 
   return (
     <React.Fragment>
-      <Tooltip label={t('app.profile.phoneBind')}>
+      <Tooltip
+        label={t('app.profile.phoneBind')}
+        withArrow
+        transitionProps={{ transition: 'pop', duration: 200 }}
+      >
         <Button
           bg={'transparent'}
           onClick={() => setVisible(true)}
