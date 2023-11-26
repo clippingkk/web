@@ -1,4 +1,3 @@
-'use client';
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
@@ -9,6 +8,7 @@ import { AppFeatures } from '../../constants/features'
 import styles from './Hero.module.css'
 import PureImages from '../backgrounds/pure-images';
 import Image from 'next/image';
+import { YouTubeEmbed } from '@next/third-parties/dist/google'
 import buttonStyles from '../../components/button/lighten.module.css';
 
 function useLoad() {
@@ -33,6 +33,10 @@ function VideoTipsArea() {
     return null
   }
 
+  return null
+
+  return <YouTubeEmbed videoid="0eQASJHQIGk" height={400} params="controls=0" />
+
   return (
     <div className='flex-1'>
       <iframe
@@ -52,6 +56,7 @@ type HeroProps = {
 }
 
 import bgLightsPng from '../../assets/bg-lights.png'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
 function Hero(props: HeroProps) {
   const { t } = useTranslation()
@@ -96,6 +101,17 @@ function Hero(props: HeroProps) {
                 </Button>
               )}
             </div>
+            <Button
+            variant='transparent'
+             component='a'
+              rightSection={<ArrowTopRightOnSquareIcon className='w-4 h-4' />}
+              href='https://www.bilibili.com/video/BV1Nb41187Lo'
+              target='_blank'
+              className='hover:underline'
+              referrerPolicy='no-referrer'
+            >
+              How to use?
+            </Button>
           </div>
 
           <VideoTipsArea />
