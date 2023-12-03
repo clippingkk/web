@@ -8,7 +8,6 @@ import { AppFeatures } from '../../constants/features'
 import styles from './Hero.module.css'
 import PureImages from '../backgrounds/pure-images';
 import Image from 'next/image';
-import { YouTubeEmbed } from '@next/third-parties/dist/google'
 import buttonStyles from '../../components/button/lighten.module.css';
 
 function useLoad() {
@@ -35,7 +34,7 @@ function VideoTipsArea() {
 
   return null
 
-  return <YouTubeEmbed videoid="0eQASJHQIGk" height={400} params="controls=0" />
+  // return <YouTubeEmbed videoid="0eQASJHQIGk" height={400} params="controls=0" />
 
   return (
     <div className='flex-1'>
