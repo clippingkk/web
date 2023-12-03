@@ -155,7 +155,8 @@ function ClippingSidebar(props: ClippingSidebarProps) {
           <li className='w-full mb-4'>
             <Button
               component='a'
-              href={`https://book.douban.com/subject/${book?.doubanId}`}
+              disabled={!book}
+              href={book ? `https://book.douban.com/subject/${book?.doubanId}` : 'javascript:void(0)'}
               target="_blank"
               rel="noreferrer"
               variant='gradient'

@@ -6,7 +6,7 @@ import { WenquBook } from '../../services/wenqu'
 import BookCandidate from './bookCandidate'
 import { toast } from 'react-hot-toast'
 import { useUpdateClippingBookIdMutation } from '../../schema/generated'
-import { Input, Modal } from '@mantine/core'
+import { Button, Input, Modal } from '@mantine/core'
 import LoadingIcon from '../icons/loading.svg'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
@@ -24,7 +24,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
   const [selectedBook, setSelectedBook] = useState<WenquBook | null>(null)
   const candidates = useBookSearch(bookName, 0, props.visible)
   const client = useApolloClient()
-  const [doUpdate] = useUpdateClippingBookIdMutation()
+  const [doUpdate, { loading }] = useUpdateClippingBookIdMutation()
 
   // set inital value
   useEffect(() => {
@@ -34,23 +34,26 @@ function BookInfoChanger(props: BookInfoChangerProps) {
     setBookName(props.bookName)
   }, [props.bookName])
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     if (!selectedBook) {
       return
     }
 
-    return doUpdate({
-      variables: {
-        cid: props.clippingID,
-        doubanId: selectedBook.doubanId
-      }
-    }).then(() => {
-      client.resetStore()
-      toast.success(t('app.common.done'))
-      setBookName('')
-      props.onClose()
-    }).catch(err => {
-      toast.error(err)
+    // return toast.promise(new Promise(r => setTimeout(r, 4000)), {
+      return toast.promise(doUpdate({
+        variables: {
+          cid: props.clippingID,
+          doubanId: selectedBook.doubanId
+        }
+      }), {
+      loading: t('app.common.saving'),
+      success: () => {
+        client.resetStore()
+        setBookName('')
+        props.onClose()
+        return t('app.common.done')
+      },
+      error: (err) => t(err),
     })
   }, [selectedBook?.id, props.clippingID])
 
@@ -93,7 +96,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
             title: selectedBook?.title ?? 'null'
           })}</p>
           <ul
-            className=' overflow-y-auto'
+            className='overflow-y-auto'
             style={{
               maxHeight: '65vh'
             }}
@@ -105,8 +108,8 @@ function BookInfoChanger(props: BookInfoChangerProps) {
             )}
             {candidates.isFetched && !candidates.isLoading && candidates.data?.count === 0 && (
               <div className='w-full flex justify-center items-center h-96 flex-col'>
-                  <span className=' text-9xl'>🤨</span>
-                  <p className='mt-2'>{t('app.menu.search.empty')}</p>
+                <span className=' text-9xl'>🤨</span>
+                <p className='mt-2'>{t('app.menu.search.empty')}</p>
               </div>
             )}
             {candidates.data?.books.map(x => (
@@ -127,13 +130,19 @@ function BookInfoChanger(props: BookInfoChangerProps) {
         </div>
 
         <div>
-          <button
-            className='text-white text-2xl w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow disabled:from-gray-200 disabled:to-gray-300 hover:shadow-lg duration-300 transition-all'
-            disabled={!selectedBook}
+          <Button
+            variant='gradient'
+            gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+            fullWidth
             onClick={onSubmit}
+            mt={8}
+            size='lg'
+            loading={loading}
+            className='active:scale-95 transition-all duration-75'
+            disabled={!selectedBook}
           >
             {t('app.common.doUpdate')}
-          </button>
+          </Button>
         </div>
       </Modal.Body>
     </Modal>
