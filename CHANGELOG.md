@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.15](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.14...v5.7.15) (2023-12-03)
+
+
+### Features
+
+* **deps:** upgrade deps ([1089c7c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1089c7cf680c531b931861204c5315948c4f1225))
+
+
+### Bug Fixes
+
+* **index:** remove unused youtube embed component ([84ffd1f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/84ffd1f843fb52eb3dec34ce7f989574a16a8b13))
+
 ### [5.7.14](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.13...v5.7.14) (2023-12-03)
 
 
