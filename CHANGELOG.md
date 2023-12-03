@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.14](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.13...v5.7.14) (2023-12-03)
+
+
+### Features
+
+* **app:** remove guide video ([d4b3929](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d4b392972c292001267bac67a519ba1e03832941))
+
+
+### Bug Fixes
+
+* **app:** update tooltips ([e5b6c7d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e5b6c7dfb4fc762cb68dfd9dfbc807f3cac215e1))
+* **app:** upgrade packages ([a389ba2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a389ba221dd5680ce9cd0741a5e6fdb21d75ec9a))
+* **book:** update book section in clipping page info ([7fd3f16](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7fd3f16283b63bbd353b7e6fdef81d0c8c208da2))
+
 ### [5.7.13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.12...v5.7.13) (2023-11-16)
 
 
