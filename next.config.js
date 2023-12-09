@@ -15,8 +15,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
  **/
 const config = {
   experimental: {
-    incrementalCacheHandlerPath: require.resolve('./cache-handler.js'),
-    isrMemoryCacheSize: 0, // disable default in-memory caching
+    // incrementalCacheHandlerPath: require.resolve('./cache-handler.js'),
+    // isrMemoryCacheSize: 0, // disable default in-memory caching
   },
   images: {
     domains: [
