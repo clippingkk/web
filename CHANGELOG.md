@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.16](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.15...v5.7.16) (2023-12-09)
+
+
+### Features
+
+* **cache:** add cache handler for next 14 ([c104e69](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c104e692668ca86a8a8156042fba2b65f8184ac4))
+* **cache:** disable cache for now ([4964dcd](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4964dcded8dc8b030c8eb01c3b240ade362a04b6))
+* **deps:** upgrade deps ([89b9028](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/89b902809c676c8b50668d37e47883855937447e))
+* **deps:** upgrade to next@14.0.4 ([abcaf7f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/abcaf7f38acdf9755d08cd9f5b7962613ac00dc2))
+
+
+### Bug Fixes
+
+* **cache:** disable redis cache in build phase ([8cd643a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8cd643af77c1555ef18577fb07bd6cedb9a98355))
+* **upload:** fix xstate api changes ([04d644b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/04d644bdea23215c1cb716f482954f0f3bdab4c4))
+
 ### [5.7.15](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.14...v5.7.15) (2023-12-03)
 
 
