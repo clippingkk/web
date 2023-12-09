@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.17](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.16...v5.7.17) (2023-12-09)
+
+
+### Bug Fixes
+
+* **ci:** try to add GIT_COMMIT info to build stage ([492d30e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/492d30e2735062e061c943951ca99673a8569377))
+
 ### [5.7.16](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.15...v5.7.16) (2023-12-09)
 
 
