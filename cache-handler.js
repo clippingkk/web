@@ -32,11 +32,15 @@ var client = createRedisClient(redisUrl)
 connect(client).then(() => {
   console.log('Redis connected')
 })
-
-IncrementalCache.onCreation(
-  createHandler({
-    client,
+if (process.env.SERVER_STARTED) {
+  IncrementalCache.onCreation(() => {
+    return {
+      diskAccessMode: 'read-no/write-no',
+      catch: createHandler({
+        client,
+      })
+    }
   })
-)
+}
 
 module.exports = IncrementalCache
