@@ -55,5 +55,6 @@ jobs:
           GIT_COMMIT: ${{ github.sha }}
         with:
           push: true
+          build-args: GIT_COMMIT=${{ github.sha }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
