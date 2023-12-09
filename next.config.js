@@ -14,19 +14,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
  * @type {import('next').NextConfig}
  **/
 const config = {
-  //  strictMode: true,
-  // sentry: {
-  //   hideSourceMaps: true
-  // },
-  // experimental: {
-    // instrumentationHook: isProd,
-    // runtime: 'experimental-edge',
-    // swcPlugins: [['@swc-jotai/debug-label', {}]],
-  // },
-  // i18n: {
-  //   locales: ['default', 'zhCN', 'en', 'ko'],
-  //   defaultLocale: 'zhCN'
-  // },
+  experimental: {
+    incrementalCacheHandlerPath: require.resolve('./cache-handler.js'),
+    isrMemoryCacheSize: 0, // disable default in-memory caching
+  },
   images: {
     domains: [
       'ck-cdn.annatarhe.cn',
@@ -36,13 +27,15 @@ const config = {
       'gateway.moralisipfs.com'
     ],
   },
-  //  excludeFile: (str) => /__tests__/.test(str),
   env: {
     DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
     GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT || ''),
     infuraKey: JSON.stringify(process.env.infuraKey || '')
   },
-  // swcMinify: true
+  generateBuildId: async () => {
+    // This could be anything, using the latest git hash
+    return process.env.GIT_COMMIT
+  },
 }
 
 if (process.env.IS_FLY_IO) {

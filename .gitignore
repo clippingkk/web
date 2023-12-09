@@ -68,3 +68,5 @@ src/schema/generated.tsx
 # Sentry
 .sentryclirc
 src/gql/
+
+.env.local
