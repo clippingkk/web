@@ -18,6 +18,7 @@ import { notifications } from "@mantine/notifications"
 import { graphql } from '../gql'
 import { delay } from "../utils/timer"
 import { digestMessage } from '../utils/crypto'
+import { uploadProcessMachine } from "./my-file.machine"
 
 
 type digestedClippingItem = TClippingItem & { _digest?: string }
@@ -29,58 +30,6 @@ const onSyncEndMutation = graphql(`
     onCreateClippingEnd(startedAt: $startedAt)
   }
 `)
-
-const uploadProcessMachine = createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QFUAOAbA9gQwgBQCdMBjOWAWW2IAsBLAOzADp7NGBiAOTAA8AXANoAGALqJQqTLFp9abcSB6IAbMqFMAnACYAjAA4tG5TuUBWHQHZTAGhABPRHp1MALBvcaXpvcr1G9pgC+gbZoWLiEJGSUNAzMqNgEsGBcvIKiCpLSsvJIiog6GgDMTEJFOlrmfqZuyi4utg4Ipt6uJsqGFhYuRaYWesGhGDj4RKSwFFR0jEwJSSkAogREBMJieVkycvQKSgiFJWUVVRo1RvWNiPUl3e5OOjo9QloWgyBhI5Hjk7Ezc8nsABKcDA6XWEikW1yoD2B1K5Uq+lOtQu9kQWmeTC0bncQiERjKui0bw+ETG0SmcSYyUSvygACFMJgANapfhrTKQnI7PJ7DHqFxCDouEwYsw2NEINR6TTtHrlExOEnDMlRCYxabMGkEOmMlnsJYrDkbLnbXZXUwaJjKCz6Kp6FxaDoaS7NCwC9oWYrYjRCEXK8KjNU-TXUsC06YMpms4HJMGc7Jm3kWq02u36B1OwyuopaLSaDz+OrKYqvELvFVB74aqkAV0rDCgbPjJsT0Py+2K8OOSLOdQakp8+ZFZltWgCWiKbgDn3J6spM3rgcbBuWmFWGVbUJ5MIKXaOiOqKIHTRLznalrUll6pmJ5dJVYpv2YS5GK9joONELbO47cIPJx9qiTTdM4qiqPiLQuDaDozqq1YLswEBsCkH4tt+27mggXipraAQZo6zqukObSjhUE5ThocGPvOz5MGAa4EECILoSAmzclhZglDUvhFBofg6L0LqSn0HqqF6uZuH6OjBOWrAQHACgPl8T6agmmHJggAC0yiujp1EqbRoasIw6kcZpXQWJoQoZjoQouP0Og5oYrh1E6dlOno-RBPelaGSGVL-GAZlJruCAWPmBLFF5vSOtBrraKUOIxXoAQ2tOvmBv5NYzNqurRiF7Z8hoVl8UKebOqoBiuqYdSuB4XHKHxDxlkMWVzgFi4NvQUCFb+eyOq6xhWtBqgOUUEVeV6BkdTlSEoX1WFFEU6gRU60ETZUPgSk0JEaCYfTkbelEzcGc30Yxi2abVLjdti5gTS4MU1e6sqqFO442vxVGyUAA */
-  id: "UploadProcessMachine",
-
-  states: {
-    none: {
-      on: {
-        Next: "parse"
-      }
-    },
-
-    parse: {
-      on: {
-        Next: "searchingBook",
-        Error: "error",
-        Reset: "none"
-      }
-    },
-
-    searchingBook: {
-      on: {
-        Next: "uploading",
-        Error: "error",
-        Reset: "none"
-      }
-    },
-
-    uploading: {
-      on: {
-        Next: "done",
-        Error: "error",
-        Reset: "none"
-      }
-    },
-
-    done: {
-      on: {
-        Reset: "none"
-      }
-    },
-
-    error: {
-      on: {
-        Reset: "none"
-      }
-    },
-  },
-
-  initial: "none",
-  predictableActionArguments: true,
-})
 
 export function useUploadData(
   visible: boolean,
@@ -107,11 +56,11 @@ export function useUploadData(
     }
     let str = ''
     try {
-      send('Next')
+      send({ type: 'Next' })
       str = await extraFile(file)
     } catch (e: any) {
       console.error(e, e.toString())
-      send('Error')
+      send({ type: 'Error' })
       setMessages(m => m.concat(e.toString()))
       return
     }
@@ -121,12 +70,12 @@ export function useUploadData(
       const parser = new ClippingTextParser(str)
       parsedData = parser.execute()
     } catch (e) {
-      send('Error')
+      send({ type: 'Error' })
       setMessages(['file invalid'])
       return
     }
 
-    send('Next')
+    send({ type: 'Next' })
 
     let uploadedClippings = new Set<string>()
     const uploadedClippingValue = localStorage.getItem('app.uploaded.clippings')
@@ -186,7 +135,7 @@ export function useUploadData(
         wenquSearchResult.current.set(i.title, i.bookId ? ~~i.bookId : 0)
       }
     }
-    send('Next')
+    send({ type: 'Next' })
     // cache
     const chunkedData = parsedData.reduce((result, item, index) => {
       if (result[result.length - 1].length % 20 === 0 && index !== 0) {
@@ -200,7 +149,7 @@ export function useUploadData(
     if (!willSyncServer) {
       // 这里会覆盖之前的数据，后续可以考虑是不是弄个队列
       localStorage.setItem(localClippingsStashKey, JSON.stringify(chunkedData))
-      send('Next')
+      send({ type: 'Next' })
       notifications.show({
         icon: (<CheckCircleIcon className="w-4 h-4" />),
         title: t('app.upload.tips.parsedInfoTitle'),
@@ -241,9 +190,9 @@ export function useUploadData(
 
       setAt(chunkedData.length)
       toast.success(t('app.upload.tips.done'))
-      send('Next')
+      send({ type: 'Next' })
     } catch (e: any) {
-      send('Error')
+      send({ type: 'Error' })
       setMessages(m => m.concat(e.toString()))
     } finally {
       client.resetStore()
@@ -251,9 +200,9 @@ export function useUploadData(
   }, [client, exec, t, willSyncServer])
 
   useEffect(() => {
-    if (step === UploadStep.Done || step === UploadStep.Error) {
+    if (step === UploadStep.Error) {
       setTimeout(() => {
-        send('Reset')
+        send({ type: 'Reset' })
         setMessages([])
       }, 3000)
     }
