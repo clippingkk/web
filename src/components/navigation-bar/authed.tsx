@@ -2,9 +2,8 @@ import { Box, Divider, Tooltip } from '@mantine/core'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux';
-import { UserContent, execLogout } from '../../store/user/type';
-import { Avatar, Button, HoverCard, Menu } from '@mantine/core';
+import { UserContent } from '../../store/user/type';
+import { Avatar, Button, HoverCard } from '@mantine/core';
 import { CogIcon } from '@heroicons/react/24/solid';
 import { ArrowLeftOnRectangleIcon, DevicePhoneMobileIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
@@ -13,6 +12,9 @@ import AvatarOnNavigationBar from './avatar';
 import { useIsPremium } from '../../hooks/profile';
 import { useProfileQuery } from '../../schema/generated';
 import PremiumBadge from '../premium/badge';
+import profile from '../../utils/profile';
+import toast from 'react-hot-toast';
+import mixpanel from 'mixpanel-browser';
 
 type LoggedNavigationBarProps = {
   profile: UserContent
@@ -22,25 +24,27 @@ type LoggedNavigationBarProps = {
 }
 
 function LoggedNavigationBar(props: LoggedNavigationBarProps) {
-  const { uidOrDomain, onPhoneLogin, onSearch, profile } = props
+  const { uidOrDomain, onPhoneLogin, onSearch, profile: profileData } = props
   const { t } = useTranslation()
-  const dispatch = useDispatch()
 
   const r = useRouter()
 
   const onLogout = useCallback(() => {
-    dispatch(execLogout(r.push))
+    profile.onLogout()
+    toast.success('Bye bye')
+    mixpanel.track('logout')
+    r.push('/')
   }, [])
 
   const { data: p } = useProfileQuery({
     variables: {
-      id: profile.id,
+      id: profileData.id,
     },
   })
 
   const isPremium = useIsPremium(p?.me.premiumEndAt)
 
-  const avatar = profile.avatar.startsWith('http') ? profile.avatar : `${CDN_DEFAULT_DOMAIN}/${profile.avatar}`
+  const avatar = profileData.avatar.startsWith('http') ? profileData.avatar : `${CDN_DEFAULT_DOMAIN}/${profileData.avatar}`
 
   return (
     <ul className='flex with-slide-in'>
@@ -93,10 +97,10 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                 )}
                 className='flex items-center'
               >
-                {profile.name}
+                {profileData.name}
               </Button>
               <Button
-              className='my-2'
+                className='my-2'
                 fullWidth
                 leftSection={<DevicePhoneMobileIcon className='w-6 h-6' />}
                 onClick={onPhoneLogin}

@@ -1,15 +1,14 @@
-import { useMutation } from '@apollo/client'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-hot-toast'
-import { plainLogout } from '@/store/user/action'
 import { USER_LOGOUT } from '@/store/user/type'
 import { useRouter } from 'next/navigation'
 import { Button } from '@mantine/core'
 import { useDeleteMyAccountMutation } from '@/schema/generated'
 import { notifications } from '@mantine/notifications'
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
+import profile from '../../../../utils/profile'
 
 type AccountRemoveButtonProps = {
 }
@@ -25,7 +24,8 @@ function AccountRemoveButton(props: AccountRemoveButtonProps) {
     try {
       await doDelete()
       // do logout
-      plainLogout()
+      profile.onLogout()
+      toast.success('Bye bye')
       dispatch({ type: USER_LOGOUT })
       // show tips
       notifications.show({
