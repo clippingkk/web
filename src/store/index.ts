@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { configureStore } from '@reduxjs/toolkit'
+import { Tuple, configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import userReducer from './user/user'
 import rootSaga from './saga';
@@ -20,7 +20,7 @@ const store = configureStore({
     app: appReducer,
   }),
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware({ thunk: false }).prepend(saga);
+    return getDefaultMiddleware({ thunk: false }).prepend(saga as any);
   },
   preloadedState: typeof window !== 'undefined' ? (window as any).__PRELOADED_STATE__ : {}
 })
