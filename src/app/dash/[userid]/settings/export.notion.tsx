@@ -12,7 +12,7 @@ import { ExportDestination, useExportDataToMutation } from '../../../../schema/g
 function ExportToNotion() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
-  const [mutate] = useExportDataToMutation()
+  const [mutate] = useExportDataToMutation({})
   const formik = useFormik({
     initialValues: {
       notionToken: '',
