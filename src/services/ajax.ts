@@ -36,13 +36,16 @@ let token = getLocalToken()
 // let token = localProfile?.token
 
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
-  if (token) {
-    options.headers = {
-      ...(options.headers || {}),
-      'Authorization': `Bearer ${token}`,
-      'X-Accept-Language': getLanguage()
-    }
+  // set token if not exist
+  if (!(options.headers as Record<string, string>)['Authorization'] && token) {
+    (options.headers as Record<string, string>)['Authorization'] = `Bearer ${token}`
   }
+
+  // set language if not exist
+  if (!(options.headers as Record<string, string>)['X-Accept-Language']) {
+    (options.headers as Record<string, string>)['X-Accept-Language'] = getLanguage()
+  }
+
   options.credentials = 'include'
   options.mode = 'cors'
   if (!options.next) {
