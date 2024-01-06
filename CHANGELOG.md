@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.8.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.17...v5.8.0) (2024-01-06)
+
+
+### Features
+
+* **app:** upgrade deps ([6dc7e02](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6dc7e029fbfce04afe71dca5de933b16bffba4b6))
+* **deps:** update deps ([4b00fd1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4b00fd15f43229efbc3269c6590f4d244d740965))
+* **reaction:** update reaction components ([3ad5e82](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3ad5e828279e0bbe25af7fc32ddd987710c9d33f))
+
+
+### Bug Fixes
+
+* **app:** update packages ([bbe2007](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/bbe20070a50f8dc64026f60345c706f7cd57f0da))
+
 ### [5.7.17](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.16...v5.7.17) (2023-12-09)
 
 
