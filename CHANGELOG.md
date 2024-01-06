@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.8.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.0...v5.8.1) (2024-01-06)
+
+
+### Bug Fixes
+
+* **home:** revert list api to non-suspense api ([cd16e37](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cd16e37203f85c7d7bbf358175ead95d1e47cbef))
+
 ## [5.8.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.7.17...v5.8.0) (2024-01-06)
 
 
