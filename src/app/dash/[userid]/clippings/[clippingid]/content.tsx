@@ -19,26 +19,23 @@ import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '@/store/global'
-import { FetchClippingQuery, useFetchClippingQuery } from '@/schema/generated'
+import { FetchClippingDocument, FetchClippingQuery, useFetchClippingQuery, useFetchClippingSuspenseQuery } from '@/schema/generated'
 import styles from './clipping.module.css'
 import { toast } from 'react-hot-toast';
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 
 type ClippingPageProps = {
   cid: number
-  clipping: FetchClippingQuery
   iac: string
 }
 
 function ClippingPageContent(props: ClippingPageProps) {
-  const { cid, clipping: clippingServerData, iac } = props
-
-  const { data: clippingClientData } = useFetchClippingQuery({
+  const { cid, iac } = props
+  const { data: clipping } = useSuspenseQuery<FetchClippingQuery>(FetchClippingDocument, {
     variables: {
-      id: cid
+      id: ~~cid,
     },
   })
-
-  const clipping = clippingClientData || clippingServerData
 
   const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
@@ -120,9 +117,9 @@ function ClippingPageContent(props: ClippingPageProps) {
               <>
                 <h3 className='text-2xl lg:text-4xl font-light lg:mb-4'>{t('app.clipping.comments.title')}</h3>
                 <ul ref={commentListRef}>
-                {clipping?.clipping.comments.map(m => (
-                  <Comment key={m.id} comment={m} />
-                ))}
+                  {clipping?.clipping.comments.map(m => (
+                    <Comment key={m.id} comment={m} />
+                  ))}
                 </ul>
                 {clipping && me && (
                   <CommentBox me={me} book={book} clipping={clipping?.clipping} />

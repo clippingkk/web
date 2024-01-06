@@ -216,8 +216,7 @@ export function useUploadData(
   }
 }
 
-export function useSyncClippingsToServer() {
-  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+export function useSyncClippingsToServer(id: number) {
   const { t } = useTranslation()
   const [exec, { client }] = useCreateClippingsMutation()
   useEffect(() => {

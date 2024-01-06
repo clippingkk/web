@@ -12,9 +12,11 @@ import { IN_APP_CHANNEL } from '../../../../../services/channel';
 import OGWithBook from '../../../../../components/og/og-with-book';
 import { useMasonaryColumnCount } from '../../../../../hooks/use-screen-size';
 import { Masonry, useInfiniteLoader } from 'masonic';
-import { Clipping, useBookQuery, useQueryMyIdByDomainQuery } from '../../../../../schema/generated';
+import { BookDocument, BookQuery, Clipping, QueryMyIdByDomainDocument, QueryMyIdByDomainQuery, useBookQuery, useQueryMyIdByDomainQuery } from '../../../../../schema/generated';
 import { useSingleBook } from '../../../../../hooks/book';
 import BookPageSkeleton from './skeleton';
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
+import { skipToken } from '@apollo/client';
 
 type BookPageContentProps = {
   userid: string
@@ -30,7 +32,7 @@ function BookPageContent(props: BookPageContentProps) {
   const bookData = useSingleBook(bookid)
 
   const hasMore = useRef(true)
-  const { data: clippingsData, fetchMore, loading } = useBookQuery({
+  const { data: clippingsData, fetchMore } = useSuspenseQuery<BookQuery>(BookDocument, {
     variables: {
       id: ~~bookid,
       pagination: {
@@ -39,7 +41,6 @@ function BookPageContent(props: BookPageContentProps) {
       }
     },
   })
-
   useEffect(() => {
     if (!bookData) {
       return
@@ -50,21 +51,22 @@ function BookPageContent(props: BookPageContentProps) {
   const { t } = useTranslation()
 
   const duration = useMemo(() => {
-    if (!clippingsData?.book.startReadingAt || !clippingsData.book.lastReadingAt) {
+    if (!clippingsData.book.startReadingAt || !clippingsData.book.lastReadingAt) {
       return undefined
     }
-    const result = dayjs(clippingsData?.book.lastReadingAt)
-      .diff(dayjs(clippingsData?.book.startReadingAt), 'd', false)
+    const result = dayjs(clippingsData.book.lastReadingAt)
+      .diff(dayjs(clippingsData.book.startReadingAt), 'd', false)
     return result || undefined
-  }, [clippingsData?.book.startReadingAt, clippingsData?.book.lastReadingAt])
+  }, [clippingsData.book.startReadingAt, clippingsData.book.lastReadingAt])
 
-  const mappedMyData = useQueryMyIdByDomainQuery({
-    variables: {
-      domain
-    },
+  const mappedMyData = useSuspenseQuery<QueryMyIdByDomainQuery>(
+    QueryMyIdByDomainDocument,
     // 是 NaN 就是 domain 啦~
-    skip: !Number.isNaN(parseInt(domain))
-  })
+    Number.isNaN(parseInt(domain)) ? {
+      variables: {
+        domain
+      },
+    } : skipToken)
 
   const masonaryColumnCount = useMasonaryColumnCount()
   const maybeLoadMore = useInfiniteLoader((startIndex, stopIndex, currentItems) => {
@@ -83,7 +85,7 @@ function BookPageContent(props: BookPageContentProps) {
   }, {
     isItemLoaded: (index, items) => !!items[index],
     threshold: 3,
-    totalItems: clippingsData?.book.clippingsCount
+    totalItems: clippingsData.book.clippingsCount
   })
 
   if (!bookData || !clippingsData) {
@@ -96,7 +98,7 @@ function BookPageContent(props: BookPageContentProps) {
         book={bookData}
         uid={mappedMyData.data?.me.id ?? (~~domain)}
         duration={duration}
-        isLastReadingBook={clippingsData?.book.isLastReadingBook}
+        isLastReadingBook={clippingsData.book.isLastReadingBook}
       />
       <Divider title={t('app.book.title')} />
       <div>

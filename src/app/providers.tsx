@@ -10,18 +10,22 @@ import { useDarkModeStatus } from '../hooks/theme';
 import { Provider } from 'react-redux';
 import store from '../store';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { createReactQueryClient, makeApolloClient } from '../services/ajax';
+import { createReactQueryClient, makeApolloClient, makeApolloClientWithCredentials } from '../services/ajax';
 import { reactQueryPersister } from '../services/storage';
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
 import InitProvider from './init.provider';
 import { I18nextProvider } from 'react-i18next';
 
 type ClientOnlyProvidersProps = {
+  loggedInfo: {
+    token?: string
+    uid?: number
+  }
   children: React.ReactNode
 }
 
 function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
-  const { children } = props
+  const { loggedInfo, children } = props
   useDarkModeStatus()
   const cache = useGluedEmotionCache();
   const instance = init()
@@ -38,7 +42,7 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
               }}
             >
               <ApolloNextAppProvider
-                makeClient={makeApolloClient}
+                makeClient={makeApolloClientWithCredentials(loggedInfo)}
               >
                 <InitProvider>
                   {children}

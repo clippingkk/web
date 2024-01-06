@@ -4,6 +4,7 @@ import { generateMetadata as profileGenerateMetadata } from '../../../../compone
 import { Metadata } from 'next'
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '../../../../schema/generated'
 import { getApolloServerClient } from '../../../../services/apollo.server'
+import { cookies } from 'next/headers'
 
 type PageProps = {
   params: { userid: string }
@@ -28,8 +29,11 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 async function Page(props: PageProps) {
   const { userid } = props.params
+  const cs = cookies()
+  const myUid = cs.get('uid')?.value
+
   return (
-    <HomePageContent userid={userid} />
+    <HomePageContent userid={userid} myUid={myUid ? parseInt(myUid) : undefined} />
   )
 }
 

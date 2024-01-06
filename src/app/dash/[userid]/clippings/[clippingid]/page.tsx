@@ -1,6 +1,6 @@
 import React from 'react'
 import { duration3Days } from '@/hooks/book'
-import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument } from '@/schema/generated'
+import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument, useFetchClippingSuspenseQuery } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
@@ -8,13 +8,14 @@ import ClippingPageContent from './content'
 import { generateMetadata as clippingGenerateMetadata } from '@/components/og/og-with-clipping'
 import { Metadata } from 'next'
 import { getApolloServerClient } from '@/services/apollo.server'
+import { cookies } from 'next/headers'
 
 type PageProps = {
   params: { clippingid: string, userid: string }
   searchParams: { iac: string }
 }
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const { clippingid, userid } = props.params
+  const { clippingid } = props.params
   const cid = ~~clippingid
 
   const client = getApolloServerClient()
@@ -45,7 +46,6 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   })
 }
 
-
 async function Page(props: PageProps) {
   const { clippingid, userid } = props.params
   const cid = ~~clippingid
@@ -74,7 +74,6 @@ async function Page(props: PageProps) {
     <HydrationBoundary state={d}>
       <ClippingPageContent
         cid={cid}
-        clipping={clippingsResponse.data}
         iac={props.searchParams.iac}
       />
     </HydrationBoundary>

@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Avatar from '../../../../../components/avatar/avatar'
-import { Comment as CommentData, User } from '../../../../../schema/generated'
+import Avatar from '@/components/avatar/avatar'
+import { Comment as CommentData, User } from '@/schema/generated'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Button } from '@mantine/core'
 import { ArrowDownIcon } from '@heroicons/react/24/solid'
 import { ArrowUpIcon } from '@heroicons/react/24/outline'
-import MarkdownPreview from '../../../../../components/markdown-editor/md-preview'
+import MarkdownPreview from '@/components/markdown-editor/md-preview'
 
 type CommentProps = {
   comment: Pick<CommentData, 'id' | 'content'> & { creator: Pick<User, 'name' | 'avatar'> }
@@ -32,7 +32,8 @@ function Comment(props: CommentProps) {
     <div className='flex container mb-6 flex-col lg:flex-row bg-gray-100 bg-opacity-25 lg:p-8 p-6 rounded'>
       <div className='flex flex-row lg:flex-col lg:mt-4 items-center'>
         <Avatar
-          img={creator.avatar} name={creator.name}
+          img={creator.avatar}
+          name={creator.name}
           className='w-12 h-12 lg:h-24 lg:w-24'
         />
         <h5 className='w-24 lg:mt-4 text-center'>{creator.name}</h5>

@@ -29,6 +29,7 @@ import { Lato } from 'next/font/google'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import { theme } from '../styles/mantine'
 import { colorSchemeManager } from '../hooks/theme';
+import { cookies } from 'next/headers'
 // import localFont from 'next/font/local'
 
 const lato = Lato({
@@ -107,7 +108,13 @@ export const metadata: Metadata = {
 // <link href="https://bam.nr-data.net" rel="preconnect" crossOrigin='use-credentials' />
 // ReactDOM.preconnect('https://cdn.annatarhe.com', { crossOrigin: 'use-credentials' })
 
-const Layout = (props: LayoutProps) => {
+async function Layout(props: LayoutProps) {
+  const cookieStorage = cookies()
+  const token = cookieStorage.get('token')?.value
+  const uid = cookieStorage.get('uid')?.value
+
+  // const loggedInfo = (uid && token) ? await cloakSSROnlySecret(JSON.stringify({ uid: ~~uid, token }), RSC_LOGGED_INFO_KEY) : '{}'
+
   return (
     <html
       className={`${lato.variable}`}
@@ -121,7 +128,7 @@ const Layout = (props: LayoutProps) => {
       <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}' />
       <body>
         <MantineProvider theme={theme} colorSchemeManager={colorSchemeManager}>
-          <ClientOnlyProviders>
+          <ClientOnlyProviders loggedInfo={{ token, uid: uid ? ~~uid : undefined }}>
             <>
               <AppContainer>
                 <>

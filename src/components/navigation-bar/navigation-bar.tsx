@@ -15,6 +15,7 @@ import LoggedNavigationBar from './authed'
 import { ArrowUpTrayIcon, BookOpenIcon, Squares2X2Icon } from '@heroicons/react/24/outline'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import styles from './navigation-bar.module.css'
+import { ProfileQuery } from '../../schema/generated'
 
 const leftMenu = [
   {
@@ -42,10 +43,14 @@ const leftMenu = [
   // },
 ]
 
-function NavigationBar() {
-  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
+type NavigationBarProps = {
+  myProfile?: ProfileQuery['me']
+}
 
-  const id = profile.domain.length > 2 ? profile.domain : profile.id
+function NavigationBar(props: NavigationBarProps) {
+  const { myProfile: profile } = props
+
+  const id = profile?.id
 
   const { visible, setVisible } = useCtrlP()
   const onSearchbarClose = useCallback(() => {
@@ -68,7 +73,7 @@ function NavigationBar() {
           width={40}
           height={40}
         />
-        {profile.id > 0 ? (
+        {profile ? (
           <ul className='flex ml-2 lg:ml-6 with-slide-in'>
             {leftMenu.map((item, index) => (
               <li
@@ -79,7 +84,7 @@ function NavigationBar() {
               >
                 <Link
                   className='flex items-center'
-                  href={id === 0 ? '/auth/auth-v3' : item.dest(id)}
+                  href={item.dest(profile.domain.length > 2 ? profile.domain : profile.id)}
                 >
                   <>
                     {item.emoji()}
@@ -97,10 +102,10 @@ function NavigationBar() {
           null
         )}
       </div>
-      {profile.id > 0 ? (
+      {profile ? (
         <LoggedNavigationBar
           onSearch={() => setVisible(true)}
-          uidOrDomain={id}
+          uidOrDomain={profile.domain.length > 2 ? profile.domain : profile.id}
           onPhoneLogin={() => setLoginByQRCodeModalVisible(true)}
           profile={profile}
         />

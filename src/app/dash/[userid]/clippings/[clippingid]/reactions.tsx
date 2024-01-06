@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { TGlobalStore } from '../../../../../store'
-import { FetchClippingQuery } from '../../../../../schema/generated'
-import ReactionCell, { SymbolGroupedData } from '../../../../../components/reaction/reaction-cell'
+import { TGlobalStore } from '@/store'
+import { FetchClippingQuery } from '@/schema/generated'
+import ReactionCell, { SymbolGroupedData } from '@/components/reaction/reaction-cell'
 
 const availableReactions = ["👍", "❤️", "⭐️", "🐶", "😱"]
 

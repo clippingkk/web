@@ -13,11 +13,12 @@ import { UserContent } from '@/store/user/type';
 import { useSyncClippingsToServer } from '@/hooks/my-file'
 import { useRouter } from 'next/navigation';
 import HomePageSkeleton, { BooksSkeleton } from './skeleton';
-import { useBooksQuery } from '@/schema/generated';
+import { BooksDocument, BooksQuery, BooksQueryVariables, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated';
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 
 const STEP = 10
 
-function useUserNewbie(userProfile: UserContent, onNewbie: () => void) {
+function useUserNewbie(userProfile: UserContent | null, onNewbie: () => void) {
   useEffect(() => {
     if (!userProfile || userProfile.id === 0) {
       return
@@ -39,41 +40,55 @@ function useUserNewbie(userProfile: UserContent, onNewbie: () => void) {
 
 type HomePageContentProps = {
   userid: string
+  myUid?: number
 }
 
 function HomePageContent(props: HomePageContentProps) {
-  const { userid: userDomain } = props
-  const userProfile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-  const uid = userProfile.id
+  const { userid: userDomain, myUid } = props
+  // const userProfile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
+  // const uid = userProfile.id
+
+  const isTypeUid = !Number.isNaN(parseInt(userDomain))
+  const { data: targetProfileData } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, {
+    variables: {
+      id: isTypeUid ? ~~userDomain : undefined,
+      domain: isTypeUid ? undefined : userDomain
+    }
+  })
+
+  const { data: myProfile } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, {
+    variables: {
+      id: myUid
+    }
+  })
+
+  const userProfile = targetProfileData.me
+  const uid = myProfile.me.id
 
   const { push: navigate } = useRouter()
 
-  useUserNewbie(userProfile, () => {
+  // only works for me(logged user is same with the accessing user)
+  useUserNewbie(userProfile.id === uid ? userProfile : null, () => {
     // is new bie
     navigate(`/dash/${uid}/profile?with_profile_editor=1`)
   })
-  useSyncClippingsToServer()
+  useSyncClippingsToServer(uid)
 
   const [reachEnd, setReachEnd] = useState(false)
-  const { data, fetchMore, loading, called } = useBooksQuery({
+  const { data, fetchMore } = useSuspenseQuery<BooksQuery, BooksQueryVariables>(BooksDocument, {
     variables: {
-      id: uid,
+      id: targetProfileData.me.id,
       pagination: {
         limit: STEP,
         offset: 0
       },
     },
-    skip: !uid,
   })
 
-  const bls = data?.books.map(x => x.doubanId) ?? []
+  const bls = data.books.map(x => x.doubanId) ?? []
 
   const { t } = useTranslation()
   const books = useMultipBook(bls)
-
-  if (!data) {
-    return (<HomePageSkeleton />)
-  }
 
   const recents = data.me.recents
 
@@ -98,13 +113,13 @@ function HomePageContent(props: HomePageContentProps) {
       </header>
 
       <div className='flex flex-wrap items-center justify-center'>
-        {loading && data.books.length === 0 && !called && (
+        {/* {loading && data.books.length === 0 && !called && (
           <HomePageSkeleton />
-        )}
-        {data.books.length === 0 && called && (
+        )} */}
+        {data.books.length === 0 && (
           <NoContentAlert domain={userDomain} />
         )}
-        {(books.books.length > 0 && called) &&
+        {(books.books.length > 0) &&
           books.books.map((item, index) => (
             <BookCover
               book={item}
@@ -121,7 +136,7 @@ function HomePageContent(props: HomePageContentProps) {
           </div>
         }
         loadMoreFn={() => {
-          if (loading || !called || books.loading) {
+          if (books.loading) {
             return
           }
           fetchMore({
@@ -133,7 +148,7 @@ function HomePageContent(props: HomePageContentProps) {
               }
             },
           }).then(res => {
-            if (res.data.books.length === 0) {
+            if ((res.data?.books.length ?? 0) === 0) {
               setReachEnd(true)
               return
             }

@@ -166,9 +166,43 @@ export function makeApolloClient() {
   // })
 }
 
-// function makeSuspenseCache() {
-//   return new SuspenseCache();
-// }
+export function makeApolloClientWithCredentials(credentials: { uid?: number, token?: string }) {
+  // same as makeApolloClient
+  return () => {
+    const links: ApolloLink[] = []
+    if (typeof window === 'undefined') {
+      links.push(new SSRMultipartLink({ stripDefer: true }))
+    }
+
+    const token = credentials.token
+    const authLinkRSC = new ApolloLink((operation, forward) => {
+      operation.setContext(({ headers = {} }) => {
+        if (!token) {
+          return headers
+        }
+
+        return {
+          headers: {
+            ...headers,
+            'Authorization': `Bearer ${token}`,
+            'X-Accept-Language': getLanguage()
+          }
+        }
+      })
+
+      return forward(operation)
+    })
+
+    links.push(errorLink, authLinkRSC, httpLink)
+
+    return new NextSSRApolloClient({
+      ssrMode: typeof window === 'undefined',
+      cache: new NextSSRInMemoryCache(apolloCacheConfig),
+      link: ApolloLink.from(links),
+      connectToDevTools: process.env.DEV === 'true',
+    })
+  }
+}
 
 export function createReactQueryClient() {
   return new QueryClient({

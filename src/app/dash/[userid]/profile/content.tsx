@@ -18,31 +18,41 @@ import Link from 'next/link';
 import CliApiToken from './cli-api';
 import AvatarPicker from '../../../../components/profile/avatar-picker';
 import PersonalActivity from '../../../../components/profile/activity';
-import { ProfileQuery, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '../../../../schema/generated';
+import { ProfileDocument, ProfileQuery, ProfileQueryVariables, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '../../../../schema/generated';
 import { Divider, Text, Tooltip } from '@mantine/core';
 import UserName from '../../../../components/profile/user-name';
 import styles from './profile.module.css'
 import ClippingList from './clipping-list';
 import Loading from '../square/loading';
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
+import { toastPromiseDefaultOption } from '../../../../services/misc';
 
 type ProfilePageContentProps = {
-  userid: string
-  profileData: ProfileQuery
+  targetUidOrDomain: string
+  myUid?: number
   withProfileEditor?: string
 }
 
 function ProfilePageContent(props: ProfilePageContentProps) {
-  // 优先使用本地数据，服务端数据只是为了 seo
-  const data = props.profileData
+  const { targetUidOrDomain, myUid, withProfileEditor } = props
 
   const [isPickingAvatar, setIsPickingAvatar] = useState(false)
 
   const [doFollow, { loading: followLoading }] = useFollowUserMutation()
   const [doUnfollow, { loading: unfollowLoading }] = useUnfollowUserMutation()
 
-  const [doUpdate, { client: apolloClient }] = useUpdateProfileMutation()
+  const [doUpdate] = useUpdateProfileMutation()
 
-  const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const isTargetUidType = !Number.isNaN(parseInt(targetUidOrDomain))
+
+  const { data } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, {
+    variables: {
+      id: isTargetUidType ? parseInt(targetUidOrDomain) : undefined,
+      domain: isTargetUidType ? undefined : targetUidOrDomain
+    }
+  })
+
+  const uid = myUid
   usePageTrack('profile', {
     userId: data.me.id
   })
@@ -67,7 +77,7 @@ function ProfilePageContent(props: ProfilePageContentProps) {
   const isInMyPage = uid === data.me.id
 
   const isWechatBindingVisible = useMemo(() => {
-    if (uid === 0) {
+    if (!uid || uid === 0) {
       return false
     }
 
@@ -84,8 +94,8 @@ function ProfilePageContent(props: ProfilePageContentProps) {
           <div className='w-full flex items-center justify-center'>
             <Avatar
               img={data.me.avatar ?? ''}
-              name={data?.me.name}
-              editable={uid === data.me.id}
+              name={data.me.name}
+              editable={isInMyPage}
               className='w-16 h-16 mr-12 lg:w-32 lg:h-32'
               onClick={() => setIsPickingAvatar(true)}
             />
@@ -95,10 +105,10 @@ function ProfilePageContent(props: ProfilePageContentProps) {
                   name={data.me.name}
                   premiumEndAt={data.me.premiumEndAt}
                 />
-                {data?.me.phone === '' && isInMyPage && (
+                {data.me.phone === '' && isInMyPage && (
                   <ProfileBindPhone />
                 )}
-                {uid === data?.me.id && (
+                {isInMyPage && (
                   <ProfileEditor
                     uid={uid}
                     bio={data.me.bio}
@@ -109,10 +119,10 @@ function ProfilePageContent(props: ProfilePageContentProps) {
                 <CliApiToken />
               </div>
               <h5 className='text-lg text-gray-800 dark:text-gray-300'>
-                {t('app.profile.collected', { count: data?.me.clippingsCount })}
+                {t('app.profile.collected', { count: data.me.clippingsCount })}
               </h5>
               <div className='mb-4'>
-                {data?.me.bio.split('\n').map((v, i) => (
+                {data.me.bio.split('\n').map((v, i) => (
                   <p key={i}>{v}</p>
                 ))}
               </div>
@@ -122,7 +132,7 @@ function ProfilePageContent(props: ProfilePageContentProps) {
               {!isInMyPage && (
                 <button
                   className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6 mr-4'
-                  title={t(`app.profile.fans.${data?.me.isFan ? 'un' : ''}follow`) ?? ''}
+                  title={t(`app.profile.fans.${data.me.isFan ? 'un' : ''}follow`) ?? ''}
                   disabled={followLoading || unfollowLoading}
                   onClick={() => {
                     if (followLoading || unfollowLoading) {
@@ -130,7 +140,7 @@ function ProfilePageContent(props: ProfilePageContentProps) {
                     }
                     const params = { targetUserID: data.me.id }
                     let mutationJob: Promise<any>
-                    if (data?.me.isFan) {
+                    if (data.me.isFan) {
                       mutationJob = doUnfollow({
                         variables: params
                       })
@@ -139,19 +149,15 @@ function ProfilePageContent(props: ProfilePageContentProps) {
                         variables: params
                       })
                     }
-                    mutationJob.then(() => {
-                      toast.success(t('app.common.done'))
-                    }).catch(err => {
-                      toast.error(err.toString())
-                    })
+                    return toast.promise(mutationJob, toastPromiseDefaultOption)
                   }}
                 >
-                  {t(`app.profile.fans.${data?.me.isFan ? 'un' : ''}follow`)}
+                  {t(`app.profile.fans.${data.me.isFan ? 'un' : ''}follow`)}
                 </button>
               )}
 
               <Link
-                href={`/report/yearly?uid=${data?.me.id}&year=${year}`}
+                href={`/report/yearly?uid=${data.me.id}&year=${year}`}
                 className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
                 title={t('app.profile.yearlyReportTip') ?? ''}>
                 {t('app.profile.report.yearlyTitle')}
@@ -162,7 +168,7 @@ function ProfilePageContent(props: ProfilePageContentProps) {
                 transitionProps={{ transition: 'pop', duration: 200 }}
               >
                 <a
-                  href={`${API_HOST}/api/rss/user/${data?.me.id}/clippings`}
+                  href={`${API_HOST}/api/rss/user/${data.me.id}/clippings`}
                   target='_blank'
                   className='ml-4 px-4 py-2 rounded hover:bg-blue-400'
                   rel="noreferrer"
@@ -187,11 +193,11 @@ function ProfilePageContent(props: ProfilePageContentProps) {
         className='my-8'
       />
 
-      <Suspense fallback={<Loading />}>
-        <ClippingList uid={uid} userDomain={data?.me.domain} />
-      </Suspense>
+      {uid && (
+        <ClippingList uid={uid} userDomain={data.me.domain} />
+      )}
 
-      {isPickingAvatar && (
+      {isPickingAvatar && uid && (
         <AvatarPicker
           onCancel={() => setIsPickingAvatar(false)}
           onSubmit={(nextAvatar) => {
