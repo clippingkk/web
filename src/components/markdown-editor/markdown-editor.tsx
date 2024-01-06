@@ -1,6 +1,6 @@
 import { DocumentTextIcon, PencilSquareIcon } from '@heroicons/react/24/solid'
 import { Tabs, Text, Textarea } from '@mantine/core'
-import React, { useTransition } from 'react'
+import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
 import MarkdownPreview from './md-preview'

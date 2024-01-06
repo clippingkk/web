@@ -1,11 +1,10 @@
 import React from 'react'
-import { FetchClippingsByUidDocument, FetchClippingsByUidQuery, FetchClippingsByUidQueryVariables, useFetchClippingsByUidQuery } from '../../../../schema/generated'
+import { FetchClippingsByUidQuery, useFetchClippingsByUidQuery } from '../../../../schema/generated'
 import { Masonry, useInfiniteLoader } from 'masonic'
 import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { useMultipBook } from '../../../../hooks/book'
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 
 type ClippingListProps = {
   uid: number
@@ -14,20 +13,19 @@ type ClippingListProps = {
 
 function ClippingList(props: ClippingListProps) {
   const { uid, userDomain } = props
-  // const { data, loading, fetchMore } = useFetchClippingsByUidQuery({
-  const { data, fetchMore } = useSuspenseQuery<FetchClippingsByUidQuery, FetchClippingsByUidQueryVariables>(FetchClippingsByUidDocument, {
+  const [renderList, setRenderList] = React.useState<FetchClippingsByUidQuery['clippingList']['items']>([])
+  const { data, loading, fetchMore } = useFetchClippingsByUidQuery({
+    // const { data, fetchMore } = useSuspenseQuery<FetchClippingsByUidQuery, FetchClippingsByUidQueryVariables>(FetchClippingsByUidDocument, {
     variables: {
       uid,
       pagination: {
         limit: 20,
       }
     },
-    // onCompleted(data) {
-    //   setRenderList(data.clippingList.items)
-    // },
+    onCompleted(data) {
+      setRenderList(data.clippingList.items)
+    },
   })
-  const [renderList, setRenderList] = React.useState<FetchClippingsByUidQuery['clippingList']['items']>(data.clippingList.items)
-
   const masonaryColumnCount = useMasonaryColumnCount()
   const maybeLoadMore = useInfiniteLoader((startIndex, stopIndex, currentItems: FetchClippingsByUidQuery['clippingList']['items']) => {
     if (renderList.length === 0 || !data) {
@@ -60,11 +58,15 @@ function ClippingList(props: ClippingListProps) {
 
   const books = useMultipBook(data?.clippingList.items.map(x => x.bookID) ?? [])
 
-  if (!data) {
-    // TODO: add no data component
+  if (loading && !data) {
     return (
-      <div>
-        no data
+      <div className='grid grid-cols-3 gap-4'>
+        {new Array(9).fill(0).map((_, index) => (
+          <div
+            key={index}
+            className='w-full h-52 animate-pulse bg-gray-300 dark:bg-gray-800'
+          />
+        ))}
       </div>
     )
   }

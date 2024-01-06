@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import ListFooter from '@/components/list-footer/list-footer';
-import { useSelector } from 'react-redux';
-import { TGlobalStore } from '@/store';
 import { useTranslation } from 'react-i18next';
 import { useMultipBook } from '@/hooks/book';
 import NoContentAlert from './no-content';
@@ -15,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import HomePageSkeleton, { BooksSkeleton } from './skeleton';
 import { BooksDocument, BooksQuery, BooksQueryVariables, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated';
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
+import { useQuery } from '@apollo/client';
 
 const STEP = 10
 
@@ -75,7 +74,7 @@ function HomePageContent(props: HomePageContentProps) {
   useSyncClippingsToServer(uid)
 
   const [reachEnd, setReachEnd] = useState(false)
-  const { data, fetchMore } = useSuspenseQuery<BooksQuery, BooksQueryVariables>(BooksDocument, {
+  const { data, fetchMore } = useQuery<BooksQuery, BooksQueryVariables>(BooksDocument, {
     variables: {
       id: targetProfileData.me.id,
       pagination: {
@@ -85,12 +84,12 @@ function HomePageContent(props: HomePageContentProps) {
     },
   })
 
-  const bls = data.books.map(x => x.doubanId) ?? []
+  const bls = data?.books.map(x => x.doubanId) ?? []
 
   const { t } = useTranslation()
   const books = useMultipBook(bls)
 
-  const recents = data.me.recents
+  const recents = data?.me.recents ?? []
 
   return (
     <section className='h-full page'>
@@ -116,7 +115,7 @@ function HomePageContent(props: HomePageContentProps) {
         {/* {loading && data.books.length === 0 && !called && (
           <HomePageSkeleton />
         )} */}
-        {data.books.length === 0 && (
+        {(data?.books.length ?? 0) === 0 && (
           <NoContentAlert domain={userDomain} />
         )}
         {(books.books.length > 0) &&
