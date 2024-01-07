@@ -65,6 +65,7 @@
       "notionPageId": "notion page id",
       "notionToken": "notion bot token",
       "domain": "Domain",
+      "sendOtp": "Send OneTime Passcode",
       "legacyTip": "Users who used mobile phones or third parties to log in in the past, please click the button below to log in.",
       "accountTip": "If you have any questions about your account, please email annatar.he+ck@gmail.com Don't worry, we'd love to hear from you 🫡",
       "loginWithPassword": "Login with Password",
@@ -73,7 +74,8 @@
         "placeholder": "code from mobile phone sms"
       },
       "info": {
-        "smsSent": "message has sent to your mobile phone"
+        "smsSent": "message has sent to your mobile phone",
+        "otpSent": "One Time PassCode sent, please check your email \n if not, please find it in spam box"
       },
       "errors": {
         "pnLen": "phone number invalid",

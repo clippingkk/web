@@ -5,9 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { GithubClientID, SignInWithAppleOptions } from '../../../constants/config';
 import { usePageTrack, useActionTrack } from '../../../hooks/tracke';
-import profile from '../../../utils/profile';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/navigation';
 import logo from '../../../assets/logo.png'
 import GithubLogo from '../../../components/icons/github.logo.svg';
 
@@ -37,7 +35,7 @@ function AuthPage(props: AuthPageProps) {
 
   return (
     <section className=' from-teal-100 to-green-300 bg-gradient-to-br dark:from-teal-900 dark:to-slate-900 flex h-screen items-center justify-center'>
-      <Card className='with-slide-in'>
+      <Card className='with-slide-in container'>
         <>
           <div className='flex items-center justify-center flex-col mb-4'>
             <Image

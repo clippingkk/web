@@ -66,6 +66,7 @@
       "notionToken": "notion bot token",
       "domain": "Domain",
       "legacyTip": "과거에 휴대폰 또는 제3자를 이용하여 로그인한 사용자는 아래 버튼을 클릭하여 로그인하십시오.",
+      "sendOtp": "일회용 비밀번호",
       "accountTip": "계정에 대해 질문이 있는 경우 annatar.he+ck@gmail.com으로 이메일을 보내주십시오. 걱정하지 마세요. 🫡",
       "legacyLogin": "기존 로그인",
       "loginWithPassword": "비밀번호로 로그인",
@@ -73,7 +74,8 @@
         "placeholder": "휴대폰의 인증 코드"
       },
       "info": {
-        "smsSent": "확인 코드가 전송되었습니다."
+        "smsSent": "확인 코드가 전송되었습니다.",
+        "otpSent": "일회용 비밀번호가 전송되었습니다. 이메일을 확인하세요. \n 그렇지 않은 경우 스팸함에서 찾아보세요."
       },
       "errors": {
         "pnLen": "휴대폰 번호가 불법입니다.",

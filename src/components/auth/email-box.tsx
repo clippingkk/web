@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Turnstile from "react-turnstile"
 import { CF_TURNSTILE_SITE_KEY } from '../../constants/config'
 import { REGEX_EMAIL } from '../../services/regex'
+import { Button } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 
 type EmailBoxProps = {
   loading: boolean
@@ -9,6 +11,8 @@ type EmailBoxProps = {
 }
 
 function EmailBox(props: EmailBoxProps) {
+  const { loading, onEmailSubmit } = props
+  const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [turnstileToken, setTurnstileToken] = useState('')
 
@@ -16,10 +20,10 @@ function EmailBox(props: EmailBoxProps) {
     <form
       onSubmit={(e) => {
         e.preventDefault()
-        if (props.loading) {
+        if (loading) {
           return
         }
-        props.onEmailSubmit(email, turnstileToken)
+        onEmailSubmit(email, turnstileToken)
       }}
       className='w-full'
     >
@@ -28,7 +32,7 @@ function EmailBox(props: EmailBoxProps) {
           htmlFor="email"
           className='text-gray-100 text-lg mb-2 capitalize'
         >
-          email
+          {t('app.auth.email')}
         </label>
         <input
           type="email"
@@ -46,14 +50,16 @@ function EmailBox(props: EmailBoxProps) {
         />
       </fieldset>
       <div className='w-full mt-4'>
-        <button
+        <Button
           className='text-white w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'
+          size='2xl'
           type='submit'
-          disabled={props.loading || turnstileToken === '' || !REGEX_EMAIL.test(email)}
+          loading={loading}
+          disabled={turnstileToken === '' || !REGEX_EMAIL.test(email)}
           title='send one time passcode'
         >
-          Send OTP
-        </button>
+          {t('app.auth.sendOtp')}
+        </Button>
       </div>
     </form>
   )

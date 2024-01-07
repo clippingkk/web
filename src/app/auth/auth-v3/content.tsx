@@ -48,7 +48,7 @@ function AuthV3Content(props: AuthV3Props) {
   ] = useDoLoginV3Mutation()
 
   const onOTPConfirmed = useCallback((otp: string) => {
-    toast.promise(
+    return toast.promise(
       loginV3({
         variables: {
           payload: {

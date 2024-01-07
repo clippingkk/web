@@ -4,7 +4,6 @@ import { useAuthSuccessed } from '../../../hooks/hooks';
 import { useTitle } from '../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
-import FieldInput from '../../../components/input'
 import * as Yup from 'yup'
 import Turnstile from 'react-turnstile'
 import { CF_TURNSTILE_SITE_KEY } from '../../../constants/config'
@@ -75,7 +74,7 @@ function SigninPageContent() {
           placeholder='Password'
           onChange={formik.handleChange}
         />
-        </Input.Wrapper>
+      </Input.Wrapper>
       {isProd && (
         <Turnstile
           sitekey={CF_TURNSTILE_SITE_KEY}
@@ -90,7 +89,7 @@ function SigninPageContent() {
       <Button
         variant='gradient'
         gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-        className='transition-all active:scale-95 duration-150'
+        className='transition-all active:scale-95 duration-150 mt-8'
         fullWidth
         loading={resp.loading}
         disabled={formDisabled}
