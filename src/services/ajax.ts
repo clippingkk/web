@@ -130,13 +130,8 @@ const errorLink = onError((errData) => {
         updateToken('')
         profile.onLogout()
       }
-      toast.error(`${ne.statusCode}: ${ne.name}`)
+      // toast.error(`${ne.statusCode}: ${ne.name}`)
     }
-    // swal({
-    //   icon: 'error',
-    //   title: `${ne.statusCode}: ${ne.name}`,
-    //   text: ne.result?.error
-    // })
   }
 });
 

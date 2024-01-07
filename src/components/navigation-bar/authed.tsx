@@ -15,6 +15,7 @@ import PremiumBadge from '../premium/badge';
 import profile from '../../utils/profile';
 import toast from 'react-hot-toast';
 import mixpanel from 'mixpanel-browser';
+import { onCleanServerCookie } from './logout';
 
 type LoggedNavigationBarProps = {
   profile: UserContent
@@ -29,7 +30,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
 
   const r = useRouter()
 
-  const onLogout = useCallback(() => {
+  const onLogout = useCallback(async () => {
     profile.onLogout()
     toast.success('Bye bye')
     mixpanel.track('logout')
@@ -122,7 +123,10 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                 color='red'
                 fullWidth
                 leftSection={<ArrowLeftOnRectangleIcon className='w-6 h-6' />}
-                onClick={onLogout}
+                onClick={async () => {
+                  await onCleanServerCookie()
+                  onLogout()
+                }}
               >
                 {t('app.menu.logout')}
               </Button>

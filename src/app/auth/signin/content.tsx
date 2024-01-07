@@ -30,16 +30,13 @@ function SigninPageContent() {
     }),
     onSubmit(values) {
       if (!formik.isValid) return
-      return toast.promise(
-        exec({
-          variables: {
-            email: values.email,
-            password: values.pwd,
-            cfTurnstileToken: turnstileToken
-          }
-        }),
-        toastPromiseDefaultOption
-      )
+      return exec({
+        variables: {
+          email: values.email,
+          password: values.pwd,
+          cfTurnstileToken: turnstileToken
+        },
+      })
     }
   })
 
