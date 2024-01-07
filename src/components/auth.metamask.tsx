@@ -1,13 +1,10 @@
 'use client';
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import { signDataByWeb3 } from '../utils/wallet'
 import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/navigation'
-import LoadingIcon from './icons/loading.svg'
-import WithLoading from './with-loading'
-import { isMobile } from '../utils/device'
 import { useAuthByWeb3LazyQuery } from '../schema/generated'
 import { Button } from '@mantine/core';
 
@@ -19,26 +16,26 @@ function AuthByMetamask(props: AuthByMetamaskProps) {
   const [doAuth, doAuthData] = useAuthByWeb3LazyQuery()
   // const err = hooks.useError()
   const onMetamaskLogin = useCallback(async () => {
-    return signDataByWeb3()
-      .then(res => {
-        return doAuth({
-          variables: {
-            payload: {
-              address: res.address!,
-              signature: res.signature!,
-              text: res.text
-            }
+    try {
+
+      const res = await signDataByWeb3()
+      const r = await doAuth({
+        variables: {
+          payload: {
+            address: res.address!,
+            signature: res.signature!,
+            text: res.text
           }
-        }).then(r => {
-          if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
-            router.push(`/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`)
-            return
-          }
-        })
-      }).catch((err: any) => {
-        toast.error(err.message)
+        }
       })
-  }, [])
+      if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
+        router.push(`/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`)
+        return
+      }
+    } catch (err: any) {
+      toast.error(err.message)
+    }
+  }, [doAuth, router])
 
   // useEffect(() => {
   //   // if (!err) {

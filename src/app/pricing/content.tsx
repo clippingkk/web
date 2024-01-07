@@ -1,37 +1,37 @@
 'use client'
-import { Button, Divider } from '@mantine/core'
+import { Button } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import FreePlanFeatures from '../../components/pricing/free-plan-features'
 import PlanCard from '../../components/pricing/plan-card'
 import PremiumPlanFeatures from '../../components/pricing/premium-plan-features'
 import { StripePremiumPriceId } from '../../constants/config'
-import { useProfileQuery } from '../../schema/generated'
+import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '../../schema/generated'
 import { getPaymentSubscription } from '../../services/payment'
-import { TGlobalStore } from '../../store'
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
+import { skipToken } from '@apollo/client'
 
 type PricingContentProps = {
+  uid?: number
 }
 
 function PricingContent(props: PricingContentProps) {
+  const { uid } = props
   const { t } = useTranslation();
 
-  const pid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   const { data, isLoading } = useQuery({
     queryKey: ['payment-subscription', StripePremiumPriceId],
     queryFn: () => getPaymentSubscription(StripePremiumPriceId),
-    enabled: pid > 0,
+    enabled: Boolean(uid && uid > 0),
   })
 
-  const { data: p } = useProfileQuery({
+  const { data: p } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, uid && uid > 0 ? {
     variables: {
-      id: pid
-    },
-    skip: pid < 1,
-  })
+      id: uid
+    }
+  } : skipToken)
 
   const isPremium = useMemo(() => {
     const endAt = p?.me.premiumEndAt
