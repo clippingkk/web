@@ -7,6 +7,5 @@ export async function onCleanServerCookie() {
   const cs = cookies()
   await cs.delete('token')
   await cs.delete('uid')
-  return Promise.resolve()
 }
 
