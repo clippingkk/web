@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.8.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.1...v5.8.2) (2024-01-07)
+
+
+### Bug Fixes
+
+* **auth:** update auth page styles ([03cba13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/03cba13a8c8a5bb8d36d007d2cea7589e386f87d))
+
 ### [5.8.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.0...v5.8.1) (2024-01-06)
 
 
