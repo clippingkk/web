@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.8.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.2...v5.8.3) (2024-01-07)
+
+
+### Bug Fixes
+
+* **auth:** remove duplicated toast and clena server cookies ([f8bdb5c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f8bdb5c5041a8645bdda5d605ab68a1f67bf237f))
+* **auth:** remove useless condition ([eb40a26](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/eb40a26f38e241892d26abceeb31cca95234bfc0))
+
 ### [5.8.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.1...v5.8.2) (2024-01-07)
 
 
