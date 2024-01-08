@@ -1,0 +1,1642 @@
+[
+    {
+        "identifier": "app.fold",
+        "source_string": "Fold",
+        "translation": "겹",
+        "context": "app -> fold",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.unfold",
+        "source_string": "Unfold",
+        "translation": "펴다",
+        "context": "app -> unfold",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.payment.required",
+        "source_string": "Limit exceeded, please upgrade to a premium account",
+        "translation": "한도를 초과했습니다. 프리미엄 계정으로 업그레이드하세요.",
+        "context": "app -> payment -> required",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.payment.webhookRequired",
+        "source_string": "Webhook only available in premium plan. please upgrade to premium",
+        "translation": "웹훅은 프리미엄 플랜에서만 사용할 수 있습니다. 프리미엄으로 업그레이드해주세요",
+        "context": "app -> payment -> webhookRequired",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.ai.clippingHelp",
+        "source_string": "AI-generated narration for the segment",
+        "translation": "세그먼트에 대한 AI 생성 내레이션",
+        "context": "app -> ai -> clippingHelp",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.loading",
+        "source_string": "Loading...",
+        "translation": "짐싣기",
+        "context": "app -> common -> loading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.closed",
+        "source_string": "This feature is still under heavy development",
+        "translation": "사각형 기능은 아직 열리지 않았습니다 ~",
+        "context": "app -> common -> closed",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.cancel",
+        "source_string": "Cancel",
+        "translation": "취소",
+        "context": "app -> common -> cancel",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.doUpdate",
+        "source_string": "Update",
+        "translation": "최신 정보",
+        "context": "app -> common -> doUpdate",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.done",
+        "source_string": "Done",
+        "translation": "마치다",
+        "context": "app -> common -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.delete",
+        "source_string": "Delete",
+        "translation": "삭제",
+        "context": "app -> common -> delete",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.bind",
+        "source_string": "Bind",
+        "translation": "묶다",
+        "context": "app -> common -> bind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.bound",
+        "source_string": "bound",
+        "translation": "경계",
+        "context": "app -> common -> bound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.slogan",
+        "source_string": "Read, Reflect, Illuminate: Discover Goodness, Seek Truth, Illuminate Others.",
+        "translation": "읽기, 숙고, 비추다: 선을 발견하고, 진리를 찾으며, 다른 이에게 빛을 비추다.",
+        "context": "app -> slogan",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.go",
+        "source_string": "Go!",
+        "translation": "지금 시도하십시오!",
+        "context": "app -> go",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.read",
+        "source_string": "Read",
+        "translation": "읽었다",
+        "context": "app -> menu -> read",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.square",
+        "source_string": "Square",
+        "translation": "광장",
+        "context": "app -> menu -> square",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.upload",
+        "source_string": "Upload",
+        "translation": "업로드",
+        "context": "app -> menu -> upload",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.my",
+        "source_string": "My Profile",
+        "translation": "내 정보",
+        "context": "app -> menu -> my",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.settings",
+        "source_string": "Settings",
+        "translation": "설정",
+        "context": "app -> menu -> settings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.logout",
+        "source_string": "Logout",
+        "translation": "그만두 다",
+        "context": "app -> menu -> logout",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.loginByQRCode.title",
+        "source_string": "Login by QRCode",
+        "translation": "qrcode로 로그인",
+        "context": "app -> menu -> loginByQRCode -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.title",
+        "source_string": "Search",
+        "translation": "검색",
+        "context": "app -> menu -> search -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.placeholder",
+        "source_string": "Empire, faith, free...",
+        "translation": "군대, 위엄, 사랑...",
+        "context": "app -> menu -> search -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.empty",
+        "source_string": "no data here",
+        "translation": "데이터 없음",
+        "context": "app -> menu -> search -> empty",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.readings",
+        "source_string": "Reading books",
+        "translation": "모두가 읽고 있습니다",
+        "context": "app -> public -> readings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.readers",
+        "source_string": "Readers",
+        "translation": "이 친구들은 읽기를 좋아합니다",
+        "context": "app -> public -> readers",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.clippings",
+        "source_string": "User clippings",
+        "translation": "사용자 책 다이제스트",
+        "context": "app -> public -> clippings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.hideReasons",
+        "source_string": "Due to privacy issues, users’ book clippings are not displayed",
+        "translation": "개인 정보 보호 문제로 인해 사용자의 책 발췌문이 표시되지 않습니다.",
+        "context": "app -> public -> hideReasons",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.title",
+        "source_string": "Clippings",
+        "translation": "책 다이제스트",
+        "context": "app -> book -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.share",
+        "source_string": "Share the book",
+        "translation": "이 책 공유",
+        "context": "app -> book -> share",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.readingDuration",
+        "source_string": "Read for {{ count }} day",
+        "translation": "이 책을 {{ count }} 일 동안 읽으십시오",
+        "context": "app -> book -> readingDuration",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.readingDuration_plural",
+        "source_string": "Read for {{ count }} days",
+        "translation": "이 책을 {{ count }} 일 동안 읽으십시오",
+        "context": "app -> book -> readingDuration_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.signin",
+        "source_string": "Sign in",
+        "translation": "로그인",
+        "context": "app -> auth -> signin",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.signup",
+        "source_string": "Sign up",
+        "translation": "등기",
+        "context": "app -> auth -> signup",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.phone",
+        "source_string": "phone",
+        "translation": "전화 번호",
+        "context": "app -> auth -> phone",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.username",
+        "source_string": "User name",
+        "translation": "사용자 이름",
+        "context": "app -> auth -> username",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.avatar",
+        "source_string": "Avatar",
+        "translation": "화신",
+        "context": "app -> auth -> avatar",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.email",
+        "source_string": "Email",
+        "translation": "사서함",
+        "context": "app -> auth -> email",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.pwd",
+        "source_string": "Password",
+        "translation": "암호",
+        "context": "app -> auth -> pwd",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.bio",
+        "source_string": "Bio",
+        "translation": "개인 프로필",
+        "context": "app -> auth -> bio",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.submit",
+        "source_string": "Go go go!",
+        "translation": "제출",
+        "context": "app -> auth -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.endpoint",
+        "source_string": "API endpoint",
+        "translation": "API",
+        "context": "app -> auth -> endpoint",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.name",
+        "source_string": "User name",
+        "translation": "사용자 이름",
+        "context": "app -> auth -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.hookUrl",
+        "source_string": "Web Hook URL",
+        "translation": "Web Hook URL",
+        "context": "app -> auth -> hookUrl",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.notionPageId",
+        "source_string": "notion page id",
+        "translation": "notion page id",
+        "context": "app -> auth -> notionPageId",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.notionToken",
+        "source_string": "notion bot token",
+        "translation": "notion bot token",
+        "context": "app -> auth -> notionToken",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.domain",
+        "source_string": "Domain",
+        "translation": "Domain",
+        "context": "app -> auth -> domain",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.sendOtp",
+        "source_string": "Send OneTime Passcode",
+        "translation": "일회용 비밀번호",
+        "context": "app -> auth -> sendOtp",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.legacyTip",
+        "source_string": "Users who used mobile phones or third parties to log in in the past, please click the button below to log in.",
+        "translation": "과거에 휴대폰 또는 제3자를 이용하여 로그인한 사용자는 아래 버튼을 클릭하여 로그인하십시오.",
+        "context": "app -> auth -> legacyTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.accountTip",
+        "source_string": "If you have any questions about your account, please email annatar.he+ck@gmail.com Don't worry, we'd love to hear from you 🫡",
+        "translation": "계정에 대해 질문이 있는 경우 annatar.he+ck@gmail.com으로 이메일을 보내주십시오. 걱정하지 마세요. 🫡",
+        "context": "app -> auth -> accountTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.loginWithPassword",
+        "source_string": "Login with Password",
+        "translation": "비밀번호로 로그인",
+        "context": "app -> auth -> loginWithPassword",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.legacyLogin",
+        "source_string": "Leacy Login",
+        "translation": "기존 로그인",
+        "context": "app -> auth -> legacyLogin",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.code.placeholder",
+        "source_string": "code from mobile phone sms",
+        "translation": "휴대폰의 인증 코드",
+        "context": "app -> auth -> code -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.info.smsSent",
+        "source_string": "message has sent to your mobile phone",
+        "translation": "확인 코드가 전송되었습니다.",
+        "context": "app -> auth -> info -> smsSent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.info.otpSent",
+        "source_string": "One Time PassCode sent, please check your email \n if not, please find it in spam box",
+        "translation": "일회용 비밀번호가 전송되었습니다. 이메일을 확인하세요. \n 그렇지 않은 경우 스팸함에서 찾아보세요.",
+        "context": "app -> auth -> info -> otpSent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.pnLen",
+        "source_string": "phone number invalid",
+        "translation": "휴대폰 번호가 불법입니다.",
+        "context": "app -> auth -> errors -> pnLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.verifyCodeLen",
+        "source_string": "verify code invalid",
+        "translation": "인증 코드가 잘못되었습니다.",
+        "context": "app -> auth -> errors -> verifyCodeLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.codeLen",
+        "source_string": "code length should be 6",
+        "translation": "인증 코드의 길이가 충분하지 않습니다.",
+        "context": "app -> auth -> errors -> codeLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.logged",
+        "source_string": "Cool, you have an account ~",
+        "translation": "Cool, 생성 된",
+        "context": "app -> authCallback -> logged",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.prevAccountTip",
+        "source_string": "Did you had an account before ?",
+        "translation": "이전에 연결해야 하는 계정이 있었나요?",
+        "context": "app -> authCallback -> prevAccountTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.createAccountDirectly",
+        "source_string": "No Account, Just need to create a new one.",
+        "translation": "아니요, 그냥 로그인",
+        "context": "app -> authCallback -> createAccountDirectly",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.toBind",
+        "source_string": "Yes, I need bind previous account",
+        "translation": "예, 이전 계정을 바인딩해야 합니다.",
+        "context": "app -> authCallback -> toBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.reading",
+        "source_string": "The Reading Book",
+        "translation": "읽고있는 책",
+        "context": "app -> home -> reading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.title",
+        "source_string": "My books",
+        "translation": "내 책들",
+        "context": "app -> home -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.unchecked",
+        "source_string": "Not matched books",
+        "translation": "분류되지 않은 책",
+        "context": "app -> home -> unchecked",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.notfound",
+        "source_string": "What! No clippings for now?",
+        "translation": "뭐! 아직 메모를 읽지 않았습니까?",
+        "context": "app -> home -> notfound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.uploadTip",
+        "source_string": "click me and upload",
+        "translation": "업로드하려면 나를 클릭하세요.",
+        "context": "app -> home -> uploadTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.update",
+        "source_string": "Change book info",
+        "translation": "책 업데이트",
+        "context": "app -> clipping -> update",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updatePlaceholder",
+        "source_string": "Search any book you need",
+        "translation": "책 제목 검색",
+        "context": "app -> clipping -> updatePlaceholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updateCandidatesCount",
+        "source_string": "candidate count: {{ count }}",
+        "translation": "총 {{ count }} 개의 데이터",
+        "context": "app -> clipping -> updateCandidatesCount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updateSelectedTip",
+        "source_string": "selected new book is: {{ title }}",
+        "translation": "선택한 새 책은 다음과 같습니다. {{ title }}",
+        "context": "app -> clipping -> updateSelectedTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.shares",
+        "source_string": "Share",
+        "translation": "사진 공유",
+        "context": "app -> clipping -> shares",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.link",
+        "source_string": "Douban link",
+        "translation": "Douban 독서",
+        "context": "app -> clipping -> link",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.at",
+        "source_string": "Excerpted on",
+        "translation": "발췌 시간",
+        "context": "app -> clipping -> at",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.preview",
+        "source_string": "Preview",
+        "translation": "시사",
+        "context": "app -> clipping -> preview",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.save",
+        "source_string": "Save",
+        "translation": "저장",
+        "context": "app -> clipping -> save",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.visible",
+        "source_string": "Visible(public to others ?)",
+        "translation": "다른 사람들이 볼 수 있습니까?",
+        "context": "app -> clipping -> visible",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.aiSummary",
+        "source_string": "AI Explain",
+        "translation": "AI 설명",
+        "context": "app -> clipping -> aiSummary",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.share.excerptAt",
+        "source_string": "excerpt at {{ date }}",
+        "translation": "{{ 날짜 }}에서 발췌",
+        "context": "app -> clipping -> share -> excerptAt",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.share.noBook",
+        "source_string": "no book available",
+        "translation": "사용할 수 있는 책이 없습니다",
+        "context": "app -> clipping -> share -> noBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.sidebar.prev",
+        "source_string": "previous clipping",
+        "translation": "이전",
+        "context": "app -> clipping -> sidebar -> prev",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.sidebar.next",
+        "source_string": "next clipping",
+        "translation": "다음",
+        "context": "app -> clipping -> sidebar -> next",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.removeSuccess",
+        "source_string": "Removed",
+        "translation": "삭제됨",
+        "context": "app -> clipping -> reactions -> removeSuccess",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.addSuccess",
+        "source_string": "Added",
+        "translation": "이미 추가",
+        "context": "app -> clipping -> reactions -> addSuccess",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.actionRejected",
+        "source_string": "Action rejected, please try again later",
+        "translation": "작업에 실패했습니다. 나중에 다시 시도하십시오.",
+        "context": "app -> clipping -> reactions -> actionRejected",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.title",
+        "source_string": "Comments",
+        "translation": "논평",
+        "context": "app -> clipping -> comments -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.count",
+        "source_string": "count, 40 words at least. Don't let your tongue before your thinking.",
+        "translation": "단어, 40 단어 이상 생각하지 않고 배우는 것은 답답합니다.",
+        "context": "app -> clipping -> comments -> count",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.submit",
+        "source_string": "Submit",
+        "translation": "제출",
+        "context": "app -> clipping -> comments -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.placeholder",
+        "source_string": "What do you think this clipping? You can write down and communicate with others.",
+        "translation": "이 발췌문에 대해 어떻게 생각하십니까? 적어두고 다른 친구들과 공유하세요 ~",
+        "context": "app -> clipping -> comments -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.tip.tooShort",
+        "source_string": "Too short, need more thinking.",
+        "translation": "너무 짧습니다. 그것에 대해 더 생각하십니까?",
+        "context": "app -> clipping -> comments -> tip -> tooShort",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.tip.success",
+        "source_string": "Yes, shared your's feeling",
+        "translation": "완료, 다른 친구와 공유",
+        "context": "app -> clipping -> comments -> tip -> success",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.square.title",
+        "source_string": "Square",
+        "translation": "광장",
+        "context": "app -> square -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tip",
+        "source_string": "Drop My Clippings.txt to here",
+        "translation": "My Clippings.txt에서 드래그",
+        "context": "app -> upload -> tip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.dropHere",
+        "source_string": "Release the mouse",
+        "translation": "Release the mouse",
+        "context": "app -> upload -> dropHere",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.help.title",
+        "source_string": "What is the `My Clippings.txt`",
+        "translation": "내 Clippings.txt는 무엇입니까",
+        "context": "app -> upload -> help -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.help.content",
+        "source_string": "connect kindle to the computer by usb, and find a folder named as `documents`, <br /> double click and enter into the folder,<br /> then find the file `My Clippings.txt` <br /> video and images should be here",
+        "translation": "킨들을 컴퓨터에 삽입하고 킨들을 클릭하여 입력하고, <br /> 디렉토리에서`documents`를 검색하고 두 번 클릭하여 입력합니다. <br />`My Clippings.txt`라는 파일을 찾습니다. <br /> 비디오 및 사진 준비",
+        "context": "app -> upload -> help -> content",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.private.on",
+        "source_string": "Clippings you upload will be public(can be seen by others)",
+        "translation": "업로드 한 콘텐츠를 공개 할 수 있습니다 (다른 사람이 볼 수 있음).",
+        "context": "app -> upload -> private -> on",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.private.off",
+        "source_string": "Clippings you upload will be private(only you can see)",
+        "translation": "업로드 한 콘텐츠가 다른 사람에게 표시되지 않습니다 (다른 사람이 볼 수 없음).",
+        "context": "app -> upload -> private -> off",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.fileTitle",
+        "source_string": "Oops",
+        "translation": "Oops",
+        "context": "app -> upload -> errors -> fileTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.fileNotFound",
+        "source_string": "Please putting `My Clippings.txt` from Kindle",
+        "translation": "My Clipping.txt를 빛나게 제공하십시오.",
+        "context": "app -> upload -> errors -> fileNotFound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.unknown",
+        "source_string": "Unknown errors. please contact annatarhe@gmail.com",
+        "translation": "죄송합니다. 업로드에 실패했습니다. 다시 시도하세요. 프로그래머에게 연락 할 수 없습니다. \\n annatarhe@gmail.com",
+        "context": "app -> upload -> errors -> unknown",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.parse",
+        "source_string": "parse clippings error. you need to upload manually",
+        "translation": "구문 분석 오류입니다. 수동으로 업로드하려면 업로드 페이지를 입력해야 합니다.",
+        "context": "app -> upload -> errors -> parse",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.done",
+        "source_string": "All data up to date",
+        "translation": "모든 데이터가 동기화되었습니다",
+        "context": "app -> upload -> tips -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.extracting",
+        "source_string": "Extracting",
+        "translation": "파싱",
+        "context": "app -> upload -> tips -> extracting",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.extractingText",
+        "source_string": "Extracting, please wait...",
+        "translation": "필사적으로 분석 중입니다. 잠시만 기다려주세요 ...",
+        "context": "app -> upload -> tips -> extractingText",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.parsedInfoTitle",
+        "source_string": "parse successed. it will sync to server when you login next time",
+        "translation": "분석이 성공하고 다음 로그인이 서버에 자동으로 동기화됩니다.",
+        "context": "app -> upload -> tips -> parsedInfoTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.parsedInfoContent",
+        "source_string": "parse success. it will sync to server when you login next time",
+        "translation": "분석이 성공하고 다음 로그인이 서버에 자동으로 동기화됩니다.",
+        "context": "app -> upload -> tips -> parsedInfoContent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.backUpload",
+        "source_string": "background uploading...",
+        "translation": "백그라운드에서 동기화 중...",
+        "context": "app -> upload -> tips -> backUpload",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.yesText",
+        "source_string": "Congratulations, checkout clippings here",
+        "translation": "축하합니다. 업로드가 완료되었습니다.",
+        "context": "app -> upload -> yesText",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.none",
+        "source_string": "None",
+        "translation": "아니",
+        "context": "app -> upload -> progress -> none",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.parsing",
+        "source_string": "Parsing File",
+        "translation": "파일 구문 분석",
+        "context": "app -> upload -> progress -> parsing",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.searchingBook",
+        "source_string": "Searching Book Data",
+        "translation": "참고 문헌 일치",
+        "context": "app -> upload -> progress -> searchingBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.uploading",
+        "source_string": "Syncing",
+        "translation": "동기화 요약",
+        "context": "app -> upload -> progress -> uploading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.done",
+        "source_string": "Done",
+        "translation": "수행하다",
+        "context": "app -> upload -> progress -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.error",
+        "source_string": "Error",
+        "translation": "오류",
+        "context": "app -> upload -> progress -> error",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.message.open",
+        "source_string": "Please do not close this window in uploading",
+        "translation": "끝까지 기다리십시오.이 페이지를 닫지 마십시오.",
+        "context": "app -> upload -> progress -> message -> open",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.collected",
+        "source_string": "collected {{ count }} item",
+        "translation": "모은 {{ count }} 기록",
+        "context": "app -> profile -> collected",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.collected_plural",
+        "source_string": "collected {{ count }} items",
+        "translation": "모은 {{ count }} 기록",
+        "context": "app -> profile -> collected_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.records",
+        "source_string": "{{ count }} item",
+        "translation": "{{ count }} 기록",
+        "context": "app -> profile -> records",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.records_plural",
+        "source_string": "{{ count }} items",
+        "translation": "{{ count }} 기록",
+        "context": "app -> profile -> records_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.rssTip",
+        "source_string": "copy the RSS link to your RSS reader",
+        "translation": "이 RSS 링크를 RSS 리더에 붙여 넣기",
+        "context": "app -> profile -> rssTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.yearlyReportTip",
+        "source_string": "yearly report",
+        "translation": "연간 독서 보고서",
+        "context": "app -> profile -> yearlyReportTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.recents",
+        "source_string": "Recents",
+        "translation": "최근 활동",
+        "context": "app -> profile -> recents",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.wechatBind",
+        "source_string": "Wechat binding",
+        "translation": "WeChat 애플릿 바인딩",
+        "context": "app -> profile -> wechatBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.wechatBindTip",
+        "source_string": "binging wechat mini program",
+        "translation": "바인딩 할 개인 센터의 코드를 스캔하려면 \"clippingKK\" 애플릿을 사용하십시오.",
+        "context": "app -> profile -> wechatBindTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.phoneBind",
+        "source_string": "bind a phone",
+        "translation": "휴대 전화 번호 바인딩",
+        "context": "app -> profile -> phoneBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.phoneBinded",
+        "source_string": "success!",
+        "translation": "휴대폰 번호를 성공적으로 바인딩",
+        "context": "app -> profile -> phoneBinded",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.externalAccountList",
+        "source_string": "External account list",
+        "translation": "타사 로그인",
+        "context": "app -> profile -> externalAccountList",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.fans.follow",
+        "source_string": "Follow",
+        "translation": "주의를 기울이다",
+        "context": "app -> profile -> fans -> follow",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.fans.unfollow",
+        "source_string": "Unfollow",
+        "translation": "더 이상 팔로우하지 않음",
+        "context": "app -> profile -> fans -> unfollow",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.title",
+        "source_string": "Update my profile",
+        "translation": "내 개인 정보 업데이트",
+        "context": "app -> profile -> editor -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.updated",
+        "source_string": "Updated",
+        "translation": "업데이트 됨",
+        "context": "app -> profile -> editor -> updated",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.max4line",
+        "source_string": "Only supports up to 4 lines of text",
+        "translation": "최대 4 줄의 텍스트 만 지원합니다.",
+        "context": "app -> profile -> editor -> max4line",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.invalid",
+        "source_string": "Invalid input",
+        "translation": "invalid",
+        "context": "app -> profile -> editor -> invalid",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.report.yearlyTitle",
+        "source_string": "Yearly report",
+        "translation": "연간 보고서",
+        "context": "app -> profile -> report -> yearlyTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.title",
+        "source_string": "Global Settings(for web)",
+        "translation": "글로벌 구성 (웹 사이트)",
+        "context": "app -> settings -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.theme",
+        "source_string": "Theme",
+        "translation": "야간 모드",
+        "context": "app -> settings -> theme",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.title",
+        "source_string": "Web Hook",
+        "translation": "Web Hook",
+        "context": "app -> settings -> webhook -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.submit",
+        "source_string": "Submit",
+        "translation": "제출하다",
+        "context": "app -> settings -> webhook -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.docLink",
+        "source_string": "documentation",
+        "translation": "문서를 보려면 여기를 클릭하십시오",
+        "context": "app -> settings -> webhook -> docLink",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.title",
+        "source_string": "Orders",
+        "translation": "주문하다",
+        "context": "app -> settings -> orders -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.orderId",
+        "source_string": "Order ID",
+        "translation": "주문 번호",
+        "context": "app -> settings -> orders -> orderId",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.amount",
+        "source_string": "Amount",
+        "translation": "금액",
+        "context": "app -> settings -> orders -> amount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.currency",
+        "source_string": "Currency",
+        "translation": "통화 단위",
+        "context": "app -> settings -> orders -> currency",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.title",
+        "source_string": "Export",
+        "translation": "데이터 내보내기",
+        "context": "app -> settings -> export -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.success",
+        "source_string": "exported",
+        "translation": "데이터를 내보냈습니다.",
+        "context": "app -> settings -> export -> success",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.flomo.title",
+        "source_string": "Flomo",
+        "translation": "Flomo",
+        "context": "app -> settings -> export -> flomo -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.flomo.submit",
+        "source_string": "export to flomo",
+        "translation": "flomo 로 내보내기",
+        "context": "app -> settings -> export -> flomo -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.notion.title",
+        "source_string": "Notion",
+        "translation": "Notion",
+        "context": "app -> settings -> export -> notion -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.notion.submit",
+        "source_string": "export to notion",
+        "translation": "notion 로 내보내기",
+        "context": "app -> settings -> export -> notion -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.domain.title",
+        "source_string": "Domain name",
+        "translation": "Domain name",
+        "context": "app -> settings -> domain -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccount",
+        "source_string": "Delete Account",
+        "translation": "Delete Account",
+        "context": "app -> settings -> danger -> removeAccount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeButton",
+        "source_string": "Delete My Account",
+        "translation": "Delete My Account",
+        "context": "app -> settings -> danger -> removeButton",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccountDone",
+        "source_string": "Account Deleted",
+        "translation": "Account Deleted",
+        "context": "app -> settings -> danger -> removeAccountDone",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccountDoneTip",
+        "source_string": "Do not login again in 24 hours, and your account will be delete permently",
+        "translation": "Do not login again in 24 hours, and your account will be delete permently",
+        "context": "app -> settings -> danger -> removeAccountDoneTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.title",
+        "source_string": "Open",
+        "translation": "오픈",
+        "context": "app -> index -> features -> open -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f1",
+        "source_string": "Export To Notion",
+        "translation": "Notion으로 내보내기",
+        "context": "app -> index -> features -> open -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f2",
+        "source_string": "Export To Flomo",
+        "translation": "Flomo로 내보내기",
+        "context": "app -> index -> features -> open -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f2Desc",
+        "source_string": "copy your flomo endpoint in setting page",
+        "translation": "설정 페이지에서 플로모 연결 복사",
+        "context": "app -> index -> features -> open -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f3",
+        "source_string": "Web Hook",
+        "translation": "Web Hook",
+        "context": "app -> index -> features -> open -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f4",
+        "source_string": "Web Widget",
+        "translation": "웹 공유 구성 요소",
+        "context": "app -> index -> features -> open -> f4",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f4Desc",
+        "source_string": "click `copy embed html` in detail page",
+        "translation": "세부정보 페이지에서 'HTML 복사'를 클릭합니다.",
+        "context": "app -> index -> features -> open -> f4Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.title",
+        "source_string": "Modern",
+        "translation": "현대",
+        "context": "app -> index -> features -> modern -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f1",
+        "source_string": "Arch",
+        "translation": "아키텍처",
+        "context": "app -> index -> features -> modern -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f1Desc",
+        "source_string": "The Modern software architecture used in this app",
+        "translation": "현대 소프트웨어 아키텍처로 구성된 제품이 매우 자랑스럽습니다~",
+        "context": "app -> index -> features -> modern -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f2",
+        "source_string": "Code",
+        "translation": "코드",
+        "context": "app -> index -> features -> modern -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f2Desc",
+        "source_string": "Testable, maintainable stable code",
+        "translation": "테스트 가능하고 유지 관리 가능한 안정적인 코드",
+        "context": "app -> index -> features -> modern -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f3",
+        "source_string": "Mindset",
+        "translation": "생각하는 모델",
+        "context": "app -> index -> features -> modern -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f3Desc",
+        "source_string": "The most important - we have real readers mindset",
+        "translation": "가장 중요한 사고 방식. 우리는 다른 사고 패턴을 가진 진정한 독자입니다.",
+        "context": "app -> index -> features -> modern -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.title",
+        "source_string": "Sense",
+        "translation": "제품 통찰력",
+        "context": "app -> index -> features -> sense -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f1",
+        "source_string": "iOS Widget",
+        "translation": "iOS 위젯",
+        "context": "app -> index -> features -> sense -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f1Desc",
+        "source_string": "we offer iOS widget to display your clippings in home screen",
+        "translation": "언제든지 이전 읽기 상태를 검토할 수 있는 편리한 iPhone 데스크탑용 위젯을 제공합니다.",
+        "context": "app -> index -> features -> sense -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f2",
+        "source_string": "Privacy",
+        "translation": "프라이버시",
+        "context": "app -> index -> features -> sense -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f2Desc",
+        "source_string": "we really care about your privacy. So you have option to hide some clippings you highlighted",
+        "translation": "우리는 귀하의 개인 정보를 진심으로 걱정합니다. 책 발췌문에 대한 외부 액세스를 차단할 수 있습니다.",
+        "context": "app -> index -> features -> sense -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f3",
+        "source_string": "Comminicate",
+        "translation": "통신",
+        "context": "app -> index -> features -> sense -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f3Desc",
+        "source_string": "You can leave some deep comments here and comminicate with each other",
+        "translation": "사려깊은 내용을 남겨두고 다른 독자들과 소통할 수 있습니다.",
+        "context": "app -> index -> features -> sense -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.title",
+        "source_string": "Make Reading Greate Aagain",
+        "translation": "긴 독서를 다시 위대하게",
+        "context": "app -> index -> features -> reading4 -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f1",
+        "source_string": "Multip Platform",
+        "translation": "다중 플랫폼",
+        "context": "app -> index -> features -> reading4 -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f1Desc",
+        "source_string": "iOS, wechat mini program",
+        "translation": "iOS, WeChat 미니 프로그램",
+        "context": "app -> index -> features -> reading4 -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f2",
+        "source_string": "Closer to readers",
+        "translation": "추종자",
+        "context": "app -> index -> features -> reading4 -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f2Desc",
+        "source_string": "other readers can reach your steps",
+        "translation": "다른 독자가 귀하의 읽기 트랙을 쉽게 추적할 수 있습니다.",
+        "context": "app -> index -> features -> reading4 -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f3",
+        "source_string": "Command Line Interface",
+        "translation": "명령줄",
+        "context": "app -> index -> features -> reading4 -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f3Desc",
+        "source_string": "we provided cli to parse file in termainal",
+        "translation": "명령줄 구문 분석 파일을 제공합니다.",
+        "context": "app -> index -> features -> reading4 -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f4",
+        "source_string": "Free",
+        "translation": "무료",
+        "context": "app -> index -> features -> reading4 -> f4",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f4Desc",
+        "source_string": "maybe the last Free land can share your readings",
+        "translation": "아마도 그들의 독서 인식을 기꺼이 공유할 수 있는 몇 안 되는 장소 중 하나일 것입니다.",
+        "context": "app -> index -> features -> reading4 -> f4Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.report.clippingCountOnBook",
+        "source_string": "Quoted {{count}} clippings",
+        "translation": "{{count}} 장을 발췌했습니다",
+        "context": "app -> report -> clippingCountOnBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.name",
+        "source_string": "Free Plan",
+        "translation": "Free Plan",
+        "context": "app -> plan -> free -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.description",
+        "source_string": "Good for everyone",
+        "translation": "Good for everyone",
+        "context": "app -> plan -> free -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.goto",
+        "source_string": "Login",
+        "translation": "Login",
+        "context": "app -> plan -> free -> goto",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.storage",
+        "source_string": "✅ Up to 2000 clippings",
+        "translation": "✅ 최대 2000개의 클리핑",
+        "context": "app -> plan -> free -> features -> storage",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.ai",
+        "source_string": "✅ First 10 AI calls free",
+        "translation": "✅ 처음 10회의 AI 호출 무료 제공",
+        "context": "app -> plan -> free -> features -> ai",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.ios",
+        "source_string": "✅ Access to iOS widget",
+        "translation": "✅ iOS 위젯 액세스",
+        "context": "app -> plan -> free -> features -> ios",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.support",
+        "source_string": "✅ Email support",
+        "translation": "✅ 이메일 지원",
+        "context": "app -> plan -> free -> features -> support",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.name",
+        "source_string": "Premium Plan",
+        "translation": "Premium Plan",
+        "context": "app -> plan -> premium -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.description",
+        "source_string": "Aim for highest",
+        "translation": "Aim for highest",
+        "context": "app -> plan -> premium -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.goto",
+        "source_string": "Go Premium",
+        "translation": "Go Premium",
+        "context": "app -> plan -> premium -> goto",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.webhook",
+        "source_string": "✅ Support webhook",
+        "translation": "✅ 웹훅 지원",
+        "context": "app -> plan -> premium -> features -> dev -> webhook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.ci.title",
+        "source_string": "Continuous Integration",
+        "translation": "Continuous Integration",
+        "context": "app -> plan -> premium -> features -> dev -> ci -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.ci.description",
+        "source_string": "✅ For developers, our advanced integrations, including Github Action, simplify the clipping collection process.",
+        "translation": "✅ 개발자를 위한 고급 통합 기능으로는 Github Action 등이 포함되어 있어 클리핑 수집 과정을 단순화할 수 있습니다.",
+        "context": "app -> plan -> premium -> features -> dev -> ci -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.storage",
+        "source_string": "✅ Unlimited clippings uploads",
+        "translation": "✅ 무제한 클리핑 업로드",
+        "context": "app -> plan -> premium -> features -> storage",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.ai",
+        "source_string": "✅ First 1000 AI calls free every month",
+        "translation": "✅ 매월 1000회의 AI 호출 무료 제공",
+        "context": "app -> plan -> premium -> features -> ai",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.ios",
+        "source_string": "✅ Access to iOS widget",
+        "translation": "✅ iOS 위젯 액세스",
+        "context": "app -> plan -> premium -> features -> ios",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.rss",
+        "source_string": "✅ RSS access",
+        "translation": "✅ RSS 액세스",
+        "context": "app -> plan -> premium -> features -> rss",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.support",
+        "source_string": "✅ Email support",
+        "translation": "✅ 이메일 지원",
+        "context": "app -> plan -> premium -> features -> support",
+        "labels": "en.json",
+        "max_length": null
+    }
+]
