@@ -1,0 +1,1642 @@
+[
+    {
+        "identifier": "app.fold",
+        "source_string": "Fold",
+        "translation": "折叠",
+        "context": "app -> fold",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.unfold",
+        "source_string": "Unfold",
+        "translation": "展开",
+        "context": "app -> unfold",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.payment.required",
+        "source_string": "Limit exceeded, please upgrade to a premium account",
+        "translation": "超过限额，请升级到高级帐户",
+        "context": "app -> payment -> required",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.payment.webhookRequired",
+        "source_string": "Webhook only available in premium plan. please upgrade to premium",
+        "translation": "Webhook 仅在高级计划中可用。 请升级到高级版",
+        "context": "app -> payment -> webhookRequired",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.ai.clippingHelp",
+        "source_string": "AI-generated narration for the segment",
+        "translation": "AI 生成的对于该片段的讲解",
+        "context": "app -> ai -> clippingHelp",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.loading",
+        "source_string": "Loading...",
+        "translation": "加载中...",
+        "context": "app -> common -> loading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.closed",
+        "source_string": "This feature is still under heavy development",
+        "translation": "广场功能暂未开放哦~",
+        "context": "app -> common -> closed",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.cancel",
+        "source_string": "Cancel",
+        "translation": "取消",
+        "context": "app -> common -> cancel",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.doUpdate",
+        "source_string": "Update",
+        "translation": "更新",
+        "context": "app -> common -> doUpdate",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.done",
+        "source_string": "Done",
+        "translation": "完成",
+        "context": "app -> common -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.delete",
+        "source_string": "Delete",
+        "translation": "删除",
+        "context": "app -> common -> delete",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.bind",
+        "source_string": "Bind",
+        "translation": "绑定",
+        "context": "app -> common -> bind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.bound",
+        "source_string": "bound",
+        "translation": "已绑定",
+        "context": "app -> common -> bound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.slogan",
+        "source_string": "Read, Reflect, Illuminate: Discover Goodness, Seek Truth, Illuminate Others.",
+        "translation": "阅读，思考，启迪：发现善良，寻求真理，启迪他人。",
+        "context": "app -> slogan",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.go",
+        "source_string": "Go!",
+        "translation": "立即体验！",
+        "context": "app -> go",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.read",
+        "source_string": "Read",
+        "translation": "已读",
+        "context": "app -> menu -> read",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.square",
+        "source_string": "Square",
+        "translation": "广场",
+        "context": "app -> menu -> square",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.upload",
+        "source_string": "Upload",
+        "translation": "上传",
+        "context": "app -> menu -> upload",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.my",
+        "source_string": "My Profile",
+        "translation": "我的信息",
+        "context": "app -> menu -> my",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.settings",
+        "source_string": "Settings",
+        "translation": "设置",
+        "context": "app -> menu -> settings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.logout",
+        "source_string": "Logout",
+        "translation": "退出",
+        "context": "app -> menu -> logout",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.loginByQRCode.title",
+        "source_string": "Login by QRCode",
+        "translation": "扫码登陆",
+        "context": "app -> menu -> loginByQRCode -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.title",
+        "source_string": "Search",
+        "translation": "搜索",
+        "context": "app -> menu -> search -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.placeholder",
+        "source_string": "Empire, faith, free...",
+        "translation": "父亲, 士大夫, 人民...",
+        "context": "app -> menu -> search -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.empty",
+        "source_string": "no data here",
+        "translation": "没有数据",
+        "context": "app -> menu -> search -> empty",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.readings",
+        "source_string": "Reading books",
+        "translation": "大家在读",
+        "context": "app -> public -> readings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.readers",
+        "source_string": "Readers",
+        "translation": "这些朋友爱读书",
+        "context": "app -> public -> readers",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.clippings",
+        "source_string": "User clippings",
+        "translation": "用户书摘",
+        "context": "app -> public -> clippings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.hideReasons",
+        "source_string": "Due to privacy issues, users’ book clippings are not displayed",
+        "translation": "由于隐私问题，并不展示用户书摘内容",
+        "context": "app -> public -> hideReasons",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.title",
+        "source_string": "Clippings",
+        "translation": "书摘",
+        "context": "app -> book -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.share",
+        "source_string": "Share the book",
+        "translation": "分享这本书",
+        "context": "app -> book -> share",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.readingDuration",
+        "source_string": "Read for {{ count }} day",
+        "translation": "这本书看了 {{ count }} 天",
+        "context": "app -> book -> readingDuration",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.readingDuration_plural",
+        "source_string": "Read for {{ count }} days",
+        "translation": "这本书看了 {{ count }} 天",
+        "context": "app -> book -> readingDuration_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.signin",
+        "source_string": "Sign in",
+        "translation": "登陆",
+        "context": "app -> auth -> signin",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.signup",
+        "source_string": "Sign up",
+        "translation": "注册",
+        "context": "app -> auth -> signup",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.phone",
+        "source_string": "phone",
+        "translation": "手机",
+        "context": "app -> auth -> phone",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.username",
+        "source_string": "User name",
+        "translation": "用户名",
+        "context": "app -> auth -> username",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.avatar",
+        "source_string": "Avatar",
+        "translation": "头像",
+        "context": "app -> auth -> avatar",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.email",
+        "source_string": "Email",
+        "translation": "邮箱",
+        "context": "app -> auth -> email",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.pwd",
+        "source_string": "Password",
+        "translation": "密码",
+        "context": "app -> auth -> pwd",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.bio",
+        "source_string": "Bio",
+        "translation": "个人简介",
+        "context": "app -> auth -> bio",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.submit",
+        "source_string": "Go go go!",
+        "translation": "搞快点",
+        "context": "app -> auth -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.endpoint",
+        "source_string": "API endpoint",
+        "translation": "API 地址",
+        "context": "app -> auth -> endpoint",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.name",
+        "source_string": "User name",
+        "translation": "用户名",
+        "context": "app -> auth -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.hookUrl",
+        "source_string": "Web Hook URL",
+        "translation": "hook 地址",
+        "context": "app -> auth -> hookUrl",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.notionPageId",
+        "source_string": "notion page id",
+        "translation": "notion page id",
+        "context": "app -> auth -> notionPageId",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.notionToken",
+        "source_string": "notion bot token",
+        "translation": "notion 机器人 token",
+        "context": "app -> auth -> notionToken",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.domain",
+        "source_string": "Domain",
+        "translation": "域名",
+        "context": "app -> auth -> domain",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.sendOtp",
+        "source_string": "Send OneTime Passcode",
+        "translation": "发送单次验证码",
+        "context": "app -> auth -> sendOtp",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.legacyTip",
+        "source_string": "Users who used mobile phones or third parties to log in in the past, please click the button below to log in.",
+        "translation": "过去使用手机或者第三方登录的朋友请点击下面的按钮通过以往的方式登录",
+        "context": "app -> auth -> legacyTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.accountTip",
+        "source_string": "If you have any questions about your account, please email annatar.he+ck@gmail.com Don't worry, we'd love to hear from you 🫡",
+        "translation": "如果对于账户有任何疑问，请发邮件给 annatar.he+ck@gmail.com 不必担心，我们很乐意收到邮件 🫡",
+        "context": "app -> auth -> accountTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.loginWithPassword",
+        "source_string": "Login with Password",
+        "translation": "密码登录",
+        "context": "app -> auth -> loginWithPassword",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.legacyLogin",
+        "source_string": "Leacy Login",
+        "translation": "旧版登录",
+        "context": "app -> auth -> legacyLogin",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.code.placeholder",
+        "source_string": "code from mobile phone sms",
+        "translation": "手机中的验证码",
+        "context": "app -> auth -> code -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.info.smsSent",
+        "source_string": "message has sent to your mobile phone",
+        "translation": "验证码已发送",
+        "context": "app -> auth -> info -> smsSent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.info.otpSent",
+        "source_string": "One Time PassCode sent, please check your email \n if not, please find it in spam box",
+        "translation": "一次性密码已发送，请检查您的电子邮件\n如果没有，请在垃圾邮件箱中查找",
+        "context": "app -> auth -> info -> otpSent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.pnLen",
+        "source_string": "phone number invalid",
+        "translation": "手机号不合法",
+        "context": "app -> auth -> errors -> pnLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.verifyCodeLen",
+        "source_string": "verify code invalid",
+        "translation": "验证码不合法",
+        "context": "app -> auth -> errors -> verifyCodeLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.codeLen",
+        "source_string": "code length should be 6",
+        "translation": "验证码长度不够哦",
+        "context": "app -> auth -> errors -> codeLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.logged",
+        "source_string": "Cool, you have an account ~",
+        "translation": "Cool, 已经创建完成啦",
+        "context": "app -> authCallback -> logged",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.prevAccountTip",
+        "source_string": "Did you had an account before ?",
+        "translation": "之前是否有过账户需要绑定？",
+        "context": "app -> authCallback -> prevAccountTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.createAccountDirectly",
+        "source_string": "No Account, Just need to create a new one.",
+        "translation": "没，直接登陆吧",
+        "context": "app -> authCallback -> createAccountDirectly",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.toBind",
+        "source_string": "Yes, I need bind previous account",
+        "translation": "有， 需要绑定之前的账户",
+        "context": "app -> authCallback -> toBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.reading",
+        "source_string": "The Reading Book",
+        "translation": "正在读",
+        "context": "app -> home -> reading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.title",
+        "source_string": "My books",
+        "translation": "我的书籍",
+        "context": "app -> home -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.unchecked",
+        "source_string": "Not matched books",
+        "translation": "未分类图书",
+        "context": "app -> home -> unchecked",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.notfound",
+        "source_string": "What! No clippings for now?",
+        "translation": "什么！你竟然还没有读书笔记？",
+        "context": "app -> home -> notfound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.uploadTip",
+        "source_string": "click me and upload",
+        "translation": "还不快点我上传",
+        "context": "app -> home -> uploadTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.update",
+        "source_string": "Change book info",
+        "translation": "书目更新",
+        "context": "app -> clipping -> update",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updatePlaceholder",
+        "source_string": "Search any book you need",
+        "translation": "搜索需要匹配的图书",
+        "context": "app -> clipping -> updatePlaceholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updateCandidatesCount",
+        "source_string": "candidate count: {{ count }}",
+        "translation": "共: {{ count }}",
+        "context": "app -> clipping -> updateCandidatesCount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updateSelectedTip",
+        "source_string": "selected new book is: {{ title }}",
+        "translation": "已选中新书: {{ title }}",
+        "context": "app -> clipping -> updateSelectedTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.shares",
+        "source_string": "Share",
+        "translation": "图片分享",
+        "context": "app -> clipping -> shares",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.link",
+        "source_string": "Douban link",
+        "translation": "豆瓣读书",
+        "context": "app -> clipping -> link",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.at",
+        "source_string": "Excerpted on",
+        "translation": "摘录于",
+        "context": "app -> clipping -> at",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.preview",
+        "source_string": "Preview",
+        "translation": "预览",
+        "context": "app -> clipping -> preview",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.save",
+        "source_string": "Save",
+        "translation": "保存",
+        "context": "app -> clipping -> save",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.visible",
+        "source_string": "Visible(public to others ?)",
+        "translation": "是否对他人可见",
+        "context": "app -> clipping -> visible",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.aiSummary",
+        "source_string": "AI Explain",
+        "translation": "AI 解析",
+        "context": "app -> clipping -> aiSummary",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.share.excerptAt",
+        "source_string": "excerpt at {{ date }}",
+        "translation": "摘录于 {{ date }}",
+        "context": "app -> clipping -> share -> excerptAt",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.share.noBook",
+        "source_string": "no book available",
+        "translation": "没有书籍内容",
+        "context": "app -> clipping -> share -> noBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.sidebar.prev",
+        "source_string": "previous clipping",
+        "translation": "上一条",
+        "context": "app -> clipping -> sidebar -> prev",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.sidebar.next",
+        "source_string": "next clipping",
+        "translation": "下一条",
+        "context": "app -> clipping -> sidebar -> next",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.removeSuccess",
+        "source_string": "Removed",
+        "translation": "已移除自己的态度",
+        "context": "app -> clipping -> reactions -> removeSuccess",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.addSuccess",
+        "source_string": "Added",
+        "translation": "已表达自己的态度",
+        "context": "app -> clipping -> reactions -> addSuccess",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.actionRejected",
+        "source_string": "Action rejected, please try again later",
+        "translation": "操作失败，请稍后重试哦~",
+        "context": "app -> clipping -> reactions -> actionRejected",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.title",
+        "source_string": "Comments",
+        "translation": "评论",
+        "context": "app -> clipping -> comments -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.count",
+        "source_string": "count, 40 words at least. Don't let your tongue before your thinking.",
+        "translation": "个字, 至少为 40 个字. 学而不思则惘.",
+        "context": "app -> clipping -> comments -> count",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.submit",
+        "source_string": "Submit",
+        "translation": "提交",
+        "context": "app -> clipping -> comments -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.placeholder",
+        "source_string": "What do you think this clipping? You can write down and communicate with others.",
+        "translation": "你觉得这段摘录怎么样？写下来分享给其他朋友吧~",
+        "context": "app -> clipping -> comments -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.tip.tooShort",
+        "source_string": "Too short, need more thinking.",
+        "translation": "太短了，再多想想？",
+        "context": "app -> clipping -> comments -> tip -> tooShort",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.tip.success",
+        "source_string": "Yes, shared your's feeling",
+        "translation": "搞定，已经分享给其他朋友了",
+        "context": "app -> clipping -> comments -> tip -> success",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.square.title",
+        "source_string": "Square",
+        "translation": "广场",
+        "context": "app -> square -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tip",
+        "source_string": "Drop My Clippings.txt to here",
+        "translation": "把 My Clippings.txt 拖进来",
+        "context": "app -> upload -> tip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.dropHere",
+        "source_string": "Release the mouse",
+        "translation": "松开鼠标",
+        "context": "app -> upload -> dropHere",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.help.title",
+        "source_string": "What is the `My Clippings.txt`",
+        "translation": "什么是 My Clippings.txt",
+        "context": "app -> upload -> help -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.help.content",
+        "source_string": "connect kindle to the computer by usb, and find a folder named as `documents`, <br /> double click and enter into the folder,<br /> then find the file `My Clippings.txt` <br /> video and images should be here",
+        "translation": "将 kindle 插入电脑，点击进入 kindle，<br />在目录中寻找 `documents` 双击进入，<br />找到文件名为 `My Clippings.txt` 的即可.<br /> 视频和图片准备中",
+        "context": "app -> upload -> help -> content",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.private.on",
+        "source_string": "Clippings you upload will be public(can be seen by others)",
+        "translation": "您上传的内容可以公开（可能被其他人看到）",
+        "context": "app -> upload -> private -> on",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.private.off",
+        "source_string": "Clippings you upload will be private(only you can see)",
+        "translation": "您上传的内容对他人隐藏（不能被其他人看到）",
+        "context": "app -> upload -> private -> off",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.fileTitle",
+        "source_string": "Oops",
+        "translation": "Oops",
+        "context": "app -> upload -> errors -> fileTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.fileNotFound",
+        "source_string": "Please putting `My Clippings.txt` from Kindle",
+        "translation": "请务必提供 kindle 中的 My Clipping.txt 哦",
+        "context": "app -> upload -> errors -> fileNotFound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.unknown",
+        "source_string": "Unknown errors. please contact annatarhe@gmail.com",
+        "translation": "哎呀呀，上传失败了，重试一下。实在不行联系程序员吧 \\n annatarhe@gmail.com",
+        "context": "app -> upload -> errors -> unknown",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.parse",
+        "source_string": "parse clippings error. you need to upload manually",
+        "translation": "解析出错，您需要进入上传页面手动上传",
+        "context": "app -> upload -> errors -> parse",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.done",
+        "source_string": "All data up to date",
+        "translation": "所有数据已经同步完成",
+        "context": "app -> upload -> tips -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.extracting",
+        "source_string": "Extracting",
+        "translation": "解析中",
+        "context": "app -> upload -> tips -> extracting",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.extractingText",
+        "source_string": "Extracting, please wait...",
+        "translation": "正在拼命解析中，请稍等...",
+        "context": "app -> upload -> tips -> extractingText",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.parsedInfoTitle",
+        "source_string": "parse successed. it will sync to server when you login next time",
+        "translation": "解析成功，下次登陆将会自动同步到服务器",
+        "context": "app -> upload -> tips -> parsedInfoTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.parsedInfoContent",
+        "source_string": "parse success. it will sync to server when you login next time",
+        "translation": "解析成功，下次登陆将会自动同步到服务器",
+        "context": "app -> upload -> tips -> parsedInfoContent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.backUpload",
+        "source_string": "background uploading...",
+        "translation": "后台同步中...",
+        "context": "app -> upload -> tips -> backUpload",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.yesText",
+        "source_string": "Congratulations, checkout clippings here",
+        "translation": "牛逼！你上传完成了！",
+        "context": "app -> upload -> yesText",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.none",
+        "source_string": "None",
+        "translation": "无",
+        "context": "app -> upload -> progress -> none",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.parsing",
+        "source_string": "Parsing File",
+        "translation": "解析文件中",
+        "context": "app -> upload -> progress -> parsing",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.searchingBook",
+        "source_string": "Searching Book Data",
+        "translation": "正在匹配书目",
+        "context": "app -> upload -> progress -> searchingBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.uploading",
+        "source_string": "Syncing",
+        "translation": "正在同步书摘",
+        "context": "app -> upload -> progress -> uploading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.done",
+        "source_string": "Done",
+        "translation": "完成",
+        "context": "app -> upload -> progress -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.error",
+        "source_string": "Error",
+        "translation": "错误",
+        "context": "app -> upload -> progress -> error",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.message.open",
+        "source_string": "Please do not close this window in uploading",
+        "translation": "请等待结束，勿关闭此页面",
+        "context": "app -> upload -> progress -> message -> open",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.collected",
+        "source_string": "collected {{ count }} item",
+        "translation": "已收集 {{ count }} 条记录",
+        "context": "app -> profile -> collected",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.collected_plural",
+        "source_string": "collected {{ count }} items",
+        "translation": "已收集 {{ count }} 条记录",
+        "context": "app -> profile -> collected_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.records",
+        "source_string": "{{ count }} item",
+        "translation": "{{ count }} 条记录",
+        "context": "app -> profile -> records",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.records_plural",
+        "source_string": "{{ count }} items",
+        "translation": "{{ count }} 条记录",
+        "context": "app -> profile -> records_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.rssTip",
+        "source_string": "copy the RSS link to your RSS reader",
+        "translation": "支持粘贴此 RSS 链接到 RSS 阅读器中",
+        "context": "app -> profile -> rssTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.yearlyReportTip",
+        "source_string": "yearly report",
+        "translation": "年度阅读报告",
+        "context": "app -> profile -> yearlyReportTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.recents",
+        "source_string": "Recents",
+        "translation": "最近动态",
+        "context": "app -> profile -> recents",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.wechatBind",
+        "source_string": "Wechat binding",
+        "translation": "微信小程序绑定",
+        "context": "app -> profile -> wechatBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.wechatBindTip",
+        "source_string": "binging wechat mini program",
+        "translation": "使用 clippingKK 小程序 个人中心扫码即可绑定",
+        "context": "app -> profile -> wechatBindTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.phoneBind",
+        "source_string": "bind a phone",
+        "translation": "绑定手机号",
+        "context": "app -> profile -> phoneBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.phoneBinded",
+        "source_string": "success!",
+        "translation": "绑定成功",
+        "context": "app -> profile -> phoneBinded",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.externalAccountList",
+        "source_string": "External account list",
+        "translation": "外部账户",
+        "context": "app -> profile -> externalAccountList",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.fans.follow",
+        "source_string": "Follow",
+        "translation": "追踪",
+        "context": "app -> profile -> fans -> follow",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.fans.unfollow",
+        "source_string": "Unfollow",
+        "translation": "不再追踪",
+        "context": "app -> profile -> fans -> unfollow",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.title",
+        "source_string": "Update my profile",
+        "translation": "更新我的个人信息",
+        "context": "app -> profile -> editor -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.updated",
+        "source_string": "Updated",
+        "translation": "已更新",
+        "context": "app -> profile -> editor -> updated",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.max4line",
+        "source_string": "Only supports up to 4 lines of text",
+        "translation": "最大仅支持 4 行文字",
+        "context": "app -> profile -> editor -> max4line",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.invalid",
+        "source_string": "Invalid input",
+        "translation": "内容有错误",
+        "context": "app -> profile -> editor -> invalid",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.report.yearlyTitle",
+        "source_string": "Yearly report",
+        "translation": "年度报告",
+        "context": "app -> profile -> report -> yearlyTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.title",
+        "source_string": "Global Settings(for web)",
+        "translation": "全局配置(网站)",
+        "context": "app -> settings -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.theme",
+        "source_string": "Theme",
+        "translation": "黑暗模式",
+        "context": "app -> settings -> theme",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.title",
+        "source_string": "Web Hook",
+        "translation": "Webhook",
+        "context": "app -> settings -> webhook -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.submit",
+        "source_string": "Submit",
+        "translation": "提交",
+        "context": "app -> settings -> webhook -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.docLink",
+        "source_string": "documentation",
+        "translation": "文档在这里",
+        "context": "app -> settings -> webhook -> docLink",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.title",
+        "source_string": "Orders",
+        "translation": "账单",
+        "context": "app -> settings -> orders -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.orderId",
+        "source_string": "Order ID",
+        "translation": "订单号",
+        "context": "app -> settings -> orders -> orderId",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.amount",
+        "source_string": "Amount",
+        "translation": "金额",
+        "context": "app -> settings -> orders -> amount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.currency",
+        "source_string": "Currency",
+        "translation": "货币单位",
+        "context": "app -> settings -> orders -> currency",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.title",
+        "source_string": "Export",
+        "translation": "导出数据",
+        "context": "app -> settings -> export -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.success",
+        "source_string": "exported",
+        "translation": "已导出",
+        "context": "app -> settings -> export -> success",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.flomo.title",
+        "source_string": "Flomo",
+        "translation": "Flomo",
+        "context": "app -> settings -> export -> flomo -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.flomo.submit",
+        "source_string": "export to flomo",
+        "translation": "导出至 flomo",
+        "context": "app -> settings -> export -> flomo -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.notion.title",
+        "source_string": "Notion",
+        "translation": "Notion",
+        "context": "app -> settings -> export -> notion -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.notion.submit",
+        "source_string": "export to notion",
+        "translation": "导出至 notion",
+        "context": "app -> settings -> export -> notion -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.domain.title",
+        "source_string": "Domain name",
+        "translation": "域名路由",
+        "context": "app -> settings -> domain -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccount",
+        "source_string": "Delete Account",
+        "translation": "删除账户",
+        "context": "app -> settings -> danger -> removeAccount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeButton",
+        "source_string": "Delete My Account",
+        "translation": "删除我的账户",
+        "context": "app -> settings -> danger -> removeButton",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccountDone",
+        "source_string": "Account Deleted",
+        "translation": "账户已删除",
+        "context": "app -> settings -> danger -> removeAccountDone",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccountDoneTip",
+        "source_string": "Do not login again in 24 hours, and your account will be delete permently",
+        "translation": "24 小时内不再登陆，则账户数据会被永久删除",
+        "context": "app -> settings -> danger -> removeAccountDoneTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.title",
+        "source_string": "Open",
+        "translation": "开放",
+        "context": "app -> index -> features -> open -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f1",
+        "source_string": "Export To Notion",
+        "translation": "导出到 Notion",
+        "context": "app -> index -> features -> open -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f2",
+        "source_string": "Export To Flomo",
+        "translation": "导出到 Flomo",
+        "context": "app -> index -> features -> open -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f2Desc",
+        "source_string": "copy your flomo endpoint in setting page",
+        "translation": "在设置页面复制 flomo 连接",
+        "context": "app -> index -> features -> open -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f3",
+        "source_string": "Web Hook",
+        "translation": "Web Hook",
+        "context": "app -> index -> features -> open -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f4",
+        "source_string": "Web Widget",
+        "translation": "网页分享组件",
+        "context": "app -> index -> features -> open -> f4",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f4Desc",
+        "source_string": "click `copy embed html` in detail page",
+        "translation": "在详情页点击 `复制 HTML`",
+        "context": "app -> index -> features -> open -> f4Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.title",
+        "source_string": "Modern",
+        "translation": "现代",
+        "context": "app -> index -> features -> modern -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f1",
+        "source_string": "Arch",
+        "translation": "架构",
+        "context": "app -> index -> features -> modern -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f1Desc",
+        "source_string": "The Modern software architecture used in this app",
+        "translation": "现代软件架构上组织的产品，非常自豪~",
+        "context": "app -> index -> features -> modern -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f2",
+        "source_string": "Code",
+        "translation": "代码",
+        "context": "app -> index -> features -> modern -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f2Desc",
+        "source_string": "Testable, maintainable stable code",
+        "translation": "可测试，可维护的稳定代码",
+        "context": "app -> index -> features -> modern -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f3",
+        "source_string": "Mindset",
+        "translation": "思维模式",
+        "context": "app -> index -> features -> modern -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f3Desc",
+        "source_string": "The most important - we have real readers mindset",
+        "translation": "最重要的 —— 思维模式。 我们是真正的阅读者，有着不一样的思维模式（和而不同）",
+        "context": "app -> index -> features -> modern -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.title",
+        "source_string": "Sense",
+        "translation": "产品洞见",
+        "context": "app -> index -> features -> sense -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f1",
+        "source_string": "iOS Widget",
+        "translation": "iOS 小组件",
+        "context": "app -> index -> features -> sense -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f1Desc",
+        "source_string": "we offer iOS widget to display your clippings in home screen",
+        "translation": "我们为您的 iPhone 桌面提供小组件，方便随时 review 曾经的阅读状况",
+        "context": "app -> index -> features -> sense -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f2",
+        "source_string": "Privacy",
+        "translation": "隐私",
+        "context": "app -> index -> features -> sense -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f2Desc",
+        "source_string": "we really care about your privacy. So you have option to hide some clippings you highlighted",
+        "translation": "我们真心关注您的隐私情况 —— 您可屏蔽书摘的对外访问情况",
+        "context": "app -> index -> features -> sense -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f3",
+        "source_string": "Comminicate",
+        "translation": "交流",
+        "context": "app -> index -> features -> sense -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f3Desc",
+        "source_string": "You can leave some deep comments here and comminicate with each other",
+        "translation": "您可留下一些深思熟虑和其他阅读者共同交流",
+        "context": "app -> index -> features -> sense -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.title",
+        "source_string": "Make Reading Greate Aagain",
+        "translation": "使长阅读再次伟大",
+        "context": "app -> index -> features -> reading4 -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f1",
+        "source_string": "Multip Platform",
+        "translation": "多平台",
+        "context": "app -> index -> features -> reading4 -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f1Desc",
+        "source_string": "iOS, wechat mini program",
+        "translation": "iOS, 微信小程序",
+        "context": "app -> index -> features -> reading4 -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f2",
+        "source_string": "Closer to readers",
+        "translation": "追随师者",
+        "context": "app -> index -> features -> reading4 -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f2Desc",
+        "source_string": "other readers can reach your steps",
+        "translation": "其他读者可以方便地追踪您的阅读轨迹",
+        "context": "app -> index -> features -> reading4 -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f3",
+        "source_string": "Command Line Interface",
+        "translation": "命令行",
+        "context": "app -> index -> features -> reading4 -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f3Desc",
+        "source_string": "we provided cli to parse file in termainal",
+        "translation": "我们提供命令行解析文件",
+        "context": "app -> index -> features -> reading4 -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f4",
+        "source_string": "Free",
+        "translation": "自由",
+        "context": "app -> index -> features -> reading4 -> f4",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f4Desc",
+        "source_string": "maybe the last Free land can share your readings",
+        "translation": "也许是为数不多愿意分享自己阅读感知的地方了",
+        "context": "app -> index -> features -> reading4 -> f4Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.report.clippingCountOnBook",
+        "source_string": "Quoted {{count}} clippings",
+        "translation": "我摘录了 {{count}} 条句子",
+        "context": "app -> report -> clippingCountOnBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.name",
+        "source_string": "Free Plan",
+        "translation": "Free Plan",
+        "context": "app -> plan -> free -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.description",
+        "source_string": "Good for everyone",
+        "translation": "Good for everyone",
+        "context": "app -> plan -> free -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.goto",
+        "source_string": "Login",
+        "translation": "Login",
+        "context": "app -> plan -> free -> goto",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.storage",
+        "source_string": "✅ Up to 2000 clippings",
+        "translation": "✅ 高达 2000 个剪贴",
+        "context": "app -> plan -> free -> features -> storage",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.ai",
+        "source_string": "✅ First 10 AI calls free",
+        "translation": "✅ 首次 10 个 AI 调用免费",
+        "context": "app -> plan -> free -> features -> ai",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.ios",
+        "source_string": "✅ Access to iOS widget",
+        "translation": "✅ iOS 小部件访问",
+        "context": "app -> plan -> free -> features -> ios",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.support",
+        "source_string": "✅ Email support",
+        "translation": "✅ 电子邮件支持",
+        "context": "app -> plan -> free -> features -> support",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.name",
+        "source_string": "Premium Plan",
+        "translation": "Premium Plan",
+        "context": "app -> plan -> premium -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.description",
+        "source_string": "Aim for highest",
+        "translation": "Aim for highest",
+        "context": "app -> plan -> premium -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.goto",
+        "source_string": "Go Premium",
+        "translation": "Go Premium",
+        "context": "app -> plan -> premium -> goto",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.webhook",
+        "source_string": "✅ Support webhook",
+        "translation": "✅ Webhook 支持",
+        "context": "app -> plan -> premium -> features -> dev -> webhook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.ci.title",
+        "source_string": "Continuous Integration",
+        "translation": "Continuous Integration",
+        "context": "app -> plan -> premium -> features -> dev -> ci -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.ci.description",
+        "source_string": "✅ For developers, our advanced integrations, including Github Action, simplify the clipping collection process.",
+        "translation": "✅ 对于开发人员，我们提供高级集成，包括 Github Action 等，以简化剪贴收集过程。",
+        "context": "app -> plan -> premium -> features -> dev -> ci -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.storage",
+        "source_string": "✅ Unlimited clippings uploads",
+        "translation": "✅ 无限制剪贴上传",
+        "context": "app -> plan -> premium -> features -> storage",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.ai",
+        "source_string": "✅ First 1000 AI calls free every month",
+        "translation": "✅ 每月前 1000 个 AI 调用免费",
+        "context": "app -> plan -> premium -> features -> ai",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.ios",
+        "source_string": "✅ Access to iOS widget",
+        "translation": "✅ iOS 小部件访问权限",
+        "context": "app -> plan -> premium -> features -> ios",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.rss",
+        "source_string": "✅ RSS access",
+        "translation": "✅ 通过 RSS 访问摘录",
+        "context": "app -> plan -> premium -> features -> rss",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.support",
+        "source_string": "✅ Email support",
+        "translation": "✅ Email 支持",
+        "context": "app -> plan -> premium -> features -> support",
+        "labels": "en.json",
+        "max_length": null
+    }
+]
