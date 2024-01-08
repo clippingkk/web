@@ -1,0 +1,1642 @@
+[
+    {
+        "identifier": "app.fold",
+        "source_string": "Fold",
+        "translation": "Fold",
+        "context": "app -> fold",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.unfold",
+        "source_string": "Unfold",
+        "translation": "Unfold",
+        "context": "app -> unfold",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.payment.required",
+        "source_string": "Limit exceeded, please upgrade to a premium account",
+        "translation": "Limit exceeded, please upgrade to a premium account",
+        "context": "app -> payment -> required",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.payment.webhookRequired",
+        "source_string": "Webhook only available in premium plan. please upgrade to premium",
+        "translation": "Webhook only available in premium plan. please upgrade to premium",
+        "context": "app -> payment -> webhookRequired",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.ai.clippingHelp",
+        "source_string": "AI-generated narration for the segment",
+        "translation": "AI-generated narration for the segment",
+        "context": "app -> ai -> clippingHelp",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.loading",
+        "source_string": "Loading...",
+        "translation": "Loading...",
+        "context": "app -> common -> loading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.closed",
+        "source_string": "This feature is still under heavy development",
+        "translation": "This feature is still under heavy development",
+        "context": "app -> common -> closed",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.cancel",
+        "source_string": "Cancel",
+        "translation": "Cancel",
+        "context": "app -> common -> cancel",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.doUpdate",
+        "source_string": "Update",
+        "translation": "Update",
+        "context": "app -> common -> doUpdate",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.done",
+        "source_string": "Done",
+        "translation": "Done",
+        "context": "app -> common -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.delete",
+        "source_string": "Delete",
+        "translation": "Delete",
+        "context": "app -> common -> delete",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.bind",
+        "source_string": "Bind",
+        "translation": "Bind",
+        "context": "app -> common -> bind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.common.bound",
+        "source_string": "bound",
+        "translation": "bound",
+        "context": "app -> common -> bound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.slogan",
+        "source_string": "Read, Reflect, Illuminate: Discover Goodness, Seek Truth, Illuminate Others.",
+        "translation": "Read, Reflect, Illuminate: Discover Goodness, Seek Truth, Illuminate Others.",
+        "context": "app -> slogan",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.go",
+        "source_string": "Go!",
+        "translation": "Go!",
+        "context": "app -> go",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.read",
+        "source_string": "Read",
+        "translation": "Read",
+        "context": "app -> menu -> read",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.square",
+        "source_string": "Square",
+        "translation": "Square",
+        "context": "app -> menu -> square",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.upload",
+        "source_string": "Upload",
+        "translation": "Upload",
+        "context": "app -> menu -> upload",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.my",
+        "source_string": "My Profile",
+        "translation": "My Profile",
+        "context": "app -> menu -> my",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.settings",
+        "source_string": "Settings",
+        "translation": "Settings",
+        "context": "app -> menu -> settings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.logout",
+        "source_string": "Logout",
+        "translation": "Logout",
+        "context": "app -> menu -> logout",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.loginByQRCode.title",
+        "source_string": "Login by QRCode",
+        "translation": "Login by QRCode",
+        "context": "app -> menu -> loginByQRCode -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.title",
+        "source_string": "Search",
+        "translation": "Search",
+        "context": "app -> menu -> search -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.placeholder",
+        "source_string": "Empire, faith, free...",
+        "translation": "Empire, faith, free...",
+        "context": "app -> menu -> search -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.menu.search.empty",
+        "source_string": "no data here",
+        "translation": "no data here",
+        "context": "app -> menu -> search -> empty",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.readings",
+        "source_string": "Reading books",
+        "translation": "Reading books",
+        "context": "app -> public -> readings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.readers",
+        "source_string": "Readers",
+        "translation": "Readers",
+        "context": "app -> public -> readers",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.clippings",
+        "source_string": "User clippings",
+        "translation": "User clippings",
+        "context": "app -> public -> clippings",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.public.hideReasons",
+        "source_string": "Due to privacy issues, users’ book clippings are not displayed",
+        "translation": "Due to privacy issues, users’ book clippings are not displayed",
+        "context": "app -> public -> hideReasons",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.title",
+        "source_string": "Clippings",
+        "translation": "Clippings",
+        "context": "app -> book -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.share",
+        "source_string": "Share the book",
+        "translation": "Share the book",
+        "context": "app -> book -> share",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.readingDuration",
+        "source_string": "Read for {{ count }} day",
+        "translation": "Read for {{ count }} day",
+        "context": "app -> book -> readingDuration",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.book.readingDuration_plural",
+        "source_string": "Read for {{ count }} days",
+        "translation": "Read for {{ count }} days",
+        "context": "app -> book -> readingDuration_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.signin",
+        "source_string": "Sign in",
+        "translation": "Sign in",
+        "context": "app -> auth -> signin",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.signup",
+        "source_string": "Sign up",
+        "translation": "Sign up",
+        "context": "app -> auth -> signup",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.phone",
+        "source_string": "phone",
+        "translation": "phone",
+        "context": "app -> auth -> phone",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.username",
+        "source_string": "User name",
+        "translation": "User name",
+        "context": "app -> auth -> username",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.avatar",
+        "source_string": "Avatar",
+        "translation": "Avatar",
+        "context": "app -> auth -> avatar",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.email",
+        "source_string": "Email",
+        "translation": "Email",
+        "context": "app -> auth -> email",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.pwd",
+        "source_string": "Password",
+        "translation": "Password",
+        "context": "app -> auth -> pwd",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.bio",
+        "source_string": "Bio",
+        "translation": "Bio",
+        "context": "app -> auth -> bio",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.submit",
+        "source_string": "Go go go!",
+        "translation": "Go go go!",
+        "context": "app -> auth -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.endpoint",
+        "source_string": "API endpoint",
+        "translation": "API endpoint",
+        "context": "app -> auth -> endpoint",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.name",
+        "source_string": "User name",
+        "translation": "User name",
+        "context": "app -> auth -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.hookUrl",
+        "source_string": "Web Hook URL",
+        "translation": "Web Hook URL",
+        "context": "app -> auth -> hookUrl",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.notionPageId",
+        "source_string": "notion page id",
+        "translation": "notion page id",
+        "context": "app -> auth -> notionPageId",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.notionToken",
+        "source_string": "notion bot token",
+        "translation": "notion bot token",
+        "context": "app -> auth -> notionToken",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.domain",
+        "source_string": "Domain",
+        "translation": "Domain",
+        "context": "app -> auth -> domain",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.sendOtp",
+        "source_string": "Send OneTime Passcode",
+        "translation": "Send OneTime Passcode",
+        "context": "app -> auth -> sendOtp",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.legacyTip",
+        "source_string": "Users who used mobile phones or third parties to log in in the past, please click the button below to log in.",
+        "translation": "Users who used mobile phones or third parties to log in in the past, please click the button below to log in.",
+        "context": "app -> auth -> legacyTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.accountTip",
+        "source_string": "If you have any questions about your account, please email annatar.he+ck@gmail.com Don't worry, we'd love to hear from you 🫡",
+        "translation": "If you have any questions about your account, please email annatar.he+ck@gmail.com Don't worry, we'd love to hear from you 🫡",
+        "context": "app -> auth -> accountTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.loginWithPassword",
+        "source_string": "Login with Password",
+        "translation": "Login with Password",
+        "context": "app -> auth -> loginWithPassword",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.legacyLogin",
+        "source_string": "Leacy Login",
+        "translation": "Leacy Login",
+        "context": "app -> auth -> legacyLogin",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.code.placeholder",
+        "source_string": "code from mobile phone sms",
+        "translation": "code from mobile phone sms",
+        "context": "app -> auth -> code -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.info.smsSent",
+        "source_string": "message has sent to your mobile phone",
+        "translation": "message has sent to your mobile phone",
+        "context": "app -> auth -> info -> smsSent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.info.otpSent",
+        "source_string": "One Time PassCode sent, please check your email \n if not, please find it in spam box",
+        "translation": "One Time PassCode sent, please check your email \n if not, please find it in spam box",
+        "context": "app -> auth -> info -> otpSent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.pnLen",
+        "source_string": "phone number invalid",
+        "translation": "phone number invalid",
+        "context": "app -> auth -> errors -> pnLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.verifyCodeLen",
+        "source_string": "verify code invalid",
+        "translation": "verify code invalid",
+        "context": "app -> auth -> errors -> verifyCodeLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.auth.errors.codeLen",
+        "source_string": "code length should be 6",
+        "translation": "code length should be 6",
+        "context": "app -> auth -> errors -> codeLen",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.logged",
+        "source_string": "Cool, you have an account ~",
+        "translation": "Cool, you have an account ~",
+        "context": "app -> authCallback -> logged",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.prevAccountTip",
+        "source_string": "Did you had an account before ?",
+        "translation": "Did you had an account before ?",
+        "context": "app -> authCallback -> prevAccountTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.createAccountDirectly",
+        "source_string": "No Account, Just need to create a new one.",
+        "translation": "No Account, Just need to create a new one.",
+        "context": "app -> authCallback -> createAccountDirectly",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.authCallback.toBind",
+        "source_string": "Yes, I need bind previous account",
+        "translation": "Yes, I need bind previous account",
+        "context": "app -> authCallback -> toBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.reading",
+        "source_string": "The Reading Book",
+        "translation": "The Reading Book",
+        "context": "app -> home -> reading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.title",
+        "source_string": "My books",
+        "translation": "My books",
+        "context": "app -> home -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.unchecked",
+        "source_string": "Not matched books",
+        "translation": "Not matched books",
+        "context": "app -> home -> unchecked",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.notfound",
+        "source_string": "What! No clippings for now?",
+        "translation": "What! No clippings for now?",
+        "context": "app -> home -> notfound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.home.uploadTip",
+        "source_string": "click me and upload",
+        "translation": "click me and upload",
+        "context": "app -> home -> uploadTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.update",
+        "source_string": "Change book info",
+        "translation": "Change book info",
+        "context": "app -> clipping -> update",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updatePlaceholder",
+        "source_string": "Search any book you need",
+        "translation": "Search any book you need",
+        "context": "app -> clipping -> updatePlaceholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updateCandidatesCount",
+        "source_string": "candidate count: {{ count }}",
+        "translation": "candidate count: {{ count }}",
+        "context": "app -> clipping -> updateCandidatesCount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.updateSelectedTip",
+        "source_string": "selected new book is: {{ title }}",
+        "translation": "selected new book is: {{ title }}",
+        "context": "app -> clipping -> updateSelectedTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.shares",
+        "source_string": "Share",
+        "translation": "Share",
+        "context": "app -> clipping -> shares",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.link",
+        "source_string": "Douban link",
+        "translation": "Douban link",
+        "context": "app -> clipping -> link",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.at",
+        "source_string": "Excerpted on",
+        "translation": "Excerpted on",
+        "context": "app -> clipping -> at",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.preview",
+        "source_string": "Preview",
+        "translation": "Preview",
+        "context": "app -> clipping -> preview",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.save",
+        "source_string": "Save",
+        "translation": "Save",
+        "context": "app -> clipping -> save",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.visible",
+        "source_string": "Visible(public to others ?)",
+        "translation": "Visible(public to others ?)",
+        "context": "app -> clipping -> visible",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.aiSummary",
+        "source_string": "AI Explain",
+        "translation": "AI Explain",
+        "context": "app -> clipping -> aiSummary",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.share.excerptAt",
+        "source_string": "excerpt at {{ date }}",
+        "translation": "excerpt at {{ date }}",
+        "context": "app -> clipping -> share -> excerptAt",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.share.noBook",
+        "source_string": "no book available",
+        "translation": "no book available",
+        "context": "app -> clipping -> share -> noBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.sidebar.prev",
+        "source_string": "previous clipping",
+        "translation": "previous clipping",
+        "context": "app -> clipping -> sidebar -> prev",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.sidebar.next",
+        "source_string": "next clipping",
+        "translation": "next clipping",
+        "context": "app -> clipping -> sidebar -> next",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.removeSuccess",
+        "source_string": "Removed",
+        "translation": "Removed",
+        "context": "app -> clipping -> reactions -> removeSuccess",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.addSuccess",
+        "source_string": "Added",
+        "translation": "Added",
+        "context": "app -> clipping -> reactions -> addSuccess",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.reactions.actionRejected",
+        "source_string": "Action rejected, please try again later",
+        "translation": "Action rejected, please try again later",
+        "context": "app -> clipping -> reactions -> actionRejected",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.title",
+        "source_string": "Comments",
+        "translation": "Comments",
+        "context": "app -> clipping -> comments -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.count",
+        "source_string": "count, 40 words at least. Don't let your tongue before your thinking.",
+        "translation": "count, 40 words at least. Don't let your tongue before your thinking.",
+        "context": "app -> clipping -> comments -> count",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.submit",
+        "source_string": "Submit",
+        "translation": "Submit",
+        "context": "app -> clipping -> comments -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.placeholder",
+        "source_string": "What do you think this clipping? You can write down and communicate with others.",
+        "translation": "What do you think this clipping? You can write down and communicate with others.",
+        "context": "app -> clipping -> comments -> placeholder",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.tip.tooShort",
+        "source_string": "Too short, need more thinking.",
+        "translation": "Too short, need more thinking.",
+        "context": "app -> clipping -> comments -> tip -> tooShort",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.clipping.comments.tip.success",
+        "source_string": "Yes, shared your's feeling",
+        "translation": "Yes, shared your's feeling",
+        "context": "app -> clipping -> comments -> tip -> success",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.square.title",
+        "source_string": "Square",
+        "translation": "Square",
+        "context": "app -> square -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tip",
+        "source_string": "Drop My Clippings.txt to here",
+        "translation": "Drop My Clippings.txt to here",
+        "context": "app -> upload -> tip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.dropHere",
+        "source_string": "Release the mouse",
+        "translation": "Release the mouse",
+        "context": "app -> upload -> dropHere",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.help.title",
+        "source_string": "What is the `My Clippings.txt`",
+        "translation": "What is the `My Clippings.txt`",
+        "context": "app -> upload -> help -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.help.content",
+        "source_string": "connect kindle to the computer by usb, and find a folder named as `documents`, <br /> double click and enter into the folder,<br /> then find the file `My Clippings.txt` <br /> video and images should be here",
+        "translation": "connect kindle to the computer by usb, and find a folder named as `documents`, <br /> double click and enter into the folder,<br /> then find the file `My Clippings.txt` <br /> video and images should be here",
+        "context": "app -> upload -> help -> content",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.private.on",
+        "source_string": "Clippings you upload will be public(can be seen by others)",
+        "translation": "Clippings you upload will be public(can be seen by others)",
+        "context": "app -> upload -> private -> on",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.private.off",
+        "source_string": "Clippings you upload will be private(only you can see)",
+        "translation": "Clippings you upload will be private(only you can see)",
+        "context": "app -> upload -> private -> off",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.fileTitle",
+        "source_string": "Oops",
+        "translation": "Oops",
+        "context": "app -> upload -> errors -> fileTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.fileNotFound",
+        "source_string": "Please putting `My Clippings.txt` from Kindle",
+        "translation": "Please putting `My Clippings.txt` from Kindle",
+        "context": "app -> upload -> errors -> fileNotFound",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.unknown",
+        "source_string": "Unknown errors. please contact annatarhe@gmail.com",
+        "translation": "Unknown errors. please contact annatarhe@gmail.com",
+        "context": "app -> upload -> errors -> unknown",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.errors.parse",
+        "source_string": "parse clippings error. you need to upload manually",
+        "translation": "parse clippings error. you need to upload manually",
+        "context": "app -> upload -> errors -> parse",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.done",
+        "source_string": "All data up to date",
+        "translation": "All data up to date",
+        "context": "app -> upload -> tips -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.extracting",
+        "source_string": "Extracting",
+        "translation": "Extracting",
+        "context": "app -> upload -> tips -> extracting",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.extractingText",
+        "source_string": "Extracting, please wait...",
+        "translation": "Extracting, please wait...",
+        "context": "app -> upload -> tips -> extractingText",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.parsedInfoTitle",
+        "source_string": "parse successed. it will sync to server when you login next time",
+        "translation": "parse successed. it will sync to server when you login next time",
+        "context": "app -> upload -> tips -> parsedInfoTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.parsedInfoContent",
+        "source_string": "parse success. it will sync to server when you login next time",
+        "translation": "parse success. it will sync to server when you login next time",
+        "context": "app -> upload -> tips -> parsedInfoContent",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.tips.backUpload",
+        "source_string": "background uploading...",
+        "translation": "background uploading...",
+        "context": "app -> upload -> tips -> backUpload",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.yesText",
+        "source_string": "Congratulations, checkout clippings here",
+        "translation": "Congratulations, checkout clippings here",
+        "context": "app -> upload -> yesText",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.none",
+        "source_string": "None",
+        "translation": "None",
+        "context": "app -> upload -> progress -> none",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.parsing",
+        "source_string": "Parsing File",
+        "translation": "Parsing File",
+        "context": "app -> upload -> progress -> parsing",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.searchingBook",
+        "source_string": "Searching Book Data",
+        "translation": "Searching Book Data",
+        "context": "app -> upload -> progress -> searchingBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.uploading",
+        "source_string": "Syncing",
+        "translation": "Syncing",
+        "context": "app -> upload -> progress -> uploading",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.done",
+        "source_string": "Done",
+        "translation": "Done",
+        "context": "app -> upload -> progress -> done",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.error",
+        "source_string": "Error",
+        "translation": "Error",
+        "context": "app -> upload -> progress -> error",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.upload.progress.message.open",
+        "source_string": "Please do not close this window in uploading",
+        "translation": "Please do not close this window in uploading",
+        "context": "app -> upload -> progress -> message -> open",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.collected",
+        "source_string": "collected {{ count }} item",
+        "translation": "collected {{ count }} item",
+        "context": "app -> profile -> collected",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.collected_plural",
+        "source_string": "collected {{ count }} items",
+        "translation": "collected {{ count }} items",
+        "context": "app -> profile -> collected_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.records",
+        "source_string": "{{ count }} item",
+        "translation": "{{ count }} item",
+        "context": "app -> profile -> records",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.records_plural",
+        "source_string": "{{ count }} items",
+        "translation": "{{ count }} items",
+        "context": "app -> profile -> records_plural",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.rssTip",
+        "source_string": "copy the RSS link to your RSS reader",
+        "translation": "copy the RSS link to your RSS reader",
+        "context": "app -> profile -> rssTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.yearlyReportTip",
+        "source_string": "yearly report",
+        "translation": "yearly report",
+        "context": "app -> profile -> yearlyReportTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.recents",
+        "source_string": "Recents",
+        "translation": "Recents",
+        "context": "app -> profile -> recents",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.wechatBind",
+        "source_string": "Wechat binding",
+        "translation": "Wechat binding",
+        "context": "app -> profile -> wechatBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.wechatBindTip",
+        "source_string": "binging wechat mini program",
+        "translation": "binging wechat mini program",
+        "context": "app -> profile -> wechatBindTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.phoneBind",
+        "source_string": "bind a phone",
+        "translation": "bind a phone",
+        "context": "app -> profile -> phoneBind",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.phoneBinded",
+        "source_string": "success!",
+        "translation": "success!",
+        "context": "app -> profile -> phoneBinded",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.externalAccountList",
+        "source_string": "External account list",
+        "translation": "External account list",
+        "context": "app -> profile -> externalAccountList",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.fans.follow",
+        "source_string": "Follow",
+        "translation": "Follow",
+        "context": "app -> profile -> fans -> follow",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.fans.unfollow",
+        "source_string": "Unfollow",
+        "translation": "Unfollow",
+        "context": "app -> profile -> fans -> unfollow",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.title",
+        "source_string": "Update my profile",
+        "translation": "Update my profile",
+        "context": "app -> profile -> editor -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.updated",
+        "source_string": "Updated",
+        "translation": "Updated",
+        "context": "app -> profile -> editor -> updated",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.max4line",
+        "source_string": "Only supports up to 4 lines of text",
+        "translation": "Only supports up to 4 lines of text",
+        "context": "app -> profile -> editor -> max4line",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.editor.invalid",
+        "source_string": "Invalid input",
+        "translation": "Invalid input",
+        "context": "app -> profile -> editor -> invalid",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.profile.report.yearlyTitle",
+        "source_string": "Yearly report",
+        "translation": "Yearly report",
+        "context": "app -> profile -> report -> yearlyTitle",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.title",
+        "source_string": "Global Settings(for web)",
+        "translation": "Global Settings(for web)",
+        "context": "app -> settings -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.theme",
+        "source_string": "Theme",
+        "translation": "Theme",
+        "context": "app -> settings -> theme",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.title",
+        "source_string": "Web Hook",
+        "translation": "Web Hook",
+        "context": "app -> settings -> webhook -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.submit",
+        "source_string": "Submit",
+        "translation": "Submit",
+        "context": "app -> settings -> webhook -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.webhook.docLink",
+        "source_string": "documentation",
+        "translation": "documentation",
+        "context": "app -> settings -> webhook -> docLink",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.title",
+        "source_string": "Orders",
+        "translation": "Orders",
+        "context": "app -> settings -> orders -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.orderId",
+        "source_string": "Order ID",
+        "translation": "Order ID",
+        "context": "app -> settings -> orders -> orderId",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.amount",
+        "source_string": "Amount",
+        "translation": "Amount",
+        "context": "app -> settings -> orders -> amount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.orders.currency",
+        "source_string": "Currency",
+        "translation": "Currency",
+        "context": "app -> settings -> orders -> currency",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.title",
+        "source_string": "Export",
+        "translation": "Export",
+        "context": "app -> settings -> export -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.success",
+        "source_string": "exported",
+        "translation": "exported",
+        "context": "app -> settings -> export -> success",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.flomo.title",
+        "source_string": "Flomo",
+        "translation": "Flomo",
+        "context": "app -> settings -> export -> flomo -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.flomo.submit",
+        "source_string": "export to flomo",
+        "translation": "export to flomo",
+        "context": "app -> settings -> export -> flomo -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.notion.title",
+        "source_string": "Notion",
+        "translation": "Notion",
+        "context": "app -> settings -> export -> notion -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.export.notion.submit",
+        "source_string": "export to notion",
+        "translation": "export to notion",
+        "context": "app -> settings -> export -> notion -> submit",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.domain.title",
+        "source_string": "Domain name",
+        "translation": "Domain name",
+        "context": "app -> settings -> domain -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccount",
+        "source_string": "Delete Account",
+        "translation": "Delete Account",
+        "context": "app -> settings -> danger -> removeAccount",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeButton",
+        "source_string": "Delete My Account",
+        "translation": "Delete My Account",
+        "context": "app -> settings -> danger -> removeButton",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccountDone",
+        "source_string": "Account Deleted",
+        "translation": "Account Deleted",
+        "context": "app -> settings -> danger -> removeAccountDone",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.settings.danger.removeAccountDoneTip",
+        "source_string": "Do not login again in 24 hours, and your account will be delete permently",
+        "translation": "Do not login again in 24 hours, and your account will be delete permently",
+        "context": "app -> settings -> danger -> removeAccountDoneTip",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.title",
+        "source_string": "Open",
+        "translation": "Open",
+        "context": "app -> index -> features -> open -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f1",
+        "source_string": "Export To Notion",
+        "translation": "Export To Notion",
+        "context": "app -> index -> features -> open -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f2",
+        "source_string": "Export To Flomo",
+        "translation": "Export To Flomo",
+        "context": "app -> index -> features -> open -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f2Desc",
+        "source_string": "copy your flomo endpoint in setting page",
+        "translation": "copy your flomo endpoint in setting page",
+        "context": "app -> index -> features -> open -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f3",
+        "source_string": "Web Hook",
+        "translation": "Web Hook",
+        "context": "app -> index -> features -> open -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f4",
+        "source_string": "Web Widget",
+        "translation": "Web Widget",
+        "context": "app -> index -> features -> open -> f4",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.open.f4Desc",
+        "source_string": "click `copy embed html` in detail page",
+        "translation": "click `copy embed html` in detail page",
+        "context": "app -> index -> features -> open -> f4Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.title",
+        "source_string": "Modern",
+        "translation": "Modern",
+        "context": "app -> index -> features -> modern -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f1",
+        "source_string": "Arch",
+        "translation": "Arch",
+        "context": "app -> index -> features -> modern -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f1Desc",
+        "source_string": "The Modern software architecture used in this app",
+        "translation": "The Modern software architecture used in this app",
+        "context": "app -> index -> features -> modern -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f2",
+        "source_string": "Code",
+        "translation": "Code",
+        "context": "app -> index -> features -> modern -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f2Desc",
+        "source_string": "Testable, maintainable stable code",
+        "translation": "Testable, maintainable stable code",
+        "context": "app -> index -> features -> modern -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f3",
+        "source_string": "Mindset",
+        "translation": "Mindset",
+        "context": "app -> index -> features -> modern -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.modern.f3Desc",
+        "source_string": "The most important - we have real readers mindset",
+        "translation": "The most important - we have real readers mindset",
+        "context": "app -> index -> features -> modern -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.title",
+        "source_string": "Sense",
+        "translation": "Sense",
+        "context": "app -> index -> features -> sense -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f1",
+        "source_string": "iOS Widget",
+        "translation": "iOS Widget",
+        "context": "app -> index -> features -> sense -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f1Desc",
+        "source_string": "we offer iOS widget to display your clippings in home screen",
+        "translation": "we offer iOS widget to display your clippings in home screen",
+        "context": "app -> index -> features -> sense -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f2",
+        "source_string": "Privacy",
+        "translation": "Privacy",
+        "context": "app -> index -> features -> sense -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f2Desc",
+        "source_string": "we really care about your privacy. So you have option to hide some clippings you highlighted",
+        "translation": "we really care about your privacy. So you have option to hide some clippings you highlighted",
+        "context": "app -> index -> features -> sense -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f3",
+        "source_string": "Comminicate",
+        "translation": "Comminicate",
+        "context": "app -> index -> features -> sense -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.sense.f3Desc",
+        "source_string": "You can leave some deep comments here and comminicate with each other",
+        "translation": "You can leave some deep comments here and comminicate with each other",
+        "context": "app -> index -> features -> sense -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.title",
+        "source_string": "Make Reading Greate Aagain",
+        "translation": "Make Reading Greate Aagain",
+        "context": "app -> index -> features -> reading4 -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f1",
+        "source_string": "Multip Platform",
+        "translation": "Multip Platform",
+        "context": "app -> index -> features -> reading4 -> f1",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f1Desc",
+        "source_string": "iOS, wechat mini program",
+        "translation": "iOS, wechat mini program",
+        "context": "app -> index -> features -> reading4 -> f1Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f2",
+        "source_string": "Closer to readers",
+        "translation": "Closer to readers",
+        "context": "app -> index -> features -> reading4 -> f2",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f2Desc",
+        "source_string": "other readers can reach your steps",
+        "translation": "other readers can reach your steps",
+        "context": "app -> index -> features -> reading4 -> f2Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f3",
+        "source_string": "Command Line Interface",
+        "translation": "Command Line Interface",
+        "context": "app -> index -> features -> reading4 -> f3",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f3Desc",
+        "source_string": "we provided cli to parse file in termainal",
+        "translation": "we provided cli to parse file in termainal",
+        "context": "app -> index -> features -> reading4 -> f3Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f4",
+        "source_string": "Free",
+        "translation": "Free",
+        "context": "app -> index -> features -> reading4 -> f4",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.index.features.reading4.f4Desc",
+        "source_string": "maybe the last Free land can share your readings",
+        "translation": "maybe the last Free land can share your readings",
+        "context": "app -> index -> features -> reading4 -> f4Desc",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.report.clippingCountOnBook",
+        "source_string": "Quoted {{count}} clippings",
+        "translation": "Quoted {{count}} clippings",
+        "context": "app -> report -> clippingCountOnBook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.name",
+        "source_string": "Free Plan",
+        "translation": "Free Plan",
+        "context": "app -> plan -> free -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.description",
+        "source_string": "Good for everyone",
+        "translation": "Good for everyone",
+        "context": "app -> plan -> free -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.goto",
+        "source_string": "Login",
+        "translation": "Login",
+        "context": "app -> plan -> free -> goto",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.storage",
+        "source_string": "✅ Up to 2000 clippings",
+        "translation": "✅ Up to 2000 clippings",
+        "context": "app -> plan -> free -> features -> storage",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.ai",
+        "source_string": "✅ First 10 AI calls free",
+        "translation": "✅ First 10 AI calls free",
+        "context": "app -> plan -> free -> features -> ai",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.ios",
+        "source_string": "✅ Access to iOS widget",
+        "translation": "✅ Access to iOS widget",
+        "context": "app -> plan -> free -> features -> ios",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.free.features.support",
+        "source_string": "✅ Email support",
+        "translation": "✅ Email support",
+        "context": "app -> plan -> free -> features -> support",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.name",
+        "source_string": "Premium Plan",
+        "translation": "Premium Plan",
+        "context": "app -> plan -> premium -> name",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.description",
+        "source_string": "Aim for highest",
+        "translation": "Aim for highest",
+        "context": "app -> plan -> premium -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.goto",
+        "source_string": "Go Premium",
+        "translation": "Go Premium",
+        "context": "app -> plan -> premium -> goto",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.webhook",
+        "source_string": "✅ Support webhook",
+        "translation": "✅ Support webhook",
+        "context": "app -> plan -> premium -> features -> dev -> webhook",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.ci.title",
+        "source_string": "Continuous Integration",
+        "translation": "Continuous Integration",
+        "context": "app -> plan -> premium -> features -> dev -> ci -> title",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.dev.ci.description",
+        "source_string": "✅ For developers, our advanced integrations, including Github Action, simplify the clipping collection process.",
+        "translation": "✅ For developers, our advanced integrations, including Github Action, simplify the clipping collection process.",
+        "context": "app -> plan -> premium -> features -> dev -> ci -> description",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.storage",
+        "source_string": "✅ Unlimited clippings uploads",
+        "translation": "✅ Unlimited clippings uploads",
+        "context": "app -> plan -> premium -> features -> storage",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.ai",
+        "source_string": "✅ First 1000 AI calls free every month",
+        "translation": "✅ First 1000 AI calls free every month",
+        "context": "app -> plan -> premium -> features -> ai",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.ios",
+        "source_string": "✅ Access to iOS widget",
+        "translation": "✅ Access to iOS widget",
+        "context": "app -> plan -> premium -> features -> ios",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.rss",
+        "source_string": "✅ RSS access",
+        "translation": "✅ RSS access",
+        "context": "app -> plan -> premium -> features -> rss",
+        "labels": "en.json",
+        "max_length": null
+    },
+    {
+        "identifier": "app.plan.premium.features.support",
+        "source_string": "✅ Email support",
+        "translation": "✅ Email support",
+        "context": "app -> plan -> premium -> features -> support",
+        "labels": "en.json",
+        "max_length": null
+    }
+]
