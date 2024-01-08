@@ -1,2 +1,6 @@
 bundles:
   - 4
+
+files:
+  - source: /src/locales/en.json
+    target: /src/locale/%two_letters_code%.json
