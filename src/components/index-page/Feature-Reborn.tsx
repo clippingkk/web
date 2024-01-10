@@ -9,13 +9,16 @@ import { useTranslation } from 'react-i18next'
 import { Tooltip } from '@mantine/core'
 import Link from 'next/link'
 import { useGoAuthLink } from '../../hooks/hooks'
+import { ProfileQuery } from '../../schema/generated'
 
 type FeatureRebornProps = {
+  me?: ProfileQuery['me']
 }
 
 function FeatureReborn(props: FeatureRebornProps) {
+  const { me } = props
   const { t } = useTranslation()
-  const goLinkUrl = useGoAuthLink()
+  const goLinkUrl = useGoAuthLink(me)
   return (
     <div className='flex items-center mt-24 lg:mt-72 w-full justify-around py-16 flex-col'>
       <h3 className={'lg:text-7xl text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-gray-800 to-pink-300 font-extrabold bg-clip-text text-transparent bg-gradient-to-br'}>

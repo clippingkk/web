@@ -10,7 +10,7 @@ import { updateToken } from "../services/ajax"
 import { USER_TOKEN_KEY } from "../constants/storage"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
-import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from "../schema/generated"
+import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, ProfileQuery, SignupMutation } from "../schema/generated"
 import { TGlobalStore } from "../store"
 
 export function useAuthBy3rdPartSuccessed(
@@ -255,9 +255,7 @@ export function useSignupSuccess(result: MutationResult<SignupMutation>) {
   }, [result])
 }
 
-export function useGoAuthLink() {
-  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-
+export function useGoAuthLink(profile?: ProfileQuery['me']) {
   const goLinkUrl = useMemo(() => {
     if (profile && profile.id > 0) {
       return `/dash/${profile.domain.length > 1 ? profile.domain : profile.id}/home`
