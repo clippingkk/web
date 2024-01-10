@@ -7,7 +7,6 @@ import FeatureWidget from './Feature-Widget'
 import FeatureModern from './Feature-Modern'
 import FeatureSense from './Feature-Sense'
 import FeatureReborn from './Feature-Reborn'
-import { ProfileQuery } from '../../schema/generated';
 
 type featureColorPattern = {
   title: string[]
@@ -110,12 +109,7 @@ function FeatureSection(props: FeatureSectionType) {
   )
 }
 
-type FeaturesProps = {
-  me?: ProfileQuery['me']
-}
-
-function Features(props: FeaturesProps) {
-  const { me } = props
+function Features() {
   const { t } = useTranslation()
   return (
     <div className='w-full flex justify-center flex-col p-10'>
@@ -172,7 +166,7 @@ function Features(props: FeaturesProps) {
           desc: t('app.index.features.sense.f3Desc'),
         }]}
       /> */}
-      <FeatureReborn me={me} />
+      <FeatureReborn />
       {/* <FeatureSection
         colorPattern={colorPatterns[0]}
         title={t('app.index.features.reading4.title')}

@@ -8,7 +8,6 @@ import IndexPage from '../components/index-page/index.page'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { useBackgroundImageServer as getBackgroundImageServer } from '../hooks/theme.server'
 import { getApolloServerClient } from '../services/apollo.server'
-import { cookies } from 'next/headers'
 
 export const revalidate = 60 * 60 * 24 * 3 // 3 day
 
@@ -35,15 +34,10 @@ async function Page() {
   })
   const d = dehydrate(rq)
   const bgInfo = getBackgroundImageServer()
-
-  const cs = cookies()
-  const uid = cs.get('uid')?.value
-
   return (
     <div>
       <HydrationBoundary state={d}>
         <IndexPage
-          uid={uid ? parseInt(uid) : undefined}
           bgInfo={bgInfo}
           hydratedStates={d}
           publicData={data.data}

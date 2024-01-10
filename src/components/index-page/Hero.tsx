@@ -9,9 +9,6 @@ import styles from './Hero.module.css'
 import PureImages from '../backgrounds/pure-images';
 import Image from 'next/image';
 import buttonStyles from '../../components/button/lighten.module.css';
-import bgLightsPng from '../../assets/bg-lights.png'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
-import { ProfileQuery } from '../../schema/generated'
 
 function useLoad() {
   const [loaded, setLoaded] = useState(false)
@@ -55,14 +52,15 @@ type HeroProps = {
     src: string;
     blurHash: string;
   }
-  me?: ProfileQuery['me']
 }
 
+import bgLightsPng from '../../assets/bg-lights.png'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+
 function Hero(props: HeroProps) {
-  const { me } = props
-  // const { bgInfo: bg } = props
   const { t } = useTranslation()
-  const goLinkUrl = useGoAuthLink(me)
+  // const { bgInfo: bg } = props
+  const goLinkUrl = useGoAuthLink()
 
   return (
     <div
@@ -103,8 +101,8 @@ function Hero(props: HeroProps) {
               )}
             </div>
             <Button
-              variant='transparent'
-              component='a'
+            variant='transparent'
+             component='a'
               rightSection={<ArrowTopRightOnSquareIcon className='w-4 h-4' />}
               href='https://www.bilibili.com/video/BV1Nb41187Lo'
               target='_blank'
