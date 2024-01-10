@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.8.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.3...v5.8.4) (2024-01-10)
+
+
+### Features
+
+* **settings:** update settings page style ([e29dcc0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e29dcc00c855c90123af477735a1e46719236c46))
+
+
+### Bug Fixes
+
+* **crowdin:** remove crowdin ([4bbc960](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4bbc960dae0a78f72cb8785253310277d1c6b56d))
+* **crowdin:** update crowdin config ([6af10a9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6af10a9d74d56b73d8257fcaaf71af91f3dca004))
+
 ### [5.8.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.2...v5.8.3) (2024-01-07)
 
 
