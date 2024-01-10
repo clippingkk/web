@@ -1,3 +1,4 @@
+'use client'
 import { Divider, Group } from '@mantine/core'
 import React from 'react'
 import ExportToFlomo from './export.flomo'

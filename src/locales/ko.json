@@ -232,6 +232,7 @@
       "danger": {
         "removeAccount": "Delete Account",
         "removeButton": "Delete My Account",
+        "removeAccountTip1": "계정을 삭제하면 모든 데이터가 삭제되어 복구할 수 없습니다. 삭제하려는 것인지 확인하시기 바랍니다. \n불만 사항이 있는 경우 annatar.he+ck@gmail.com으로 이메일을 보내 문제를 해결할 수 있습니다. \n계정 삭제를 실제로 확인하려면 아래 확인 버튼을 클릭하세요. 귀하의 계정은 영구적으로 유지됩니다. 24시간 이내에 삭제됨",
         "removeAccountDone": "Account Deleted",
         "removeAccountDoneTip": "Do not login again in 24 hours, and your account will be delete permently"
       }

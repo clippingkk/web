@@ -232,6 +232,7 @@
       "danger": {
         "removeAccount": "Delete Account",
         "removeButton": "Delete My Account",
+        "removeAccountTip1": "Deleting the account will erase all data and cannot be recovered. Please make sure you really want to delete it. \nIf you have any dissatisfaction, you can send an email to annatar.he+ck@gmail.com to try to solve it. \nTo really confirm the deletion of your account, please click the confirmation button below. Your account will be permanently deleted within 24 hours",
         "removeAccountDone": "Account Deleted",
         "removeAccountDoneTip": "Do not login again in 24 hours, and your account will be delete permently"
       }

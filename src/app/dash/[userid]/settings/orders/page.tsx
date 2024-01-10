@@ -1,16 +1,17 @@
+'use client'
 import React, { useMemo } from 'react'
 import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useSelector } from 'react-redux'
-import { Order, OrderCategory, SubscriptionStatus, useFetchOrdersQuery } from '../../../../schema/generated'
-import { TGlobalStore } from '../../../../store'
+import { Order, OrderCategory, SubscriptionStatus, useFetchOrdersQuery } from '../../../../../schema/generated'
+import { TGlobalStore } from '../../../../../store'
 import { Badge, Button, Chip, Table } from '@mantine/core'
 import { useMutation } from '@tanstack/react-query'
-import { cancelPaymentSubscription } from '../../../../services/payment'
+import { cancelPaymentSubscription } from '../../../../../services/payment'
 import { toast } from 'react-hot-toast'
-import { toastPromiseDefaultOption } from '../../../../services/misc'
+import { toastPromiseDefaultOption } from '../../../../../services/misc'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { UserContent } from '../../../../store/user/type'
+import { UserContent } from '../../../../../store/user/type'
 
 type SubscriptionOrderListProps = {
   orders: Order[]
@@ -40,29 +41,29 @@ function SubscriptionOrderList(props: SubscriptionOrderListProps) {
   })
 
   return (
-    <Table className=' dark:text-gray-100'>
-      <thead>
+    <Table className='dark:text-gray-100'>
+      <Table.Thead>
         {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id}>
+          <Table.Tr key={headerGroup.id}>
             {headerGroup.headers.map(header => (
-              <th key={header.id}>
+              <Table.Th key={header.id}>
                 {flexRender(header.column.columnDef.header, header.getContext())}
-              </th>
+              </Table.Th>
             ))}
-          </tr>
+          </Table.Tr>
         ))}
-      </thead>
-      <tbody>
+      </Table.Thead>
+      <Table.Tbody>
         {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
+          <Table.Tr key={row.id}>
             {row.getVisibleCells().map(cell => (
-              <td key={cell.id}>
+              <Table.Td key={cell.id}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
+              </Table.Td>
             ))}
-          </tr>
+          </Table.Tr>
         ))}
-      </tbody>
+      </Table.Tbody>
     </Table>
   )
 
@@ -97,6 +98,7 @@ function OrdersTable(props: OrdersTableProps) {
         <div className='flex justify-center'>
           <Button
             component={Link}
+            size='sm'
             href='/pricing'
             variant='gradient'
             gradient={{ from: 'indigo', to: 'cyan', deg: 105 }}

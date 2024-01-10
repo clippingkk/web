@@ -1,18 +1,18 @@
-/* eslint-disable react/jsx-key */
+'use client'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { TGlobalStore } from '../../../../store'
-import Dialog from '../../../../components/dialog/dialog'
-import FieldInput from '../../../../components/input'
+import { TGlobalStore } from '../../../../../store'
+import Dialog from '../../../../../components/dialog/dialog'
+import FieldInput from '../../../../../components/input'
 import { useFormik } from 'formik'
 import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import { Button, Table, Tooltip } from '@mantine/core'
-import { FetchMyWebHooksQuery, useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, useProfileQuery, WebHookItem, WebHookStep } from '../../../../schema/generated'
-import { useIsPremium } from '../../../../hooks/profile'
-import WebhookTable from './components/webhook-table'
+import { FetchMyWebHooksQuery, useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, useProfileQuery, WebHookItem, WebHookStep } from '../../../../../schema/generated'
+import { useIsPremium } from '../../../../../hooks/profile'
+import WebhookTable from '../components/webhook-table'
 
 const webhookColumns: ColumnDef<FetchMyWebHooksQuery['me']['webhooks'][0]>[] = [{
   header: 'id',
@@ -91,6 +91,14 @@ function WebHooks() {
 
   return (
     <div className='w-full text-center'>
+      <a
+        href="https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae"
+        target='_blank'
+        referrerPolicy='no-referrer'
+        className='text-gray-800 dark:text-gray-200 text-sm hover:underline' rel="noreferrer"
+      >
+        {t('app.settings.webhook.docLink')}
+      </a>
       <div className=' mx-4 lg:mx-20'>
         <WebhookTable
           table={table}
@@ -103,7 +111,14 @@ function WebHooks() {
           }}
         />
       </div>
-      <Tooltip label={!isPremium ? t('app.payment.webhookRequired') : null}>
+      <Tooltip
+        withArrow
+        transitionProps={{
+          transition: 'pop',
+          duration: 300
+        }}
+        disabled={isPremium}
+        label={!isPremium ? t('app.payment.webhookRequired') : null}>
         <Button
           variant="gradient"
           className='bg-gradient-to-br from-indigo-400 to-cyan-500'
@@ -134,7 +149,15 @@ function WebHooks() {
               <div
                 className='w-full text-right'
               >
-                <Tooltip label={!isPremium ? t('app.payment.webhookRequired') : null}>
+                <Tooltip
+                  withArrow
+                  transitionProps={{
+                    transition: 'pop',
+                    duration: 300
+                  }}
+                  disabled={isPremium}
+                  label={!isPremium ? t('app.payment.webhookRequired') : null}
+                >
                   <Button
                     variant="gradient"
                     className='bg-gradient-to-br from-indigo-400 to-cyan-500'

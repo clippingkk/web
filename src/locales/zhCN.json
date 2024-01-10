@@ -232,6 +232,7 @@
       "danger": {
         "removeAccount": "删除账户",
         "removeButton": "删除我的账户",
+        "removeAccountTip1": "删除账户将清空所有数据且无法恢复，请十分确认你是真的想删除。\n如果有什么不满可以发邮件至 annatar.he+ck@gmail.com 来尝试解决. \n真的确认删除账户请点击下方的确认按钮. 您的账户将在 24 小时内永久删除",
         "removeAccountDone": "账户已删除",
         "removeAccountDoneTip": "24 小时内不再登陆，则账户数据会被永久删除"
       }

@@ -63,7 +63,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
           label={<span>{t('app.menu.settings')}</span>}
         >
           <Link
-            href={`/dash/${uidOrDomain}/settings`}
+            href={`/dash/${uidOrDomain}/settings/web`}
             className='text-3xl lg:text-4xl'
             title={t('app.menu.settings') ?? 'setting'}>
           </Link>
@@ -110,7 +110,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
               </Button>
               <Button
                 component={Link}
-                href={`/dash/${uidOrDomain}/settings`}
+                href={`/dash/${uidOrDomain}/settings/web`}
                 leftSection={<CogIcon className='w-6 h-6' />}
                 fullWidth
               >
