@@ -1,10 +1,14 @@
 import React from 'react'
 import HomePageContent from './content'
 import { generateMetadata as profileGenerateMetadata } from '../../../../components/og/og-with-user-profile'
-import { Metadata } from 'next'
+import next, { Metadata } from 'next'
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '../../../../schema/generated'
 import { getApolloServerClient } from '../../../../services/apollo.server'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { getReactQueryClient } from '../../../../services/ajax'
+import { WenquSearchResponse, wenquRequest } from '../../../../services/wenqu'
+import { duration3Days } from '../../../../hooks/book'
 
 type PageProps = {
   params: { userid: string }
@@ -27,13 +31,44 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   })
 }
 
+// the home page only available for myself
 async function Page(props: PageProps) {
   const { userid } = props.params
   const cs = cookies()
   const myUid = cs.get('uid')?.value
 
+  if (!myUid) {
+    return redirect(`/dash/${userid}/profile`)
+  }
+
+  const myUidInt = myUid ? parseInt(myUid) : undefined
+
+  const apolloClient = getApolloServerClient()
+  const profileResponse = await apolloClient.query<ProfileQuery, ProfileQueryVariables>({
+    query: ProfileDocument,
+    fetchPolicy: 'network-only',
+    variables: {
+      id: myUidInt
+    },
+    context: {
+      headers: {
+        'Authorization': 'Bearer ' + cs.get('token')
+      }
+    }
+  })
+
+  if (profileResponse.data.me.recents.length > 0) {
+    const firstBook = profileResponse.data.me.recents[0].bookID
+    await getReactQueryClient().prefetchQuery({
+      queryKey: ['wenqu', 'books', firstBook],
+      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?uid=${firstBook}`),
+      staleTime: duration3Days,
+      gcTime: duration3Days,
+    })
+  }
+
   return (
-    <HomePageContent userid={userid} myUid={myUid ? parseInt(myUid) : undefined} />
+    <HomePageContent userid={userid} myUid={myUidInt} />
   )
 }
 

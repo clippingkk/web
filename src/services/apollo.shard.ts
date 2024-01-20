@@ -1,5 +1,6 @@
 import { HttpLink, InMemoryCacheConfig } from '@apollo/client'
 import { API_HOST } from '../constants/config';
+import { uniqBy } from 'lodash';
 
 function apolloFetcher(url: string, options: RequestInit = {}) {
   if (!options.next) {
@@ -29,9 +30,7 @@ export const apolloCacheConfig: InMemoryCacheConfig = {
       fields: {
         books: {
           keyArgs: ['doubanId'],
-          merge(p = [], n) {
-            return [...p, ...n]
-          }
+          merge: simpleDistArrayMerge
         }
       }
     },
@@ -46,10 +45,6 @@ export const apolloCacheConfig: InMemoryCacheConfig = {
     ClippingListResponse: {
       fields: {
         items: {
-          // merge: (existing = [], incoming) => {
-          //   console.log('on the fk merge', existing, incoming)
-          //   return [...existing, ...incoming]
-          // }
           merge: simpleDistArrayMerge
         }
       }
@@ -62,14 +57,8 @@ export const apolloCacheConfig: InMemoryCacheConfig = {
       }
     }
   }
-
 }
 
 function simpleDistArrayMerge(existings: { __ref: string }[] = [], incoming: { __ref: string }[] = []) {
-  return [...existings, ...incoming].reduce((acc, x) => {
-    if (acc.findIndex((z: any) => z.__ref === x.__ref) === -1) {
-      acc.push(x)
-    }
-    return acc
-  }, [] as any[])
+  return uniqBy([...existings, ...incoming], '__ref')
 }

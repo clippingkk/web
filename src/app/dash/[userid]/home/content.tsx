@@ -12,8 +12,7 @@ import { useSyncClippingsToServer } from '@/hooks/my-file'
 import { useRouter } from 'next/navigation';
 import HomePageSkeleton, { BooksSkeleton } from './skeleton';
 import { BooksDocument, BooksQuery, BooksQueryVariables, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated';
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
-import { useQuery } from '@apollo/client';
+import { useQuery, useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 
 const STEP = 10
 
@@ -44,9 +43,6 @@ type HomePageContentProps = {
 
 function HomePageContent(props: HomePageContentProps) {
   const { userid: userDomain, myUid } = props
-  // const userProfile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-  // const uid = userProfile.id
-
   const isTypeUid = !Number.isNaN(parseInt(userDomain))
   const { data: targetProfileData } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, {
     variables: {
@@ -88,8 +84,6 @@ function HomePageContent(props: HomePageContentProps) {
 
   const { t } = useTranslation()
   const books = useMultipleBook(bls)
-
-  console.log('the books', books, bls)
 
   const recents = data?.me.recents ?? []
 
@@ -137,9 +131,6 @@ function HomePageContent(props: HomePageContentProps) {
           </div>
         }
         loadMoreFn={() => {
-          if (books.loading) {
-            return
-          }
           fetchMore({
             variables: {
               id: uid,
@@ -148,10 +139,9 @@ function HomePageContent(props: HomePageContentProps) {
                 offset: bls.length
               }
             },
-          }).then(res => {
-            if ((res.data?.books.length ?? 0) === 0) {
+          }).then((res) => {
+            if (res.data.books.length < STEP) {
               setReachEnd(true)
-              return
             }
           })
         }}
