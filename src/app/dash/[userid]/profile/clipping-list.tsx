@@ -4,7 +4,7 @@ import { Masonry, useInfiniteLoader } from 'masonic'
 import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
-import { useMultipBook } from '../../../../hooks/book'
+import { useMultipleBook } from '../../../../hooks/book'
 
 type ClippingListProps = {
   uid: number
@@ -56,7 +56,7 @@ function ClippingList(props: ClippingListProps) {
     totalItems: data?.clippingList.count ?? 0
   })
 
-  const books = useMultipBook(data?.clippingList.items.map(x => x.bookID) ?? [])
+  const books = useMultipleBook(data?.clippingList.items.map(x => x.bookID) ?? [])
 
   if (loading && !data) {
     return (

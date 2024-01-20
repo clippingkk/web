@@ -6,7 +6,7 @@ import Features from './Features'
 import TopBooks from './TopBooks'
 import TopClippings from './TopClippings'
 import TopUsers from './TopUsers'
-import { useMultipBook } from '../../hooks/book'
+import { useMultipleBook } from '../../hooks/book'
 import { usePageTrack } from '../../hooks/tracke';
 
 type IndexPageProps = {
@@ -27,7 +27,7 @@ function IndexPage(props: IndexPageProps) {
     map(x => x.doubanId).
     filter(x => x.length > 3) ?? []
 
-  const bs = useMultipBook(dbIds)
+  const bs = useMultipleBook(dbIds)
 
   return (
     <>

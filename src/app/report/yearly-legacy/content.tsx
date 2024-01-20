@@ -7,7 +7,7 @@ import PublicBookItem from '../../../components/public-book-item/public-book-ite
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 import logo from '../../../assets/logo.png'
 import { FetchClippingQueryVariables, FetchYearlyReportDocument, FetchYearlyReportQuery, FetchYearlyReportQueryVariables } from '../../../schema/generated'
-import { useMultipBook } from '../../../hooks/book'
+import { useMultipleBook } from '../../../hooks/book'
 
 type ReportBookItemTypes = {
   book: WenquBook
@@ -49,11 +49,11 @@ type ReportYearlyProps = {
 }
 
 function ReportYearly(props: ReportYearlyProps) {
-  const { year, dbIds, reportInfoServerData: data} = props
+  const { year, dbIds, reportInfoServerData: data } = props
 
   const { t } = useTranslation()
 
-  const bs = useMultipBook(dbIds)
+  const bs = useMultipleBook(dbIds)
   const books = bs.books
 
   const containerStyle = useMemo<React.CSSProperties | undefined>(() => {

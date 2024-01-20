@@ -11,7 +11,7 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import ReportHero from '../../../components/reports/report-hero'
 import { useBackgroundImage } from '../../../hooks/theme'
 import { Clipping, FetchYearlyReportQuery } from '../../../schema/generated'
-import { useMultipBook } from '../../../hooks/book'
+import { useMultipleBook } from '../../../hooks/book'
 
 type PageContainerProps = {
   bgImage?: string | { src: string, blurHash: string }
@@ -30,7 +30,7 @@ function PageContainer(props: PageContainerProps) {
     }
 
     if (typeof bgImg === 'object') {
-      backgroundImage =  `url(${bgImg.src})`;
+      backgroundImage = `url(${bgImg.src})`;
     }
     return {
       backgroundImage
@@ -55,9 +55,9 @@ type ReportYearlyProps = {
 }
 
 function ReportYearly(props: ReportYearlyProps) {
-  const { year, dbIds, reportInfoServerData: data} = props
+  const { year, dbIds, reportInfoServerData: data } = props
 
-  const { books } = useMultipBook(dbIds)
+  const { books } = useMultipleBook(dbIds)
   const { t } = useTranslation()
 
   const [randomQuote, setRandomQuote] = useState<{ book: WenquBook, clipping: Pick<Clipping, 'id' | 'content'> } | null>(null)

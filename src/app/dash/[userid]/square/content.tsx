@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import ClippingItem from '../../../../components/clipping-item/clipping-item'
-import { duration3Days, useMultipBook } from '../../../../hooks/book'
+import { duration3Days, useMultipleBook } from '../../../../hooks/book'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { APP_API_STEP_LIMIT } from '../../../../constants/config'
 import { LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
@@ -37,7 +37,7 @@ function SquarePageContent(props: SquarePageContentProps) {
   const data = localData ?? props.squareData
   // 这里会翻页，所以还是用客户端的书列表
   // ssr 的数据用来做 seo
-  const books = useMultipBook(data?.featuredClippings.map(x => x.bookID) || [])
+  const books = useMultipleBook(data?.featuredClippings.map(x => x.bookID) || [])
 
   const maybeLoadMore = useInfiniteLoader<FetchSquareDataQuery['featuredClippings'][0], LoadMoreItemsCallback<FetchSquareDataQuery['featuredClippings'][0]>>((startIndex, stopIndex, currentItems) => {
     if (sqData.length >= 200) {

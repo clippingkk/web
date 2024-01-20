@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import ListFooter from '@/components/list-footer/list-footer';
 import { useTranslation } from 'react-i18next';
-import { useMultipBook } from '@/hooks/book';
+import { useMultipleBook } from '@/hooks/book';
 import NoContentAlert from './no-content';
 import BookCover from '@/components/book-cover/book-cover';
 import ReadingBook from './reading-book';
@@ -87,7 +87,9 @@ function HomePageContent(props: HomePageContentProps) {
   const bls = data?.books.map(x => x.doubanId) ?? []
 
   const { t } = useTranslation()
-  const books = useMultipBook(bls)
+  const books = useMultipleBook(bls)
+
+  console.log('the books', books, bls)
 
   const recents = data?.me.recents ?? []
 

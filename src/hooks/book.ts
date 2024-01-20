@@ -25,7 +25,7 @@ export function useSingleBook(doubanId?: string, skip?: boolean): WenquBook | nu
   return books[0]
 }
 
-export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestReturn {
+export function useMultipleBook(doubanIds: string[], skip?: boolean): bookRequestReturn {
   const validDoubanIdList = useMemo(() => {
     return doubanIds
       .filter(x => x.length > 3)
@@ -51,11 +51,12 @@ export function useMultipBook(doubanIds: string[], skip?: boolean): bookRequestR
       queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
       enabled: dbIds.length > 0 && !skip,
       staleTime: duration3Days,
+      gcTime: duration3Days,
       cacheTime: duration3Days,
     }))
   })
 
-  const isLoading = useMemo(() => bbs.every(bs => bs.isLoading), [bbs.map(x => x.isLoading)])
+  const isLoading = useMemo(() => bbs.every(bs => bs.isLoading), [bbs])
   // reorder
   const books = useMemo<WenquBook[]>(() => {
     const bsList = bbs
