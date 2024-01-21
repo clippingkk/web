@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.9.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.5...v5.9.0) (2024-01-21)
+
+
+### Features
+
+* **app:** upgrade deps ([d9ac7ca](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d9ac7ca7d327b04f2aa4be327f37bdb4cea212c9))
+
+
+### Bug Fixes
+
+* **home:** fix loading state even not init load in home page ([9277393](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9277393b3c5a1085ca7505cb2e3ba8c8df652090))
+* update node version ([c7b5102](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c7b5102215d99b449b0af0a1db314e7aa3653de2))
+
 ### [5.8.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.4...v5.8.5) (2024-01-11)
 
 ### [5.8.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.3...v5.8.4) (2024-01-10)
