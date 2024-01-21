@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.9.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.0...v5.9.1) (2024-01-21)
+
+
+### Bug Fixes
+
+* **app:** fix ts errors ([9027ec9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9027ec9f5b5d4682f0e136d39cdbbb9cf21e429d))
+
 ## [5.9.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.8.5...v5.9.0) (2024-01-21)
 
 
