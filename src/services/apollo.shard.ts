@@ -2,7 +2,7 @@ import { HttpLink, InMemoryCacheConfig } from '@apollo/client'
 import { API_HOST } from '../constants/config';
 import { uniqBy } from 'lodash';
 
-function apolloFetcher(url: string, options: RequestInit = {}) {
+function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
   if (!options.next) {
     options.next = {
       revalidate: 60 * 60 * 2000
