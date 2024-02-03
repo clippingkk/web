@@ -39,7 +39,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
 
   const isPremium = useIsPremium(profileData.premiumEndAt)
 
-  const avatar = profileData.avatar.startsWith('http') ? profileData.avatar : `${CDN_DEFAULT_DOMAIN}/${profileData.avatar}`
+  const avatar = profileData.avatar?.startsWith('http') ? profileData.avatar : `${CDN_DEFAULT_DOMAIN}/${profileData.avatar}`
 
   return (
     <ul className='flex with-slide-in'>

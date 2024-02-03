@@ -72,6 +72,7 @@ function SquarePageContent(props: SquarePageContentProps) {
   return (
     <section className='flex items-center justify-center flex-col'>
       <h2 className='text-3xl lg:text-5xl text-slate-900 dark:text-slate-100 my-8'>
+
         🪩 {t('app.menu.square')}
       </h2>
       <Divider className='w-full my-4' />
