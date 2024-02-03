@@ -15,6 +15,7 @@ import { reactQueryPersister } from '../services/storage';
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
 import InitProvider from './init.provider';
 import { I18nextProvider } from 'react-i18next';
+import { usePointerUpdate } from '../hooks/pointer';
 
 type ClientOnlyProvidersProps = {
   loggedInfo: {
@@ -30,6 +31,7 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const cache = useGluedEmotionCache();
   const instance = init()
   const rq = createReactQueryClient()
+  usePointerUpdate()
   return (
     <I18nextProvider i18n={instance}>
       <JotaiProvider>

@@ -87,9 +87,11 @@ function HomePageContent(props: HomePageContentProps) {
 
   const recents = data?.me.recents ?? []
 
+  const latestBookId = recents.length > 0 ? recents[0]?.bookID : undefined
+
   return (
     <section className='h-full page'>
-      {recents.length > 0 && (
+      {latestBookId && latestBookId.length > 3 && (
         <div className='mt-8 with-slide-in'>
           <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>
             {t('app.home.reading')}

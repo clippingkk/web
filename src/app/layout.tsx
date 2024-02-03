@@ -4,6 +4,7 @@ import 'react-phone-input-2/lib/style.css'
 // import 'emoji-mart/css/emoji-mart.css'
 import '../styles/react-animation.css'
 import '../styles/global.css'
+import '../styles/effect-glow.css'
 import '../styles/tailwind.css'
 import '../styles/cmdk-raycast.css'
 

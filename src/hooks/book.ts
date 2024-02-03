@@ -1,6 +1,6 @@
 import { WenquBook, WenquSearchResponse, wenquRequest } from "../services/wenqu"
 import { useMemo } from "react"
-import { useQueries, useQuery } from "@tanstack/react-query"
+import { useQueries, useQuery, useSuspenseQuery } from "@tanstack/react-query"
 
 // 3 days
 export const duration3Days = 1000 * 60 * 60 * 24 * 3
@@ -20,6 +20,20 @@ export function useSingleBook(doubanId?: string, skip?: boolean): WenquBook | nu
   })
   const books = bs.data?.books
   if (!books || books.length === 0) {
+    return null
+  }
+  return books[0]
+}
+
+export function useSingleBookSuspense(doubanId?: string): WenquBook | null {
+  const bs = useSuspenseQuery({
+    queryKey: ['wenqu', 'books', 'dbId', doubanId],
+    queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${doubanId}`),
+    staleTime: duration3Days,
+    gcTime: duration3Days,
+  })
+  const books = bs.data.books
+  if (books.length === 0) {
     return null
   }
   return books[0]

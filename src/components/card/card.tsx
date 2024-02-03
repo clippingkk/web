@@ -5,27 +5,22 @@ type cardProps = {
   style?: Object
   onClick?: (e: React.MouseEvent) => void
   children?: React.ReactElement
+  glow?: boolean
 }
 
-class Card extends React.PureComponent<cardProps> {
-  onCardClick = (e: React.MouseEvent) => {
-    if (this.props.onClick) {
-      this.props.onClick(e)
-    }
-  }
-
-  render() {
-    const cls = `m-4 p-4 rounded shadow bg-gray-400 bg-opacity-50 ${this.props.className || ''}`
-    return (
-      <section
-        className={cls}
-        onClick={this.onCardClick}
-        style={this.props.style}
-      >
-        {this.props.children}
-      </section>
-    )
-  }
+function Card(props: cardProps) {
+  const { className = '', style, onClick, glow, children } = props
+  const cls = `m-4 p-4 rounded shadow bg-gray-400 bg-opacity-50 ${className}`
+  return (
+    <section
+      className={cls}
+      onClick={onClick}
+      style={style}
+      data-glow={glow}
+    >
+      {children}
+    </section>
+  )
 }
 
 export default Card

@@ -21,11 +21,7 @@ function InitProvider(props: InitProviderProps) {
       dispatch({ type: AUTH_LOGIN, profile: data.me, token: profile.token })
     },
   })
-  return (
-    <>
-      {props.children}
-    </>
-  )
+  return props.children
 }
 
 export default InitProvider

@@ -66,7 +66,16 @@ function ClippingPageContent(props: ClippingPageProps) {
   return (
     <div className={`${styles.clipping} page anna-fade-in`}>
       <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20 flex-col lg:flex-row with-slide-in'>
-        <Card className={styles['main-card'] + ' text-black p-2 lg:p-10'}>
+        <div
+          className={'m-4 p-4 rounded-xl shadow dark:bg-slate-900 bg-opacity-50 flex-[3] text-black dark:text-slate-200 lg:p-10'}
+          data-glow
+          style={{
+            '--base': 80,
+            '--spread': 500,
+            '--outer': 1,
+            'backdrop-filter': 'blur(calc(var(--cardblur, 5) * 1px))'
+          } as any}
+        >
           <>
             <h1 className='lg:text-3xl text-xl font-bold my-2 font-lxgw'>
               {book?.title ?? clipping?.clipping.title}
@@ -99,7 +108,7 @@ function ClippingPageContent(props: ClippingPageProps) {
               </time>
             </footer>
           </>
-        </Card>
+        </div>
         {/** 再加一个作者简介 */}
         <ClippingSidebar
           clipping={clipping?.clipping}

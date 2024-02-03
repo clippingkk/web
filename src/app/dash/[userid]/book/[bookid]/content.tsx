@@ -9,7 +9,6 @@ import { usePageTrack } from '../../../../../hooks/tracke';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { IN_APP_CHANNEL } from '../../../../../services/channel';
-import OGWithBook from '../../../../../components/og/og-with-book';
 import { useMasonaryColumnCount } from '../../../../../hooks/use-screen-size';
 import { Masonry, useInfiniteLoader } from 'masonic';
 import { BookDocument, BookQuery, Clipping, QueryMyIdByDomainDocument, QueryMyIdByDomainQuery } from '../../../../../schema/generated';

@@ -12,7 +12,7 @@ import { Clipping, User } from '../../schema/generated';
 
 type TClippingItemProps = {
   className?: string
-  item: Pick< Clipping, 'id' | 'bookID' | 'title' | 'content'>
+  item: Pick<Clipping, 'id' | 'bookID' | 'title' | 'content'>
   book?: WenquBook
   domain: string
   inAppChannel: IN_APP_CHANNEL
@@ -27,8 +27,17 @@ function ClippingItem(props: TClippingItemProps) {
       href={`/dash/${domain}/clippings/${item.id}?iac=${inAppChannel}`}
       key={item.id}
       className={'block mx-2 md:mx-0 ' + className}
+    >
+      <div className={styles.clipping + ' lg:p-10 p-2 hover:shadow-2xl transition-all duration-300 rounded-xl'}
+        data-glow
+        style={{
+          // '--base': 80,
+          '--base': item.id,
+          '--spread': 200,
+          '--outer': 1,
+          'backdrop-filter': 'blur(calc(var(--cardblur, 5) * 1px))'
+        } as any}
       >
-      <Card className={styles.clipping + ' lg:p-10 p-2 hover:shadow-2xl transition-all duration-300'} style={{ margin: '1rem 0' }}>
         <>
           <h3 className='lg:text-3xl text-xl font-lxgw'>
             {book?.title ?? item.title}
@@ -56,7 +65,7 @@ function ClippingItem(props: TClippingItemProps) {
             </React.Fragment>
           )}
         </>
-      </Card>
+      </div>
     </Link>
   );
 }

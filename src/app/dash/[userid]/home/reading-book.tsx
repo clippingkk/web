@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import BookInfo from '../../../../components/book-info/book-info'
 import ClippingContent from '../../../../components/clipping-content'
-import { useSingleBook } from '../../../../hooks/book'
+import { useSingleBook, useSingleBookSuspense } from '../../../../hooks/book'
 import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { Clipping } from '../../../../schema/generated'
 
@@ -12,7 +12,8 @@ type ReadingBookProps = {
 }
 
 function ReadingBook(props: ReadingBookProps) {
-  const book = useSingleBook(props.clipping.bookID)
+  const { clipping } = props
+  const book = useSingleBookSuspense(clipping.bookID)
   if (!book) {
     return null
   }
