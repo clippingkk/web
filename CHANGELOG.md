@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.9.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.2...v5.9.3) (2024-02-03)
+
+
+### Bug Fixes
+
+* **navigation-bar:** add optional operator if profile is null ([6470107](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/64701072f2933e7daa087a25caeafae1982b613e))
+
 ### [5.9.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.1...v5.9.2) (2024-02-03)
 
 
