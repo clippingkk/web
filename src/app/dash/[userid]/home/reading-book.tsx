@@ -26,7 +26,10 @@ function ReadingBook(props: ReadingBookProps) {
           href={`/dash/${uid}/clippings/${clipping.id}?iac=${IN_APP_CHANNEL.clippingFromBook}`}
           className='font-lxgw text-3xl leading-loose from-yellow-100 to-yellow-200 bg-gradient-to-br rounded-lg p-8 block hover:shadow-xl m-4 transform hover:scale-x-105 duration-150 dark:from-purple-600 dark:to-purple-800 dark:text-gray-200 active:scale-95'>
 
-          <ClippingContent content={clipping.content} />
+          <ClippingContent
+            content={clipping.content}
+            className='text-slate-900 dark:text-slate-100'
+          />
         </Link>
       )}
     </div>

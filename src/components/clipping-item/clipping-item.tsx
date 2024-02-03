@@ -28,7 +28,7 @@ function ClippingItem(props: TClippingItemProps) {
       key={item.id}
       className={'block mx-2 md:mx-0 ' + className}
     >
-      <div className={styles.clipping + ' lg:p-10 p-2 hover:shadow-2xl transition-all duration-300 rounded-xl'}
+      <div className={styles.clipping + ' lg:p-10 p-2 hover:shadow-2xl transition-all duration-300 rounded-xl text-slate-900 dark:text-slate-100'}
         data-glow
         style={{
           // '--base': 80,
@@ -43,7 +43,7 @@ function ClippingItem(props: TClippingItemProps) {
             {book?.title ?? item.title}
           </h3>
           <hr className='my-4' />
-          <ClippingContent content={item.content} className='lg:text-2xl text-gray-900 font-lxgw' />
+          <ClippingContent content={item.content} className='lg:text-2xl font-lxgw' />
           {creator && (
             <React.Fragment>
               <hr className='my-4 self-end' />

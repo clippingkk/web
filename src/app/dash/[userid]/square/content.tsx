@@ -18,7 +18,6 @@ type SquarePageContentProps = {
 function SquarePageContent(props: SquarePageContentProps) {
   usePageTrack('square')
   const { t } = useTranslation()
-  // useTitle(t('app.square.title') ?? '')
 
   const masonaryColumnCount = useMasonaryColumnCount()
 
@@ -72,8 +71,10 @@ function SquarePageContent(props: SquarePageContentProps) {
 
   return (
     <section className='flex items-center justify-center flex-col'>
-      <h2 className='text-3xl lg:text-5xl dark:text-gray-400 my-8'> 🪩 {t('app.menu.square')}</h2>
-      <Divider className='w-full' />
+      <h2 className='text-3xl lg:text-5xl text-slate-900 dark:text-slate-100 my-8'>
+        🪩 {t('app.menu.square')}
+      </h2>
+      <Divider className='w-full my-4' />
       <Masonry
         items={sqData}
         columnCount={masonaryColumnCount}

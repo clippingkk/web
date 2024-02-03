@@ -39,10 +39,16 @@ function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
           />
         </div>
 
-        <div className='font-lxgw'>
+        <div className='font-lxgw text-slate-900 dark:text-slate-100'>
           <div className='flex items-center flex-column lg:flex-row'>
-            <h2 className='my-4 text-4xl font-bold mr-2'>{book.title}</h2>
-            <Tooltip label={`douban: ${book.rating}/10`}>
+            <h2
+              className='my-4 text-4xl font-bold mr-2 bg-gradient-to-r dark:from-orange-400 dark:to-sky-400 from-indigo-600 to-cyan-700 text-transparent bg-clip-text'
+            >{book.title}</h2>
+            <Tooltip
+              withArrow
+              label={`douban: ${book.rating ?? 0}/10`}
+              transitionProps={{ transition: 'pop', duration: 200 }}
+            >
               <Rating readOnly value={book.rating / 2} />
             </Tooltip>
           </div>
