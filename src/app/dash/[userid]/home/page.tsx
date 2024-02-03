@@ -57,18 +57,25 @@ async function Page(props: PageProps) {
     }
   })
 
+  let firstBookId: string | undefined
+
   if (profileResponse.data.me.recents.length > 0) {
-    const firstBook = profileResponse.data.me.recents[0].bookID
-    await getReactQueryClient().prefetchQuery({
-      queryKey: ['wenqu', 'books', firstBook],
-      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?uid=${firstBook}`),
-      staleTime: duration3Days,
-      gcTime: duration3Days,
-    })
+    firstBookId = profileResponse.data.me.recents[0].bookID
+    if (firstBookId.length <= 3) {
+      firstBookId = undefined
+    }
+    if (firstBookId) {
+      await getReactQueryClient().prefetchQuery({
+        queryKey: ['wenqu', 'books', firstBookId],
+        queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbid=${firstBookId}`),
+        staleTime: duration3Days,
+        gcTime: duration3Days,
+      })
+    }
   }
 
   return (
-    <HomePageContent userid={userid} myUid={myUidInt} />
+    <HomePageContent userid={userid} myUid={myUidInt} firstBookId={firstBookId} />
   )
 }
 

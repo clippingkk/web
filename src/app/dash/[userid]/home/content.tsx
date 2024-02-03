@@ -39,10 +39,11 @@ function useUserNewbie(userProfile: UserContent | null, onNewbie: () => void) {
 type HomePageContentProps = {
   userid: string
   myUid?: number
+  firstBookId?: string
 }
 
 function HomePageContent(props: HomePageContentProps) {
-  const { userid: userDomain, myUid } = props
+  const { userid: userDomain, myUid, firstBookId } = props
   const isTypeUid = !Number.isNaN(parseInt(userDomain))
   const { data: targetProfileData } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, {
     variables: {
@@ -87,16 +88,17 @@ function HomePageContent(props: HomePageContentProps) {
 
   const recents = data?.me.recents ?? []
 
-  const latestBookId = recents.length > 0 ? recents[0]?.bookID : undefined
-
   return (
     <section className='h-full page'>
-      {latestBookId && latestBookId.length > 3 && (
+      {firstBookId && firstBookId.length > 3 && (
         <div className='mt-8 with-slide-in'>
           <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>
             {t('app.home.reading')}
           </h2>
-          <ReadingBook clipping={recents[0]} uid={uid} />
+          <ReadingBook
+            bookId={firstBookId}
+            clipping={recents?.[0]}
+            uid={uid} />
         </div>
       )}
       <header className='flex items-center justify-center my-10'>
@@ -110,10 +112,7 @@ function HomePageContent(props: HomePageContentProps) {
       </header>
 
       <div className='flex flex-wrap items-center justify-center'>
-        {/* {loading && data.books.length === 0 && !called && (
-          <HomePageSkeleton />
-        )} */}
-        {(data?.books.length ?? 0) === 0 && (
+        {((data?.books.length ?? 0) === 0 && !firstBookId) && (
           <NoContentAlert domain={userDomain} />
         )}
         {(books.books.length > 0) &&

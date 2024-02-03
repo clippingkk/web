@@ -37,13 +37,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
     r.push('/')
   }, [])
 
-  const { data: p } = useProfileQuery({
-    variables: {
-      id: profileData.id,
-    },
-  })
-
-  const isPremium = useIsPremium(p?.me.premiumEndAt)
+  const isPremium = useIsPremium(profileData.premiumEndAt)
 
   const avatar = profileData.avatar.startsWith('http') ? profileData.avatar : `${CDN_DEFAULT_DOMAIN}/${profileData.avatar}`
 

@@ -50,8 +50,6 @@ type NavigationBarProps = {
 function NavigationBar(props: NavigationBarProps) {
   const { myProfile: profile } = props
 
-  const id = profile?.id
-
   const { visible, setVisible } = useCtrlP()
   const onSearchbarClose = useCallback(() => {
     setVisible(false)
