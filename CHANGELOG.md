@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.9.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.1...v5.9.2) (2024-02-03)
+
+
+### Features
+
+* **app:** update colors in dashboard page ([c3d8630](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c3d8630eade8f7aeb10da2b79e1df47b2a740274))
+* **clipping:** add glow effect for clipping card ([f0ebd97](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f0ebd9728bf1e4a53539ada932d9cebf50a775e8))
+
+
+### Bug Fixes
+
+* **app:** update deps ([0841429](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0841429ba9926342ed3540a06f06df5d792098d0))
+* **ci:** upgrade node to latest version in ci ([761e471](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/761e47117f6aed3f0df830d287c7540c2e8daaa4))
+
 ### [5.9.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.0...v5.9.1) (2024-01-21)
 
 
