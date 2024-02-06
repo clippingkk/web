@@ -1,16 +1,17 @@
 'use client';
 import Link from 'next/link'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import { Clipping, User } from '../../schema/generated'
 import { IN_APP_CHANNEL } from '../../services/channel'
 import styles from './top-clippings.module.css'
+import { Tooltip } from '@mantine/core';
 
 // const styles = require('').default
 
 type TopClippingsProps = {
-  clippings: (Pick<Clipping, 'id' | 'title' | 'content'> & { creator: Pick<User, 'domain' | 'id' | 'name' | 'avatar'>}) []
+  clippings: (Pick<Clipping, 'id' | 'title' | 'content'> & { creator: Pick<User, 'domain' | 'id' | 'name' | 'avatar'> })[]
 }
 
 function SimpleAvatar({ avatar }: any) {
@@ -25,7 +26,7 @@ function TopClippings(props: TopClippingsProps) {
 
   return (
     <div className='flex flex-wrap justify-center items-center flex-col mx-4'>
-      <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>
+      <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200 text-slate-900'>
         {t('app.public.clippings')}
       </h2>
       <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-2 gap-8 w-full'>
@@ -36,9 +37,18 @@ function TopClippings(props: TopClippingsProps) {
           >
             <Link
               href={`/dash/${c.creator.domain.length > 2 ? c.creator.domain : c.creator.id}/clippings/${c.id}?iac=${IN_APP_CHANNEL.clippingFromUser}`}
-              className={`h-96 max-w-4xl w-full p-8 bg-gradient-to-br from-yellow-300 to-red-400 dark:from-gray-500 dark:to-gray-700 rounded-lg flex flex-col justify-between dark:text-gray-200 hover:scale-105 transform duration-300 with-slide-in`}>
-
-              <div>
+              className={`h-96 max-w-4xl w-full p-8 flex flex-col text-slate-800 dark:text-slate-200`}
+              data-glow
+              style={{
+                borderRadius: 12,
+                // '--base': 80,
+                '--base': c.creator.id,
+                '--spread': 20,
+                '--outer': 1,
+                'backdrop-filter': 'blur(calc(var(--cardblur, 1) * 1px))'
+              } as any}
+            >
+              <div className='flex-1'>
                 <p
                   className={`text-xl leading-relaxed font-lxgw ${styles.clippingText}`}
                 >
@@ -51,10 +61,11 @@ function TopClippings(props: TopClippingsProps) {
                   <span className='ml-2'>{c.creator.name}</span>
                 </div>
                 <div className='ml-4'>
-                  <span className='text-right font-lxgw'>{c.title}</span>
+                  <Tooltip label={c.title} withArrow transitionProps={{ duration: 200, transition: 'pop' }}>
+                    <span className='text-right font-lxgw line-clamp-2'>{c.title}</span>
+                  </Tooltip>
                 </div>
               </div>
-
             </Link>
           </div>
         ))}

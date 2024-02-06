@@ -113,7 +113,7 @@ function Features() {
   const { t } = useTranslation()
   return (
     <div className='w-full flex justify-center flex-col p-10'>
-      <h2 className='text-3xl text-center dark:text-gray-100'>Feature List</h2>
+      <h2 className='text-3xl text-center dark:text-gray-100 text-slate-900'>Feature List</h2>
       <FeaturesOpen />
       {/* <FeatureSection
         title={t('app.index.features.open.title')}

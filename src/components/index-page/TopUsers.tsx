@@ -24,10 +24,12 @@ function TopUsers(props: TopUsersProps) {
     }))
   return (
     <div>
-      <h2 className='text-3xl text-center font-bold my-8 dark:text-gray-200'>
-        {t('app.public.readers')}
-        <i className='text-sm text-gray-600 italic ml-2 dark:text-gray-200'>{t('app.public.hideReasons')}</i>
-      </h2>
+      <div className='flex flex-col justify-center mb-8'>
+        <h2 className='text-3xl text-center font-bold mt-8 mb-2 dark:text-gray-200 text-slate-900'>
+          {t('app.public.readers')}
+        </h2>
+        <i className='text-sm text-center text-gray-600 italic ml-2 dark:text-gray-200'>{t('app.public.hideReasons')}</i>
+      </div>
       <ul className='flex items-center justify-center flex-wrap'>
         {users.map(u => (
           <HideUntilLoaded
@@ -40,7 +42,7 @@ function TopUsers(props: TopUsersProps) {
                 className='w-16 h-16 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover'
                 alt={u.name}
               />
-              <span className={'font-light block duration-300 opacity-0 mt-4 overflow-hidden dark:text-gray-200 ' + styles['user-name']}>{u.name}</span>
+              <span className={'font-light block duration-300 opacity-0 mt-4 overflow-hidden dark:text-gray-200 text-slate-800 ' + styles['user-name']}>{u.name}</span>
             </div>
           </HideUntilLoaded>
         ))}
