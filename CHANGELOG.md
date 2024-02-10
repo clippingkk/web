@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.9.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.3...v5.9.4) (2024-02-10)
+
+
+### Bug Fixes
+
+* update home page with glow effect ([a17fb19](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a17fb19eae07fc61d461a8c03573897b57aadff6))
+
 ### [5.9.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.2...v5.9.3) (2024-02-03)
 
 
