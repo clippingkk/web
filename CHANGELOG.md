@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.9.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.4...v5.9.5) (2024-02-11)
+
+
+### Bug Fixes
+
+* **mobile:** fix touch event not fired in mobile device issue ([2d341ae](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2d341aee9051fa66a667e95bc1e2c4c877407289))
+* **mobile:** update styles in mobile ([5c3eb95](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5c3eb95a492b4e95d08d3650057252fd2c5168b5))
+
 ### [5.9.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.3...v5.9.4) (2024-02-10)
 
 
