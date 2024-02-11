@@ -75,9 +75,9 @@ function NavigationBar(props: NavigationBarProps) {
           <ul className='flex ml-2 lg:ml-6 with-slide-in'>
             {leftMenu.map((item, index) => (
               <li
-                className={clsx('mr-3 dark:text-white flex items-center lg:mr-6 cursor-pointer px-4 py-2 rounded-full bg-gradient-to-br transition-all hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-gray-900 duration-150 hover:shadow-lg active:scale-95', {
-                  'from-indigo-500 via-purple-500 to-pink-500 text-gray-500 ': activeSegment === item.targetSegment
-                })}
+                className={clsx('mr-3 dark:text-white items-center lg:mr-6 cursor-pointer px-4 py-2 rounded-full bg-gradient-to-br transition-all hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-gray-900 duration-150 hover:shadow-lg active:scale-95', {
+                  'from-indigo-500 via-purple-500 to-pink-500 text-gray-500 ': activeSegment === item.targetSegment,
+                }, item.alt === 'upload' ? 'hidden md:flex' : 'flex')}
                 key={index}
               >
                 <Link

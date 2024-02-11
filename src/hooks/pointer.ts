@@ -13,9 +13,17 @@ function syncPointer({ x, y }: PointerEvent) {
   )
 }
 
+function isTouchDevice() {
+  return (('ontouchstart' in window) ||
+    (navigator.maxTouchPoints > 0))
+}
+
 // https://codepen.io/jh3y/pen/oNVvQRo
 export function usePointerUpdate() {
   useEffect(() => {
+    // if (isTouchDevice()) {
+    //   return
+    // }
     document.body.addEventListener('pointermove', syncPointer)
     return () => {
       document.body.removeEventListener('pointermove', syncPointer)

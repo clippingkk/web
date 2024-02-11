@@ -2,7 +2,7 @@ import React from 'react'
 
 export function BooksSkeleton() {
   return (
-    <div className='grid grid-cols-3 mt-16 mb-16 gap-6'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-16 mb-16 gap-6'>
       {new Array(6).fill(1).map((_, i) => (
         <div
           key={i}

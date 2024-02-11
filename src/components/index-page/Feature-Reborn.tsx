@@ -22,7 +22,7 @@ function FeatureReborn(props: FeatureRebornProps) {
         {t('app.index.features.reading4.title')}
       </h3>
 
-      <div className=' my-24 lg:my-72 flex'>
+      <div className='my-24 lg:my-72 flex flex-wrap'>
         <a
           href='https://apps.apple.com/us/app/clippingkk/id1537830952'
           target='_blank'
