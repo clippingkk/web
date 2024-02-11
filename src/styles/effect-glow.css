@@ -15,34 +15,37 @@
   --hue: calc(var(--base) + (var(--pointer-xp, 0) * var(--spread, 0)));
   background-image: radial-gradient(
     var(--spotlight-size) var(--spotlight-size) at
-    calc(var(--pointer-x, 0) * 1px)
-    calc(var(--pointer-y, 0) * 1px),
-    hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.1)), transparent
+      calc(var(--pointer-x, 0) * 1px) calc(var(--pointer-y, 0) * 1px),
+    hsl(
+      var(--hue, 210) calc(var(--saturation, 100) * 1%)
+        calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.1)
+    ),
+    transparent
   );
   background-color: var(--backdrop, transparent);
-  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-size: calc(100% + (2 * var(--border-size)))
+    calc(100% + (2 * var(--border-size)));
   background-position: 50% 50%;
   background-attachment: fixed;
   border: var(--border-size) solid var(--backup-border);
   position: relative;
-  touch-action: none;
+  /* touch-action: none; */
 }
 
 [data-glow]::before,
 [data-glow]::after {
   pointer-events: none;
-  content: "";
+  content: '';
   position: absolute;
   inset: calc(var(--border-size) * -1);
   border: var(--border-size) solid transparent;
   border-radius: calc(var(--radius) * 1px);
   background-attachment: fixed;
-  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-size: calc(100% + (2 * var(--border-size)))
+    calc(100% + (2 * var(--border-size)));
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  mask:
-    linear-gradient(transparent, transparent),
-    linear-gradient(white, white);
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
   mask-clip: padding-box, border-box;
   mask-composite: intersect;
 }
@@ -51,9 +54,12 @@
 [data-glow]::before {
   background-image: radial-gradient(
     calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
-    calc(var(--pointer-x, 0) * 1px)
-    calc(var(--pointer-y, 0) * 1px),
-    hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)), transparent 100%
+      calc(var(--pointer-x, 0) * 1px) calc(var(--pointer-y, 0) * 1px),
+    hsl(
+      var(--hue, 210) calc(var(--saturation, 100) * 1%)
+        calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)
+    ),
+    transparent 100%
   );
   filter: brightness(2);
 }
@@ -61,9 +67,9 @@
 [data-glow]::after {
   background-image: radial-gradient(
     calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
-    calc(var(--pointer-x, 0) * 1px)
-    calc(var(--pointer-y, 0) * 1px),
-    hsl(0 100% 100% / var(--border-light-opacity, 1)), transparent 100%
+      calc(var(--pointer-x, 0) * 1px) calc(var(--pointer-y, 0) * 1px),
+    hsl(0 100% 100% / var(--border-light-opacity, 1)),
+    transparent 100%
   );
 }
 [data-glow] [data-glow] {
