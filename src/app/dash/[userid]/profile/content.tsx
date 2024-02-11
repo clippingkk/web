@@ -1,17 +1,12 @@
 'use client';
-import React, { Suspense, useMemo, useState } from 'react'
-import ClippingItem from '../../../../components/clipping-item/clipping-item';
+import React, { useMemo, useState } from 'react'
 import { usePageTrack, useTitle } from '../../../../hooks/tracke'
 import WechatBindButton from './bind';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import Avatar from '../../../../components/avatar/avatar';
 import ProfileEditor from './profile-editor'
-import { useSelector } from 'react-redux'
-import { TGlobalStore } from '../../../../store'
-import MasonryContainer from '../../../../components/masonry-container'
 import ProfileBindPhone from './bind-phone'
-import { IN_APP_CHANNEL } from '../../../../services/channel'
 import { API_HOST } from '../../../../constants/config'
 import { toast } from 'react-hot-toast'
 import Link from 'next/link';

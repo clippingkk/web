@@ -29,7 +29,7 @@ function UncheckedPageContent() {
     <div>
       <Divider title={t('app.home.unchecked')} />
       <MasonryContainer>
-        <React.Fragment>
+        <>
           {clippingsData?.book.clippings.map(clipping => (
             <ClippingItem
               item={clipping}
@@ -38,7 +38,7 @@ function UncheckedPageContent() {
               inAppChannel={IN_APP_CHANNEL.clippingFromUser}
             />
           ))}
-        </React.Fragment>
+        </>
       </MasonryContainer>
     </div>
   )
