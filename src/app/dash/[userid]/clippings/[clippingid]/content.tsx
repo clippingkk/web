@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Card from '@/components/card/card'
-import Preview from '@/components/preview/preview4'
+import Preview from '@/components/preview/preview3'
 import { useSingleBook } from '@/hooks/book'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
@@ -19,7 +19,7 @@ import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '@/store/global'
-import { FetchClippingDocument, FetchClippingQuery, useFetchClippingQuery, useFetchClippingSuspenseQuery } from '@/schema/generated'
+import { FetchClippingDocument, FetchClippingQuery } from '@/schema/generated'
 import styles from './clipping.module.css'
 import { toast } from 'react-hot-toast';
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
