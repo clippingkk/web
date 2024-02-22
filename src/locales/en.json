@@ -216,14 +216,20 @@
       },
       "export": {
         "title": "Export",
-        "success": "exported",
+        "success": "Exporting... Email notification upon completion.",
         "flomo": {
-          "title": "Flomo",
-          "submit": "export to flomo"
+          "title": "Export to Flomo",
+          "submit": "Export to flomo"
         },
         "notion": {
-          "title": "Notion",
-          "submit": "export to notion"
+          "title": "Export to Notion",
+          "submit": "Export to notion"
+        },
+        "email": {
+          "button": "Email",
+          "title": "Export to Email",
+          "tips": "Are you sure you want to export your data to email?",
+          "submit": "Export to email"
         }
       },
       "domain": {
