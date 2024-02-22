@@ -216,7 +216,7 @@
       },
       "export": {
         "title": "导出数据",
-        "success": "已导出",
+        "success": "正在执行导出作业，完成后会发送邮件通知",
         "flomo": {
           "title": "Flomo",
           "submit": "导出至 flomo"
@@ -224,6 +224,12 @@
         "notion": {
           "title": "Notion",
           "submit": "导出至 notion"
+        },
+        "email": {
+          "button": "邮件",
+          "title": "导出至邮箱",
+          "tips": "你是否确定真的要导出到邮箱",
+          "submit": "导出至邮箱"
         }
       },
       "domain": {

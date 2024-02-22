@@ -62,7 +62,7 @@ function ExportToNotion() {
         centered
         size='xl'
         onClose={() => setVisible(false)}
-        overlayProps={{ opacity: 0.55, blur: 8 }}
+        overlayProps={{ backgroundOpacity: 0.55, blur: 8 }}
         title={t('app.settings.export.notion.title')}
       >
         <div className='w-full'>

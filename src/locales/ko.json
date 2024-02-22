@@ -216,7 +216,7 @@
       },
       "export": {
         "title": "데이터 내보내기",
-        "success": "데이터를 내보냈습니다.",
+        "success": "내보내기 작업이 진행 중이며 완료되면 이메일 알림이 전송됩니다.",
         "flomo": {
           "title": "Flomo",
           "submit": "flomo 로 내보내기"
@@ -224,6 +224,12 @@
         "notion": {
           "title": "Notion",
           "submit": "notion 로 내보내기"
+        },
+        "email": {
+          "button": "이메일",
+          "title": "이메일로 내보내기",
+          "tips": "정말 이메일로 내보내시겠습니까?",
+          "submit": "이메일로 내보내기"
         }
       },
       "domain": {
