@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.10.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.6...v5.10.0) (2024-02-22)
+
+
+### Features
+
+* **email:** add export to email functionality ([69cece3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/69cece38f7ca6d2474260fa0c57fb283b3f5b585))
+
 ### [5.9.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.5...v5.9.6) (2024-02-13)
 
 
