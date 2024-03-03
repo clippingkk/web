@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.0...v5.10.1) (2024-03-03)
+
+
+### Features
+
+* add new dependencies for OpenTelemetry and Uptrace integration ([7b847fe](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7b847fe44cc8150f2aea842118e581fbd7d8aff1))
+
+
+### Bug Fixes
+
+* **tracking:** disable tracking and update ci actions to latest version ([9e06ba4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9e06ba442b33f99d6dea1707514eaf70d520f5b9))
+
 ## [5.10.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.9.6...v5.10.0) (2024-02-22)
 
 
