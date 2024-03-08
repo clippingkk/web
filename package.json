@@ -117,6 +117,7 @@
     "@tanstack/react-query-persist-client": "^5.24.2",
     "@tanstack/react-table": "^8.13.2",
     "@uptrace/node": "^1.19.0",
+    "@vercel/og": "^0.6.2",
     "@web3-react/core": "8.2.3",
     "@web3-react/metamask": "8.2.4",
     "@web3-react/network": "8.2.3",

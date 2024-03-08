@@ -24,7 +24,8 @@ RUN apk add --no-cache curl \
   && pnpm run build \
   && pnpm install --prod --frozen-lockfile \
   && cd .next/standalone \
-  && node-prune
+  && node-prune \
+  && pnpm add sharp
 
 FROM node:21-alpine AS runner
 WORKDIR /app
