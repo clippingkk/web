@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.1...v5.10.2) (2024-03-09)
+
+
+### Features
+
+* **seo:** add og support for clipping ([a9d030c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a9d030c76099ccc4f3392c35880ad6febd166927))
+* **seo:** add open graph image ([9efc136](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9efc13672ec827115bbbf565a435600d4d32d184))
+
+
+### Bug Fixes
+
+* **deps:** add sharp to dockerfile ([fffc67f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fffc67f611307c387788056dece0d35779847e89))
+* **seo:** fix opengraph tag in page clipping ([6fab751](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6fab7518c02ae9c28207a0672fa61f545898adb4))
+
 ### [5.10.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.0...v5.10.1) (2024-03-03)
 
 
