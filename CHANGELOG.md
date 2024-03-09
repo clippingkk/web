@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.2...v5.10.3) (2024-03-09)
+
+
+### Bug Fixes
+
+* **seo:** add metadataBase and remove unused code ([947f2b1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/947f2b1aa0220851c6fd17276f93130424e8b267))
+
 ### [5.10.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.1...v5.10.2) (2024-03-09)
 
 
