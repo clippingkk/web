@@ -12,6 +12,7 @@ const desc = 'ClippingKK 帮助用户整理 kindle 中的笔记到可控制，�
 const logoLink = APP_URL_ORIGIN + logo.src
 
 export const metadata: Metadata = {
+  metadataBase: new URL(APP_URL_ORIGIN),
   title: metaTitle,
   description: desc,
   openGraph: {
@@ -29,31 +30,3 @@ export const metadata: Metadata = {
     description: desc,
   },
 }
-
-function OGWithPricing(props: OGWithPricingProps) {
-  return (
-    <React.Fragment>
-      <meta property="og:url" content={url} />
-      <meta property="og:type" content='website' />
-      <meta property="og:title" content={metaTitle} />
-      <meta property="og:image" content={logoLink} />
-      <meta property="og:description" content={desc} />
-      <meta property="og:site_name" content='clippingkk' />
-      <meta property="article:author" content='AnntarHe' />
-
-      <meta name='description' content={desc} />
-      <meta name='keyword' content={`clippingkk, 书摘, 首页, kindle`} />
-      <MetaTwitterCard
-        card={TwitterCardType.summary}
-        site='AnnatarHe'
-        creator='AnnatarHe'
-        url={url}
-        title={metaTitle}
-        description={desc}
-        image={logoLink}
-      />
-    </React.Fragment>
-  )
-}
-
-export default OGWithPricing

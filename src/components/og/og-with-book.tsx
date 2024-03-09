@@ -16,6 +16,7 @@ export function generateMetadata(uid: string, book?: WenquBook | null): Metadata
 
   const logoLink = book?.image ?? (APP_URL_ORIGIN + logo.src)
   return {
+    metadataBase: new URL(APP_URL_ORIGIN),
     title: metaTitle,
     description: book?.title,
     openGraph: {
@@ -53,7 +54,7 @@ function OGWithBook(props: OGWithBookProps) {
       <meta property="article:author" content={props.book?.author} />
 
       <meta name='description' content={props.book?.title} />
-      <meta name='keyword' content={`${props.book?.title}, ${props.book?.author}, clippingkk, 书摘` } />
+      <meta name='keyword' content={`${props.book?.title}, ${props.book?.author}, clippingkk, 书摘`} />
       <MetaTwitterCard
         card={TwitterCardType.summary}
         site='AnnatarHe'

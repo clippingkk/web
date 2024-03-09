@@ -20,6 +20,7 @@ export function generateMetadata(props: OGWithClippingProps): Metadata {
   const logoLink = props.book?.image ?? (APP_URL_ORIGIN + logo.src)
 
   return {
+    metadataBase: new URL(APP_URL_ORIGIN),
     title: metaTitle,
     description: props.clipping?.content ?? '',
     openGraph: {
