@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.3...v5.10.4) (2024-03-09)
+
+
+### Bug Fixes
+
+* **seo:** fix missing seo file ([a45b502](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a45b50246b6258356cb4cf26a7236e67e01615aa))
+
 ### [5.10.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.2...v5.10.3) (2024-03-09)
 
 
