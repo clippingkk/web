@@ -6,6 +6,8 @@ import { getApolloServerClient } from '../../../../../services/apollo.server'
 import { duration3Days } from '../../../../../hooks/book'
 import { getReactQueryClient } from '../../../../../services/ajax'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../../../services/wenqu'
+import Loading from './loading'
+import OGImageClipping from '../../../../../components/og/image-clipping'
 
 export const runtime = 'edge'
 
@@ -56,62 +58,26 @@ export default async function Image(req: { params: { userid: string; clippingid:
 
   const LXGWWenKai = fetch(u).then((res) => res.arrayBuffer())
 
-  console.log(Logo.src)
-
   const content = clippingsResponse.data.clipping.content
 
-  let contentFontSize = '3rem'
-  // TODO: 23 chars every line
-
-
+  if (!b) {
+    return new Response(
+      JSON.stringify({
+        error: 'Book not found',
+      }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
 
   return new ImageResponse(
     (
-      // ImageResponse JSX element
-      <div
-        style={{
-          background: '#3498db',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <img src={logoSrc} width={100} height={100} />
-        <div
-          style={{
-            padding: '2rem',
-            display: 'flex',
-            width: '100%',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-          }}
-        >
-
-          <h2 style={{ fontSize: '3rem' }}>{content}</h2>
-
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '100%',
-            alignItems: 'flex-end',
-            justifyContent: 'space-between'
-          }}>
-            <h4 style={{ fontSize: '2rem', }}>{b?.title}</h4>
-            <h5 style={{ fontSize: '1.5rem', textAlign: 'right' }}>{b?.author}</h5>
-          </div>
-        </div>
-
-      </div>
+      <OGImageClipping content={content} b={b} logoSrc={logoSrc} />
     ),
     {
       ...size,
       fonts: [
         {
-          name: 'Inter',
+          name: 'LXGWWenKai',
           data: await LXGWWenKai,
           style: 'normal',
           weight: 400,
