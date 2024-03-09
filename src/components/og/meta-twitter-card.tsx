@@ -1,7 +1,8 @@
 import React from 'react'
 
 export enum TwitterCardType {
-  summary = 'summary'
+  summary = 'summary',
+  summaryLargeImage = 'summary_large_image'
 }
 
 type MetaTwitterCardProps = {
