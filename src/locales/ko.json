@@ -92,7 +92,7 @@
     "home": {
       "reading": "읽고있는 책",
       "title": "내 책들",
-      "unchecked": "분류되지 않은 책",
+      "unchecked": "일치하지 않는 책",
       "notfound": "뭐! 아직 메모를 읽지 않았습니까?",
       "uploadTip": "업로드하려면 나를 클릭하세요."
     },
