@@ -5,7 +5,7 @@ import { uniqBy } from 'lodash';
 function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
   if (!options.next) {
     options.next = {
-      revalidate: 60 * 60 * 2000
+      revalidate: 1000 * 60 * 2 // 2 minutes
     }
   }
   return fetch(url, options)

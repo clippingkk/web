@@ -53,7 +53,7 @@ async function Page(props: PageProps) {
     context: {
       headers: {
         'Authorization': 'Bearer ' + cs.get('token')
-      }
+      },
     }
   })
 
