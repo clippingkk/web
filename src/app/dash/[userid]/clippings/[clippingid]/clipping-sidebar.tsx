@@ -173,7 +173,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
               fullWidth
               onClick={onCopyEmbedHtml}
             >
-              copy embed html
+              {t('app.clipping.embed.title')}
             </Button>
           </li>
           {clipping?.creator.id === me.id && (

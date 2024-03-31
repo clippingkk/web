@@ -17,7 +17,13 @@
       "done": "完成",
       "delete": "删除",
       "bind": "绑定",
-      "bound": "已绑定"
+      "bound": "已绑定",
+      "errors": {
+        "404": {
+          "title": "页面不存在",
+          "content": "页面未找到"
+        }
+      }
     },
     "slogan": "阅读，思考，启迪：发现善良，寻求真理，启迪他人。",
     "go": "立即体验！",
@@ -130,6 +136,9 @@
           "tooShort": "太短了，再多想想？",
           "success": "搞定，已经分享给其他朋友了"
         }
+      },
+      "embed": {
+        "title": "复制内嵌 HTML"
       }
     },
     "square": {
@@ -286,7 +295,11 @@
       }
     },
     "report": {
-      "clippingCountOnBook": "我摘录了 {{count}} 条句子"
+      "clippingCountOnBook": "我摘录了 {{count}} 条句子",
+      "tips": {
+        "pcOpen": "使用电脑打开链接",
+        "dropTxtToSync": "拖入 kindle 文件即可同步"
+      }
     },
     "plan": {
       "free": {

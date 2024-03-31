@@ -64,7 +64,7 @@ function AdminPanel() {
   })
 
   return (
-    <div>
+    <div className='container mx-auto'>
       <Box>
         <>
           <h3 className='text-3xl text-center dark:text-gray-50 my-8'>无家可归的书目们</h3>

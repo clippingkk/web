@@ -6,7 +6,7 @@ import Avatar from '../../../components/avatar/avatar'
 import { WenquBook } from '../../../services/wenqu'
 import logo from '../../../assets/logo.png'
 import ReportBookSection from '../../../components/reports/report-book-section'
-import { Blockquote, Divider } from '@mantine/core'
+import { Divider } from '@mantine/core'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import ReportHero from '../../../components/reports/report-hero'
 import { useBackgroundImage } from '../../../hooks/theme'
@@ -147,7 +147,7 @@ function ReportYearly(props: ReportYearlyProps) {
           <div>
             <h2 className='text-gray-700 text-xl lg:text-3xl 2xl:text-6xl dark:text-gray-200 mb-8 text-center'>{t('app.slogan')}</h2>
             <p className='text-sm lg:text-lg 2xl:text-xl text-gray-700 dark:text-gray-500 w-full text-center px-8'>
-              使用电脑浏览器打开
+              {t('app.report.tips.pcOpen')}
               <a
                 href="https://clippingkk.annatarhe.com"
                 className='text-gray-700 dark:text-gray-200 mx-2 hover:underline'
@@ -155,7 +155,7 @@ function ReportYearly(props: ReportYearlyProps) {
                 https://clippingkk.annatarhe.com
                 <ArrowTopRightOnSquareIcon className=' w-4 h-4 inline-block ml-1 mb-4' />
               </a>
-              拖入 kindle 文件即可同步
+              {t('app.report.tips.dropTxtToSync')}
             </p>
           </div>
         </PageContainer>

@@ -2,16 +2,14 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { TGlobalStore } from '../../../../../store'
-import Dialog from '../../../../../components/dialog/dialog'
-import FieldInput from '../../../../../components/input'
+import { TGlobalStore } from '@/store'
 import { useFormik } from 'formik'
 import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
-import { Button, Table, Tooltip } from '@mantine/core'
-import { FetchMyWebHooksQuery, useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, useProfileQuery, WebHookItem, WebHookStep } from '../../../../../schema/generated'
-import { useIsPremium } from '../../../../../hooks/profile'
+import { Button, Table, Tooltip, Modal, Fieldset, TextInput } from '@mantine/core'
+import { FetchMyWebHooksQuery, useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, useProfileQuery, WebHookItem, WebHookStep } from '@/schema/generated'
+import { useIsPremium } from '@/hooks/profile'
 import WebhookTable from '../components/webhook-table'
 
 const webhookColumns: ColumnDef<FetchMyWebHooksQuery['me']['webhooks'][0]>[] = [{
@@ -131,48 +129,56 @@ function WebHooks() {
         </Button>
       </Tooltip>
 
-      {visible && (
-        <Dialog
-          title={t('app.settings.webhook.title')}
-          onCancel={() => setVisible(false)}
-          onOk={() => formik.handleSubmit()}
-        >
-          <div className='w-full'>
-            <form className='w-full' onSubmit={formik.handleSubmit}>
-              <FieldInput
-                name='hookUrl'
-                value={formik.values.hookUrl}
-                error={formik.errors.hookUrl}
-                onChange={formik.handleChange}
-                type='url'
-              />
-              <div
-                className='w-full text-right'
+      <Modal
+        opened={visible}
+        title={t('app.settings.webhook.title')}
+        onClose={() => setVisible(false)}
+        size={'lg'}
+        centered
+      >
+        <form className='w-full' onSubmit={formik.handleSubmit}>
+          <TextInput
+            withAsterisk
+            type='url'
+            className='mt-4'
+            size='md'
+            label={t('app.settings.webhook.title')}
+            placeholder='https://example.com'
+            {...formik.getFieldProps('hookUrl')} />
+          <div
+            className='w-full text-right flex gap-4 justify-end mt-4'
+          >
+            <Button
+              onClick={() => {
+                setVisible(false)
+              }}
+            >
+              {t('app.common.cancel')}
+            </Button>
+            <Tooltip
+              withArrow
+              transitionProps={{
+                transition: 'pop',
+                duration: 300
+              }}
+              disabled={formik.isValid && isPremium}
+              label={!isPremium ? t('app.payment.webhookRequired') : (
+                formik.errors.hookUrl
+              )}
+            >
+              <Button
+                variant="gradient"
+                className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+                disabled={formik.values.hookUrl.length <= 3 || !formik.isValid || !isPremium}
+                loading={formik.isSubmitting}
+                type='submit'
               >
-                <Tooltip
-                  withArrow
-                  transitionProps={{
-                    transition: 'pop',
-                    duration: 300
-                  }}
-                  disabled={isPremium}
-                  label={!isPremium ? t('app.payment.webhookRequired') : null}
-                >
-                  <Button
-                    variant="gradient"
-                    className='bg-gradient-to-br from-indigo-400 to-cyan-500'
-                    disabled={formik.values.hookUrl.length <= 3 || !formik.isValid || !isPremium}
-                    loading={formik.isSubmitting}
-                    type='submit'
-                  >
-                    {t('app.settings.webhook.submit')}
-                  </Button>
-                </Tooltip>
-              </div>
-            </form>
+                {t('app.settings.webhook.submit')}
+              </Button>
+            </Tooltip>
           </div>
-        </Dialog>
-      )}
+        </form>
+      </Modal>
     </div>
   )
 }

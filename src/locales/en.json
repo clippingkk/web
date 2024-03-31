@@ -17,7 +17,14 @@
       "done": "Done",
       "delete": "Delete",
       "bind": "Bind",
-      "bound": "bound"
+      "bound": "bound",
+      "errors": {
+        "404": {
+          "content": "Page Not Found",
+          "title": "Page not found"
+        }
+      },
+      "backToHome": "Back To Home"
     },
     "slogan": "Read, Reflect, Illuminate: Discover Goodness, Seek Truth, Illuminate Others.",
     "go": "Go!",
@@ -130,6 +137,9 @@
           "tooShort": "Too short, need more thinking.",
           "success": "Yes, shared your's feeling"
         }
+      },
+      "embed": {
+        "title": "copy embed html"
       }
     },
     "square": {
@@ -286,7 +296,11 @@
       }
     },
     "report": {
-      "clippingCountOnBook": "Quoted {{count}} clippings"
+      "clippingCountOnBook": "Quoted {{count}} clippings",
+      "tips": {
+        "pcOpen": "use PC to open the link",
+        "dropTxtToSync": "drop `my clippings.txt` to sync"
+      }
     },
     "plan": {
       "free": {

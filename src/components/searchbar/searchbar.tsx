@@ -3,13 +3,12 @@ import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../store'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { useTranslation } from 'react-i18next'
-import { debounce } from '../../utils/debounce'
 import Link from 'next/link'
-import ReactDOM from 'react-dom'
 import { UserContent } from '../../store/user/type'
 import { useSearchQueryLazyQuery } from '../../schema/generated'
 import { Input, Modal } from '@mantine/core'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import { useHotkeys } from '@mantine/hooks'
 
 type SearchBarProps = {
   visible: boolean
@@ -18,34 +17,11 @@ type SearchBarProps = {
 
 export function useCtrlP() {
   const [visible, setVisible] = useState(false)
-  useEffect(() => {
-    function onKeyRelease(e: KeyboardEvent) {
-      if (!e.ctrlKey) {
-        return
-      }
-      if (e.code !== 'KeyP' && e.code !== 'KeyK') {
-        return
-      }
-      e.stopPropagation()
-      e.preventDefault()
-      setVisible(true)
-      return false
-    }
-    function onKeyEscape(e: KeyboardEvent) {
-      if (e.code === 'Escape') {
-        e.stopPropagation()
-        e.preventDefault()
-        setVisible(false)
-        return false
-      }
-    }
-    document.body.addEventListener('keydown', onKeyRelease)
-    document.body.addEventListener('keydown', onKeyEscape)
-    return () => {
-      document.body.removeEventListener('keydown', onKeyRelease)
-      document.body.removeEventListener('keydown', onKeyEscape)
-    }
-  }, [])
+
+  useHotkeys([
+    ['ctrl+p', () => { setVisible(true) }],
+    ['mod+k', () => { setVisible(true) }]
+  ])
 
   useEffect(() => {
     if (visible) {
@@ -66,11 +42,6 @@ function SearchBar(props: SearchBarProps) {
   const { t } = useTranslation()
   const [doQuery, { data, loading, called }] = useSearchQueryLazyQuery()
   const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-  const noop = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
-    return
-  }, [])
 
   const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -98,6 +69,10 @@ function SearchBar(props: SearchBarProps) {
       centered
       withCloseButton={false}
       className='dark:bg-slate-900 bg-slate-100'
+      overlayProps={{
+        backgroundOpacity: 0.55,
+        blur: 4,
+      }}
     >
       <Input
         onChange={onInputChange}
