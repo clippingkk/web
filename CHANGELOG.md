@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.4...v5.10.5) (2024-03-31)
+
+
+### Features
+
+* **deps:** upgrade deps ([faa4a67](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/faa4a67baeba147743e5224895e407b883cb308c))
+
+
+### Bug Fixes
+
+* **next:** update next cache time to 2 mintues ([7d53ab3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7d53ab359b0be676b5224b61a8cb00e875cb6f4a))
+* **vscode:** add i18n-ally support in vscode ([bdc4fe4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/bdc4fe49042ab5e318692bd65f893678a0493658))
+
 ### [5.10.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.3...v5.10.4) (2024-03-09)
 
 
