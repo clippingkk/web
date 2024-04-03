@@ -33,10 +33,6 @@ const config = {
     GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT || ''),
     infuraKey: JSON.stringify(process.env.infuraKey || '')
   },
-  generateBuildId: async () => {
-    // This could be anything, using the latest git hash
-    return process.env.GIT_COMMIT
-  },
 }
 
 if (process.env.IS_FLY_IO) {

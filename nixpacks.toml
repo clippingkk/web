@@ -1,5 +1,0 @@
-[phases.build]
-cmds = ['pnpm install --frozen-lockfile --force', 'npm run build']
-
-[start]
-cmd = 'npm run start'
