@@ -52,11 +52,11 @@ function EmailBox(props: EmailBoxProps) {
       <div className='w-full mt-4'>
         <Button
           className='text-white w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'
-          size='2xl'
+          fullWidth
+          size='lg'
           type='submit'
           loading={loading}
           disabled={turnstileToken === '' || !REGEX_EMAIL.test(email)}
-          title='send one time passcode'
         >
           {t('app.auth.sendOtp')}
         </Button>

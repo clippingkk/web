@@ -122,9 +122,7 @@ function AuthV3Content(props: AuthV3Props) {
               <Link
                 href='/auth/auth-v2'
                 className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'>
-
                 {t('app.auth.legacyLogin')}
-
               </Link>
 
               <hr className='my-4' />
