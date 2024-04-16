@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.7...v5.10.8) (2024-04-16)
+
+
+### Features
+
+* **metric:** add newrelic integration for monitor ([2942cb0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2942cb0659af244062d2a56a98f885dc03cefed2))
+
 ### [5.10.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.6...v5.10.7) (2024-04-16)
 
 
