@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.9...v5.10.10) (2024-04-16)
+
+
+### Bug Fixes
+
+* **ci:** fix dockerfile ([372403a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/372403a7a74b756267f1ad89d2349cfa1465cb88))
+* **metric:** embed newrelic client to node server ([4ad3f66](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4ad3f66b15561bd099047fb9097bb26de7962b9e))
+
 ### [5.10.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.8...v5.10.9) (2024-04-16)
 
 
