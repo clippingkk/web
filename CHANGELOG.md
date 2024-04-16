@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.6...v5.10.7) (2024-04-16)
+
+
+### Features
+
+* **ci:** add Kraft deploy config ([3f9e528](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3f9e528ecd4b3ecd6c1a81bcb8857b4f02ed4263))
+* **ci:** upgrade pnpm to 9 ([cd58f7f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cd58f7fd59ccc30492bdbb433395a6a0018c8067))
+* **deps:** upgrade deps to latest ([83c2b4b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/83c2b4b5c86f4cdc56b6a4b46508c95ee453ceab))
+* **deps:** upgrade metamask package to latest ([2fa9189](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2fa9189d648f40ffb8cd4e9cd6997a0a271d60e2))
+
 ### [5.10.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.5...v5.10.6) (2024-04-03)
 
 ### [5.10.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.4...v5.10.5) (2024-03-31)
