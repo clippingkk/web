@@ -1,0 +1,7 @@
+spec: v0.6
+name: ck-web
+runtime: node:21-alpine
+
+rootfs: ./Dockerfile
+
+cmd: ["/usr/bin/node", "/usr/src/server.js"]

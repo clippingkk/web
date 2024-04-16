@@ -4,8 +4,6 @@
 
 we use pnpm
 
-kindle viewer website
-
 ## Notes
 
 ```bash
@@ -14,4 +12,16 @@ $ mv schema.json src/schema/
 $ apollo codegen:generate --target=typescript --localSchemaFile="./src/schema/schema.json" --includes="./src/schema/**/*.graphql" --useReadOnlyTypes
 ```
 
-esbuild 有问题报错 ENOENT: 执行: `node ./node_modules/esbuild/install.js`
+## Deploy
+
+### Docker
+
+```bash
+podman run -d --restart=always -e PORT=3333 -e HOSTNAME=0.0.0.0 -e OTEL_EXPORTER_OTLP_ENDPOINT="https://otlp.uptrace.dev" -e OTEL_EXPORTER_OTLP_HEADERS="uptrace-dsn=https://PASSWORD@api.uptrace.dev/123456" -e OTEL_EXPORTER_OTLP_COMPRESSION=gzip -e OTEL_EXPORTER_OTLP_METRICS_DEFAULT_HISTOGRAM_AGGREGATION=BASE2_EXPONENTIAL_BUCKET_HISTOGRAM -e OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE=DELTA -e REDIS_URL=redis://:PASSWORD@localhost:6379/7 --network=host registry.cn-shanghai.aliyuncs.com/annatarhe/clippingkk-web:5.10.6
+```
+
+### Kraft
+
+```bash
+kraft cloud deploy -p 443:3000 -M 1024 .
+```
