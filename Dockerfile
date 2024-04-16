@@ -56,4 +56,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["node", "-r @newrelic/next", "server.js"]
+CMD ["node", "server.js"]
