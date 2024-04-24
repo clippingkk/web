@@ -1,4 +1,4 @@
-import '@newrelic/next'
+// import '@newrelic/next'
 import uptrace from '@uptrace/node'
 import otel from '@opentelemetry/api'
 
