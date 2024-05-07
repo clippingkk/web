@@ -73,7 +73,7 @@ function ClippingPageContent(props: ClippingPageProps) {
             '--base': 80,
             '--spread': 500,
             '--outer': 1,
-            'backdrop-filter': 'blur(calc(var(--cardblur, 5) * 1px))'
+            backdropFilter: 'blur(calc(var(--cardblur, 5) * 1px))'
           } as any}
         >
           <>

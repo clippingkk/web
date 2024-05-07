@@ -14,10 +14,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
  * @type {import('next').NextConfig}
  **/
 const config = {
+  cacheHandler: isProd ? require.resolve('./cache-handler.mjs') : undefined,
+  cacheMaxMemorySize: 0,
   experimental: {
     instrumentationHook: true,
-    // incrementalCacheHandlerPath: require.resolve('./cache-handler.js'),
-    // isrMemoryCacheSize: 0, // disable default in-memory caching
   },
   images: {
     domains: [

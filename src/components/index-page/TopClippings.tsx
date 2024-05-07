@@ -45,7 +45,7 @@ function TopClippings(props: TopClippingsProps) {
                 '--base': c.creator.id,
                 '--spread': 20,
                 '--outer': 1,
-                'backdrop-filter': 'blur(calc(var(--cardblur, 1) * 1px))'
+                backdropFilter: 'blur(calc(var(--cardblur, 1) * 1px))'
               } as any}
             >
               <div className='flex-1'>

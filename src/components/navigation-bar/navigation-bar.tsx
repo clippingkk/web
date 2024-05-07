@@ -1,9 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import Image from 'next/image'
 import clsx from 'classnames'
-import { useSelector } from 'react-redux'
-import { UserContent } from '../../store/user/type'
-import { TGlobalStore } from '../../store'
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
