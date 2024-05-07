@@ -35,7 +35,7 @@ function ClippingItem(props: TClippingItemProps) {
           '--base': item.id,
           '--spread': 200,
           '--outer': 1,
-          'backdrop-filter': 'blur(calc(var(--cardblur, 5) * 1px))'
+          backdropFilter: 'blur(calc(var(--cardblur, 5) * 1px))'
         } as any}
       >
         <>
