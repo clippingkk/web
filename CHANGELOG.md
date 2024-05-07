@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.10.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.10...v5.10.11) (2024-05-07)
+
+
+### Features
+
+* **cache:** enable cache in prod and fix backdropFilter attr ([07dd59b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/07dd59b001c3ada0c9728d5e64c960e5c2ccb95c))
+* **deps:** Update dependencies versions ([f3ba966](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f3ba966009ce2ffe678bcba05ad02d2b0b63990f))
+* **node:** upgrade node.js version to 22.x for workflows ([83ee6a5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/83ee6a5e4ec322ee17a275a2253f8a78831d410a))
+
+
+### Bug Fixes
+
+* **ci:** Update Node version to 22 and pnpm version to 9.1.0. ([b8623db](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b8623db21110f6687f2ddfe23214a169708a7337))
+* **deps:** upgrade deps ([cf685b3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cf685b31f0b22da2a071cd1f805062c54ee828cb))
+
 ### [5.10.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.9...v5.10.10) (2024-04-16)
 
 
