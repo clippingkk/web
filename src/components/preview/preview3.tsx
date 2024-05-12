@@ -1,12 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import Dialog from '../dialog/dialog'
 import { WenquBook } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
 import ThemePicker from './theme-picker'
-import { Blockquote, Divider, Paper, Text, Title } from '@mantine/core'
+import { Blockquote, Divider, Paper, Title } from '@mantine/core'
 import { Clipping, User } from '../../schema/generated'
+import LoadingIcon from '../icons/loading.svg'
 
 type PreviewProps = {
   onCancel: () => void
@@ -17,7 +18,6 @@ type PreviewProps = {
 }
 
 function Preview(props: PreviewProps) {
-  const [shareURL, setShareURL] = useState('')
   const [loading, setLoading] = useState(true)
   const [errMsg, setErrMsg] = useState('')
   const [currentTheme, setCurrentTheme] = useState(KonzertThemeMap.young.id)
@@ -31,9 +31,9 @@ function Preview(props: PreviewProps) {
     setErrMsg('')
   }, [])
 
-  useEffect(() => {
+  const shareURL = useMemo(() => {
     if (!props.book) {
-      return
+      return ''
     }
     const data = {
       cid: props.clipping.id,
@@ -41,11 +41,7 @@ function Preview(props: PreviewProps) {
       uid: props.clipping.creator.id,
       theme: currentTheme
     }
-
-    // setShareURL('https://avatars.githubusercontent.com/u/8704175?v=4')
-    setShareURL(getUTPLink(UTPService.clipping, data))
-    setLoading(true)
-    setErrMsg('')
+    return getUTPLink(UTPService.clipping, data)
   }, [props.clipping.id, props.book?.id, currentTheme])
 
   const { t } = useTranslation()
@@ -56,17 +52,21 @@ function Preview(props: PreviewProps) {
       title={t('app.clipping.preview')}
     >
       <section className='flex mt-2'>
-        <div>
+        <div className='relative'>
           <img
             src={shareURL}
             onLoad={onImageLoad}
+            onLoadStart={() => setLoading(true)}
             onError={onImageError}
             className={'h-[812px] w-[375px] rounded'}
             alt={t('app.common.loading') ?? 'loading'}
           />
-          {/* {loading && (
-            <span>{t('app.common.loading')}</span>
-          )} */}
+          {loading && (
+            <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center bg-slate-800 bg-opacity-80'>
+              <LoadingIcon className='w-8 h-8 animate-spin' />
+              <span className='ml-2 dark:text-white'>{t('app.common.loading')}</span>
+            </div>
+          )}
         </div>
 
         <aside className='mt-2 flex flex-col ml-4'>

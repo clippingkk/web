@@ -74,7 +74,7 @@ function ClippingPageContent(props: ClippingPageProps) {
             '--spread': 500,
             '--outer': 1,
             backdropFilter: 'blur(calc(var(--cardblur, 5) * 1px))'
-          } as any}
+          } as React.CSSProperties}
         >
           <>
             <h1 className='lg:text-3xl text-xl font-bold my-2 font-lxgw'>
