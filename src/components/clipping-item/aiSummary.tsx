@@ -71,9 +71,15 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
         />
         <Tooltip
           label={errMsg?.includes('402') ? t('app.payment.required') : t('app.ai.clippingHelp')}
+          withArrow
+          transitionProps={{ duration: 175, transition: 'pop' }}
         >
           <Paper className='w-96 md:w-144 lg:w-[600px]'>
-            <Blockquote icon={isMobile ? null : undefined} cite=' - ChatGPT' className='font-lxgw'>
+            <Blockquote
+              icon={isMobile ? null : undefined}
+              cite=' - ChatGPT'
+              className='font-lxgw text-xl'
+            >
               {errMsg ?? data?.clipping.aiSummary}
             </Blockquote>
           </Paper>
