@@ -333,6 +333,16 @@
           "support": "✅ Email support"
         }
       }
+    },
+    "nouns": {
+      "empty": {
+        "tip": "If you think this noun is not easy to understand. you may want to add explanation on it",
+        "add": "Add"
+      },
+      "title": {
+        "add": "Add a new noun",
+        "update": "Update noun"
+      }
     }
   }
 }

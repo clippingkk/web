@@ -4,6 +4,28 @@ query fetchClipping($id: Int!) {
     bookID
     title
     content
+    richContent {
+      html
+      plain
+      segments
+      nouns {
+        id
+        noun
+        content
+        scope
+        updaters {
+          id
+          name
+          avatar
+        }
+        creator {
+          id
+          name
+          avatar
+        }
+        createdAt
+      }
+    }
     createdAt
     pageAt
     visible

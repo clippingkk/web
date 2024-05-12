@@ -1,0 +1,10 @@
+mutation updateNounMutation($id: Int!, $input: NounUpdateInput!) {
+  updateNoun(id: $id, payload: $input) {
+    id
+    noun
+    content
+    bookId
+    createdAt
+    updatedAt
+  }
+}

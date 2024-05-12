@@ -21,8 +21,11 @@ import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '@/store/global'
 import { FetchClippingDocument, FetchClippingQuery } from '@/schema/generated'
 import styles from './clipping.module.css'
-import { toast } from 'react-hot-toast';
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
+import { toast } from 'react-hot-toast'
+import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
+import ClippingRichContent from '@/components/text-content/clipping-rich-content'
+import { useIsPremium } from '@/hooks/profile'
+import { isGrandAdmin } from '@/services/admin'
 
 type ClippingPageProps = {
   cid: number
@@ -62,6 +65,7 @@ function ClippingPageContent(props: ClippingPageProps) {
   const creator = clipping?.clipping.creator
 
   const [commentListRef] = useAutoAnimate()
+  const isPremium = useIsPremium(me.premiumEndAt)
 
   return (
     <div className={`${styles.clipping} page anna-fade-in`}>
@@ -85,10 +89,17 @@ function ClippingPageContent(props: ClippingPageProps) {
             </h1>
             <h3 className='font-light lg:text-lg my-4 font-lxgw'>{book?.author}</h3>
             <hr className='bg-gray-400 my-12' />
-            <ClippingContent
+            {/* <ClippingContent
               className='lg:text-4xl text-3xl lg:leading-loose leading-normal font-lxgw'
               content={clipping?.clipping.content ?? ''}
+            /> */}
+            <ClippingRichContent
+              isPremium={isPremium}
+              isGrandAdmin={isGrandAdmin({ id: me.id })}
+              className='lg:text-4xl text-3xl lg:leading-loose leading-normal font-lxgw'
+              richContent={clipping?.clipping.richContent}
             />
+
             <hr className='bg-gray-400 my-12' />
             <Reactions reactions={clipping?.clipping.reactionData} cid={clipping?.clipping.id || -1} />
             <hr className='bg-gray-400 my-12' />
