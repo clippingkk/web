@@ -64,7 +64,15 @@ function ClippingRichContent(props: ClippingRichContentProps) {
         onClose={() => setEditingNoun(undefined)}
         title={editingNoun?.id === -1 ? t('app.nouns.title.add') : t('app.nouns.title.update')}
       >
-        <NounEditContent id={editingNoun?.id} noun={editingNoun?.noun} />
+        {editingNoun ? (
+          <NounEditContent
+            id={editingNoun.id}
+            noun={nouns.get(editingNoun.noun ?? '')}
+            onClose={() => setEditingNoun(undefined)}
+          />
+        ) : (
+          <div>No Noun Selected</div>
+        )}
       </Modal>
     </>
   )

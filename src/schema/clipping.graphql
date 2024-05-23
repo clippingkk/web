@@ -12,6 +12,7 @@ query fetchClipping($id: Int!) {
         id
         noun
         content
+        bookId
         scope
         updaters {
           id
