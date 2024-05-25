@@ -10,11 +10,20 @@ type ClippingRichContentProps = {
   isPremium?: boolean
   isGrandAdmin?: boolean
   richContent?: FetchClippingQuery['clipping']['richContent']
+  bookId?: string
+  clippingId?: number
   className?: string
 }
 
 function ClippingRichContent(props: ClippingRichContentProps) {
-  const { richContent, className, isPremium = false, isGrandAdmin = false } = props
+  const {
+    richContent,
+    className,
+    bookId,
+    clippingId,
+    isPremium = false,
+    isGrandAdmin = false
+  } = props
   const { t } = useTranslation()
 
   const nouns = useMemo(() => {
@@ -60,6 +69,7 @@ function ClippingRichContent(props: ClippingRichContentProps) {
           opacity: 0.55,
           blur: 50,
         }}
+        size={'xl'}
         transitionProps={{ transition: 'fade', duration: 150 }}
         onClose={() => setEditingNoun(undefined)}
         title={editingNoun?.id === -1 ? t('app.nouns.title.add') : t('app.nouns.title.update')}
@@ -67,7 +77,9 @@ function ClippingRichContent(props: ClippingRichContentProps) {
         {editingNoun ? (
           <NounEditContent
             id={editingNoun.id}
-            noun={nouns.get(editingNoun.noun ?? '')}
+            noun={editingNoun.noun}
+            bookId={bookId}
+            clippingId={clippingId}
             onClose={() => setEditingNoun(undefined)}
           />
         ) : (

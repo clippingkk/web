@@ -1,7 +1,10 @@
 import React, { useCallback } from 'react'
 import { FetchClippingQuery, Noun } from '../../schema/generated'
-import { Button, ButtonGroup, HoverCard, Popover } from '@mantine/core'
+import { Avatar, Button, ButtonGroup, HoverCard, Popover } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
+import { AppFeatures } from '../../constants/features'
+import MarkdownPreview from '../markdown-editor/md-preview'
+import NounContentRender from '../noun/content-render'
 
 type ContentSegmentProps = {
   noun?: FetchClippingQuery['clipping']['richContent']['nouns'][0]
@@ -14,7 +17,7 @@ type ContentSegmentProps = {
 }
 
 const symbolList = new Set([
-  "、", "，", "。", "！", "@", "——", "【", "】",
+  "、", "，", "。", "！", "@", "——", "【", "】", "的", "了", ":", "“", "”", "《", "》", "："
 ])
 
 function ContentSegment(props: ContentSegmentProps) {
@@ -28,6 +31,10 @@ function ContentSegment(props: ContentSegmentProps) {
     onNounUpdate,
   } = props
   const { t } = useTranslation()
+
+  if (!AppFeatures.enableNounExplainer) {
+    return <span>{segment}</span>
+  }
 
   if (symbolList.has(segment)) {
     return <span>{segment}</span>
@@ -54,13 +61,25 @@ function ContentSegment(props: ContentSegmentProps) {
     )
   }
 
+  // 不能创建，而且也没有内容，暂时不知道咋操作，先不做
+  if (!noun) {
+    return <span>{segment}</span>
+  }
+
   return (
-    <HoverCard withArrow transitionProps={{ transition: 'pop', duration: 125 }}>
+    <HoverCard
+      transitionProps={{ transition: 'pop', duration: 125 }}
+      arrowSize={14}
+      withArrow
+    >
       <HoverCard.Target>
         <span>{segment}</span>
       </HoverCard.Target>
       <HoverCard.Dropdown>
-        <p>{segment}</p>
+        <NounContentRender
+          noun={noun}
+          updatable={updatable}
+          onUpdate={onNounUpdate} />
       </HoverCard.Dropdown>
     </HoverCard>
   )

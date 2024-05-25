@@ -1,3 +1,4 @@
 export const AppFeatures = {
-  enablePremiumPayment: true
+  enablePremiumPayment: true,
+  enableNounExplainer: true
 }

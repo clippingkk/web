@@ -8,22 +8,28 @@ type AvatarProps = {
   className?: string
   editable?: boolean
   onClick?: () => any
+  isPremium?: boolean
 }
 
 function Avatar(props: AvatarProps) {
+  const { img, isPremium } = props
   const avatar = props.img.startsWith('http') ? props.img : `${CDN_DEFAULT_DOMAIN}/${props.img}`
 
   let cls = props.className || ''
 
   if (!cls && !cls.includes('w-')) {
-    cls += ' w-24 h-24'
+    cls += ' w-24 h-24 '
+  }
+
+  if (isPremium) {
+    cls += ' px-1 py-1 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400 '
   }
 
   const { ref, isHovering } = useHover<HTMLDivElement>()
 
   if (props.img === '') {
     return (
-      <div className={' rounded-full bg-gray-500 animate-pulse ' + cls} />
+      <div className={'rounded-full bg-gray-500 animate-pulse ' + cls} />
     )
   }
   return (
@@ -31,7 +37,7 @@ function Avatar(props: AvatarProps) {
       <img
         src={avatar}
         alt={props.name}
-        className={'rounded-full w-full h-full '}
+        className={'rounded-full w-full h-full'}
       />
       {props.editable && (
         <div

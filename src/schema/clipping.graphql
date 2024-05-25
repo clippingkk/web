@@ -25,6 +25,7 @@ query fetchClipping($id: Int!) {
           avatar
         }
         createdAt
+        updatedAt
       }
     }
     createdAt

@@ -138,6 +138,11 @@
       },
       "embed": {
         "title": "복사 삽입 HTML"
+      },
+      "noun": {
+        "card": {
+          "whoUpdatedTips": "기여했습니다"
+        }
       }
     },
     "square": {
@@ -340,6 +345,33 @@
       "title": {
         "add": "새로운 명사를 추가하세요.",
         "update": "업데이트 명사"
+      },
+      "form": {
+        "id": {
+          "label": "ID",
+          "fieldset": "정보"
+        },
+        "noun": {
+          "fieldset": "명사",
+          "placeholder": "설명하고 싶은 명사를 제시해주세요.",
+          "label": "명사"
+        },
+        "content": {
+          "placeholder": "설명의 내용을 제공해주세요.",
+          "label": "설명"
+        },
+        "cancel": "취소하다",
+        "submit": "제출하다",
+        "update": "업데이트",
+        "scope": {
+          "label": "범위",
+          "data": {
+            "all": "모든 사용자 및 모든 책을 통틀어 전역적으로",
+            "book": "책만(동일한 책에만 영향을 미치지만 다른 사용자와 공유할 수 있음)",
+            "clipping": "클리핑만(이 클리핑에만 적용)",
+            "forbid": "금지됨 (이 단어를 비활성화할 것입니다)"
+          }
+        }
       }
     }
   }

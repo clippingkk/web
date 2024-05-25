@@ -98,6 +98,8 @@ function ClippingPageContent(props: ClippingPageProps) {
               isGrandAdmin={isGrandAdmin({ id: me.id })}
               className='lg:text-4xl text-3xl lg:leading-loose leading-normal font-lxgw'
               richContent={clipping?.clipping.richContent}
+              clippingId={clipping?.clipping.id}
+              bookId={clipping?.clipping.bookID}
             />
 
             <hr className='bg-gray-400 my-12' />

@@ -140,6 +140,11 @@
       },
       "embed": {
         "title": "copy embed html"
+      },
+      "noun": {
+        "card": {
+          "whoUpdatedTips": "contributed"
+        }
       }
     },
     "square": {
@@ -342,6 +347,33 @@
       "title": {
         "add": "Add a new noun",
         "update": "Update noun"
+      },
+      "form": {
+        "id": {
+          "label": "ID",
+          "fieldset": "Information"
+        },
+        "noun": {
+          "fieldset": "Noun",
+          "placeholder": "Please give a noun you want to explain",
+          "label": "Noun"
+        },
+        "content": {
+          "placeholder": "Please give the content of explain",
+          "label": "Explanation"
+        },
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "update": "Update",
+        "scope": {
+          "label": "Scope",
+          "data": {
+            "all": "Global(across all users and all books)",
+            "book": "Book only(only effect same book but would share with other users)",
+            "clipping": "Clipping only(only effect for this clipping)",
+            "forbid": "Forbidden(would disable this word)"
+          }
+        }
       }
     }
   }
