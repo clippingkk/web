@@ -74,7 +74,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
           <HoverCard.Target>
             <Link href={`/dash/${uidOrDomain}/profile`}>
               <AvatarOnNavigationBar
-                avatarUrl={avatar}
+                avatarUrl={profileData.avatar}
                 isPremium={isPremium}
               />
             </Link>
@@ -84,10 +84,10 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
               <Button
                 fullWidth
                 leftSection={(
-                  <Avatar
-                    size={24}
-                    src={avatar}
-                    radius={'xl'}
+                  <AvatarOnNavigationBar
+                    avatarUrl={profileData.avatar}
+                    size='sm'
+                    isPremium={isPremium}
                   />
                 )}
                 className='flex items-center'

@@ -1,0 +1,10 @@
+query fetchNoun($id: Int!) {
+  noun(id: $id) {
+    id
+    noun
+    bookId
+    content
+    createdAt
+    updatedAt
+  }
+}

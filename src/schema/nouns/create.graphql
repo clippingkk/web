@@ -1,0 +1,10 @@
+mutation createNounMutation($input: NounInput!) {
+  createNoun(payload: $input) {
+    id
+    noun
+    bookId
+    content
+    createdAt
+    updatedAt
+  }
+}
