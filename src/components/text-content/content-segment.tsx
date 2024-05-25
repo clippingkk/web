@@ -3,7 +3,6 @@ import { FetchClippingQuery, Noun } from '../../schema/generated'
 import { Avatar, Button, ButtonGroup, HoverCard, Popover } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import { AppFeatures } from '../../constants/features'
-import MarkdownPreview from '../markdown-editor/md-preview'
 import NounContentRender from '../noun/content-render'
 
 type ContentSegmentProps = {
