@@ -20,9 +20,11 @@
       "bound": "경계",
       "errors": {
         "404": {
-          "title": "페이지를 찾을 수 없습니다"
+          "title": "페이지를 찾을 수 없습니다",
+          "content": "Page not found"
         }
-      }
+      },
+      "backToHome": "Back To Home"
     },
     "slogan": "읽기, 숙고, 비추다: 선을 발견하고, 진리를 찾으며, 다른 이에게 빛을 비추다.",
     "go": "지금 시도하십시오!",
@@ -86,6 +88,9 @@
         "pnLen": "휴대폰 번호가 불법입니다.",
         "verifyCodeLen": "인증 코드가 잘못되었습니다.",
         "codeLen": "인증 코드의 길이가 충분하지 않습니다."
+      },
+      "thirdPart": {
+        "title": "또는 ...으로 로그인을 시도할 수도 있습니다."
       }
     },
     "authCallback": {
