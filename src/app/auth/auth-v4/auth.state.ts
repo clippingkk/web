@@ -1,5 +1,5 @@
-import { EventFromLogic, SnapshotFrom, assign, createMachine, fromPromise, setup } from "xstate";
-import { AppleAuthResponse } from "../../../services/apple";
+import { EventFromLogic, SnapshotFrom, assign, fromPromise, setup } from "xstate"
+import { AppleAuthResponse } from "../../../services/apple"
 
 type Context = {
   email?: string
@@ -22,6 +22,7 @@ type Event =
   | { type: 'APPLE_DATA_SUCCESS', data: Required<Context>['appleData'] }
   // | { type: 'METAMASK_LOGIN', data: Required<Context>['metamaskData'] }
   | { type: 'OTP_TYPING', otp: string }
+  | { type: 'PWD_TYPING', pwd: string }
   | { type: 'METAMASK_LOGIN_AUTH' }
   | { type: 'GITHUB_LOGIN' }
   | { type: 'RESEND' }
@@ -51,7 +52,7 @@ const authMachine = setup({
     doMetamaskLogin: fromPromise(async (_: { input: { data: Context['metamaskData'] } }): Promise<any> => {
       throw new Error('not implemented')
     }),
-    doManualLogin: fromPromise(async (ctx) => {
+    doManualLogin: fromPromise(async (_: { input: { email?: string, password?: string, otp?: string } }): Promise<any> => {
       throw new Error('not implemented')
     }),
     doAppleLogin: fromPromise(async (_: { input: { data: Context['appleData'] } }): Promise<any> => {
@@ -65,20 +66,28 @@ const authMachine = setup({
     onlyOnOTPTimeReset: (ctx) => ctx.context.resendOTPReminds === 0,
     onlyTimeReset: (ctx) => ctx.context.resendOTPReminds === 0,
     // TODO: implement it
-    onDataValidated: () => true,
+    manualLoginDataValid: (ctx) => {
+      const { email, password, otp } = ctx.context
+      console.log('mmmm', email, password, otp, ctx)
+      if (!email) {
+        return false
+      }
+      if (!password && !otp) {
+        return false
+      }
+      return true
+    },
     validatedOnly: (ctx) => true
   },
   actions: {
-    emailConfirmed: (ctx, params: { email: string }) => assign({ email: params.email }),
     coolingOTP: (ctx) => {
       console.log('coolingOTP', ctx)
       return assign({ resendOTPReminds: ctx.context.resendOTPReminds - 1 })
     },
-    onCFVerified: (_, params: { turnstileToken: string }) => assign({ turnstileToken: params.turnstileToken }),
     appleDataSuccess: (_, params: { data: Required<Context>['appleData'] }) => assign({ appleData: params.data }),
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEECuAXAFgMQDYHsB3AOgEsJcwBiAcQEkAVACQFUAhAfQBkB5egOQDaABgC6iUAAd8sUulL4AdhJAAPRACYAnABZiAZg0aArAHYdANi3Gdw-foA0IAJ6IAtBdPEAHKfs2ARlNTMw1vbwBfCKc0LDwiMgpqAFEAWWQ6Lg4AYR5+bDoAJVTkgBERcSQQaVl5JRV1BDcArX1iLQtjYWtjbxbvTydXJvM9YQ0LbRaLfQCA7qiYjBwCEnJKKhKGZHSAZQBpbj46fg5kFmYKlRq5BWUqxrdtY2INS3mLAYtbWaHEAI0bU+xg0pmEISshmEOkWIFiKwS62oyAACiiuMkjgIrlUbnV7qBGgF9HpvCZjMYAr5jJDoX8EAEdN5XhZ5nYNHYaWDTLD4fE1klEhtstgOAA1ZKFOgFMo4qQyW71B7uIIaYjCTo6HqdLreHSOFzufTg9XdSl2AFk4SRaJw5b84gogCGsFgAGN8BBqOl+CxkFleNixNcFfiGog+m0TJ99FZgZYDcM3H4AsRjFpgpTdN5dPpefbVo6Xe7PWAi67CPgAE4QKjZJjIfg0TEMHgcHgMFFy6qhu7hppzYTtFo6LqmKnfMEWenNUEvYQAqn2exk3T5uKF52uj1e4gdlF1htNlttlHIXa7ADqPEK5WDuN7SsJKv0zIprJj2kmHWnhoHALaUwNDmcJvH0GkdHMdcERILcS13fchWoQpkl2ZJ+DvSp5VqPtlQQUEhxBEFR1fMwui0Gc5kBYggJA8JwMnGFbT5Tdix3MtEKRKg0Iw7s8Vw58EBmQCKXHLRoXBexTEo8l1SMOxX18L8mKWDcEjg9i907JCqH3DgGAATRRE4aD4x8CTURB7D0IDhC5PptGCaxKMsPQtACLlTE8cduh5ZiC3UtjSy0lFiFgMBFAgUhFCgKgICUMtooAN3wABrMsWMC7dgsQ8LIuiqAEGS-A3SdfEKjMnCn0shA9QsGjjV6CwF06cdpL-ZpVTkrzxgGIxwOgh0NJy7T912CL0CoVRYHQMqyydAAzdAwCrAAKNlhAASioTLYKChDRs7cbFHQSrFQsxo+i8QE7KA8IbHCDQXIGAwtCMdMrD1UE838tSSAAWzAWbUhdVKuHwKAoAKuKErIRQUvS4hduIQHgdB8HIYKor4ZKsq7gq+9sPO-svx8bRxP0XQqOeelX2u6E-H1AE7BmYxBsLVGnRB2AwYhqGYqoFaq2rYhJFwMqFurf6kYCgGga59G+ax4rSvKsQzrDPCPHGYhhLA5rJhzUxvHpAEXipYxjQXHRLDA192YSTn-sVzGYroRQYcURKccR5GnZd-moHd7GUtV-H1cJnsqou-4FPaVp5mCa0bGNmcORecDR1sww6qMB2SChrBUAAIwxwP3c972EYy2XiELzAS7Lgrg5VvGlAJrCo+JvCZj0G7em6AEtDAk2OvTgwbFCdlc-zlGnUUVAnVwJu3Y9+Kvbh6uZb+ueF6Xleg8UEPcbV0QNYEmqBi8CxvxCY2dA5UcZ31NpwT18FiW6Abfpg4gnUkMWYAD4V3XlXNKNcd7-0AcAo+rdT7n2qpdHQqYwhvQ8nqcwLM052QnlnDkOdLAaFnlAyg8JoaonRJiUoyBtgcF2CwbI2RUK7AQTHBANgtDEAfiCMEWhdAZi8qbEwrw9Q2zsN4GkJhDBRFtIoUs8Aqi7RDNHfsHgui6xXLGDUqDU4dSCEyHwaDJzmDelYWeSJlHd0Ek8AxHRPLzBsKOToz8wJcJzGYUcWoJELjZj-B0SIkKWM1tYjkQ47HeQcTbGkxgZyUxeMPaw98gLIJZuYwUboFpihWqQBapBIBBIvo8XwxAPKxmNm9cw8w3ixOsO0HMBsWjzACFYXxqlf7DS9AUxBRoPJpkZNoB+5gOSfEojfVMlNgIdGQc1VoNo2lDX2mWOClYaxdLYU8TwfSH66FBA-DUo8kxzFaOqGwzV9CjD1OCWeHSOKdjWSTIwaYTBvEthIkI3RKJmDaDmIwYRboTA1NcxZIVAkPhUT3ZBXDATAhaEYQhlF7BqlQdaZBGYb7GyBdlA6oU8pRRivcvC6ZmTAW8AzYkHRdCUSCIRMIwEFLnKApi+CtzQpjQmgSwSOZUzcmJGSOYJIBgyWKdS0p5yWp+FnmXSA7sOWX06DRM0Vtk7Gyeh1HOULDaiQXFJWenNua81dlAWVjxtDMlsJMEkltjYzHasMc5nDSUdAtuYVk4kVJ2h3v7HmMDjURmJBPZplTPjaNtVZGYCrbC+GtMBMwWhZ710bkrVevqhIchooyYedtmoYJnO5AwjMHF8PHCuXV89F7LyTYfFNEi9CMhMQudBFoZy9DVB5CCYEPKf3dcjEhQDK0yrBVYy+oIaJ+Hsoi9yqrhgAhsjMywxt+k6mIQA0hywCopvAmqTwrNhALlaKCQVf5GTErncEG+4FXxMSiEAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEECuAXAFgMQDYHsB3AOgEsJcwBiAcQEkAVACQFUAhAfQBkB5egOQDaABgC6iUAAd8sUulL4AdhJAAPRAEYAHAFZiAZgBsRwxv0B2LRo0AWAEzmANCACeiALT79G4obtabLQBOMw1DAJt9AF8o5zQsPCIyCmoAUQBZZDouDgBhHn5sOgAldNSAERFxJBBpWXklFXUEdw0g-WIgwx1hIJ0dKyCtQydXD3MbG2JhOz8Qru8NXpi4jBwCEnJKKjKGZEyAZQBpbj46fg5kFmYqlTq5BWUa5vc7PuI7G1NhcMNDG2E3mcbgQGjsHXCOgcwnMOkM7TswhsKxA8XWSS21GQAAVsVxUqcBLcavcGk9QM0vMJOhMvgMlks3qMQWYOv1tP8tOZurDbCi0YlNilkttctgOAA1VLFOhFCrEqQyB6NZ4eDTmOzTbo2Ppw-rCAL6YEefQw6a9HRLbz+RFaflrQXEbEAQ1gsAAxvgINRMvwWMgcrwiWI7kqyU1EFYOnY4VojF1dF8jWMWuZvMQdEFzLygoFc9FYqiHRsna6PV6wKW3YR8AAnCBUXJMZD8GgEhg8Dg8BjYhW1MOPCMtazU+Y2HrmDk2cw-Y3Dhx6YRg7ReLxaN7IwsCksut2e71V2A1+tUbEAdXKHAYAE1secaH3SYPVS17Jq46bPjP9EFhEjkyCrT+OYxDqn+k76HSSzmPaCQ7mW+6Vt22KNs2rbtp22LIAcBxnjwxSVCGJIDiqFJqvoWgZnCYRxm8cx-HOrRgh0GrWFo7H6HC06bqscFJLu5YHshIrUMUqQHKk-CEdUir1M+ZEINCGYxp8OgUTosK9Ix1jgsQrHaBxXETLB6IkAJiHEMJmJUBJUmPiR5JqIgxgsf0k6-gCaYWNpMaLnYiJrlydE8UWfFmQhFaWT2IlUMhV63ve9lyaRTkIF4UwasIcKWGCWbmH02lfFMITZdy2ZLFmJmOuZkXCbAYCKBApCKFAVAQEolbNQAbvgADWlbbvxEVCdF9WNc1UAIN1+Dus6ZJVElyqOc0ASGHppoDIYS48uq2nqpqMzcjMwz+ZxVXwXutXRchBwNegVCqLA6BzZWzoAGboGAtYABRLH+ACUVCDeFl0jdiUXYrdijoIt4YvlYIHgllGrsTogTroVwwGEE-mZvCAQOAWvGmcQAC2YDPekrq9Vw+BQFAE1tR1ZCKD1-XEMDZMU86VOwDTdMMy1U2szNc2PAtRGyUtQ40QY9j5QEYIAkE7RznGa0auO3gAmpMYhZz5OU9TtP04zX21nWxCSLgc1vXWpMc8WSSGzzxsCxNws9bN81iLD8mpe4W2ai56s-P4WZaHOYJ6Noal-rYXwfnaW5OyQLuk27pstXQihM4onUi+zBvcxnfMm4LUA557os+6Ifspc01j6JqXS0mppr-FpKY2EsekhBRCLqiEfIp2FXPPaX-NZ5Xufm5b1u2-bjtj+nmcV1X03e+LvuS-2yXLWqvRaj+gKZvlfQMd3sK+LMXRdHCfSAudSQM1gqAAEblxNOd5wXbMDanYgr9MAfy-tnRQ1ct5KAljJPe0sXzZhAgaU+4R7CcWZB4KE0xpzch7uOXosJjKjxJsA0B7twFUDnrWK2Nt0B21rA7TmpDP7kJnpAsW0Cd6wKfA3ZyAwDCIjctYSYM5I4pncJ5D4DhOTtG5DjSYz807OkUKgZ0uAwEz1-izf+y8SYZxUWojRG8RZQMUDA0M+8hzsSmDqMEfw-x2DMHGRikQgi+B+F5NS0dhiKLJso1R6jWE-yoTQxeDDdGOn0QEoxEDN4cLMVwix8CFJqRsfYKEOoDTZkvoBNM1ICF+DBMEeEyxiGOmdJIa2YAYlaOmkXQBFSqkxPYbXeuB8EDtCmBoLxbQzDgjTGIkEiI3EWC0ICQIthgI6F8Y0ygNSQkLzoUvTmszqlBNiSY+J5jiKWJfLMECkQlamm6WM7phg5x-D0O3AeP5fxFJmZUygaJGY4jxAScoyA9gcAOCwXIuRxIHDaUON4McKI6nsH+UwAw5z2A1rSGEWV9lwkMDEQsigKzwBqMDJJcMFKBx6L4NcRgw7BEsNpCYlFgiOP+NmHUt9fGYhxf7F4nxKL3xGJOLKkw9QuLjMQPMGlxw6l0EuaZZSSyYhEky3hLRESjm6BypYaNxzdEYj+PQQw+iWGnJ8K0KLxUYmFO6N6EovqkDeqQSA0r2nuC5KBNSIwqUTEZDYNV7xNVbVMCEbafRfE1W9NaocEiZzEA-DMacgJfz-m0n8HwP5HFdB7ltdoydibVWGpWASx4ICBpfK8EYGZJm5gcBC8Ie12jTDRltCwkwAgwj9RmiGuaFL+U1FCDJaldCaSCNpDSHQqX+TGRpWYPwG2gyQtFRlOzkmpX+D4NBkI2j+S+HYbSXhNThwND3LMfxLBjsEhO8GY0motWbalTMlFHFjOnGYO+rrxHWBDVCdcVovDZjsPuiywkbp3TPStEIekYROMcWYQI5yH3AVAjObpb7tppl8eXSAOc-2IBxpqfKmZATfHVeBwCXgfB+ACMEUIqDIi+JdrzKeFcUPDndexRxGkDSZnHBghAcYMpLnAvlREbQYIGrTiXNe39HI8PaWpNxKtfzyLeBVNWkFAN-WzDjJclV+NALkCAlh09kPTtxee94Aw8lpivZCqO8nbAUTBA4X8fwLDkf8YY9ZNGuSjlhN0E+UINSsfcAMPQwxtCIs+DCfwDymlOd08yxAVbQ0xnUpxQIk4NAXJ+OtIY-h7A6TFWmksqznmnoizK+Lla-q2FsJYRE96hmmH5e5EY45ca5lRVEIAA */
   initial: "idle",
 
   context: {
@@ -95,12 +104,9 @@ const authMachine = setup({
 
         EMAIL_CONFIRMED: {
           target: "Passcode",
-          actions: {
-            type: "emailConfirmed",
-            params({ event }) {
-              return { email: event.email }
-            },
-          }
+          actions: assign({
+            email: (ctx) => ctx.event.email
+          })
         },
 
         METAMASK_LOGIN_AUTH: "metaMaskLogging",
@@ -116,12 +122,9 @@ const authMachine = setup({
           on: {
             CF_VERIFIED: {
               target: "cfVerified",
-              actions: {
-                type: "onCFVerified",
-                params({ event }) {
-                  return { turnstileToken: event.turnstileToken }
-                },
-              },
+              actions: assign({
+                turnstileToken: (ctx) => ctx.event.turnstileToken
+              }),
               reenter: true
             }
           }
@@ -137,7 +140,11 @@ const authMachine = setup({
       states: {
         Password: {
           on: {
-            CHANGE_TO_OTP: "OTP"
+            CHANGE_TO_OTP: "OTP",
+            PWD_TYPING: {
+              target: 'Password',
+              actions: assign({ password: (ctx) => ctx.event.pwd })
+            }
           }
         },
 
@@ -162,7 +169,10 @@ const authMachine = setup({
                   reenter: true
                 },
 
-                OTP_TYPING: "idle"
+                OTP_TYPING: {
+                  target: 'idle',
+                  actions: assign({ otp: (ctx) => ctx.event.otp })
+                }
               }
             },
 
@@ -193,7 +203,7 @@ const authMachine = setup({
             },
           },
           initial: "idle"
-        },
+        }
       },
 
       initial: "Password",
@@ -201,7 +211,7 @@ const authMachine = setup({
       on: {
         MANUAL_LOGIN: {
           target: "manualLoggingIn",
-          guard: "onDataValidated"
+          guard: "manualLoginDataValid"
         }
       }
     },
@@ -228,7 +238,10 @@ const authMachine = setup({
         input: (ctx) => {
           return { data: ctx.context.metamaskData }
         },
-        onDone: 'LoggedIn'
+        onDone: 'LoggedIn',
+        onError: {
+          target: "idle",
+        }
       }
     },
 
@@ -239,15 +252,28 @@ const authMachine = setup({
           target: "LoggedIn",
           reenter: true
         },
+        onError: {
+          target: "idle",
+        }
       },
     },
 
     manualLoggingIn: {
       invoke: {
         src: "doManualLogin",
+        input: (ctx) => {
+          return {
+            email: ctx.context.email,
+            password: ctx.context.password,
+            otp: ctx.context.otp
+          }
+        },
         onDone: {
           target: "LoggedIn",
           reenter: true
+        },
+        onError: {
+          target: "Passcode",
         }
       }
     },
@@ -260,7 +286,10 @@ const authMachine = setup({
             data: ctx.context.appleData
           }
         },
-        onDone: 'LoggedIn'
+        onDone: 'LoggedIn',
+        onError: {
+          target: "idle",
+        }
       }
     },
 

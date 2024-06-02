@@ -3,7 +3,7 @@ import { useMachine } from '@xstate/react'
 import React, { useCallback } from 'react'
 import authMachine from './auth.state'
 import { fromPromise } from 'xstate'
-import { AppleLoginPlatforms, OtpChannel, PublicDataQuery, useAuthByWeb3LazyQuery, useLoginByAppleLazyQuery, useSendOtpMutation } from '../../../schema/generated'
+import { AppleLoginPlatforms, OtpChannel, PublicDataQuery, useAuthByWeb3LazyQuery, useDoLoginV3Mutation, useLoginByAppleLazyQuery, useSendOtpMutation } from '../../../schema/generated'
 import toast from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../services/misc'
 import { useActionTrack } from '../../../hooks/tracke'
@@ -15,6 +15,8 @@ import { signDataByWeb3 } from '../../../utils/wallet'
 import { useTranslation } from 'react-i18next'
 import { Divider } from '@mantine/core'
 import EmailLoginEntry from './emailEntry'
+// import { createBrowserInspector } from '@statelyai/inspect'
+// const { inspect } = createBrowserInspector();
 
 type AuthV4ContentProps = {
   publicData?: PublicDataQuery
@@ -41,6 +43,10 @@ function AuthV4Content(props: AuthV4ContentProps) {
 
   const [doAppleAuth, appleAuthResponse] = useLoginByAppleLazyQuery()
   const [doWeb3Auth, doWeb3AuthData] = useAuthByWeb3LazyQuery()
+  const [
+    loginV3,
+    loginV3Response
+  ] = useDoLoginV3Mutation()
 
   const onGithubClick = useActionTrack('login:github')
   const [state, send] = useMachine(authMachine.provide({
@@ -112,15 +118,28 @@ function AuthV4Content(props: AuthV4ContentProps) {
           },
         })
       }),
-      doManualLogin: fromPromise(async (ctx) => {
+      doManualLogin: fromPromise(async ({ input }) => {
+        if (!input.email) {
+          return
+        }
+        // TODO: password login
+        return toast.promise(loginV3({
+          variables: {
+            payload: {
+              email: input.email,
+              otp: input.otp!
+            }
+          }
+        }), toastPromiseDefaultOption)
       }),
     }
-  }))
+  }), {
+    //  inspect 
+  })
 
   return (
     <div className='w-full h-full bg-slate-100 relative'>
       <AuthBackgroundView publicData={publicData} />
-
       <div
         className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
         style={{
