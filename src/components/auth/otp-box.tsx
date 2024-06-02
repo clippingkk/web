@@ -9,7 +9,7 @@ import { DoLoginV3Mutation } from '../../schema/generated'
 type OTPBoxProps = {
   autoValidate?: boolean
   loading: boolean
-  onSubmit(val: string): Promise<FetchResult<DoLoginV3Mutation>>
+  onSubmit(val: string): Promise<any>
 }
 
 // TODO: resend case
@@ -40,7 +40,7 @@ function OTPBox(props: OTPBoxProps) {
   return (
     <div className='w-full with-fade-in'>
       <p
-        className='text-white whitespace-break-spaces text-center mb-4'
+        className=' text-slate-900 dark:text-white whitespace-break-spaces text-center mb-4'
       >
         {t('app.auth.info.otpSent')}
       </p>

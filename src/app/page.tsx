@@ -39,7 +39,6 @@ async function Page() {
       <HydrationBoundary state={d}>
         <IndexPage
           bgInfo={bgInfo}
-          hydratedStates={d}
           publicData={data.data}
         />
       </HydrationBoundary>

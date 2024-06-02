@@ -15,7 +15,6 @@ type IndexPageProps = {
     src: string;
     blurHash: string;
   }
-  hydratedStates: any
 }
 
 function IndexPage(props: IndexPageProps) {

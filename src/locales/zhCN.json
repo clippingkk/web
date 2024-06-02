@@ -91,7 +91,9 @@
       },
       "thirdPart": {
         "title": "Or you can try login by ..."
-      }
+      },
+      "otpTitle": "一次性密码",
+      "resend": "重发"
     },
     "authCallback": {
       "logged": "Cool, 已经创建完成啦",

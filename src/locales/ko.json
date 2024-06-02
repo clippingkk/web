@@ -91,7 +91,9 @@
       },
       "thirdPart": {
         "title": "또는 ...으로 로그인을 시도할 수도 있습니다."
-      }
+      },
+      "otpTitle": "일회용 암호",
+      "resend": "재전송"
     },
     "authCallback": {
       "logged": "Cool, 생성 된",

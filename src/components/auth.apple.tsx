@@ -1,34 +1,14 @@
 'use client'
 import React, { useCallback } from 'react'
-import AppleSignin from 'react-apple-signin-auth'
 import { toast } from 'react-hot-toast'
 import { AppleAuthResponse } from '../services/apple'
 import { useRouter } from 'next/navigation'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
-import WithLoading from './with-loading'
 import { AppleLoginPlatforms, useLoginByAppleLazyQuery } from '../schema/generated'
+import AppleLoginButtonView from './auth/apple'
 
 type AuthAppleProps = {
   disabled?: boolean
-}
-
-const authOptions = {
-  clientId: 'com.annatarhe.clippingkk',
-  scope: 'email name',
-  redirectURI: 'https://clippingkk.annatarhe.com/auth/auth-v2',
-  state: 'state',
-  usePopup: true,
-}
-
-function AuthAppleButton(props: any) {
-  return (
-    <button
-      className='flex justify-center items-center bg-black text-white w-full mt-4 rounded hover:scale-105 duration-150 py-0.5'
-      onClick={props.onClick}
-    >
-      {props.children}
-    </button>
-  )
 }
 
 function AuthByAppleButton(props: AuthAppleProps) {
@@ -64,27 +44,16 @@ function AuthByAppleButton(props: AuthAppleProps) {
   const loading = appleAuthResponse.loading
 
   return (
-    <WithLoading
+    <AppleLoginButtonView
       loading={loading}
       disabled={props.disabled}
-    >
-      <AppleSignin
-        authOptions={authOptions}
-        uiType="dark"
-        className="apple-auth-btn"
-        noDefaultStyle={false}
-        buttonExtraChildren="Continue with Apple"
-        onSuccess={onSuccess}
-        onError={
-          (error: any) => {
-            toast.error('Auth by Apple: ' + error.error)
-          }
+      onSuccess={onSuccess}
+      onError={
+        (error: any) => {
+          toast.error('Auth by Apple: ' + error.error)
         }
-        skipScript={false}
-        iconProp={{ style: { marginTop: '10px' } }}
-        render={AuthAppleButton}
-      />
-    </WithLoading>
+      }
+    />
   )
 }
 

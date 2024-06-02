@@ -91,7 +91,9 @@
       },
       "thirdPart": {
         "title": "Or you can try login by ..."
-      }
+      },
+      "otpTitle": "One Time Passcode",
+      "resend": "Resend"
     },
     "authCallback": {
       "logged": "Cool, you have an account ~",
