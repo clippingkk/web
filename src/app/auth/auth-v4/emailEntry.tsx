@@ -6,6 +6,9 @@ import { Form, useForm } from "@mantine/form"
 import { useTranslation } from "react-i18next"
 import { ChevronRightIcon } from "@heroicons/react/24/solid"
 import OTPBox from "../../../components/auth/otp-box"
+import { useEffect } from "react"
+import Turnstile from "react-turnstile"
+import { CF_TURNSTILE_SITE_KEY } from "../../../constants/config"
 
 type EmailLoginEntryProps = {
   machine: AuthMachine
@@ -26,7 +29,15 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
     },
   })
 
-  console.log(f.values)
+  f.watch('email', (email) => {
+    sendEvent({ type: 'EMAIL_TYPING', email: email.value })
+  })
+  f.watch('password', (password) => {
+    sendEvent({ type: 'PWD_TYPING', pwd: password.value })
+  })
+  f.watch('otp', (otp) => {
+    sendEvent({ type: 'OTP_TYPING', otp: otp.value })
+  })
 
   const machineCtxErrors = machine.context.errorMessages
 
@@ -42,13 +53,13 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
         type="email"
         className="w-full"
         name="email"
-        onBlur={() => sendEvent({ type: 'EMAIL_CONFIRMED', email: f.values.email })}
+        onBlur={() => sendEvent({ type: 'EMAIL_TYPING', email: f.values.email })}
         onKeyDown={async (e) => {
           if (e.key !== 'Enter') {
             return
           }
           await f.validate()
-          sendEvent({ type: 'EMAIL_CONFIRMED', email: f.values.email })
+          sendEvent({ type: 'EMAIL_TYPING', email: f.values.email })
         }}
         {...f.getInputProps('email')}
       />
@@ -131,6 +142,13 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
           </div>
         </div>
       )}
+      <Turnstile
+        sitekey={CF_TURNSTILE_SITE_KEY}
+        onVerify={t => sendEvent({ type: 'CF_VERIFIED', turnstileToken: t })}
+        onError={e => sendEvent({ type: 'CF_VERIFIED', turnstileToken: 'temp' })}
+        // onError={() => sendEvent({ type: 'CF_ERROR' })}
+        className='mx-auto my-4 w-full'
+      />
       <Button
         fullWidth
         size="lg"

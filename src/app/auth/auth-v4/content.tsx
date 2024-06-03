@@ -3,7 +3,7 @@ import { useMachine } from '@xstate/react'
 import React, { useCallback } from 'react'
 import authMachine from './auth.state'
 import { fromPromise } from 'xstate'
-import { AppleLoginPlatforms, OtpChannel, PublicDataQuery, useAuthByWeb3LazyQuery, useDoLoginV3Mutation, useLoginByAppleLazyQuery, useSendOtpMutation } from '../../../schema/generated'
+import { AppleLoginPlatforms, OtpChannel, PublicDataQuery, useAuthByWeb3LazyQuery, useAuthLazyQuery, useAuthQuery, useDoLoginV3Mutation, useLoginByAppleLazyQuery, useSendOtpMutation } from '../../../schema/generated'
 import toast from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../services/misc'
 import { useActionTrack } from '../../../hooks/tracke'
@@ -42,6 +42,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
   const { t } = useTranslation()
 
   const [doAppleAuth, appleAuthResponse] = useLoginByAppleLazyQuery()
+  const [doAuth, doAuthData] = useAuthLazyQuery()
   const [doWeb3Auth, doWeb3AuthData] = useAuthByWeb3LazyQuery()
   const [
     loginV3,
@@ -73,10 +74,10 @@ function AuthV4Content(props: AuthV4ContentProps) {
       doMetamaskLogin: fromPromise(async ({ input }) => {
         if (!input.data) {
           toast.error('Auth by Metamask: not exist')
-          return
+          throw new Error('Auth by Metamask: not exist')
         }
         const { address, signature, text } = input.data
-        const r = await doWeb3Auth({
+        return toast.promise(doWeb3Auth({
           variables: {
             payload: {
               address: address,
@@ -84,10 +85,11 @@ function AuthV4Content(props: AuthV4ContentProps) {
               text: text
             }
           }
-        })
-        if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
-          router.push(`/auth/callback/metamask?a=${address}&s=${signature}&t=${encodeURIComponent(text)}`)
-        }
+        }), toastPromiseDefaultOption)
+          .then(r => r.data?.loginByWeb3)
+        // if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
+        //   router.push(`/auth/callback/metamask?a=${address}&s=${signature}&t=${encodeURIComponent(text)}`)
+        // }
       }),
       doAppleLogin: fromPromise(async ({ input }) => {
         if (!input.data) {
@@ -95,7 +97,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
           return
         }
         const { code, id_token, state } = input.data
-        const r = await doAppleAuth({
+        return toast.promise(doAppleAuth({
           variables: {
             payload: {
               code: code,
@@ -104,10 +106,11 @@ function AuthV4Content(props: AuthV4ContentProps) {
               platform: AppleLoginPlatforms.Web,
             }
           }
-        })
-        if (r.data?.loginByApple.noAccountFrom3rdPart) {
-          router.push(`/auth/callback/apple?i=${id_token}`)
-        }
+        }), toastPromiseDefaultOption)
+          .then(r => r.data?.loginByApple)
+        // if (r.data?.loginByApple.noAccountFrom3rdPart) {
+        //   router.push(`/auth/callback/apple?i=${id_token}`)
+        // }
       }),
       connectWeb3Wallet: fromPromise((ctx) => {
         return toast.promise(signDataByWeb3(), {
@@ -122,7 +125,17 @@ function AuthV4Content(props: AuthV4ContentProps) {
         if (!input.email) {
           return
         }
-        // TODO: password login
+        if (!input.otp) {
+          // 这里是用户名密码登录
+          return toast.promise(doAuth({
+            variables: {
+              email: input.email,
+              password: input.password!,
+              cfTurnstileToken: input.turnstileToken!
+            }
+          }), toastPromiseDefaultOption)
+            .then(r => r.data?.auth)
+        }
         return toast.promise(loginV3({
           variables: {
             payload: {
@@ -131,6 +144,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
             }
           }
         }), toastPromiseDefaultOption)
+          .then(r => r.data?.loginV3)
       }),
     }
   }), {
@@ -152,7 +166,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
           <div className='px-8 py-4 flex flex-col lg:flex-row rounded bg-slate-200 bg-opacity-80 backdrop-blur'>
             <EmailLoginEntry machine={state} sendEvent={send} />
             <Divider variant='vertical' className='mx-8' />
-            <div>
+            <div className='mt-6 lg:mt-0'>
               <h3 className='text-lg mb-8 font-bold'>{t('app.auth.thirdPart.title')}</h3>
               <ThirdPartEntry machine={state} onEvent={send} />
             </div>

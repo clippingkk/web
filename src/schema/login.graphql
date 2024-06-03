@@ -1,19 +1,6 @@
+#import './fragment/auth.graphql'
 query githubLogin($code: String!) {
   githubAuth(code: $code) {
-    user {
-      id
-      name
-      email
-      phone
-      password
-      avatar
-      checked
-      bio
-      createdAt
-      updatedAt
-      domain
-      wechatOpenid
-    }
-    token
+    ...AuthLoginResponse
   }
 }

@@ -1,5 +1,7 @@
 import { EventFromLogic, SnapshotFrom, assign, fromPromise, setup } from "xstate"
 import { AppleAuthResponse } from "../../../services/apple"
+import { AuthV4ManualAuthSchema } from "./schema"
+import { AuthLoginResponseFragment, AuthResponse } from "../../../schema/generated"
 
 type Context = {
   email?: string
@@ -17,10 +19,9 @@ type Context = {
 }
 
 type Event =
-  | { type: 'EMAIL_CONFIRMED', email: string }
+  | { type: 'EMAIL_TYPING', email: string }
   | { type: 'CF_VERIFIED', turnstileToken: string }
   | { type: 'APPLE_DATA_SUCCESS', data: Required<Context>['appleData'] }
-  // | { type: 'METAMASK_LOGIN', data: Required<Context>['metamaskData'] }
   | { type: 'OTP_TYPING', otp: string }
   | { type: 'PWD_TYPING', pwd: string }
   | { type: 'METAMASK_LOGIN_AUTH' }
@@ -49,45 +50,39 @@ const authMachine = setup({
     doSendOTP: fromPromise(async (_: { input: { email?: string, turnstileToken?: string } }): Promise<any> => {
       throw new Error('not implemented')
     }),
-    doMetamaskLogin: fromPromise(async (_: { input: { data: Context['metamaskData'] } }): Promise<any> => {
+    doMetamaskLogin: fromPromise(async (_: { input: { data: Context['metamaskData'] } }): Promise<AuthLoginResponseFragment | undefined> => {
       throw new Error('not implemented')
     }),
-    doManualLogin: fromPromise(async (_: { input: { email?: string, password?: string, otp?: string } }): Promise<any> => {
+    doManualLogin: fromPromise(async (_: { input: { email?: string, password?: string, otp?: string, turnstileToken?: string } }): Promise<AuthLoginResponseFragment | undefined> => {
       throw new Error('not implemented')
     }),
-    doAppleLogin: fromPromise(async (_: { input: { data: Context['appleData'] } }): Promise<any> => {
+    doAppleLogin: fromPromise(async (_: { input: { data: Context['appleData'] } }): Promise<AuthLoginResponseFragment | undefined> => {
       throw new Error('not implemented')
     }),
     connectWeb3Wallet: fromPromise(async (_: { input: unknown }): Promise<Required<Context>['metamaskData']> => {
       throw new Error('not implemented')
+    }),
+    setLocalState: fromPromise(async (_: { input: unknown }): Promise<Required<Context>['metamaskData']> => {
+      throw new Error('not implemented')
     })
   },
   guards: {
+    isEmailValid: (ctx) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(ctx.context.email ?? ''),
     onlyOnOTPTimeReset: (ctx) => ctx.context.resendOTPReminds === 0,
     onlyTimeReset: (ctx) => ctx.context.resendOTPReminds === 0,
     // TODO: implement it
     manualLoginDataValid: (ctx) => {
-      const { email, password, otp } = ctx.context
-      console.log('mmmm', email, password, otp, ctx)
-      if (!email) {
-        return false
-      }
-      if (!password && !otp) {
-        return false
-      }
-      return true
+      const { email, password, otp, turnstileToken } = ctx.context
+      const parsed = AuthV4ManualAuthSchema.safeParse({ email, password, otp, turnstileToken })
+      return parsed.success
     },
     validatedOnly: (ctx) => true
   },
   actions: {
-    coolingOTP: (ctx) => {
-      console.log('coolingOTP', ctx)
-      return assign({ resendOTPReminds: ctx.context.resendOTPReminds - 1 })
-    },
     appleDataSuccess: (_, params: { data: Required<Context>['appleData'] }) => assign({ appleData: params.data }),
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEECuAXAFgMQDYHsB3AOgEsJcwBiAcQEkAVACQFUAhAfQBkB5egOQDaABgC6iUAAd8sUulL4AdhJAAPRAEYAHAFZiAZgBsRwxv0B2LRo0AWAEzmANCACeiALT79G4obtabLQBOMw1DAJt9AF8o5zQsPCIyCmoAUQBZZDouDgBhHn5sOgAldNSAERFxJBBpWXklFXUEdw0g-WIgwx1hIJ0dKyCtQydXD3MbG2JhOz8Qru8NXpi4jBwCEnJKKjKGZEyAZQBpbj46fg5kFmYqlTq5BWUa5vc7PuI7G1NhcMNDG2E3mcbgQGjsHXCOgcwnMOkM7TswhsKxA8XWSS21GQAAVsVxUqcBLcavcGk9QM0vMJOhMvgMlks3qMQWYOv1tP8tOZurDbCi0YlNilkttctgOAA1VLFOhFCrEqQyB6NZ4eDTmOzTbo2Ppw-rCAL6YEefQw6a9HRLbz+RFaflrQXEbEAQ1gsAAxvgINRMvwWMgcrwiWI7kqyU1EFYOnY4VojF1dF8jWMWuZvMQdEFzLygoFc9FYqiHRsna6PV6wKW3YR8AAnCBUXJMZD8GgEhg8Dg8BjYhW1MOPCMtazU+Y2HrmDk2cw-Y3Dhx6YRg7ReLxaN7IwsCksut2e71V2A1+tUbEAdXKHAYAE1secaH3SYPVS17Jq46bPjP9EFhEjkyCrT+OYxDqn+k76HSSzmPaCQ7mW+6Vt22KNs2rbtp22LIAcBxnjwxSVCGJIDiqFJqvoWgZnCYRxm8cx-HOrRgh0GrWFo7H6HC06bqscFJLu5YHshIrUMUqQHKk-CEdUir1M+ZEINCGYxp8OgUTosK9Ix1jgsQrHaBxXETLB6IkAJiHEMJmJUBJUmPiR5JqIgxgsf0k6-gCaYWNpMaLnYiJrlydE8UWfFmQhFaWT2IlUMhV63ve9lyaRTkIF4UwasIcKWGCWbmH02lfFMITZdy2ZLFmJmOuZkXCbAYCKBApCKFAVAQEolbNQAbvgADWlbbvxEVCdF9WNc1UAIN1+Dus6ZJVElyqOc0ASGHppoDIYS48uq2nqpqMzcjMwz+ZxVXwXutXRchBwNegVCqLA6BzZWzoAGboGAtYABRLH+ACUVCDeFl0jdiUXYrdijoIt4YvlYIHgllGrsTogTroVwwGEE-mZvCAQOAWvGmcQAC2YDPekrq9Vw+BQFAE1tR1ZCKD1-XEMDZMU86VOwDTdMMy1U2szNc2PAtRGyUtQ40QY9j5QEYIAkE7RznGa0auO3gAmpMYhZz5OU9TtP04zX21nWxCSLgc1vXWpMc8WSSGzzxsCxNws9bN81iLD8mpe4W2ai56s-P4WZaHOYJ6Noal-rYXwfnaW5OyQLuk27pstXQihM4onUi+zBvcxnfMm4LUA557os+6Ifspc01j6JqXS0mppr-FpKY2EsekhBRCLqiEfIp2FXPPaX-NZ5Xufm5b1u2-bjtj+nmcV1X03e+LvuS-2yXLWqvRaj+gKZvlfQMd3sK+LMXRdHCfSAudSQM1gqAAEblxNOd5wXbMDanYgr9MAfy-tnRQ1ct5KAljJPe0sXzZhAgaU+4R7CcWZB4KE0xpzch7uOXosJjKjxJsA0B7twFUDnrWK2Nt0B21rA7TmpDP7kJnpAsW0Cd6wKfA3ZyAwDCIjctYSYM5I4pncJ5D4DhOTtG5DjSYz807OkUKgZ0uAwEz1-izf+y8SYZxUWojRG8RZQMUDA0M+8hzsSmDqMEfw-x2DMHGRikQgi+B+F5NS0dhiKLJso1R6jWE-yoTQxeDDdGOn0QEoxEDN4cLMVwix8CFJqRsfYKEOoDTZkvoBNM1ICF+DBMEeEyxiGOmdJIa2YAYlaOmkXQBFSqkxPYbXeuB8EDtCmBoLxbQzDgjTGIkEiI3EWC0ICQIthgI6F8Y0ygNSQkLzoUvTmszqlBNiSY+J5jiKWJfLMECkQlamm6WM7phg5x-D0O3AeP5fxFJmZUygaJGY4jxAScoyA9gcAOCwXIuRxIHDaUON4McKI6nsH+UwAw5z2A1rSGEWV9lwkMDEQsigKzwBqMDJJcMFKBx6L4NcRgw7BEsNpCYlFgiOP+NmHUt9fGYhxf7F4nxKL3xGJOLKkw9QuLjMQPMGlxw6l0EuaZZSSyYhEky3hLRESjm6BypYaNxzdEYj+PQQw+iWGnJ8K0KLxUYmFO6N6EovqkDeqQSA0r2nuC5KBNSIwqUTEZDYNV7xNVbVMCEbafRfE1W9NaocEiZzEA-DMacgJfz-m0n8HwP5HFdB7ltdoydibVWGpWASx4ICBpfK8EYGZJm5gcBC8Ie12jTDRltCwkwAgwj9RmiGuaFL+U1FCDJaldCaSCNpDSHQqX+TGRpWYPwG2gyQtFRlOzkmpX+D4NBkI2j+S+HYbSXhNThwND3LMfxLBjsEhO8GY0motWbalTMlFHFjOnGYO+rrxHWBDVCdcVovDZjsPuiywkbp3TPStEIekYROMcWYQI5yH3AVAjObpb7tppl8eXSAOc-2IBxpqfKmZATfHVeBwCXgfB+ACMEUIqDIi+JdrzKeFcUPDndexRxGkDSZnHBghAcYMpLnAvlREbQYIGrTiXNe39HI8PaWpNxKtfzyLeBVNWkFAN-WzDjJclV+NALkCAlh09kPTtxee94Aw8lpivZCqO8nbAUTBA4X8fwLDkf8YY9ZNGuSjlhN0E+UINSsfcAMPQwxtCIs+DCfwDymlOd08yxAVbQ0xnUpxQIk4NAXJ+OtIY-h7A6TFWmksqznmnoizK+Lla-q2FsJYRE96hmmH5e5EY45ca5lRVEIAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEECuAXAFgMQDYHsB3AOgEsJcwBiAcQEkAVACQFUAhAfQBkB5egOQDaABgC6iUAAd8sUulL4AdhJAAPRAEYAHAFZiAZgBsRwxv0B2LRo0AWAEzmANCACeiALT79G4obtabLQBOMw1DAJt9AF8o5zQsPCIyCmoAWQBRBmRU5ABlAGluPjp+DmQWZhFxJBBpWXklFXUEdzsgvTsbU2Fww0MbYW9nNwQNO31fXQdhcx1DIP07YRsYuIwcAhJySipkAAU9rnSigSqVOrkFZRrmr2FiIPMbLp0rYQ1hNqdXTS9iHR02n6WnMhh0s1sqxA8Q2SW21HSOToXA4DAAmnsSjQzjULg1rqBmu4dINiEthEFlnYPgMHMMPEYJhodEEbHMdPoAnYHFCYYktilkjsAMLYDgANXSACU6Ng6OkACI4qQyS6NG4eDTmOzEHo6GztdkkgL6ektfQzXUUwGDMZaJZaXnrfnEPYAQ1gsAAxvgIGlkPwWMgUbxTmJzqr8U1EFYJnY5lojEFwvrjGb3OZvP9HhDWcFIk6EptXR7vb6wCXPYR8AAnCBUYVMAM0Y4MHgcHgMPbK2qRq7RlrWe4hVkk8xAmzmHrpsazXVjbReLz21mF2Ekd2en1+yuwat1qh7ADqCtRGKxPbx-Y1LXsOsTFs6U-0lOWpp+g-85mIWuEMzMLwfOYa4upuZY7p2ewNk2-Atqi7Z7HkuRHjwUpKuGuJ9uqhKapy-xzGEiZtH4yaGDOYwTNq1haDR+hzJOKyxNCzrFmB24VpBQrUFK6S5Ok-DodUKr1NeOEINM-zxp0HK6LMFLkeMxBUdotH0U8IGsaW7HEJx8JUHxAmXlhBJqIgxiUQC46UgMmYWDO8Z6J8SzLiCxGMWsRZJGx5Y6V2XFUJBZ6YrBRkidhpkIF4NhKUscyWGMObtDOXTRSEcWguY44UsBTF8ppW4+ZxsBgIoECkIoUBUBASgVuVABu+AANYVnlXlaYVfnFaV5VQAg9X4F6br4lUoVqiZzQBIYSkWq8hjvGC47fCM7jWNquoOHN-h+OMOgaW1BUQX5kG5CV6BUKosDoENFZugAZugYA1gAFB8f4AJS7Cx+3gRxR1didijoKNUY3lY37jMI4L+LogT2slWhTS+3IsvMXKZntJAALZgFdqQeo1XD4FAUA9VVNVkIoDXNcQrVYzjbp47ABNEyTFV9ZTA1DVcI0YcJY0DoRBj2OYQQBGMAxBAsZqJlN2pst4AwcvG7nMZ5dO4-jhPE6Tj01rWxCSLgQ23bWmM0196sM5rLM9ezDWDcNYjA6JEXuJtvjLkYPT+I8WhmmMejaByf62F0D6OrlFvENjV2Y9b2sVXQihk4otUc9TtPR-TcdM1rrNQEnduc47ojO+FzTWIsDyGE88sWv08kfjYHxKSEnILNSIvWCrmcx26OfMwnBfJ7r+uG8bpvm2rWex-H+eF-1Dvc07vO9mF42ahSurGJSdGPJLcxkU3c5+PMZ9zO0gwY8QJNYKgABGec9UnKdp1TLVR7fmAP0-ieKEXS8lA8yEmvfmN5MrfmEFoQYCZ7B0SWh4HQOpliZX6LYEkjxwQ90-nIb+j8bZ-yoKPGsBsjboBNjWM2mcv4-wIcPABXMgErxAVecuZlXgGFiuCbuk4oHphsmSDagQFigiCJ0bB0846KFQG6XAv9h6vwpu-Ke65o5umkbI+RC8OaAMUMAiM68Bw0WigaMYfQ-zUk5O+ZakQgi+B6LZDkAcEbXykTIuRdCX7ENIRPShKiXRuM0Z4-+i9GF6OYQYsBYkOQmPsEgg0UDUFH2Wpme42U-B2mTJSII183SSENmALRydqqpyUU1D+088kFKKQwkuZcN4IAWNFZk3gNBt3GJmP2H4lh2IsNA-QgRbBfl2pHSp+TKBFKITWPWJDx7kMnpnKpEzgm1OXqXVerCGl2BrsQSI4sLTMmgcyZJZkwT-CXMEF8lI7S5PGWAGEpN9iHGOAqZAWQOC5BYMKYUvFcj1IHG0QOnIDT2D-KYV4Zp7Cy1rjMSG2zZh9Gvnpf5N4Vrjl1JlbkO8uiZjTB+DMbQhaWFha8d4cwYhMUUOWeANRaaRJBmJN2JIPZWLmn4YIlgZxPC0MQYI1Iwhd1ZIYJFKR6UuyJJ0HlyZ0ofH1GyME-DEy7OCDXOiAzjHo1Gao+EXExVsJaOSauMrIbPHZOmF8ehRbtEsJOToHwjAisoMQL0t1xSPVILdUgkA9UNPcCCH8HIa58qeB8To5r2gPBVT0NpHwwjtGvt5P0PqBzuF4byu4T5BivkiDOPoPgkbchjeOJYEjVGJorGBfcEBk2ovhf8IZrIHCgvCORBYupUyDFrgEGYCb2qHT2DWsS3IdRIPiTJcEGCZzggmHy5kbJMxSQjh5Mtfbfp7F1ZhQxN40G7PGCmNp3Iuh2BnF4HUPsoHN0eH0SwvaDpruIF1MqFVB0RRZDy6k0DJxmCyTYciU5JL2ntV4TFt6fq+XXcdU6L6JohCUv+Tk-L1UnM-P638LSLDzU1cul0edIBJ2gzGE+9pQTxNsKHc1xhJj+DMAEccKrhVaoCfTRmg984EcHBG0WgHwRQJZPO6WAy4OvUymI94jxXHZzns-EymyBwcjsZLbJnQ2gfCCAJ6KU5hMiyWG0nK2Hiw0PwUPfDm6omvoja8VJC7tBgv9oJ2wnIxgOEpH0Cwrj1HuKKexkEw4EXybhdqBBLRXh6ARjZpBnQZj+FudU4J7HUy8vjJyDk+oQTWDNGy6aot-D2GsPGGLlAHnPtMwyiKdFoqQ1emRyc9plhmm2T4L9yYngRb4xSqIQA */
   initial: "idle",
 
   context: {
@@ -102,18 +97,18 @@ const authMachine = setup({
           reenter: true
         },
 
-        EMAIL_CONFIRMED: {
-          target: "Passcode",
-          actions: assign({
-            email: (ctx) => ctx.event.email
-          })
-        },
-
         METAMASK_LOGIN_AUTH: "metaMaskLogging",
 
         APPLE_LOGIN: {
           target: "appleAuthing",
           reenter: true
+        },
+
+        EMAIL_TYPING: {
+          target: "idle",
+          actions: assign({
+            email: (ctx) => ctx.event.email
+          })
         }
       },
 
@@ -133,7 +128,13 @@ const authMachine = setup({
         cfVerified: {}
       },
 
-      initial: "idle"
+      initial: "idle",
+
+      always: {
+        target: "Passcode",
+        reenter: true,
+        guard: "isEmailValid"
+      }
     },
 
     Passcode: {
@@ -163,12 +164,10 @@ const authMachine = setup({
                   guard: "onlyOnOTPTimeReset",
                   reenter: true
                 },
-
                 SEND: {
                   target: "sending",
                   reenter: true
                 },
-
                 OTP_TYPING: {
                   target: 'idle',
                   actions: assign({ otp: (ctx) => ctx.event.otp })
@@ -197,7 +196,7 @@ const authMachine = setup({
                   target: 'idle',
                   reenter: true,
                   guard: "onlyTimeReset",
-                  actions: "coolingOTP"
+                  actions: assign({ resendOTPReminds: (ctx) => ctx.context.resendOTPReminds - 1 })
                 }
               }
             },
@@ -216,7 +215,11 @@ const authMachine = setup({
       }
     },
 
-    LoggedIn: {},
+    LoggedIn: {
+      invoke: {
+        src: "setLocalState"
+      }
+    },
 
     metaMaskLogging: {
       invoke: {
@@ -265,7 +268,8 @@ const authMachine = setup({
           return {
             email: ctx.context.email,
             password: ctx.context.password,
-            otp: ctx.context.otp
+            otp: ctx.context.otp,
+            turnstileToken: ctx.context.turnstileToken,
           }
         },
         onDone: {
@@ -308,7 +312,6 @@ const authMachine = setup({
       }
     }
   },
-
   id: "AuthFlow"
 })
 
