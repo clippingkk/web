@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.11.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.11...v5.11.0) (2024-06-03)
+
+
+### Features
+
+* **noun:** add noun support ([#114](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/issues/114)) ([0d06c6e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0d06c6ebfdcf5d5a05df7fa684c0fb16ba63a692))
+
+
+### Bug Fixes
+
+* **clipping:** update styles in ai summary ([c61182e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c61182e31edfc33504ae2a54bf6848324086671b))
+* **mixpanel:** respect real env when setting mixpanel debug variable ([7f892cb](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7f892cbaa2947420c9cdeea9617381537d3d6996))
+* **preview:** update loading state in preview of share ([36d747b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/36d747b9f6f1b4eba7b4ff0ff70916b8ca87d528))
+* **test:** remove generated.ts from test coverage ([6dd0987](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6dd09879bf9d9e17a3f18f0eecc67dc83fd1aced))
+
 ### [5.10.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.10.10...v5.10.11) (2024-05-07)
 
 
