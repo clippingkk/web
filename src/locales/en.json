@@ -88,7 +88,12 @@
         "pnLen": "phone number invalid",
         "verifyCodeLen": "verify code invalid",
         "codeLen": "code length should be 6"
-      }
+      },
+      "thirdPart": {
+        "title": "Or you can try login by ..."
+      },
+      "otpTitle": "One Time Passcode",
+      "resend": "Resend"
     },
     "authCallback": {
       "logged": "Cool, you have an account ~",

@@ -1,7 +1,11 @@
 mutation sendOTP(
-    $channel: OTPChannel!
-    $address: String!
-    $cfTurnstileToken: String!
+  $channel: OTPChannel!
+  $address: String!
+  $cfTurnstileToken: String!
 ) {
-	sendOneTimePasscode(channel: $channel, address: $address, cfTurnstileToken: $cfTurnstileToken)
+  sendOneTimePasscode(
+    channel: $channel
+    address: $address
+    cfTurnstileToken: $cfTurnstileToken
+  )
 }
