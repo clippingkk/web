@@ -128,6 +128,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
             <div className="ml-4">
               {machine.can({ type: 'RESEND' }) && (
                 <Button
+                  loading={machine.matches({ Passcode: { OTP: 'sending' } })}
                   onClick={() => sendEvent({ type: 'RESEND' })}
                 >
                   {t('app.auth.resend')}

@@ -25,19 +25,21 @@ type AuthV4ContentProps = {
 function AuthV4Content(props: AuthV4ContentProps) {
   const { publicData } = props
   const router = useRouter()
-  const [doSendOtp, {
-    loading: isSendingOtp
-  }] = useSendOtpMutation()
+  // const [doSendOtp, {
+  //   loading: isSendingOtp
+  // }] = useSendOtpMutation()
 
-  const onEmailSubmit = useCallback((email: string, turnstileToken: string) => {
-    toast.promise(doSendOtp({
-      variables: {
-        channel: OtpChannel.Email,
-        address: email,
-        cfTurnstileToken: turnstileToken
-      }
-    }), toastPromiseDefaultOption)
-  }, [doSendOtp])
+  const doSendOtp = (...args: any) => new Promise(resolve => setTimeout(resolve, 2000))
+
+  // const onEmailSubmit = useCallback((email: string, turnstileToken: string) => {
+  //   toast.promise(doSendOtp({
+  //     variables: {
+  //       channel: OtpChannel.Email,
+  //       address: email,
+  //       cfTurnstileToken: turnstileToken
+  //     }
+  //   }), toastPromiseDefaultOption)
+  // }, [doSendOtp])
 
   const { t } = useTranslation()
 
@@ -54,7 +56,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
     actors: {
       doSendOTP: fromPromise(async ({ input }) => {
         if (!input.email || !input.turnstileToken) {
-          return
+          throw new Error('Auth by Email: not exist')
         }
         return toast.promise(doSendOtp({
           variables: {
@@ -68,7 +70,6 @@ function AuthV4Content(props: AuthV4ContentProps) {
         onGithubClick()
         const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`
         location.href = githubAuthUrl
-
         // TODO: github login callback
       }),
       doMetamaskLogin: fromPromise(async ({ input }) => {
