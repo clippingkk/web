@@ -1,3 +1,4 @@
+'use client'
 import { useState, useRef, useCallback, useEffect } from "react"
 import './style.css'
 
@@ -36,8 +37,10 @@ function InfiniteLooper({
     const { width: parentWidth } = outerRef.current.getBoundingClientRect();
 
     const widthDeficit = parentWidth - width;
-
-    const instanceWidth = width / innerRef.current.children.length;
+    let instanceWidth = width / innerRef.current.children.length;
+    if (instanceWidth === 0) {
+      instanceWidth = 300
+    }
 
     if (widthDeficit) {
       setLooperInstances(

@@ -15,41 +15,39 @@ import { signDataByWeb3 } from '../../../utils/wallet'
 import { useTranslation } from 'react-i18next'
 import { Divider } from '@mantine/core'
 import EmailLoginEntry from './emailEntry'
+import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '../../../hooks/hooks'
 // import { createBrowserInspector } from '@statelyai/inspect'
 // const { inspect } = createBrowserInspector();
 
 type AuthV4ContentProps = {
-  publicData?: PublicDataQuery
 }
 
 function AuthV4Content(props: AuthV4ContentProps) {
-  const { publicData } = props
   const router = useRouter()
-  // const [doSendOtp, {
-  //   loading: isSendingOtp
-  // }] = useSendOtpMutation()
 
   const doSendOtp = (...args: any) => new Promise(resolve => setTimeout(resolve, 2000))
-
-  // const onEmailSubmit = useCallback((email: string, turnstileToken: string) => {
-  //   toast.promise(doSendOtp({
-  //     variables: {
-  //       channel: OtpChannel.Email,
-  //       address: email,
-  //       cfTurnstileToken: turnstileToken
-  //     }
-  //   }), toastPromiseDefaultOption)
-  // }, [doSendOtp])
 
   const { t } = useTranslation()
 
   const [doAppleAuth, appleAuthResponse] = useLoginByAppleLazyQuery()
+  useAuthBy3rdPartSuccessed(
+    appleAuthResponse.called,
+    appleAuthResponse.loading,
+    appleAuthResponse.error,
+    appleAuthResponse.data?.loginByApple
+  )
+
   const [doAuth, doAuthData] = useAuthLazyQuery()
+  useLoginV3Successed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.auth)
+
   const [doWeb3Auth, doWeb3AuthData] = useAuthByWeb3LazyQuery()
+  useAuthBy3rdPartSuccessed(doWeb3AuthData.called, doWeb3AuthData.loading, doWeb3AuthData.error, doWeb3AuthData.data?.loginByWeb3)
   const [
     loginV3,
     loginV3Response
   ] = useDoLoginV3Mutation()
+
+  useLoginV3Successed(loginV3Response.called, loginV3Response.loading, loginV3Response.error, loginV3Response.data?.loginV3)
 
   const onGithubClick = useActionTrack('login:github')
   const [state, send] = useMachine(authMachine.provide({
@@ -88,9 +86,12 @@ function AuthV4Content(props: AuthV4ContentProps) {
           }
         }), toastPromiseDefaultOption)
           .then(r => r.data?.loginByWeb3)
-        // if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
-        //   router.push(`/auth/callback/metamask?a=${address}&s=${signature}&t=${encodeURIComponent(text)}`)
-        // }
+          .then(r => {
+            if (r?.noAccountFrom3rdPart) {
+              router.push(`/auth/callback/metamask?a=${address}&s=${signature}&t=${encodeURIComponent(text)}`)
+            }
+            return r
+          })
       }),
       doAppleLogin: fromPromise(async ({ input }) => {
         if (!input.data) {
@@ -109,9 +110,12 @@ function AuthV4Content(props: AuthV4ContentProps) {
           }
         }), toastPromiseDefaultOption)
           .then(r => r.data?.loginByApple)
-        // if (r.data?.loginByApple.noAccountFrom3rdPart) {
-        //   router.push(`/auth/callback/apple?i=${id_token}`)
-        // }
+          .then(r => {
+            if (r?.noAccountFrom3rdPart) {
+              router.push(`/auth/callback/apple?i=${id_token}`)
+            }
+            return r
+          })
       }),
       connectWeb3Wallet: fromPromise((ctx) => {
         return toast.promise(signDataByWeb3(), {
@@ -147,32 +151,21 @@ function AuthV4Content(props: AuthV4ContentProps) {
         }), toastPromiseDefaultOption)
           .then(r => r.data?.loginV3)
       }),
+      setLocalState: fromPromise(({ input }) => {
+        console.log('set local state', input)
+      })
     }
   }), {
     //  inspect 
   })
 
   return (
-    <div className='w-full h-full bg-slate-100 relative'>
-      <AuthBackgroundView publicData={publicData} />
-      <div
-        className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
-        style={{
-          '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
-          '--end-color': 'oklch(45.08% 0.133 252.21 / 77.28%)',
-          backgroundImage: 'radial-gradient(var(--start-color) 0%, var(--end-color) 100%)',
-        } as React.CSSProperties}
-      >
-        <div className='w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-sm flex justify-center items-center'>
-          <div className='px-8 py-4 flex flex-col lg:flex-row rounded bg-slate-200 bg-opacity-80 backdrop-blur'>
-            <EmailLoginEntry machine={state} sendEvent={send} />
-            <Divider variant='vertical' className='mx-8' />
-            <div className='mt-6 lg:mt-0'>
-              <h3 className='text-lg mb-8 font-bold'>{t('app.auth.thirdPart.title')}</h3>
-              <ThirdPartEntry machine={state} onEvent={send} />
-            </div>
-          </div>
-        </div>
+    <div className='px-8 py-4 flex flex-col lg:flex-row rounded bg-slate-200 bg-opacity-80 backdrop-blur'>
+      <EmailLoginEntry machine={state} sendEvent={send} />
+      <Divider variant='vertical' className='mx-8' />
+      <div className='mt-6 lg:mt-0'>
+        <h3 className='text-lg mb-8 font-bold'>{t('app.auth.thirdPart.title')}</h3>
+        <ThirdPartEntry machine={state} onEvent={send} />
       </div>
     </div>
   )

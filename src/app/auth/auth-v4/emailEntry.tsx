@@ -42,7 +42,8 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
   const machineCtxErrors = machine.context.errorMessages
 
   return (
-    <Form form={f} className="w-128 h-full" ref={animationParent}>
+    <Form form={f} className="h-full" ref={animationParent}
+      style={{ width: 300 }}>
       <TextInput
         labelProps={{
           className: 'mb-1',

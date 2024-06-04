@@ -8,6 +8,7 @@ import { PublicDataQuery, PublicDataDocument } from '../../../schema/generated'
 import { getReactQueryClient } from '../../../services/ajax'
 import { getApolloServerClient } from '../../../services/apollo.server'
 import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
+import AuthBackgroundView from './authBackground'
 
 export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/auth-v4')
@@ -43,9 +44,21 @@ async function Page() {
 
   return (
     <HydrationBoundary state={d}>
-      <AuthV4Content
-        publicData={data.data}
-      />
+      <div className='w-full h-full bg-slate-100 relative'>
+        <AuthBackgroundView publicData={data.data} />
+        <div
+          className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
+          style={{
+            '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
+            '--end-color': 'oklch(45.08% 0.133 252.21 / 77.28%)',
+            backgroundImage: 'radial-gradient(var(--start-color) 0%, var(--end-color) 100%)',
+          } as React.CSSProperties}
+        >
+          <div className='w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-sm flex justify-center items-center'>
+            <AuthV4Content />
+          </div>
+        </div>
+      </div>
     </HydrationBoundary>
   )
 }

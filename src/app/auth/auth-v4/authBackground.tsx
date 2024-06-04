@@ -1,15 +1,17 @@
-import React, { useMemo, useRef } from 'react'
+import React from 'react'
 import { PublicDataQuery } from '../../../schema/generated'
-import { useMultipleBook } from '../../../hooks/book'
+import { duration3Days } from '../../../hooks/book'
 import ClippingLite from '../../../components/clipping-item/clipping-lite'
 import InfiniteLooper from '../../../components/infinite-looper/infinite-looper';
 import BookCover from '../../../components/book-cover/book-cover'
+import { WenquSearchResponse, wenquRequest } from '../../../services/wenqu';
+import { getReactQueryClient } from '../../../services/ajax';
 
 type AuthBackgroundViewProps = {
   publicData?: PublicDataQuery
 }
 
-function AuthBackgroundView(props: AuthBackgroundViewProps) {
+async function AuthBackgroundView(props: AuthBackgroundViewProps) {
   const { publicData: data } = props
   const dbIds = data?.
     public.
@@ -17,21 +19,22 @@ function AuthBackgroundView(props: AuthBackgroundViewProps) {
     map(x => x.doubanId).
     filter(x => x.length > 3) ?? []
 
-  const cs = useMemo(() => {
-    if (!data) {
-      return []
+  const cs = data?.public.clippings.reduce<PublicDataQuery['public']['clippings'][]>((acc, c, i) => {
+    if (i % 2 === 0) {
+      acc[0].push(c)
+    } else {
+      acc[1].push(c)
     }
-    return data?.public.clippings.reduce<PublicDataQuery['public']['clippings'][]>((acc, c, i) => {
-      if (i % 2 === 0) {
-        acc[0].push(c)
-      } else {
-        acc[1].push(c)
-      }
-      return acc
-    }, [[], []])
-  }, [data])
+    return acc
+  }, [[], []]) ?? [[], []]
 
-  const bs = useMultipleBook(dbIds)
+  const rq = getReactQueryClient()
+  const bs = await rq.fetchQuery({
+    queryKey: ['wenqu', 'books', 'dbIds', dbIds],
+    queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
+    staleTime: duration3Days,
+    gcTime: duration3Days,
+  })
 
   return (
     <div className='w-full h-full min-h-screen with-fade-in'>
