@@ -9,6 +9,7 @@ import OTPBox from "../../../components/auth/otp-box"
 import { useEffect } from "react"
 import Turnstile from "react-turnstile"
 import { CF_TURNSTILE_SITE_KEY } from "../../../constants/config"
+import toast from "react-hot-toast"
 
 type EmailLoginEntryProps = {
   machine: AuthMachine
@@ -147,8 +148,8 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
       <Turnstile
         sitekey={CF_TURNSTILE_SITE_KEY}
         onVerify={t => sendEvent({ type: 'CF_VERIFIED', turnstileToken: t })}
-        onError={e => sendEvent({ type: 'CF_VERIFIED', turnstileToken: 'temp' })}
-        // onError={() => sendEvent({ type: 'CF_ERROR' })}
+        // onError={e => sendEvent({ type: 'CF_VERIFIED', turnstileToken: 'temp' })}
+        onError={(err) => toast.error('Turnstile: ' + err.toString())}
         className='mx-auto my-4 w-full'
       />
       <Button

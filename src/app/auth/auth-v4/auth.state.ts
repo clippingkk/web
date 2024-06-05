@@ -1,4 +1,4 @@
-import { EventFromLogic, SnapshotFrom, assign, fromPromise, setup } from "xstate"
+import { EventFromLogic, SnapshotFrom, assign, fromCallback, fromPromise, setup } from "xstate"
 import { AppleAuthResponse } from "../../../services/apple"
 import { AuthV4ManualAuthSchema } from "./schema"
 import { AuthLoginResponseFragment } from "../../../schema/generated"
@@ -38,6 +38,7 @@ type Event =
   | { type: 'SIGN' }
   | { type: 'APPLE_LOGIN' }
   | { type: 'LOGGED' }
+  | { type: 'TICK' }
 
 const authMachine = setup({
   types: {
@@ -63,14 +64,18 @@ const authMachine = setup({
     connectWeb3Wallet: fromPromise(async (_: { input: unknown }): Promise<Required<Context>['metamaskData']> => {
       throw new Error('not implemented')
     }),
-    setLocalState: fromPromise(async (_: { input: unknown }): Promise<Required<Context>['metamaskData']> => {
+    setLocalState: fromPromise(async (_: { input: unknown }): Promise<any> => {
       throw new Error('not implemented')
+    }),
+    tickTimer: fromCallback(({ sendBack }) => {
+      const timer = setInterval(() => sendBack({ type: 'TICK' }), 1000)
+      return () => clearInterval(timer)
     })
   },
   guards: {
     isEmailValid: (ctx) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(ctx.context.email ?? ''),
     onlyOnOTPTimeReset: (ctx) => ctx.context.resendOTPReminds === 0,
-    onlyTimeReset: (ctx) => ctx.context.resendOTPReminds === 0,
+    onlyTimeReset: (ctx) => ctx.context.resendOTPReminds <= 0,
     // TODO: implement it
     manualLoginDataValid: (ctx) => {
       const { email, password, otp, turnstileToken } = ctx.context
@@ -84,7 +89,7 @@ const authMachine = setup({
     onAuthSuccess: (_, params: { data?: AuthLoginResponseFragment }) => assign({ authData: params.data }),
   },
 }).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QEECuAXAFgMQDYHsB3AOgEsJcwBiAcQEkAVACQFUAhAfQBkB5egOQDaABgC6iUAAd8sUulL4AdhJAAPRAEYAHAFZiAZgBsRwxv0B2LRo0AWAEzmANCACeiALT79G4obtabLQBOMw1DAJt9AF8o5zQsPCIyCmoAWQBRBmRU5ABlAGluPjp+DmQWZhFxJBBpWXklFXUEdzsgvTsbU2Fww0MbYW9nNwQNO31fXQdhcx1DIP07YRsYuIwcAhJySipkAAU9rnSigSqVOrkFZRrmr2FiIPMbLp0rYQ1hNqdXTS9iHR02n6WnMhh0s1sqxA8Q2SW21HSOToXA4DAAmnsSjQzjULg1rqBmu4dINiEthEFlnYPgMHMMPEYJhodEEbHMdPoAnYHFCYYktikqDipDJLo0bh4NOYfDNzNzjKzDOZGfSWnKggYbJYZsJXu85rz1vzkpQTdQAMLYDgANXSACU6Ng6OkACLC2qi-FNSVy4g9HQ2drskkBfSqzwzP0UwGDMZaJZaQ0JTbEPYAQ1gsAAxvgIGlkPwWMgUbxTmJzp6rt6EFYJnY5kEQrNBoMbOGQT5jOZo3Y-F0vEnYSR05mc3nUxnYIR8AAnCBUc1MAs0Y4MHgcHgMPbuvFViUtaz3EKsknSrT9buGcNjWZ+sbaLxeeOswfGkfZ3NgCeZ6dzqh7AB1F1UQxLEd0rcVCQ8ew7GILQ7k6bt9EpZYwx+A9-HMYgpWEGYzBeD5zFfFN3zHL9Nz2Bcl34FdUXXPY8lyACeDtN1y1xCCCTUSVOX+OYwngto-CCPprzGCY5WsLRpP0OYtRWWJoSNEjJzI4gKLNKg7XSXJ0n4NjqhFeo9yghBpn+etOg5XRmyCMTxmISTtBkuSnmIpJSM-dSt003T9PA4zIO4hBjAkgFpUpAZlQsa96z0T4lifEEhIUtZkw81SvI0+EqAokDMRogKxS4259BsRyljmSwxkecx2mvLpypCKrQXMaUKSIxS+RU0csp82AwEUCBSEUKAqAgJQvxGgA3fAAGsv26jLevHDSBqGkaoAQGb8CzNN8SqIqvX3AJDEc-RdXPd4wWlb4RncaxfU+UFPnPblZPc4dMtW-rBuG0aqDAGcZ1nYhJFwfaADNZwAW2IJavpW8jfo20btsUWa9oOsQjpM4KIT9Cx4JmcYgmk2LAmIQJ4w0R4zGsz7vw-H69m8vZckG9AqFUWB0H2r800h9AgYACg+XCAEpdmU5bmeR1mKI5xR0FxoLmnFvQRL8MxqRJAYr3Qh77AmMr7GeT42WeIJGZhsA+dSDM5q4fAoCgTbxsmsgMfmxaZZIW37cd53Xc29HMf2q5DvYoziurATNQcMmbDGAZGzQkZ4LOuU2W8AYOXrVKlPS-27bTB3YCdl23YBoGQZnMGIfQaGZzhhHiADsug6r0OdqxyOcejj1ApKjxDE+XwnyMHp-EeLRVTGPRtA5XDbC6eDORt0uYa7kPRroRQPcUKbvYW+G-fbred+rqB97D3aI6UKPDKH2P92sRYHiVZ4OQu-oKVVZO9w6pmGCIsKUIRIRdXPh3beFdg7X33oDYGoNwZQ1hmfYuF8+awMrrvG+ig7590fgPZ+u41aSgpH6BUgwWR1XaKJdCWo9B+HmKwhsJJohQMwW7LAqAABG8DNqIImkfL2s1T5tx4Zgfhgi94EN7g-RQT8KzD2rG1LCwgtA0PCMbcE4YdCwWWG1fotgSSPHBIXSRchpECO7nIpBdcG5oJbhgocxApEyLsfgwhijlEcVUfuMEWgDCVXBNYZ43Y56GyimSBwwIFigiCJ0Sx0C0yKFQGmXAsj8GH2PuI32mDt7pMydk2+CjsaiFViPGsAQqYhCMJhKU4R9GdF8AGPooIATUisDbNJGSsleMQbXFBjdm6t1ScUgZeCyneyIUokhKjX6mTmBJdoCxHiaN0How2IJ7hmEkvGRkfQ7CMzTJIcGYBSkHxEXkn2rjjRnIuVcnxFSqnVgWOVZk3haY6wsJyVUSwNRE1bFYewIIdCnPOZQK5DiRnOPGZgx50LBnyNmb4hZ-ilnBV7FhSIKcLrMi0cyA2Iw+h6B-pydZlI4yQouTCd2+xDjHBdMgLIHBcgsHNOaHSuQ3n7jaIvTkgZ7C4VMK8ABvZHJPCirqHFcxDCM08izNmSsuZ8tMocqmiFGzjA+NJDQDVZL-BYXhUwVhLAxEUooT88AagI0WcdUy7gwT3FCpnaewRLDXjlLi5kHItSXn8JwtKbj4QOrxkSTowSRItQ+AGNkYJwyBAmIEESyp-XSS1MGouoaUhmnDeQlo5JP6xt1N-RNhtkKa2COCAI2cPhGEZvCYgWZIbWiBqQSGpBIAFuqe4EE2EORKmCA4QBnRwxVoeMEMepgQjXXaIq76YBe3VncFqe468LZIRQpEa8CoHjEuQjWrR-hF1IyZr+CAK79ytCVP8WwbR7BPCWM0w21gFh+naYMaVAQZhnrlmza9pluSwQMQYnONkzHXi6VTP1coAS01kicrhbilXy3zZix1wUTFaqMLoWm3Iuh2GvF4WCM9NHJ0eB0xMKG3xLrZsQda-0oBAeCiyYJ3SjFmBEqyMS3YLI00GF4NqyGQ10fPRpRWnNWPNGCD4bs0pOTUnwueWKA6cJfIsNdZUjN4GQH3jJxA4LJhxPA7YVeE7jAmdrHW7QWtN6BzgV4wzB52hTppuCTRLI2R3SM2VRy7xcJtSSe8R4Dm0w4KuS5jkGpGyUiSfYOddl0LwXKt2cWwWli006mJlMHjbHTK4mQ6pLJyUggusqTjPR57+dsJyMYicehdl6ZMqLmGI1Gf4+Yp47xkJ1SMOGcIGotHhAcBYB93JaXIsK9FrocF6ycg5AGDsBr0IzvOmTfw9hrD1im2Aelo0XOyXKrqcW5mtTxmWAC0wVMIpfwMfWF8lqgA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QEECuAXAFgMQDYHsB3AOgEsJcwBiAcQEkAVACQFUAhAfQBkB5egOQDaABgC6iUAAd8sUulL4AdhJAAPRAEYAHAFZiAZgBsRwxv0B2LRo0AWAEzmANCACeiALT79G4obtabLQBOMw1DAJt9AF8o5zQsPCIyCmoAWQBRBmRU5ABlAGluPjp+DmQWZhFxJBBpWXklFXUEdzsgvTsbU2Fww0MbYW9nNwQNO31fXQdhcx1DIP07YRsYuIwcAhJySipkAAU9rnSigSqVOrkFZRrmr2FiIPMbLp0rYQ1hNqdXTS9iHR02n6WnMhh0s1sqxA8Q2SW21HSOToXA4DAAmnsSjQzjULg1rqBmu4dINiEthEFlnYPgMHMMPEYJhodEEbHMdPoAnYHFCYYktikqDipDJLo0bh4NOYfDNzNzjKzDOZGfSWnKggYbJYZsJXu85rz1vzkpQTdQAMLYDgANXSACU6Ng6OkACLC2qi-FNSVy4g9HQ2drskkBfSqzwzP0UwGDMZaJZaQ0JTbEPYAQ1gsAAxvgIGlkPwWMgUbxTmJzp6rt6EFYJnY5kEQrNBoMbOGQT5jOZo3Y-F0vEnYSR05mc3nUxnYIR8AAnCBUc1MAs0Y4MHgcHgMPbuvFViUtaz3EKsknSrT9buGcNjWZ+sbaLxeeOswfGkfZ3NgCeZ6dzqh7AB1F1UQxLEd0rcVCQ8ew7GILQ7k6bt9EpZYwx+A9-HMYgpWEGYzBeD5zFfFN3zHL9Nz2Bcl34FdUXXPY8lyACeDtN1y1xCCCTUSVOX+OYwngto-CCPprzGCY5WsLRpP0OYtRWWJoSNEjJzI4gKLNKg7XSXJ0n4NjqhFeo9yghBpn+etOg5XRmyCMTxmISTtBkuSnmIpJSM-dSt003T9PA4zIO4hBjAkgFpUpAZlQsa96z0T4lifEEhIUtZkw81SvI0+EqAokDMRogKxS4259BsRyljmSwxkecx2mvLpypCKrQXMaUKSIxS+RU0csp82AwEUCBSEUKAqAgJQvxGgA3fAAGsv26jLevHDSBqGkaoAQGb8CzNN8SqIqvX3AJDEc-RdXPd4wWlb4RncaxfU+UFPnPblZPc4dMtW-rBuG0aqDAGcZ1nYhJFwfaADNZwAW2IJavpW8jfo20btsUWa9oOsQjpM4KIT9Cx4JmcYgmk2LAmIQJ4w0R4zGsz7vw-H69m8vZckG9AhXYoziureMJnsLVG3GD5pI0BrZP+PxDDw0wrEsRnPJZtmOcULmGDoc18lxoLmjFrCRPrC7wg+cI0Pu2xmV8MrtE+UwBJ0RmYbAdA01SDM5q4fAoCgTbxsmsgMfmxblKSF23Y92AvZ9v20Z2rGrkOnmPUCkrNHCTUHDJmwxgGRsLcQeCzrlNlvAGDl61SpT0pICP3c973ff9oGQZnMGIfQaGZzhhHiHrqOY+b+Pg8TpRk8M1O+f3dxZdg0Li56fxHi0VUxj0bQOVw2wungzlnddtMYcb2PNroRQA8UKbg4W+Gw7rw-j+jpu46gc-0cx-ak5xlPdz1zQzCwREk8MuJt86qlzvcOqZhgiLClCESEXV7790fifYeb8L6t1BuDKGsM761xQW7J+Q9X7vwTl-ceP9J5-3TgeCkfoFSDBZHVdool0Jaj0DLESIkGwkmiEgghfssCoAAEYvzPhfCaV8g6zVvn3IRmBRHiNGmQ0eFDFATwrGnasbUsLCC0Ew8I9hZJ3Q8DoWCyw2r9FsCSR44Jq7yLkIosRp8VGYOBtgzu3de7IIUUo1xGCP67XUZoji2j9xgi0AYSq4JrDPG7KvdC7gopkgcMCBYoIgidAccg4+ihUBplwMojBl9r6yNDgQvJBSikBNUZ-bGohda0OkuVQMZg-AdlBIk+65jypgi6EqME5jtAaGdmmfJhTinn0Bh49uOCu54L7lUyZtTFBBLHhoqhWjp6mTmBJdoCxHj6N0OCds3ZsIWGpALYwfQ7CMzTJIcGYApmSMDjtORyCHlPJeeskJWywk7OCgscqzJvC00ARYTkqolgaiJq2Kw9gQROwEUOYgXzKAvJmW3DuuCe74NRei55qzfkNKadWXsWFIh5wusyAxzIrzoT6HoDkT5DmUjjPcx5lAYT+32IcY4LpkBZA4LkFg5pzQ6VyGS-cbQN6ckDPYXCphXgQN7I5EBOpzFKjmIYGIilFCfngDUBG2zjqmVniSG2nIjBL2CJYa8cpKX0siGk1hdyUXGnhKavGRJOhRJ4UqdqAY2RgnDIEQWwQwSslOoEAMjN4Rmm9f-Fo5IHhgkDR8YN7JwzIT0GTdolgtSdA+EYeNKRiBZkhtaIGpBIakEgEm2h7gQTYQ5EqYIDhIGdBze0B4kaejguuu0JW30wCNurMk85e9PhakGChSI14FQPHpQCWshb+FpVRcrL875fwQHHTPCl-xbBtHsE8JY4QxILD9AGWWFhngBBmCOpGbMD2mW5LBcxvTrLglsdeAEsFc46qVGyeJz7mbI1Zl6gFZrgrWKpuMcIgIsmdD8NeLwsFl76Nzo8PoisPU9Qg2zYg61-pQDfcFFkUSrmWLMNwtsSTHr3HMTTQYXg2rus3W+UdxGKJq3QBR5owQfDdmlJyak+FzyxRbThUFFhrrKkZi-SA59BNF1vOENJvSrbPBzcYSY-gYFam0CJXVBHw6H0HsUtTB5e1kxpuCfRLI2SmJrGVRy7xcJtSye8R4B8iFoNIVxGh1YOQakbJSLJ9gQgUlVPBcq3YPiyh87TTqXGUx+Jceg1TMGfWIBZMykEF1lQ0Z6GvdzthORjGzj0LsYyJk1Oy8Fzi-Nzl2KeO8ZCdUjDhnCBqAxmnlTShgpxmuBKuVEqazZ29cFja6FkoEaUEtGU9HOmTfw9hrD1k5U8nlo0bMLZvUlnTlglgMZGL2HwxngFsm5M5vVUQgA */
   initial: "idle",
 
   context: {
@@ -205,8 +210,16 @@ const authMachine = setup({
                 guard: "onlyTimeReset"
               },
 
-              after: {
-                "1000": {
+              invoke: {
+                src: "tickTimer",
+                onDone: {
+                  target: "idle",
+                  actions: assign({ resendOTPReminds: 60 })
+                }
+              },
+
+              on: {
+                TICK: {
                   target: "OTPSent",
                   actions: assign({ resendOTPReminds: (ctx) => ctx.context.resendOTPReminds - 1 })
                 }

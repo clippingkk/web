@@ -152,7 +152,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
           .then(r => r.data?.loginV3)
       }),
       setLocalState: fromPromise(({ input }) => {
-        console.log('set local state', input)
+        return Promise.resolve()
       })
     }
   }), {
