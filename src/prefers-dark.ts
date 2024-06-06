@@ -1,12 +1,12 @@
 export function checkDarkMode() {
-  if (!process.browser) {
+  if (typeof window === 'undefined') {
     return
   }
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 function watchDarkMode() {
-  if (!process.browser) {
+  if (typeof window === 'undefined') {
     return
   }
   if (!window.matchMedia) return;
@@ -27,5 +27,5 @@ watchDarkMode()
 
 // only can init by once
 if (checkDarkMode()) {
-    document.documentElement.classList.add('dark')
+  document.documentElement.classList.add('dark')
 }

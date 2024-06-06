@@ -1,17 +1,17 @@
 import React from 'react'
-import { PublicDataQuery } from '../../../schema/generated'
-import { duration3Days } from '../../../hooks/book'
-import ClippingLite from '../../../components/clipping-item/clipping-lite'
-import InfiniteLooper from '../../../components/infinite-looper/infinite-looper';
-import BookCover from '../../../components/book-cover/book-cover'
-import { WenquSearchResponse, wenquRequest } from '../../../services/wenqu';
-import { getReactQueryClient } from '../../../services/ajax';
+import { PublicDataQuery } from '../schema/generated'
+import { duration3Days } from '../hooks/book'
+import ClippingLite from './clipping-item/clipping-lite'
+import InfiniteLooper from './infinite-looper/infinite-looper';
+import BookCover from './book-cover/book-cover'
+import { WenquSearchResponse, wenquRequest } from '../services/wenqu';
+import { getReactQueryClient } from '../services/ajax';
 
 type AuthBackgroundViewProps = {
   publicData?: PublicDataQuery
 }
 
-async function AuthBackgroundView(props: AuthBackgroundViewProps) {
+async function GalleryBackgroundView(props: AuthBackgroundViewProps) {
   const { publicData: data } = props
   const dbIds = data?.
     public.
@@ -69,4 +69,4 @@ async function AuthBackgroundView(props: AuthBackgroundViewProps) {
   )
 }
 
-export default AuthBackgroundView
+export default GalleryBackgroundView

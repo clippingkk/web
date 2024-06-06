@@ -10,7 +10,6 @@ import { useActionTrack } from '../../../hooks/tracke'
 import { GithubClientID } from '../../../constants/config'
 import { useRouter } from 'next/navigation'
 import ThirdPartEntry from './thirdPartEntry'
-import AuthBackgroundView from './authBackground'
 import { signDataByWeb3 } from '../../../utils/wallet'
 import { useTranslation } from 'react-i18next'
 import { Divider } from '@mantine/core'
@@ -24,11 +23,8 @@ type AuthV4ContentProps = {
 
 function AuthV4Content(props: AuthV4ContentProps) {
   const router = useRouter()
-
-  const doSendOtp = (...args: any) => new Promise(resolve => setTimeout(resolve, 2000))
-
   const { t } = useTranslation()
-
+  const [doSendOtp] = useSendOtpMutation()
   const [doAppleAuth, appleAuthResponse] = useLoginByAppleLazyQuery()
   useAuthBy3rdPartSuccessed(
     appleAuthResponse.called,
@@ -160,7 +156,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
   })
 
   return (
-    <div className='px-8 py-4 flex flex-col lg:flex-row rounded bg-slate-200 bg-opacity-80 backdrop-blur'>
+    <div className='px-8 py-4 flex flex-col lg:flex-row rounded bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur shadow-lg'>
       <EmailLoginEntry machine={state} sendEvent={send} />
       <Divider variant='vertical' className='mx-8' />
       <div className='mt-6 lg:mt-0'>

@@ -1,12 +1,5 @@
 module.exports = {
-  // corePlugins: {
-  //   preflight: false,
-  // },
-  darkMode: 'class',
-  // future: {
-  //   removeDeprecatedGapUtilities: true,
-  //   purgeLayersByDefault: true,
-  // },
+  darkMode: ['class', '[data-mantine-color-scheme="dark"]'],
   content: [
     'src/**/*.tsx',
     'src/**/*.jsx',
@@ -16,7 +9,6 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
   ],
-  // whitelist: ['mode-dark'],
   theme: {
     extend: {
       fontFamily: {

@@ -1,14 +1,14 @@
 import React from 'react'
 import AuthV4Content from './content'
 import { Metadata } from 'next'
-import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
+import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
-import { duration3Days } from '../../../hooks/book'
-import { PublicDataQuery, PublicDataDocument } from '../../../schema/generated'
-import { getReactQueryClient } from '../../../services/ajax'
-import { getApolloServerClient } from '../../../services/apollo.server'
-import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
-import AuthBackgroundView from './authBackground'
+import { duration3Days } from '@/hooks/book'
+import { PublicDataQuery, PublicDataDocument } from '@/schema/generated'
+import { getReactQueryClient } from '@/services/ajax'
+import { getApolloServerClient } from '@/services/apollo.server'
+import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
+import GalleryBackgroundView from '@/components/galleryBackgroundView'
 
 export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/auth-v4')
@@ -44,8 +44,8 @@ async function Page() {
 
   return (
     <HydrationBoundary state={d}>
-      <div className='w-full h-full bg-slate-100 relative'>
-        <AuthBackgroundView publicData={data.data} />
+      <div className='w-full h-full bg-slate-100 dark:bg-slate-900 relative'>
+        <GalleryBackgroundView publicData={data.data} />
         <div
           className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
           style={{

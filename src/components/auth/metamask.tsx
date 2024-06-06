@@ -12,7 +12,7 @@ function MetamaskButtonView(props: MetamaskButtonViewProps) {
   return (
     <Button
       loading={loading}
-      className='h-[47px] rounded hover:shadow-lg bg-purple-400 flex justify-center items-center hover:scale-105 hover:bg-purple-500 duration-150 w-full flex-col'
+      className='h-[47px] rounded hover:shadow-lg bg-purple-400 flex justify-center items-center hover:scale-105 hover:!bg-purple-500 duration-150 w-full flex-col'
       color='rgb(192 132 252 / var(--tw-bg-opacity))'
       fullWidth
       h={'62px'}
