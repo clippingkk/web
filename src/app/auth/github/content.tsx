@@ -1,15 +1,19 @@
 'use client'
 import React, { useEffect } from 'react'
-import { useAuthSuccessed } from '../../../hooks/hooks';
-import { useGithubLoginLazyQuery } from '../../../schema/generated';
+import { useAuthSuccessed } from '@/hooks/hooks';
+import { useGithubLoginLazyQuery } from '@/schema/generated';
+import LoadingIcon from '@/components/icons/loading.svg';
 
-function GithubOAuthContent() {
+type GithubOAuthContentProps = {
+  code: string
+}
+
+function GithubOAuthContent(props: GithubOAuthContentProps) {
+  const { code } = props
   const [exec, resp] = useGithubLoginLazyQuery()
 
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.githubAuth)
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code')
     if (!code) {
       console.log('no code')
       // TODO: redirect
@@ -21,14 +25,17 @@ function GithubOAuthContent() {
         code
       }
     })
-  }, [])
+  }, [code])
 
   return (
-    <main className='w-full h-full from-blue-400 to-purple-400 bg-gradient-to-br via-green-400 min-h-screen flex justify-center items-center'>
-      <p className='p-10 bg-gray-300 bg-opacity-40 rounded text-4xl backdrop-blur-lg'>
-        authing
-      </p>
-    </main>
+    <div className='p-10 bg-gray-300 bg-opacity-40 rounded text-4xl backdrop-blur-lg'>
+      {resp.loading && (
+        <LoadingIcon className='animate-spin' />
+      )}
+      {resp.error && (
+        <div className='max-w-sm h-96 overflow-y-auto'>{resp.error.message}</div>
+      )}
+    </div>
   )
 }
 
