@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.1...v5.11.2) (2024-06-06)
+
+
+### Bug Fixes
+
+* **auth:** move to auth v4 page ([6be3e4a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6be3e4a1364a37872f977b3f89c01eb66dc982f4))
+* **auth:** update auth page ([0d6d470](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0d6d47010a1541bdc085f2c2ae2b32ae2142e34c))
+
 ### [5.11.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.0...v5.11.1) (2024-06-05)
 
 
