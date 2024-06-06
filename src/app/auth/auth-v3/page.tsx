@@ -4,7 +4,7 @@ import { Metadata } from 'next'
 import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
 
 export function generateMetadata(): Metadata {
-  return authGenerateMetadata('auth/auth-v3')
+  return authGenerateMetadata('auth/auth-v4')
 }
 
 function Page() {

@@ -105,7 +105,7 @@ function NavigationBar(props: NavigationBarProps) {
           profile={profile}
         />
       ) : (
-        <Link href='/auth/auth-v3' legacyBehavior>
+        <Link href='/auth/auth-v4' legacyBehavior>
           <h2 className='text-white font-bold'>
             {t('app.slogan')}
           </h2>

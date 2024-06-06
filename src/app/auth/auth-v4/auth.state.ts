@@ -85,7 +85,6 @@ const authMachine = setup({
     validatedOnly: (ctx) => true
   },
   actions: {
-    appleDataSuccess: (_, params: { data: Required<Context>['appleData'] }) => assign({ appleData: params.data }),
     onAuthSuccess: (_, params: { data?: AuthLoginResponseFragment }) => assign({ authData: params.data }),
   },
 }).createMachine({
@@ -353,12 +352,7 @@ const authMachine = setup({
       on: {
         APPLE_DATA_SUCCESS: {
           target: "appleLoggingIn",
-          actions: {
-            type: 'appleDataSuccess',
-            params({ event }) {
-              return { data: event.data }
-            },
-          },
+          actions: assign({ appleData: (ctx) => ctx.event.data }),
           reenter: true
         }
       }

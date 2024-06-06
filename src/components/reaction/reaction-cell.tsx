@@ -48,7 +48,7 @@ function ReactionCell(props: ReactionCellProps) {
 
   const onCellClick = useCallback(() => {
     if (myUid <= 0) {
-      navigate.push('/auth/auth-v3')
+      navigate.push('/auth/auth-v4')
       return
     }
     if (data.done) {

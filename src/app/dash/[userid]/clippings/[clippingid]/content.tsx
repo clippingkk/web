@@ -107,7 +107,7 @@ function ClippingPageContent(props: ClippingPageProps) {
             <hr className='bg-gray-400 my-12' />
             <footer className='flex justify-between flex-col lg:flex-row mt-4'>
               {me.id === 0 && (
-                (<Link href={`/auth/auth-v3`} className='flex justify-start items-center w-full'>
+                (<Link href={`/auth/auth-v4`} className='flex justify-start items-center w-full'>
                   <img
                     src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
                     className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover inline-block'

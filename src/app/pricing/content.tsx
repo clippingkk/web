@@ -53,7 +53,7 @@ function PricingContent(props: PricingContentProps) {
               <div className='w-full justify-center'>
                 <Button
                   component={Link}
-                  href={p ? `/dash/${p.me.id}/home` : '/auth/auth-v3'}
+                  href={p ? `/dash/${p.me.id}/home` : '/auth/auth-v4'}
                   fullWidth
                   variant='gradient'
                   gradient={{ from: 'indigo', to: 'cyan' }}
@@ -85,7 +85,7 @@ function PricingContent(props: PricingContentProps) {
                   </Link>
                 ) : (
                   <Link
-                    href={data?.checkoutUrl ?? '/auth/auth-v3'}
+                    href={data?.checkoutUrl ?? '/auth/auth-v4'}
                     className=' block py-4 rounded-md text-center bg-gradient-to-br from-yellow-300 to-orange-500 w-full hover:scale-105 transition-all duration-300 shadow-lg'
                   >
                     {t('app.plan.premium.goto')}

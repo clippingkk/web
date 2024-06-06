@@ -250,7 +250,7 @@ export function useSignupSuccess(result: MutationResult<SignupMutation>) {
           duration: 10_000
         }
       )
-      navigate('/auth/auth-v3')
+      navigate('/auth/auth-v4')
     }
   }, [result])
 }
@@ -262,7 +262,7 @@ export function useGoAuthLink() {
     if (profile && profile.id > 0) {
       return `/dash/${profile.domain.length > 1 ? profile.domain : profile.id}/home`
     }
-    return '/auth/auth-v3'
+    return '/auth/auth-v4'
   }, [profile])
 
   return goLinkUrl
