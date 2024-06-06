@@ -120,7 +120,8 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
                 variant='white'
                 rightSection={<ChevronRightIcon className="w-4 h-4" />}
                 onClick={() => sendEvent({ type: 'CHANGE_TO_PASSWORD' })}>
-                {t('app.auth.otpTitle')}
+                {machine.can({ type: 'CHANGE_TO_PASSWORD' }) && t('app.auth.otpTitle')}
+                {machine.can({ type: 'CHANGE_TO_OTP' }) && t('app.auth.pwd')}
               </Button>
             </div>
           </div>
