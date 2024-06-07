@@ -381,5 +381,21 @@
         }
       }
     }
+  },
+  "nouns": {
+    "empty": {
+      "add": "Add"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "scope": {
+        "label": "Scope"
+      }
+    },
+    "title": {
+      "add": "Add",
+      "update": "Update"
+    }
   }
 }

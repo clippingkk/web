@@ -346,11 +346,39 @@
     },
     "nouns": {
       "form": {
-        "update": "更新"
+        "update": "更新",
+        "cancel": "取消",
+        "content": {
+          "label": "解释",
+          "placeholder": "请提供解释的内容"
+        },
+        "id": {
+          "fieldset": "信息",
+          "label": "ID\n\n身份证"
+        },
+        "noun": {
+          "fieldset": "名词",
+          "label": "名词",
+          "placeholder": "请提供您想解释的名词"
+        },
+        "scope": {
+          "data": {
+            "all": "全球（跨所有用户和所有书籍）",
+            "book": "仅限书籍（只对同一本书有效，但可以与其他用户共享）",
+            "clipping": "仅裁剪（仅适用于此裁剪）",
+            "forbid": "禁止（将禁用此词）"
+          },
+          "label": "范围"
+        },
+        "submit": "提交"
       },
       "empty": {
         "tip": "如果你觉得这个名词不容易理解，你可能想在上面加上解释。",
         "add": "添加"
+      },
+      "title": {
+        "add": "添加一个新名词",
+        "update": "更新名词"
       }
     }
   },

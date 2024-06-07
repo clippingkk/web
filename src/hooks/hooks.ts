@@ -68,7 +68,7 @@ export function useAuthBy3rdPartSuccessed(
     setTimeout(() => {
       const domain = me.domain.length > 2 ? me.domain : me.id
       navigate(`/dash/${domain}/home?from_auth=1`)
-    }, 0)
+    }, 100)
   }, [called, loading, error, authResponse, dispatch, navigate])
 }
 
@@ -117,15 +117,15 @@ export function useLoginV3Successed(
     mixpanel.identify(me.id.toString())
     mixpanel.track('loginV3')
     updateToken(profile.token)
-    Cookies.set('token', profile.token, { expires: 365 })
-    Cookies.set('uid', profile.uid.toString(), { expires: 365 })
+    Cookies.set('token', profile.token, { expires: 365, httpOnly: true })
+    Cookies.set('uid', profile.uid.toString(), { expires: 365, httpOnly: true })
     dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
     // redirect
     mixpanel.track('loginV3')
     setTimeout(() => {
       const domain = me.domain.length > 2 ? me.domain : me.id
       navigate(`/dash/${domain}/${authResponse.isNewUser ? 'newbie' : 'home'}?from_auth=1`)
-    }, 0)
+    }, 100)
   }, [called, loading, error, authResponse, dispatch, navigate])
 }
 
@@ -170,15 +170,15 @@ export function useAuthByPhoneSuccessed(
     mixpanel.identify(me.id.toString())
     mixpanel.track('login')
     updateToken(profile.token)
-    Cookies.set('token', profile.token, { expires: 365 })
-    Cookies.set('uid', profile.uid.toString(), { expires: 365 })
+    Cookies.set('token', profile.token, { expires: 365, httpOnly: true })
+    Cookies.set('uid', profile.uid.toString(), { expires: 365, httpOnly: true })
     dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
     // redirect
     mixpanel.track('login')
     setTimeout(() => {
       const domain = me.domain.length > 2 ? me.domain : me.id
       navigate(`/dash/${domain}/home?from_auth=1`)
-    }, 0)
+    }, 100)
   }, [called, loading, error, authResponse])
 }
 
@@ -214,7 +214,7 @@ export function useAuthSuccessed(
       // redirect
       setTimeout(() => {
         navigate(`/dash/${me.id}/home`)
-      }, 0)
+      }, 100)
     }
   }, [called, loading, error, authResponse])
 }

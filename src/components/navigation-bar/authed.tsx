@@ -2,7 +2,7 @@ import { Box, Divider, Tooltip } from '@mantine/core'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { UserContent } from '../../store/user/type';
+import { USER_LOGOUT, UserContent } from '../../store/user/type';
 import { Avatar, Button, HoverCard } from '@mantine/core';
 import { CogIcon } from '@heroicons/react/24/solid';
 import { ArrowLeftOnRectangleIcon, DevicePhoneMobileIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
@@ -16,6 +16,7 @@ import profile from '../../utils/profile';
 import toast from 'react-hot-toast';
 import mixpanel from 'mixpanel-browser';
 import { onCleanServerCookie } from './logout';
+import { useDispatch } from 'react-redux';
 
 type LoggedNavigationBarProps = {
   profile: UserContent
@@ -29,9 +30,11 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
   const { t } = useTranslation()
 
   const r = useRouter()
+  const dispatch = useDispatch()
 
   const onLogout = useCallback(async () => {
     profile.onLogout()
+    dispatch({ type: USER_LOGOUT })
     toast.success('Bye bye')
     mixpanel.track('logout')
     r.push('/')
