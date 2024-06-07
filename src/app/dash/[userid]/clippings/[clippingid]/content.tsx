@@ -83,9 +83,9 @@ function ClippingPageContent(props: ClippingPageProps) {
           <>
             <h1 className='lg:text-3xl text-xl font-bold my-2 font-lxgw'>
               {book?.title ?? clipping?.clipping.title}
-              <h6 className='text-gray-500 text-xs ml-4 inline-block dark:text-gray-300'>
+              {/* <h6 className='text-gray-500 text-xs ml-4 inline-block dark:text-gray-300'>
                 {clipping.clipping.title}
-              </h6>
+              </h6> */}
             </h1>
             <h3 className='font-light lg:text-lg my-4 font-lxgw'>{book?.author}</h3>
             <hr className='bg-gray-400 my-12' />
