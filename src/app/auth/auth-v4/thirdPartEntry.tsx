@@ -19,17 +19,26 @@ function ThirdPartEntry(props: ThirdPartEntryProps) {
         disabled={false}
         onClick={() => onEvent({ type: 'METAMASK_LOGIN_AUTH' })}
       />
-      <AppleLoginButtonView
-        loading={machine.matches('appleAuthing')}
-        disabled={false}
-        onError={(error: any) => {
-          toast.error('Auth by Apple: ' + error.error)
-        }}
-        onSuccess={(resp) => onEvent({
-          type: 'APPLE_DATA_SUCCESS',
-          data: resp.authorization
-        })}
-      />
+      <div
+        onClickCapture={() => {
+          onEvent({ type: 'APPLE_LOGIN' })
+        }}>
+        <AppleLoginButtonView
+          version='v4'
+          loading={machine.matches('appleAuthing')}
+          disabled={false}
+          onError={(error: any) => {
+            onEvent({ type: 'REVERT_TO_IDLE' })
+            toast.error('Auth by Apple: ' + error.error)
+          }}
+          onSuccess={(resp) => {
+            onEvent({
+              type: 'APPLE_DATA_SUCCESS',
+              data: resp.authorization
+            })
+          }}
+        />
+      </div>
       <AuthByGithub />
     </div>
   )

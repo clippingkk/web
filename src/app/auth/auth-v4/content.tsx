@@ -3,18 +3,18 @@ import { useMachine } from '@xstate/react'
 import React, { useCallback } from 'react'
 import authMachine from './auth.state'
 import { fromPromise } from 'xstate'
-import { AppleLoginPlatforms, OtpChannel, PublicDataQuery, useAuthByWeb3LazyQuery, useAuthLazyQuery, useAuthQuery, useDoLoginV3Mutation, useLoginByAppleLazyQuery, useSendOtpMutation } from '../../../schema/generated'
+import { AppleAuthVersion, AppleLoginPlatforms, OtpChannel, PublicDataQuery, useAuthByWeb3LazyQuery, useAuthLazyQuery, useAuthQuery, useDoLoginV3Mutation, useLoginByAppleLazyQuery, useSendOtpMutation } from '../../../schema/generated'
 import toast from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../services/misc'
 import { useActionTrack } from '../../../hooks/tracke'
 import { GithubClientID } from '../../../constants/config'
 import { useRouter } from 'next/navigation'
 import ThirdPartEntry from './thirdPartEntry'
-import { signDataByWeb3 } from '../../../utils/wallet'
+import { signDataByWeb3 } from '@/utils/wallet'
 import { useTranslation } from 'react-i18next'
 import { Divider } from '@mantine/core'
 import EmailLoginEntry from './emailEntry'
-import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '../../../hooks/hooks'
+import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '@/hooks/hooks'
 // import { createBrowserInspector } from '@statelyai/inspect'
 // const { inspect } = createBrowserInspector();
 
@@ -101,6 +101,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
               code: code,
               idToken: id_token,
               state: state,
+              version: AppleAuthVersion.V4,
               platform: AppleLoginPlatforms.Web,
             }
           }
@@ -152,7 +153,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
       })
     }
   }), {
-    //  inspect 
+    // inspect
   })
 
   return (

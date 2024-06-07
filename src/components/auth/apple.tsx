@@ -1,12 +1,14 @@
 import AppleSignin from 'react-apple-signin-auth'
 import WithLoading from '../with-loading'
 import { AppleAuthResponse } from '../../services/apple'
+import { useMemo } from 'react'
 
 type AppleLoginButtonViewProps = {
   loading: boolean
   disabled?: boolean
   onSuccess: (resp: AppleAuthResponse) => void
   onError: (error: any) => void
+  version?: 'v2' | 'v4'
 }
 const authOptions = {
   clientId: 'com.annatarhe.clippingkk',
@@ -29,7 +31,15 @@ function AuthAppleButton(props: any) {
 
 
 function AppleLoginButtonView(props: AppleLoginButtonViewProps) {
-  const { loading, disabled, onSuccess, onError } = props
+  const { loading, disabled, onSuccess, version = 'v2', onError } = props
+
+  const appleAuthOptions = useMemo(() => {
+    const v = { ...authOptions }
+    if (version === 'v4') {
+      v.redirectURI = 'https://clippingkk.annatarhe.com/auth/auth-v4'
+    }
+    return v
+  }, [version])
 
   return (
     <WithLoading
@@ -37,7 +47,7 @@ function AppleLoginButtonView(props: AppleLoginButtonViewProps) {
       disabled={disabled}
     >
       <AppleSignin
-        authOptions={authOptions}
+        authOptions={appleAuthOptions}
         uiType="dark"
         className="apple-auth-btn"
         noDefaultStyle={false}

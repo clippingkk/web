@@ -7047,6 +7047,29 @@
       },
       {
         "kind": "ENUM",
+        "name": "appleAuthVersion",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "v2",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "v4",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
         "name": "appleLoginPlatforms",
         "description": null,
         "fields": null,
@@ -7139,6 +7162,18 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "appleAuthVersion",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
