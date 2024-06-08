@@ -68,9 +68,9 @@ function ClippingPageContent(props: ClippingPageProps) {
 
   return (
     <div className={`${styles.clipping} page anna-fade-in`}>
-      <div className='flex mt-4 lg:mt-40 py-0 px-2 lg:px-20 flex-col lg:flex-row with-slide-in'>
+      <div className='flex mt-4 lg:mt-24 py-0 px-2 lg:px-20 flex-col lg:flex-row with-slide-in gap-4'>
         <div
-          className={'m-4 p-4 rounded-xl shadow dark:bg-slate-900 bg-opacity-50 flex-[3] text-black dark:text-slate-200 lg:p-10'}
+          className={'my-4 p-4 rounded-xl shadow dark:bg-slate-800 bg-opacity-50 flex-[3] text-black dark:text-slate-200 lg:p-10'}
           data-glow
           style={{
             '--base': 80,
@@ -133,20 +133,25 @@ function ClippingPageContent(props: ClippingPageProps) {
 
       {
         me.id !== 0 && (
-          <div className='container px-2 lg:px-20'>
-            <Card>
+          <div className='container px-2 lg:px-20 mb-4'>
+            <div
+              className='w-full h-full rounded p-4 backdrop-blur bg-slate-200 dark:bg-slate-800 bg-opacity-50 dark:bg-opacity-50 shadow'
+              style={{
+                // backgroundImage: 'linear-gradient(180deg, oklch(71.33% 0.16 292.24 / 6.75%) 0%, oklch(71.33% 0.16 292.24 / 36.75%) 100%)',
+              }}
+            >
               <>
                 <h3 className='text-2xl lg:text-4xl font-light lg:mb-4'>{t('app.clipping.comments.title')}</h3>
+                {clipping && me && (
+                  <CommentBox me={me} book={book} clipping={clipping?.clipping} />
+                )}
                 <ul ref={commentListRef}>
                   {clipping?.clipping.comments.map(m => (
                     <Comment key={m.id} comment={m} />
                   ))}
                 </ul>
-                {clipping && me && (
-                  <CommentBox me={me} book={book} clipping={clipping?.clipping} />
-                )}
               </>
-            </Card>
+            </div>
           </div>
         )
       }

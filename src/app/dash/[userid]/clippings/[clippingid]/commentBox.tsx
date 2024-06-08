@@ -1,15 +1,17 @@
-import { useApolloClient, useMutation } from '@apollo/client'
-import React, { useCallback, useState } from 'react'
-import { UserContent } from '../../../../../store/user/type'
+import { useApolloClient } from '@apollo/client'
+import React, { useCallback, useRef, useState } from 'react'
+import { UserContent } from '@/store/user/type'
 import { useTranslation } from 'react-i18next'
-import Avatar from '../../../../../components/avatar/avatar'
-import { Clipping, useCreateCommentMutation } from '../../../../../schema/generated'
+import Avatar from '@/components/avatar/avatar'
+import { Clipping, useCreateCommentMutation } from '@/schema/generated'
 import { toast } from 'react-hot-toast'
-import { toastPromiseDefaultOption } from '../../../../../services/misc'
+import { toastPromiseDefaultOption } from '@/services/misc'
 import { Button } from '@mantine/core'
-import MarkdownEditor from '../../../../../components/markdown-editor/markdown-editor'
-import AICommentEnhancer from '../../../../../components/ai/enhance-comment'
-import { WenquBook } from '../../../../../services/wenqu'
+import AICommentEnhancer from '@/components/ai/enhance-comment'
+import { WenquBook } from '@/services/wenqu'
+import CKLexicalBaseEditor from '@/components/RichTextEditor'
+import { $getRoot, LexicalEditor } from 'lexical'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 type CommentBoxProps = {
   book: WenquBook | null
@@ -21,9 +23,12 @@ const COMMENT_MIN_LEN = 40
 
 function CommentBox(props: CommentBoxProps) {
   const [content, setContent] = useState('')
+  const ed = useRef<LexicalEditor>(null)
 
   const [createCommentAction, { loading }] = useCreateCommentMutation()
   const client = useApolloClient()
+
+  const [ref] = useAutoAnimate()
 
   const { t } = useTranslation()
 
@@ -41,13 +46,18 @@ function CommentBox(props: CommentBoxProps) {
       refetchQueries: ['fetchClipping'],
     }), toastPromiseDefaultOption).then(() => {
       client.resetStore()
-      setContent('')
+      ed.current?.update(() => {
+        $getRoot().clear()
+      })
     })
     // text: t('app.clipping.comments.tip.success')
   }, [content, createCommentAction, props.clipping.id, t, client])
+  const onContentChange = useCallback((md: string) => {
+    setContent(md)
+  }, [])
 
   return (
-    <div className='flex container flex-col lg:flex-row'>
+    <div className='flex container flex-col lg:flex-row mb-4 lg:p-8 p-6 '>
       <div className='flex flex-row lg:flex-col my-4 lg:mb-0 items-center'>
         <Avatar
           img={props.me.avatar}
@@ -59,12 +69,16 @@ function CommentBox(props: CommentBoxProps) {
 
       <div className='flex flex-1 lg:ml-8 flex-col justify-center items-end'>
         <div className='w-full'>
-          <MarkdownEditor
-            value={content}
-            onValueChange={setContent}
+          <CKLexicalBaseEditor
+            editable
+            className='w-full min-h-40 px-2 shadow bg-slate-300 dark:bg-slate-800 dark:text-slate-200 focus:outline-none rounded transition-all duration-150'
+            markdown={content}
+            onContentChange={onContentChange}
+            ref={ed}
           />
+
         </div>
-        <div className='w-full flex-col lg:flex-row flex items-center justify-between mt-4'>
+        <div className='w-full flex-col lg:flex-row flex items-center justify-between mt-4 gap-4' ref={ref}>
           {content.length > COMMENT_MIN_LEN ? (
             <AICommentEnhancer
               bookName={props.book?.title}

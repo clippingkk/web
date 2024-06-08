@@ -46,7 +46,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
 
   return (
     <>
-      <Button.Group>
+      <Button.Group className='gap-2'>
         <Button
           variant="gradient"
           className='bg-gradient-to-r from-gray-500 to-pink-400'
