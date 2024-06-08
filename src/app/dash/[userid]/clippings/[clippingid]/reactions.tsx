@@ -42,7 +42,7 @@ function Reactions(props: ReactionsProps) {
 
   return (
     <div className='w-full'>
-      <div className='relative inline-block w-full'>
+      <div className='relative inline-flex gap-2 flex-wrap w-full'>
         {Object.keys(symbolCounts).map(k => (
           <ReactionCell
             key={k}

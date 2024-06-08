@@ -98,12 +98,13 @@ function ReportYearly(props: ReportYearlyProps) {
     >
       <div className='w-full min-h-screen backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
         <PageContainer bgImage={defaultBgImage}>
-          <div className=' container relative min-h-screen flex items-center flex-col justify-center'>
+          <div className='container min-h-screen flex items-center flex-col justify-center'>
+            <div className='flex-1 w-full' />
             <ReportHero
               books={books}
               clippings={data.reportYearly.books ?? []}
             />
-            <div className=' flex justify-center flex-col text-center'>
+            <div className='flex justify-center flex-col text-center'>
               <Avatar
                 img={data?.reportYearly.user.avatar ?? ''}
                 name={data?.reportYearly.user.name}
@@ -115,8 +116,9 @@ function ReportYearly(props: ReportYearlyProps) {
               </p>
             </div>
             <Divider />
+            <div className='flex-1 w-full' />
             <a
-              className='flex justify-between items-center w-full absolute bottom-10 left-0 right-0 px-8 lg:px-0'
+              className='flex justify-around items-center w-full pb-4 px-8 lg:px-0'
               href='https://clippingkk.annatarhe.com'
             >
               <Image

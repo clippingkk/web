@@ -69,7 +69,7 @@ function ReactionCell(props: ReactionCellProps) {
 
   return (
     <Tooltip
-      className='inline-block w-min ml-1 first:ml-0'
+      className='inline-block w-min'
       label={data.creators.map(x => x.name).join(', ')}
       disabled={data.creators.length === 0}
       withArrow

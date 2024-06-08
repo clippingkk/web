@@ -1,13 +1,13 @@
 import React from 'react'
 import ReportYearly from './content'
-import { getReactQueryClient } from '../../../services/ajax'
+import { getReactQueryClient } from '@/services/ajax'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
-import { duration3Days } from '../../../hooks/book'
-import { FetchYearlyReportQuery, FetchYearlyReportQueryVariables, FetchYearlyReportDocument } from '../../../schema/generated'
-import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
-import { generateMetadata as generateReportMetadata } from '../../../components/og/og-with-report'
+import { duration3Days } from '@/hooks/book'
+import { FetchYearlyReportQuery, FetchYearlyReportQueryVariables, FetchYearlyReportDocument } from '@/schema/generated'
+import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
+import { generateMetadata as generateReportMetadata } from '@/components/og/og-with-report'
 import { Metadata } from 'next'
-import { getApolloServerClient } from '../../../services/apollo.server'
+import { getApolloServerClient } from '@/services/apollo.server'
 
 type YearlyLegacyPageProps = {
   params: {}
@@ -60,7 +60,7 @@ async function YearlyPage(props: YearlyLegacyPageProps) {
     map(x => x.doubanId).
     filter(x => x.length > 3) ?? []
 
-    const rq = getReactQueryClient()
+  const rq = getReactQueryClient()
 
   if (dbIds.length >= 1) {
     await rq.prefetchQuery({
