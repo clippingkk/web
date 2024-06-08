@@ -1,5 +1,4 @@
 import mixpanel from "mixpanel-browser"
-import Cookies from 'js-cookie'
 import * as sentry from '@sentry/react'
 import { useEffect, useMemo } from "react"
 import profile from "../utils/profile"
@@ -12,6 +11,39 @@ import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
 import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from "../schema/generated"
 import { TGlobalStore } from "../store"
+import { Dispatch } from "redux"
+import { syncLoginStateToServer } from "../actions/login"
+
+async function onAuthEnd(dispatch: Dispatch, data: { user: UserContent, token: string }) {
+  const { user, token } = data
+  localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
+    profile: user,
+    token: token,
+    createdAt: Date.now()
+  }))
+  sessionStorage.setItem('token', token)
+  sessionStorage.setItem('uid', user.id.toString())
+
+  profile.token = token
+  profile.uid = user.id
+  const me = user
+  sentry.setUser({
+    email: me.email,
+    id: me.id.toString(),
+    username: me.name
+  })
+  mixpanel.identify(me.id.toString())
+  mixpanel.people.set({
+    "$email": me.email,
+    "Sign up date": me.createdAt,
+    "USER_ID": me.id.toString(),
+  });
+  updateToken(profile.token)
+  await syncLoginStateToServer({ uid: me.id, token: profile.token })
+  // Cookies.set('token', profile.token, { expires: 365 })
+  // Cookies.set('uid', profile.uid.toString(), { expires: 365 })
+  dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
+}
 
 export function useAuthBy3rdPartSuccessed(
   called: boolean,
@@ -41,34 +73,15 @@ export function useAuthBy3rdPartSuccessed(
       return
     }
 
-    localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
-      profile: authResponse.user,
-      token: authResponse.token,
-      createdAt: Date.now()
-    }))
-    sessionStorage.setItem('token', authResponse.token)
-    sessionStorage.setItem('uid', authResponse.user.id.toString())
-
-    profile.token = authResponse.token
-    profile.uid = authResponse.user.id
-    const me = authResponse.user
-    sentry.setUser({
-      email: me.email,
-      id: me.id.toString(),
-      username: me.name
+    onAuthEnd(dispatch, authResponse).then(() => {
+      mixpanel.track('login')
+      // redirect
+      setTimeout(() => {
+        const me = authResponse.user
+        const domain = me.domain.length > 2 ? me.domain : me.id
+        navigate(`/dash/${domain}/home?from_auth=1`)
+      }, 100)
     })
-    mixpanel.identify(me.id.toString())
-    mixpanel.track('login')
-    updateToken(profile.token)
-    Cookies.set('token', profile.token, { expires: 365 })
-    Cookies.set('uid', profile.uid.toString(), { expires: 365 })
-    dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
-    // redirect
-    mixpanel.track('login')
-    setTimeout(() => {
-      const domain = me.domain.length > 2 ? me.domain : me.id
-      navigate(`/dash/${domain}/home?from_auth=1`)
-    }, 100)
   }, [called, loading, error, authResponse, dispatch, navigate])
 }
 
@@ -98,34 +111,15 @@ export function useLoginV3Successed(
       return
     }
 
-    localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
-      profile: authResponse.user,
-      token: authResponse.token,
-      createdAt: Date.now()
-    }))
-    sessionStorage.setItem('token', authResponse.token)
-    sessionStorage.setItem('uid', authResponse.user.id.toString())
-
-    profile.token = authResponse.token
-    profile.uid = authResponse.user.id
-    const me = authResponse.user
-    sentry.setUser({
-      email: me.email,
-      id: me.id.toString(),
-      username: me.name
+    onAuthEnd(dispatch, authResponse).then(() => {
+      mixpanel.track('loginV3')
+      // redirect
+      setTimeout(() => {
+        const me = authResponse.user
+        const domain = me.domain.length > 2 ? me.domain : me.id
+        navigate(`/dash/${domain}/${authResponse.isNewUser ? 'newbie' : 'home'}?from_auth=1`)
+      }, 100)
     })
-    mixpanel.identify(me.id.toString())
-    mixpanel.track('loginV3')
-    updateToken(profile.token)
-    Cookies.set('token', profile.token, { expires: 365, httpOnly: true })
-    Cookies.set('uid', profile.uid.toString(), { expires: 365, httpOnly: true })
-    dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
-    // redirect
-    mixpanel.track('loginV3')
-    setTimeout(() => {
-      const domain = me.domain.length > 2 ? me.domain : me.id
-      navigate(`/dash/${domain}/${authResponse.isNewUser ? 'newbie' : 'home'}?from_auth=1`)
-    }, 100)
   }, [called, loading, error, authResponse, dispatch, navigate])
 }
 
@@ -151,34 +145,16 @@ export function useAuthByPhoneSuccessed(
     if (!authResponse) {
       return
     }
-    localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
-      profile: authResponse.user,
-      token: authResponse.token,
-      createdAt: Date.now()
-    }))
-    sessionStorage.setItem('token', authResponse.token)
-    sessionStorage.setItem('uid', authResponse.user.id.toString())
 
-    profile.token = authResponse.token
-    profile.uid = authResponse.user.id
-    const me = authResponse.user
-    sentry.setUser({
-      email: me.email,
-      id: me.id.toString(),
-      username: me.name
+    onAuthEnd(dispatch, authResponse).then(() => {
+      mixpanel.track('login')
+      // redirect
+      setTimeout(() => {
+        const me = authResponse.user
+        const domain = me.domain.length > 2 ? me.domain : me.id
+        navigate(`/dash/${domain}/home?from_auth=1`)
+      }, 100)
     })
-    mixpanel.identify(me.id.toString())
-    mixpanel.track('login')
-    updateToken(profile.token)
-    Cookies.set('token', profile.token, { expires: 365, httpOnly: true })
-    Cookies.set('uid', profile.uid.toString(), { expires: 365, httpOnly: true })
-    dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
-    // redirect
-    mixpanel.track('login')
-    setTimeout(() => {
-      const domain = me.domain.length > 2 ? me.domain : me.id
-      navigate(`/dash/${domain}/home?from_auth=1`)
-    }, 100)
   }, [called, loading, error, authResponse])
 }
 
@@ -192,25 +168,8 @@ export function useAuthSuccessed(
   const dispatch = useDispatch()
   useEffect(() => {
     if (called && !error && authResponse && !loading) {
-      profile.token = authResponse.token
-      profile.uid = authResponse.user.id
+      onAuthEnd(dispatch, authResponse)
       const me = authResponse.user
-      sentry.setUser({
-        email: me.email,
-        id: me.id.toString(),
-        username: me.name
-      })
-      mixpanel.identify(me.id.toString())
-      mixpanel.people.set({
-        "$email": me.email,
-        "Sign up date": me.createdAt,
-        "USER_ID": me.id.toString(),
-      });
-      mixpanel.track('login')
-      updateToken(profile.token)
-      Cookies.set('token', profile.token, { expires: 365 })
-      Cookies.set('uid', profile.uid.toString(), { expires: 365 })
-      dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
       // redirect
       setTimeout(() => {
         navigate(`/dash/${me.id}/home`)
@@ -221,23 +180,12 @@ export function useAuthSuccessed(
 
 export function useSignupSuccess(result: MutationResult<SignupMutation>) {
   const { push: navigate } = useRouter()
+  const dispatch = useDispatch()
   useEffect(() => {
     const { called, error, data, loading } = result
     if (called && !error && data && !loading) {
-      profile.token = data.signup.token
-      profile.uid = data.signup.user.id
+      onAuthEnd(dispatch, data.signup)
       const me = data.signup.user
-      sentry.setUser({
-        email: me.email,
-        id: me.id.toString(),
-        username: me.name
-      })
-      mixpanel.identify(me.id.toString())
-      mixpanel.people.set({
-        "$email": me.email,
-        "Sign up date": me.createdAt,
-        "USER_ID": me.id.toString(),
-      });
       mixpanel.track('signup', {
         email: me.email,
         name: me.name,

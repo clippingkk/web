@@ -1,5 +1,5 @@
-import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
-import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
+import { ApolloLink } from "@apollo/client";
+import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/experimental-nextjs-app-support";
 import { apolloCacheConfig, httpLink } from "./apollo.shard";
 
 const { getClient } = registerApolloClient(() => new ApolloClient({

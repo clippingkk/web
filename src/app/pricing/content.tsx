@@ -10,8 +10,7 @@ import PremiumPlanFeatures from '../../components/pricing/premium-plan-features'
 import { StripePremiumPriceId } from '../../constants/config'
 import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '../../schema/generated'
 import { getPaymentSubscription } from '../../services/payment'
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import { skipToken } from '@apollo/client'
+import { skipToken, useSuspenseQuery } from '@apollo/client'
 
 type PricingContentProps = {
   uid?: number

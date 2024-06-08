@@ -5,9 +5,8 @@ import Footer from '../footer/Footer'
 
 import { useAtomValue } from 'jotai'
 import { appBackgroundAtom } from '../../store/global'
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '../../schema/generated';
-import { skipToken } from '@apollo/client';
+import { skipToken, useSuspenseQuery } from '@apollo/client';
 
 const defaultBg = require('../../assets/bg.jpg').default
 

@@ -12,7 +12,7 @@ import { useSyncClippingsToServer } from '@/hooks/my-file'
 import { useRouter } from 'next/navigation';
 import HomePageSkeleton, { BooksSkeleton } from './skeleton';
 import { BooksDocument, BooksQuery, BooksQueryVariables, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated';
-import { useQuery, useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
+import { useQuery, useSuspenseQuery } from '@apollo/client'
 
 const STEP = 10
 

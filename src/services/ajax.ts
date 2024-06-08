@@ -5,7 +5,7 @@ import profile from '../utils/profile'
 import toast from 'react-hot-toast'
 import { QueryClient } from '@tanstack/react-query'
 import { getLanguage } from '../utils/locales'
-import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
+import { ApolloClient, InMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support'
 import Cookies from 'js-cookie'
 import { cache } from 'react'
 import { apolloCacheConfig } from './apollo.shard'
@@ -147,9 +147,9 @@ export function makeApolloClient() {
   }
   links.push(errorLink, authLink, httpLink)
 
-  return new NextSSRApolloClient({
+  return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    cache: new NextSSRInMemoryCache(apolloCacheConfig),
+    cache: new InMemoryCache(apolloCacheConfig),
     link: ApolloLink.from(links),
     connectToDevTools: process.env.DEV === 'true',
   })
@@ -162,6 +162,25 @@ export function makeApolloClient() {
 }
 
 export function makeApolloClientWithCredentials(credentials: { uid?: number, token?: string }) {
+  const token = credentials.token
+  const authLinkRSC = new ApolloLink((operation, forward) => {
+    operation.setContext(({ headers = {} }) => {
+      if (!token) {
+        return headers
+      }
+
+      return {
+        headers: {
+          ...headers,
+          'Authorization': `Bearer ${token}`,
+          'X-Accept-Language': getLanguage()
+        }
+      }
+    })
+
+    return forward(operation)
+  })
+
   // same as makeApolloClient
   return () => {
     const links: ApolloLink[] = []
@@ -169,30 +188,11 @@ export function makeApolloClientWithCredentials(credentials: { uid?: number, tok
       links.push(new SSRMultipartLink({ stripDefer: true }))
     }
 
-    const token = credentials.token
-    const authLinkRSC = new ApolloLink((operation, forward) => {
-      operation.setContext(({ headers = {} }) => {
-        if (!token) {
-          return headers
-        }
-
-        return {
-          headers: {
-            ...headers,
-            'Authorization': `Bearer ${token}`,
-            'X-Accept-Language': getLanguage()
-          }
-        }
-      })
-
-      return forward(operation)
-    })
-
     links.push(errorLink, authLinkRSC, httpLink)
 
-    return new NextSSRApolloClient({
+    return new ApolloClient({
       ssrMode: typeof window === 'undefined',
-      cache: new NextSSRInMemoryCache(apolloCacheConfig),
+      cache: new InMemoryCache(apolloCacheConfig),
       link: ApolloLink.from(links),
       connectToDevTools: process.env.DEV === 'true',
     })

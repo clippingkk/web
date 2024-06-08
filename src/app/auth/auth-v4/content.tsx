@@ -52,13 +52,21 @@ function AuthV4Content(props: AuthV4ContentProps) {
         if (!input.email || !input.turnstileToken) {
           throw new Error('Auth by Email: not exist')
         }
-        return toast.promise(doSendOtp({
+
+        const t = toast.loading('Sending OTP...')
+        return doSendOtp({
           variables: {
             channel: OtpChannel.Email,
             address: input.email,
             cfTurnstileToken: input.turnstileToken
           }
-        }), toastPromiseDefaultOption)
+        }).then(r => {
+          toast.success('OTP Sent, please check your email box', { id: t })
+          return r
+        }).catch(e => {
+          toast.error(e.message, { id: t })
+          throw e
+        })
       }),
       doGithubLogin: fromPromise(async (ctx) => {
         onGithubClick()
@@ -72,7 +80,8 @@ function AuthV4Content(props: AuthV4ContentProps) {
           throw new Error('Auth by Metamask: not exist')
         }
         const { address, signature, text } = input.data
-        return toast.promise(doWeb3Auth({
+        const t = toast.loading('Auth by Metamask: login in progress...')
+        return doWeb3Auth({
           variables: {
             payload: {
               address: address,
@@ -80,13 +89,17 @@ function AuthV4Content(props: AuthV4ContentProps) {
               text: text
             }
           }
-        }), toastPromiseDefaultOption)
+        })
           .then(r => r.data?.loginByWeb3)
           .then(r => {
+            toast.success('Auth by Metamask: login success', { id: t })
             if (r?.noAccountFrom3rdPart) {
               router.push(`/auth/callback/metamask?a=${address}&s=${signature}&t=${encodeURIComponent(text)}`)
             }
             return r
+          }).catch(e => {
+            toast.error(e.toString(), { id: t })
+            throw e
           })
       }),
       doAppleLogin: fromPromise(async ({ input }) => {
@@ -95,7 +108,9 @@ function AuthV4Content(props: AuthV4ContentProps) {
           return
         }
         const { code, id_token, state } = input.data
-        return toast.promise(doAppleAuth({
+
+        const t = toast.loading('Auth by Apple: login in progress...')
+        return doAppleAuth({
           variables: {
             payload: {
               code: code,
@@ -105,48 +120,69 @@ function AuthV4Content(props: AuthV4ContentProps) {
               platform: AppleLoginPlatforms.Web,
             }
           }
-        }), toastPromiseDefaultOption)
+        })
           .then(r => r.data?.loginByApple)
           .then(r => {
+            toast.success('Auth by Apple: login success', { id: t })
             if (r?.noAccountFrom3rdPart) {
               router.push(`/auth/callback/apple?i=${id_token}`)
             }
             return r
+          }).catch(e => {
+            toast.error(e.toString(), { id: t })
+            throw e
           })
       }),
       connectWeb3Wallet: fromPromise((ctx) => {
-        return toast.promise(signDataByWeb3(), {
-          loading: 'Connecting...',
-          success: 'Signed',
-          error: (err) => {
-            return err.message ?? err.toString()
-          },
+        const t = toast.loading('Connecting...')
+        return signDataByWeb3().then(r => {
+          toast.success('Connected', { id: t })
+          return r
+        }).catch(e => {
+          toast.error(e.toString(), { id: t })
+          throw e
         })
       }),
       doManualLogin: fromPromise(async ({ input }) => {
         if (!input.email) {
           return
         }
+        const t = toast.loading('Auth by Email: login in progress...')
         if (!input.otp) {
           // 这里是用户名密码登录
-          return toast.promise(doAuth({
+          return doAuth({
             variables: {
               email: input.email,
               password: input.password!,
               cfTurnstileToken: input.turnstileToken!
             }
-          }), toastPromiseDefaultOption)
-            .then(r => r.data?.auth)
+          }).then(r => {
+            if (!r.data) {
+              throw r.error
+            }
+            toast.success('Auth by Email: login success', { id: t })
+            return r.data?.auth
+          }).catch(e => {
+            toast.error(e.toString(), { id: t })
+            throw e
+          })
         }
-        return toast.promise(loginV3({
+
+        return loginV3({
           variables: {
             payload: {
               email: input.email,
               otp: input.otp!
             }
           }
-        }), toastPromiseDefaultOption)
-          .then(r => r.data?.loginV3)
+        })
+          .then(r => {
+            toast.success('Auth by Email: login success', { id: t })
+            return r.data?.loginV3
+          }).catch(e => {
+            toast.error(e.toString(), { id: t })
+            throw e
+          })
       }),
       setLocalState: fromPromise(({ input }) => {
         return Promise.resolve()

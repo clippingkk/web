@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,7 +10,7 @@ import { ExportDestination, ProfileDocument, ProfileQuery, ProfileQueryVariables
 import { EnvelopeIcon } from '@heroicons/react/24/outline'
 import { useDisclosure } from '@mantine/hooks'
 import { useParams } from 'next/navigation'
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
+import { useSuspenseQuery } from '@apollo/client';
 
 function ExportToMail() {
   const [visible, { open, close }] = useDisclosure()

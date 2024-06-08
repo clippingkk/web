@@ -1,21 +1,20 @@
 'use client'
 import React, { useEffect, useMemo, useRef } from 'react'
-import BookInfo from '../../../../../components/book-info/book-info';
-import ClippingItem from '../../../../../components/clipping-item/clipping-item';
-import Divider from '../../../../../components/divider/divider';
-import { changeBackground } from '../../../../../store/app/type';
-import { useDispatch } from 'react-redux';
-import { usePageTrack } from '../../../../../hooks/tracke';
-import { useTranslation } from 'react-i18next';
+import BookInfo from '@/components/book-info/book-info';
+import ClippingItem from '@/components/clipping-item/clipping-item'
+import Divider from '@/components/divider/divider'
+import { changeBackground } from '@/store/app/type'
+import { useDispatch } from 'react-redux'
+import { usePageTrack } from '@/hooks/tracke'
+import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs';
-import { IN_APP_CHANNEL } from '../../../../../services/channel';
-import { useMasonaryColumnCount } from '../../../../../hooks/use-screen-size';
+import { IN_APP_CHANNEL } from '@/services/channel';
+import { useMasonaryColumnCount } from '@/hooks/use-screen-size';
 import { Masonry, useInfiniteLoader } from 'masonic';
-import { BookDocument, BookQuery, Clipping, QueryMyIdByDomainDocument, QueryMyIdByDomainQuery } from '../../../../../schema/generated';
-import { useSingleBook } from '../../../../../hooks/book';
+import { BookDocument, BookQuery, Clipping, QueryMyIdByDomainDocument, QueryMyIdByDomainQuery } from '@/schema/generated';
+import { useSingleBook } from '@/hooks/book';
 import BookPageSkeleton from './skeleton';
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
-import { skipToken, useQuery } from '@apollo/client';
+import { skipToken, useSuspenseQuery, useQuery } from '@apollo/client';
 
 type BookPageContentProps = {
   userid: string

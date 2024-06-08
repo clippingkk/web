@@ -1,12 +1,10 @@
-import { Button, Fieldset, Input, TextInput } from "@mantine/core"
+import { Button, TextInput } from "@mantine/core"
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import OTPInput from 'react-auth-code-input'
 import { AuthMachine, AuthEvents } from "./auth.state"
 import { Form, useForm } from "@mantine/form"
 import { useTranslation } from "react-i18next"
 import { ChevronRightIcon } from "@heroicons/react/24/solid"
-import OTPBox from "../../../components/auth/otp-box"
-import { useEffect } from "react"
 import Turnstile from "react-turnstile"
 import { CF_TURNSTILE_SITE_KEY } from "../../../constants/config"
 import toast from "react-hot-toast"
@@ -41,6 +39,14 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
   })
 
   const machineCtxErrors = machine.context.errorMessages
+
+  const onTurnstileError = (err: any) => {
+    if (process.env.NODE_ENV !== 'production') {
+      sendEvent({ type: 'CF_VERIFIED', turnstileToken: 'temp' })
+      return
+    }
+    toast.error('Turnstile: ' + err.toString())
+  }
 
   return (
     <Form
@@ -157,8 +163,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
       <Turnstile
         sitekey={CF_TURNSTILE_SITE_KEY}
         onVerify={t => sendEvent({ type: 'CF_VERIFIED', turnstileToken: t })}
-        // onError={e => sendEvent({ type: 'CF_VERIFIED', turnstileToken: 'temp' })}
-        onError={(err) => toast.error('Turnstile: ' + err.toString())}
+        onError={onTurnstileError}
         className='mx-auto my-4 w-full'
       />
       <Button

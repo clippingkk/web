@@ -1,14 +1,14 @@
 import React from 'react'
 import HomePageContent from './content'
-import { generateMetadata as profileGenerateMetadata } from '../../../../components/og/og-with-user-profile'
+import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import next, { Metadata } from 'next'
-import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '../../../../schema/generated'
-import { getApolloServerClient } from '../../../../services/apollo.server'
+import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '@/schema/generated'
+import { getApolloServerClient } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { getReactQueryClient } from '../../../../services/ajax'
-import { WenquSearchResponse, wenquRequest } from '../../../../services/wenqu'
-import { duration3Days } from '../../../../hooks/book'
+import { getReactQueryClient } from '@/services/ajax'
+import { WenquSearchResponse, wenquRequest } from '@/services/wenqu'
+import { duration3Days } from '@/hooks/book'
 
 type PageProps = {
   params: { userid: string }
@@ -52,7 +52,7 @@ async function Page(props: PageProps) {
     },
     context: {
       headers: {
-        'Authorization': 'Bearer ' + cs.get('token')
+        'Authorization': 'Bearer ' + cs.get('token')?.value
       },
     }
   })

@@ -19,7 +19,7 @@ import UserName from '../../../../components/profile/user-name';
 import styles from './profile.module.css'
 import ClippingList from './clipping-list';
 import Loading from '../square/loading';
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
+import { useSuspenseQuery } from '@apollo/client';
 import { toastPromiseDefaultOption } from '../../../../services/misc';
 
 type ProfilePageContentProps = {

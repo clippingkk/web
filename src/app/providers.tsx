@@ -12,7 +12,7 @@ import store from '../store';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { createReactQueryClient, makeApolloClient, makeApolloClientWithCredentials } from '../services/ajax';
 import { reactQueryPersister } from '../services/storage';
-import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
+import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support';
 import InitProvider from './init.provider';
 import { I18nextProvider } from 'react-i18next';
 import { usePointerUpdate } from '../hooks/pointer';

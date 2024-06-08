@@ -110,9 +110,9 @@ export const metadata: Metadata = {
 // ReactDOM.preconnect('https://cdn.annatarhe.com', { crossOrigin: 'use-credentials' })
 
 async function Layout(props: LayoutProps) {
-  const cookieStorage = cookies()
-  const token = cookieStorage.get('token')?.value
-  const uid = cookieStorage.get('uid')?.value
+  const cs = cookies()
+  const token = cs.get('token')?.value
+  const uid = cs.get('uid')?.value
 
   // const loggedInfo = (uid && token) ? await cloakSSROnlySecret(JSON.stringify({ uid: ~~uid, token }), RSC_LOGGED_INFO_KEY) : '{}'
 
