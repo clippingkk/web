@@ -17,26 +17,28 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
   const { t } = useTranslation()
   return (
     <>
-      <div className='anna-page-container flex h-screen items-center justify-center relative flex-col px-4 lg:px-0'>
+      <div className='px-8 py-4 flex flex-col lg:flex-row rounded bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur shadow-lg'>
         <div
           className={'duration-150 container ' + (willBind ? 'opacity-50 ' : '')}
         >
-          <h3 className=' text-3xl lg:text-8xl dark:text-gray-100'>
+          <h3 className=' text-2xl lg:text-5xl dark:text-gray-100'>
             {t('app.authCallback.logged')}
           </h3>
-          <h4 className=' text-xl lg:text-6xl mt-4 dark:text-gray-100'>
+          <h4 className=' text-xl lg:text-3xl mt-4 dark:text-gray-100'>
             {t('app.authCallback.prevAccountTip')}
           </h4>
-          <div className='my-8 flex flex-col'>
+          <div className='my-8 flex flex-col lg:flex-row items-center justify-end gap-4'>
             <Button
               className='h-20 from-teal-400 via-teal-500 to-teal-400 bg-gradient-to-br rounded-lg text-2xl lg:text-5xl duration-150'
+              variant='outline'
+              color='red'
               onClick={props.doBind}
             >
               {t('app.authCallback.createAccountDirectly')}
             </Button>
             {!willBind && (
               <Button
-                className='h-20 from-blue-400 via-teal-400 to-orange-400 bg-gradient-to-br rounded-lg text-2xl lg:text-4xl hover:shadow-lg hover:scale-105 duration-150 mt-6'
+                className='h-20 from-blue-400 via-teal-400 to-orange-400 bg-gradient-to-br rounded-lg text-2xl lg:text-4xl hover:shadow-lg hover:scale-105 duration-150'
                 onClick={() => {
                   setWillBind(true)
                 }}
