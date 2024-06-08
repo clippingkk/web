@@ -391,7 +391,8 @@
       "submit": "Submit",
       "scope": {
         "label": "Scope"
-      }
+      },
+      "update": "Update"
     },
     "title": {
       "add": "Add",
