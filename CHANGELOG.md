@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.2...v5.11.3) (2024-06-08)
+
+
+### Bug Fixes
+
+* **auth:** fix auth ([2961ede](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2961edeea95b71d7b75441d7f26899a8c880737a))
+* **auth:** fix auth issue ([0487421](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/04874216627a210e142576feb83973b4e9165d03))
+* **authV4:** fix sign in with apple ([a9c57e6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a9c57e6340594e922bb5684cd05d099de5ffcb8f))
+* **clipping:** disable title in clipping ([107d8e9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/107d8e9fab32e413afae7b25fcea78848d376286))
+* **i18n:** update i18n locales ([a4a99f4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a4a99f4c06eccadf27a66ec61b462ccce435e209))
+
 ### [5.11.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.1...v5.11.2) (2024-06-06)
 
 
