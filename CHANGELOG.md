@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.5...v5.11.6) (2024-06-27)
+
+
+### Features
+
+* **comment:** add lexical as comment textarea input ([8613b8d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8613b8d009f8e5f43433203cbf9fff644cf0ba1a))
+* **deps:** upgrade deps ([17f0c44](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/17f0c441606702f1269808ad09dae300a147b860))
+
+
+### Bug Fixes
+
+* **report:** add more mobile support for report page ([a9a8076](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a9a8076e3f895c4b8b9b6ff46cd1eeaea4a44441))
+
 ### [5.11.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.4...v5.11.5) (2024-06-08)
 
 
