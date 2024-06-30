@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.6...v5.11.7) (2024-06-30)
+
+
+### Bug Fixes
+
+* **apollo:** add cache limit for apollo client ([b3e3090](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b3e309008d7170b9b44f9b9fd0da302326819c14))
+
 ### [5.11.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.5...v5.11.6) (2024-06-27)
 
 
