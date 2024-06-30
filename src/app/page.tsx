@@ -32,18 +32,17 @@ async function Page() {
     staleTime: duration3Days,
     gcTime: duration3Days,
   })
-  const d = dehydrate(rq)
   const bgInfo = getBackgroundImageServer()
   return (
-    <div>
-      <HydrationBoundary state={d}>
+    <>
+      <HydrationBoundary state={dehydrate(rq)}>
         <IndexPage
           bgInfo={bgInfo}
           publicData={data.data}
         />
       </HydrationBoundary>
       <Footer />
-    </div>
+    </>
   )
 }
 

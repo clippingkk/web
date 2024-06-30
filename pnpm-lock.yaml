@@ -16285,7 +16285,7 @@ snapshots:
 
   '@types/concat-stream@1.6.1':
     dependencies:
-      '@types/node': 8.10.66
+      '@types/node': 20.14.9
 
   '@types/connect@3.4.36':
     dependencies:
@@ -16350,7 +16350,7 @@ snapshots:
 
   '@types/form-data@0.0.33':
     dependencies:
-      '@types/node': 8.10.66
+      '@types/node': 20.14.9
 
   '@types/graceful-fs@4.1.7':
     dependencies:

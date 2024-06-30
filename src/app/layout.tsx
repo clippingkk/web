@@ -1,6 +1,5 @@
 import '../styles/devices.min.css'
 import 'react-phone-input-2/lib/style.css'
-
 // import 'emoji-mart/css/emoji-mart.css'
 import '../styles/react-animation.css'
 import '../styles/global.css'
@@ -13,11 +12,10 @@ import '@mantine/spotlight/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/code-highlight/styles.css'
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
 import AppContainer from '../components/AppContainer'
 
 import '../prefers-dark'
+import '../utils/settings'
 import '../utils/locales'
 import { Toaster } from 'react-hot-toast'
 import React from 'react'
@@ -28,6 +26,7 @@ import Script from 'next/script'
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { Lato } from 'next/font/google'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { theme } from '../styles/mantine'
 import { colorSchemeManager } from '../hooks/theme';
 import { cookies } from 'next/headers'

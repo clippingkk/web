@@ -10,7 +10,7 @@ import { useDarkModeStatus } from '../hooks/theme';
 import { Provider } from 'react-redux';
 import store from '../store';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { createReactQueryClient, makeApolloClient, makeApolloClientWithCredentials } from '../services/ajax';
+import { createReactQueryClient, makeApolloClientWithCredentials } from '../services/ajax';
 import { reactQueryPersister } from '../services/storage';
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support';
 import InitProvider from './init.provider';
