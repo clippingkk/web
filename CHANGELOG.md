@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.7...v5.11.8) (2024-07-03)
+
+
+### Bug Fixes
+
+* **auth:** update turnstile package ([5852400](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/585240026878b75d546ace188ef932182400f4d2))
+* **react-query:** decrease gcTime to avoid memory issue in server ([652a0aa](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/652a0aa2fd14600a62c83ba40eaa36d3628e5509))
+
 ### [5.11.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.6...v5.11.7) (2024-06-30)
 
 
