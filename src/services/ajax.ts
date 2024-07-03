@@ -204,7 +204,7 @@ export function createReactQueryClient() {
     defaultOptions: {
       queries: {
         staleTime: 60 * 60,
-        gcTime: 60 * 60 * 3 // 3 hours
+        gcTime: 5000
       },
     }
   })
