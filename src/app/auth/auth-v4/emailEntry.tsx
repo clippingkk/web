@@ -5,7 +5,7 @@ import { AuthMachine, AuthEvents } from "./auth.state"
 import { Form, useForm } from "@mantine/form"
 import { useTranslation } from "react-i18next"
 import { ChevronRightIcon } from "@heroicons/react/24/solid"
-import Turnstile from "react-turnstile"
+import { Turnstile } from "@marsidev/react-turnstile"
 import { CF_TURNSTILE_SITE_KEY } from "../../../constants/config"
 import toast from "react-hot-toast"
 
@@ -161,8 +161,8 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
         </div>
       )}
       <Turnstile
-        sitekey={CF_TURNSTILE_SITE_KEY}
-        onVerify={t => sendEvent({ type: 'CF_VERIFIED', turnstileToken: t })}
+        siteKey={CF_TURNSTILE_SITE_KEY}
+        onSuccess={t => sendEvent({ type: 'CF_VERIFIED', turnstileToken: t })}
         onError={onTurnstileError}
         className='mx-auto my-4 w-full'
       />

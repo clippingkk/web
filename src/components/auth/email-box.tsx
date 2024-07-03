@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import Turnstile from "react-turnstile"
+import React, { useState } from 'react'
+import { Turnstile } from "@marsidev/react-turnstile"
 import { CF_TURNSTILE_SITE_KEY } from '../../constants/config'
 import { REGEX_EMAIL } from '../../services/regex'
 import { Button } from '@mantine/core'
@@ -44,8 +44,8 @@ function EmailBox(props: EmailBoxProps) {
       </fieldset>
       <fieldset>
         <Turnstile
-          sitekey={CF_TURNSTILE_SITE_KEY}
-          onVerify={t => setTurnstileToken(t)}
+          siteKey={CF_TURNSTILE_SITE_KEY}
+          onSuccess={t => setTurnstileToken(t)}
           className='mx-auto'
         />
       </fieldset>

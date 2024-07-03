@@ -5,9 +5,8 @@ import { useTitle } from '../../../hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import Turnstile from 'react-turnstile'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { CF_TURNSTILE_SITE_KEY } from '../../../constants/config'
-import toast from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '../../../services/misc'
 import { useAuthLazyQuery } from '../../../schema/generated';
 import { Button, Input, InputWrapper } from '@mantine/core';
@@ -74,9 +73,8 @@ function SigninPageContent() {
       </Input.Wrapper>
       {isProd && (
         <Turnstile
-          sitekey={CF_TURNSTILE_SITE_KEY}
-          retry='auto'
-          onVerify={t => setTurnstileToken(t)}
+          siteKey={CF_TURNSTILE_SITE_KEY}
+          onSuccess={t => setTurnstileToken(t)}
           className='mx-auto'
         />
       )}
