@@ -52,12 +52,13 @@ function PersonalityView(props: PersonalityViewProps) {
       >
         <div className='w-full min-h-60 flex items-center flex-col px-4'>
           <LoadingOverlay visible={loading} />
-          {/* <MarkdownPreview value={personalityData ?? ''} /> */}
-          <CKLexicalBaseEditor
-            editable={false}
-            className='w-full px-2 focus:shadow focus:bg-slate-300 focus:outline-none rounded transition-all duration-150'
-            markdown={personalityData}
-          />
+          {personalityData && (
+            <CKLexicalBaseEditor
+              editable={false}
+              className='w-full px-2 focus:shadow focus:bg-slate-300 focus:outline-none rounded transition-all duration-150'
+              markdown={personalityData}
+            />
+          )}
           {error && (
             <Alert color='red' title='Oops'>
               {error.clientErrors.map((e) => e.message).join(', ')}
