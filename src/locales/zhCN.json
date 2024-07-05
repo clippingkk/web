@@ -218,6 +218,10 @@
       },
       "report": {
         "yearlyTitle": "年度报告"
+      },
+      "personality": {
+        "title": "个性",
+        "tooltip": "根据您最近阅读的书籍，通过人工智能预测个性"
       }
     },
     "settings": {

@@ -218,6 +218,10 @@
       },
       "report": {
         "yearlyTitle": "연간 보고서"
+      },
+      "personality": {
+        "title": "성격",
+        "tooltip": "AI가 최근에 읽은 책을 기반으로 성격을 예측합니다."
       }
     },
     "settings": {

@@ -1,0 +1,5 @@
+query fetchUserPersonality($id: Int, $domain: String) {
+  me(id: $id, domain: $domain) {
+    personalityByAI
+  }
+}

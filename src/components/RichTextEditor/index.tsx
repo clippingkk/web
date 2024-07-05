@@ -88,7 +88,7 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
             underline: 'underline',
             bold: 'font-bold',
             strikethrough: 'line-through',
-            code: ' px-1 py border-1 border-gray-300 bg-gray-200 rounded text-slate-800',
+            code: 'px-1 py border-1 border-gray-300 bg-gray-200 rounded text-slate-800',
           },
           link: 'text-blue-500 hover:text-blue-600 hover:underline cursor-pointer',
           quote: 'my-4 border-l-4 border-gray-300 pl-4 italic',
@@ -134,9 +134,11 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
         <LinkPlugin />
         <LexicalClickableLinkPlugin />
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-        <EditorRefPlugin
-          editorRef={editor as any}
-        />
+        {editor && (
+          <EditorRefPlugin
+            editorRef={editor as any}
+          />
+        )}
         {/* <LexicalBlockPlugin /> */}
         {/* <BlockToolBar /> */}
         {/* <FloatingMenuPlugin

@@ -14,13 +14,14 @@ import CliApiToken from './cli-api';
 import AvatarPicker from '../../../../components/profile/avatar-picker';
 import PersonalActivity from '../../../../components/profile/activity';
 import { ProfileDocument, ProfileQuery, ProfileQueryVariables, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '../../../../schema/generated';
-import { Divider, Text, Tooltip } from '@mantine/core';
+import { Button, Divider, Text, Tooltip } from '@mantine/core';
 import UserName from '../../../../components/profile/user-name';
 import styles from './profile.module.css'
 import ClippingList from './clipping-list';
 import Loading from '../square/loading';
 import { useSuspenseQuery } from '@apollo/client';
 import { toastPromiseDefaultOption } from '../../../../services/misc';
+import PersonalityView from './personality';
 
 type ProfilePageContentProps = {
   targetUidOrDomain: string
@@ -171,6 +172,9 @@ function ProfilePageContent(props: ProfilePageContentProps) {
                   RSS
                 </a>
               </Tooltip>
+              {isInMyPage && (
+                <PersonalityView uid={data.me.id} domain={data.me.domain} />
+              )}
             </div>
           </div>
 

@@ -218,6 +218,10 @@
       },
       "report": {
         "yearlyTitle": "Yearly report"
+      },
+      "personality": {
+        "title": "Personality",
+        "tooltip": "predict personality by AI base on your recent reading books"
       }
     },
     "settings": {

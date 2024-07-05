@@ -11,19 +11,19 @@ type MarkdownPreviewProps = {
 function MarkdownPreview(props: MarkdownPreviewProps) {
   const { value } = props
   return (
-    <div className=' text-lg'>
+    <div className='text-lg'>
       <ReactMarkdown
         components={{
-          h1: ({ className,ref, ...props }) => <Title order={1} className={`my-6 ${className}`} {...props} />,
-          h2: ({ className,ref, ...props }) => <Title order={2} className={`my-5 ${className}`} {...props} />,
-          h3: ({ className,ref, ...props }) => <Title order={3} className={`my-4 ${className}`} {...props} />,
-          h4: ({ className,ref, ...props }) => <Title order={4} className={`my-3 ${className}`} {...props} />,
-          h5: ({ className,ref, ...props }) => <Title order={5} className={`my-2 ${className}`} {...props} />,
-          h6: ({ className,ref, ...props }) => <Title order={6} className={`my-1 ${className}`} {...props} />,
-          ul: ({ ref, ...props}) => <List listStyleType='disc' {...props} />,
-          ol: ({ type,ref, ...props }) => <List listStyleType='ordered' {...props} />,
-          li: ({ className, ref, ...props}) => <List.Item className={` text-lg ${className}`} {...props} />,
-          p: ({ ref, ...props}) => <Text {...props} />,
+          h1: ({ className, ref, ...props }) => <Title order={1} className={`my-6 ${className}`} {...props} />,
+          h2: ({ className, ref, ...props }) => <Title order={2} className={`my-5 ${className}`} {...props} />,
+          h3: ({ className, ref, ...props }) => <Title order={3} className={`my-4 ${className}`} {...props} />,
+          h4: ({ className, ref, ...props }) => <Title order={4} className={`my-3 ${className}`} {...props} />,
+          h5: ({ className, ref, ...props }) => <Title order={5} className={`my-2 ${className}`} {...props} />,
+          h6: ({ className, ref, ...props }) => <Title order={6} className={`my-1 ${className}`} {...props} />,
+          ul: ({ ref, ...props }) => <ul className='list-disc pl-4' {...props} />,
+          ol: ({ type, ref, ...props }) => <ol className='list-decimal pl-4' {...props} />,
+          li: ({ className, ref, ...props }) => <li className={`text-lg list-item ${className}`} {...props} />,
+          p: ({ ref, ...props }) => <p className={'my-2 leading-relaxed ' + props.className} {...props} />,
           a: ({ className, children, ...props }) => {
             return (
               <a target='_blank' className={`relative text-lg ${className} hover:underline`} {...props}>
