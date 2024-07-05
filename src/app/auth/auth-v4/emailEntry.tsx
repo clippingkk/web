@@ -119,7 +119,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
       {machine.matches({ Passcode: 'OTP' }) && (
         <div className="my-4 ">
           <div className="flex justify-between items-center w-full mb-2">
-            <span>{t('app.auth.otpTitle')}</span>
+            <span>{t('app.auth.pwd')}</span>
             <div>
               <Button
                 size="xs"
