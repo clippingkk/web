@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.9...v5.11.10) (2024-07-05)
+
+
+### Bug Fixes
+
+* **me:** display personality only on data finished ([70af621](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/70af621e24a07be2d625df306fb80a3a5e1d9a1f))
+
 ### [5.11.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.8...v5.11.9) (2024-07-05)
 
 
