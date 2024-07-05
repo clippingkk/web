@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.8...v5.11.9) (2024-07-05)
+
+
+### Features
+
+* **ci:** add git hook ([ea30960](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ea30960b5504e2c1e3df1db7f5538be681726418))
+* **me:** add personality predict feature on my profile ([4e5f9bc](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4e5f9bc55a5b4c96dcf4a57dee5baa9c8a42506d))
+
+
+### Bug Fixes
+
+* fix auth key ([bb350e0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/bb350e0bab054918c8a8b8e7f2ac0fabd4a0aa69))
+
 ### [5.11.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.7...v5.11.8) (2024-07-03)
 
 
