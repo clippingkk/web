@@ -25,6 +25,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
+      - uses: PromptPal/github-action@v1.0.2
+        env:
+          PROMPTPAL_ENDPOINT: ${{ secrets.PROMPTPAL_ENDPOINT }}
+          PROMPTPAL_API_TOKEN: ${{ secrets.PROMPTPAL_API_TOKEN }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          command: pp g
       - name: Install dependencies
         run: pnpm install
       - run: pnpm run codegen

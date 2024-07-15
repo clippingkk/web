@@ -1,0 +1,9 @@
+input:
+    http:
+        url: https://prompt-pal.annatarhe.com
+        token: "@env.PROMPTPAL_API_TOKEN"
+output:
+    schema: ./schema.g.json
+    typescript_types:
+        prefix: CK
+        output: ./src/types.g.ts
