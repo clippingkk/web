@@ -64,6 +64,14 @@ function BookSharePreview(props: BookSharePreviewProps) {
         blur: 8,
         opacity: 0.7
       }}
+      style={{
+        '--modal-size': 'fit-content',
+      }}
+      styles={{
+        content: {
+          // background: 'linear-gradient(45deg, rgba(0,212,255,0.35), rgba(111, 111, 111, 0.35))'
+        }
+      }}
       title={t('app.clipping.preview')}
     >
       <section className='flex mt-2'>
@@ -72,7 +80,7 @@ function BookSharePreview(props: BookSharePreviewProps) {
             src={shareURL}
             onLoad={onImageLoad}
             onError={onImageError}
-            className={'h-[812px] w-[375px] rounded'}
+            className={'w-[375px] rounded overflow-y-auto'}
             alt={t('app.common.loading') ?? 'loading'}
           />
           {/* {loading && (

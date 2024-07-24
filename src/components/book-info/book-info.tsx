@@ -3,11 +3,8 @@ import Card from '../card/card';
 import { WenquBook } from '../../services/wenqu'
 import BlurhashView from '@annatarhe/blurhash-react'
 // import Image from 'next/image'
-import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp';
 import { useTranslation } from 'react-i18next';
-import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
 import { Rating, Tooltip } from '@mantine/core';
-import Preview from '../preview/preview3';
 import BookSharePreview from '../preview/preview-book';
 import { ShareIcon } from '@heroicons/react/24/solid';
 
