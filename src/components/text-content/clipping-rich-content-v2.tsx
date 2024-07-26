@@ -1,9 +1,12 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { FetchClippingQuery } from '../../schema/generated'
-import { Modal } from '@mantine/core'
+import { HoverCard, Modal } from '@mantine/core'
 import ContentSegment from './content-segment'
 import { useTranslation } from 'react-i18next'
 import NounEditContent from '../noun/noun-edit'
+import { autoUpdate, offset, useFloating, inline, arrow, FloatingArrow } from '@floating-ui/react'
+import NounTooltipCard from './noun-tooltip-card'
+import { useClickOutside } from '@mantine/hooks'
 
 type ClippingRichContentProps = {
   isPremium?: boolean
@@ -14,7 +17,7 @@ type ClippingRichContentProps = {
   className?: string
 }
 
-function ClippingRichContent(props: ClippingRichContentProps) {
+function ClippingRichContentV2(props: ClippingRichContentProps) {
   const {
     richContent,
     className,
@@ -43,10 +46,39 @@ function ClippingRichContent(props: ClippingRichContentProps) {
     setEditingNoun({ id, noun })
   }, [])
 
+  const [selectingText, setSelectingText] = useState<string | undefined>()
+
+  const arraowRef = useRef(null)
+
+  const { refs, floatingStyles, context } = useFloating({
+    open: !!selectingText,
+    middleware: [offset(8), arrow({ element: arraowRef })],
+  })
+
+  const onClippingSelect = useCallback(() => {
+    const selection = getSelection()
+    if (selection?.type !== 'Range') {
+      setSelectingText(undefined)
+      return
+    }
+
+    const box = selection.getRangeAt(0).getBoundingClientRect()
+    refs.setPositionReference({
+      getBoundingClientRect() {
+        return box
+      }
+    })
+    setSelectingText(selection.toString())
+  }, [])
+
+  const coRef = useClickOutside(() => {
+    setSelectingText(undefined)
+  })
+
   return (
     <>
       <div className={className}>
-        {richContent?.segments.map((s, i) => (
+        {/* {richContent?.segments.map((s, i) => (
           <ContentSegment
             key={i}
             noun={nouns.get(s)}
@@ -57,7 +89,34 @@ function ClippingRichContent(props: ClippingRichContentProps) {
             onNounAdd={onNounAdd}
             onNounUpdate={onNounUpdate}
           />
-        ))}
+        ))} */}
+        <p ref={coRef} onMouseUp={onClippingSelect}>
+          {richContent?.plain}
+        </p>
+        {selectingText && (
+          <div
+            ref={refs.setFloating}
+            style={{
+              ...floatingStyles,
+            }}
+            className={`z-10 p-8 rounded-xl relative with-fade-in bg-gradient-to-b from-slate-600 to-slate-700`}
+          >
+            <FloatingArrow
+              ref={arraowRef}
+              context={context}
+              tipRadius={2}
+              fill='#64748b'
+            />
+            <NounTooltipCard
+              noun={nouns.get(selectingText)}
+              segment={selectingText}
+              creatable={isPremium}
+              updatable={isPremium}
+              deletable={isGrandAdmin && isPremium}
+              onNounAdd={onNounAdd} onNounUpdate={onNounUpdate}
+            />
+          </div>
+        )}
       </div>
       <Modal
         opened={!!editingNoun}
@@ -89,4 +148,4 @@ function ClippingRichContent(props: ClippingRichContentProps) {
   )
 }
 
-export default ClippingRichContent
+export default ClippingRichContentV2

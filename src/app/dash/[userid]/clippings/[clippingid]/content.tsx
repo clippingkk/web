@@ -22,7 +22,7 @@ import { FetchClippingDocument, FetchClippingQuery } from '@/schema/generated'
 import styles from './clipping.module.css'
 import { toast } from 'react-hot-toast'
 import { useSuspenseQuery } from '@apollo/client'
-import ClippingRichContent from '@/components/text-content/clipping-rich-content'
+import ClippingRichContent from '@/components/text-content/clipping-rich-content-v2'
 import { useIsPremium } from '@/hooks/profile'
 import { isGrandAdmin } from '@/services/admin'
 
