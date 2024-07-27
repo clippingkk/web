@@ -18,12 +18,12 @@ import { toastPromiseDefaultOption } from '@/services/misc'
 type ClippingSidebarProps = {
   clipping?: Pick<Clipping, 'id' | 'visible' | 'content' | 'title' | 'createdAt' | 'nextClipping' | 'prevClipping'> & { creator: Pick<User, 'id' | 'name' | 'domain'> }
   book: WenquBook | null
-  me: UserContent
+  me?: UserContent
   inAppChannel: IN_APP_CHANNEL
   onTogglePreviewVisible: () => void
 }
 
-function getSiblingLink(iac: IN_APP_CHANNEL, domain: string, clipping?: Pick<Clipping, 'prevClipping' | 'nextClipping'>) {
+function getSiblingLink(iac: IN_APP_CHANNEL, domain?: string, clipping?: Pick<Clipping, 'prevClipping' | 'nextClipping'>) {
   let prev = '', next = ''
   if (!clipping) {
     return { prev, next }
@@ -87,7 +87,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
         clipping.creator.domain :
         clipping.creator.id.toString()
     ) :
-    me.id.toString()
+    me?.id.toString()
 
   const siblingLink = getSiblingLink(props.inAppChannel, clippingDomain, clipping)
   return (
@@ -117,7 +117,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             />
           </li>
 
-          {me.id === clipping?.creator.id && (
+          {me?.id === clipping?.creator.id && (
             <li className='w-full mb-4'>
               <Button
                 variant='gradient'
@@ -128,7 +128,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 {t('app.clipping.update')}
               </Button>
               <BookInfoChanger
-                bookName={clipping.title}
+                bookName={clipping?.title}
                 clippingID={clipping?.id ?? -1}
                 visible={updateClippingBookId >= 0}
                 onClose={() => {
@@ -176,7 +176,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
               {t('app.clipping.embed.title')}
             </Button>
           </li>
-          {clipping?.creator.id === me.id && (
+          {clipping?.creator.id === me?.id && (
             <li className='w-full mb-4'>
               <div
                 className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center justify-between'
@@ -185,7 +185,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 <Switch
                   disabled={false}
                   name='visible'
-                  checked={clipping.visible}
+                  checked={clipping?.visible ?? true}
                   onChange={() => {
                     if (!clipping) {
                       return

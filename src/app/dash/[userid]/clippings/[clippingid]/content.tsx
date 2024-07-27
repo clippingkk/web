@@ -18,28 +18,28 @@ import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useSetAtom } from 'jotai'
 import { appBackgroundAtom } from '@/store/global'
-import { FetchClippingDocument, FetchClippingQuery } from '@/schema/generated'
+import { FetchClippingDocument, FetchClippingQuery, ProfileQuery } from '@/schema/generated'
 import styles from './clipping.module.css'
 import { toast } from 'react-hot-toast'
 import { useSuspenseQuery } from '@apollo/client'
-import ClippingRichContent from '@/components/text-content/clipping-rich-content'
+import ClippingRichContent from '@/components/text-content/clipping-rich-content-v2'
 import { useIsPremium } from '@/hooks/profile'
 import { isGrandAdmin } from '@/services/admin'
 
 type ClippingPageProps = {
   cid: number
   iac: string
+  myProfile?: ProfileQuery['me']
 }
 
 function ClippingPageContent(props: ClippingPageProps) {
-  const { cid, iac } = props
+  const { cid, iac, myProfile: me } = props
   const { data: clipping } = useSuspenseQuery<FetchClippingQuery>(FetchClippingDocument, {
     variables: {
       id: ~~cid,
     },
   })
 
-  const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
 
   const book = useSingleBook(clipping.clipping.bookID)
@@ -64,7 +64,7 @@ function ClippingPageContent(props: ClippingPageProps) {
   const creator = clipping?.clipping.creator
 
   const [commentListRef] = useAutoAnimate()
-  const isPremium = useIsPremium(me.premiumEndAt)
+  const isPremium = useIsPremium(me?.premiumEndAt)
 
   return (
     <div className={`${styles.clipping} page anna-fade-in`}>
@@ -94,7 +94,7 @@ function ClippingPageContent(props: ClippingPageProps) {
             /> */}
             <ClippingRichContent
               isPremium={isPremium}
-              isGrandAdmin={isGrandAdmin({ id: me.id })}
+              isGrandAdmin={isGrandAdmin({ id: me?.id })}
               className='lg:text-4xl text-3xl lg:leading-loose leading-normal font-lxgw'
               richContent={clipping?.clipping.richContent}
               clippingId={clipping?.clipping.id}
@@ -105,7 +105,7 @@ function ClippingPageContent(props: ClippingPageProps) {
             <Reactions reactions={clipping?.clipping.reactionData} cid={clipping?.clipping.id || -1} />
             <hr className='bg-gray-400 my-12' />
             <footer className='flex justify-between flex-col lg:flex-row mt-4'>
-              {me.id === 0 && (
+              {me?.id === 0 && (
                 (<Link href={`/auth/auth-v4`} className='flex justify-start items-center w-full'>
                   <img
                     src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
@@ -132,7 +132,7 @@ function ClippingPageContent(props: ClippingPageProps) {
       </div>
 
       {
-        me.id !== 0 && (
+        me?.id !== 0 && (
           <div className='container px-2 lg:px-20 mb-4'>
             <div
               className='w-full h-full rounded p-4 backdrop-blur bg-slate-200 dark:bg-slate-800 bg-opacity-50 dark:bg-opacity-50 shadow'

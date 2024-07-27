@@ -35,9 +35,12 @@ function ContentSegment(props: ContentSegmentProps) {
     return <span>{segment}</span>
   }
 
+  return <span>{segment}</span>
+
   if (symbolList.has(segment)) {
     return <span>{segment}</span>
   }
+
 
   if (creatable && !noun) {
     return (

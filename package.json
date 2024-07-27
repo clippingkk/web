@@ -90,6 +90,7 @@
     "@emotion/server": "^11.11.0",
     "@fingerprintjs/fingerprintjs": "^4.3.0",
     "@floating-ui/dom": "^1.6.7",
+    "@floating-ui/react": "^0.26.20",
     "@formkit/auto-animate": "0.8.2",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@headlessui/react": "^2.1.2",

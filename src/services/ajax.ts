@@ -73,7 +73,7 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
 function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
   if (!options.next) {
     options.next = {
-      revalidate: 60 * 60 * 2000
+      revalidate: 30 // 30 seconds
     }
   }
   return fetch(url, options)

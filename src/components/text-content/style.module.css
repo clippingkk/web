@@ -1,0 +1,41 @@
+.glow {
+  all: unset;
+  position: relative;
+  font-family: sans-serif;
+  backdrop-filter: blur(2px);
+}
+
+.glow::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0px;
+  transition: all;
+
+  border-radius: inherit;
+  /* this is the border width */
+  padding: 1px;
+  background: linear-gradient(
+    to bottom right,
+    #171717 0%,
+    #525252 62%,
+    #171717 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.glow:hover::before {
+  background: linear-gradient(
+    to bottom right,
+    oklch(0.48 0.16 271 / 1) 0%,
+    rgba(100, 100, 100, 0.6) 62%,
+    oklch(0.7 0.16 239 / 1) 100%
+  );
+}

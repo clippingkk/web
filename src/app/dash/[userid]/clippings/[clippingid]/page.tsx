@@ -1,6 +1,6 @@
 import React from 'react'
 import { duration3Days } from '@/hooks/book'
-import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument, useFetchClippingSuspenseQuery } from '@/schema/generated'
+import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
@@ -58,6 +58,27 @@ async function Page(props: PageProps) {
     },
   })
 
+  const cs = cookies()
+  const uid = cs.get('uid')?.value
+  let myProfile: ProfileQuery['me'] | undefined = undefined
+  if (uid) {
+    const p = await client.query<ProfileQuery, ProfileQueryVariables>({
+      query: ProfileDocument,
+      variables: {
+        id: ~~uid,
+      },
+      context: {
+        headers: {
+          headers: {
+            'Authorization': 'Bearer ' + cs.get('token')?.value
+          },
+        },
+      }
+    })
+    myProfile = p.data.me
+  }
+
+
   const bookID = clippingsResponse.data.clipping.bookID
   const rq = getReactQueryClient()
   if (bookID && bookID.length > 3) {
@@ -75,6 +96,7 @@ async function Page(props: PageProps) {
       <ClippingPageContent
         cid={cid}
         iac={props.searchParams.iac}
+        myProfile={myProfile}
       />
     </HydrationBoundary>
   )
