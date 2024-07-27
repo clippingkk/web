@@ -32,7 +32,12 @@ function NounContentRender(props: NounContentRenderProps) {
           {noun?.updaters.map(u => (
             <Avatar key={u.id} className='w-12 h-12' isPremium img={u.avatar} />
           ))}
-          <span>{t('app.clipping.noun.card.whoUpdatedTips')}</span>
+          <div className='flex flex-col'>
+            {noun?.updaters.map(u => (
+              <span className='text-sm font-bold' key={u.id}>{u.name}</span>
+            ))}
+            <span className='text-gray-500 text-xs'>{t('app.clipping.noun.card.whoUpdatedTips')}</span>
+          </div>
         </div>
         <time className='text-gray-500 text-xs'>
           {dayjs(noun?.updatedAt).format('YYYY-MM-DD HH:mm')}

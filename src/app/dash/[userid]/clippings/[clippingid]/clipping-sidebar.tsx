@@ -18,12 +18,12 @@ import { toastPromiseDefaultOption } from '@/services/misc'
 type ClippingSidebarProps = {
   clipping?: Pick<Clipping, 'id' | 'visible' | 'content' | 'title' | 'createdAt' | 'nextClipping' | 'prevClipping'> & { creator: Pick<User, 'id' | 'name' | 'domain'> }
   book: WenquBook | null
-  me: UserContent
+  me?: UserContent
   inAppChannel: IN_APP_CHANNEL
   onTogglePreviewVisible: () => void
 }
 
-function getSiblingLink(iac: IN_APP_CHANNEL, domain: string, clipping?: Pick<Clipping, 'prevClipping' | 'nextClipping'>) {
+function getSiblingLink(iac: IN_APP_CHANNEL, domain?: string, clipping?: Pick<Clipping, 'prevClipping' | 'nextClipping'>) {
   let prev = '', next = ''
   if (!clipping) {
     return { prev, next }
@@ -87,11 +87,11 @@ function ClippingSidebar(props: ClippingSidebarProps) {
         clipping.creator.domain :
         clipping.creator.id.toString()
     ) :
-    me.id.toString()
+    me?.id.toString()
 
   const siblingLink = getSiblingLink(props.inAppChannel, clippingDomain, clipping)
   return (
-    <div className='flex-1 p-4 shadow bg-slate-200 dark:bg-slate-800 my-4 rounded bg-opacity-50 dark:bg-opacity-50 backdrop-blur'>
+    <div className='flex-1 p-4 shadow bg-slate-200 dark:bg-slate-800 my-4 rounded bg-opacity-50 dark:bg-opacity-50 backdrop-blur -z-10'>
       <div className='flex w-full h-full flex-col justify-between items-center'>
         <ul className={'w-full p-0 list-none'}>
           <li className='w-full mb-4'>

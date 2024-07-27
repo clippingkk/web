@@ -1,10 +1,9 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { FetchClippingQuery } from '../../schema/generated'
-import { HoverCard, Modal } from '@mantine/core'
-import ContentSegment from './content-segment'
+import { HoverCard, Modal, Highlight } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import NounEditContent from '../noun/noun-edit'
-import { autoUpdate, offset, useFloating, inline, arrow, FloatingArrow } from '@floating-ui/react'
+import { offset, useFloating, arrow, FloatingArrow } from '@floating-ui/react'
 import NounTooltipCard from './noun-tooltip-card'
 import { useClickOutside } from '@mantine/hooks'
 
@@ -48,11 +47,11 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
 
   const [selectingText, setSelectingText] = useState<string | undefined>()
 
-  const arraowRef = useRef(null)
+  const arrowRef = useRef(null)
 
   const { refs, floatingStyles, context } = useFloating({
     open: !!selectingText,
-    middleware: [offset(8), arrow({ element: arraowRef })],
+    middleware: [offset(8), arrow({ element: arrowRef })],
   })
 
   const onClippingSelect = useCallback(() => {
@@ -77,35 +76,32 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
 
   return (
     <>
-      <div className={className}>
-        {/* {richContent?.segments.map((s, i) => (
-          <ContentSegment
-            key={i}
-            noun={nouns.get(s)}
-            segment={s}
-            creatable={isPremium}
-            updatable={isPremium}
-            deletable={isGrandAdmin && isPremium}
-            onNounAdd={onNounAdd}
-            onNounUpdate={onNounUpdate}
-          />
-        ))} */}
-        <p ref={coRef} onMouseUp={onClippingSelect}>
-          {richContent?.plain}
-        </p>
+      <div className={className} ref={coRef} >
+        <Highlight
+          inherit
+          onMouseUp={onClippingSelect}
+          highlight={[]}
+          highlightStyles={{
+            background: 'transparent',
+            textDecoration: 'underline',
+            textDecorationStyle: 'dotted',
+          }}
+        >
+          {richContent?.plain ?? ''}
+        </Highlight>
         {selectingText && (
           <div
             ref={refs.setFloating}
             style={{
               ...floatingStyles,
             }}
-            className={`z-10 p-8 rounded-xl relative with-fade-in bg-gradient-to-b from-slate-600 to-slate-700`}
+            className={`z-50 p-4 rounded-xl relative with-fade-in bg-gradient-to-b from-slate-50 to-slate-200 isolate`}
           >
             <FloatingArrow
-              ref={arraowRef}
+              ref={arrowRef}
               context={context}
               tipRadius={2}
-              fill='#64748b'
+              fill='#f8fafc'
             />
             <NounTooltipCard
               noun={nouns.get(selectingText)}

@@ -1,7 +1,7 @@
 export function isGrandAdmin({
   id
 }: {
-  id: number
+  id?: number
 }) {
   return id === 1
 }

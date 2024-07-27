@@ -20,8 +20,8 @@ function NounTooltipCard(props: NounTooltipCardProps) {
   if (creatable && !noun) {
     return (
       <>
-        <p className='w-full text-center text-xl'>{ }</p>
-        <p>{t('app.nouns.empty.tip')}</p>
+        <p className='w-full text-center text-xl'>{segment}</p>
+        <p className='text-gray-500 text-sm'>{t('app.nouns.empty.tip')}</p>
         <div className='mt-4 flex justify-end'>
           <Button onClick={() => onNounAdd(segment)}>{t('app.nouns.empty.add')}</Button>
         </div>
@@ -31,7 +31,7 @@ function NounTooltipCard(props: NounTooltipCardProps) {
 
   // 不能创建，而且也没有内容，暂时不知道咋操作，先不做
   if (!noun) {
-    return <span>{segment}</span>
+    return <span className='text-gray-500 text-lg'>{segment}</span>
   }
 
   return (
