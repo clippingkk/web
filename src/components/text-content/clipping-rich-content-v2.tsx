@@ -36,17 +36,18 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
     return m
   }, [richContent?.nouns])
 
+  const [selectingText, setSelectingText] = useState<string | undefined>()
   const [editingNoun, setEditingNoun] = useState<{ id: number, noun: string } | undefined>(undefined)
 
   const onNounAdd = useCallback((noun: string) => {
+    setSelectingText(undefined)
     setEditingNoun({ id: -1, noun })
   }, [])
 
   const onNounUpdate = useCallback((id: number, noun: string) => {
+    setSelectingText(undefined)
     setEditingNoun({ id, noun })
   }, [])
-
-  const [selectingText, setSelectingText] = useState<string | undefined>()
 
   const arrowRef = useRef(null)
 
@@ -133,7 +134,8 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
             creatable={isPremium}
             updatable={isPremium}
             deletable={isGrandAdmin && isPremium}
-            onNounAdd={onNounAdd} onNounUpdate={onNounUpdate}
+            onNounAdd={onNounAdd}
+            onNounUpdate={onNounUpdate}
           />
         </div>
       </div>
