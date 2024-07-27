@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.11...v5.11.12) (2024-07-27)
+
+
+### Bug Fixes
+
+* **ci:** ignore some wrong codes ([11cad22](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/11cad2268e45f1d4327ddd5f5755d113b60e5fdf))
+
 ### [5.11.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.10...v5.11.11) (2024-07-27)
 
 
