@@ -91,7 +91,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
 
   const siblingLink = getSiblingLink(props.inAppChannel, clippingDomain, clipping)
   return (
-    <div className='flex-1 p-4 shadow bg-slate-200 dark:bg-slate-800 my-4 rounded bg-opacity-50 dark:bg-opacity-50 backdrop-blur -z-10'>
+    <div className='flex-1 p-4 shadow bg-slate-200 dark:bg-slate-800 my-4 rounded bg-opacity-50 dark:bg-opacity-50 backdrop-blur'>
       <div className='flex w-full h-full flex-col justify-between items-center'>
         <ul className={'w-full p-0 list-none'}>
           <li className='w-full mb-4'>

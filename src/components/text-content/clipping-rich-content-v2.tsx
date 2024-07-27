@@ -1,11 +1,12 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FetchClippingQuery } from '../../schema/generated'
-import { HoverCard, Modal, Highlight } from '@mantine/core'
+import { HoverCard, Modal, Highlight, useMantineColorScheme } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import NounEditContent from '../noun/noun-edit'
 import { offset, useFloating, arrow, FloatingArrow } from '@floating-ui/react'
 import NounTooltipCard from './noun-tooltip-card'
 import { useClickOutside } from '@mantine/hooks'
+import styles from './style.module.css'
 
 type ClippingRichContentProps = {
   isPremium?: boolean
@@ -61,18 +62,39 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
       return
     }
 
+    const newText = selection.toString()
+
+    if (newText === selectingText) {
+      setSelectingText(undefined)
+      return
+    }
+
     const box = selection.getRangeAt(0).getBoundingClientRect()
     refs.setPositionReference({
       getBoundingClientRect() {
         return box
       }
     })
-    setSelectingText(selection.toString())
-  }, [])
+    setSelectingText(newText)
+  }, [selectingText])
 
   const coRef = useClickOutside(() => {
     setSelectingText(undefined)
   })
+
+  useEffect(() => {
+    if (selectingText) {
+      refs.floating.current?.showPopover()
+    } else {
+      refs.floating.current?.hidePopover()
+    }
+  }, [selectingText])
+
+  const highlights = useMemo(() => {
+    return richContent?.nouns.map(n => n.noun) ?? []
+  }, [richContent?.nouns])
+
+  const { colorScheme } = useMantineColorScheme()
 
   return (
     <>
@@ -80,39 +102,40 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
         <Highlight
           inherit
           onMouseUp={onClippingSelect}
-          highlight={[]}
+          highlight={highlights}
           highlightStyles={{
-            background: 'transparent',
-            textDecoration: 'underline',
-            textDecorationStyle: 'dotted',
+            backgroundImage:
+              colorScheme === 'dark' ? 'linear-gradient(45deg, #9e9e9e, rgba(103, 97, 97, 1))' : 'linear-gradient(45deg, #444, #222)',
+            fontWeight: 700,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
           }}
         >
           {richContent?.plain ?? ''}
         </Highlight>
-        {selectingText && (
-          <div
-            ref={refs.setFloating}
-            style={{
-              ...floatingStyles,
-            }}
-            className={`z-50 p-4 rounded-xl relative with-fade-in bg-gradient-to-b from-slate-50 to-slate-200 isolate`}
-          >
-            <FloatingArrow
-              ref={arrowRef}
-              context={context}
-              tipRadius={2}
-              fill='#f8fafc'
-            />
-            <NounTooltipCard
-              noun={nouns.get(selectingText)}
-              segment={selectingText}
-              creatable={isPremium}
-              updatable={isPremium}
-              deletable={isGrandAdmin && isPremium}
-              onNounAdd={onNounAdd} onNounUpdate={onNounUpdate}
-            />
-          </div>
-        )}
+        <div
+          ref={refs.setFloating}
+          style={{
+            ...floatingStyles,
+          }}
+          popover='manual'
+          className={`z-50 p-4 rounded-xl relative with-fade-in bg-gradient-to-b from-slate-50 to-slate-200 dark:from-slate-900 dark:to-slate-950 isolate shadow-lg overflow-visible m-0`}
+        >
+          <FloatingArrow
+            ref={arrowRef}
+            context={context}
+            tipRadius={2}
+            className='fill-slate-50 dark:fill-slate-900'
+          />
+          <NounTooltipCard
+            noun={nouns.get(selectingText ?? '')}
+            segment={selectingText ?? ''}
+            creatable={isPremium}
+            updatable={isPremium}
+            deletable={isGrandAdmin && isPremium}
+            onNounAdd={onNounAdd} onNounUpdate={onNounUpdate}
+          />
+        </div>
       </div>
       <Modal
         opened={!!editingNoun}
