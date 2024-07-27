@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.12...v5.11.13) (2024-07-27)
+
+
+### Bug Fixes
+
+* **ci:** check pp_token only in runtime ([71369d2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/71369d2c69cf61ea583a664d48d5cfa80a1d0358))
+
 ### [5.11.12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.11...v5.11.12) (2024-07-27)
 
 
