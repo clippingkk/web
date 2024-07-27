@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.14](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.13...v5.11.14) (2024-07-27)
+
+
+### Bug Fixes
+
+* **popover:** hide popover when modal shown ([168854d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/168854d7aa0be7227263ab767880ec6b24628276))
+
 ### [5.11.13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.12...v5.11.13) (2024-07-27)
 
 
