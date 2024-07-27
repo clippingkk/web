@@ -117,7 +117,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             />
           </li>
 
-          {me.id === clipping?.creator.id && (
+          {me?.id === clipping?.creator.id && (
             <li className='w-full mb-4'>
               <Button
                 variant='gradient'
@@ -128,7 +128,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 {t('app.clipping.update')}
               </Button>
               <BookInfoChanger
-                bookName={clipping.title}
+                bookName={clipping?.title}
                 clippingID={clipping?.id ?? -1}
                 visible={updateClippingBookId >= 0}
                 onClose={() => {
@@ -176,7 +176,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
               {t('app.clipping.embed.title')}
             </Button>
           </li>
-          {clipping?.creator.id === me.id && (
+          {clipping?.creator.id === me?.id && (
             <li className='w-full mb-4'>
               <div
                 className='bg-gray-400 bg-opacity-70 border-0 w-full p-4 box-border flex m-0 cursor-pointer hover:bg-gray-100 items-center justify-between'
@@ -185,7 +185,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 <Switch
                   disabled={false}
                   name='visible'
-                  checked={clipping.visible}
+                  checked={clipping?.visible ?? true}
                   onChange={() => {
                     if (!clipping) {
                       return
