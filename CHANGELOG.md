@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.11.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.10...v5.11.11) (2024-07-27)
+
+
+### Features
+
+* **deps:** upgrade deps ([9919062](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/99190628d6b0a8fc505cb7e4c38a855d64b8b4db))
+* **md:** add readonly markdown preview component ([1a58535](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1a585354c466a9821fb227452c1e3765b4ee6833))
+* **pp:** add promptpal client for AI prompt manage ([cd8cb17](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cd8cb17c85f325b6a902a16e9ce98e422d74105f))
+
+
+### Bug Fixes
+
+* **preview:** fix styles issue in preview ([7d9fbbd](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7d9fbbd1dc5316429ee36bf760fa9992f63f8c5c))
+
 ### [5.11.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.9...v5.11.10) (2024-07-05)
 
 
