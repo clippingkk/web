@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.12.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.14...v5.12.0) (2024-08-02)
+
+
+### Features
+
+* **pp:** use promptpal client ([4aa24a0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4aa24a015d1e55ef683d9bfafe718dc4be520bff))
+
 ### [5.11.14](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.11.13...v5.11.14) (2024-07-27)
 
 
