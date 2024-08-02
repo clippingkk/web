@@ -109,6 +109,9 @@ function ClippingSidebar(props: ClippingSidebarProps) {
               {t('app.clipping.aiSummary')}
             </Button>
             <ClippingAISummaryModal
+              uid={me?.id}
+              clippingContent={clipping?.content ?? ''}
+              book={book}
               open={aiSummaryVisible}
               cid={clipping?.id}
               onClose={() => {

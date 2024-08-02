@@ -1,11 +1,18 @@
 import { Blockquote, LoadingOverlay, Modal, Paper, Tooltip, useMantineTheme } from '@mantine/core'
 import { useViewportSize } from '@mantine/hooks';
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useFetchClippingAiSummaryQuery } from '../../schema/generated'
+import client from '../../services/pp';
+import { CKPromptDescribeBookPassageVariables, CKPrompts } from '../../types.g';
+import { WenquBook } from '../../services/wenqu';
+import { getLanguage } from '../../utils/locales';
+import { useQuery } from '@tanstack/react-query';
 
 type ClippingAISummaryModalProps = {
+  uid?: number
   cid?: number
+  book?: WenquBook | null
+  clippingContent: string
   open: boolean
   onClose: () => void
 }
@@ -24,14 +31,38 @@ type serverGraphQLError = {
 }
 
 function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
-  const { cid, open, onClose } = props
-  const theme = useMantineTheme()
+  const { cid, open, book, clippingContent, uid, onClose } = props
+  const [data, setData] = useState<string[]>([])
 
-  const { data, loading, error } = useFetchClippingAiSummaryQuery({
-    variables: {
-      id: cid ?? 0
+  const { isLoading, error } = useQuery({
+    queryKey: ['book', book?.id, cid, 'aiSummary'],
+    queryFn: async () => {
+      return client.executeStream<CKPrompts, CKPromptDescribeBookPassageVariables>(
+        CKPrompts.DescribeBookPassage,
+        {
+          lang: getLanguage(),
+          bookTitle: book!.title,
+          author: book!.author,
+          pbDate: book!.pubdate,
+          url: book!.url,
+          isbn: book!.isbn,
+          passage: clippingContent
+        },
+        uid ? uid.toString() : undefined,
+        {
+          onData: (chunk) => {
+            setData(d => [...d, chunk.message])
+            return Promise.resolve()
+          },
+          onEnd: () => {
+            return Promise.resolve()
+          }
+        }).then((final) => {
+          setData([final.message])
+          return final
+        })
     },
-    skip: !open && !!cid
+    enabled: open && !!cid && !!book,
   })
 
   const isMobile = useViewportSize().width <= 768
@@ -39,18 +70,7 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
   const { t } = useTranslation()
 
   const errMsg = useMemo(() => {
-    if (!error) {
-      return null
-    }
-
-    const ne = error.networkError as unknown as serverGraphQLError
-
-    const errs = ne.result.errors
-    if (errs.length === 0) {
-      return error.message
-    }
-
-    return errs[0].message
+    return error?.message
   }, [error])
 
   return (
@@ -67,10 +87,10 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
     >
       <div className='relative'>
         <LoadingOverlay
-          visible={loading}
+          visible={isLoading}
         />
         <Tooltip
-          label={errMsg?.includes('402') ? t('app.payment.required') : t('app.ai.clippingHelp')}
+          label={errMsg?.includes('403') ? t('app.payment.required') : t('app.ai.clippingHelp')}
           withArrow
           transitionProps={{ duration: 175, transition: 'pop' }}
         >
@@ -80,7 +100,7 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
               cite=' - ChatGPT'
               className='font-lxgw text-xl'
             >
-              {errMsg ?? data?.clipping.aiSummary}
+              {errMsg ?? data.join('')}
             </Blockquote>
           </Paper>
         </Tooltip>
