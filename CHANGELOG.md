@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.5...v5.12.6) (2024-08-03)
+
+
+### Bug Fixes
+
+* **env:** parse all encoded string to real string ([ce41b88](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ce41b882eaa46bbccffaf3c84b4bf9ea4897d23d))
+
 ### [5.12.5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.4...v5.12.5) (2024-08-03)
 
 
