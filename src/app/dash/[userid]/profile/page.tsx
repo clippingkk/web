@@ -1,9 +1,9 @@
 import React from 'react'
-import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '../../../../schema/generated'
-import { generateMetadata as profileGenerateMetadata } from '../../../../components/og/og-with-user-profile'
+import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '@/schema/generated'
+import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import ProfilePageContent from './content'
 import { Metadata } from 'next'
-import { getApolloServerClient } from '../../../../services/apollo.server'
+import { getApolloServerClient } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
 
 type PageProps = {

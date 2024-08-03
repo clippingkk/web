@@ -46,6 +46,7 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
           pbDate: book!.pubdate,
           url: book!.url,
           isbn: book!.isbn,
+          summary: book!.summary,
           passage: clippingContent
         },
         uid ? uid.toString() : undefined,
