@@ -135,8 +135,8 @@ importers:
         specifier: ^1.9.0
         version: 1.9.0
       '@prompt-pal/node-sdk':
-        specifier: npm:@jsr/prompt-pal__node-sdk@^0.4.2
-        version: '@jsr/prompt-pal__node-sdk@0.4.2'
+        specifier: npm:@jsr/prompt-pal__node-sdk@^0.4.3
+        version: '@jsr/prompt-pal__node-sdk@0.4.3'
       '@reduxjs/toolkit':
         specifier: ^2.2.7
         version: 2.2.7(react-redux@9.1.2(@types/react@18.3.3)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
@@ -2483,8 +2483,8 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
-  '@jsr/prompt-pal__node-sdk@0.4.2':
-    resolution: {integrity: sha512-GqxwGlVNWrsDp2SE5WTFcxWK//KPfck/p6Yf6+nKhLxcJd1mcdJtWI94s0tb8VYYQ+y300dAjMDhN0TTudj0WQ==, tarball: https://npm.jsr.io/~/11/@jsr/prompt-pal__node-sdk/0.4.2.tgz}
+  '@jsr/prompt-pal__node-sdk@0.4.3':
+    resolution: {integrity: sha512-SdISIeDeZnbBwO6RCmDsYFYqsM9WoiYGp/JJcmHWVvXI/CJDJhJ5l/OwNivzM5ZixhgGOn2bSU/OJWBe2jJiqg==, tarball: https://npm.jsr.io/~/11/@jsr/prompt-pal__node-sdk/0.4.3.tgz}
 
   '@kamilkisiela/fast-url-parser@1.1.4':
     resolution: {integrity: sha512-gbkePEBupNydxCelHCESvFSFM8XPh1Zs/OAVRW/rKpEqPAl5PbOM90Si8mv9bvnR53uPD2s/FiRxdvSejpRJew==}
@@ -13815,7 +13815,7 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@jsr/prompt-pal__node-sdk@0.4.2': {}
+  '@jsr/prompt-pal__node-sdk@0.4.3': {}
 
   '@kamilkisiela/fast-url-parser@1.1.4': {}
 

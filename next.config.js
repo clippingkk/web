@@ -37,6 +37,19 @@ const config = {
     NEXT_PUBLIC_PP_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_PP_TOKEN || ''),
     infuraKey: JSON.stringify(process.env.infuraKey || '')
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*{/}?',
+        headers: [
+          {
+            key: 'X-Accel-Buffering',
+            value: 'no',
+          },
+        ],
+      },
+    ]
+  },
 }
 
 if (process.env.IS_FLY_IO) {
