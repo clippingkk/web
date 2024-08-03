@@ -31,6 +31,7 @@ const config = {
   env: {
     DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
     GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT || ''),
+    NEXT_PUBLIC_PP_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_PP_TOKEN || ''),
     infuraKey: JSON.stringify(process.env.infuraKey || '')
   },
 }

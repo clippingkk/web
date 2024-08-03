@@ -46,6 +46,7 @@ jobs:
           context: .
           push: false
           build-args: GIT_COMMIT=${{ github.sha }}
+            NEXT_PUBLIC_PP_TOKEN=${{ secrets.PROMPTPAL_CLIENT_API_TOKEN }}
           tags: tests
           labels: tests
       - run: pnpm run coveralls
