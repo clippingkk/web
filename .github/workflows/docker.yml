@@ -59,6 +59,7 @@ jobs:
         env:
           GIT_COMMIT: ${{ github.sha }}
         with:
+          context: .
           push: true
           build-args: GIT_COMMIT=${{ github.sha }}
           tags: ${{ steps.meta.outputs.tags }}

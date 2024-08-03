@@ -38,6 +38,16 @@ jobs:
       - run: pnpm run build # to make sure this version can be build
         env:
           GIT_COMMIT: ${{ github.sha }}
+      - name: docker build
+        uses: docker/build-push-action@v6
+        env:
+          GIT_COMMIT: ${{ github.sha }}
+        with:
+          context: .
+          push: false
+          build-args: GIT_COMMIT=${{ github.sha }}
+          tags: tests
+          labels: tests
       - run: pnpm run coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.CODEALLS_REPO_TOKEN }}
