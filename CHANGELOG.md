@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.6...v5.12.7) (2024-08-03)
+
+
+### Bug Fixes
+
+* **streaming:** disable buffering to enable streaming response ([3152a34](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3152a34a8c669d4ae1752ec4372762a63573f82c))
+
 ### [5.12.6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.5...v5.12.6) (2024-08-03)
 
 
