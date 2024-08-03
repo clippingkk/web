@@ -14,6 +14,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
  * @type {import('next').NextConfig}
  **/
 const config = {
+  generateBuildId: () => {
+    return process.env.GIT_COMMIT
+  },
   cacheHandler: isProd ? require.resolve('./cache-handler.mjs') : undefined,
   cacheMaxMemorySize: 0,
   experimental: {
