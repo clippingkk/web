@@ -7,7 +7,7 @@ RUN apk add --no-cache libc6-compat g++ make py3-pip
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* src/types.g.ts ./
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
 FROM base AS builder
