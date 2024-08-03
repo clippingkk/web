@@ -1,6 +1,8 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import React from 'react'
 
+const version = JSON.parse(process.env.GIT_COMMIT ?? '{}')
+
 function ICPInfo() {
   return (
     <a
@@ -20,7 +22,7 @@ function Footer() {
         <p>
           Build with ❤ by AnnatarHe
         </p>
-        <p>Version: {process.env.GIT_COMMIT}</p>
+        <p>Version: {version}</p>
         <p>
           Host on
           <a
