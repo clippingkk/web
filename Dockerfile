@@ -18,6 +18,8 @@ ENV NODE_ENV production
 ENV IS_FLY_IO 1
 ARG GIT_COMMIT
 ENV GIT_COMMIT=$GIT_COMMIT
+ARG NEXT_PUBLIC_PP_TOKEN
+ENV NEXT_PUBLIC_PP_TOKEN=$NEXT_PUBLIC_PP_TOKEN
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -33,6 +35,8 @@ WORKDIR /app
 ENV NODE_ENV production
 ARG GIT_COMMIT
 ENV GIT_COMMIT=$GIT_COMMIT
+ARG NEXT_PUBLIC_PP_TOKEN
+ENV NEXT_PUBLIC_PP_TOKEN=$NEXT_PUBLIC_PP_TOKEN
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
