@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.3...v5.12.4) (2024-08-03)
+
+
+### Features
+
+* **ci:** add build cache ([e0cba11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e0cba11b6e28eccaa51afe008666da9f7e209d0e))
+
+
+### Bug Fixes
+
+* **ci:** add pp token to docker image ([7de6213](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7de62135915d7dae809c9ddcf63539c1a46886c4))
+
 ### [5.12.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.2...v5.12.3) (2024-08-03)
 
 
