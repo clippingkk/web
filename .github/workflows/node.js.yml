@@ -43,6 +43,7 @@ jobs:
         env:
           GIT_COMMIT: ${{ github.sha }}
         with:
+          context: .
           push: false
           build-args: GIT_COMMIT=${{ github.sha }}
           tags: tests
