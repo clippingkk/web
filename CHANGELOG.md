@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.1...v5.12.2) (2024-08-03)
+
+
+### Features
+
+* **ci:** enable turbopack build in prod ([ba4ca58](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ba4ca582e3c9bb10824d6d7ef1bddcd0f7ce25a8))
+
+
+### Bug Fixes
+
+* **ci:** fix ci ([#118](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/issues/118)) ([c4f4625](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c4f4625f4bedab200d3bd4a19ac884f09cbb7670))
+* **ci:** revert turbo build in prod ([09d1ffb](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/09d1ffb24504c906e9bc0f832f01bf740365729f))
+
 ### [5.12.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.0...v5.12.1) (2024-08-03)
 
 
