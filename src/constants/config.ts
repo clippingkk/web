@@ -40,6 +40,6 @@ export const StripePremiumPriceId = __DEV__ ? 'price_1Md7IUBkj5y79CYsLpkamBZm' :
 export const PP_API = 'https://prompt-pal.annatarhe.com'
 export const PP_TOKEN = process.env.NEXT_PUBLIC_PP_TOKEN as string
 
-if (process.env.NEXT_PHASE === PHASE_PRODUCTION_SERVER && !PP_TOKEN) {
-  throw new Error('PP_TOKEN is required')
-}
+// if (process.env.NEXT_PHASE === PHASE_PRODUCTION_SERVER && !PP_TOKEN) {
+//   throw new Error('PP_TOKEN is required')
+// }
