@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.2...v5.12.3) (2024-08-03)
+
+
+### Bug Fixes
+
+* **promptpal:** build client with static token for promptpal ([8d13746](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8d13746350d7bf898713aef496a29e8f29753d3c))
+
 ### [5.12.2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.1...v5.12.2) (2024-08-03)
 
 
