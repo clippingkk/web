@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.7...v5.12.8) (2024-09-08)
+
+
+### Features
+
+* update deps and nodejs base image ([1d617f5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1d617f575436cb53611522d0abbbafebaaf1a696))
+
+
+### Bug Fixes
+
+* **ai:** update prompt for ai summary ([db4d355](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/db4d355de0e6d3b0c661141647ba00a7cd54a736))
+
 ### [5.12.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.6...v5.12.7) (2024-08-03)
 
 
