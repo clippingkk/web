@@ -7,7 +7,9 @@
       "webhookRequired": "웹훅은 프리미엄 플랜에서만 사용할 수 있습니다. 프리미엄으로 업그레이드해주세요"
     },
     "ai": {
-      "clippingHelp": "세그먼트에 대한 AI 생성 내레이션"
+      "clippingHelp": "세그먼트에 대한 AI 생성 내레이션",
+      "professionalize": "전문적으로 만들어주세요.",
+      "deeplize": "음색을 더 깊게 만드세요."
     },
     "common": {
       "loading": "짐싣기",
@@ -24,7 +26,8 @@
           "content": "Page not found"
         }
       },
-      "backToHome": "Back To Home"
+      "backToHome": "Back To Home",
+      "accept": "수락하다"
     },
     "slogan": "읽기, 숙고, 비추다: 선을 발견하고, 진리를 찾으며, 다른 이에게 빛을 비추다.",
     "go": "지금 시도하십시오!",

@@ -7,7 +7,9 @@
       "webhookRequired": "Webhook 仅在高级计划中可用。 请升级到高级版"
     },
     "ai": {
-      "clippingHelp": "AI 生成的对于该片段的讲解"
+      "clippingHelp": "AI 生成的对于该片段的讲解",
+      "professionalize": "语气职业化",
+      "deeplize": "使语气更低"
     },
     "common": {
       "loading": "加载中...",
@@ -24,7 +26,8 @@
           "content": "页面未找到"
         }
       },
-      "backToHome": "Back To Home"
+      "backToHome": "Back To Home",
+      "accept": "接受"
     },
     "slogan": "阅读，思考，启蒙：发现善良，寻求真理，照亮他人",
     "go": "立即体验！",

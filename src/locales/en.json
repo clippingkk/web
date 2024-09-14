@@ -7,7 +7,9 @@
       "webhookRequired": "Webhook only available in premium plan. please upgrade to premium"
     },
     "ai": {
-      "clippingHelp": "AI-generated narration for the segment"
+      "clippingHelp": "AI-generated narration for the segment",
+      "professionalize": "Make it professional",
+      "deeplize": "Make the tone deeper"
     },
     "common": {
       "loading": "Loading...",
@@ -24,7 +26,8 @@
           "title": "Page not found"
         }
       },
-      "backToHome": "Back To Home"
+      "backToHome": "Back To Home",
+      "accept": "Accept"
     },
     "slogan": "Read, Reflect, Enlighten: Discover Goodness, Seek Truth, Enlighten Others.",
     "go": "Go!",

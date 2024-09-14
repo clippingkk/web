@@ -3,6 +3,7 @@ import { useAiEnhanceCommentMutation } from '../../schema/generated'
 import React, { useCallback, useState } from 'react'
 import MarkdownPreview from '../markdown-editor/md-preview'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 
 type AICommentEnhancerProps = {
   bookName?: string
@@ -18,8 +19,8 @@ enum Prompts {
 }
 
 function AICommentEnhancer(props: AICommentEnhancerProps) {
-
   const [opened, setOpened] = useState(false)
+  const { t } = useTranslation()
   const [doEnhance, { loading, data }] = useAiEnhanceCommentMutation({
     variables: {
       promptId: -1,
@@ -53,7 +54,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
           loading={loading}
           onClick={() => onEnhance(Prompts.Professional)}
         >
-          Make it Professional
+          {t('app.ai.professionalize')}
         </Button>
         <Button
           variant="gradient"
@@ -61,7 +62,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
           loading={loading}
           onClick={() => onEnhance(Prompts.Deeper)}
         >
-          Make it deeper
+          {t('app.ai.deeplize')}
         </Button>
         <Button
           variant="gradient"
@@ -89,7 +90,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
             onClick={() => setOpened(false)}
             className='bg-gray-300 text-black mr-4'
           >
-            Cancel
+            {t('app.common.cancel')}
           </Button>
           <Button
             variant='gradient'
@@ -98,7 +99,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
               setOpened(false)
               props.onAccept(data?.aiEnhanceComment.content ?? '')
             }}>
-            Accept
+            {t('app.common.accept')}
           </Button>
         </div>
       </Modal>
