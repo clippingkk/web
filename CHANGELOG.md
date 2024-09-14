@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.8...v5.12.9) (2024-09-14)
+
+
+### Bug Fixes
+
+* **utp:** fix utp parameters ([c3b0881](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c3b0881b0beb11cf3ebd07ac1d7cecd14cd319b9))
+
 ### [5.12.8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.7...v5.12.8) (2024-09-08)
 
 
