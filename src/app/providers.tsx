@@ -2,10 +2,8 @@
 import '../utils/mixpanel'
 import { init } from '../utils/locales'
 
-import { CacheProvider } from '@emotion/react';
 import React from 'react'
 import { Provider as JotaiProvider } from 'jotai'
-import { useGluedEmotionCache } from '../hooks/emotion';
 import { useDarkModeStatus } from '../hooks/theme';
 import { Provider } from 'react-redux';
 import store from '../store';
@@ -28,7 +26,6 @@ type ClientOnlyProvidersProps = {
 function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const { loggedInfo, children } = props
   useDarkModeStatus()
-  const cache = useGluedEmotionCache();
   const instance = init()
   const rq = createReactQueryClient()
   usePointerUpdate()
@@ -36,22 +33,20 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
     <I18nextProvider i18n={instance}>
       <JotaiProvider>
         <Provider store={store}>
-          <CacheProvider value={cache}>
-            <PersistQueryClientProvider
-              client={rq}
-              persistOptions={{
-                persister: reactQueryPersister
-              }}
+          <PersistQueryClientProvider
+            client={rq}
+            persistOptions={{
+              persister: reactQueryPersister
+            }}
+          >
+            <ApolloNextAppProvider
+              makeClient={makeApolloClientWithCredentials(loggedInfo)}
             >
-              <ApolloNextAppProvider
-                makeClient={makeApolloClientWithCredentials(loggedInfo)}
-              >
-                <InitProvider>
-                  {children}
-                </InitProvider>
-              </ApolloNextAppProvider>
-            </PersistQueryClientProvider>
-          </CacheProvider>
+              <InitProvider>
+                {children}
+              </InitProvider>
+            </ApolloNextAppProvider>
+          </PersistQueryClientProvider>
         </Provider>
       </JotaiProvider>
     </I18nextProvider>
