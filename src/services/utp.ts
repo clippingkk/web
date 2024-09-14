@@ -33,5 +33,5 @@ export function getUTPLink(service: UTPService, params: Object): string {
   const screenWidth = process.browser ? (screen.width > 375 ? 375 : screen.width) : 375
   const dpi = 3
 
-  return `https://utp.annatarhe.com/?url=${distUrl}&isMobile=true&isFullPage=true&viewPortWidth=${screenWidth}&width=${screenWidth * dpi}&deviceScaleFactor=${dpi}&viewPortHeight=768`
+  return `https://utp.annatarhe.com/?url=${distUrl}&isMobile=true&isFullPage=true&viewportWidth=${screenWidth}&width=${screenWidth * dpi}&deviceScaleFactor=${dpi}&viewportHeight=768`
 }
