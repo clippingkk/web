@@ -1,6 +1,6 @@
 spec: v0.6
 name: ck-web
-runtime: node:22-alpine
+runtime: node:23-alpine
 
 rootfs: ./Dockerfile
 
