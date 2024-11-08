@@ -8,12 +8,12 @@ export function generateMetadata(): Metadata {
 }
 
 type AppleCallbackPageProps = {
-  params: {}
-  searchParams: { a: string, s: string, t: string }
+  params: Promise<{}>
+  searchParams: Promise<{ a: string, s: string, t: string }>
 }
 
-function MetamaskPage(props: AppleCallbackPageProps) {
-  const { a: address, s: signature, t: text } = props.searchParams
+async function MetamaskPage(props: AppleCallbackPageProps) {
+  const { a: address, s: signature, t: text } = (await props.searchParams)
   return (
     <AuthCallbackMetamask
       address={address}

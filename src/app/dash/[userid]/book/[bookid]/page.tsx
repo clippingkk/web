@@ -8,11 +8,11 @@ import { Metadata } from 'next'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
 
 type PageProps = {
-  params: { bookid: string, userid: string }
+  params: Promise<{ bookid: string, userid: string }>
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const { bookid, userid } = props.params
+  const { bookid, userid } = (await props.params)
   const dbId = bookid ?? ''
   const rq = getReactQueryClient()
   const bs = await rq.fetchQuery({
@@ -33,7 +33,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 // </Head>
 
 async function Page(props: PageProps) {
-  const { bookid, userid } = props.params
+  const { bookid, userid } = (await props.params)
   const dbId = bookid ?? ''
   const rq = getReactQueryClient()
   if (dbId && dbId.length > 3) {

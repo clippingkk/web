@@ -11,11 +11,11 @@ import { getApolloServerClient } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
 
 type PageProps = {
-  params: { clippingid: string, userid: string }
-  searchParams: { iac: string }
+  params: Promise<{ clippingid: string, userid: string }>
+  searchParams: Promise<{ iac: string }>
 }
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const { clippingid } = props.params
+  const { clippingid } = (await props.params)
   const cid = ~~clippingid
 
   const client = getApolloServerClient()
@@ -47,7 +47,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 }
 
 async function Page(props: PageProps) {
-  const { clippingid, userid } = props.params
+  const { clippingid, userid } = (await props.params)
   const cid = ~~clippingid
   const client = getApolloServerClient()
   const clippingsResponse = await client.query<FetchClippingQuery, FetchClippingQueryVariables>({
@@ -92,14 +92,14 @@ async function Page(props: PageProps) {
   const d = dehydrate(rq)
 
   return (
-    <HydrationBoundary state={d}>
+    (<HydrationBoundary state={d}>
       <ClippingPageContent
         cid={cid}
-        iac={props.searchParams.iac}
+        iac={(await props.searchParams).iac}
         myProfile={myProfile}
       />
-    </HydrationBoundary>
-  )
+    </HydrationBoundary>)
+  );
 }
 
 export default Page

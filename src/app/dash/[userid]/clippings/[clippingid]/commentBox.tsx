@@ -25,13 +25,13 @@ function CommentBox(props: CommentBoxProps) {
   const [content, setContent] = useState('')
   const ed = useRef<LexicalEditor>(null)
 
-  const [createCommentAction, { loading }] = useCreateCommentMutation()
+  const [createCommentAction, { loading }] = useCreateCommentMutation({
+    refetchQueries: ['fetchClipping'],
+  })
   const client = useApolloClient()
 
   const [ref] = useAutoAnimate()
-
   const { t } = useTranslation()
-
   const onSubmit = useCallback(() => {
     if (content.length < COMMENT_MIN_LEN) {
       toast.error(t('app.clipping.comments.tip.tooShort'))
@@ -43,9 +43,7 @@ function CommentBox(props: CommentBoxProps) {
         cid: props.clipping.id,
         content: content
       },
-      refetchQueries: ['fetchClipping'],
     }), toastPromiseDefaultOption).then(() => {
-      client.resetStore()
       ed.current?.update(() => {
         $getRoot().clear()
       })

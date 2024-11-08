@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, use } from 'react';
 import Card from '../../../components/card/card'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -20,6 +20,7 @@ type AuthPageProps = {
 }
 
 function AuthPage(props: AuthPageProps) {
+  const children = use(props.children);
   usePageTrack('auth')
   // const { push: navigate } = useRouter()
   // useEffect(() => {
@@ -34,7 +35,7 @@ function AuthPage(props: AuthPageProps) {
   const onGithubClick = useActionTrack('login:github')
 
   return (
-    <section className=' from-teal-100 to-green-300 bg-gradient-to-br dark:from-teal-900 dark:to-slate-900 flex h-screen items-center justify-center'>
+    (<section className=' from-teal-100 to-green-300 bg-gradient-to-br dark:from-teal-900 dark:to-slate-900 flex h-screen items-center justify-center'>
       <Card className='with-slide-in container'>
         <>
           <div className='flex items-center justify-center flex-col mb-4'>
@@ -63,7 +64,7 @@ function AuthPage(props: AuthPageProps) {
             </Link>
           </div>
           <hr className='my-2' />
-          {props.children}
+          {children}
           <hr className='my-2' />
           <div className='flex items-center justify-center'>
             <a
@@ -76,7 +77,7 @@ function AuthPage(props: AuthPageProps) {
           </div>
         </>
       </Card>
-    </section>
+    </section>)
   );
 }
 

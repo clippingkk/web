@@ -4,16 +4,16 @@ import { generateMetadata as authGenerateMetadata } from '../../../../components
 import { Metadata } from 'next'
 
 type AppleCallbackPageProps = {
-  params: {}
-  searchParams: { i: string }
+  params: Promise<{}>
+  searchParams: Promise<{ i: string }>
 }
 
 export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/callback/apple')
 }
 
-function AppleCallbackPage(props: AppleCallbackPageProps) {
-  const idToken = props.searchParams.i
+async function AppleCallbackPage(props: AppleCallbackPageProps) {
+  const idToken = (await props.searchParams).i
   return (
     <AuthCallbackApple idToken={idToken} />
   )

@@ -5,13 +5,13 @@ import { getReactQueryClient } from '../../../services/ajax'
 import PaymentSuccessContent from './content'
 
 type PaymentSuccessPageProps = {
-  params: {}
-  searchParams: { sessionId: string, uid: string }
+  params: Promise<{}>
+  searchParams: Promise<{ sessionId: string, uid: string }>
 }
 
 async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
   // const sessionId = useRouter().query.sessionId as string
-  const { sessionId, uid } = props.searchParams
+  const { sessionId, uid } = (await props.searchParams)
 
   const rq = getReactQueryClient()
 

@@ -11,11 +11,11 @@ import { WenquSearchResponse, wenquRequest } from '@/services/wenqu'
 import { duration3Days } from '@/hooks/book'
 
 type PageProps = {
-  params: { userid: string }
+  params: Promise<{ userid: string }>
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const pathUid: string = props.params.userid
+  const pathUid: string = (await props.params).userid
   const uid = parseInt(pathUid)
   const client = getApolloServerClient()
   const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
@@ -33,7 +33,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 // the home page only available for myself
 async function Page(props: PageProps) {
-  const { userid } = props.params
+  const { userid } = (await props.params)
   const cs = await cookies()
   const myUid = cs.get('uid')?.value
 

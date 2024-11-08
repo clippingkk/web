@@ -7,11 +7,12 @@ import { getApolloServerClient } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
 
 type PageProps = {
-  params: { userid: string }
-  searchParams: { with_profile_editor?: string }
+  params: Promise<{ userid: string }>
+  searchParams: Promise<{ with_profile_editor?: string }>
 }
 
-export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const pathUid: string = params.userid
   const uid = parseInt(pathUid)
 
@@ -30,16 +31,16 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 }
 
 async function Page(props: PageProps) {
-  const pathUid: string = props.params.userid
+  const pathUid: string = (await props.params).userid
   const cs = await cookies()
   const myUid = cs.get('uid')?.value
   return (
-    <ProfilePageContent
-      targetUidOrDomain={props.params.userid}
+    (<ProfilePageContent
+      targetUidOrDomain={(await props.params).userid}
       myUid={myUid ? parseInt(myUid) : undefined}
-      withProfileEditor={props.searchParams.with_profile_editor}
-    />
-  )
+      withProfileEditor={(await props.searchParams).with_profile_editor}
+    />)
+  );
 }
 
 export default Page
