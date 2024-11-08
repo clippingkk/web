@@ -20,7 +20,10 @@ const config = {
   cacheHandler: isProd ? require.resolve('./cache-handler.mjs') : undefined,
   cacheMaxMemorySize: 0,
   experimental: {
-    instrumentationHook: true,
+    ppr: true,
+    useLightningcss: true,
+    // typedEnv: true,
+    // typedRoutes: true,
   },
   images: {
     domains: [

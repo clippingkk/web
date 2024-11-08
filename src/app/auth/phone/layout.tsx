@@ -22,7 +22,7 @@ type AuthPageProps = {
 }
 
 function AuthPage(props: AuthPageProps) {
-  const children = use(props.children);
+  const children = props.children
   usePageTrack('auth')
   const { push: navigate } = useRouter()
   useEffect(() => {

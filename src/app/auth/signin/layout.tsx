@@ -1,13 +1,13 @@
 'use client'
-import React, { useEffect, use } from 'react';
-import Card from '../../../components/card/card'
+import React from 'react';
+import Card from '@/components/card/card'
 import Link from 'next/link'
 import Image from 'next/image'
-import { GithubClientID, SignInWithAppleOptions } from '../../../constants/config';
-import { usePageTrack, useActionTrack } from '../../../hooks/tracke';
+import { GithubClientID } from '@/constants/config';
+import { usePageTrack, useActionTrack } from '@/hooks/tracke';
 import { useTranslation } from 'react-i18next';
-import logo from '../../../assets/logo.png'
-import GithubLogo from '../../../components/icons/github.logo.svg';
+import logo from '@/assets/logo.png'
+import GithubLogo from '@/components/icons/github.logo.svg';
 
 function checkIsCurrentPath({ isCurrent }: any) {
   return {
@@ -20,7 +20,7 @@ type AuthPageProps = {
 }
 
 function AuthPage(props: AuthPageProps) {
-  const children = use(props.children);
+  const children = props.children
   usePageTrack('auth')
   // const { push: navigate } = useRouter()
   // useEffect(() => {
