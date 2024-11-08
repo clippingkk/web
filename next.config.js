@@ -21,7 +21,7 @@ const config = {
   cacheMaxMemorySize: 0,
   experimental: {
     // ppr: true,
-    useLightningcss: true,
+    // useLightningcss: true,
     // typedEnv: true,
     // typedRoutes: true,
   },
