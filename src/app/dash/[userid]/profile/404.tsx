@@ -18,8 +18,8 @@ function Profile404Page(props: Profile404PageProps) {
   )
 }
 
-Profile404Page.getLayout = function getLayout(page: React.ReactElement) {
-  const cs = cookies()
+Profile404Page.getLayout = async function getLayout(page: React.ReactElement) {
+  const cs = await cookies()
   const myUid = cs.get('uid')?.value
   return (
     <DashboardContainer uidOrDomain={myUid}>

@@ -148,7 +148,6 @@ export function makeApolloClient() {
   links.push(errorLink, authLink, httpLink)
 
   return new ApolloClient({
-    ssrMode: typeof window === 'undefined',
     cache: new InMemoryCache(apolloCacheConfig),
     link: ApolloLink.from(links),
     connectToDevTools: process.env.DEV === 'true',
@@ -191,7 +190,6 @@ export function makeApolloClientWithCredentials(credentials: { uid?: number, tok
     links.push(errorLink, authLinkRSC, httpLink)
 
     return new ApolloClient({
-      ssrMode: typeof window === 'undefined',
       cache: new InMemoryCache(apolloCacheConfig),
       link: ApolloLink.from(links),
       connectToDevTools: process.env.DEV === 'true',

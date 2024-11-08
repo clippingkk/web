@@ -31,7 +31,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 
 async function Page(props: PageProps) {
   const pathUid: string = props.params.userid
-  const cs = cookies()
+  const cs = await cookies()
   const myUid = cs.get('uid')?.value
   return (
     <ProfilePageContent

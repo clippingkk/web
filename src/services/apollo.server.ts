@@ -3,7 +3,6 @@ import { registerApolloClient, ApolloClient, InMemoryCache } from "@apollo/exper
 import { apolloCacheConfig, httpLink } from "./apollo.shard";
 
 const { getClient } = registerApolloClient(() => new ApolloClient({
-  ssrMode: typeof window === 'undefined',
   cache: new InMemoryCache(apolloCacheConfig),
   link: ApolloLink.from([
     httpLink

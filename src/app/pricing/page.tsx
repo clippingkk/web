@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   ...pricingMetadata,
 }
 
-function PricingPage(props: PricingPageProps) {
-  const cs = cookies()
+async function PricingPage(props: PricingPageProps) {
+  const cs = await cookies()
   const uid = cs.get('uid')?.value
   return (
     <PricingContent uid={uid ? ~~uid : undefined} />

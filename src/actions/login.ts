@@ -7,6 +7,7 @@ import { updateToken } from "../services/ajax";
 export async function syncLoginStateToServer(data: { uid: number, token: string }) {
   const { uid, token } = data
   const expires = dayjs().add(1, 'year').toDate()
-  cookies().set('token', token, { expires, httpOnly: true })
-  cookies().set('uid', uid.toString(), { expires, httpOnly: true })
+  const ck = await cookies()
+  ck.set('token', token, { expires, httpOnly: true })
+  ck.set('uid', uid.toString(), { expires, httpOnly: true })
 }

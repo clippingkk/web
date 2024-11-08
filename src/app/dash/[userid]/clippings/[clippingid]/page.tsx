@@ -58,7 +58,7 @@ async function Page(props: PageProps) {
     },
   })
 
-  const cs = cookies()
+  const cs = await cookies()
   const uid = cs.get('uid')?.value
   let myProfile: ProfileQuery['me'] | undefined = undefined
   if (uid) {

@@ -10,8 +10,8 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
-function Layout(props: LayoutProps) {
-  const cs = cookies()
+async function Layout(props: LayoutProps) {
+  const cs = await cookies()
   const myUid = cs.get('uid')?.value
   return (
     <DashboardContainer uidOrDomain={myUid} header={<NavigateGuide title={i18next.t('app.plan.premium.name') ?? ''} />}>

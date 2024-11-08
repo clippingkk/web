@@ -109,7 +109,7 @@ export const metadata: Metadata = {
 // ReactDOM.preconnect('https://cdn.annatarhe.com', { crossOrigin: 'use-credentials' })
 
 async function Layout(props: LayoutProps) {
-  const cs = cookies()
+  const cs = await cookies()
   const token = cs.get('token')?.value
   const uid = cs.get('uid')?.value
 

@@ -8,8 +8,8 @@ type LayoutProps = {
   children: React.ReactNode
 }
 
-const Layout = (props: LayoutProps) => {
-  const cs = cookies()
+const Layout = async (props: LayoutProps) => {
+  const cs = await cookies()
   const myUid = cs.get('uid')?.value
   return (
     <DashboardContainer uidOrDomain={myUid} header={<NavigateGuide title='Success' />}>

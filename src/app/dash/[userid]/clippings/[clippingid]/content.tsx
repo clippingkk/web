@@ -1,13 +1,9 @@
 'use client';
 import React, { useState, useCallback, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import Card from '@/components/card/card'
 import Preview from '@/components/preview/preview3'
 import { useSingleBook } from '@/hooks/book'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { TGlobalStore } from '@/store'
-import { UserContent } from '@/store/user/type'
 import CommentBox from './commentBox'
 import Comment from './comment'
 import { useLocalTime } from '@/hooks/time'

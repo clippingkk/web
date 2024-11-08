@@ -34,7 +34,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 // the home page only available for myself
 async function Page(props: PageProps) {
   const { userid } = props.params
-  const cs = cookies()
+  const cs = await cookies()
   const myUid = cs.get('uid')?.value
 
   if (!myUid) {
