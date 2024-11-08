@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.9...v5.12.10) (2024-11-08)
+
+
+### Features
+
+* upgrade nextjs to latest ([a68b4c1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a68b4c1b510142c5756a5af688f9687642c86595))
+* upgrade pkg ([716733c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/716733ce523a86d82c8905beae024b80bfab2d27))
+
+
+### Bug Fixes
+
+* **app:** remove unused emotion css ([70e05bc](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/70e05bcece73b8148d6f6cff5ddf8753007eacbb))
+* **app:** translate some missing fields ([3093de5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3093de5008c91296eae81122c73d3f03e58b7336))
+* **cd:** upgrade node version in Kraftfile to 22 ([d3b6613](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d3b66138caf7cb2121034dc3aad1dafd857c5994))
+* **comments:** fix crash issue after create a comment ([37ed162](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/37ed1622280097693d8eae32da97902150754f4e))
+* **nextjs:** upgrade to dynamic cookies operators ([c6ed0f2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c6ed0f234b0255dd0536612cd201b9f590640d39))
+* **pkgs:** update packages ([7d4dd66](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/7d4dd66348e7536403b3cb6a4a79a68fb3d3ca3c))
+
 ### [5.12.9](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.8...v5.12.9) (2024-09-14)
 
 
