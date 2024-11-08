@@ -15,8 +15,9 @@ type YearlyLegacyPageProps = {
 }
 
 export async function generateMetadata(props: YearlyLegacyPageProps): Promise<Metadata> {
-  const uid = ~~(await props.searchParams).uid
-  const year = (await props.searchParams).year ? ~~(await props.searchParams).year : new Date().getFullYear()
+  const sp = await props.searchParams
+  const uid = ~~sp.uid
+  const year = sp?.year ? ~~sp.year : new Date().getFullYear()
 
   const client = getApolloServerClient()
   const reportInfoResponse = await client.query<FetchYearlyReportQuery, FetchYearlyReportQueryVariables>({
@@ -39,8 +40,9 @@ export async function generateMetadata(props: YearlyLegacyPageProps): Promise<Me
 }
 
 async function YearlyPage(props: YearlyLegacyPageProps) {
-  const uid = ~~(await props.searchParams).uid
-  const year = (await props.searchParams).year ? ~~(await props.searchParams).year : new Date().getFullYear()
+  const sp = await props.searchParams
+  const uid = ~~sp.uid
+  const year = sp.year ? ~~sp.year : new Date().getFullYear()
   // const uid = ~~(context.params?.userid ?? -1) as number
 
   const client = getApolloServerClient()

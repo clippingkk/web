@@ -15,7 +15,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NODE_ENV production
-ENV IS_FLY_IO 1
+ENV STANDALONE 1
 ARG GIT_COMMIT
 ENV GIT_COMMIT=$GIT_COMMIT
 ARG NEXT_PUBLIC_PP_TOKEN
@@ -55,9 +55,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
-
 EXPOSE 3000
-
 ENV PORT 3000
-
 CMD ["node", "server.js"]

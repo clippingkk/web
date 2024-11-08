@@ -7,7 +7,7 @@ processes = []
 
 [env]
   NODE_ENV = "production"
-  IS_FLY_IO = 1
+  STANDALONE = 1
   LEANCLOUD_APP_PORT = 3000
   PORT = 3000
 

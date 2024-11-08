@@ -55,7 +55,7 @@ const config = {
   },
 }
 
-if (process.env.IS_FLY_IO) {
+if (process.env.STANDALONE) {
   config.output = 'standalone'
 }
 

@@ -49,6 +49,7 @@ jobs:
           build-args: |
             GIT_COMMIT=${{ github.sha }}
             NEXT_PUBLIC_PP_TOKEN=${{ env.PROMPTPAL_CLIENT_API_TOKEN }}
+            STANDALONE=1
           tags: tests
           labels: tests
       - run: pnpm run coveralls
