@@ -1,5 +1,6 @@
-// @ts-check
 // const { withSentryConfig } = require('@sentry/nextjs')
+
+import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -10,12 +11,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-/**
- * @type {import('next').NextConfig}
- **/
-const config = {
+const config: NextConfig = {
   generateBuildId: () => {
-    return process.env.GIT_COMMIT
+    return process.env.GIT_COMMIT ?? ''
   },
   cacheHandler: isProd ? require.resolve('./cache-handler.mjs') : undefined,
   cacheMaxMemorySize: 0,
@@ -61,4 +59,5 @@ if (process.env.STANDALONE) {
 
 // FIXME: 暂时关掉， leancloud cloud engine do not support yet
 // module.exports = withSentryConfig(config, sentryWebpackPluginOptions)
-module.exports = withBundleAnalyzer(config)
+//  export default withBundleAnalyzer(config)
+export default config
