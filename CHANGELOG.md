@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.10...v5.12.11) (2024-11-09)
+
+
+### Bug Fixes
+
+* **app:** disable lightingcss also :sad: ([d3dbd1c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d3dbd1cb02ff59de17a8ced19c96a05ef07090ec))
+* **app:** disable ppr and upgrade pkgs ([dd4a50e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/dd4a50ecd7bff86b4e7cb1d4eb421e7755bc929a))
+* **app:** enable expermental features and fix migration issue ([79e2cbc](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/79e2cbc3324b004e17589af08d4e0945a7883ecf))
+* **app:** fix app and build issue ([3c14415](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3c1441560f6da23e3c93637619cabb9382f69499))
+* **app:** remove unsupported config ([457ed0c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/457ed0cf83ba5a6ee264248a7edcca17774201de))
+* **ci:** upgrade pnpm to latest ([77b2e2c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/77b2e2cd19580500611756eeb921141b02ab7c6a))
+* **nextjs:** remvoe unsupported config ([1acfab3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/1acfab33415edd57587b59c811406df4d9137976))
+* **next:** move config to ts ([39925ce](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/39925ce89938b08534b4e67a5a01b1e45078daa5))
+
 ### [5.12.10](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.9...v5.12.10) (2024-11-08)
 
 
