@@ -14,8 +14,6 @@ export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/auth-v4')
 }
 
-export const revalidate = 60 * 60 * 24 * 3 // 3 day
-
 async function Page() {
   const client = getApolloServerClient()
   const data = await client.query<PublicDataQuery>({
