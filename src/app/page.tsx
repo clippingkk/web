@@ -9,8 +9,6 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { useBackgroundImageServer as getBackgroundImageServer } from '../hooks/theme.server'
 import { getApolloServerClient } from '../services/apollo.server'
 
-export const revalidate = 60 * 60 * 24 * 3 // 3 day
-
 async function Page() {
   const client = getApolloServerClient()
   const data = await client.query<PublicDataQuery>({
