@@ -1,37 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useTranslation } from '@/i18n/index'
 import Link from 'next/link'
-import { useGoAuthLink } from '../../hooks/hooks'
 import { Button } from '@mantine/core'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import { AppFeatures } from '../../constants/features'
 import styles from './Hero.module.css'
-import PureImages from '../backgrounds/pure-images';
-import Image from 'next/image';
-import buttonStyles from '../../components/button/lighten.module.css';
-
-function useLoad() {
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    function onload() {
-      setLoaded(true)
-    }
-    window.addEventListener('load', onload)
-    return () => {
-      window.removeEventListener('load', onload)
-    }
-  }, [])
-
-  return loaded
-}
+import PureImages from '../backgrounds/pure-images'
+import Image from 'next/image'
+import buttonStyles from '../../components/button/lighten.module.css'
 
 function VideoTipsArea() {
-  const loaded = useLoad()
-  if (!loaded) {
-    return null
-  }
-
   return null
 
   // return <YouTubeEmbed videoid="0eQASJHQIGk" height={400} params="controls=0" />
@@ -48,19 +26,15 @@ function VideoTipsArea() {
 }
 
 type HeroProps = {
-  bgInfo: {
-    src: string;
-    blurHash: string;
-  }
+  myUid?: number
 }
 
 import bgLightsPng from '../../assets/bg-lights.png'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 
-function Hero(props: HeroProps) {
-  const { t } = useTranslation()
-  // const { bgInfo: bg } = props
-  const goLinkUrl = useGoAuthLink()
+async function Hero(props: HeroProps) {
+  const { myUid } = props
+  const { t } = await useTranslation()
 
   return (
     <div
@@ -82,7 +56,7 @@ function Hero(props: HeroProps) {
             <h4 className='text-3xl mt-4 font-lato bg-clip-text from-green-300 to-indigo-400 text-transparent bg-gradient-to-br'>{t('app.slogan')}</h4>
             <div className='flex items-end my-6'>
               <Link
-                href={goLinkUrl}
+                href={myUid ? `/dash/${myUid}/home` : '/auth/auth-v4'}
                 className={buttonStyles.lightenButton}>
                 {t('app.go')}
               </Link>
@@ -101,8 +75,8 @@ function Hero(props: HeroProps) {
               )}
             </div>
             <Button
-            variant='transparent'
-             component='a'
+              variant='transparent'
+              component='a'
               rightSection={<ArrowTopRightOnSquareIcon className='w-4 h-4' />}
               href='https://www.bilibili.com/video/BV1Nb41187Lo'
               target='_blank'
@@ -118,7 +92,7 @@ function Hero(props: HeroProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default Hero

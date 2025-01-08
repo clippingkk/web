@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Divider, Select, Tabs } from '@mantine/core'
+import { Tabs } from '@mantine/core'
 import { usePathname, useRouter } from 'next/navigation'
 import { Cog8ToothIcon, DocumentArrowDownIcon, GlobeAltIcon, QueueListIcon, UserIcon } from '@heroicons/react/24/outline'
 
@@ -19,7 +19,7 @@ function SettingsPageContent(props: SettingsPageProps) {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-slate-200 dark:bg-slate-800 bg-opacity-70`}
+      className={'flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-slate-200 dark:bg-slate-800 bg-opacity-70'}
     >
       <Tabs value={activeKey} onChange={(v) => router.push(`${paths.join('/')}/${v}`)} className='w-10/12'>
         <Tabs.List>

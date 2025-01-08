@@ -1,6 +1,6 @@
-import { WenquBook, WenquSearchResponse, wenquRequest } from "../services/wenqu"
-import { useMemo } from "react"
-import { useQueries, useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import { WenquBook, WenquSearchResponse, wenquRequest } from '../services/wenqu'
+import { useMemo } from 'react'
+import { useQueries, useQuery, useSuspenseQuery } from '@tanstack/react-query'
 
 // 3 days
 export const duration3Days = 1000 * 60 * 60 * 24 * 3
@@ -54,7 +54,7 @@ export function useMultipleBook(doubanIds: string[], skip?: boolean): bookReques
     const result: string[][] = []
     const chunkSize = 10
     for (let i = 0; i < validDoubanIdList.length; i += chunkSize) {
-      result.push(validDoubanIdList.slice(i, i + chunkSize));
+      result.push(validDoubanIdList.slice(i, i + chunkSize))
     }
     return result
   }, [validDoubanIdList])
@@ -70,7 +70,7 @@ export function useMultipleBook(doubanIds: string[], skip?: boolean): bookReques
     }))
   })
 
-  const isLoading = useMemo(() => bbs.every(bs => bs.isLoading), [bbs])
+  const isLoading = useMemo(() => bbs.every(bs => bs.isLoading), [JSON.stringify(bbs)])
   // reorder
   const books = useMemo<WenquBook[]>(() => {
     const bsList = bbs

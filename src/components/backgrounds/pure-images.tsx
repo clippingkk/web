@@ -1,3 +1,5 @@
+'use client'
+
 import { useColorScheme } from '@mantine/hooks'
 import React, { useMemo } from 'react'
 

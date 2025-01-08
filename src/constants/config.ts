@@ -1,5 +1,5 @@
 
-import { PHASE_PRODUCTION_SERVER } from 'next/constants'
+// import { PHASE_PRODUCTION_SERVER } from 'next/constants'
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
@@ -13,11 +13,11 @@ export const WENQU_SIMPLE_TOKEN = '500ae25e22b5de1b6c44a7d78908e7b7cc63f97b55ea9
 export const GithubClientID = '3659f6b0ecfe917d69e6'
 
 export const SignInWithAppleOptions = {
-  clientId: "com.annatarhe.clippingkk",
-  scope: "name email",
+  clientId: 'com.annatarhe.clippingkk',
+  scope: 'name email',
   // redirectURI: "https://clippingkk.annatarhe.com/oauth/apple",
-  redirectURI: "https://local.dev.annatarhe.cn/oauth/apple",
-  state: "origin:web",
+  redirectURI: 'https://local.dev.annatarhe.cn/oauth/apple',
+  state: 'origin:web',
   usePopup: true,
 }
 

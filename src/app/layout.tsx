@@ -7,7 +7,7 @@ import '../styles/effect-glow.css'
 import '../styles/tailwind.css'
 import '../styles/cmdk-raycast.css'
 
-import '@mantine/core/styles.css';
+import '@mantine/core/styles.css'
 import '@mantine/spotlight/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/code-highlight/styles.css'
@@ -20,7 +20,7 @@ import '../utils/locales'
 import { Toaster } from 'react-hot-toast'
 import React from 'react'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
-import ClientOnlyProviders from './providers';
+import ClientOnlyProviders from './providers'
 import { Metadata } from 'next'
 import Script from 'next/script'
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
@@ -28,7 +28,7 @@ import { Lato } from 'next/font/google'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { theme } from '../styles/mantine'
-import { colorSchemeManager } from '../hooks/theme';
+import { colorSchemeManager } from '../hooks/theme'
 import { cookies } from 'next/headers'
 // import localFont from 'next/font/local'
 
@@ -120,7 +120,7 @@ async function Layout(props: LayoutProps) {
       className={`${lato.variable}`}
       style={{
         '--font-lxgw': 'LxgwWenKai',
-      } as any}
+      } as React.CSSProperties}
     >
       <head>
         <ColorSchemeScript />

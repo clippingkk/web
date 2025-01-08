@@ -1,9 +1,10 @@
-'use client';
-import { useEffect, useCallback } from "react";
-import mixpanel from "mixpanel-browser";
+'use client'
+import { useEffect, useCallback } from 'react'
+import mixpanel from 'mixpanel-browser'
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function usePageTrack(page: string, params?: any) {
   useEffect(() => {
     if (__DEV__) {
@@ -18,6 +19,7 @@ export function usePageTrack(page: string, params?: any) {
   }, [page, params])
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useActionTrack(action: string, params?: any) {
   return useCallback(() => {
     if (__DEV__) {

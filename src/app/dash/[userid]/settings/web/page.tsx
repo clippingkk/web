@@ -1,11 +1,12 @@
 'use client'
+import Cookies from 'js-cookie'
 import { useMantineColorScheme, Select } from '@mantine/core'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
 import SimpleSwitcher from '../simple-switcher'
+import { STORAGE_LANG_KEY } from '@/constants/storage'
+import { useRouter } from 'next/navigation'
 
-type SettingsWebPageProps = {
-}
 
 const langOptions = [{
   label: 'English',
@@ -18,9 +19,10 @@ const langOptions = [{
   value: 'ko'
 }]
 
-function SettingsWebPage(props: SettingsWebPageProps) {
+function SettingsWebPage() {
   const { t, i18n } = useTranslation()
   const { colorScheme, setColorScheme } = useMantineColorScheme()
+  const r = useRouter()
   return (
     <div className='w-full'>
       <div className='w-full flex items-center justify-around mb-4'>
@@ -35,7 +37,9 @@ function SettingsWebPage(props: SettingsWebPageProps) {
           className='w-64'
           value={langOptions.find(x => x.value === i18n.language)?.value}
           onChange={(v) => {
+            Cookies.set(STORAGE_LANG_KEY, v!)
             i18n.changeLanguage(v!)
+            r.refresh()
           }}
         />
       </div>
