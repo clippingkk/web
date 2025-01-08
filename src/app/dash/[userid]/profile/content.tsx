@@ -1,27 +1,26 @@
-'use client';
+'use client'
 import React, { useMemo, useState } from 'react'
-import { usePageTrack, useTitle } from '../../../../hooks/tracke'
-import WechatBindButton from './bind';
-import { useTranslation } from 'react-i18next';
-import dayjs from 'dayjs';
-import Avatar from '../../../../components/avatar/avatar';
+import { usePageTrack, useTitle } from '@/hooks/tracke'
+import WechatBindButton from './bind'
+import { useTranslation } from 'react-i18next'
+import dayjs from 'dayjs'
+import Avatar from '@/components/avatar/avatar'
 import ProfileEditor from './profile-editor'
 import ProfileBindPhone from './bind-phone'
-import { API_HOST } from '../../../../constants/config'
+import { API_HOST } from '@/constants/config'
 import { toast } from 'react-hot-toast'
-import Link from 'next/link';
-import CliApiToken from './cli-api';
-import AvatarPicker from '../../../../components/profile/avatar-picker';
-import PersonalActivity from '../../../../components/profile/activity';
-import { ProfileDocument, ProfileQuery, ProfileQueryVariables, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '../../../../schema/generated';
-import { Button, Divider, Text, Tooltip } from '@mantine/core';
-import UserName from '../../../../components/profile/user-name';
+import Link from 'next/link'
+import CliApiToken from './cli-api'
+import AvatarPicker from '@/components/profile/avatar-picker'
+import PersonalActivity from '@/components/profile/activity'
+import { ProfileDocument, ProfileQuery, ProfileQueryVariables, useFollowUserMutation, useUnfollowUserMutation, useUpdateProfileMutation } from '@/schema/generated'
+import { Divider, Text, Tooltip } from '@mantine/core'
+import UserName from '@/components/profile/user-name'
 import styles from './profile.module.css'
-import ClippingList from './clipping-list';
-import Loading from '../square/loading';
-import { useSuspenseQuery } from '@apollo/client';
-import { toastPromiseDefaultOption } from '../../../../services/misc';
-import PersonalityView from './personality';
+import ClippingList from './clipping-list'
+import { useSuspenseQuery } from '@apollo/client'
+import { toastPromiseDefaultOption } from '@/services/misc'
+import PersonalityView from './personality'
 
 type ProfilePageContentProps = {
   targetUidOrDomain: string
@@ -204,14 +203,14 @@ function ProfilePageContent(props: ProfilePageContentProps) {
               variables: {
                 avatar: nextAvatar
               }
-            });
+            })
           }}
           opened={isPickingAvatar}
           uid={uid}
         />
       )}
     </section>
-  );
+  )
 }
 
 export default ProfilePageContent

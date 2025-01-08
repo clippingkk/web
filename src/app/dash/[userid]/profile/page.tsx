@@ -12,7 +12,7 @@ type PageProps = {
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const params = await props.params;
+  const params = await props.params
   const pathUid: string = params.userid
   const uid = parseInt(pathUid)
 
@@ -35,12 +35,12 @@ async function Page(props: PageProps) {
   const cs = await cookies()
   const myUid = cs.get('uid')?.value
   return (
-    (<ProfilePageContent
+    <ProfilePageContent
       targetUidOrDomain={(await props.params).userid}
       myUid={myUid ? parseInt(myUid) : undefined}
       withProfileEditor={(await props.searchParams).with_profile_editor}
-    />)
-  );
+    />
+  )
 }
 
 export default Page
