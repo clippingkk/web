@@ -1,10 +1,8 @@
 'use client'
-import { useMutation } from '@apollo/client'
-import { useRouter } from 'next/navigation'
-import React, { useCallback, useMemo, useState } from 'react'
-import { useAuthBy3rdPartSuccessed } from '../../../../hooks/hooks'
-import { AppleLoginPlatforms, useBindAppleUniqueMutation } from '../../../../schema/generated'
-import AuthCallbackPageContainer from '../fake-layout'
+import React, { useCallback, useMemo } from 'react'
+import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
+import { AppleLoginPlatforms, useBindAppleUniqueMutation } from '@/schema/generated'
+import AuthCallbackPageContainer from '@/components/auth/fake-layout'
 
 type AuthCallbackAppleProps = {
   idToken: string

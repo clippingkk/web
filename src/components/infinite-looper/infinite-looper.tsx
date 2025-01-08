@@ -1,10 +1,10 @@
 'use client'
-import { useState, useRef, useCallback, useEffect } from "react"
+import { useState, useRef, useCallback, useEffect } from 'react'
 import './style.css'
 
 type InfiniteLooperProps = {
   speed: number
-  direction: "right" | "left"
+  direction: 'right' | 'left'
   children: React.ReactNode
 };
 
@@ -13,31 +13,31 @@ function InfiniteLooper({
   direction,
   children,
 }: InfiniteLooperProps) {
-  const [looperInstances, setLooperInstances] = useState(1);
-  const outerRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+  const [looperInstances, setLooperInstances] = useState(1)
+  const outerRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
 
   function resetAnimation() {
     if (innerRef?.current) {
-      innerRef.current.setAttribute("data-animate", "false");
+      innerRef.current.setAttribute('data-animate', 'false')
 
       setTimeout(() => {
         if (innerRef?.current) {
-          innerRef.current.setAttribute("data-animate", "true");
+          innerRef.current.setAttribute('data-animate', 'true')
         }
-      }, 10);
+      }, 10)
     }
   }
 
   const setupInstances = useCallback(() => {
-    if (!innerRef?.current || !outerRef?.current) return;
+    if (!innerRef?.current || !outerRef?.current) return
 
-    const { width } = innerRef.current.getBoundingClientRect();
+    const { width } = innerRef.current.getBoundingClientRect()
 
-    const { width: parentWidth } = outerRef.current.getBoundingClientRect();
+    const { width: parentWidth } = outerRef.current.getBoundingClientRect()
 
-    const widthDeficit = parentWidth - width;
-    let instanceWidth = width / innerRef.current.children.length;
+    const widthDeficit = parentWidth - width
+    let instanceWidth = width / innerRef.current.children.length
     if (instanceWidth === 0) {
       instanceWidth = 300
     }
@@ -45,11 +45,11 @@ function InfiniteLooper({
     if (widthDeficit) {
       setLooperInstances(
         looperInstances + Math.ceil(widthDeficit / instanceWidth) + 1
-      );
+      )
     }
 
-    resetAnimation();
-  }, [looperInstances]);
+    resetAnimation()
+  }, [looperInstances])
 
 
   /*
@@ -57,15 +57,15 @@ function InfiniteLooper({
     parent = 1700
   */
 
-  useEffect(() => setupInstances(), [setupInstances]);
+  useEffect(() => setupInstances(), [setupInstances])
 
   useEffect(() => {
-    window.addEventListener("resize", setupInstances);
+    window.addEventListener('resize', setupInstances)
 
     return () => {
-      window.removeEventListener("resize", setupInstances);
-    };
-  }, [looperInstances, setupInstances]);
+      window.removeEventListener('resize', setupInstances)
+    }
+  }, [looperInstances, setupInstances])
 
   return (
     <div className="looper" ref={outerRef}>
@@ -76,7 +76,7 @@ function InfiniteLooper({
             className="looper__listInstance"
             style={{
               animationDuration: `${speed}s`,
-              animationDirection: direction === "right" ? "reverse" : "normal",
+              animationDirection: direction === 'right' ? 'reverse' : 'normal',
             }}
           >
             {children}
@@ -84,7 +84,7 @@ function InfiniteLooper({
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 export default InfiniteLooper

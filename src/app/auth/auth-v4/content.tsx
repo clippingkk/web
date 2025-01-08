@@ -1,13 +1,12 @@
 'use client'
 import { useMachine } from '@xstate/react'
-import React, { useCallback } from 'react'
+import React from 'react'
 import authMachine from './auth.state'
 import { fromPromise } from 'xstate'
-import { AppleAuthVersion, AppleLoginPlatforms, OtpChannel, PublicDataQuery, useAuthByWeb3LazyQuery, useAuthLazyQuery, useAuthQuery, useDoLoginV3Mutation, useLoginByAppleLazyQuery, useSendOtpMutation } from '../../../schema/generated'
+import { AppleAuthVersion, AppleLoginPlatforms, OtpChannel, useAuthByWeb3LazyQuery, useAuthLazyQuery, useDoLoginV3Mutation, useLoginByAppleLazyQuery, useSendOtpMutation } from '@/schema/generated'
 import toast from 'react-hot-toast'
-import { toastPromiseDefaultOption } from '../../../services/misc'
-import { useActionTrack } from '../../../hooks/tracke'
-import { GithubClientID } from '../../../constants/config'
+import { useActionTrack } from '@/hooks/tracke'
+import { GithubClientID } from '@/constants/config'
 import { useRouter } from 'next/navigation'
 import ThirdPartEntry from './thirdPartEntry'
 import { signDataByWeb3 } from '@/utils/wallet'
@@ -18,10 +17,7 @@ import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '@/hooks/hooks'
 // import { createBrowserInspector } from '@statelyai/inspect'
 // const { inspect } = createBrowserInspector();
 
-type AuthV4ContentProps = {
-}
-
-function AuthV4Content(props: AuthV4ContentProps) {
+function AuthV4Content() {
   const router = useRouter()
   const { t } = useTranslation()
   const [doSendOtp] = useSendOtpMutation()
@@ -68,7 +64,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
           throw e
         })
       }),
-      doGithubLogin: fromPromise(async (ctx) => {
+      doGithubLogin: fromPromise(async () => {
         onGithubClick()
         const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`
         location.href = githubAuthUrl
@@ -94,7 +90,9 @@ function AuthV4Content(props: AuthV4ContentProps) {
           .then(r => {
             toast.success('Auth by Metamask: login success', { id: t })
             if (r?.noAccountFrom3rdPart) {
+              console.log('redirect', 'aaaaa', address, signature, text)
               router.push(`/auth/callback/metamask?a=${address}&s=${signature}&t=${encodeURIComponent(text)}`)
+              return
             }
             return r
           }).catch(e => {
@@ -133,7 +131,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
             throw e
           })
       }),
-      connectWeb3Wallet: fromPromise((ctx) => {
+      connectWeb3Wallet: fromPromise(() => {
         const t = toast.loading('Connecting...')
         return signDataByWeb3().then(r => {
           toast.success('Connected', { id: t })
@@ -184,7 +182,7 @@ function AuthV4Content(props: AuthV4ContentProps) {
             throw e
           })
       }),
-      setLocalState: fromPromise(({ input }) => {
+      setLocalState: fromPromise(({ }) => {
         return Promise.resolve()
       })
     }

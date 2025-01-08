@@ -1,6 +1,6 @@
 import { HttpLink, InMemoryCacheConfig } from '@apollo/client'
-import { API_HOST } from '../constants/config';
-import { uniqBy } from 'lodash';
+import { API_HOST } from '../constants/config'
+import { uniqBy } from 'lodash'
 
 function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
   if (!options.next) {
@@ -35,7 +35,7 @@ export const apolloCacheConfig: InMemoryCacheConfig = {
       }
     },
     Book: {
-      keyFields: ["doubanId"],
+      keyFields: ['doubanId'],
       fields: {
         clippings: {
           merge: simpleDistArrayMerge

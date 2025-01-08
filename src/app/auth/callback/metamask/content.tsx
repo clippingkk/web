@@ -1,8 +1,8 @@
 'use client'
-import React, { useCallback, useMemo, useState } from 'react'
-import { useAuthBy3rdPartSuccessed } from '../../../../hooks/hooks'
-import { useBindWeb3AddressMutation } from '../../../../schema/generated'
-import AuthCallbackPageContainer from '../fake-layout'
+import React, { useCallback, useMemo } from 'react'
+import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
+import { useBindWeb3AddressMutation } from '@/schema/generated'
+import AuthCallbackPageContainer from '@/components/auth/fake-layout'
 
 type AuthCallbackMetamaskProps = {
   address: string
@@ -38,7 +38,6 @@ function AuthCallbackMetamask(props: AuthCallbackMetamaskProps) {
     doBindResult.error,
     doBindResult.data?.bindWeb3Address
   )
-
   return (
     <AuthCallbackPageContainer
       onAuthCallback={onAuthCallback}

@@ -1,7 +1,7 @@
 import React from 'react'
-import AuthByGithub from '../../../components/auth.github'
-import MetamaskButtonView from '../../../components/auth/metamask'
-import AppleLoginButtonView from '../../../components/auth/apple'
+import AuthByGithub from '@/components/auth.github'
+import MetamaskButtonView from '@/components/auth/metamask'
+import AppleLoginButtonView from '@/components/auth/apple'
 import { AuthEvents, AuthMachine } from './auth.state'
 import toast from 'react-hot-toast'
 
@@ -27,6 +27,7 @@ function ThirdPartEntry(props: ThirdPartEntryProps) {
           version='v4'
           loading={machine.matches('appleAuthing')}
           disabled={false}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onError={(error: any) => {
             onEvent({ type: 'REVERT_TO_IDLE' })
             toast.error('Auth by Apple: ' + error.error)

@@ -1,22 +1,21 @@
+'use client'
+
 import { Box, Divider, Tooltip } from '@mantine/core'
 import Link from 'next/link'
 import React, { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { USER_LOGOUT, UserContent } from '../../store/user/type';
-import { Avatar, Button, HoverCard } from '@mantine/core';
-import { CogIcon } from '@heroicons/react/24/solid';
-import { ArrowLeftOnRectangleIcon, DevicePhoneMobileIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/navigation';
-import { CDN_DEFAULT_DOMAIN } from '../../constants/config';
-import AvatarOnNavigationBar from './avatar';
-import { useIsPremium } from '../../hooks/profile';
-import { useProfileQuery } from '../../schema/generated';
-import PremiumBadge from '../premium/badge';
-import profile from '../../utils/profile';
-import toast from 'react-hot-toast';
-import mixpanel from 'mixpanel-browser';
-import { onCleanServerCookie } from './logout';
-import { useDispatch } from 'react-redux';
+import { useTranslation } from '@/i18n/client'
+import { USER_LOGOUT, UserContent } from '../../store/user/type'
+import { Button, HoverCard } from '@mantine/core'
+import { CogIcon } from '@heroicons/react/24/solid'
+import { ArrowLeftOnRectangleIcon, DevicePhoneMobileIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { useRouter } from 'next/navigation'
+import AvatarOnNavigationBar from './avatar'
+import { useIsPremium } from '../../hooks/profile'
+import profile from '../../utils/profile'
+import toast from 'react-hot-toast'
+import mixpanel from 'mixpanel-browser'
+import { onCleanServerCookie } from './logout'
+import { useDispatch } from 'react-redux'
 
 type LoggedNavigationBarProps = {
   profile: UserContent
@@ -41,8 +40,6 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
   }, [])
 
   const isPremium = useIsPremium(profileData.premiumEndAt)
-
-  const avatar = profileData.avatar?.startsWith('http') ? profileData.avatar : `${CDN_DEFAULT_DOMAIN}/${profileData.avatar}`
 
   return (
     <ul className='flex with-slide-in'>

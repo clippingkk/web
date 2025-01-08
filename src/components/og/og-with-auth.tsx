@@ -8,7 +8,7 @@ type OGWithAuthProps = {
   urlPath: string
 }
 
-const metaTitle = `登陆 - 书摘 - clippingkk`
+const metaTitle = '登陆 - 书摘 - clippingkk'
 
 const logoLink = APP_URL_ORIGIN + logo.src
 const desc = '书摘 kindle'

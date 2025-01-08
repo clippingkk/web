@@ -1,18 +1,18 @@
-import mixpanel from "mixpanel-browser"
+import mixpanel from 'mixpanel-browser'
 import * as sentry from '@sentry/react'
-import { useEffect, useMemo } from "react"
-import profile from "../utils/profile"
-import { ApolloError, MutationResult } from "@apollo/client"
-import { useDispatch, useSelector } from "react-redux"
-import { AUTH_LOGIN, UserContent } from "../store/user/type"
-import { updateToken } from "../services/ajax"
-import { USER_TOKEN_KEY } from "../constants/storage"
-import { useRouter } from "next/navigation"
-import toast from "react-hot-toast"
-import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from "../schema/generated"
-import { TGlobalStore } from "../store"
-import { Dispatch } from "redux"
-import { syncLoginStateToServer } from "../actions/login"
+import { useEffect, useMemo } from 'react'
+import profile from '../utils/profile'
+import { ApolloError, MutationResult } from '@apollo/client'
+import { useDispatch, useSelector } from 'react-redux'
+import { AUTH_LOGIN, UserContent } from '../store/user/type'
+import { updateToken } from '../services/ajax'
+import { USER_TOKEN_KEY } from '../constants/storage'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from '../schema/generated'
+import { TGlobalStore } from '../store'
+import { Dispatch } from 'redux'
+import { syncLoginStateToServer } from '../actions/login'
 
 async function onAuthEnd(dispatch: Dispatch, data: { user: UserContent, token: string }) {
   const { user, token } = data
@@ -34,10 +34,10 @@ async function onAuthEnd(dispatch: Dispatch, data: { user: UserContent, token: s
   })
   mixpanel.identify(me.id.toString())
   mixpanel.people.set({
-    "$email": me.email,
-    "Sign up date": me.createdAt,
-    "USER_ID": me.id.toString(),
-  });
+    '$email': me.email,
+    'Sign up date': me.createdAt,
+    'USER_ID': me.id.toString(),
+  })
   updateToken(profile.token)
   await syncLoginStateToServer({ uid: me.id, token: profile.token })
   // Cookies.set('token', profile.token, { expires: 365 })

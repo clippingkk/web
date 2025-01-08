@@ -1,10 +1,9 @@
-import { dehydrate } from '@tanstack/react-query'
-import { duration3Days } from '../../../hooks/book'
-import { PublicDataQuery, PublicDataDocument } from '../../../schema/generated'
-import { getReactQueryClient } from '../../../services/ajax'
-import { getApolloServerClient } from '../../../services/apollo.server'
-import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
-import GalleryBackgroundView from '../../../components/galleryBackgroundView'
+import { duration3Days } from '@/hooks/book'
+import { PublicDataQuery, PublicDataDocument } from '@/schema/generated'
+import { getReactQueryClient } from '@/services/ajax'
+import { getApolloServerClient } from '@/services/apollo.server'
+import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
+import GalleryBackgroundView from '@/components/galleryBackgroundView'
 
 type AuthCallbackLayoutProps = {
   children: React.ReactNode
@@ -35,7 +34,6 @@ async function AuthCallbackLayout(props: AuthCallbackLayoutProps) {
     staleTime: duration3Days,
     gcTime: duration3Days,
   })
-  const d = dehydrate(rq)
   return (
     <div className='relative'>
       <GalleryBackgroundView publicData={data.data} />

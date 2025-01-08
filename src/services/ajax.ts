@@ -1,5 +1,5 @@
 import { ApolloLink, HttpLink } from '@apollo/client'
-import { onError } from "@apollo/client/link/error"
+import { onError } from '@apollo/client/link/error'
 import { API_HOST } from '../constants/config'
 import profile from '../utils/profile'
 import toast from 'react-hot-toast'
@@ -32,7 +32,7 @@ export function getLocalToken() {
 
 // FIXME: 由于循环依赖的问题，这里避免引入 './profile'
 // 但是 profile 中有一样的初始化获取逻辑
-let token = getLocalToken()
+let token = typeof window === 'undefined' ? null : getLocalToken()
 // let token = localProfile?.token
 
 export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
@@ -83,18 +83,22 @@ export function updateToken(t: string) {
   token = t
 }
 
-const authLink = new ApolloLink((operation, forward) => {
-  operation.setContext(({ headers = {} }) => {
-    if (!token) {
-      return headers
+export const authLink = new ApolloLink((operation, forward) => {
+  operation.setContext(({ headers = {} as Record<string, string> }) => {
+    if (
+      typeof window !== 'undefined' &&
+      !('Authorization' in headers) &&
+      token
+    ) {
+      headers['Authorization'] = `Bearer ${token}`
     }
 
     return {
       headers: {
+        'X-Accept-Language': getLanguage(),
         ...headers,
-        'Authorization': `Bearer ${token}`,
-        'X-Accept-Language': getLanguage()
-      }
+        // 'Authorization': `Bearer ${token}`,
+      },
     }
   })
 
@@ -121,7 +125,7 @@ const errorLink = onError((errData) => {
       toast.error(graphQLErrors[0].message)
     }
   }
-  let ne = networkError as GraphQLResponseError
+  const ne = networkError as GraphQLResponseError
 
   if (ne) {
     console.log(`[Network error]: ${ne}`)
@@ -133,7 +137,7 @@ const errorLink = onError((errData) => {
       // toast.error(`${ne.statusCode}: ${ne.name}`)
     }
   }
-});
+})
 
 const httpLink = new HttpLink({
   uri: API_HOST + '/api/v2/graphql',

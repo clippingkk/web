@@ -1,13 +1,14 @@
+'use client'
+
 import React, { useCallback, useState } from 'react'
 import Image from 'next/image'
 import clsx from 'classnames'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/i18n/client'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import SearchBar, { useCtrlP } from '../searchbar/searchbar'
 import { Modal } from '@mantine/core'
 import LoginByQRCode from './login-by-qrcode'
-import { getMyHomeLink } from '../../utils/profile'
 import LoggedNavigationBar from './authed'
 import { ArrowUpTrayIcon, BookOpenIcon, Squares2X2Icon } from '@heroicons/react/24/outline'
 import { useSelectedLayoutSegment } from 'next/navigation'
@@ -55,7 +56,7 @@ function NavigationBar(props: NavigationBarProps) {
   const [loginByQRCodeModalVisible, setLoginByQRCodeModalVisible] = useState(false)
 
   const { t } = useTranslation()
-  const homeLink = getMyHomeLink(profile)
+  // const homeLink = getMyHomeLink(profile)
   const activeSegment = useSelectedLayoutSegment()
 
   return (
@@ -122,7 +123,7 @@ function NavigationBar(props: NavigationBarProps) {
         <LoginByQRCode />
       </Modal>
     </nav>
-  );
+  )
 }
 
 export default NavigationBar

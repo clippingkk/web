@@ -1,12 +1,14 @@
+'use client'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import BindPhone from '../../../components/bind-phone'
-import LoadingIcon from '../../../components/icons/loading.svg'
-import OGWithAuth from '../../../components/og/og-with-auth'
+import { useTranslation } from '@/i18n/client'
+import BindPhone from '@/components/bind-phone'
+import LoadingIcon from '@/components/icons/loading.svg'
 import { Button } from '@mantine/core'
 
 type AuthCallbackPageContainerProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   doBind: () => Promise<any>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onAuthCallback: (pn: string, code: string) => Promise<any>
   loading: boolean
   children?: React.ReactElement
@@ -50,6 +52,7 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
         </div>
         {willBind && (
           <div className='with-fade-in w-full mx-auto'>
+            <span>No phone number bind yet</span>
             <BindPhone
               onFinalCheck={props.onAuthCallback}
             />
