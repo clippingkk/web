@@ -7,7 +7,7 @@ type dialogProps = {
   onCancel: (e: React.MouseEvent) => void
   onOk?: (e: React.MouseEvent) => void
   title: string
-  children: JSX.Element
+  children: React.ReactElement
 }
 
 class InnerDialog extends React.PureComponent<dialogProps> {
@@ -23,11 +23,11 @@ class InnerDialog extends React.PureComponent<dialogProps> {
           onClick={this.stopBuble}
         >
           <>
-          <h3 className='mb-4 text-2xl text-center'>{this.props.title}</h3>
-          <hr />
-          <div>
-            {this.props.children}
-          </div>
+            <h3 className='mb-4 text-2xl text-center'>{this.props.title}</h3>
+            <hr />
+            <div>
+              {this.props.children}
+            </div>
           </>
         </Card>
       </div>
@@ -36,9 +36,8 @@ class InnerDialog extends React.PureComponent<dialogProps> {
 }
 
 function Dialog(props: dialogProps) {
-  const { children, ...others } = props
   return ReactDOM.createPortal(
-    <InnerDialog {...props}>{children}</InnerDialog>,
+    <InnerDialog {...props} />,
     document.querySelector('#dialog') as Element
   )
 }

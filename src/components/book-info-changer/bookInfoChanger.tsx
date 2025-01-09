@@ -15,6 +15,7 @@ type BookInfoChangerProps = {
   bookName?: string
   visible: boolean
   onClose: () => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onConfirm: (bookDoubanId: string) => Promise<any>
 }
 
@@ -40,12 +41,12 @@ function BookInfoChanger(props: BookInfoChangerProps) {
     }
 
     // return toast.promise(new Promise(r => setTimeout(r, 4000)), {
-      return toast.promise(doUpdate({
-        variables: {
-          cid: props.clippingID,
-          doubanId: selectedBook.doubanId
-        }
-      }), {
+    return toast.promise(doUpdate({
+      variables: {
+        cid: props.clippingID,
+        doubanId: selectedBook.doubanId
+      }
+    }), {
       loading: t('app.common.saving'),
       success: () => {
         client.resetStore()
@@ -53,7 +54,8 @@ function BookInfoChanger(props: BookInfoChangerProps) {
         props.onClose()
         return t('app.common.done')
       },
-      error: (err) => t(err),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      error: (err: any) => t(err),
     })
   }, [selectedBook?.id, props.clippingID])
 
