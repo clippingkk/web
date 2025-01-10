@@ -101,9 +101,6 @@ importers:
       '@marsidev/react-turnstile':
         specifier: ^1.1.0
         version: 1.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@metamask/sdk':
-        specifier: ^0.31.4
-        version: 0.31.4(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@metamask/sdk-react':
         specifier: ^0.31.4
         version: 0.31.4(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@19.0.0(react@19.0.0))(react-native@0.76.1(@babel/core@7.22.20)(@babel/preset-env@7.26.0(@babel/core@7.22.20))(@react-native-community/cli-server-api@15.1.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@types/react@19.0.3)(bufferutil@4.0.9)(encoding@0.1.13)(react@19.0.0)(utf-8-validate@5.0.10))(react@19.0.0)(utf-8-validate@5.0.10)

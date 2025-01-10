@@ -111,7 +111,6 @@
     "@mantine/nprogress": "^7.15.2",
     "@mantine/spotlight": "^7.15.2",
     "@marsidev/react-turnstile": "^1.1.0",
-    "@metamask/sdk": "^0.31.4",
     "@metamask/sdk-react": "^0.31.4",
     "@neshca/cache-handler": "^1.9.0",
     "@newrelic/next": "^0.10.0",
