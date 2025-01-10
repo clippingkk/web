@@ -1,25 +1,19 @@
 'use client'
-import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import ButtonSimple from '../../../../components/button/button-simple'
-import GithubBindButton from '../../../../components/externalAccount/github.bind'
-import MetamaskBindButton from '../../../../components/externalAccount/metamask.bind'
-import FieldInput from '../../../../components/input'
-import ProgressBlock from '../../../../components/progress/progress-block'
-import { useUpdateProfileMutation } from '../../../../schema/generated'
-import { toastPromiseDefaultOption, uploadImage } from '../../../../services/misc'
-import { TGlobalStore } from '../../../../store'
-import { delay } from '../../../../utils/timer'
-
-type NewbiePageProps = {
-}
+import ButtonSimple from '@/components/button/button-simple'
+import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
+import FieldInput from '@/components/input'
+import ProgressBlock from '@/components/progress/progress-block'
+import { useUpdateProfileMutation } from '@/schema/generated'
+import { toastPromiseDefaultOption, uploadImage } from '@/services/misc'
+import { TGlobalStore } from '@/store'
 
 // redirected from a new signup by loginV3
-function NewbiePageContent(props: NewbiePageProps) {
+function NewbiePageContent() {
   // TODO:
   // 1. update name
   // 2. update domain
@@ -52,7 +46,7 @@ function NewbiePageContent(props: NewbiePageProps) {
   }, [newName])
 
   const newDomainSubmitDisabled = useMemo(() => {
-    return !(/[a-z\.]{3,32}/.test(newDomain));
+    return !(/[a-z\.]{3,32}/.test(newDomain))
   }, [newDomain])
 
   const { push: navigate } = useRouter()
@@ -118,7 +112,7 @@ function NewbiePageContent(props: NewbiePageProps) {
                     }
                   }),
                   toastPromiseDefaultOption
-                ).then(res => {
+                ).then(() => {
                   setPhase(1)
                   setNewDomain(newName.toLowerCase())
                 })
@@ -159,7 +153,7 @@ function NewbiePageContent(props: NewbiePageProps) {
                     }
                   }),
                   toastPromiseDefaultOption
-                ).then(res => {
+                ).then(() => {
                   setPhase(2)
                 })
               }}
@@ -198,7 +192,7 @@ function NewbiePageContent(props: NewbiePageProps) {
                 setAvatar(f)
               }}
               inputProps={{
-                accept: "image/png, image/jpeg"
+                accept: 'image/png, image/jpeg'
               }}
               value={undefined}
             />
@@ -219,6 +213,7 @@ function NewbiePageContent(props: NewbiePageProps) {
                   })
                   setPhase(p => p + 1)
                   toast.success(t('app.profile.editor.updated'), { id: tl })
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (e: any) {
                   toast.error(e.toString(), { id: tl })
                 }

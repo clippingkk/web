@@ -1,14 +1,13 @@
 import React from 'react'
-import Card from '../card/card';
-import { WenquBook } from '../../services/wenqu';
-import { useTranslation } from 'react-i18next';
-import Avatar from '../avatar/avatar';
-import ClippingContent from '../clipping-content';
-import { IN_APP_CHANNEL } from '../../services/channel';
+import { WenquBook } from '../../services/wenqu'
+import { useTranslation } from 'react-i18next'
+import Avatar from '../avatar/avatar'
+import ClippingContent from '../clipping-content'
+import { IN_APP_CHANNEL } from '../../services/channel'
 
 import styles from './clipping-item.module.css'
-import Link from 'next/link';
-import { Clipping, User } from '../../schema/generated';
+import Link from 'next/link'
+import { Clipping, User } from '../../schema/generated'
 
 type TClippingItemProps = {
   className?: string
@@ -67,7 +66,7 @@ function ClippingItem(props: TClippingItemProps) {
         </>
       </div>
     </Link>
-  );
+  )
 }
 
 export default ClippingItem

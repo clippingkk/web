@@ -1,7 +1,7 @@
-import { request } from "./ajax";
+import { request } from './ajax'
 import { supportsWebp } from '../utils/image'
-import { IClippingItem, IHttpClippingItem } from "./clippings";
-import { CDN_DEFAULT_DOMAIN } from "../constants/config";
+import { IClippingItem, IHttpClippingItem } from './clippings'
+import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 
 interface Book {
   id: number
@@ -54,8 +54,8 @@ export async function getBookClippings(userid: number, bookId: string, offset: n
 }
 
 export async function updateClippingBook(clippingId: number, bookId: string) {
-    return request(`/book/clippings/${clippingId}`, {
-      method: 'PUT',
-      body: JSON.stringify({ bookId })
-    })
+  return request(`/book/clippings/${clippingId}`, {
+    method: 'PUT',
+    body: JSON.stringify({ bookId })
+  })
 }

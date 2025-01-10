@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/solid'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { useUploadData } from '../hooks/my-file'
 import { useActionTrack } from '../hooks/tracke'
 import { TGlobalStore } from '../store'
-import FloatingProgress from './progress/floating';
+import FloatingProgress from './progress/floating'
 
 type AppContainerProps = {
   children: React.ReactElement

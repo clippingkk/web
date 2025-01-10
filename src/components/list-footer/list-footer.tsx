@@ -1,5 +1,5 @@
 import React from 'react'
-import { useInView } from "react-cool-inview"
+import { useInView } from 'react-cool-inview'
 
 type TListFooterProp = {
   loadingBlock?: React.ReactElement
@@ -10,14 +10,14 @@ type TListFooterProp = {
 function ListFooter(props: TListFooterProp) {
   const { loadMoreFn, hasMore, loadingBlock } = props
   const { observe } = useInView({
-    rootMargin: "50px 0px",
+    rootMargin: '50px 0px',
     onEnter: ({ unobserve }) => {
       if (!hasMore) {
         return
       }
       loadMoreFn()
     },
-  });
+  })
   return (
     <footer className='flex justify-center items-center my-4 mx-0 w-full'>
       <div

@@ -1,17 +1,14 @@
 'use client'
 import { Button, Input, Modal } from '@mantine/core'
 import React, { useCallback, useRef, useState } from 'react'
-import BlurhashView from '@annatarhe/blurhash-react';
+import BlurhashView from '@annatarhe/blurhash-react'
 import { toPng } from 'html-to-image'
 import download from 'downloadjs'
 import { toast } from 'react-hot-toast'
-import { useBookSearch, useSingleBook } from '../../../hooks/book'
-import PublicBookItem from '../../../components/public-book-item/public-book-item'
-import SpinnerIcon from '../../../components/loading/spinner'
-import { toastPromiseDefaultOption } from '../../../services/misc'
-
-type ReportFavouritesPageProps = {
-}
+import { useBookSearch, useSingleBook } from '@/hooks/book'
+import PublicBookItem from '@/components/public-book-item/public-book-item'
+import SpinnerIcon from '@/components/loading/spinner'
+import { toastPromiseDefaultOption } from '@/services/misc'
 
 function FavBookCard(
   props: {
@@ -117,7 +114,7 @@ function FavBookCard(
   )
 }
 
-function ReportFavouritesPage(props: ReportFavouritesPageProps) {
+function ReportFavouritesPage() {
   const [records, setRecords] = useState<{ [k: string]: number }>({
     '最爱的': -1,
     '最影响我的': -1,

@@ -10,10 +10,10 @@ export type IVersionItem = {
 }
 
 export async function getVersions(platform: string): Promise<IVersionItem[]> {
-    const response = await (request(`/version/${platform}?take=5`) as Promise<IVersionItem[]>)
+  const response = await (request(`/version/${platform}?take=5`) as Promise<IVersionItem[]>)
 
-    return response.map(x => ({
-      ...x,
-      // info: x.info.replace(/\n/g, '')
-    }))
+  return response.map(x => ({
+    ...x,
+    // info: x.info.replace(/\n/g, '')
+  }))
 }

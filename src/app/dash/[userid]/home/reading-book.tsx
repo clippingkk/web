@@ -1,10 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
-import BookInfo from '../../../../components/book-info/book-info'
-import ClippingContent from '../../../../components/clipping-content'
-import { useSingleBook, useSingleBookSuspense } from '../../../../hooks/book'
-import { IN_APP_CHANNEL } from '../../../../services/channel'
-import { Clipping } from '../../../../schema/generated'
+import BookInfo from '@/components/book-info/book-info'
+import ClippingContent from '@/components/clipping-content'
+import { useSingleBookSuspense } from '@/hooks/book'
+import { IN_APP_CHANNEL } from '@/services/channel'
+import { Clipping } from '@/schema/generated'
 
 type ReadingBookProps = {
   uid: number
@@ -33,7 +33,7 @@ function ReadingBook(props: ReadingBookProps) {
         </Link>
       )}
     </div>
-  );
+  )
 }
 
 export default ReadingBook

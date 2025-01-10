@@ -47,7 +47,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 }
 
 async function Page(props: PageProps) {
-  const { clippingid, userid } = (await props.params)
+  const { clippingid } = await props.params
   const cid = ~~clippingid
   const client = getApolloServerClient()
   const clippingsResponse = await client.query<FetchClippingQuery, FetchClippingQueryVariables>({
@@ -99,7 +99,7 @@ async function Page(props: PageProps) {
         myProfile={myProfile}
       />
     </HydrationBoundary>)
-  );
+  )
 }
 
 export default Page

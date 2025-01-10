@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useApolloClient } from '@apollo/client'
 import Switch from '@/components/switcher'
-import Card from '@/components/card/card'
 import { WenquBook } from '@/services/wenqu'
 import { UserContent } from '@/store/user/type'
 import { useTranslation } from 'react-i18next'
@@ -137,7 +136,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                 onClose={() => {
                   setUpdateClippingBookId(-1)
                 }}
-                onConfirm={newBookId => {
+                onConfirm={() => {
                   setUpdateClippingBookId(-1)
                   return Promise.resolve(1)
                 }}
@@ -200,7 +199,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
                         }
                       }),
                       toastPromiseDefaultOption)
-                      .then(res => {
+                      .then(() => {
                         client.resetStore()
                       })
                   }}
@@ -245,7 +244,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
 export default ClippingSidebar

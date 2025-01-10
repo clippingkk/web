@@ -1,16 +1,13 @@
 import { CommandLineIcon } from '@heroicons/react/24/outline'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import Dialog from '../../../../components/dialog/dialog'
-import { CodeHighlight } from '@mantine/code-highlight';
-import { getLocalToken } from '../../../../services/ajax'
-import { useClaimCliApiTokenMutation } from '../../../../schema/generated'
-import { Button, Tooltip } from '@mantine/core';
+import Dialog from '@/components/dialog/dialog'
+import { CodeHighlight } from '@mantine/code-highlight'
+import { getLocalToken } from '@/services/ajax'
+import { useClaimCliApiTokenMutation } from '@/schema/generated'
+import { Button, Tooltip } from '@mantine/core'
 
-type CliApiTokenProps = {
-}
-
-function CliApiToken(props: CliApiTokenProps) {
+function CliApiToken() {
   const [doClaim, { data }] = useClaimCliApiTokenMutation()
   // TODO: request publick api token
   const [visible, setVisible] = useState(false)

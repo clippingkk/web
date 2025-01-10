@@ -1,14 +1,11 @@
-'use client';
+'use client'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import party from 'party-js'
 import { Text } from '@mantine/core'
-import { useSelector } from 'react-redux'
-import { getPaymentOrderInfo } from '../../../services/payment'
-import { TGlobalStore } from '../../../store'
-import { UserContent } from '../../../store/user/type'
+import { getPaymentOrderInfo } from '@/services/payment'
 
 type PaymentSuccessContentProps = {
   sessionId: string
@@ -41,7 +38,6 @@ function PaymentSuccessContent(props: PaymentSuccessContentProps) {
     }
     party.confetti(document.querySelector('body')!)
   }, [data])
-  const p = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
 
   return (
     <div className=' w-full h-full flex flex-col items-center justify-center dark:text-gray-100 pt-20'>

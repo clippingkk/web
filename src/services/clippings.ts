@@ -1,5 +1,5 @@
 import { request, IBaseResponseData } from './ajax'
-import { TClippingItem } from '../store/clippings/parser';
+import { TClippingItem } from '../store/clippings/parser'
 
 interface IBaseClippingItem {
   id: number
@@ -38,7 +38,7 @@ export async function getClipping(clippingid: number): Promise<IClippingItem> {
 }
 
 export async function create(clippings: TClippingItem[]) {
-  const response = await (request(`/clippings/multip/create`, {
+  const response = await (request('/clippings/multip/create', {
     method: 'POST',
     body: JSON.stringify({ clippings })
   }) as Promise<IHttpClippingItem[]>)

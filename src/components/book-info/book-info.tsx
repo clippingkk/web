@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react'
-import Card from '../card/card';
+import Card from '../card/card'
 import { WenquBook } from '../../services/wenqu'
 import BlurhashView from '@annatarhe/blurhash-react'
 // import Image from 'next/image'
-import { useTranslation } from 'react-i18next';
-import { Rating, Tooltip } from '@mantine/core';
-import BookSharePreview from '../preview/preview-book';
-import { ShareIcon } from '@heroicons/react/24/solid';
+import { useTranslation } from 'react-i18next'
+import { Rating, Tooltip } from '@mantine/core'
+import BookSharePreview from '../preview/preview-book'
+import { ShareIcon } from '@heroicons/react/24/solid'
 
 type TBookInfoProp = {
   uid: number
@@ -15,7 +15,7 @@ type TBookInfoProp = {
   isLastReadingBook?: boolean
 }
 
-function BookInfo({ book, uid, duration, isLastReadingBook }: TBookInfoProp) {
+function BookInfo({ book, uid, duration }: TBookInfoProp) {
   const { t } = useTranslation()
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
 

@@ -1,21 +1,15 @@
 'use client'
-import React, { useEffect, use } from 'react';
-import Card from '../../../components/card/card'
+import React, { useEffect } from 'react'
+import Card from '@/components/card/card'
 import Link from 'next/link'
 import Image from 'next/image'
-import { GithubClientID, SignInWithAppleOptions } from '../../../constants/config';
-import { usePageTrack, useActionTrack } from '../../../hooks/tracke';
-import profile from '../../../utils/profile';
-import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/navigation';
-import logo from '../../../assets/logo.png'
-import GithubLogo from '../../../components/icons/github.logo.svg';
-
-function checkIsCurrentPath({ isCurrent }: any) {
-  return {
-    className: `flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 ${isCurrent ? 'bg-indigo-400' : ''}`
-  }
-}
+import { GithubClientID } from '@/constants/config'
+import { usePageTrack, useActionTrack } from '@/hooks/tracke'
+import profile from '@/utils/profile'
+import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/navigation'
+import logo from '@/assets/logo.png'
+import GithubLogo from '@/components/icons/github.logo.svg'
 
 type AuthPageProps = {
   children: React.ReactElement
@@ -52,13 +46,13 @@ function AuthPage(props: AuthPageProps) {
           <div className='w-full flex items-center justify-center rounded'>
             <Link
               href="/auth/phone"
-              className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 bg-indigo-400`}>
+              className={'flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 bg-indigo-400'}>
               {t('app.auth.phone')}
             </Link>
 
             <Link
               href="/auth/signin"
-              className={`flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400`}>
+              className={'flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400'}>
               {t('app.auth.signin')}
             </Link>
           </div>
@@ -77,7 +71,7 @@ function AuthPage(props: AuthPageProps) {
         </>
       </Card>
     </section>)
-  );
+  )
 }
 
 export default AuthPage

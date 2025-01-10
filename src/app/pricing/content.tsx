@@ -18,9 +18,9 @@ type PricingContentProps = {
 
 function PricingContent(props: PricingContentProps) {
   const { uid } = props
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ['payment-subscription', StripePremiumPriceId],
     queryFn: () => getPaymentSubscription(StripePremiumPriceId),
     enabled: Boolean(uid && uid > 0),

@@ -1,4 +1,4 @@
-import { request } from "./ajax";
+import { request } from './ajax'
 
 export function getPaymentSubscription(priceId: string) {
   return request<{ checkoutUrl: string }>('/v2/payment-subscription', {
@@ -20,7 +20,7 @@ export function getPaymentOrderInfo(sessionId: string) {
 
 export function cancelPaymentSubscription(subscriptionId: string) {
   return request<{
-  }>(`/v2/payment/subscription/cancel`, {
+  }>('/v2/payment/subscription/cancel', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

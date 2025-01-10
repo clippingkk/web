@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { UploadStep } from '../../../../services/uploader'
 import LoadingModal from './loading-modal'
 import { TGlobalStore } from '../../../../store'
-import Switch from "react-switch"
+import Switch from 'react-switch'
 import ClippingsUploadHelp from './help'
 import { useUploadData } from '../../../../hooks/my-file'
 import { useRouter } from 'next/navigation'

@@ -1,13 +1,13 @@
-import { Button, TextInput } from "@mantine/core"
+import { Button, TextInput } from '@mantine/core'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import OTPInput from 'react-auth-code-input'
-import { AuthMachine, AuthEvents } from "./auth.state"
-import { Form, useForm } from "@mantine/form"
-import { useTranslation } from "react-i18next"
-import { ChevronRightIcon } from "@heroicons/react/24/solid"
-import { Turnstile } from "@marsidev/react-turnstile"
-import { CF_TURNSTILE_SITE_KEY } from "../../../constants/config"
-import toast from "react-hot-toast"
+import { AuthMachine, AuthEvents } from './auth.state'
+import { Form, useForm } from '@mantine/form'
+import { useTranslation } from 'react-i18next'
+import { ChevronRightIcon } from '@heroicons/react/24/solid'
+import { Turnstile } from '@marsidev/react-turnstile'
+import { CF_TURNSTILE_SITE_KEY } from '@/constants/config'
+import toast from 'react-hot-toast'
 
 type EmailLoginEntryProps = {
   machine: AuthMachine
@@ -40,6 +40,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
 
   const machineCtxErrors = machine.context.errorMessages
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onTurnstileError = (err: any) => {
     if (process.env.NODE_ENV !== 'production') {
       sendEvent({ type: 'CF_VERIFIED', turnstileToken: 'temp' })

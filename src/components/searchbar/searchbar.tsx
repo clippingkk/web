@@ -110,7 +110,7 @@ function SearchBar(props: SearchBarProps) {
         </ul>
       </div>
     </Modal>
-  );
+  )
 }
 
 export default SearchBar

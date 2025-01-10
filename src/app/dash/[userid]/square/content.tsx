@@ -1,15 +1,15 @@
-'use client';
+'use client'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePageTrack, useTitle } from '../../../../hooks/tracke'
-import ClippingItem from '../../../../components/clipping-item/clipping-item'
-import { duration3Days, useMultipleBook } from '../../../../hooks/book'
-import { IN_APP_CHANNEL } from '../../../../services/channel'
-import { APP_API_STEP_LIMIT } from '../../../../constants/config'
+import { usePageTrack } from '@/hooks/tracke'
+import ClippingItem from '@/components/clipping-item/clipping-item'
+import { useMultipleBook } from '@/hooks/book'
+import { IN_APP_CHANNEL } from '@/services/channel'
+import { APP_API_STEP_LIMIT } from '@/constants/config'
 import { LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
-import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size'
+import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
 import { Divider } from '@mantine/core'
-import { FetchSquareDataQuery, useFetchSquareDataQuery } from '../../../../schema/generated'
+import { FetchSquareDataQuery, useFetchSquareDataQuery } from '@/schema/generated'
 
 type SquarePageContentProps = {
   squareData: FetchSquareDataQuery
@@ -24,7 +24,7 @@ function SquarePageContent(props: SquarePageContentProps) {
   const reachEnd = useRef(false)
 
   const [sqData, setSqData] = useState<FetchSquareDataQuery['featuredClippings']>(props.squareData.featuredClippings)
-  const { data: localData, loading, fetchMore } = useFetchSquareDataQuery({
+  const { data: localData, fetchMore } = useFetchSquareDataQuery({
     variables: {
       pagination: {
         limit: APP_API_STEP_LIMIT,
@@ -38,7 +38,7 @@ function SquarePageContent(props: SquarePageContentProps) {
   // ssr 的数据用来做 seo
   const books = useMultipleBook(data?.featuredClippings.map(x => x.bookID) || [])
 
-  const maybeLoadMore = useInfiniteLoader<FetchSquareDataQuery['featuredClippings'][0], LoadMoreItemsCallback<FetchSquareDataQuery['featuredClippings'][0]>>((startIndex, stopIndex, currentItems) => {
+  const maybeLoadMore = useInfiniteLoader<FetchSquareDataQuery['featuredClippings'][0], LoadMoreItemsCallback<FetchSquareDataQuery['featuredClippings'][0]>>(() => {
     if (sqData.length >= 200) {
       reachEnd.current = true
     }
@@ -87,6 +87,7 @@ function SquarePageContent(props: SquarePageContentProps) {
           return (
             <ClippingItem
               key={clipping.id}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               item={clipping as any}
               domain={clipping.creator.domain.length > 2 ? clipping.creator.domain : clipping.creator.id.toString()}
               book={books.books.find(x => x.id.toString() == clipping.bookID)}

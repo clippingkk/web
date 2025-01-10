@@ -1,17 +1,17 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import ListFooter from '@/components/list-footer/list-footer';
-import { useTranslation } from 'react-i18next';
-import { useMultipleBook } from '@/hooks/book';
-import NoContentAlert from './no-content';
-import BookCover from '@/components/book-cover/book-cover';
-import ReadingBook from './reading-book';
-import { UserContent } from '@/store/user/type';
+import ListFooter from '@/components/list-footer/list-footer'
+import { useTranslation } from 'react-i18next'
+import { useMultipleBook } from '@/hooks/book'
+import NoContentAlert from './no-content'
+import BookCover from '@/components/book-cover/book-cover'
+import ReadingBook from './reading-book'
+import { UserContent } from '@/store/user/type'
 import { useSyncClippingsToServer } from '@/hooks/my-file'
-import { useRouter } from 'next/navigation';
-import HomePageSkeleton, { BooksSkeleton } from './skeleton';
-import { BooksDocument, BooksQuery, BooksQueryVariables, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated';
+import { useRouter } from 'next/navigation'
+import { BooksSkeleton } from './skeleton'
+import { BooksDocument, BooksQuery, BooksQueryVariables, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated'
 import { useQuery, useSuspenseQuery } from '@apollo/client'
 
 const STEP = 10
@@ -23,8 +23,8 @@ function useUserNewbie(userProfile: UserContent | null, onNewbie: () => void) {
     }
     const sp = new URLSearchParams(location.search)
     if (
-      userProfile.avatar === "" &&
-      userProfile.bio === "" &&
+      userProfile.avatar === '' &&
+      userProfile.bio === '' &&
       userProfile.name.startsWith('user.') &&
       userProfile.createdAt === userProfile.updatedAt &&
       sp.has('from_auth')
@@ -149,7 +149,7 @@ function HomePageContent(props: HomePageContentProps) {
         hasMore={!reachEnd}
       />
     </section>
-  );
+  )
 }
 
 export default HomePageContent

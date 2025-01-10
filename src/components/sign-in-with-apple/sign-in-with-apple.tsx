@@ -1,15 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { SignInWithAppleOptions } from '../../constants/config'
 
-type SignInWithAppleProps = {
-}
-
 const scriptURL = 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
 
 const scriptDomId = 'sign-in-with-app-script'
-function SignInWithApple(props: SignInWithAppleProps) {
+function SignInWithApple() {
 
-  const [loading, setLoading] = useState(true)
+  const [_, setLoading] = useState(true)
 
   useEffect(() => {
     const has = document.querySelector('#' + scriptDomId)
@@ -22,14 +19,16 @@ function SignInWithApple(props: SignInWithAppleProps) {
     document.body.appendChild(dom)
 
     function onScriptLoad() {
-      if (!(window as any).AppleID) {
+      if (!window.AppleID) {
         return
       }
-      (window as any).AppleID.auth.init(SignInWithAppleOptions)
+      window.AppleID.auth.init(SignInWithAppleOptions)
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function onAppleSignInSuccess(data: any) {
       console.log(data)
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function onAppleSignInFail(err: any) {
       console.log(err)
     }
@@ -37,9 +36,9 @@ function SignInWithApple(props: SignInWithAppleProps) {
     dom.addEventListener('load', onScriptLoad)
 
     //Listen for authorization success
-    document.addEventListener('AppleIDSignInOnSuccess', onAppleSignInSuccess);
+    document.addEventListener('AppleIDSignInOnSuccess', onAppleSignInSuccess)
     //Listen for authorization failures
-    document.addEventListener('AppleIDSignInOnFailure', onAppleSignInFail);
+    document.addEventListener('AppleIDSignInOnFailure', onAppleSignInFail)
 
     return () => {
       document.removeEventListener('AppleIDSignInOnSuccess', onAppleSignInSuccess)
@@ -49,7 +48,7 @@ function SignInWithApple(props: SignInWithAppleProps) {
   }, [])
 
   const onSignin = useCallback(async () => {
-    const response = await (window as any).AppleID.auth.signIn()
+    const response = await window.AppleID?.auth.signIn()
     return response
   }, [])
 

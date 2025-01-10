@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import { useEffect } from "react"
-import store from "../store"
-import { AUTH_LOGIN } from "../store/user/type"
-import { initParseFromLS } from "../utils/storage";
-import { useApolloClient } from "@apollo/client";
+import { useEffect } from 'react'
+import store from '../store'
+import { AUTH_LOGIN } from '../store/user/type'
+import { initParseFromLS } from '../utils/storage'
+import { useApolloClient } from '@apollo/client'
 
 export function useLayoutInit() {
   const client = useApolloClient()

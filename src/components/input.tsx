@@ -29,10 +29,10 @@ function FieldInput(props: FieldInputProps) {
   const size = props.size ?? FieldInputSize.large
   return (
     <div className='my-4 mx-0 flex items-center relative'>
-        <label
-          htmlFor={props.name}
-          className='mr-4 text-2xl w-32 text-right dark:text-white'
-        >{t(`app.auth.${props.name}`)}: </label>
+      <label
+        htmlFor={props.name}
+        className='mr-4 text-2xl w-32 text-right dark:text-white'
+      >{t(`app.auth.${props.name}`)}: </label>
       <input
         {...props.inputProps}
         type={props.type ?? 'text'}

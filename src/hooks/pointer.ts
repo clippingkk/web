@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
 function syncPointer({ x, y }: PointerEvent) {
   document.documentElement.style.setProperty('--pointer-x', x.toFixed(2))
@@ -11,11 +11,6 @@ function syncPointer({ x, y }: PointerEvent) {
     '--pointer-yp',
     (y / window.innerHeight).toFixed(2)
   )
-}
-
-function isTouchDevice() {
-  return (('ontouchstart' in window) ||
-    (navigator.maxTouchPoints > 0))
 }
 
 // https://codepen.io/jh3y/pen/oNVvQRo

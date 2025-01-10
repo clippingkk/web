@@ -24,8 +24,8 @@ export const easings = {
 }
 
 export const animations = {
-  fadeIn: `fade-in 500ms ease-out forwards`,
-  fadeOut: `fade-out 400ms ease-out forwards`,
+  fadeIn: 'fade-in 500ms ease-out forwards',
+  fadeOut: 'fade-out 400ms ease-out forwards',
   fadeInUp: `fade-in-up 800ms ${easings.easeOutExpo} forwards`,
   popIn: `pop-in 500ms ${easings.easeOutExpo} forwards`,
   popOut: `pop-out 400ms ${easings.easeOutBack} forwards`,

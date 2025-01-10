@@ -59,7 +59,7 @@ function AuthV2Page() {
         </div>
       </section>
     </React.Fragment>
-  );
+  )
 }
 
 export default AuthV2Page

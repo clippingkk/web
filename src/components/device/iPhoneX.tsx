@@ -7,7 +7,7 @@ type DeviceIPhoneXProps = {
 
 function DeviceIPhoneX(props: DeviceIPhoneXProps) {
   return (
-    <div className={"marvel-device iphone-x " + (props.className ?? '')}>
+    <div className={'marvel-device iphone-x ' + (props.className ?? '')}>
       <div className="notch">
         <div className="camera"></div>
         <div className="speaker"></div>

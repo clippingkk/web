@@ -15,7 +15,7 @@ export function supportsWebp(): Promise<boolean> {
     const webp = new Image()
 
     webp.src = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA='
-    // eslint-disable-next-line
+     
     webp.onload = webp.onerror = () => {
       support = webp.height === 1
       return resolve(support)
@@ -24,23 +24,23 @@ export function supportsWebp(): Promise<boolean> {
 }
 
 // export async function getImagePrimaryColor(imageUrl?: string): Promise<number[]> {
-  // if (!imageUrl) {
-    // return Promise.reject('image not found')
-  // }
-  // return new Promise((resolve, reject) => {
-    // const colorThief = new ColorThief()
-    // const img = new Image()
-    // img.crossOrigin = 'Anonymous'
-    // img.src = imageUrl
-    // img.addEventListener('load', function () {
-      // const c: number[] = colorThief.getColor(img)
-      // if (!c || c.length !== 3) {
-        // reject('color not found')
-      // }
-      // resolve(c)
-    // })
-    // img.addEventListener('error', reject)
-  // })
+// if (!imageUrl) {
+// return Promise.reject('image not found')
+// }
+// return new Promise((resolve, reject) => {
+// const colorThief = new ColorThief()
+// const img = new Image()
+// img.crossOrigin = 'Anonymous'
+// img.src = imageUrl
+// img.addEventListener('load', function () {
+// const c: number[] = colorThief.getColor(img)
+// if (!c || c.length !== 3) {
+// reject('color not found')
+// }
+// resolve(c)
+// })
+// img.addEventListener('error', reject)
+// })
 
 // }
 
@@ -71,9 +71,9 @@ export function rgbToHex(r: number, g: number, b: number) {
  * @param percent +- 10
  */
 export function shadeColor(color: string, percent: number) {
-  var R = parseInt(color.substring(1, 3), 16)
-  var G = parseInt(color.substring(3, 5), 16)
-  var B = parseInt(color.substring(5, 7), 16)
+  let R = parseInt(color.substring(1, 3), 16)
+  let G = parseInt(color.substring(3, 5), 16)
+  let B = parseInt(color.substring(5, 7), 16)
 
   R = ~~(R * (100 + percent) / 100)
   G = ~~(G * (100 + percent) / 100)
@@ -82,10 +82,10 @@ export function shadeColor(color: string, percent: number) {
   G = (G < 255) ? G : 255
   B = (B < 255) ? B : 255
 
-  var RR = ((R.toString(16).length == 1) ? "0" + R.toString(16) : R.toString(16));
-  var GG = ((G.toString(16).length == 1) ? "0" + G.toString(16) : G.toString(16));
-  var BB = ((B.toString(16).length == 1) ? "0" + B.toString(16) : B.toString(16));
-  return "#" + RR + GG + BB;
+  const RR = ((R.toString(16).length == 1) ? '0' + R.toString(16) : R.toString(16))
+  const GG = ((G.toString(16).length == 1) ? '0' + G.toString(16) : G.toString(16))
+  const BB = ((B.toString(16).length == 1) ? '0' + B.toString(16) : B.toString(16))
+  return '#' + RR + GG + BB
 }
 
 export function invertColor(hex: string) {
@@ -108,7 +108,7 @@ export function invertColor(hex: string) {
 }
 
 export function hexToRGB(hex: string): number[] {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
   if (!result) {
     return []
   }
@@ -121,6 +121,6 @@ export function hexToRGB(hex: string): number[] {
 }
 
 function padZero(str: string, len: number = 2) {
-  var zeros = new Array(len).join('0')
+  const zeros = new Array(len).join('0')
   return (zeros + str).slice(-len)
 }

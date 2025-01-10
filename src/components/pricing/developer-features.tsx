@@ -1,11 +1,8 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import { Button, HoverCard, Text } from '@mantine/core'
-import { CodeHighlight } from '@mantine/code-highlight';
+import { CodeHighlight } from '@mantine/code-highlight'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-
-type DeveloperFeaturesProps = {
-}
 
 const cliExample = `
 ck-cli 
@@ -15,7 +12,7 @@ ck-cli
   --output http
 `
 
-function DeveloperFeatures(props: DeveloperFeaturesProps) {
+function DeveloperFeatures() {
   const { t } = useTranslation()
   return (
     <>

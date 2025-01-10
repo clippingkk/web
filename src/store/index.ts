@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './user/user'
-import appReducer from './app/app';
-import { TUserState } from './user/type';
-import { TAppState } from './app/type';
+import appReducer from './app/app'
+import { TUserState } from './user/type'
+import { TAppState } from './app/type'
 
 export type TGlobalStore = {
   user: TUserState,

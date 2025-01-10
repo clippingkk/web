@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Turnstile } from "@marsidev/react-turnstile"
+import { Turnstile } from '@marsidev/react-turnstile'
 import { CF_TURNSTILE_SITE_KEY } from '../../constants/config'
 import { REGEX_EMAIL } from '../../services/regex'
 import { Button } from '@mantine/core'

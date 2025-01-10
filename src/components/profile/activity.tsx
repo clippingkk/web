@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react'
 // import * as echarts from 'echarts'
 import { ProfileQuery } from '../../schema/generated'
 import dayjs from 'dayjs'
-import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { useMantineColorScheme } from '@mantine/core'
 import echarts from '../../utils/echarts'
 
 type PersonalActivityProps = {
@@ -42,11 +42,10 @@ function PersonalActivity(props: PersonalActivityProps) {
     const option = {
       title: {},
       tooltip: {
-
-    formatter: function (p:any) {
-      const format = echarts.time.format(p.data[0], '{yyyy}-{MM}-{dd}', false);
-      return format + ': ' + p.data[1];
-    }
+        formatter: function (p: { data: (string | number)[] }) {
+          const format = echarts.time.format(p.data[0], '{yyyy}-{MM}-{dd}', false)
+          return format + ': ' + p.data[1]
+        }
       },
       visualMap: {
         min: 0,
@@ -89,7 +88,7 @@ function PersonalActivity(props: PersonalActivityProps) {
         },
         data: heatmapData
       }
-    };
+    }
     return option
   }, [props.data])
 

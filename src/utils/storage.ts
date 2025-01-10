@@ -60,10 +60,10 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
   mixpanel.identify(auth.profile.id.toString())
   if (mixpanel.people) {
     mixpanel.people.set({
-      "$email": auth.profile.email,
-      "Sign up date": auth.createdAt,
-      "USER_ID": auth.profile.name,
-    });
+      '$email': auth.profile.email,
+      'Sign up date': auth.createdAt,
+      'USER_ID': auth.profile.name,
+    })
   }
 
   // 存量数据里没这个字段，这里加一下 patch

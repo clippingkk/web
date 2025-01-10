@@ -2,9 +2,10 @@
 import React, { useMemo, useState } from 'react'
 import { useReactTable, Row, getCoreRowModel, ColumnDef, flexRender } from '@tanstack/react-table'
 import HomelessBookSyncInput from './sync-input'
-import { useUncheckBooksQueryQuery } from '../../../../schema/generated'
+import { useUncheckBooksQueryQuery } from '@/schema/generated'
 import { Box, NumberInput, Table } from '@mantine/core'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const homelessBookColumn: ColumnDef<homelessBookTableItem, any>[] = [
   {
     header: 'Name',
@@ -83,7 +84,7 @@ function AdminPanel() {
             >
               <Table.Thead>
                 {table.getHeaderGroups().map(headerGroup => (
-                  // eslint-disable-next-line react/jsx-key
+
                   <Table.Tr key={headerGroup.id}>
                     {headerGroup.headers.map(column => (
                       <Table.Th className='' key={column.id}>
@@ -96,7 +97,7 @@ function AdminPanel() {
                 ))}
               </Table.Thead>
               <Table.Tbody>
-                {table.getRowModel().rows.map((row, i) => {
+                {table.getRowModel().rows.map((row) => {
                   return (<HomelessBookTableRow row={row} key={row.id} />)
                 })}
               </Table.Tbody>

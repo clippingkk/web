@@ -1,4 +1,4 @@
-import { Button, Divider, Group, Modal, Title, useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { Button, Divider, Group, Modal, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import React, { useCallback, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -9,6 +9,7 @@ import NFTGallary from '../nfts/nft-gallary'
 type AvatarPickerProps = {
   uid: number
   onCancel: () => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit: (nextAvatar: string) => Promise<any>
   opened: boolean
 }
@@ -34,7 +35,7 @@ function AvatarPicker(props: AvatarPickerProps) {
     )
   }, [onSubmit, nextImage])
 
-  const { colorScheme } = useMantineColorScheme();
+  const { colorScheme } = useMantineColorScheme()
 
   return (
     <Modal
@@ -50,7 +51,7 @@ function AvatarPicker(props: AvatarPickerProps) {
       <div>
         <NFTGallary
           uid={uid}
-          onPick={(nft, realImage) => {
+          onPick={(_, realImage) => {
             setNextImage(realImage)
           }}
         />

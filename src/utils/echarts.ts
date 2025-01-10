@@ -1,8 +1,8 @@
-import * as echarts from 'echarts/core';
+import * as echarts from 'echarts/core'
 import {
   HeatmapChart,
   HeatmapSeriesOption
-} from 'echarts/charts';
+} from 'echarts/charts'
 import {
   TitleComponent,
   VisualMapComponent,
@@ -20,9 +20,9 @@ import {
   DatasetComponentOption,
   // 内置数据转换器组件 (filter, sort)
   TransformComponent
-} from 'echarts/components';
-import { LabelLayout, UniversalTransition } from 'echarts/features';
-import { CanvasRenderer } from 'echarts/renderers';
+} from 'echarts/components'
+import { LabelLayout, UniversalTransition } from 'echarts/features'
+import { CanvasRenderer } from 'echarts/renderers'
 
 // 通过 ComposeOption 来组合出一个只有必须组件和图表的 Option 类型
 export type ECOption = echarts.ComposeOption<
@@ -48,6 +48,6 @@ echarts.use([
   LabelLayout,
   UniversalTransition,
   CanvasRenderer
-]);
+])
 
 export default echarts

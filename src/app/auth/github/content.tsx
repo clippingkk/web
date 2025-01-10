@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect } from 'react'
-import { useAuthSuccessed } from '@/hooks/hooks';
-import { useGithubLoginLazyQuery } from '@/schema/generated';
-import LoadingIcon from '@/components/icons/loading.svg';
+import { useAuthSuccessed } from '@/hooks/hooks'
+import { useGithubLoginLazyQuery } from '@/schema/generated'
+import LoadingIcon from '@/components/icons/loading.svg'
 
 type GithubOAuthContentProps = {
   code: string

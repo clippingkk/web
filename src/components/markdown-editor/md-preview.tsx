@@ -1,7 +1,7 @@
 import React from 'react'
-import { List, Title, Text, Blockquote } from '@mantine/core'
+import { Title, Blockquote } from '@mantine/core'
 import ReactMarkdown from 'react-markdown'
-import { CodeHighlight } from '@mantine/code-highlight';
+import { CodeHighlight } from '@mantine/code-highlight'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 
 type MarkdownPreviewProps = {
@@ -37,6 +37,7 @@ function MarkdownPreview(props: MarkdownPreviewProps) {
             const match = /language-(\w+)/.exec(className || '')
             const lang = match ? match[1] : 'tsx'
             return (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               <CodeHighlight code={String(children)} language={lang as any} className='my-4' />
             )
           },

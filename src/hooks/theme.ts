@@ -1,11 +1,11 @@
-'use client';
-import { useState, useEffect, useCallback } from "react"
-import { bgs } from "./theme.config"
-import { localStorageColorSchemeManager, useMantineColorScheme } from "@mantine/core";
+'use client'
+import { useState, useEffect } from 'react'
+import { bgs } from './theme.config'
+import { localStorageColorSchemeManager, useMantineColorScheme } from '@mantine/core'
 
 const darkModeClassName = 'dark'
 
-export const colorSchemeManager = localStorageColorSchemeManager({ key: 'ck-color-scheme' });
+export const colorSchemeManager = localStorageColorSchemeManager({ key: 'ck-color-scheme' })
 
 export function useDarkModeStatus() {
   const { colorScheme } = useMantineColorScheme()

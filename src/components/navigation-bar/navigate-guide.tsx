@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import { Button } from '@mantine/core'
 import Image from 'next/image'

@@ -1,7 +1,8 @@
-declare var __DEV__: boolean
-declare var __VERSION__: string
-declare var WebViewJavascriptBridge: any
-declare var WVJBCallbacks: any
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare let __DEV__: boolean
+declare let __VERSION__: string
+declare let WebViewJavascriptBridge: any
+declare let WVJBCallbacks: any
 
 // graphql.d.ts file
 declare module '*.graphql' {
@@ -21,9 +22,20 @@ declare module '@emoji-mart/react';
 declare module 'body-scroll-lock';
 declare module 'iso-639-3-to-1';
 
-declare global {
-  interface Window {
-    // ethereum: any
+interface Window {
+  WebViewJavascriptBridge?: any
+  WVJBCallbacks?: any
+  AppleID?: {
+    auth: {
+      init: (options: {
+        clientId: string;
+        scope: string;
+        redirectURI: string;
+        state: string;
+        usePopup: boolean;
+      }) => void
+      signIn(): Promise
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 'use server'
 
-import { cookies } from "next/headers"
+import { cookies } from 'next/headers'
 
 // remove cookies on server
 export async function onCleanServerCookie() {

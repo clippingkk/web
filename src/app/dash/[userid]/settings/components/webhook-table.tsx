@@ -1,12 +1,12 @@
 import { Table, Button } from '@mantine/core'
 import { Table as TableDef, flexRender } from '@tanstack/react-table'
 import React from 'react'
-import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { FetchMyWebHooksQuery, useDeleteAWebHookMutation } from '../../../../../schema/generated'
+import { FetchMyWebHooksQuery } from '@/schema/generated'
 
 type WebhookTableProps = {
   table: TableDef<FetchMyWebHooksQuery['me']['webhooks'][0]>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onRowDelete: (id: number) => Promise<any>
 }
 
@@ -28,7 +28,7 @@ function WebhookTable(props: WebhookTableProps) {
         {table.getHeaderGroups().map(headerGroup => (
           <Table.Tr key={headerGroup.id}>
             {headerGroup.headers.map(column => (
-              // eslint-disable-next-line react/jsx-key
+
               <Table.Th
                 key={column.id}
               >

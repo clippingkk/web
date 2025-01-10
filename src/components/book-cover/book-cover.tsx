@@ -1,8 +1,7 @@
 import React from 'react'
-import { WenquBook } from '../../services/wenqu';
-import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded';
+import { WenquBook } from '../../services/wenqu'
 import Link from 'next/link'
-import BlurhashView from '@annatarhe/blurhash-react';
+import BlurhashView from '@annatarhe/blurhash-react'
 import styles from './book-cover.module.css'
 
 type TBookCoverProps = {
@@ -28,7 +27,7 @@ function BookCover({ book, domain }: TBookCoverProps) {
         <h5 className='my-4 mx-0 dark:text-slate-300 text-slate-600'>{book.author}</h5>
       </div>
     </Link>
-  );
+  )
 }
 
 export default BookCover

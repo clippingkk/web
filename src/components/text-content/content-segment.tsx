@@ -1,9 +1,6 @@
-import React, { useCallback } from 'react'
-import { FetchClippingQuery, Noun } from '../../schema/generated'
-import { Avatar, Button, ButtonGroup, HoverCard, Popover } from '@mantine/core'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { FetchClippingQuery } from '../../schema/generated'
 import { AppFeatures } from '../../constants/features'
-import NounContentRender from '../noun/content-render'
 
 type ContentSegmentProps = {
   noun?: FetchClippingQuery['clipping']['richContent']['nouns'][0]
@@ -15,21 +12,15 @@ type ContentSegmentProps = {
   onNounUpdate: (id: number, noun: string) => void
 }
 
-const symbolList = new Set([
-  "、", "，", "。", "！", "@", "——", "【", "】", "的", "了", ":", "“", "”", "《", "》", "："
-])
+// const symbolList = new Set([
+//   '、', '，', '。', '！', '@', '——', '【', '】', '的', '了', ':', '“', '”', '《', '》', '：'
+// ])
 
 function ContentSegment(props: ContentSegmentProps) {
   const {
-    noun,
     segment,
-    creatable,
-    updatable,
-    deletable,
-    onNounAdd,
-    onNounUpdate,
   } = props
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   if (!AppFeatures.enableNounExplainer) {
     return <span>{segment}</span>

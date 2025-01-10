@@ -16,6 +16,7 @@ type ClippingLiteProps = {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SimpleAvatar({ avatar }: any) {
   const imageUrl = avatar.startsWith('http') ? avatar : `${CDN_DEFAULT_DOMAIN}/${avatar}`
   return (
@@ -31,7 +32,7 @@ function ClippingLite(props: ClippingLiteProps) {
     <div className='w-full flex justify-center'>
       <Link
         href={`/dash/${c.creator.domain.length > 2 ? c.creator.domain : c.creator.id}/clippings/${c.id}?iac=${IN_APP_CHANNEL.clippingFromUser}`}
-        className={`min-h-64 lg:min-h-96 max-w-4xl w-full p-8 flex flex-col text-slate-800 dark:text-slate-200`}
+        className={'min-h-64 lg:min-h-96 max-w-4xl w-full p-8 flex flex-col text-slate-800 dark:text-slate-200'}
         data-glow
         style={{
           borderRadius: 12,

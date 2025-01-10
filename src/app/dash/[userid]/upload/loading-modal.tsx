@@ -40,27 +40,27 @@ function LoadingModal(props: LoadingModalProps) {
           <span className='block text-6xl'>
             {props.stepAt !== UploadStep.Done && props.stepAt !== UploadStep.Error && (
               <span className='animate-bounce'>
-              🎠
+                🎠
               </span>
-              )}
+            )}
             {props.stepAt === UploadStep.Done && '👌'}
             {props.stepAt === UploadStep.Error && '💥'}
           </span>
         </AnimateOnChange>
-          <h3 className='text-3xl text-center'>
-            {t(`app.upload.progress.${props.stepAt}`)}
-            <span className='block text-sm text-gray-500 mt-2'>
-              {Object.values(UploadStep).map(x => t(`app.upload.progress.${x}`)).join(' ▶ ')}
-            </span>
-          </h3>
-        <AnimateOnChange>
-
-        <h3 className='text-2xl font-bold'>
-          {`Progress: ${(props.at / props.count * 100).toFixed(2)}%`}
-          <span className='text-xl my-2 ml-4 text-gray-500'>
-            {props.at} / {props.count}
+        <h3 className='text-3xl text-center'>
+          {t(`app.upload.progress.${props.stepAt}`)}
+          <span className='block text-sm text-gray-500 mt-2'>
+            {Object.values(UploadStep).map(x => t(`app.upload.progress.${x}`)).join(' ▶ ')}
           </span>
         </h3>
+        <AnimateOnChange>
+
+          <h3 className='text-2xl font-bold'>
+            {`Progress: ${(props.at / props.count * 100).toFixed(2)}%`}
+            <span className='text-xl my-2 ml-4 text-gray-500'>
+              {props.at} / {props.count}
+            </span>
+          </h3>
         </AnimateOnChange>
         <p className='text-xl text-red-500 mt-2'>
           {props.message}

@@ -1,6 +1,6 @@
-import { ForwardedRef, forwardRef, useCallback, useEffect, useRef } from 'react'
+import { ForwardedRef, forwardRef, useCallback, useRef } from 'react'
 
-import { EditorState, LexicalEditor, ParagraphNode } from 'lexical'
+import { EditorState, LexicalEditor } from 'lexical'
 
 import { CodeHighlightNode, CodeNode } from '@lexical/code'
 import { LinkNode } from '@lexical/link'
@@ -18,14 +18,10 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
-import LexicalTableOfContentComponent from '@lexical/react/LexicalTableOfContents'
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
-import BlockToolBar from './plugins/BlockToolbar'
-import FloatingMenuPlugin from './plugins/FloatingMenu'
 import toast from 'react-hot-toast'
-import { NodeEventPlugin } from '@lexical/react/LexicalNodeEventPlugin'
 
 // define your extension array
 type LexicalEditorProps = {
@@ -46,8 +42,6 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
     onContentChange,
     style
   } = props
-
-  const anchorElem = useRef<HTMLDivElement>(null)
 
   const onChange = useCallback((es: EditorState) => {
     es.read(() => {

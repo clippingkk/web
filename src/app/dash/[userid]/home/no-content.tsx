@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -17,7 +17,7 @@ function NoContentAlert({ domain }: TNoContentProps) {
       <h3 className='text-5xl mt-0'>{t('app.home.uploadTip')}</h3>
 
     </Link>)
-  );
+  )
 }
 
 export default NoContentAlert

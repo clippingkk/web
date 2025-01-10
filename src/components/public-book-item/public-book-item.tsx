@@ -1,5 +1,5 @@
 import React from 'react'
-import BlurhashView from '@annatarhe/blurhash-react';
+import BlurhashView from '@annatarhe/blurhash-react'
 import { WenquBook } from '../../services/wenqu'
 import styles from './style.module.css'
 

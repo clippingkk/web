@@ -1,8 +1,8 @@
-'use client';
+'use client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Clipping, User } from '../../schema/generated'
-import ClippingLite from '../clipping-item/clipping-lite';
+import ClippingLite from '../clipping-item/clipping-lite'
 
 type TopClippingsProps = {
   clippings: (Pick<Clipping, 'id' | 'title' | 'content'> & { creator: Pick<User, 'domain' | 'id' | 'name' | 'avatar'> })[]
@@ -22,7 +22,7 @@ function TopClippings(props: TopClippingsProps) {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 export default TopClippings

@@ -1,4 +1,4 @@
-import { log } from "../../utils/sentry";
+import { log } from '../../utils/sentry'
 
 export type TClippingItem = {
   title: string
@@ -22,35 +22,35 @@ enum FileLanuages {
 }
 
 class ClippingTextParser {
-  private lines: string[][] = [];
-  private position: number = 0;
+  private lines: string[][] = []
+  private position: number = 0
   private processingItem: TClippingItem = {} as any
   private result: TClippingItem[] = []
   // private readonly infoRegexp: RegExp
   private readonly locationRegexp: RegExp
   static readonly STOP_WORDS = ['(', '（']
-  static readonly symbols = ["，", "。", "！", "@", "——", "【", "】"]
+  static readonly symbols = ['，', '。', '！', '@', '——', '【', '】']
 
-  public readonly language: FileLanuages;
+  public readonly language: FileLanuages
 
   constructor(file: string) {
     const lines = file.split('\n')
     let temp: string[] = []
     lines.forEach(line => {
       line = line.trim()
-      if (line.includes("========")) {
+      if (line.includes('========')) {
         this.lines.push(temp)
         temp = []
       }
-      if (line && !line.includes("========")) {
+      if (line && !line.includes('========')) {
         temp.push(line)
       }
     })
 
-    if (file.includes("Your Highlight on")) {
+    if (file.includes('Your Highlight on')) {
       this.locationRegexp = /\d+(-?\d+)?/g
       this.language = FileLanuages.English
-    } else if (file.includes("您在")) {
+    } else if (file.includes('您在')) {
       this.locationRegexp = /#?\d+(-?\d+)?/g
       this.language = FileLanuages.Chinese
     } else {
@@ -67,7 +67,7 @@ class ClippingTextParser {
       this.next()
     } while (this.current)
 
-    return this.result.filter(item => item.content && item.content !== "")
+    return this.result.filter(item => item.content && item.content !== '')
   }
   private exactInfo() {
     const l = this.current[1].split('|')
@@ -125,7 +125,7 @@ class ClippingTextParser {
   private trimSymbols(s: string): string {
     return s.replace(/^(，|。|！|@|【】|——)+/, '')
       .replace(/(，|。|！|@|【】|——)+$/, '')
-      .trim();
+      .trim()
   }
 
   private exactContent() {

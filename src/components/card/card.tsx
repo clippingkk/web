@@ -2,7 +2,7 @@ import React from 'react'
 
 type cardProps = {
   className?: string
-  style?: Object
+  style?: object
   onClick?: (e: React.MouseEvent) => void
   children?: React.ReactElement
   glow?: boolean

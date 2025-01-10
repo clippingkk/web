@@ -1,7 +1,6 @@
-'use server';
-import dayjs from "dayjs";
-import { cookies } from "next/headers";
-import { updateToken } from "../services/ajax";
+'use server'
+import dayjs from 'dayjs'
+import { cookies } from 'next/headers'
 
 // on server
 export async function syncLoginStateToServer(data: { uid: number, token: string }) {

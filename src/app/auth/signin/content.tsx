@@ -1,15 +1,14 @@
 'use client'
 import React, { useState } from 'react'
-import { useAuthSuccessed } from '../../../hooks/hooks';
-import { useTitle } from '../../../hooks/tracke'
+import { useAuthSuccessed } from '@/hooks/hooks'
+import { useTitle } from '@/hooks/tracke'
 import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Turnstile } from '@marsidev/react-turnstile'
-import { CF_TURNSTILE_SITE_KEY } from '../../../constants/config'
-import { toastPromiseDefaultOption } from '../../../services/misc'
-import { useAuthLazyQuery } from '../../../schema/generated';
-import { Button, Input, InputWrapper } from '@mantine/core';
+import { CF_TURNSTILE_SITE_KEY } from '@/constants/config'
+import { useAuthLazyQuery } from '@/schema/generated'
+import { Button, Input } from '@mantine/core'
 
 const isProd = process.env.NODE_ENV === 'production'
 

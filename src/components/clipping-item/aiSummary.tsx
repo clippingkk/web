@@ -1,12 +1,12 @@
-import { Blockquote, LoadingOverlay, Modal, Paper, Tooltip, useMantineTheme } from '@mantine/core'
-import { useViewportSize } from '@mantine/hooks';
+import { Blockquote, LoadingOverlay, Modal, Paper, Tooltip } from '@mantine/core'
+import { useViewportSize } from '@mantine/hooks'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import client from '../../services/pp';
-import { CKPromptDescribeBookPassageVariables, CKPrompts } from '../../types.g';
-import { WenquBook } from '../../services/wenqu';
-import { getLanguage } from '../../utils/locales';
-import { useQuery } from '@tanstack/react-query';
+import client from '../../services/pp'
+import { CKPromptDescribeBookPassageVariables, CKPrompts } from '../../types.g'
+import { WenquBook } from '../../services/wenqu'
+import { getLanguage } from '../../utils/locales'
+import { useQuery } from '@tanstack/react-query'
 
 type ClippingAISummaryModalProps = {
   uid?: number
@@ -17,7 +17,7 @@ type ClippingAISummaryModalProps = {
   onClose: () => void
 }
 
-type serverGraphQLError = {
+export type serverGraphQLError = {
   name: string, result: {
     errors: {
       message: string,
@@ -35,6 +35,7 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
   const [data, setData] = useState<string[]>([])
 
   const { isLoading, error } = useQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['book', book?.id, cid, 'aiSummary'],
     queryFn: async () => {
       return client.executeStream<CKPrompts, CKPromptDescribeBookPassageVariables>(

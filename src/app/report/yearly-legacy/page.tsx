@@ -10,7 +10,7 @@ import { Metadata } from 'next'
 import { getApolloServerClient } from '@/services/apollo.server'
 
 type YearlyLegacyPageProps = {
-  params: Promise<{}>
+  params: Promise<object>
   searchParams: Promise<{ year?: string, uid: string }>
 }
 
@@ -63,7 +63,7 @@ async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
     map(x => x.doubanId).
     filter(x => x.length > 3) ?? []
 
-    const rq = getReactQueryClient()
+  const rq = getReactQueryClient()
   if (dbIds.length >= 1) {
     await rq.prefetchQuery({
       queryKey: ['wenqu', 'books', 'dbIds', dbIds],

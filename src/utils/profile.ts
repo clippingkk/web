@@ -1,6 +1,6 @@
-'use client';
-import { ProfileQuery } from "../schema/generated"
-import Cookies from "js-cookie";
+'use client'
+import { ProfileQuery } from '../schema/generated'
+import Cookies from 'js-cookie'
 
 class MyProfile {
   private _token = ''

@@ -1,23 +1,20 @@
-import { useApolloClient, useMutation } from "@apollo/client"
+import { useApolloClient, useMutation } from '@apollo/client'
 import { useMachine } from '@xstate/react'
-import { useState, useRef, useCallback, useEffect } from "react"
-import { useTranslation } from "react-i18next"
-import { UploadStep } from "../services/uploader"
-import { wenquRequest, WenquSearchResponse } from "../services/wenqu"
-import { extraFile } from "../store/clippings/creator"
-import ClippingTextParser, { TClippingItem } from "../store/clippings/parser"
-import { useSelector } from "react-redux"
-import { TGlobalStore } from "../store"
+import { useState, useRef, useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { UploadStep } from '../services/uploader'
+import { wenquRequest, WenquSearchResponse } from '../services/wenqu'
+import { extraFile } from '../store/clippings/creator'
+import ClippingTextParser, { TClippingItem } from '../store/clippings/parser'
 import { toast } from 'react-hot-toast'
-import { useCreateClippingsMutation } from "../schema/generated"
-import { getReactQueryClient } from "../services/ajax"
+import { useCreateClippingsMutation } from '../schema/generated'
+import { getReactQueryClient } from '../services/ajax'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
-import { duration3Days } from "./book"
-import { notifications } from "@mantine/notifications"
+import { duration3Days } from './book'
+import { notifications } from '@mantine/notifications'
 import { graphql } from '../gql'
-import { delay } from "../utils/timer"
 import { digestMessage } from '../utils/crypto'
-import { uploadProcessMachine } from "./my-file.machine"
+import { uploadProcessMachine } from './my-file.machine'
 
 
 type digestedClippingItem = TClippingItem & { _digest?: string }
@@ -31,7 +28,7 @@ const onSyncEndMutation = graphql(`
 `)
 
 export function useUploadData(
-  visible: boolean,
+  _: boolean,
   willSyncServer: boolean
 ) {
   const { t } = useTranslation()
@@ -57,6 +54,7 @@ export function useUploadData(
     try {
       send({ type: 'Next' })
       str = await extraFile(file)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.error(e, e.toString())
       send({ type: 'Error' })
@@ -68,7 +66,7 @@ export function useUploadData(
     try {
       const parser = new ClippingTextParser(str)
       parsedData = parser.execute()
-    } catch (e) {
+    } catch {
       send({ type: 'Error' })
       setMessages(['file invalid'])
       return
@@ -101,7 +99,7 @@ export function useUploadData(
     setCount(parsedData.length)
 
     // get ready for book info
-    for (let index in parsedData) {
+    for (const index in parsedData) {
       const i = parsedData[index]
       setAt(~~index)
 
@@ -128,6 +126,7 @@ export function useUploadData(
         if (resp.count > 0) {
           i.bookId = resp.books[0].doubanId.toString()
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setMessages(m => m.concat(e.toString()))
       } finally {
@@ -190,6 +189,7 @@ export function useUploadData(
       setAt(chunkedData.length)
       toast.success(t('app.upload.tips.done'))
       send({ type: 'Next' })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       send({ type: 'Error' })
       setMessages(m => m.concat(e.toString()))
@@ -231,7 +231,7 @@ export function useSyncClippingsToServer(id: number) {
 
     try {
       stashClippings = JSON.parse(stashData)
-    } catch (e) {
+    } catch {
       toast.error(t('app.upload.errors.parse'))
     }
 

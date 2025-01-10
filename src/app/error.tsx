@@ -1,7 +1,7 @@
 'use client'
 
-import { ExclamationCircleIcon } from "@heroicons/react/24/solid"
-import { Alert } from "@mantine/core"
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid'
+import { Alert } from '@mantine/core'
 
 export default function Error({
   error,

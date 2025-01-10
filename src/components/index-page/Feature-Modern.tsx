@@ -2,10 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 import WebArchImage from '../../assets/web_arch.png'
-import { CodeHighlight } from '@mantine/code-highlight';
-
-type FeatureModernProps = {
-}
+import { CodeHighlight } from '@mantine/code-highlight'
 
 const exampleCode = `
 extern crate ck_cli;
@@ -46,7 +43,7 @@ fn parse_en_file() {
 }
 `
 
-function FeatureModern(props: FeatureModernProps) {
+function FeatureModern() {
   const { t } = useTranslation()
   return (
     <div className='flex items-center w-full justify-around py-16 flex-col'>
@@ -79,10 +76,10 @@ function FeatureModern(props: FeatureModernProps) {
 
         <div className=' flex justify-around mt-40 flex-col lg:flex-row'>
           <div
-          className=' px-4 lg:px-0'
-          style={{
-            maxWidth: '100vw'
-          }}
+            className=' px-4 lg:px-0'
+            style={{
+              maxWidth: '100vw'
+            }}
           >
             <CodeHighlight
               language='c'

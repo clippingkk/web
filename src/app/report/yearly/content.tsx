@@ -2,16 +2,16 @@
 import Image from 'next/image'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Avatar from '../../../components/avatar/avatar'
-import { WenquBook } from '../../../services/wenqu'
-import logo from '../../../assets/logo.png'
-import ReportBookSection from '../../../components/reports/report-book-section'
+import Avatar from '@/components/avatar/avatar'
+import { WenquBook } from '@/services/wenqu'
+import logo from '@/assets/logo.png'
+import ReportBookSection from '@/components/reports/report-book-section'
 import { Divider } from '@mantine/core'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
-import ReportHero from '../../../components/reports/report-hero'
-import { useBackgroundImage } from '../../../hooks/theme'
-import { Clipping, FetchYearlyReportQuery } from '../../../schema/generated'
-import { useMultipleBook } from '../../../hooks/book'
+import ReportHero from '@/components/reports/report-hero'
+import { useBackgroundImage } from '@/hooks/theme'
+import { Clipping, FetchYearlyReportQuery } from '@/schema/generated'
+import { useMultipleBook } from '@/hooks/book'
 
 type PageContainerProps = {
   bgImage?: string | { src: string, blurHash: string }
@@ -21,16 +21,16 @@ type PageContainerProps = {
 function PageContainer(props: PageContainerProps) {
   const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
     let backgroundImage: string | undefined
-    let bgImg = props.bgImage
+    const bgImg = props.bgImage
     if (!bgImg) {
       return undefined
     }
     if (typeof bgImg === 'string') {
-      backgroundImage = `url(${bgImg})`;
+      backgroundImage = `url(${bgImg})`
     }
 
     if (typeof bgImg === 'object') {
-      backgroundImage = `url(${bgImg.src})`;
+      backgroundImage = `url(${bgImg.src})`
     }
     return {
       backgroundImage
@@ -60,7 +60,7 @@ function ReportYearly(props: ReportYearlyProps) {
   const { books } = useMultipleBook(dbIds)
   const { t } = useTranslation()
 
-  const [randomQuote, setRandomQuote] = useState<{ book: WenquBook, clipping: Pick<Clipping, 'id' | 'content'> } | null>(null)
+  const [_, setRandomQuote] = useState<{ book: WenquBook, clipping: Pick<Clipping, 'id' | 'content'> } | null>(null)
 
   useEffect(() => {
     function flushQuote() {

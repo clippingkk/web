@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useState, useCallback, useEffect } from 'react'
 import Preview from '@/components/preview/preview3'
 import { useSingleBook } from '@/hooks/book'
@@ -102,7 +102,7 @@ function ClippingPageContent(props: ClippingPageProps) {
             <hr className='bg-gray-400 my-12' />
             <footer className='flex justify-between flex-col lg:flex-row mt-4'>
               {me?.id === 0 && (
-                (<Link href={`/auth/auth-v4`} className='flex justify-start items-center w-full'>
+                (<Link href={'/auth/auth-v4'} className='flex justify-start items-center w-full'>
                   <img
                     src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
                     className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover inline-block'
@@ -155,16 +155,16 @@ function ClippingPageContent(props: ClippingPageProps) {
       {sharePreviewVisible &&
         clipping?.clipping.content &&
         book && (
-          <Preview
-            onCancel={togglePreviewVisible}
-            onOk={togglePreviewVisible}
-            background={book.image}
-            clipping={clipping.clipping}
-            book={book}
-          />
-        )}
+        <Preview
+          onCancel={togglePreviewVisible}
+          onOk={togglePreviewVisible}
+          background={book.image}
+          clipping={clipping.clipping}
+          book={book}
+        />
+      )}
     </div>
-  );
+  )
 }
 
 export default ClippingPageContent

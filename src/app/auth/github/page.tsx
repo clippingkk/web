@@ -1,14 +1,14 @@
 import React from 'react'
 import { Metadata } from 'next'
 import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
-import GithubOAuthContent from './content';
-import { getApolloServerClient } from '../../../services/apollo.server';
-import { PublicDataDocument, PublicDataQuery } from '../../../schema/generated';
-import { getReactQueryClient } from '../../../services/ajax';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import GalleryBackgroundView from '../../../components/galleryBackgroundView';
-import { duration3Days } from '@/hooks/book';
-import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu';
+import GithubOAuthContent from './content'
+import { getApolloServerClient } from '../../../services/apollo.server'
+import { PublicDataDocument, PublicDataQuery } from '../../../schema/generated'
+import { getReactQueryClient } from '../../../services/ajax'
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import GalleryBackgroundView from '../../../components/galleryBackgroundView'
+import { duration3Days } from '@/hooks/book'
+import { wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
 
 export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/github')
@@ -71,7 +71,7 @@ async function Page(props: PageProps) {
         </div>
       </div>
     </HydrationBoundary>)
-  );
+  )
 }
 
 export default Page

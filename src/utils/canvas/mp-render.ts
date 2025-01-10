@@ -1,5 +1,5 @@
-import { Clipping } from "../../schema/generated"
-import { WenquBook } from "../../services/wenqu"
+import { Clipping } from '../../schema/generated'
+import { WenquBook } from '../../services/wenqu'
 
 export type BasicUserInfo = {
   id: number

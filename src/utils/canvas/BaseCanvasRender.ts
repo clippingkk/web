@@ -1,30 +1,30 @@
-import { PostShareConfig } from './mp-render';
+import { PostShareConfig } from './mp-render'
 
 
 export class BaseCanvasRender {
   // @ts-ignore
-  protected dom: HTMLCanvasElement;
+  protected dom: HTMLCanvasElement
   // @ts-ignore
-  protected ctx: CanvasRenderingContext2D;
+  protected ctx: CanvasRenderingContext2D
   // @ts-ignore
-  protected config: PostShareConfig;
-  protected readonly defaultFontFamily = 'MaShanZheng,YSHaoShenTi,-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif';
+  protected config: PostShareConfig
+  protected readonly defaultFontFamily = 'MaShanZheng,YSHaoShenTi,-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif'
 
   // static readonly STOP_WORDS = [',', '.', ' ', '，', '。', '!', '！']
-  static readonly STOP_WORDS = [''];
+  static readonly STOP_WORDS = ['']
 
   protected guessMaxHeight() {
-    return 0;
+    return 0
   }
 
   get scaledWidth(): number {
-    return this.config.width;
+    return this.config.width
   }
   get scaledHeight(): number {
-    return this.config.height;
+    return this.config.height
   }
   get scaledPadding(): number {
-    return this.config.padding;
+    return this.config.padding
   }
 
   get renderFont(): string {
@@ -35,16 +35,16 @@ export class BaseCanvasRender {
 
   private setupContentFontStyle() {
     this.ctx.font = this.config.baseTextSize + 'px ' + this.renderFont
-    this.ctx.textAlign = 'left';
-    this.ctx.textBaseline = 'middle';
+    this.ctx.textAlign = 'left'
+    this.ctx.textBaseline = 'middle'
   }
 
   private drawOneLineText(text: string, x: number, y: number) {
-    const content = text.trim();
-    this.ctx.save();
-    this.setupContentFontStyle();
-    this.ctx.fillText(content, x, y);
-    this.ctx.restore();
+    const content = text.trim()
+    this.ctx.save()
+    this.setupContentFontStyle()
+    this.ctx.fillText(content, x, y)
+    this.ctx.restore()
   }
 
   protected drawText(
@@ -54,36 +54,36 @@ export class BaseCanvasRender {
     maxWidth: number,
     lineHeight: number
   ) {
-    const context = this.ctx;
+    const context = this.ctx
     const words = BaseCanvasRender.STOP_WORDS.reduce<string[]>((acc, cur) => {
       if (acc.length === 0) {
-        return text.split(cur);
+        return text.split(cur)
       }
 
-      let temp: string[] = [];
+      const temp: string[] = []
       acc.forEach(x => {
-        temp.push(...x.split(cur));
-      });
-      return temp;
-    }, []);
-    let line = '';
+        temp.push(...x.split(cur))
+      })
+      return temp
+    }, [])
+    let line = ''
 
     for (let n = 0; n < words.length; n++) {
-      const testLine = line + words[n];
-      this.setupContentFontStyle();
-      const metrics = context.measureText(testLine);
-      const testWidth = metrics.width;
+      const testLine = line + words[n]
+      this.setupContentFontStyle()
+      const metrics = context.measureText(testLine)
+      const testWidth = metrics.width
       if (testWidth > maxWidth && n > 0) {
-        this.drawOneLineText(line, x, y);
-        line = words[n];
-        y += lineHeight;
+        this.drawOneLineText(line, x, y)
+        line = words[n]
+        y += lineHeight
       }
       else {
-        line = testLine;
+        line = testLine
       }
     }
-    this.drawOneLineText(line, x, y);
+    this.drawOneLineText(line, x, y)
 
-    return y;
+    return y
   }
 }

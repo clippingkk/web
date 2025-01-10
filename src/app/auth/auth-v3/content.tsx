@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Image from 'next/image'
 import { useBackgroundImage } from '@/hooks/theme'
 import logo from '@/assets/logo.png'
@@ -14,10 +14,7 @@ import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from '@heroicons/react/24/sol
 import { useRouter } from 'next/navigation'
 import { OtpChannel, useDoLoginV3Mutation, useSendOtpMutation } from '@/schema/generated'
 
-type AuthV3Props = {
-}
-
-function AuthV3Content(props: AuthV3Props) {
+function AuthV3Content() {
   const bg = useBackgroundImage()
   const { t } = useTranslation()
   const { back } = useRouter()
@@ -36,7 +33,7 @@ function AuthV3Content(props: AuthV3Props) {
         address: email,
         cfTurnstileToken: turnstileToken
       }
-    }), toastPromiseDefaultOption).then((res) => {
+    }), toastPromiseDefaultOption).then(() => {
       setValidEmail(email)
       setPhase(1)
     })
@@ -134,7 +131,7 @@ function AuthV3Content(props: AuthV3Props) {
         </div>
       </section>
     </React.Fragment>
-  );
+  )
 }
 
 export default AuthV3Content

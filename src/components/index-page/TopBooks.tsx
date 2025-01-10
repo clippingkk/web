@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import PublicBookItem from '../public-book-item/public-book-item'

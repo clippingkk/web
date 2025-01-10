@@ -1,5 +1,5 @@
-import { Blockquote, Divider, HoverCard, Rating, Title, Tooltip } from '@mantine/core'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { Divider, HoverCard, Rating, Title } from '@mantine/core'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import autoAnimate from '@formkit/auto-animate'
 import { WenquBook } from '../../services/wenqu'
@@ -34,7 +34,7 @@ function ReportBookSection(props: ReportBookSectionProps) {
   const cksDOM = useRef<HTMLDivElement | null>(null)
   useEffect(() => {
     if (!cksDOM.current) {
-      return;
+      return
     }
     autoAnimate(cksDOM.current)
   }, [])

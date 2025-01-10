@@ -1,25 +1,25 @@
 import { FetchQRCode } from '../../services/mp'
-import { PostShareConfig, BasicUserInfo } from './mp-render';
-import { BaseCanvasRender } from "./BaseCanvasRender";
-import { UserContent } from '../../store/user/type';
-import { CDN_DEFAULT_DOMAIN } from '../../constants/config';
+import { PostShareConfig, BasicUserInfo } from './mp-render'
+import { BaseCanvasRender } from './BaseCanvasRender'
+import { UserContent } from '../../store/user/type'
+import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 
 export class PostShareRender extends BaseCanvasRender {
-  private offsetY: number = 0;
-  private readonly bannerHeight = 120;
-  private readonly qrcodeSize = 90;
-  private readonly bannerGap = 15; // 120 - 90 / 2
+  private offsetY: number = 0
+  private readonly bannerHeight = 120
+  private readonly qrcodeSize = 90
+  private readonly bannerGap = 15 // 120 - 90 / 2
   constructor(dom: HTMLCanvasElement, config: PostShareConfig) {
-    super();
-    this.dom = dom;
-    this.config = config;
-    const ctx = dom.getContext('2d');
+    super()
+    this.dom = dom
+    this.config = config
+    const ctx = dom.getContext('2d')
     if (!ctx) {
-      throw new Error('canvas context not found');
+      throw new Error('canvas context not found')
     }
 
-    this.ctx = ctx;
-    this.offsetY = this.config.padding;
+    this.ctx = ctx
+    this.offsetY = this.config.padding
   }
 
   private async loadImage(src: string): Promise<HTMLImageElement> {
@@ -40,18 +40,18 @@ export class PostShareRender extends BaseCanvasRender {
         reject(err)
       }
       img.src = realSrc
-    });
+    })
   }
 
   renderBackground(start: string = '#f2f2f2', end: string = '#e0e0e0'): Promise<void> {
-    this.ctx.save();
-    const gradient = this.ctx.createLinearGradient(0, 0, this.scaledWidth, this.scaledHeight);
-    gradient.addColorStop(0, start);
-    gradient.addColorStop(1, end);
-    this.ctx.fillStyle = gradient;
-    this.ctx.fillRect(0, 0, this.scaledWidth, this.scaledHeight);
-    this.ctx.restore();
-    return Promise.resolve();
+    this.ctx.save()
+    const gradient = this.ctx.createLinearGradient(0, 0, this.scaledWidth, this.scaledHeight)
+    gradient.addColorStop(0, start)
+    gradient.addColorStop(1, end)
+    this.ctx.fillStyle = gradient
+    this.ctx.fillRect(0, 0, this.scaledWidth, this.scaledHeight)
+    this.ctx.restore()
+    return Promise.resolve()
   }
   renderText(): Promise<void> {
     this.ctx.save()
@@ -64,55 +64,55 @@ export class PostShareRender extends BaseCanvasRender {
       this.config.baseTextSize * 1.5
     )
 
-    this.offsetY = y;
-    this.ctx.restore();
-    return Promise.resolve();
+    this.offsetY = y
+    this.ctx.restore()
+    return Promise.resolve()
   }
   renderTitle(): Promise<void> {
-    this.ctx.save();
+    this.ctx.save()
     this.ctx.font = this.config.baseTextSize * 0.7 + 'px ' + this.renderFont
-    this.ctx.fillStyle = '#4F4F4F';
-    this.ctx.textAlign = 'right';
-    this.ctx.textBaseline = 'middle';
+    this.ctx.fillStyle = '#4F4F4F'
+    this.ctx.textAlign = 'right'
+    this.ctx.textBaseline = 'middle'
     this.ctx.fillText(
       this.config.bookInfo.title,
       this.scaledWidth - this.scaledPadding,
       this.scaledPadding + this.offsetY + this.scaledPadding * 3,
       this.scaledWidth - this.scaledPadding * 2
-    );
+    )
 
-    this.offsetY += this.config.baseTextSize;
-    this.ctx.restore();
-    return Promise.resolve();
+    this.offsetY += this.config.baseTextSize
+    this.ctx.restore()
+    return Promise.resolve()
   }
   renderAuthor(): Promise<void> {
-    this.ctx.save();
-    this.ctx.font = this.config.baseTextSize * 0.7 + 'px ' + this.renderFont;
-    this.ctx.fillStyle = '#4F4F4F';
-    this.ctx.textAlign = 'right';
-    this.ctx.textBaseline = 'middle';
+    this.ctx.save()
+    this.ctx.font = this.config.baseTextSize * 0.7 + 'px ' + this.renderFont
+    this.ctx.fillStyle = '#4F4F4F'
+    this.ctx.textAlign = 'right'
+    this.ctx.textBaseline = 'middle'
     this.ctx.fillText(
       this.config.bookInfo.author,
       this.scaledWidth - this.scaledPadding,
       this.scaledPadding + this.offsetY + this.scaledPadding * 3,
       this.scaledWidth - this.scaledPadding * 2
-    );
-    this.offsetY += this.config.baseTextSize;
-    this.ctx.restore();
-    return Promise.resolve();
+    )
+    this.offsetY += this.config.baseTextSize
+    this.ctx.restore()
+    return Promise.resolve()
   }
 
   renderBanner(): Promise<void> {
-    this.ctx.save();
-    const ctx = this.ctx;
-    const x = this.scaledPadding;
+    this.ctx.save()
+    const ctx = this.ctx
+    const x = this.scaledPadding
 
     const y = this.offsetY + 200
 
-    const width = this.scaledWidth - this.scaledPadding * 2;
-    const height = this.bannerHeight;
-    const defaultRadius = 5;
-    const radius = { tl: defaultRadius, tr: defaultRadius, br: defaultRadius, bl: defaultRadius };
+    const width = this.scaledWidth - this.scaledPadding * 2
+    const height = this.bannerHeight
+    const defaultRadius = 5
+    const radius = { tl: defaultRadius, tr: defaultRadius, br: defaultRadius, bl: defaultRadius }
 
     // make blur effect
     // ctx.save()
@@ -121,39 +121,39 @@ export class PostShareRender extends BaseCanvasRender {
     // ctx.fillRect(x, y, width, height)
     // ctx.restore()
     // draw box
-    ctx.fillStyle = 'rgba(0,0,0, .1)';
+    ctx.fillStyle = 'rgba(0,0,0, .1)'
     // ctx.fillStyle = 'rgba(61,126,154, .7)'
-    ctx.beginPath();
-    ctx.moveTo(x + radius.tl, y);
-    ctx.lineTo(x + width - radius.tr, y);
-    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
-    ctx.lineTo(x + width, y + height - radius.br);
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
-    ctx.lineTo(x + radius.bl, y + height);
-    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
-    ctx.lineTo(x, y + radius.tl);
-    ctx.quadraticCurveTo(x, y, x + radius.tl, y);
-    ctx.closePath();
-    ctx.shadowOffsetY = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowColor = '#000';
-    ctx.shadowBlur = 10;
-    ctx.fill();
+    ctx.beginPath()
+    ctx.moveTo(x + radius.tl, y)
+    ctx.lineTo(x + width - radius.tr, y)
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr)
+    ctx.lineTo(x + width, y + height - radius.br)
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height)
+    ctx.lineTo(x + radius.bl, y + height)
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl)
+    ctx.lineTo(x, y + radius.tl)
+    ctx.quadraticCurveTo(x, y, x + radius.tl, y)
+    ctx.closePath()
+    ctx.shadowOffsetY = 0
+    ctx.shadowOffsetX = 0
+    ctx.shadowColor = '#000'
+    ctx.shadowBlur = 10
+    ctx.fill()
 
-    this.ctx.restore();
+    this.ctx.restore()
     this.offsetY = y + this.bannerHeight + this.scaledPadding
-    return Promise.resolve();
+    return Promise.resolve()
   }
 
   async renderMyInfo(user?: BasicUserInfo): Promise<void> {
     if (!user) {
-      return Promise.resolve();
+      return Promise.resolve()
     }
 
-    const avatarSize = 65;
-    const avatar = await this.loadImage(user.avatar);
-    this.ctx.save();
-    this.ctx.beginPath();
+    const avatarSize = 65
+    const avatar = await this.loadImage(user.avatar)
+    this.ctx.save()
+    this.ctx.beginPath()
     this.ctx.arc(
       this.scaledPadding + avatarSize,
       this.offsetY - this.scaledPadding - this.bannerHeight / 2 - 5,
@@ -161,23 +161,23 @@ export class PostShareRender extends BaseCanvasRender {
       0,
       2 * Math.PI,
       false
-    );
-    this.ctx.clip();
+    )
+    this.ctx.clip()
     this.ctx.drawImage(
       avatar,
       this.scaledPadding + avatarSize / 2,
       this.offsetY - this.scaledPadding - this.bannerHeight / 2 - avatarSize / 2 - 5,
       avatarSize,
       avatarSize
-    );
-    this.ctx.closePath();
-    this.ctx.restore();
+    )
+    this.ctx.closePath()
+    this.ctx.restore()
 
-    this.ctx.save();
-    this.ctx.font = this.config.baseTextSize * 0.6 + 'px Roboto' ;
-    this.ctx.fillStyle = '#ffffff';
-    this.ctx.textAlign = 'center';
-    this.ctx.textBaseline = 'middle';
+    this.ctx.save()
+    this.ctx.font = this.config.baseTextSize * 0.6 + 'px Roboto' 
+    this.ctx.fillStyle = '#ffffff'
+    this.ctx.textAlign = 'center'
+    this.ctx.textBaseline = 'middle'
     const username = user.name
     let realUsername = ''
 
@@ -193,25 +193,25 @@ export class PostShareRender extends BaseCanvasRender {
       this.scaledPadding * 2 + avatarSize / 2 + 7.5,
       this.offsetY - this.scaledPadding * 2,
       this.scaledWidth - this.scaledPadding * 2.5 - this.qrcodeSize
-    );
+    )
 
-    this.ctx.restore();
-    return Promise.resolve();
+    this.ctx.restore()
+    return Promise.resolve()
   }
 
   async renderQRCode(): Promise<void> {
-    const qrcode = await FetchQRCode(`c=${this.config.clipping.id}`, 'pages/landing/landing', this.qrcodeSize, true);
-    this.ctx.save();
+    const qrcode = await FetchQRCode(`c=${this.config.clipping.id}`, 'pages/landing/landing', this.qrcodeSize, true)
+    this.ctx.save()
     await this.ctx.drawImage(
       qrcode,
       this.scaledWidth - (this.qrcodeSize + this.config.padding + this.bannerGap),
       this.offsetY - (this.qrcodeSize + this.scaledPadding + this.bannerGap),
       this.qrcodeSize,
       this.qrcodeSize
-    );
+    )
 
-    this.ctx.restore();
-    return Promise.resolve();
+    this.ctx.restore()
+    return Promise.resolve()
   }
 
   async draw(user?: BasicUserInfo): Promise<void> {

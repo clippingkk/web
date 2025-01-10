@@ -2,8 +2,7 @@
 // import { Button } from '../../ui/button'
 // import { Textarea } from '../../ui/textarea'
 
-import { Button } from "@mantine/core"
-import { useState } from "react"
+import { Button } from '@mantine/core'
 
 type BlockToolbarViewProps = {
   offsetY: number
@@ -12,8 +11,6 @@ type BlockToolbarViewProps = {
 
 function BlockToolbarView(props: BlockToolbarViewProps) {
   const { offsetY, onLLMImprove } = props
-  const [visible, setVisible] = useState(false)
-  const [customPrompt, setCustomPrompt] = useState('')
   return (
     <div
       className="absolute top-5 rounded-lg flex gap-1 transition-all duration-75"

@@ -10,10 +10,7 @@ import { Metadata } from 'next'
 import { generateMetadata as squareGenerateMetadata } from '@/components/og/og-with-square-page'
 import { getApolloServerClient } from '@/services/apollo.server'
 
-type PageProps = {
-}
-
-export async function generateMetadata(props: PageProps): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const client = getApolloServerClient()
   const squareResponse = await client.query<FetchSquareDataQuery, FetchSquareDataQueryVariables>({
     query: FetchSquareDataDocument,
@@ -30,7 +27,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     map(x => x.bookID).
     filter(x => x.length > 3) ?? []
 
-    const rq = getReactQueryClient()
+  const rq = getReactQueryClient()
 
   const bs = await rq.fetchQuery({
     queryKey: ['wenqu', 'books', 'dbIds', dbIds],
@@ -42,7 +39,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   return squareGenerateMetadata(bs.books)
 }
 
-async function Page(props: PageProps) {
+async function Page() {
   const client = getApolloServerClient()
   const squareResponse = await client.query<FetchSquareDataQuery, FetchSquareDataQueryVariables>({
     query: FetchSquareDataDocument,
@@ -59,7 +56,7 @@ async function Page(props: PageProps) {
     map(x => x.bookID).
     filter(x => x.length > 3) ?? []
 
-    const rq = getReactQueryClient()
+  const rq = getReactQueryClient()
 
   if (dbIds.length >= 1) {
     await rq.prefetchQuery({

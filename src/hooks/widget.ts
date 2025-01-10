@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
 export function useWebWidgetScript() {
   const scriptUrl = 'https://web-widget-script.pages.dev/bundle.js'

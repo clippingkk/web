@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { TGlobalStore } from '@/store'
 import { FetchClippingQuery } from '@/schema/generated'
 import ReactionCell, { SymbolGroupedData } from '@/components/reaction/reaction-cell'
 
-const availableReactions = ["👍", "❤️", "⭐️", "🐶", "😱"]
+const availableReactions = ['👍', '❤️', '⭐️', '🐶', '😱']
 
 type ReactionsProps = {
   cid: number
@@ -12,11 +12,7 @@ type ReactionsProps = {
 }
 
 function Reactions(props: ReactionsProps) {
-  const [pickerVisible, setPickerVisible] = useState(false)
   const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
-  const togglePicker = useCallback(() => {
-    setPickerVisible(s => !s)
-  }, [])
 
   const symbolCounts = useMemo(() => {
     const symbolData: Record<string, SymbolGroupedData> = {}
@@ -24,7 +20,7 @@ function Reactions(props: ReactionsProps) {
       return symbolData
     }
     // 如果服务端返回的没有这些数据，则补全
-    for (let ar of availableReactions) {
+    for (const ar of availableReactions) {
       if (!(ar in symbolData)) {
         symbolData[ar] = {
           count: 0,
