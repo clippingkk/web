@@ -89,14 +89,18 @@ function BookInfoChanger(props: BookInfoChangerProps) {
         <div>
           <p
             className='bg-gradient-to-br p-2'
-          >{t('app.clipping.updateCandidatesCount', {
-            count: candidates.data?.count ?? 0
-          })}</p>
+          >{
+              t('app.clipping.updateCandidatesCount', {
+                count: candidates.data?.count ?? 0
+              })
+            }</p>
           <p
             className='bg-gradient-to-br p-2 mt-2'
-          >{t('app.clipping.updateSelectedTip', {
-            title: selectedBook?.title ?? 'null'
-          })}</p>
+          >{
+              t('app.clipping.updateSelectedTip', {
+                title: selectedBook?.title ?? 'null'
+              })
+            }</p>
           <ul
             className='overflow-y-auto'
             style={{

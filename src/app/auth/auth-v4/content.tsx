@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { Divider } from '@mantine/core'
 import EmailLoginEntry from './emailEntry'
 import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '@/hooks/hooks'
+import { useSDK } from '@metamask/sdk-react'
 // import { createBrowserInspector } from '@statelyai/inspect'
 // const { inspect } = createBrowserInspector();
 
@@ -28,6 +29,8 @@ function AuthV4Content() {
     appleAuthResponse.error,
     appleAuthResponse.data?.loginByApple
   )
+
+  const { sdk: metamaskSDK } = useSDK()
 
   const [doAuth, doAuthData] = useAuthLazyQuery()
   useLoginV3Successed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.auth)
@@ -132,8 +135,11 @@ function AuthV4Content() {
           })
       }),
       connectWeb3Wallet: fromPromise(() => {
+        if (!metamaskSDK) {
+          throw new Error('metamaskSDK not found')
+        }
         const t = toast.loading('Connecting...')
-        return signDataByWeb3().then(r => {
+        return signDataByWeb3(metamaskSDK).then(r => {
           toast.success('Connected', { id: t })
           return r
         }).catch(e => {

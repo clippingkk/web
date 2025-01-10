@@ -1,10 +1,11 @@
-import { useApolloClient, useMutation } from '@apollo/client'
-import React, { useCallback, useEffect } from 'react'
+import { useApolloClient } from '@apollo/client'
+import React, { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
-import { signDataByWeb3 } from '../../utils/wallet'
+import { signDataByWeb3 } from '@/utils/wallet'
 import WithLoading from '../with-loading'
 import { useTranslation } from 'react-i18next'
-import { useBindWeb3AddressMutation } from '../../schema/generated'
+import { useBindWeb3AddressMutation } from '@/schema/generated'
+import { useSDK } from '@metamask/sdk-react'
 
 type MetamaskBindButtonProps = {
   onBound?: (address: string) => void
@@ -14,9 +15,13 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
   const { t } = useTranslation()
   const [doBind, doBindResult] = useBindWeb3AddressMutation()
   const client = useApolloClient()
+  const { sdk: metamaskSDK } = useSDK()
   const onMetamaskLogin = useCallback(async () => {
+    if (!metamaskSDK) {
+      return
+    }
     let account = ''
-    return signDataByWeb3()
+    return signDataByWeb3(metamaskSDK)
       .then(res => {
         account = res.address!
         return doBind({
@@ -27,13 +32,14 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
               text: res.text
             }
           }
-        }).then(r => {
+        }).then(() => {
           toast.success(t('app.common.bound'))
           client.resetStore()
           if (props.onBound) {
             props.onBound(account)
           }
         })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }).catch((err: any) => {
         toast.error(err.message)
       })

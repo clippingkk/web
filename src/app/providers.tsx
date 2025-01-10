@@ -14,6 +14,7 @@ import InitProvider from './init.provider'
 import { I18nextProvider } from 'react-i18next'
 import { usePointerUpdate } from '../hooks/pointer'
 import { useTranslation } from '../i18n/client'
+import { MetaMaskProvider } from '@metamask/sdk-react'
 
 type ClientOnlyProvidersProps = {
   loggedInfo: {
@@ -30,26 +31,37 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const rq = createReactQueryClient()
   usePointerUpdate()
   return (
-    <I18nextProvider i18n={i18n}>
-      <JotaiProvider>
-        <Provider store={store}>
-          <PersistQueryClientProvider
-            client={rq}
-            persistOptions={{
-              persister: reactQueryPersister
-            }}
-          >
-            <ApolloNextAppProvider
-              makeClient={makeApolloClientWithCredentials(loggedInfo)}
+    <MetaMaskProvider
+      sdkOptions={{
+        dappMetadata: {
+          name: 'ClippingKK',
+          url: window.location.href,
+        },
+        infuraAPIKey: process.env.infuraKey,
+        // Other options.
+      }}
+    >
+      <I18nextProvider i18n={i18n}>
+        <JotaiProvider>
+          <Provider store={store}>
+            <PersistQueryClientProvider
+              client={rq}
+              persistOptions={{
+                persister: reactQueryPersister
+              }}
             >
-              <InitProvider>
-                {children}
-              </InitProvider>
-            </ApolloNextAppProvider>
-          </PersistQueryClientProvider>
-        </Provider>
-      </JotaiProvider>
-    </I18nextProvider>
+              <ApolloNextAppProvider
+                makeClient={makeApolloClientWithCredentials(loggedInfo)}
+              >
+                <InitProvider>
+                  {children}
+                </InitProvider>
+              </ApolloNextAppProvider>
+            </PersistQueryClientProvider>
+          </Provider>
+        </JotaiProvider>
+      </I18nextProvider>
+    </MetaMaskProvider>
   )
 }
 

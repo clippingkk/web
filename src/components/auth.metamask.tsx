@@ -1,24 +1,25 @@
-'use client';
+'use client'
 import React, { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import { signDataByWeb3 } from '../utils/wallet'
-import MetamaskLogo from './icons/metamask.logo.svg'
+// import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/navigation'
 import { useAuthByWeb3LazyQuery } from '../schema/generated'
-import { Button } from '@mantine/core';
-import MetamaskButtonView from './auth/metamask';
+import MetamaskButtonView from './auth/metamask'
+import { useSDK } from '@metamask/sdk-react'
 
-type AuthByMetamaskProps = {
-}
-
-function AuthByMetamask(props: AuthByMetamaskProps) {
+function AuthByMetamask() {
   const router = useRouter()
   const [doAuth, doAuthData] = useAuthByWeb3LazyQuery()
+  const { sdk: metamaskSDK } = useSDK()
   // const err = hooks.useError()
   const onMetamaskLogin = useCallback(async () => {
+    if (!metamaskSDK) {
+      return
+    }
     try {
-      const res = await signDataByWeb3()
+      const res = await signDataByWeb3(metamaskSDK)
       const r = await doAuth({
         variables: {
           payload: {
@@ -32,6 +33,7 @@ function AuthByMetamask(props: AuthByMetamaskProps) {
         router.push(`/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`)
         return
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       toast.error(err.message)
     }

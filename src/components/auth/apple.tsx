@@ -1,12 +1,13 @@
 import AppleSignin from 'react-apple-signin-auth'
 import WithLoading from '../with-loading'
-import { AppleAuthResponse } from '../../services/apple'
+import { AppleAuthResponse } from '@/services/apple'
 import { useMemo } from 'react'
 
 type AppleLoginButtonViewProps = {
   loading: boolean
   disabled?: boolean
   onSuccess: (resp: AppleAuthResponse) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onError: (error: any) => void
   version?: 'v2' | 'v4'
 }
@@ -18,13 +19,19 @@ const authOptions = {
   usePopup: true,
 }
 
-function AuthAppleButton(props: any) {
+type Props = {
+  onClick: () => void
+  children: React.ReactNode
+}
+
+function AuthAppleButton(props: Props) {
+  const { onClick, children } = props
   return (
     <button
       className='flex justify-center items-center bg-black text-white w-full mt-4 rounded hover:scale-105 duration-150 py-0.5'
-      onClick={props.onClick}
+      onClick={onClick}
     >
-      {props.children}
+      {children}
     </button>
   )
 }

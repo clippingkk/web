@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import BlurhashImage from '@annatarhe/blurhash-react'
 import { WenquBook } from '../../services/wenqu'
 import { Rating, Tooltip } from '@mantine/core'
