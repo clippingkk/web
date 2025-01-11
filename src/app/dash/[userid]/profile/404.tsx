@@ -1,11 +1,8 @@
 import React from 'react'
-import DashboardContainer from '../../../../components/dashboard-container/container'
+import DashboardContainer from '@/components/dashboard-container/container'
 import { cookies } from 'next/headers'
 
-type Profile404PageProps = {
-}
-
-function Profile404Page(props: Profile404PageProps) {
+function Profile404Page() {
   return (
     <section>
       {/* <Head>

@@ -6,9 +6,9 @@ const init: TAppState = {
 
 export default function appReducer(state = init, action: TAppAction): TAppState {
   switch (action.type) {
-  case CHANGE_BACKGROUND:
-    return { background: action.background }
-  default:
-    return state
+    case CHANGE_BACKGROUND:
+      return { background: action.background }
+    default:
+      return state
   }
 }

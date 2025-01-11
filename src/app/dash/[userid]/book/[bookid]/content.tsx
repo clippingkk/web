@@ -67,7 +67,7 @@ function BookPageContent(props: BookPageContentProps) {
     } : skipToken)
 
   const masonaryColumnCount = useMasonaryColumnCount()
-  const maybeLoadMore = useInfiniteLoader((startIndex, stopIndex, currentItems) => {
+  const maybeLoadMore = useInfiniteLoader((_, __, currentItems) => {
     if (!hasMore.current) {
       return Promise.reject(1)
     }

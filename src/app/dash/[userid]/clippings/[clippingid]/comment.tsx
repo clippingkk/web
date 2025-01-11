@@ -7,7 +7,6 @@ import { Button } from '@mantine/core'
 import { ArrowDownIcon } from '@heroicons/react/24/solid'
 import { ArrowUpIcon } from '@heroicons/react/24/outline'
 import CKLexicalBaseEditor from '@/components/RichTextEditor/index'
-import MarkdownPreview from '@/components/markdown-editor/md-preview'
 import { LexicalEditor } from 'lexical'
 
 type CommentProps = {
@@ -20,7 +19,6 @@ function Comment(props: CommentProps) {
   const [isFold, setIsFold] = useState(true)
 
   const commentLines = props.comment.content.split('\n')
-  const shouldFoldButtonVisible = commentLines.length > 5
   const [foldRef] = useAutoAnimate()
 
   const ed = useRef<LexicalEditor>(null)

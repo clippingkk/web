@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useCallback, useRef } from 'react'
+import { ForwardedRef, forwardRef, useCallback } from 'react'
 
 import { EditorState, LexicalEditor } from 'lexical'
 
@@ -130,6 +130,7 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         {editor && (
           <EditorRefPlugin
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             editorRef={editor as any}
           />
         )}

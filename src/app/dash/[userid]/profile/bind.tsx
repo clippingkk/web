@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 // import { QRNormal, QRImage } from 'react-qrbtf'
-import {QRCodeSVG} from 'qrcode.react'
-import Dialog from '../../../../components/dialog/dialog'
+import { QRCodeSVG } from 'qrcode.react'
+import Dialog from '@/components/dialog/dialog'
 import { useTranslation } from 'react-i18next'
-import { useWechatBindQuery } from '../../../../schema/generated'
-
-type WechatBindButtonProps = {
-}
+import { useWechatBindQuery } from '@/schema/generated'
 
 function BindQRCode() {
   const { data } = useWechatBindQuery()
@@ -23,7 +20,7 @@ function BindQRCode() {
   )
 }
 
-function WechatBindButton(props: WechatBindButtonProps) {
+function WechatBindButton() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
 

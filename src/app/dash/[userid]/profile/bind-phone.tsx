@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
-import BindPhone from '../../../../components/bind-phone'
-import Dialog from '../../../../components/dialog/dialog'
-import { useBindUserPhoneMutation } from '../../../../schema/generated'
+import BindPhone from '@/components/bind-phone'
+import Dialog from '@/components/dialog/dialog'
+import { useBindUserPhoneMutation } from '@/schema/generated'
 import { Button, Tooltip } from '@mantine/core'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 
-type BindPhoneProps = {
-}
-
-function ProfileBindPhone(props: BindPhoneProps) {
+function ProfileBindPhone() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
   const [doAuth, doAuthResponse] = useBindUserPhoneMutation()
@@ -50,7 +47,7 @@ function ProfileBindPhone(props: BindPhoneProps) {
           title={t('app.profile.editor.title')}
           onCancel={() => setVisible(false)}
           onOk={() => {
-            () => setVisible(false)
+            setVisible(false)
           }}
         >
           <div className='w-full md:w-144 h-48 md:h-96 flex flex-col justify-center'>

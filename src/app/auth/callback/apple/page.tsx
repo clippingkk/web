@@ -1,10 +1,10 @@
 import React from 'react'
 import AuthCallbackApple from './content'
-import { generateMetadata as authGenerateMetadata } from '../../../../components/og/og-with-auth'
+import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
 import { Metadata } from 'next'
 
 type AppleCallbackPageProps = {
-  params: Promise<{}>
+  params: Promise<object>
   searchParams: Promise<{ i: string }>
 }
 

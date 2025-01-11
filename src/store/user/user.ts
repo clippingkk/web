@@ -18,15 +18,15 @@ const initState: TUserState = {
 
 function userReducer(state = initState, action: IUserAction): TUserState {
   switch (action.type) {
-  case AUTH_LOGIN:
-    return {
-      profile: action.profile,
-      token: action.token
-    }
-  case USER_LOGOUT:
-    return initState
-  default:
-    return state
+    case AUTH_LOGIN:
+      return {
+        profile: action.profile,
+        token: action.token
+      }
+    case USER_LOGOUT:
+      return initState
+    default:
+      return state
   }
 }
 

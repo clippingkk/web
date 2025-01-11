@@ -6,7 +6,6 @@ import { getApolloServerClient } from '@/services/apollo.server'
 import { duration3Days } from '@/hooks/book'
 import { getReactQueryClient } from '@/services/ajax'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
-import Loading from './loading'
 import OGImageClipping from '@/components/og/image-clipping'
 
 export const runtime = 'edge'
@@ -21,7 +20,6 @@ export const contentType = 'image/png'
 
 // Image generation
 export default async function Image(req: { params: { userid: string; clippingid: string } }) {
-  const uid = ~~req.params.userid
   const cid = ~~req.params.clippingid
 
   const client = getApolloServerClient()

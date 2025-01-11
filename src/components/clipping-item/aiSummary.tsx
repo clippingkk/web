@@ -60,9 +60,9 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
             return Promise.resolve()
           }
         }).then((final) => {
-          setData([final.message])
-          return final
-        })
+        setData([final.message])
+        return final
+      })
     },
     enabled: open && !!cid && !!book,
   })

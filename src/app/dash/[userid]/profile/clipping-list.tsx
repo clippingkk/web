@@ -1,10 +1,10 @@
 import React from 'react'
-import { FetchClippingsByUidQuery, useFetchClippingsByUidQuery } from '../../../../schema/generated'
+import { FetchClippingsByUidQuery, useFetchClippingsByUidQuery } from '@/schema/generated'
 import { Masonry, useInfiniteLoader } from 'masonic'
-import { useMasonaryColumnCount } from '../../../../hooks/use-screen-size'
-import ClippingItem from '../../../../components/clipping-item/clipping-item'
-import { IN_APP_CHANNEL } from '../../../../services/channel'
-import { useMultipleBook } from '../../../../hooks/book'
+import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
+import ClippingItem from '@/components/clipping-item/clipping-item'
+import { IN_APP_CHANNEL } from '@/services/channel'
+import { useMultipleBook } from '@/hooks/book'
 
 type ClippingListProps = {
   uid: number
@@ -27,7 +27,7 @@ function ClippingList(props: ClippingListProps) {
     },
   })
   const masonaryColumnCount = useMasonaryColumnCount()
-  const maybeLoadMore = useInfiniteLoader((startIndex, stopIndex, currentItems: FetchClippingsByUidQuery['clippingList']['items']) => {
+  const maybeLoadMore = useInfiniteLoader((_, __, currentItems: FetchClippingsByUidQuery['clippingList']['items']) => {
     if (renderList.length === 0 || !data) {
       return
     }

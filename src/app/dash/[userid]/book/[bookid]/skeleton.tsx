@@ -1,9 +1,6 @@
 import React from 'react'
 
-type BookPageSkeletonProps = {
-}
-
-function BookPageSkeleton(props: BookPageSkeletonProps) {
+function BookPageSkeleton() {
   return (
     <div className='container mx-auto'>
       <div className='mt-12 w-full h-96 animate-pulse bg-gray-300 dark:bg-gray-800' />
