@@ -15,7 +15,8 @@ const config = [
     'rules': {
       'indent': [
         'error',
-        2
+        2,
+        { 'SwitchCase': 1 }
       ],
       'react/jsx-indent': [
         2,
