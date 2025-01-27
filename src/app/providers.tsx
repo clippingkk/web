@@ -35,7 +35,7 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
       sdkOptions={{
         dappMetadata: {
           name: 'ClippingKK',
-          url: window.location.href,
+          url: typeof window === 'undefined' ? '' : window.location.href,
         },
         infuraAPIKey: process.env.infuraKey,
         // Other options.

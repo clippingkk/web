@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useState } from 'react'
 import Card from '../card/card'
 import { WenquBook } from '../../services/wenqu'

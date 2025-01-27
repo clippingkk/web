@@ -2,19 +2,18 @@ import React from 'react'
 import Link from 'next/link'
 import BookInfo from '@/components/book-info/book-info'
 import ClippingContent from '@/components/clipping-content'
-import { useSingleBookSuspense } from '@/hooks/book'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import { Clipping } from '@/schema/generated'
+import { WenquBook } from '@/services/wenqu'
 
 type ReadingBookProps = {
   uid: number
-  bookId: string
+  book: WenquBook
   clipping?: Pick<Clipping, 'id' | 'bookID' | 'content'>
 }
 
 function ReadingBook(props: ReadingBookProps) {
-  const { clipping, bookId, uid } = props
-  const book = useSingleBookSuspense(bookId)
+  const { clipping, book, uid } = props
   if (!book) {
     return null
   }
