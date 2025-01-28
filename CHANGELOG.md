@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.12...v5.12.13) (2025-01-28)
+
+
+### Features
+
+* **deps:** update deps ([ba17b11](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ba17b117dddc46b422d384dde2ee395e672cd41e))
+* Upgrade Node.js version to 23.6.x ([ad9fe1b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ad9fe1b3a1b92407dd567a22dc0eb8a88645f51e))
+
+
+### Bug Fixes
+
+* **app:** fix package and eslint ([4cad819](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4cad819047f5ad126c2743ffdda8d06c08df2ee0))
+* **app:** upgrade app to latest nextjs ([747e3ff](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/747e3ff6cb1983da5fd944f7e571d2dc594fe17c))
+* **i18n:** make i18n server usable ([3ba49ac](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3ba49ac97d83c754aedae665e5941692041e139b))
+* **lint:** fix lint errors ([55ca8ff](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/55ca8ff93113c9122ef752f54aa93a0319613db1))
+* **lint:** fix lint issue ([dcf471a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/dcf471a03e8bc50902d9bb98eb7e4b4a2b5f0481))
+* **lint:** fix lint issue ([4171456](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4171456fec264baa14efeeba707f4cbd8124050c))
+* **lint:** fix lint issue and switch-case indent ([cc84fc1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/cc84fc1b7818b01b8586abde6dc8cfb2a5afa7a6))
+* **metamask:** replace the metamask sdk with react pkg ([9d009c6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9d009c6b6edffb6c9d2d1f05e834b33c9b1fb8fd))
+* **pkg:** remove unused pkg ([071deb7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/071deb76c43e2222513f078ad74747a75ad4ce81))
+
 ### [5.12.12](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.11...v5.12.12) (2024-11-09)
 
 
