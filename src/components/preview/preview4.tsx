@@ -6,8 +6,8 @@ import FileSaver from 'file-saver'
 import { toast } from 'react-hot-toast'
 import { KonzertThemeMap } from '../../services/utp'
 import ThemePicker from './theme-picker'
-import { Blockquote, Button, Divider, Paper, Text, Title } from '@mantine/core'
-import { FetchClippingQuery } from '../../schema/generated'
+import { Blockquote, Button, Divider, Paper, Title } from '@mantine/core'
+import { Clipping, User } from '../../schema/generated'
 import Preview4Clipping from './preview4-clipping'
 import { toBlob } from 'html-to-image'
 import { useMutation } from '@tanstack/react-query'
@@ -17,7 +17,7 @@ type PreviewProps = {
   onOk: () => void
   background: string
   // clipping: Omit<Clipping, 'aiSummary' | 'reactions' | 'source' | 'comments'>
-  clipping: FetchClippingQuery['clipping']
+  clipping: Pick<Clipping, 'id' | 'title' | 'content' | 'createdAt'> & { creator: Pick<User, 'id' | 'name' | 'avatar'> }
   book: WenquBook | null
 }
 
@@ -48,6 +48,7 @@ function Preview(props: PreviewProps) {
     onSuccess: () => {
       toast.success(t('app.clipping.preview.success'))
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (err: any) => {
       console.log(err)
       toast.error(err.toString())

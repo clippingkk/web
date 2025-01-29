@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+'use client'
+import React, { useCallback, useMemo, useState } from 'react'
 import { FetchClippingQuery } from '../../schema/generated'
 import { Modal } from '@mantine/core'
 import ContentSegment from './content-segment'

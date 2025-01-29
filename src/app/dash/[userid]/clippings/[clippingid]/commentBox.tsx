@@ -1,3 +1,4 @@
+'use client'
 import { useApolloClient } from '@apollo/client'
 import React, { useCallback, useRef, useState } from 'react'
 import { UserContent } from '@/store/user/type'

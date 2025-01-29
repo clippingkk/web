@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useState } from 'react'
 import { useApolloClient } from '@apollo/client'
 import Switch from '@/components/switcher'
@@ -13,13 +14,13 @@ import { Clipping, User, useToggleClippingVisibleMutation } from '@/schema/gener
 import { Button, NavLink, Tooltip } from '@mantine/core'
 import ClippingAISummaryModal from '@/components/clipping-item/aiSummary'
 import { toastPromiseDefaultOption } from '@/services/misc'
+import ClippingShareButton from '@/components/shares/clipping-share-button'
 
 type ClippingSidebarProps = {
-  clipping?: Pick<Clipping, 'id' | 'visible' | 'content' | 'title' | 'createdAt' | 'nextClipping' | 'prevClipping'> & { creator: Pick<User, 'id' | 'name' | 'domain'> }
+  clipping?: Pick<Clipping, 'id' | 'visible' | 'content' | 'title' | 'createdAt' | 'nextClipping' | 'prevClipping'> & { creator: Pick<User, 'id' | 'name' | 'domain' | 'avatar' > }
   book: WenquBook | null
   me?: UserContent
   inAppChannel: IN_APP_CHANNEL
-  onTogglePreviewVisible: () => void
 }
 
 function getSiblingLink(iac: IN_APP_CHANNEL, domain?: string, clipping?: Pick<Clipping, 'prevClipping' | 'nextClipping'>) {
@@ -144,16 +145,14 @@ function ClippingSidebar(props: ClippingSidebarProps) {
             </li>
           )}
 
-          <li className='w-full mb-4'>
-            <Button
-              variant='gradient'
-              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-              fullWidth
-              onClick={props.onTogglePreviewVisible}
-            >
-              {t('app.clipping.shares')}
-            </Button>
-          </li>
+          {book && clipping && (
+            <li className='w-full mb-4'>
+              <ClippingShareButton
+                book={book}
+                clipping={clipping}
+              />
+            </li>
+          )}
           <li className='w-full mb-4'>
             <Button
               component='a'
