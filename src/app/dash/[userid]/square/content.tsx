@@ -53,6 +53,9 @@ function SquarePageContent(props: SquarePageContentProps) {
         }
       }
     }).then(data => {
+      if (data.data.featuredClippings.length === 0) {
+        reachEnd.current = true
+      }
       setSqData(
         prev => [
           ...prev,

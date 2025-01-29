@@ -14,14 +14,27 @@ export default function useScreenSize() {
   const isClient = typeof window === 'object'
 
   const getSize = useCallback(() => {
-    return {
+    const result = {
       width: isClient ? window.innerWidth : 0,
       height: isClient ? window.innerHeight : 0,
       screen: BreakPoint.s
     }
+    if (result.width < 576) {
+      result.screen = BreakPoint.xs
+    } else if (result.width >= 576 && result.width < 768) {
+      result.screen = BreakPoint.s
+    } else if (result.width >= 768 && result.width < 992) {
+      result.screen = BreakPoint.m
+    } else if (result.width >= 992 && result.width < 1200) {
+      result.screen = BreakPoint.l
+    } else {
+      result.screen = BreakPoint.xl
+    }
+
+    return result
   }, [isClient])
 
-  const [screenSize, setScreenSize] = useState(getSize)
+  const [size, setSize] = useState<BreakPoint>(BreakPoint.s)
 
   useEffect(() => {
     if (!isClient) {
@@ -29,26 +42,14 @@ export default function useScreenSize() {
     }
 
     function handleResize () {
-      setScreenSize(getSize())
+      setSize(getSize().screen)
     }
-
+    handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  if (screenSize.width < 576) {
-    screenSize.screen = BreakPoint.xs
-  } else if (screenSize.width >= 576 && screenSize.width < 768) {
-    screenSize.screen = BreakPoint.s
-  } else if (screenSize.width >= 768 && screenSize.width < 992) {
-    screenSize.screen = BreakPoint.m
-  } else if (screenSize.width >= 992 && screenSize.width < 1200) {
-    screenSize.screen = BreakPoint.l
-  } else {
-    screenSize.screen = BreakPoint.xl
-  }
-
-  return screenSize
+  return size
 }
 
 const masonaryColumnsMapping = {
@@ -61,5 +62,5 @@ const masonaryColumnsMapping = {
 
 export function useMasonaryColumnCount() {
   const s = useScreenSize()
-  return masonaryColumnsMapping[s.screen]
+  return masonaryColumnsMapping[s]
 }

@@ -49,7 +49,7 @@ export function useMultipleBook(doubanIds: string[], skip?: boolean): bookReques
         }
         return acc
       }, [])
-  }, [doubanIds])
+  }, [doubanIds.join('&')])
   const chunkedDbIds = useMemo(() => {
     const result: string[][] = []
     const chunkSize = 10
