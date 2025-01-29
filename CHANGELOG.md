@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.14](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.13...v5.12.14) (2025-01-29)
+
+
+### Bug Fixes
+
+* **book:** remove unused dehydra ([e05d9ae](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e05d9ae3adb4c127936a0111305964382c50f715))
+* **fetch:** disable cache for fresh data ([0a1b063](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0a1b0632edd3d879da23d2b032e35f5090065129))
+* move index page into server component ([b757a6f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b757a6f6c895792a5f25f4162a5aaf9faf927662))
+* **reaction:** refresh data after action ([df6762c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/df6762c4bc98181c9dd03dc37c87a1344f2d47f0))
+* **reaction:** update style in reaction ([ac9986d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ac9986d95dd212d5f606acd93b0c54e44e385182))
+
 ### [5.12.13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.12...v5.12.13) (2025-01-28)
 
 
