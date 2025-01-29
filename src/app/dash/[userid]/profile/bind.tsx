@@ -1,9 +1,10 @@
+'use client'
 import React, { useState } from 'react'
 // import { QRNormal, QRImage } from 'react-qrbtf'
 import { QRCodeSVG } from 'qrcode.react'
 import Dialog from '@/components/dialog/dialog'
 import { useTranslation } from 'react-i18next'
-import { useWechatBindQuery } from '@/schema/generated'
+import { ProfileQuery, useWechatBindQuery } from '@/schema/generated'
 
 function BindQRCode() {
   const { data } = useWechatBindQuery()
@@ -20,9 +21,31 @@ function BindQRCode() {
   )
 }
 
-function WechatBindButton() {
+type Props = {
+  uid?: number
+  profile: ProfileQuery['me']
+  isInMyPage: boolean
+}
+
+function WechatBindButton(props: Props) {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
+
+  const { uid, profile, isInMyPage } = props
+
+  let isWechatBindingVisible = true
+
+  if (!uid || uid === 0) {
+    isWechatBindingVisible = false
+  }
+  if (!isInMyPage) {
+    isWechatBindingVisible = false
+  }
+  isWechatBindingVisible = !!profile.wechatOpenid
+
+  if (!isWechatBindingVisible) {
+    return null
+  }
 
   return (
     <div>

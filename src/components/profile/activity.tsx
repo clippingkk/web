@@ -1,9 +1,10 @@
+'use client'
 import React, { useEffect, useMemo, useRef } from 'react'
 // import * as echarts from 'echarts'
-import { ProfileQuery } from '../../schema/generated'
+import { ProfileQuery } from '@/schema/generated'
 import dayjs from 'dayjs'
 import { useMantineColorScheme } from '@mantine/core'
-import echarts from '../../utils/echarts'
+import echarts from '@/utils/echarts'
 
 type PersonalActivityProps = {
   data: ProfileQuery['me']['analysis']['daily']

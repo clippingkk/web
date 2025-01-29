@@ -1,6 +1,6 @@
-import { Badge } from '@mantine/core'
-import React, { useMemo } from 'react'
+import React from 'react'
 import PremiumBadge from '../premium/badge'
+import { checkIsPremium } from '@/compute/user'
 
 type UserNameProps = {
   name?: string
@@ -10,12 +10,7 @@ type UserNameProps = {
 function UserName(props: UserNameProps) {
   const { name, premiumEndAt } = props
 
-  const isPremium = useMemo(() => {
-    if (!premiumEndAt) {
-      return false
-    }
-    return new Date(premiumEndAt) > new Date()
-  }, [premiumEndAt])
+  const isPremium = checkIsPremium(premiumEndAt)
 
   if (!name) {
     return null

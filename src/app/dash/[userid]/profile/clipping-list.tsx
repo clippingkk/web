@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { FetchClippingsByUidQuery, useFetchClippingsByUidQuery } from '@/schema/generated'
 import { Masonry, useInfiniteLoader } from 'masonic'
@@ -15,7 +16,6 @@ function ClippingList(props: ClippingListProps) {
   const { uid, userDomain } = props
   const [renderList, setRenderList] = React.useState<FetchClippingsByUidQuery['clippingList']['items']>([])
   const { data, loading, fetchMore } = useFetchClippingsByUidQuery({
-    // const { data, fetchMore } = useSuspenseQuery<FetchClippingsByUidQuery, FetchClippingsByUidQueryVariables>(FetchClippingsByUidDocument, {
     variables: {
       uid,
       pagination: {

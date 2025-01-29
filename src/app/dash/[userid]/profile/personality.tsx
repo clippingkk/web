@@ -1,5 +1,6 @@
+'use client'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
-import { Alert, Button, Divider, LoadingOverlay, Modal, Tooltip } from '@mantine/core'
+import { Alert, Button, LoadingOverlay, Modal, Tooltip } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'react-i18next'
 import { useFetchUserPersonalityQuery } from '@/schema/generated'

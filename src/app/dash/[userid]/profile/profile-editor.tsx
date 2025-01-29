@@ -1,15 +1,15 @@
-import { useMutation, useQuery } from '@apollo/client'
+'use client'
 import { useFormik } from 'formik'
 import React, { useCallback, useEffect, useState } from 'react'
 import * as Yup from 'yup'
-import Dialog from '../../../../components/dialog/dialog'
-import FieldInput from '../../../../components/input'
-import FieldTextarea from '../../../../components/textarea'
+import Dialog from '@/components/dialog/dialog'
+import FieldInput from '@/components/input'
+import FieldTextarea from '@/components/textarea'
 import { toast } from 'react-hot-toast'
-import { uploadImage } from '../../../../services/misc'
+import { uploadImage } from '@/services/misc'
 import { useTranslation } from 'react-i18next'
-import ExternalAccountList from '../../../../components/externalAccount/list'
-import { useUpdateProfileMutation } from '../../../../schema/generated'
+import ExternalAccountList from '@/components/externalAccount/list'
+import { useUpdateProfileMutation } from '@/schema/generated'
 import { Button, Tooltip } from '@mantine/core'
 import { CogIcon } from '@heroicons/react/24/solid'
 
@@ -61,6 +61,7 @@ function ProfileEditor(props: ProfileEditorProps) {
         try {
           const resp = await uploadImage(vals.avatar)
           avatarUrl = resp.filePath
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
           toast.error(e)
           throw e
@@ -83,6 +84,7 @@ function ProfileEditor(props: ProfileEditorProps) {
         setVisible(false)
         client.resetStore()
         toast.success(t('app.profile.editor.updated'))
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error(err)
         toast.error(err)

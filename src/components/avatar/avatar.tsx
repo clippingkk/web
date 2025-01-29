@@ -1,18 +1,20 @@
+'use client'
 import React from 'react'
-import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import { useHover } from '../../hooks/dom'
+import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
+import { useHover } from '@/hooks/dom'
 
 type AvatarProps = {
   img: string
   name?: string
   className?: string
   editable?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onClick?: () => any
   isPremium?: boolean
 }
 
 function Avatar(props: AvatarProps) {
-  const { img, isPremium } = props
+  const { isPremium } = props
   const avatar = props.img.startsWith('http') ? props.img : `${CDN_DEFAULT_DOMAIN}/${props.img}`
 
   let cls = props.className || ''
