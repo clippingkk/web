@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n'
 import WebArchImage from '../../assets/web_arch.png'
 import { CodeHighlight } from '@mantine/code-highlight'
 
@@ -43,8 +43,8 @@ fn parse_en_file() {
 }
 `
 
-function FeatureModern() {
-  const { t } = useTranslation()
+async function FeatureModern() {
+  const { t } = await useTranslation()
   return (
     <div className='flex items-center w-full justify-around py-16 flex-col'>
       <h3 className={'lg:text-7xl text-4xl text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible font-extrabold from-red-400 to-pink-500 bg-clip-text text-transparent bg-gradient-to-br'}>

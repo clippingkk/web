@@ -5,17 +5,17 @@ import AndroidIcon from '../../assets/android-icon.svg'
 import TerminalIcon from '../../assets/terminal-icon.svg'
 import WechatIcon from '../../assets/wechat-icon.svg'
 import CKMPQRCode from '../../assets/ck_mp_qrcode.jpg'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n'
 import { Tooltip } from '@mantine/core'
 import Link from 'next/link'
-import { useGoAuthLink } from '../../hooks/hooks'
+import { cookies } from 'next/headers'
 
-type FeatureRebornProps = {
-}
+async function FeatureReborn() {
+  const { t } = await useTranslation()
 
-function FeatureReborn(props: FeatureRebornProps) {
-  const { t } = useTranslation()
-  const goLinkUrl = useGoAuthLink()
+  const ck = await cookies()
+  const uid = ck.get('uid')?.value
+  const goLinkUrl = uid ? `/dash/${uid}/home` : '/auth/auth-v4'
   return (
     <div className='flex items-center mt-24 lg:mt-72 w-full justify-around py-16 flex-col'>
       <h3 className={'lg:text-7xl text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-gray-800 to-pink-300 font-extrabold bg-clip-text text-transparent bg-gradient-to-br'}>

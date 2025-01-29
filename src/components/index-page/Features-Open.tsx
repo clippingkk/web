@@ -3,15 +3,12 @@ import BrandNotionLogo from '../../assets/brand-notion.svg'
 import BrandServerLogo from '../../assets/brand-server.svg'
 import BrandFlomoLogo from '../../assets/brand-flomo.png'
 import logo from '../../assets/logo.png'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n'
 import Image from 'next/image'
-import { ArrowRightIcon, ArrowUturnRightIcon } from '@heroicons/react/24/solid'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
 
-type FeaturesOpenProps = {
-}
-
-function FeaturesOpen(props: FeaturesOpenProps) {
-  const { t } = useTranslation()
+async function FeaturesOpen() {
+  const { t } = await useTranslation()
   return (
     <div className='flex items-center w-full justify-around py-16 lg:flex-row flex-col'>
       <h3 className={'lg:text-7xl text-4xl font-extrabold text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-gray-400 to-blue-500 bg-clip-text text-transparent bg-gradient-to-br'}>

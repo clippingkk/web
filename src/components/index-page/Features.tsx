@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-'use client'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import FeaturesOpen from './Features-Open'
 import FeatureWidget from './Feature-Widget'
@@ -14,6 +11,7 @@ type featureColorPattern = {
   rows: string[]
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const colorPatterns: featureColorPattern[] = [
   {
     title: [
@@ -73,6 +71,7 @@ type FeatureSectionType = {
   colorPattern: featureColorPattern
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function FeatureSection(props: FeatureSectionType) {
   return (
     <div className='flex items-center w-full justify-around py-16 lg:flex-row flex-col'>
@@ -111,7 +110,6 @@ function FeatureSection(props: FeatureSectionType) {
 }
 
 function Features() {
-  const { t } = useTranslation()
   return (
     <div className='w-full flex justify-center flex-col p-10'>
       <h2 className='text-3xl text-center dark:text-gray-100 text-slate-900'>Feature List</h2>

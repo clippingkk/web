@@ -1,3 +1,4 @@
+'use client'
 import mixpanel from 'mixpanel-browser'
 import * as sentry from '@sentry/react'
 import { useEffect, useMemo } from 'react'

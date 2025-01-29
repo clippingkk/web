@@ -1,18 +1,13 @@
-import { Kbd } from '@mantine/core'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+'use client'
+import React, { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWebWidgetScript } from '../../hooks/widget'
 
-type FeatureWidgetProps = {
-}
-
-
-
-function FeatureWidget(props: FeatureWidgetProps) {
+function FeatureWidget() {
   const { t } = useTranslation()
 
   useWebWidgetScript()
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [perspective, setPerspective] = useState(900)
 
   const containerDOM = useRef<HTMLDivElement | null>(null)

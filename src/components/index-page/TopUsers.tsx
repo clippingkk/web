@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
 import styles from './tops.module.css'
@@ -10,8 +9,8 @@ type TopUsersProps = {
   users?: Pick<User, 'id' | 'avatar' | 'name'>[]
 }
 
-function TopUsers(props: TopUsersProps) {
-  const { t } = useTranslation()
+async function TopUsers(props: TopUsersProps) {
+  const { t } = await useTranslation()
   if (!props.users) {
     return null
   }

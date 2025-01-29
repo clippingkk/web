@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n'
 import { Clipping, User } from '../../schema/generated'
 import ClippingLite from '../clipping-item/clipping-lite'
 
@@ -8,8 +7,8 @@ type TopClippingsProps = {
   clippings: (Pick<Clipping, 'id' | 'title' | 'content'> & { creator: Pick<User, 'domain' | 'id' | 'name' | 'avatar'> })[]
 }
 
-function TopClippings(props: TopClippingsProps) {
-  const { t } = useTranslation()
+async function TopClippings(props: TopClippingsProps) {
+  const { t } = await useTranslation()
 
   return (
     <div className='flex flex-wrap justify-center items-center flex-col mx-4'>
