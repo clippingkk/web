@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.15](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.14...v5.12.15) (2025-01-29)
+
+
+### Features
+
+* **upload:** update upload styles and add windsurf support ([4f3c86d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4f3c86d29cc90f3ed2d277777e2483d1e9738c4c))
+
+
+### Bug Fixes
+
+* **square:** fix infinate loading on square data ([026fdd6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/026fdd657a3f9136044d86c21e444803268f73ca))
+
 ### [5.12.14](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.13...v5.12.14) (2025-01-29)
 
 
