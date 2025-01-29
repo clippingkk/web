@@ -1,0 +1,7 @@
+the main purpose of this website(ClippingKK) is to provide a platform for users to share their favorite clippings from books they have read from kindle. and share it with others.
+
+the website is based on Next.js App Router and TypeScript. using tailwindcss.
+
+the website is supporting english, simplified chinese by default. should import `useTranslation` from `@/i18n` or `@/i18n/client`.
+
+the website should support dark mode. the UI style should be bold and simple. with aggressive gradient colors and grate blur effect. use icons from `lucide-react`.

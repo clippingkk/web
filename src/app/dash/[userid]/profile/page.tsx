@@ -6,9 +6,10 @@ import { useTranslation } from '@/i18n'
 import { Metadata } from 'next'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
-import PersonalActivity from '@/components/profile/activity'
 import { Divider, Text } from '@mantine/core'
+import PersonalActivity from '@/components/profile/activity'
 import ClippingList from './clipping-list'
+
 
 type PageProps = {
   params: Promise<{ userid: string }>

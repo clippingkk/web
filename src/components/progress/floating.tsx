@@ -1,7 +1,7 @@
 import React from 'react'
-import { UploadStep } from '../../services/uploader'
-import { useTranslation } from 'react-i18next'
-import Loading2Icon from '../icons/loading2.svg'
+import { UploadStep } from '@/services/uploader'
+import { useTranslation } from '@/i18n/client'
+import { Loader2 } from 'lucide-react'
 
 type FloatingProgressProps = {
   step: UploadStep
@@ -16,14 +16,16 @@ function FloatingProgress(props: FloatingProgressProps) {
     return null
   }
   return (
-    <div className='fixed bottom-10 right-10 rounded bg-gradient-to-br from-purple-400 to-teal-400 px-4 py-2 flex justify-center items-center shadow animate-bounce'>
-      <div className='flex justify-center items-center flex-row'>
-        <Loading2Icon />
-        <div className='flex'>
-          <span className='text-right'>
-            {t(`app.upload.progress.${step}`)}
-          </span>
-          <span className='ml-2'>{at}/{count}</span>
+    <div className="fixed bottom-6 right-6 animate-in fade-in slide-in-from-bottom-6 duration-300">
+      <div className="backdrop-blur-xl bg-gradient-to-br from-purple-500/80 to-teal-500/80 dark:from-purple-600/80 dark:to-teal-600/80 rounded-xl shadow-lg shadow-purple-500/20 dark:shadow-purple-900/30">
+        <div className="px-6 py-4 flex items-center gap-3">
+          <Loader2 className="w-5 h-5 text-white animate-spin" />
+          <div className="flex items-center gap-2 text-white font-medium">
+            <span>
+              {t(`app.upload.progress.${step}`)}
+            </span>
+            <span className="font-bold">{at}/{count}</span>
+          </div>
         </div>
       </div>
     </div>
