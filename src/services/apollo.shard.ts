@@ -3,11 +3,6 @@ import { API_HOST } from '../constants/config'
 import { uniqBy } from 'lodash'
 
 function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
-  if (!options.next) {
-    options.next = {
-      revalidate: 30 // 30 seconds
-    }
-  }
   return fetch(url, options)
 }
 

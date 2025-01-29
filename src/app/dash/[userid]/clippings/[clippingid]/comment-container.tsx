@@ -11,7 +11,6 @@ type Props = {
 }
 
 async function CommentContainer({ me, clipping, book }: Props) {
-
   const { t } = await useTranslation()
 
   if (!me || me.id === 0) {

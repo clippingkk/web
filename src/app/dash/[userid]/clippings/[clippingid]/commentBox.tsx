@@ -13,6 +13,7 @@ import { WenquBook } from '@/services/wenqu'
 import CKLexicalBaseEditor from '@/components/RichTextEditor'
 import { $getRoot, LexicalEditor } from 'lexical'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useRouter } from 'next/navigation'
 
 type CommentBoxProps = {
   book: WenquBook | null
@@ -26,8 +27,13 @@ function CommentBox(props: CommentBoxProps) {
   const [content, setContent] = useState('')
   const ed = useRef<LexicalEditor>(null)
 
+  const r = useRouter()
+
   const [createCommentAction, { loading }] = useCreateCommentMutation({
     refetchQueries: ['fetchClipping'],
+    onCompleted: () => {
+      r.refresh()
+    }
   })
   const client = useApolloClient()
 

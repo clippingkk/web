@@ -48,11 +48,6 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
 
   options.credentials = 'include'
   options.mode = 'cors'
-  if (!options.next) {
-    options.next = {
-      revalidate: 30 // 30 seconds
-    }
-  }
 
   const finalUrl = url.startsWith('http') ? url : `${API_HOST}/api${url}`
 
@@ -71,11 +66,6 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
 }
 
 function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
-  if (!options.next) {
-    options.next = {
-      revalidate: 30 // 30 seconds
-    }
-  }
   return fetch(url, options)
 }
 

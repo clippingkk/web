@@ -101,7 +101,6 @@ async function Page(props: PageProps) {
     bookData = bs.books[0]
   }
 
-
   const clipping = clippingsResponse.data.clipping
   const creator = clipping.creator
   const me = myProfile

@@ -1,21 +1,14 @@
 // const { withSentryConfig } = require('@sentry/nextjs')
 
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
-const isProd = process.env.NODE_ENV === 'production'
-
-const sentryWebpackPluginOptions = {
-  silent: true,
-};
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+// const isProd = process.env.NODE_ENV === 'production'
 
 const config: NextConfig = {
   generateBuildId: () => {
     return process.env.GIT_COMMIT ?? ''
   },
-  cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
+  // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
   cacheMaxMemorySize: 0,
   experimental: {
     // ppr: true,
