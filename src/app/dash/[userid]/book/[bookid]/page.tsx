@@ -1,6 +1,5 @@
 import React from 'react'
 import { getReactQueryClient } from '@/services/ajax'
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { duration3Days } from '@/hooks/book'
 import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import BookPageContent from './content'
@@ -76,7 +75,6 @@ async function Page(props: PageProps) {
     })
     bookData = bs.books.length === 1 ? bs.books[0] : null
   }
-  const d = dehydrate(rq)
 
   if (!bookData || !clippingsData) {
     return null
@@ -89,7 +87,7 @@ async function Page(props: PageProps) {
   }
 
   return (
-    <HydrationBoundary state={d}>
+    <>
       <BookInfo
         book={bookData}
         uid={uid}
@@ -98,7 +96,7 @@ async function Page(props: PageProps) {
       />
       <Divider title={t('app.book.title')} />
       <BookPageContent book={bookData} userid={userid} />
-    </HydrationBoundary>
+    </>
   )
 }
 
