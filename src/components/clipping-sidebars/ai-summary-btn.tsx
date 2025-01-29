@@ -13,7 +13,7 @@ type Props = {
   book?: WenquBook | null
 }
 
-function AISummaryBtn({ clipping, me }: Props) {
+function AISummaryBtn({ clipping, me, book }: Props) {
   const { t } = useTranslation()
   const [aiSummaryVisible, setAISummaryVisible] = useState(false)
 
@@ -31,7 +31,7 @@ function AISummaryBtn({ clipping, me }: Props) {
         <ClippingAISummaryModal
           uid={me?.id}
           cid={clipping?.id}
-          book={null}
+          book={book}
           clippingContent={clipping?.content || ''}
           open={aiSummaryVisible}
           onClose={() => setAISummaryVisible(false)}
