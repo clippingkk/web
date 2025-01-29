@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.16](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.15...v5.12.16) (2025-01-29)
+
+
+### Bug Fixes
+
+* **clipping:** fix params in clipping ([ec5dd51](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ec5dd51b68038c889f87ac3834eb5770ee3b3b21))
+* **deps:** update deps ([c40ee90](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c40ee903d5916bcc1afa6aced349faad4068670f))
+
 ### [5.12.15](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.14...v5.12.15) (2025-01-29)
 
 
