@@ -30,6 +30,7 @@ function ReactionCell(props: ReactionCellProps) {
   const [doReactionCreate, { loading: isCreating }] = useReactionCreateMutation({
     onCompleted() {
       toast.success(t('app.clipping.reactions.addSuccess'))
+      navigate.refresh()
       client.resetStore()
     },
     onError() {
@@ -39,6 +40,7 @@ function ReactionCell(props: ReactionCellProps) {
   const [doReactionRemove, { loading: isRemoving }] = useReactionRemoveMutation({
     onCompleted() {
       toast.success(t('app.clipping.reactions.removeSuccess'))
+      navigate.refresh()
       client.resetStore()
     },
     onError() {
