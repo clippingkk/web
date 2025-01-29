@@ -1,5 +1,5 @@
-import i18next from 'i18next'
 import React from 'react'
+import { useTranslation } from '@/i18n'
 import DashboardContainer from '../../components/dashboard-container/container'
 import NavigateGuide from '../../components/navigation-bar/navigate-guide'
 import { cookies } from 'next/headers'
@@ -13,8 +13,9 @@ type LayoutProps = {
 async function Layout(props: LayoutProps) {
   const cs = await cookies()
   const myUid = cs.get('uid')?.value
+  const { t } = await useTranslation()
   return (
-    <DashboardContainer uidOrDomain={myUid} header={<NavigateGuide title={i18next.t('app.plan.premium.name') ?? ''} />}>
+    <DashboardContainer uidOrDomain={myUid} header={<NavigateGuide title={t('app.plan.premium.name') ?? ''} />}>
       {props.children}
     </DashboardContainer>
   )

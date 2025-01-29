@@ -4,14 +4,11 @@ import PricingContent from './content'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 
-type PricingPageProps = {
-}
-
 export const metadata: Metadata = {
   ...pricingMetadata,
 }
 
-async function PricingPage(props: PricingPageProps) {
+async function PricingPage() {
   const cs = await cookies()
   const uid = cs.get('uid')?.value
   return (
