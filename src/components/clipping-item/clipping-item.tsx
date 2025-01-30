@@ -36,15 +36,15 @@ function ClippingItem(props: TClippingItemProps) {
     >
       <div 
         className={`
-          bg-white dark:bg-slate-800/70 backdrop-blur-lg
+          bg-slate-50/80 dark:bg-slate-800/70 backdrop-blur-xl
           p-6 lg:p-8 rounded-2xl
-          shadow-[0_8px_30px_rgb(0,0,0,0.12)]
+          shadow-[0_8px_30px_rgb(0,0,0,0.08)]
           dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)]
-          hover:shadow-[0_8px_40px_rgb(0,0,0,0.16)]
+          hover:shadow-[0_8px_40px_rgb(0,0,0,0.12)]
           dark:hover:shadow-[0_8px_40px_rgb(0,0,0,0.4)]
           transition-all duration-300 ease-in-out
-          border border-slate-100 dark:border-slate-700/50
-          hover:border-slate-200 dark:hover:border-slate-600/50
+          border border-slate-100/50 dark:border-slate-700/50
+          hover:border-slate-200/70 dark:hover:border-slate-600/50
           text-slate-900 dark:text-slate-100
           hover:-translate-y-1
         `}
