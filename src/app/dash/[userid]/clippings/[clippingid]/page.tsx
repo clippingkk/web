@@ -57,6 +57,9 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 async function Page(props: PageProps) {
   const { clippingid } = await props.params
+  const cs = await cookies()
+  const token = cs.get('token')?.value
+  const uid = cs.get('uid')?.value
   const iac = (await props.searchParams).iac
   const cid = ~~clippingid
   const client = getApolloServerClient()
@@ -66,10 +69,15 @@ async function Page(props: PageProps) {
     variables: {
       id: ~~cid,
     },
+    context: {
+      headers: token ? {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+      } : undefined
+    }
   })
 
-  const cs = await cookies()
-  const uid = cs.get('uid')?.value
   let myProfile: ProfileQuery['me'] | undefined = undefined
   if (uid) {
     const p = await client.query<ProfileQuery, ProfileQueryVariables>({
@@ -78,11 +86,9 @@ async function Page(props: PageProps) {
         id: ~~uid,
       },
       context: {
-        headers: {
-          headers: {
-            'Authorization': 'Bearer ' + cs.get('token')?.value
-          },
-        },
+        headers: token ? {
+          'Authorization': 'Bearer ' + token
+        } : undefined
       }
     })
     myProfile = p.data.me

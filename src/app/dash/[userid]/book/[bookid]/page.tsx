@@ -8,7 +8,7 @@ import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-wit
 import BookInfo from '@/components/book-info/book-info'
 import { cookies } from 'next/headers'
 import { getApolloServerClient } from '@/services/apollo.server'
-import { BookDocument } from '@/schema/generated'
+import { BookDocument, BookQuery, BookQueryVariables } from '@/schema/generated'
 import dayjs from 'dayjs'
 import Divider from '@/components/divider/divider'
 import { useTranslation } from '@/i18n'
@@ -46,21 +46,28 @@ async function Page(props: PageProps) {
   const uid = uidStr ? parseInt(uidStr) : undefined
   const dbId = bookid ?? ''
 
+  const token = ck.get('token')?.value
+
   if (!uid) {
     return null
   }
 
   const ac = getApolloServerClient()
 
-  const { data: clippingsData } = await ac.query({
+  const { data: clippingsData } = await ac.query<BookQuery, BookQueryVariables>({
     query: BookDocument,
     variables: {
-      id: ~~bookid,
+      id: ~~dbId,
       pagination: {
         limit: 10,
         offset: 0
       }
     },
+    context: {
+      headers: token ? {
+        'Authorization': 'Bearer ' + token
+      } : {}
+    }
   })
 
   const rq = getReactQueryClient()
