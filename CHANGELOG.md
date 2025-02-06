@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.17](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.16...v5.12.17) (2025-02-06)
+
+
+### Bug Fixes
+
+* **book:** fix rsc data fetching ([af14eed](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/af14eed9f892832ab7f69691549de6260c51feab))
+* **clipping:** update style ([25d730d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/25d730d0892e7f3c7cfa7e90e37adbd5c6314450))
+
 ### [5.12.16](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.15...v5.12.16) (2025-01-29)
 
 
