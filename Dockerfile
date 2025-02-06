@@ -8,6 +8,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./src/types.g.ts ./
+RUN npm install -g corepack@latest
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
 FROM base AS builder
@@ -26,6 +27,7 @@ ENV NEXT_PUBLIC_PP_TOKEN=$NEXT_PUBLIC_PP_TOKEN
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+RUN npm install -g corepack@latest
 RUN corepack enable pnpm && pnpm run codegen && pnpm run build
 
 # Production image, copy all the files and run next
