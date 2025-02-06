@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.18](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.17...v5.12.18) (2025-02-06)
+
+
+### Bug Fixes
+
+* **ci:** use latest corepack ([fec7f87](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/fec7f87cf9226f1f15540394122f14ea8deced03))
+
 ### [5.12.17](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.16...v5.12.17) (2025-02-06)
 
 
