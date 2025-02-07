@@ -1,49 +1,27 @@
-'use client'
-import React, { useMemo, useState } from 'react'
-import { useReactTable, Row, getCoreRowModel, ColumnDef, flexRender } from '@tanstack/react-table'
-import HomelessBookSyncInput from './sync-input'
-import { useUncheckBooksQueryQuery } from '@/schema/generated'
-import { Box, NumberInput, Table } from '@mantine/core'
+import React from 'react'
+import { UncheckBooksQueryDocument } from '@/schema/generated'
+import { Box } from '@mantine/core'
+import { getApolloServerClient } from '@/services/apollo.server'
+import { uncheckBooksQuery, uncheckBooksQueryVariables } from '@/schema/__generated__/uncheckBooksQuery'
+import HomelessBooksTable from './content'
+import Link from 'next/link'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const homelessBookColumn: ColumnDef<homelessBookTableItem, any>[] = [
-  {
-    header: 'Name',
-    accessorKey: 'name',
-  },
-  {
-    header: 'Action'
-  }
-]
-
-type homelessBookTableItem = {
-  name: string
+type PageProps = {
+  params: Promise<{ userid: string }>
+  searchParams: Promise<{ offset?: string }>
 }
 
-function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
-  return (
-    <Table.Tr key={row.id} className=''>
-      {row.getVisibleCells().map(cell => {
-        if (cell.column.columnDef.header === 'Action') {
-          return (
-            <Table.Td key={cell.id}>
-              <HomelessBookSyncInput bookName={cell.row.original.name} />
-            </Table.Td>
-          )
-        }
-        return (
-          <Table.Td key={cell.id}>
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </Table.Td>
-        )
-      })}
-    </Table.Tr>
-  )
-}
+async function AdminPanel(props: PageProps) {
+  const params = await props.params
+  const sp = await props.searchParams
+  const uid = ~~params.userid
 
-function AdminPanel() {
-  const [offset, setOffset] = useState(0)
-  const { data, loading } = useUncheckBooksQueryQuery({
+  const offset = sp.offset ? ~~sp.offset : 0
+
+  const ac = getApolloServerClient()
+
+  const { data } = await ac.query<uncheckBooksQuery, uncheckBooksQueryVariables>({
+    query: UncheckBooksQueryDocument,
     variables: {
       pagination: {
         limit: 50,
@@ -51,60 +29,23 @@ function AdminPanel() {
       }
     }
   })
-  const tableData = useMemo(() => {
-    const bs = data?.adminDashboard.uncheckedBooks
-    if (!bs) {
-      return []
-    }
-    return bs.map(x => ({ name: x.title } as homelessBookTableItem)) || ([] as homelessBookTableItem[])
-  }, [data])
-  const table = useReactTable({
-    data: tableData,
-    getCoreRowModel: getCoreRowModel(),
-    columns: homelessBookColumn
-  })
 
   return (
     <div className='container mx-auto'>
       <Box>
         <>
-          <h3 className='text-3xl text-center dark:text-gray-50 my-8'>无家可归的书目们</h3>
-          <NumberInput
-            size='lg'
-            value={offset}
-            onChange={(val) => setOffset(~~val)}
-            placeholder="offset"
-            className='my-4'
-          />
-          {data ? (
-            <Table
-              className='w-full'
-              striped
-              highlightOnHover
-            >
-              <Table.Thead>
-                {table.getHeaderGroups().map(headerGroup => (
-
-                  <Table.Tr key={headerGroup.id}>
-                    {headerGroup.headers.map(column => (
-                      <Table.Th className='' key={column.id}>
-                        {
-                          flexRender(column.column.columnDef.header, column.getContext())
-                        }
-                      </Table.Th>
-                    ))}
-                  </Table.Tr>
-                ))}
-              </Table.Thead>
-              <Table.Tbody>
-                {table.getRowModel().rows.map((row) => {
-                  return (<HomelessBookTableRow row={row} key={row.id} />)
-                })}
-              </Table.Tbody>
-            </Table>
-          ) : (
-            loading ? (<span>loading</span>) : (<span>no more</span>)
-          )}
+          <div>
+            <h3 className='text-3xl text-center dark:text-gray-50 my-8'>无家可归的书目们</h3>
+            <div className='flex justify-center items-center'>
+              <Link href={`/dash/${uid}/admin?offset=${offset + 50}`} className={'text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'}>
+                下一页
+              </Link>
+              <Link href={`/dash/${uid}/admin?offset=${offset - 50}`} className={'text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'}>
+                上一页
+              </Link>
+            </div>
+          </div>
+          <HomelessBooksTable data={data.adminDashboard.uncheckedBooks} />
         </>
       </Box>
     </div>
