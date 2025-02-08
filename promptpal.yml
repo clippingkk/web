@@ -1,6 +1,6 @@
 input:
     http:
-        url: https://prompt-pal.annatarhe.com
+        url: https://pp.shelltime.xyz
         token: "@env.PROMPTPAL_API_TOKEN"
 output:
     schema: ./schema.g.json
