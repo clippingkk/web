@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.20](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.19...v5.12.20) (2025-02-08)
+
+
+### Bug Fixes
+
+* fix gql import path on admin page ([a309ca5](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/a309ca52cbfd0a5ee2d1fc6f4c137f8d18be7c46))
+
 ### [5.12.19](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.18...v5.12.19) (2025-02-08)
 
 
