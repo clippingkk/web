@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import { useReactTable, Row, getCoreRowModel, ColumnDef, flexRender } from '@tanstack/react-table'
 import HomelessBookSyncInput from './sync-input'
 import { Table } from '@mantine/core'
-import { uncheckBooksQuery } from '@/schema/__generated__/uncheckBooksQuery'
+import { UncheckBooksQueryQuery } from '@/schema/generated'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const homelessBookColumn: ColumnDef<homelessBookTableItem, any>[] = [
@@ -42,7 +42,7 @@ function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
 }
 
 type Props = {
-  data: uncheckBooksQuery['adminDashboard']['uncheckedBooks']
+  data: UncheckBooksQueryQuery['adminDashboard']['uncheckedBooks']
 }
 
 function HomelessBooksTable(props: Props) {
