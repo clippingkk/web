@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.19](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.18...v5.12.19) (2025-02-08)
+
+
+### Bug Fixes
+
+* migrate promptpal service to sg based one ([206a276](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/206a276e7e13780be38d4f4511babc9b131ff054))
+
 ### [5.12.18](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.17...v5.12.18) (2025-02-06)
 
 
