@@ -12,8 +12,6 @@ import '@mantine/spotlight/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/code-highlight/styles.css'
 
-import AppContainer from '../components/AppContainer'
-
 import '../prefers-dark'
 import '../utils/settings'
 import '../utils/locales'
@@ -30,6 +28,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { theme } from '../styles/mantine'
 import { colorSchemeManager } from '../hooks/theme'
 import { cookies } from 'next/headers'
+import GlobalUpload from '@/components/uploads/global'
 // import localFont from 'next/font/local'
 
 const lato = Lato({
@@ -130,14 +129,11 @@ async function Layout(props: LayoutProps) {
         <MantineProvider theme={theme} colorSchemeManager={colorSchemeManager}>
           <ClientOnlyProviders loggedInfo={{ token, uid: uid ? ~~uid : undefined }}>
             <>
-              <AppContainer>
-                <>
-                  {props.children}
-                  <div id="dialog"></div>
-                  <div id="toast"></div>
-                  <div id='searchbar' className='raycast'></div>
-                </>
-              </AppContainer>
+              {props.children}
+              <div id="dialog"></div>
+              <div id="toast"></div>
+              <div id='searchbar' className='raycast'></div>
+              <GlobalUpload />
               <Toaster
                 position='top-center'
               />

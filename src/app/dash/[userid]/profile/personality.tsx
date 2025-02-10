@@ -1,10 +1,11 @@
 'use client'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
-import { Alert, Button, LoadingOverlay, Modal, Tooltip } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'react-i18next'
+import { ExternalLink, Loader2 } from 'lucide-react'
+import { useTranslation } from '@/i18n/client'
 import { useFetchUserPersonalityQuery } from '@/schema/generated'
-import CKLexicalBaseEditor from '@/components/RichTextEditor'
+import { Modal } from '@/components/ui/modal'
+import { useState } from 'react'
+import Markdown from 'react-markdown'
+import { MarkdownComponents } from '@/components/RichTextEditor/markdown-components'
 
 type PersonalityViewProps = {
   uid?: number
@@ -14,58 +15,57 @@ type PersonalityViewProps = {
 function PersonalityView(props: PersonalityViewProps) {
   const { uid, domain } = props
   const { t } = useTranslation()
-  const [visible, { open, close }] = useDisclosure()
+  const [isOpen, setIsOpen] = useState(false)
+  const open = () => setIsOpen(true)
+  const close = () => setIsOpen(false)
 
   const { data, loading, error } = useFetchUserPersonalityQuery({
     variables: {
       id: uid,
       domain
     },
-    skip: !visible
+    skip: !isOpen
   })
 
   const personalityData = data?.me.personalityByAI
 
   return (
     <>
-      <Tooltip
-        label={t('app.profile.personality.tooltip') ?? ''}
-        withArrow
-        transitionProps={{ transition: 'pop', duration: 200 }}
+      <button
+        onClick={open}
+        className='group inline-flex items-center gap-2 ml-4 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-lg shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105'
+        title={t('app.profile.personality.tooltip') ?? ''}
       >
-        <Button
-          onClick={open}
-          size='sm'
-          leftSection={<ArrowTopRightOnSquareIcon className='w-4 h-4' />}
-          className=' ml-4'
-        >
-          {t('app.profile.personality.title')}
-        </Button>
-      </Tooltip>
+        <ExternalLink className='w-4 h-4 transition-transform group-hover:rotate-12' />
+        {t('app.profile.personality.title')}
+      </button>
+
       <Modal
-        opened={visible}
+        isOpen={isOpen}
         onClose={close}
         title={t('app.profile.personality.title')}
-        centered
-        size='xl'
-        className='w-128'
-        overlayProps={{ backgroundOpacity: 0.7, blur: 10 }}
+        className='max-w-4xl'
       >
-        <div className='w-full min-h-60 flex items-center flex-col px-4'>
-          <LoadingOverlay visible={loading} />
+        <div className='w-full min-h-[240px] flex items-center flex-col px-4 relative'>
+          {loading && (
+            <div className='absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm'>
+              <Loader2 className='w-8 h-8 animate-spin text-primary' />
+            </div>
+          )}
           {personalityData && (
-            <CKLexicalBaseEditor
-              editable={false}
-              className='w-full px-2 focus:shadow focus:bg-slate-300 focus:outline-none rounded transition-all duration-150'
-              markdown={personalityData}
-            />
+            <Markdown components={MarkdownComponents}>
+              {personalityData}
+            </Markdown>
           )}
           {error && (
-            <Alert color='red' title='Oops'>
-              {error.clientErrors.map((e) => e.message).join(', ')}
-              {error.networkError?.message}
-              {error.graphQLErrors.map((e) => e.message).join(', ')}
-            </Alert>
+            <div className='w-full p-4 mt-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-600 dark:text-red-400'>
+              <h3 className='font-semibold mb-2'>Error</h3>
+              <p>
+                {error.clientErrors.map((e) => e.message).join(', ')}
+                {error.networkError?.message}
+                {error.graphQLErrors.map((e) => e.message).join(', ')}
+              </p>
+            </div>
           )}
         </div>
       </Modal>

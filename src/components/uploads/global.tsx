@@ -1,3 +1,4 @@
+'use client'
 import { useState, useCallback, useEffect } from 'react'
 import FloatingProgress from '../progress/floating'
 import { useUploadData } from '@/hooks/my-file'
@@ -7,12 +8,7 @@ import { useActionTrack } from '@/hooks/tracke'
 import { usePathname } from 'next/navigation'
 import DropOverlay from './drop-overlay'
 
-type Props = {
-  ref: React.RefObject<HTMLDivElement | null>
-}
-
-function GlobalUpload(props: Props) {
-  const { ref } = props
+function GlobalUpload() {
   const onUploadTrack = useActionTrack('upload')
 
   const pathname = usePathname()
@@ -41,15 +37,13 @@ function GlobalUpload(props: Props) {
       return
     }
 
-    if (ref.current) {
-      ref.current.addEventListener('dragover', stopDragOver)
-      ref.current.addEventListener('drop', onDropEnd)
-      return () => {
-        ref.current?.removeEventListener('dragover', stopDragOver)
-        ref.current?.removeEventListener('drop', onDropEnd)
-      }
+    document.body.addEventListener('dragover', stopDragOver)
+    document.body.addEventListener('drop', onDropEnd)
+    return () => {
+      document.body.removeEventListener('dragover', stopDragOver)
+      document.body.removeEventListener('drop', onDropEnd)
     }
-  }, [ref, stopDragOver, onDropEnd, isUploadPage])
+  }, [stopDragOver, onDropEnd, isUploadPage])
 
   return (
     <>
