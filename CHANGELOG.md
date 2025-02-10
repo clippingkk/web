@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.21](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.20...v5.12.21) (2025-02-10)
+
+
+### Bug Fixes
+
+* **ai:** update modal of ai summary ([563bfb0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/563bfb0b3fcebc3753b8ba5c0ebde87d99c722df))
+* fix type error ([9f71e6b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9f71e6bbaf4d955af220ff7938a1ebb7de7c9112))
+* **mdoal:** update modal style for ai ([e99085e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e99085e479c300d61d267144c315baacdacc7f6b))
+* **pp:** update pp node client to fix loading bugs ([b1d1d13](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b1d1d130ea83f132b08c1cb331b7869db4e9488b))
+
 ### [5.12.20](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.19...v5.12.20) (2025-02-08)
 
 
