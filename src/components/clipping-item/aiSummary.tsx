@@ -1,12 +1,14 @@
-import { Blockquote, LoadingOverlay, Modal, Paper, Tooltip } from '@mantine/core'
-import { useViewportSize } from '@mantine/hooks'
 import React, { useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
 import client from '../../services/pp'
 import { CKPromptDescribeBookPassageVariables, CKPrompts } from '../../types.g'
 import { WenquBook } from '../../services/wenqu'
 import { getLanguage } from '../../utils/locales'
 import { useQuery } from '@tanstack/react-query'
+import Markdown from 'react-markdown'
+import { Loader2 } from 'lucide-react'
+import { Modal } from '@/components/ui/modal'
+import { MarkdownComponents } from '../RichTextEditor/markdown-components'
 
 type ClippingAISummaryModalProps = {
   uid?: number
@@ -67,8 +69,6 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
     enabled: open && !!cid && !!book,
   })
 
-  const isMobile = useViewportSize().width <= 768
-
   const { t } = useTranslation()
 
   const errMsg = useMemo(() => {
@@ -77,35 +77,26 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
 
   return (
     <Modal
-      opened={open}
+      isOpen={open}
       onClose={onClose}
-      centered
-      size='auto'
       title={t('app.clipping.aiSummary')}
-      overlayProps={{
-        blur: 10,
-        opacity: 0.7
-      }}
     >
-      <div className='relative'>
-        <LoadingOverlay
-          visible={isLoading}
-        />
-        <Tooltip
-          label={errMsg?.includes('403') ? t('app.payment.required') : t('app.ai.clippingHelp')}
-          withArrow
-          transitionProps={{ duration: 175, transition: 'pop' }}
-        >
-          <Paper className='w-96 md:w-144 lg:w-[600px]'>
-            <Blockquote
-              icon={isMobile ? null : undefined}
-              cite=' - ChatGPT'
-              className='font-lxgw text-xl'
-            >
-              {errMsg ?? data.join('')}
-            </Blockquote>
-          </Paper>
-        </Tooltip>
+      <div className='relative min-h-[200px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden px-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50'>
+        {isLoading && (
+          <div className='absolute inset-0 flex items-center justify-center bg-white/5 backdrop-blur-sm'>
+            <Loader2 className='h-8 w-8 animate-spin text-gray-600 dark:text-gray-300' />
+          </div>
+        )}
+        {errMsg ? (
+          <div className='rounded-lg border border-red-200 bg-red-50/50 p-4 dark:border-red-800/50 dark:bg-red-900/20'>
+            <p className='font-lxgw text-lg text-red-800 dark:text-red-200'>{errMsg}</p>
+            <p className='mt-2 text-sm text-red-600 dark:text-red-400'>- ChatGPT</p>
+          </div>
+        ) : (
+          <div>
+            <Markdown components={MarkdownComponents}>{data.join('')}</Markdown>
+          </div>
+        )}
       </div>
     </Modal>
   )

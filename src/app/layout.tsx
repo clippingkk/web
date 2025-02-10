@@ -142,6 +142,7 @@ async function Layout(props: LayoutProps) {
                 position='top-center'
               />
               <ReactQueryDevtools initialIsOpen={false} />
+              <div data-id='modal' />
             </>
           </ClientOnlyProviders>
         </MantineProvider>
