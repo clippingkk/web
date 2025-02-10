@@ -1,5 +1,6 @@
 import { Components } from 'react-markdown'
 import { cn } from '@/lib/utils'
+import React from 'react'
 
 type HeadingProps = {
   level: 1 | 2 | 3 | 4 | 5 | 6
@@ -17,7 +18,8 @@ const Heading = ({ level, children }: HeadingProps) => {
     level === 6 && 'mb-4 text-base text-gray-800 dark:text-gray-200'
   )
 
-  const Tag = `h${level}` as keyof JSX.IntrinsicElements
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Tag = `h${level}` as any
   return <Tag className={className}>{children}</Tag>
 }
 
