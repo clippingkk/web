@@ -206,6 +206,9 @@ importers:
       franc-min:
         specifier: ^6.2.0
         version: 6.2.0
+      heapdump:
+        specifier: ^0.3.15
+        version: 0.3.15
       html-to-image:
         specifier: ^1.11.11
         version: 1.11.11
@@ -393,6 +396,9 @@ importers:
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
+      '@types/heapdump':
+        specifier: ^0.3.4
+        version: 0.3.4
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -4220,6 +4226,9 @@ packages:
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
 
+  '@types/heapdump@0.3.4':
+    resolution: {integrity: sha512-gTGn7W7i58F1yzvLZ5+hRE7M/VqgEzgccERJ9ZThC6qor5R8wo3oP7iiHvwgHIZzoqPF22ngu8mBagcqPWMVTg==}
+
   '@types/hoist-non-react-statics@3.3.5':
     resolution: {integrity: sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==}
 
@@ -6799,6 +6808,10 @@ packages:
 
   header-case@2.0.4:
     resolution: {integrity: sha512-H/vuk5TEEVZwrR0lp2zed9OCo1uAILMlx0JEMgC26rzyJJ3N1v6XkwHHXJQdR2doSjcGPM6OKPYoJgf0plJ11Q==}
+
+  heapdump@0.3.15:
+    resolution: {integrity: sha512-n8aSFscI9r3gfhOcAECAtXFaQ1uy4QSke6bnaL+iymYZ/dWs9cqDqHM+rALfsHUwukUbxsdlECZ0pKmJdQ/4OA==}
+    engines: {node: '>=0.10.0'}
 
   hermes-estree@0.23.1:
     resolution: {integrity: sha512-eT5MU3f5aVhTqsfIReZ6n41X5sYn4IdQL0nvz6yO+MMlPxw49aSARHLg/MSehQftyjnrE8X6bYregzSumqc6cg==}
@@ -16663,6 +16676,8 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
 
+  '@types/heapdump@0.3.4': {}
+
   '@types/hoist-non-react-statics@3.3.5':
     dependencies:
       '@types/react': 19.0.8
@@ -19846,6 +19861,10 @@ snapshots:
       capital-case: 1.0.4
       tslib: 2.6.2
 
+  heapdump@0.3.15:
+    dependencies:
+      nan: 2.22.0
+
   hermes-estree@0.23.1:
     optional: true
 
@@ -21917,8 +21936,7 @@ snapshots:
 
   n-gram@2.0.2: {}
 
-  nan@2.22.0:
-    optional: true
+  nan@2.22.0: {}
 
   nanoid@3.3.8: {}
 
