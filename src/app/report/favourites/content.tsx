@@ -25,22 +25,22 @@ function FavBookCard(
 
   return (
     <div className='w-96 mx-auto'>
-      <div className='h-144 rounded flex flex-col'>
+      <div className='h-144 rounded-sm flex flex-col'>
         <div
           className={`flex-1 relative border-2 ${dbid > 0 ? 'border-transparent' : 'dark:border-gray-100 border-gray-400'}`}
           onClick={() => setSelecting(p => !p)}
         >
-          <div className='pr-2 pb-2 pt-2 absolute top-0 left-0 right-0 z-10 backdrop-blur bg-gray-700 bg-opacity-60'>
+          <div className='pr-2 pb-2 pt-2 absolute top-0 left-0 right-0 z-10 backdrop-blur-sm bg-gray-700 bg-opacity-60'>
             <h4 className=' text-xl text-right text-gray-100'>{k}</h4>
           </div>
           {b ? (
-            <div className={'relative transition-all duration-300 rounded transform hover:scale-110 shadow-2xl with-slide-in'}>
+            <div className={'relative transition-all duration-300 rounded-sm transform hover:scale-110 shadow-2xl with-slide-in'}>
               <BlurhashView
                 blurhashValue={b.edges?.imageInfo?.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
                 src={b.image}
                 height={576}
                 width={320}
-                className='object-cover rounded w-full h-144'
+                className='object-cover rounded-sm w-full h-144'
                 alt={b.title}
               />
               <div className={'absolute bottom-0 left-0 w-full py-8 px-4 text-white rounded-b backdrop-blur-2xl bg-gray-700 bg-opacity-60'}>
@@ -52,7 +52,7 @@ function FavBookCard(
             <div className='h-full w-full flex justify-center items-center'>
               <Button
                 variant='gradient'
-                className=' bg-gradient-to-br from-indigo-300 to-cyan-600'
+                className=' bg-linear-to-br from-indigo-300 to-cyan-600'
               >
                 Select one
               </Button>
@@ -167,7 +167,7 @@ function ReportFavouritesPage() {
 
         <div className='fixed right-6 top-6'>
           <Button
-            className=' rounded-full bg-gradient-to-br from-indigo-400 to-cyan-500'
+            className=' rounded-full bg-linear-to-br from-indigo-400 to-cyan-500'
             onClick={onShareImage}
           >
             Share

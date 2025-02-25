@@ -1,12 +1,97 @@
+@plugin '@tailwindcss/forms';
+
+@source '../../node_modules/@annatarhe/lake-ui/**/*.tsx';
+
+@custom-variant dark (&:is([data-mantine-color-scheme="dark"] *));
+
+@theme {
+  --font-lxgw: var(--font-lxgw);
+  --font-lato: var(--font-lato);
+
+  --width-128: 32rem;
+  --width-144: 36rem;
+
+  --height-128: 32rem;
+  --height-144: 36rem;
+  --height-156: 40rem;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility masonry-4 {
+  columns: 4;
+}
+
+@utility masonry-3 {
+  columns: 3;
+}
+
+@utility masonry-2 {
+  columns: 2;
+}
+
+@utility masonry-1 {
+  columns: 1;
+}
+
+@utility masonry-gap-4 {
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
+
+@utility masonry-gap-8 {
+  column-gap: 2rem;
+  row-gap: 2rem;
+}
+
+@utility masonry-gap-12 {
+  column-gap: 3rem;
+  row-gap: 3rem;
+}
+
+@utility masonry-gap-16 {
+  column-gap: 4rem;
+  row-gap: 4rem;
+}
+
+@utility with-fade-in {
+  /* .font-lxgw {
+    font-family: LxgwWenKai;
+  } */
+  animation: animation-fade-in 0.35s;
+}
+
+@utility with-slide-in {
+  animation: animation-slide-in 0.35s;
+}
+
+@utility default-bg-gridient {
+  @apply bg-linear-to-br from-sky-100 to-green-200 dark:from-sky-900 dark:to-gray-800;
+}
+
 /* 
  * make the normalize.css lower priority
  * https://github.com/orgs/mantinedev/discussions/1672
  */
 @layer tailwind {
-  @tailwind base;
+  @import 'tailwindcss';
 }
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   @font-face {
@@ -33,40 +118,6 @@
 }
 
 @layer utilities {
-  .masonry-4 {
-    columns: 4;
-  }
-  .masonry-3 {
-    columns: 3;
-  }
-  .masonry-2 {
-    columns: 2;
-  }
-  .masonry-1 {
-    columns: 1;
-  }
-
-  .masonry-gap-4 {
-    column-gap: 1rem;
-    row-gap: 1rem;
-  }
-  .masonry-gap-8 {
-    column-gap: 2rem;
-    row-gap: 2rem;
-  }
-  .masonry-gap-12 {
-    column-gap: 3rem;
-    row-gap: 3rem;
-  }
-  .masonry-gap-16 {
-    column-gap: 4rem;
-    row-gap: 4rem;
-  }
-
-  /* .font-lxgw {
-    font-family: LxgwWenKai;
-  } */
-
   @keyframes animation-fade-in {
     from {
       opacity: 0;
@@ -74,10 +125,6 @@
     to {
       opacity: 1;
     }
-  }
-
-  .with-fade-in {
-    animation: animation-fade-in 0.35s;
   }
 
   @keyframes animation-slide-in {
@@ -89,13 +136,5 @@
       transform: translateY(0);
       opacity: 1;
     }
-  }
-
-  .with-slide-in {
-    animation: animation-slide-in 0.35s;
-  }
-
-  .default-bg-gridient {
-    @apply bg-gradient-to-br from-sky-100 to-green-200 dark:from-sky-900 dark:to-gray-800;
   }
 }

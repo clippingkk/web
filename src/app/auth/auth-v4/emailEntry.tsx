@@ -57,8 +57,8 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
       style={{ width: 300 }}
     >
       <div className="mb-4 w-full items-center justify-center">
-        <h2 className="text-4xl m-0 font-extrabold bg-clip-text from-slate-600 dark:from-orange-300 to-sky-400 text-transparent bg-gradient-to-br font-lato pb-2 w-full text-center">ClippingKK</h2>
-        <span className="text-base mt-4 font-lato bg-clip-text from-green-800 dark:from-green-300 to-indigo-400 text-transparent bg-gradient-to-br text-center w-full block ">{t('app.slogan')}</span>
+        <h2 className="text-4xl m-0 font-extrabold bg-clip-text from-slate-600 dark:from-orange-300 to-sky-400 text-transparent bg-linear-to-br font-lato pb-2 w-full text-center">ClippingKK</h2>
+        <span className="text-base mt-4 font-lato bg-clip-text from-green-800 dark:from-green-300 to-indigo-400 text-transparent bg-linear-to-br text-center w-full block ">{t('app.slogan')}</span>
       </div>
       <TextInput
         labelProps={{

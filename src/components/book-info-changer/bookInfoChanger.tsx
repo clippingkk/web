@@ -88,14 +88,14 @@ function BookInfoChanger(props: BookInfoChangerProps) {
         </div>
         <div>
           <p
-            className='bg-gradient-to-br p-2'
+            className='bg-linear-to-br p-2'
           >{
               t('app.clipping.updateCandidatesCount', {
                 count: candidates.data?.count ?? 0
               })
             }</p>
           <p
-            className='bg-gradient-to-br p-2 mt-2'
+            className='bg-linear-to-br p-2 mt-2'
           >{
               t('app.clipping.updateSelectedTip', {
                 title: selectedBook?.title ?? 'null'

@@ -111,7 +111,7 @@ export function Modal({
       {/* Modal */}
       <div
         className={cn(
-          'relative w-full max-h-[90vh] container transform rounded-xl bg-gradient-to-br from-white/10 to-white/5 p-6 shadow-2xl backdrop-blur-xl dark:from-gray-800/50 dark:to-gray-900/50 overflow-hidden',
+          'relative w-full max-h-[90vh] container transform rounded-xl bg-linear-to-br from-white/10 to-white/5 p-6 shadow-2xl backdrop-blur-xl dark:from-gray-800/50 dark:to-gray-900/50 overflow-hidden',
           'transition-all duration-200 ease-out',
           isVisible
             ? 'scale-100 opacity-100 translate-y-0'

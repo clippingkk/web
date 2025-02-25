@@ -17,10 +17,10 @@ function DeviceIPhoneX(props: DeviceIPhoneXProps) {
       <div className="bottom-bar"></div>
       <div className="volume"></div>
       <div className="overflow">
-        <div className="shadow shadow--tr"></div>
-        <div className="shadow shadow--tl"></div>
-        <div className="shadow shadow--br"></div>
-        <div className="shadow shadow--bl"></div>
+        <div className="shadow-sm shadow--tr"></div>
+        <div className="shadow-sm shadow--tl"></div>
+        <div className="shadow-sm shadow--br"></div>
+        <div className="shadow-sm shadow--bl"></div>
       </div>
       <div className="inner-shadow"></div>
       <div className="screen">

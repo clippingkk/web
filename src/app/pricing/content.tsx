@@ -68,7 +68,7 @@ function PricingContent(props: PricingContentProps) {
         />
         <PlanCard
           title={(
-            <h2 className='text-5xl font-bold text-transparent bg-clip-text dark:from-teal-200 dark:to-indigo-400 bg-gradient-to-br from-teal-600 to-indigo-700'>{t('app.plan.premium.name')}</h2>
+            <h2 className='text-5xl font-bold text-transparent bg-clip-text dark:from-teal-200 dark:to-indigo-400 bg-linear-to-br from-teal-600 to-indigo-700'>{t('app.plan.premium.name')}</h2>
           )}
           plan='premium'
           description={t('app.plan.premium.description')}
@@ -78,14 +78,14 @@ function PricingContent(props: PricingContentProps) {
                 {isPremium ? (
                   <Link
                     href={`/dash/${p?.me.id}/home`}
-                    className=' block py-4 rounded-md text-center bg-gradient-to-br from-orange-500 to-sky-500 w-full hover:scale-105 transition-all duration-300'
+                    className=' block py-4 rounded-md text-center bg-linear-to-br from-orange-500 to-sky-500 w-full hover:scale-105 transition-all duration-300'
                   >
                     {t('app.go')}
                   </Link>
                 ) : (
                   <Link
                     href={data?.checkoutUrl ?? '/auth/auth-v4'}
-                    className=' block py-4 rounded-md text-center bg-gradient-to-br from-yellow-300 to-orange-500 w-full hover:scale-105 transition-all duration-300 shadow-lg'
+                    className=' block py-4 rounded-md text-center bg-linear-to-br from-yellow-300 to-orange-500 w-full hover:scale-105 transition-all duration-300 shadow-lg'
                   >
                     {t('app.plan.premium.goto')}
                   </Link>

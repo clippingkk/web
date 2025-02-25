@@ -19,15 +19,15 @@ const colorPatterns: featureColorPattern[] = [
       'to-blue-500',
       'bg-clip-text',
       'text-transparent',
-      'bg-gradient-to-r'
+      'bg-linear-to-r'
     ],
     rows: [
-      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-orange-400 to-teal-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-teal-400 to-pink-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-purple-400 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-orange-400 to-teal-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-teal-400 to-pink-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-purple-400 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-green-400 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
     ]
   }, {
     title: [
@@ -35,13 +35,13 @@ const colorPatterns: featureColorPattern[] = [
       'to-pink-500',
       'bg-clip-text',
       'text-transparent',
-      'bg-gradient-to-r'
+      'bg-linear-to-r'
     ],
     rows: [
-      'from-blue-300 to-orange-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-orange-400 to-pink-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-pink-400 to-red-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-purple-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-orange-400 to-pink-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-pink-400 to-red-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-purple-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
     ]
   }, {
     title: [
@@ -49,13 +49,13 @@ const colorPatterns: featureColorPattern[] = [
       'to-purple-500',
       'bg-clip-text',
       'text-transparent',
-      'bg-gradient-to-r'
+      'bg-linear-to-r'
     ],
     rows: [
-      'from-blue-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-green-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-orange-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
-      'from-purple-400 to-indigo-400 bg-clip-text text-transparent bg-gradient-to-r ',
+      'from-blue-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-green-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-orange-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
+      'from-purple-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
     ]
   }
 ]

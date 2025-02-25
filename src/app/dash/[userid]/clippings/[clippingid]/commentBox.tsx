@@ -76,7 +76,7 @@ function CommentBox(props: CommentBoxProps) {
         <div className='w-full'>
           <CKLexicalBaseEditor
             editable
-            className='w-full min-h-40 px-2 shadow bg-slate-300 dark:bg-slate-800 dark:text-slate-200 focus:outline-none rounded transition-all duration-150'
+            className='w-full min-h-40 px-2 shadow-sm bg-slate-300 dark:bg-slate-800 dark:text-slate-200 focus:outline-hidden rounded-sm transition-all duration-150'
             markdown={content}
             onContentChange={onContentChange}
             ref={ed}

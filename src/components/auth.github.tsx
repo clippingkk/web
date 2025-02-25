@@ -15,7 +15,7 @@ function AuthByGithub(props: AuthByGithubProps) {
       href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
       onClick={onGithubClick}
       title='github login'
-      className='px-16 py-3 rounded hover:shadow-lg bg-white flex justify-center items-center hover:scale-105 duration-150 mt-4'
+      className='px-16 py-3 rounded-sm hover:shadow-lg bg-white flex justify-center items-center hover:scale-105 duration-150 mt-4'
     >
       <GithubLogo />
       <span className=' inline-block ml-4 text-slate-950'>Github</span>

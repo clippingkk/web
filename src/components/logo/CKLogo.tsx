@@ -17,7 +17,7 @@ function CKLogo(props: CKLogoProps) {
       alt="clippingkk logo"
       width={size}
       height={size}
-      className={` rounded shadow-2xl ${className}`}
+      className={` rounded-sm shadow-2xl ${className}`}
     />
   )
 }

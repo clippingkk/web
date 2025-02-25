@@ -68,7 +68,7 @@ function FeatureWidget() {
       </div>
 
       <div className='flex flex-col items-center lg:items-start'>
-        <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-orange-300 to-blue-300 bg-clip-text text-transparent bg-gradient-to-br'}>
+        <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-orange-300 to-blue-300 bg-clip-text text-transparent bg-linear-to-br'}>
           {t('app.index.features.open.f4')}
         </h3>
         <span className='text-center block dark:text-gray-100'>

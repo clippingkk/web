@@ -69,10 +69,10 @@ function AuthV3Content() {
         <div
           className='flex w-full h-full backdrop-blur-xl bg-black bg-opacity-30 justify-center items-center'
         >
-          <div className='p-12 rounded backdrop-blur-xl shadow bg-opacity-10 bg-blue-400 w-128 container'>
+          <div className='p-12 rounded-sm backdrop-blur-xl shadow-sm bg-opacity-10 bg-blue-400 w-128 container'>
             <div className='flex justify-between items-center mb-4'>
               <button
-                className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300'
+                className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded-sm transition-colors duration-300'
                 onClick={() => {
                   back()
                 }}
@@ -82,7 +82,7 @@ function AuthV3Content() {
               </button>
               <Link
                 href='/auth/signin'
-                className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded transition-colors duration-300'>
+                className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded-sm transition-colors duration-300'>
                 <ArrowUturnRightIcon className='w-6 h-6' />
                 <span className='ml-2 inline-block'>{t('app.auth.loginWithPassword')}</span>
               </Link>
@@ -91,11 +91,11 @@ function AuthV3Content() {
               <Image
                 src={logo}
                 alt="clippingkk logo"
-                // className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
+                // className='w-24 h-24 lg:w-48 lg:h-48 shadow-sm rounded-sm'
                 width={96}
                 height={96}
               />
-              <h1 className='text-center font-bold text-3xl mt-4 font-lxgw bg-clip-text from-orange-300 to-indigo-400 text-transparent bg-gradient-to-br'>ClippingKK</h1>
+              <h1 className='text-center font-bold text-3xl mt-4 font-lxgw bg-clip-text from-orange-300 to-indigo-400 text-transparent bg-linear-to-br'>ClippingKK</h1>
             </div>
 
             {phase === 0 && (
@@ -118,7 +118,7 @@ function AuthV3Content() {
               </p>
               <Link
                 href='/auth/auth-v2'
-                className='text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'>
+                className='text-white block text-center w-full rounded-sm bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'>
                 {t('app.auth.legacyLogin')}
               </Link>
 

@@ -32,7 +32,7 @@ function BookInfo({ book, uid, duration }: TBookInfoProp) {
             src={book.image}
             height={384}
             width={320}
-            className='shadow rounded mr-4 -mt-24 w-80 h-96 transition-all duration-300 max-w-xs'
+            className='shadow-sm rounded-sm mr-4 -mt-24 w-80 h-96 transition-all duration-300 max-w-xs'
             alt={book.title}
           />
         </div>
@@ -40,7 +40,7 @@ function BookInfo({ book, uid, duration }: TBookInfoProp) {
         <div className='font-lxgw text-slate-900 dark:text-slate-100'>
           <div className='flex items-center flex-column lg:flex-row flex-wrap'>
             <h2
-              className='my-4 text-4xl font-bold mr-2 bg-gradient-to-r dark:from-orange-400 dark:to-sky-400 from-indigo-600 to-cyan-700 text-transparent bg-clip-text'
+              className='my-4 text-4xl font-bold mr-2 bg-linear-to-r dark:from-orange-400 dark:to-sky-400 from-indigo-600 to-cyan-700 text-transparent bg-clip-text'
             >{book.title}</h2>
             <Tooltip
               withArrow
@@ -60,7 +60,7 @@ function BookInfo({ book, uid, duration }: TBookInfoProp) {
           )}
           <button
             onClick={() => togglePreviewVisible()}
-            className='bg-blue-400 hover:bg-blue-500 py-2 px-4 mb-2 rounded hover:shadow duration-300 transition-all flex items-center'
+            className='bg-blue-400 hover:bg-blue-500 py-2 px-4 mb-2 rounded-sm hover:shadow-sm duration-300 transition-all flex items-center'
           >
             {t('app.book.share')}
             <ShareIcon className='w-4 h-4 ml-1' />

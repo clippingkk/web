@@ -119,7 +119,7 @@ function WebHooks() {
         label={!isPremium ? t('app.payment.webhookRequired') : null}>
         <Button
           variant="gradient"
-          className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+          className='bg-linear-to-br from-indigo-400 to-cyan-500'
           disabled={!isPremium}
           onClick={() => {
             setVisible(true)
@@ -168,7 +168,7 @@ function WebHooks() {
             >
               <Button
                 variant="gradient"
-                className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+                className='bg-linear-to-br from-indigo-400 to-cyan-500'
                 disabled={formik.values.hookUrl.length <= 3 || !formik.isValid || !isPremium}
                 loading={formik.isSubmitting}
                 type='submit'

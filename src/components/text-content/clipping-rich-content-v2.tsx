@@ -120,7 +120,7 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
             ...floatingStyles,
           }}
           popover='manual'
-          className={'z-50 p-4 rounded-xl relative with-fade-in bg-gradient-to-b from-slate-50 to-slate-200 dark:from-slate-900 dark:to-slate-950 isolate shadow-lg overflow-visible m-0'}
+          className={'z-50 p-4 rounded-xl relative with-fade-in bg-linear-to-b from-slate-50 to-slate-200 dark:from-slate-900 dark:to-slate-950 isolate shadow-lg overflow-visible m-0'}
         >
           <FloatingArrow
             ref={arrowRef}

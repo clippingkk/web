@@ -80,7 +80,7 @@ function ReportBookSection(props: ReportBookSectionProps) {
           <div
             key={currentClipping.id}
             // springConfig={presets.default}
-            className='font-lxgw text-lg md:text-3xl 2xl:text-5xl !leading-loose dark:text-white'
+            className='font-lxgw text-lg md:text-3xl 2xl:text-5xl leading-loose! dark:text-white'
           >
             {currentClipping.content}
           </div>

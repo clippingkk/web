@@ -11,7 +11,7 @@ async function FeaturesOpen() {
   const { t } = await useTranslation()
   return (
     <div className='flex items-center w-full justify-around py-16 lg:flex-row flex-col'>
-      <h3 className={'lg:text-7xl text-4xl font-extrabold text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-gray-400 to-blue-500 bg-clip-text text-transparent bg-gradient-to-br'}>
+      <h3 className={'lg:text-7xl text-4xl font-extrabold text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-gray-400 to-blue-500 bg-clip-text text-transparent bg-linear-to-br'}>
         {t('app.index.features.open.title')}
       </h3>
       <div className='flex items-center'>
@@ -19,7 +19,7 @@ async function FeaturesOpen() {
           <Image
             src={logo}
             alt="clippingkk logo"
-            className='w-10 h-10 lg:w-20 lg:h-20 rounded shadow-lg'
+            className='w-10 h-10 lg:w-20 lg:h-20 rounded-sm shadow-lg'
             width={40}
             height={40}
           />
@@ -27,9 +27,9 @@ async function FeaturesOpen() {
             className='h-16 w-16 mx-8 text-green-400 font-bold'
           />
         </div>
-        <div className=' flex flex-col border-4 border-dashed border-gray-600 rounded'>
+        <div className=' flex flex-col border-4 border-dashed border-gray-600 rounded-sm'>
           <a
-            className='p-8 hover:bg-gray-400 duration-100 transition-colors rounded'
+            className='p-8 hover:bg-gray-400 duration-100 transition-colors rounded-sm'
             href='https://www.bilibili.com/video/BV1Tg411G7gG'
             target='_blank'
             rel="noreferrer"
@@ -43,7 +43,7 @@ async function FeaturesOpen() {
           </a>
 
           <a
-            className='block p-8 hover:bg-gray-400 duration-100 transition-colors rounded'
+            className='block p-8 hover:bg-gray-400 duration-100 transition-colors rounded-sm'
             href='https://annatarhe.notion.site/flomo-170afd99f866403d922a363b5b1b7706'
             target='_blank'
             rel="noreferrer"
@@ -56,7 +56,7 @@ async function FeaturesOpen() {
             />
           </a>
           <a
-            className='p-8 hover:bg-gray-400 duration-100 transition-colors rounded flex items-center'
+            className='p-8 hover:bg-gray-400 duration-100 transition-colors rounded-sm flex items-center'
             href='https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae'
             target='_blank'
             rel="noreferrer"

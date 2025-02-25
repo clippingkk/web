@@ -51,7 +51,7 @@ function WebhookTable(props: WebhookTableProps) {
                     <Table.Td key={cell.id}>
                       <Button
                         variant="gradient"
-                        className='bg-gradient-to-br from-orange-400 to-red-500'
+                        className='bg-linear-to-br from-orange-400 to-red-500'
                         onClick={() => {
                           return onRowDelete(cell.row.getValue('id'))
                         }}

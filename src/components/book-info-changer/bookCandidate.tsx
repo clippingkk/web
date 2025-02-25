@@ -13,7 +13,7 @@ function BookCandidate(props: BookCandidateProps) {
   const { book, selected } = props
   return (
     <div
-      className={'rounded flex p-2 cursor-pointer hover:shadow hover:bg-slate-300 transition-colors duration-150 dark:hover:bg-slate-800 ' + (selected ? 'shadow bg-slate-300 dark:bg-slate-800' : '')}
+      className={'rounded-sm flex p-2 cursor-pointer hover:shadow-sm hover:bg-slate-300 transition-colors duration-150 dark:hover:bg-slate-800 ' + (selected ? 'shadow-sm bg-slate-300 dark:bg-slate-800' : '')}
       onClick={() => props.onSelecte(book)}
     >
       <BlurhashImage
@@ -21,7 +21,7 @@ function BookCandidate(props: BookCandidateProps) {
         height={192}
         src={book.image}
         alt={book.title}
-        className='rounded'
+        className='rounded-sm'
         blurhashValue={book.edges?.imageInfo?.blurHashValue ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
       />
       <div className='ml-4 w-144'>

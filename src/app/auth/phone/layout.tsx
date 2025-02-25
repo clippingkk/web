@@ -38,12 +38,12 @@ function AuthPage(props: AuthPageProps) {
             <Image
               src={logo}
               alt="clippingkk logo"
-              // className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
+              // className='w-24 h-24 lg:w-48 lg:h-48 shadow-sm rounded-sm'
               width={96}
               height={96}
             />
           </div>
-          <div className='w-full flex items-center justify-center rounded'>
+          <div className='w-full flex items-center justify-center rounded-sm'>
             <Link
               href="/auth/phone"
               className={'flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 bg-indigo-400'}>

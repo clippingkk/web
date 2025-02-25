@@ -45,7 +45,7 @@ async function AuthCallbackLayout(props: AuthCallbackLayoutProps) {
           backgroundImage: 'radial-gradient(var(--start-color) 0%, var(--end-color) 100%)',
         } as React.CSSProperties}
       >
-        <div className='w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-sm flex justify-center items-center'>
+        <div className='w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-xs flex justify-center items-center'>
           {children}
         </div>
       </div>

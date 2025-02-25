@@ -19,7 +19,7 @@ function ICPInfo() {
 function Footer() {
   return (
     <footer className="relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-100 dark:to-gray-900/50 backdrop-blur-lg" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent to-gray-100 dark:to-gray-900/50 backdrop-blur-lg" />
       <div className="relative mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-6 py-12 md:py-20">
           <div className="space-y-4">

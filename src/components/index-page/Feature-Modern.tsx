@@ -47,7 +47,7 @@ async function FeatureModern() {
   const { t } = await useTranslation()
   return (
     <div className='flex items-center w-full justify-around py-16 flex-col'>
-      <h3 className={'lg:text-7xl text-4xl text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible font-extrabold from-red-400 to-pink-500 bg-clip-text text-transparent bg-gradient-to-br'}>
+      <h3 className={'lg:text-7xl text-4xl text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible font-extrabold from-red-400 to-pink-500 bg-clip-text text-transparent bg-linear-to-br'}>
         {t('app.index.features.modern.title')}
       </h3>
 
@@ -63,7 +63,7 @@ async function FeatureModern() {
             }}
           />
           <div className='flex justify-center flex-col items-center lg:items-start'>
-            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-gradient-to-br'}>
+            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br'}>
               {t('app.index.features.modern.f1')}
             </h3>
             <span className='text-center block dark:text-gray-100'>
@@ -93,7 +93,7 @@ async function FeatureModern() {
             />
           </div>
           <div className='flex justify-center flex-col items-center lg:items-start'>
-            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-gradient-to-br mt-12 lg:mt-0'}>
+            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br mt-12 lg:mt-0'}>
               {t('app.index.features.modern.f2')}
             </h3>
             <span className='text-center block dark:text-gray-100'>
@@ -105,7 +105,7 @@ async function FeatureModern() {
 
         {/* <div className=' flex justify-around mt-40'>
           <div className='flex justify-center flex-col'>
-            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-gradient-to-br'}>
+            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br'}>
               {t('app.index.features.modern.f3')}
             </h3>
             <span className='text-center block'>

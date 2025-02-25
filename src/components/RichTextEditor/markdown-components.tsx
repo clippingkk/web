@@ -10,8 +10,8 @@ type HeadingProps = {
 const Heading = ({ level, children }: HeadingProps) => {
   const className = cn(
     'font-bold tracking-tight',
-    level === 1 && 'mb-8 bg-gradient-to-br from-gray-900 to-gray-600 bg-clip-text text-4xl text-transparent dark:from-gray-100 dark:to-gray-400',
-    level === 2 && 'mb-6 bg-gradient-to-br from-gray-800 to-gray-600 bg-clip-text text-3xl text-transparent dark:from-gray-200 dark:to-gray-400',
+    level === 1 && 'mb-8 bg-linear-to-br from-gray-900 to-gray-600 bg-clip-text text-4xl text-transparent dark:from-gray-100 dark:to-gray-400',
+    level === 2 && 'mb-6 bg-linear-to-br from-gray-800 to-gray-600 bg-clip-text text-3xl text-transparent dark:from-gray-200 dark:to-gray-400',
     level === 3 && 'mb-4 text-2xl text-gray-800 dark:text-gray-200',
     level === 4 && 'mb-4 text-xl text-gray-800 dark:text-gray-200',
     level === 5 && 'mb-4 text-lg text-gray-800 dark:text-gray-200',
@@ -31,7 +31,7 @@ export const MarkdownComponents: Components = {
   h5: ({ children }) => <Heading level={5}>{children}</Heading>,
   h6: ({ children }) => <Heading level={6}>{children}</Heading>,
   p: ({ children }) => (
-    <p className='mb-6 leading-7 text-gray-700 dark:text-gray-300 [&:not(:first-child)]:mt-6'>
+    <p className='mb-6 leading-7 text-gray-700 dark:text-gray-300 not-first:mt-6'>
       {children}
     </p>
   ),
@@ -40,7 +40,7 @@ export const MarkdownComponents: Components = {
       href={href}
       target='_blank'
       rel='noopener noreferrer'
-      className='bg-gradient-to-r from-blue-600 to-blue-400 bg-[length:0%_2px] bg-left-bottom bg-no-repeat px-1 text-blue-600 transition-all hover:bg-[length:100%_2px] hover:text-blue-500 dark:from-blue-400 dark:to-blue-300 dark:text-blue-400 dark:hover:text-blue-300'
+      className='bg-linear-to-r from-blue-600 to-blue-400 bg-[length:0%_2px] bg-left-bottom bg-no-repeat px-1 text-blue-600 transition-all hover:bg-[length:100%_2px] hover:text-blue-500 dark:from-blue-400 dark:to-blue-300 dark:text-blue-400 dark:hover:text-blue-300'
     >
       {children}
     </a>
@@ -62,7 +62,7 @@ export const MarkdownComponents: Components = {
     </pre>
   ),
   blockquote: ({ children }) => (
-    <blockquote className='mt-6 border-l-4 border-gray-300 bg-gradient-to-r from-gray-100 to-transparent pl-6 italic text-gray-700 dark:border-gray-700 dark:from-gray-800 dark:to-transparent dark:text-gray-400'>
+    <blockquote className='mt-6 border-l-4 border-gray-300 bg-linear-to-r from-gray-100 to-transparent pl-6 italic text-gray-700 dark:border-gray-700 dark:from-gray-800 dark:to-transparent dark:text-gray-400'>
       {children}
     </blockquote>
   ),
@@ -97,17 +97,17 @@ export const MarkdownComponents: Components = {
   ),
   tbody: ({ children }) => <tbody>{children}</tbody>,
   tr: ({ children }) => (
-    <tr className='border-b border-gray-100 dark:border-gray-800 [&:last-child]:border-0'>
+    <tr className='border-b border-gray-100 dark:border-gray-800 last:border-0'>
       {children}
     </tr>
   ),
   th: ({ children }) => (
-    <th className='border-r border-gray-100 p-4 text-left font-medium text-gray-900 dark:border-gray-800 dark:text-gray-100 [&:last-child]:border-0'>
+    <th className='border-r border-gray-100 p-4 text-left font-medium text-gray-900 dark:border-gray-800 dark:text-gray-100 last:border-0'>
       {children}
     </th>
   ),
   td: ({ children }) => (
-    <td className='border-r border-gray-100 p-4 text-gray-700 dark:border-gray-800 dark:text-gray-300 [&:last-child]:border-0'>
+    <td className='border-r border-gray-100 p-4 text-gray-700 dark:border-gray-800 dark:text-gray-300 last:border-0'>
       {children}
     </td>
   ),

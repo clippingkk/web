@@ -59,7 +59,7 @@ function UploaderPageContent() {
   return (
     <section className={styles.uploader}>
       <div
-        className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-sm bg-blue-800 bg-opacity-25 ${styles.box}`}
+        className={`flex flex-col items-center justify-center py-32 w-10/12 my-8 mx-auto shadow-2xl rounded-xs bg-blue-800 bg-opacity-25 ${styles.box}`}
         onDragOver={stopDragOver}
         onDrop={onDropEnd}
       >

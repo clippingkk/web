@@ -45,7 +45,7 @@ function ExportToEmail() {
     <React.Fragment>
       <Button
         variant="gradient"
-        className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+        className='bg-linear-to-br from-indigo-400 to-cyan-500'
         onClick={() => setVisible(true)}
         size='lg'
       >
@@ -92,7 +92,7 @@ function ExportToEmail() {
             >
               <Button
                 variant="gradient"
-                className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+                className='bg-linear-to-br from-indigo-400 to-cyan-500'
                 type='submit'
               >
                 {t('app.settings.export.notion.submit')}

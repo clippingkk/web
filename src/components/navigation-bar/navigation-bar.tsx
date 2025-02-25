@@ -65,7 +65,7 @@ function NavigationBar(props: NavigationBarProps) {
         <Image
           src={logo}
           alt="clippingkk logo"
-          className='w-10 h-10 lg:w-20 lg:h-20 mr-2 lg:mr-12 rounded'
+          className='w-10 h-10 lg:w-20 lg:h-20 mr-2 lg:mr-12 rounded-sm'
           width={40}
           height={40}
         />
@@ -73,7 +73,7 @@ function NavigationBar(props: NavigationBarProps) {
           <ul className='flex ml-2 lg:ml-6 with-slide-in'>
             {leftMenu.map((item, index) => (
               <li
-                className={clsx('mr-3 dark:text-white items-center lg:mr-6 cursor-pointer px-4 py-2 rounded-full bg-gradient-to-br transition-all hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-gray-900 duration-150 hover:shadow-lg active:scale-95', {
+                className={clsx('mr-3 dark:text-white items-center lg:mr-6 cursor-pointer px-4 py-2 rounded-full bg-linear-to-br transition-all hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-gray-900 duration-150 hover:shadow-lg active:scale-95', {
                   'from-indigo-500 via-purple-500 to-pink-500 text-gray-500 ': activeSegment === item.targetSegment,
                 }, item.alt === 'upload' ? 'hidden md:flex' : 'flex')}
                 key={index}

@@ -46,7 +46,7 @@ function ExportToFlomo() {
     <React.Fragment>
       <Button
         variant="gradient"
-        className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+        className='bg-linear-to-br from-indigo-400 to-cyan-500'
         onClick={() => setVisible(true)}
         size='lg'
       >
@@ -79,9 +79,9 @@ function ExportToFlomo() {
             >
 
               <Button
-                // className='w-64 bg-blue-400 rounded py-4 hover:bg-blue-500 duration-150'
+                // className='w-64 bg-blue-400 rounded-sm py-4 hover:bg-blue-500 duration-150'
                 variant="gradient"
-                className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+                className='bg-linear-to-br from-indigo-400 to-cyan-500'
                 type='submit'
               >
                 {t('app.settings.export.flomo.submit')}

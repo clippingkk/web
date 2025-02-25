@@ -78,7 +78,7 @@ function SigninPageContent() {
         />
       )}
       {resp.error && (
-        <h5 className='bg-red-600 my-4 text-white p-4 rounded w-full text-xl'>{resp.error?.message}</h5>
+        <h5 className='bg-red-600 my-4 text-white p-4 rounded-sm w-full text-xl'>{resp.error?.message}</h5>
       )}
       <Button
         variant='gradient'

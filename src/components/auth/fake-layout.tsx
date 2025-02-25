@@ -19,7 +19,7 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
   const { t } = useTranslation()
   return (
     <>
-      <div className='px-8 py-4 flex flex-col lg:flex-row rounded bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur shadow-lg'>
+      <div className='px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg'>
         <div
           className={'duration-150 container ' + (willBind ? 'opacity-50 ' : '')}
         >
@@ -31,7 +31,7 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
           </h4>
           <div className='my-8 flex flex-col lg:flex-row items-center justify-end gap-4'>
             <Button
-              className='h-20 from-teal-400 via-teal-500 to-teal-400 bg-gradient-to-br rounded-lg text-2xl lg:text-5xl duration-150'
+              className='h-20 from-teal-400 via-teal-500 to-teal-400 bg-linear-to-br rounded-lg text-2xl lg:text-5xl duration-150'
               variant='outline'
               color='red'
               onClick={props.doBind}
@@ -40,7 +40,7 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
             </Button>
             {!willBind && (
               <Button
-                className='h-20 from-blue-400 via-teal-400 to-orange-400 bg-gradient-to-br rounded-lg text-2xl lg:text-4xl hover:shadow-lg hover:scale-105 duration-150'
+                className='h-20 from-blue-400 via-teal-400 to-orange-400 bg-linear-to-br rounded-lg text-2xl lg:text-4xl hover:shadow-lg hover:scale-105 duration-150'
                 onClick={() => {
                   setWillBind(true)
                 }}
@@ -59,7 +59,7 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
           </div>
         )}
         {props.loading && (
-          <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center flex-col backdrop-blur-sm with-fade-in'>
+          <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center flex-col backdrop-blur-xs with-fade-in'>
             <LoadingIcon className='animate-spin' />
             <span className='dark:text-white text-sm mt-4'>Submitting...</span>
           </div>

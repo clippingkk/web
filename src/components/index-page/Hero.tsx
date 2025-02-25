@@ -52,8 +52,8 @@ async function Hero(props: HeroProps) {
       <div className='w-[100vw] h-[100vh] backdrop-blur-xl bg-black dark:bg-opacity-40 bg-opacity-10 flex flex-col justify-center absolute top-0 left-0'>
         <div className={styles.titleField + ' my-8 mx-8 md:my-20 md:mx-20 flex items-center justify-center flex-col md:flex-row'}>
           <div className='flex-1 mb-8'>
-            <h1 className='text-8xl m-0 font-extrabold bg-clip-text from-orange-300 to-sky-400 text-transparent bg-gradient-to-br font-lato pb-2'>ClippingKK</h1>
-            <h4 className='text-3xl mt-4 font-lato bg-clip-text from-green-300 to-indigo-400 text-transparent bg-gradient-to-br'>{t('app.slogan')}</h4>
+            <h1 className='text-8xl m-0 font-extrabold bg-clip-text from-orange-300 to-sky-400 text-transparent bg-linear-to-br font-lato pb-2'>ClippingKK</h1>
+            <h4 className='text-3xl mt-4 font-lato bg-clip-text from-green-300 to-indigo-400 text-transparent bg-linear-to-br'>{t('app.slogan')}</h4>
             <div className='flex items-end my-6'>
               <Link
                 href={myUid ? `/dash/${myUid}/home` : '/auth/auth-v4'}

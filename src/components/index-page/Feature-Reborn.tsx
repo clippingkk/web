@@ -18,7 +18,7 @@ async function FeatureReborn() {
   const goLinkUrl = uid ? `/dash/${uid}/home` : '/auth/auth-v4'
   return (
     <div className='flex items-center mt-24 lg:mt-72 w-full justify-around py-16 flex-col'>
-      <h3 className={'lg:text-7xl text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-gray-800 to-pink-300 font-extrabold bg-clip-text text-transparent bg-gradient-to-br'}>
+      <h3 className={'lg:text-7xl text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-gray-800 to-pink-300 font-extrabold bg-clip-text text-transparent bg-linear-to-br'}>
         {t('app.index.features.reading4.title')}
       </h3>
 
@@ -27,7 +27,7 @@ async function FeatureReborn() {
           href='https://apps.apple.com/us/app/clippingkk/id1537830952'
           target='_blank'
           rel="noreferrer"
-          className=' block p-8 rounded hover:bg-purple-200 hover:shadow-2xl transition-colors duration-300'
+          className=' block p-8 rounded-sm hover:bg-purple-200 hover:shadow-2xl transition-colors duration-300'
         >
           <Image
             src={AppleIcon}
@@ -38,7 +38,7 @@ async function FeatureReborn() {
         </a>
         <Tooltip label={'will release soon'}>
           <div
-            className=' block p-8 rounded hover:bg-purple-200 hover:shadow-2xl transition-colors duration-300'
+            className=' block p-8 rounded-sm hover:bg-purple-200 hover:shadow-2xl transition-colors duration-300'
           >
             <Image
               src={AndroidIcon}
@@ -59,7 +59,7 @@ async function FeatureReborn() {
           )}
         >
           <div
-            className=' block p-8 rounded hover:bg-purple-200 hover:shadow-2xl transition-colors duration-300'
+            className=' block p-8 rounded-sm hover:bg-purple-200 hover:shadow-2xl transition-colors duration-300'
           >
             <Image
               src={WechatIcon}
@@ -74,7 +74,7 @@ async function FeatureReborn() {
           href='https://github.com/clippingkk/cli'
           target='_blank'
           rel="noreferrer"
-          className=' block p-8 rounded hover:bg-purple-200 hover:shadow-2xl transition-colors duration-300'
+          className=' block p-8 rounded-sm hover:bg-purple-200 hover:shadow-2xl transition-colors duration-300'
         >
           <Image
             src={TerminalIcon}
@@ -87,7 +87,7 @@ async function FeatureReborn() {
 
       <Link
         href={goLinkUrl}
-        className={'w-full py-8 text-6xl rounded-lg block text-white my-6 hover:shadow-2xl bg-gradient-to-br from-sky-300 to-teal-400 text-center font-extrabold active:scale-95 duration-150 transition-all dark:from-slate-700 dark:to-slate-950'}
+        className={'w-full py-8 text-6xl rounded-lg block text-white my-6 hover:shadow-2xl bg-linear-to-br from-sky-300 to-teal-400 text-center font-extrabold active:scale-95 duration-150 transition-all dark:from-slate-700 dark:to-slate-950'}
       >
         {t('app.go')}
       </Link>

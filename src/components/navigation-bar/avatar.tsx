@@ -16,7 +16,7 @@ function AvatarOnNavigationBar(props: AvatarOnNavigationBarProps) {
 
   return (
     <div
-      className={clsx(isPremium && 'px-1 py-1 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400')}>
+      className={clsx(isPremium && 'px-1 py-1 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400')}>
       <Avatar
         src={avatar}
         size={size}

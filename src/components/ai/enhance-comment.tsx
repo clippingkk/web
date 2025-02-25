@@ -50,7 +50,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
       <Button.Group className='gap-2'>
         <Button
           variant="gradient"
-          className='bg-gradient-to-r from-gray-500 to-pink-400'
+          className='bg-linear-to-r from-gray-500 to-pink-400'
           loading={loading}
           onClick={() => onEnhance(Prompts.Professional)}
         >
@@ -58,7 +58,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
         </Button>
         <Button
           variant="gradient"
-          className='bg-gradient-to-r from-pink-400 to-green-500'
+          className='bg-linear-to-r from-pink-400 to-green-500'
           loading={loading}
           onClick={() => onEnhance(Prompts.Deeper)}
         >
@@ -66,7 +66,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
         </Button>
         <Button
           variant="gradient"
-          className='bg-gradient-to-r from-green-500 to-sky-400'
+          className='bg-linear-to-r from-green-500 to-sky-400'
           loading={loading}
           onClick={() => onEnhance(Prompts.Intriguing)}
         >
@@ -94,7 +94,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
           </Button>
           <Button
             variant='gradient'
-            className='bg-gradient-to-br from-green-300 to-pink-400 text-black'
+            className='bg-linear-to-br from-green-300 to-pink-400 text-black'
             onClick={() => {
               setOpened(false)
               props.onAccept(data?.aiEnhanceComment.content ?? '')

@@ -83,10 +83,10 @@ function NewbiePageContent() {
           <div className='w-full with-fade-in'>
             <h5 className='text-center text-lg mb-2 dark:text-white'>Choose my name</h5>
             <span className=' w-full text-center mb-2 block dark:text-white'>
-              <kbd className='px-1 py-2 bg-pink-400 rounded mr-1'>&lt;</kbd>
-              <kbd className='px-1 py-2 bg-pink-400 rounded mr-1'>&gt;</kbd>
-              <kbd className='px-1 py-2 bg-pink-400 rounded mr-1'>\</kbd>
-              <kbd className='px-1 py-2 bg-pink-400 rounded mr-1'>+</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>&lt;</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>&gt;</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>\</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>+</kbd>
               not allowed
             </span>
             <input
@@ -100,7 +100,7 @@ function NewbiePageContent() {
                 setNewName(val)
               }}
               placeholder='name'
-              className='w-full px-2 py-4 rounded'
+              className='w-full px-2 py-4 rounded-sm'
             />
             <ButtonSimple
               loading={doUpdateResponse.loading}
@@ -134,7 +134,7 @@ function NewbiePageContent() {
               maxLength={32}
               minLength={3}
               value={newDomain}
-              className='w-full px-2 py-4 rounded'
+              className='w-full px-2 py-4 rounded-sm'
               placeholder='my.name.domain'
               onChange={e => {
                 const val = e.target.value

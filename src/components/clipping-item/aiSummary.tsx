@@ -83,7 +83,7 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
     >
       <div className='relative min-h-[200px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden px-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50'>
         {isLoading && (
-          <div className='absolute inset-0 flex items-center justify-center bg-white/5 backdrop-blur-sm'>
+          <div className='absolute inset-0 flex items-center justify-center bg-white/5 backdrop-blur-xs'>
             <Loader2 className='h-8 w-8 animate-spin text-gray-600 dark:text-gray-300' />
           </div>
         )}

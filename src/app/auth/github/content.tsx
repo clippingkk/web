@@ -28,7 +28,7 @@ function GithubOAuthContent(props: GithubOAuthContentProps) {
   }, [code])
 
   return (
-    <div className='p-10 bg-gray-300 bg-opacity-40 rounded text-4xl backdrop-blur-lg'>
+    <div className='p-10 bg-gray-300 bg-opacity-40 rounded-sm text-4xl backdrop-blur-lg'>
       {resp.loading && (
         <LoadingIcon className='animate-spin' />
       )}

@@ -37,7 +37,7 @@ function EmailBox(props: EmailBoxProps) {
         <input
           type="email"
           placeholder='email@gmail.com'
-          className=' w-full rounded px-2 py-4 bg-gray-100 bg-opacity-90'
+          className=' w-full rounded-sm px-2 py-4 bg-gray-100 bg-opacity-90'
           value={email}
           onChange={e => setEmail(e.target.value.trim())}
         />
@@ -51,7 +51,7 @@ function EmailBox(props: EmailBoxProps) {
       </fieldset>
       <div className='w-full mt-4'>
         <Button
-          className='text-white w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'
+          className='text-white w-full rounded-sm bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'
           fullWidth
           size='lg'
           type='submit'

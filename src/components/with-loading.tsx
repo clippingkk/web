@@ -12,13 +12,13 @@ function WithLoading(props: WithLoadingProps) {
     <div className=' relative w-full'>
       {props.children}
       {props.loading && (
-        <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center backdrop-blur-sm with-fade-in'>
+        <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center backdrop-blur-xs with-fade-in'>
           <LoadingIcon className='animate-spin' />
           <span className='dark:text-white text-sm ml-4'>Submitting...</span>
         </div>
       )}
       {props.disabled ? (
-        <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center backdrop-blur-sm with-fade-in'>
+        <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center backdrop-blur-xs with-fade-in'>
           <span className='dark:text-white text-sm ml-4'>
             Unavailable
           </span>

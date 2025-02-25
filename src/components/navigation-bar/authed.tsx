@@ -46,7 +46,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
       <li className='mr-6'>
         <button
           onClick={onSearch}
-          className=' bg-slate-500 bg-opacity-50 backdrop-blur hover:bg-opacity-100 transition-all duration-150 flex items-center px-4 py-2 rounded-full text-slate-800 dark:text-white'
+          className=' bg-slate-500 bg-opacity-50 backdrop-blur-sm hover:bg-opacity-100 transition-all duration-150 flex items-center px-4 py-2 rounded-full text-slate-800 dark:text-white'
         >
           <MagnifyingGlassIcon className='w-6 h-6 text-slate-100 dark:text-slate-300' />
           <span className='ml-2 text-slate-100 dark:text-slate-300'>{t('app.menu.search.title')}</span>

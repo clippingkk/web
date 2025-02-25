@@ -58,7 +58,7 @@ function Preview(props: PreviewProps) {
             onLoad={onImageLoad}
             onLoadStart={() => setLoading(true)}
             onError={onImageError}
-            className={'h-[812px] w-[375px] rounded'}
+            className={'h-[812px] w-[375px] rounded-sm'}
             alt={t('app.common.loading') ?? 'loading'}
           />
           {loading && (
@@ -91,7 +91,7 @@ function Preview(props: PreviewProps) {
           <a
             href={shareURL}
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
-            className='text-white text-lg w-full from-indigo-400 to-teal-600 bg-gradient-to-br block text-center py-4 mt-4 rounded shadow hover:shadow-2xl duration-150'
+            className='text-white text-lg w-full from-indigo-400 to-teal-600 bg-linear-to-br block text-center py-4 mt-4 rounded-sm shadow-sm hover:shadow-2xl duration-150'
             target='_blank'
             rel="noreferrer"
           >

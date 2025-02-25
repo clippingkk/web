@@ -78,7 +78,7 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
         <UserActions isInMyPage={isInMyPage} profile={profile} />
         <Link
           href={`/report/yearly?uid=${profile.id}&year=${year}`}
-          className='px-4 py-2 rounded bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
+          className='px-4 py-2 rounded-sm bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
           title={t('app.profile.yearlyReportTip') ?? ''}>
           {t('app.profile.report.yearlyTitle')}
         </Link>
@@ -90,7 +90,7 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
           <a
             href={`${API_HOST}/api/rss/user/${profile.id}/clippings`}
             target='_blank'
-            className='ml-4 px-4 py-2 rounded hover:bg-blue-400'
+            className='ml-4 px-4 py-2 rounded-sm hover:bg-blue-400'
             rel="noreferrer"
           >
             RSS

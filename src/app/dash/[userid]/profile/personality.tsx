@@ -33,7 +33,7 @@ function PersonalityView(props: PersonalityViewProps) {
     <>
       <button
         onClick={open}
-        className='group inline-flex items-center gap-2 ml-4 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-lg shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105'
+        className='group inline-flex items-center gap-2 ml-4 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white bg-linear-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 rounded-lg shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105'
         title={t('app.profile.personality.tooltip') ?? ''}
       >
         <ExternalLink className='w-4 h-4 transition-transform group-hover:rotate-12' />
@@ -48,7 +48,7 @@ function PersonalityView(props: PersonalityViewProps) {
       >
         <div className='w-full min-h-[240px] flex items-center flex-col px-4 relative'>
           {loading && (
-            <div className='absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm'>
+            <div className='absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-xs'>
               <Loader2 className='w-8 h-8 animate-spin text-primary' />
             </div>
           )}

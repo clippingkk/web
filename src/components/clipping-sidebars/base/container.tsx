@@ -11,10 +11,10 @@ export function SidebarContainer({ children, className }: Props) {
   return (
     <li className='w-full mb-4'>
       <div className={cn(
-        'group relative overflow-hidden rounded-xl backdrop-blur-sm transition-all',
+        'group relative overflow-hidden rounded-xl backdrop-blur-xs transition-all',
         className
       )}>
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-teal-500/10 group-hover:from-purple-500/20 group-hover:to-teal-500/20 transition-colors" />
+        <div className="absolute inset-0 bg-linear-to-r from-purple-500/10 to-teal-500/10 group-hover:from-purple-500/20 group-hover:to-teal-500/20 transition-colors" />
         <div className="relative">
           {children}
         </div>

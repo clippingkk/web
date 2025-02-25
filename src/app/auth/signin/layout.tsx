@@ -29,20 +29,20 @@ function AuthPage(props: AuthPageProps) {
   const onGithubClick = useActionTrack('login:github')
 
   return (
-    (<section className=' from-teal-100 to-green-300 bg-gradient-to-br dark:from-teal-900 dark:to-slate-900 flex h-screen items-center justify-center'>
+    (<section className=' from-teal-100 to-green-300 bg-linear-to-br dark:from-teal-900 dark:to-slate-900 flex h-screen items-center justify-center'>
       <Card className='with-slide-in container'>
         <>
           <div className='flex items-center justify-center flex-col mb-4'>
             <Image
               src={logo}
               alt="clippingkk logo"
-              // className='w-24 h-24 lg:w-48 lg:h-48 shadow rounded'
+              // className='w-24 h-24 lg:w-48 lg:h-48 shadow-sm rounded-sm'
               width={96}
               height={96}
             />
 
           </div>
-          <div className='w-full flex items-center justify-center rounded'>
+          <div className='w-full flex items-center justify-center rounded-sm'>
             <Link
               href="/auth/phone"
               className={'flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400'}>

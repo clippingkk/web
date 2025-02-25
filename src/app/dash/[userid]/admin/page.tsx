@@ -43,10 +43,10 @@ async function AdminPanel(props: PageProps) {
           <div>
             <h3 className='text-3xl text-center dark:text-gray-50 my-8'>无家可归的书目们</h3>
             <div className='flex justify-center items-center gap-8'>
-              <Link href={`/dash/${uid}/admin?offset=${offset + 50}`} className={'text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'}>
+              <Link href={`/dash/${uid}/admin?offset=${offset + 50}`} className={'text-white block text-center w-full rounded-sm bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'}>
                 Next Page
               </Link>
-              <Link href={`/dash/${uid}/admin?offset=${offset - 50}`} className={'text-white block text-center w-full rounded bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'}>
+              <Link href={`/dash/${uid}/admin?offset=${offset - 50}`} className={'text-white block text-center w-full rounded-sm bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'}>
                 Prev Page
               </Link>
             </div>

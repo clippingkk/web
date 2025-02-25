@@ -92,7 +92,7 @@ ck-cli
             <CodeHighlight code={cliScriptExample} language='bash' />
             <button
               onClick={onCopyToClipboard}
-              className='text-xl py-2 px-4 rounded bg-blue-500 text-white hover:scale-110 transform duration-300'
+              className='text-xl py-2 px-4 rounded-sm bg-blue-500 text-white hover:scale-110 transform duration-300'
             >Copy to Clipboard</button>
             <br />
             3. refresh and wait it sync

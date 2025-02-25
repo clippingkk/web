@@ -18,7 +18,7 @@ function MarkdownPreview(props: MarkdownPreviewProps) {
   return (
     <CKLexicalBaseEditor
       editable={false}
-      className='w-full px-2 focus:shadow focus:bg-slate-300 focus:outline-none rounded transition-all duration-150'
+      className='w-full px-2 focus:shadow-sm focus:bg-slate-300 focus:outline-hidden rounded-sm transition-all duration-150'
       markdown={md}
       ref={editor}
     />

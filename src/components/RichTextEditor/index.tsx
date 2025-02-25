@@ -82,7 +82,7 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
             underline: 'underline',
             bold: 'font-bold',
             strikethrough: 'line-through',
-            code: 'px-1 py border-1 border-gray-300 bg-gray-200 rounded text-slate-800',
+            code: 'px-1 py border-1 border-gray-300 bg-gray-200 rounded-sm text-slate-800',
           },
           link: 'text-blue-500 hover:text-blue-600 hover:underline cursor-pointer',
           quote: 'my-4 border-l-4 border-gray-300 pl-4 italic',
@@ -94,7 +94,7 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
           table: 'my-4 table-auto',
           tableCell: 'py-1 px-2 border border-gray-300',
           tableRow: 'border-b border-gray-300',
-          code: 'p-1 bg-gray-200 rounded',
+          code: 'p-1 bg-gray-200 rounded-sm',
           codeHighlight: {
             background: 'bg-gray-200',
           },

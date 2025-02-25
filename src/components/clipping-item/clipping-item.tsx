@@ -53,17 +53,17 @@ function ClippingItem(props: TClippingItemProps) {
           <h3 className='text-2xl lg:text-3xl font-lxgw font-medium mb-6 leading-relaxed'>
             {book?.title ?? item.title}
           </h3>
-          <div className='w-full h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent mb-6'></div>
+          <div className='w-full h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent mb-6'></div>
           <ClippingContent content={item.content} className='text-lg lg:text-2xl font-lxgw leading-relaxed text-slate-700 dark:text-slate-300' />
           {creator && (
             <React.Fragment>
-              <div className='w-full h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent my-6'></div>
+              <div className='w-full h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent my-6'></div>
               <div className='flex w-full justify-between items-center'>
                 <div className='flex items-center space-x-4 min-w-0'>
                   <Avatar
                     img={creator.avatar}
                     name={creator.name}
-                    className='w-12 h-12 ring-2 ring-slate-100 dark:ring-slate-700 flex-shrink-0'
+                    className='w-12 h-12 ring-2 ring-slate-100 dark:ring-slate-700 shrink-0'
                   />
                   <span className='font-medium text-slate-800 dark:text-slate-200 truncate'>{creator.name}</span>
                 </div>

@@ -156,11 +156,11 @@ function ProfileEditor(props: ProfileEditorProps) {
               />
 
               <div className='flex items-center justify-end'>
-                <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-sm px-4 py-2 mr-4' onClick={onEditCancel}>
+                <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-xs px-4 py-2 mr-4' onClick={onEditCancel}>
                   {t('app.common.cancel')}
                 </button>
                 <Button
-                  className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-sm px-4 py-2 disabled:text-gray-500'
+                  className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-xs px-4 py-2 disabled:text-gray-500'
                   type='submit'
                   disabled={(!formik.isValid) || (
                     false

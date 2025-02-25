@@ -197,7 +197,7 @@ function AuthV4Content() {
   })
 
   return (
-    <div className='px-8 py-4 flex flex-col lg:flex-row rounded bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur shadow-lg'>
+    <div className='px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg'>
       <EmailLoginEntry machine={state} sendEvent={send} />
       <Divider variant='vertical' className='mx-8' />
       <div className='mt-6 lg:mt-0'>

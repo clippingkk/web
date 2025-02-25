@@ -110,7 +110,7 @@ async function Page(props: PageProps) {
         <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.title')}</h2>
         <Link
           href={`/dash/${myUidInt}/unchecked`}
-          className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-all hover:bg-blue-700 rounded hover:shadow'>
+          className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-all hover:bg-blue-700 rounded-sm hover:shadow-sm'>
 
           {t('app.home.unchecked')}
         </Link>

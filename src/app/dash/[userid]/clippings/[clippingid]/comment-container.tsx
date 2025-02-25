@@ -20,7 +20,7 @@ async function CommentContainer({ me, clipping, book }: Props) {
   return (
     <div className='container px-2 lg:px-20 mb-4'>
       <div
-        className='w-full h-full rounded p-4 backdrop-blur bg-slate-200 dark:bg-slate-800 bg-opacity-50 dark:bg-opacity-50 shadow'
+        className='w-full h-full rounded-sm p-4 backdrop-blur-sm bg-slate-200 dark:bg-slate-800 bg-opacity-50 dark:bg-opacity-50 shadow-sm'
         style={{
           // backgroundImage: 'linear-gradient(180deg, oklch(71.33% 0.16 292.24 / 6.75%) 0%, oklch(71.33% 0.16 292.24 / 36.75%) 100%)',
         }}

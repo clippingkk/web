@@ -60,7 +60,7 @@ function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) 
         <Avatar
           src={avatar}
           size={50}
-          className='rounded-full shadow'
+          className='rounded-full shadow-sm'
           alt={clipping.creator.name}
         />
         <h4 className='my-2 text-sm'>{clipping.creator.name}</h4>

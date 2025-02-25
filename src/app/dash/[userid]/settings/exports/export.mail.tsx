@@ -63,7 +63,7 @@ function ExportToMail() {
     <React.Fragment>
       <Button
         variant="gradient"
-        className='bg-gradient-to-br from-indigo-400 to-cyan-500'
+        className='bg-linear-to-br from-indigo-400 to-cyan-500'
         onClick={open}
         size='lg'
       >

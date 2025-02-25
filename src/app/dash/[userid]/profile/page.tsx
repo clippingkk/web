@@ -61,7 +61,7 @@ async function Page(props: PageProps) {
   const { t } = await useTranslation()
   return (
     <section>
-      <div className='flex rounded items-center justify-center py-12 w-full mx-auto mt-20 anna-fade-in bg-gray-500 bg-opacity-50 backdrop-blur shadow-2xl'>
+      <div className='flex rounded-sm items-center justify-center py-12 w-full mx-auto mt-20 anna-fade-in bg-gray-500 bg-opacity-50 backdrop-blur-sm shadow-2xl'>
         <div className='flex flex-col items-center justify-center w-full'>
           <ProfilePageContent profile={profile.me} myUid={myUid} />
 

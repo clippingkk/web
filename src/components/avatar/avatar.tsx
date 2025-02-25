@@ -24,7 +24,7 @@ function Avatar(props: AvatarProps) {
   }
 
   if (isPremium) {
-    cls += ' px-1 py-1 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400 '
+    cls += ' px-1 py-1 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 '
   }
 
   const { ref, isHovering } = useHover<HTMLDivElement>()
@@ -43,7 +43,7 @@ function Avatar(props: AvatarProps) {
       />
       {props.editable && (
         <div
-          className=' rounded-full flex justify-center items-center absolute inset-0 hover:bg-gray-900 hover:bg-opacity-40 hover:backdrop-blur transition-all duration-300'
+          className=' rounded-full flex justify-center items-center absolute inset-0 hover:bg-gray-900 hover:bg-opacity-40 hover:backdrop-blur-sm transition-all duration-300'
           onClick={props.onClick}
         >
           {isHovering && (

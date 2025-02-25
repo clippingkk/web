@@ -27,7 +27,7 @@ function LoadingModal(props: LoadingModalProps) {
       className='fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center z-50 bg-black bg-opacity-75 backdrop-blur-lg anna-fade-in'
     >
       <div
-        className='px-32 py-16 rounded shadow-lg bg-gray-100 flex justify-center items-center flex-col'
+        className='px-32 py-16 rounded-sm shadow-lg bg-gray-100 flex justify-center items-center flex-col'
       >
         {/* <UploadLoading
         percent={percent}

@@ -33,7 +33,7 @@ function MarkdownEditor(props: MarkdownEditorProps) {
       <Tabs.Panel value="edit" pt="xs">
         <Textarea
           minRows={8}
-          className='bg-gray-100 dark:bg-gray-900 bg-opacity-90 rounded'
+          className='bg-gray-100 dark:bg-gray-900 bg-opacity-90 rounded-sm'
           autosize
           maxRows={30}
           size='lg'
@@ -43,7 +43,7 @@ function MarkdownEditor(props: MarkdownEditorProps) {
         />
       </Tabs.Panel>
       <Tabs.Panel value="preview" pt="xs">
-        <div className='p-4 bg-gray-100 bg-opacity-90 rounded min-h-[184px]'>
+        <div className='p-4 bg-gray-100 bg-opacity-90 rounded-sm min-h-[184px]'>
           <MarkdownPreview value={value} />
         </div>
       </Tabs.Panel>

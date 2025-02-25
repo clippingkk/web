@@ -4,7 +4,7 @@ function Loading() {
   return (
     <div className='container mx-auto'>
       <div
-        className='w-full h-96 animate-pulse bg-gray-300 dark:bg-gray-700 rounded'
+        className='w-full h-96 animate-pulse bg-gray-300 dark:bg-gray-700 rounded-sm'
       />
     </div>
   )

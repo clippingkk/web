@@ -29,7 +29,7 @@ function Comment(props: CommentProps) {
   }, [props.comment.content, isFold, commentLines])
 
   return (
-    <div className='flex container mb-6 flex-col lg:flex-row lg:p-8 p-6 rounded'>
+    <div className='flex container mb-6 flex-col lg:flex-row lg:p-8 p-6 rounded-sm'>
       <div className='flex flex-row lg:flex-col lg:mt-4 items-center'>
         <Avatar
           img={creator.avatar}
@@ -42,7 +42,7 @@ function Comment(props: CommentProps) {
       <div className='flex flex-1 mt-2 lg:mt-0 lg:ml-8 flex-col justify-center items-start transition-all duration-150'>
         <div
           ref={foldRef}
-          className='p-4 bg-gray-100 bg-opacity-90 rounded w-full overscroll-y-hidden relative'
+          className='p-4 bg-gray-100 bg-opacity-90 rounded-sm w-full overscroll-y-hidden relative'
           style={{
             height: isFold ? 288 : '100%',
             paddingBottom: isFold ? 0 : 32
@@ -50,7 +50,7 @@ function Comment(props: CommentProps) {
         >
           <CKLexicalBaseEditor
             editable={false}
-            className='w-full px-2 focus:shadow focus:bg-slate-300 focus:outline-none rounded transition-all duration-150'
+            className='w-full px-2 focus:shadow-sm focus:bg-slate-300 focus:outline-hidden rounded-sm transition-all duration-150'
             style={{
               height: isFold ? 192 : '100%',
               overflowY: 'auto'
