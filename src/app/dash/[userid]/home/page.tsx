@@ -19,20 +19,34 @@ type PageProps = {
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const pathUid: string = (await props.params).userid
+  const [ck, params] = await Promise.all([cookies(), props.params])
+  const pathUid: string = params.userid
   const uid = parseInt(pathUid)
   const client = getApolloServerClient()
-  const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
-    query: ProfileDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      id: Number.isNaN(uid) ? -1 : uid,
-      domain: Number.isNaN(uid) ? pathUid : null
-    },
-  })
-  return profileGenerateMetadata({
-    profile: profileResponse.data.me
-  })
+
+  const tk = ck.get('token')?.value
+
+  try {
+    const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
+      query: ProfileDocument,
+      fetchPolicy: 'network-only',
+      variables: {
+        id: Number.isNaN(uid) ? -1 : uid,
+        domain: Number.isNaN(uid) ? pathUid : null
+      },
+      context: tk ? {
+        headers: {
+          'Authorization': 'Bearer ' + tk,
+        },
+      } : undefined
+    })
+    return profileGenerateMetadata({
+      profile: profileResponse.data.me
+    })
+  } catch (e) {
+    console.error(e)
+    return profileGenerateMetadata({})
+  }
 }
 
 // the home page only available for myself
@@ -46,6 +60,7 @@ async function Page(props: PageProps) {
   }
 
   const myUidInt = myUid ? parseInt(myUid) : undefined
+
 
   const apolloClient = getApolloServerClient()
   const profileResponse = await apolloClient.query<ProfileQuery, ProfileQueryVariables>({

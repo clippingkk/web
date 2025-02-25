@@ -36,13 +36,15 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 }
 
 async function Page(props: PageProps) {
-  // const withProfileEditor = (await props.searchParams).with_profile_editor
-  const pathUid: string = (await props.params).userid
-  const cs = await cookies()
-  const myUidStr = cs.get('uid')?.value
+  const [params, searchParams, ck] = await Promise.all([props.params, props.searchParams, cookies()])
+  const withProfileEditor = searchParams.with_profile_editor
+  const pathUid: string = params.userid
+  const myUidStr = ck.get('uid')?.value
   const myUid = myUidStr ? parseInt(myUidStr) : undefined
 
   const ac = getApolloServerClient()
+
+  const tk = ck.get('token')?.value
 
   const isTargetUidType = !Number.isNaN(parseInt(pathUid))
   const { data: profile } = await ac.query<ProfileQuery, ProfileQueryVariables>({
@@ -52,13 +54,14 @@ async function Page(props: PageProps) {
       domain: isTargetUidType ? undefined : pathUid
     },
     context: {
-      headers: cs.get('token')?.value ? {
-        Authorization: 'Bearer ' + cs.get('token')?.value
+      headers: tk ? {
+        Authorization: 'Bearer ' + tk
       } : null
     }
   })
 
   const { t } = await useTranslation()
+  console.log('withProfileEditor', withProfileEditor)
   return (
     <section>
       <div className='flex rounded-sm items-center justify-center py-12 w-full mx-auto mt-20 anna-fade-in bg-gray-500 bg-opacity-50 backdrop-blur-sm shadow-2xl'>
