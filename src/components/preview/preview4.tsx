@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import Dialog from '../dialog/dialog'
 import { WenquBook } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
 import FileSaver from 'file-saver'
@@ -11,8 +10,10 @@ import { Clipping, User } from '../../schema/generated'
 import Preview4Clipping from './preview4-clipping'
 import { toBlob } from 'html-to-image'
 import { useMutation } from '@tanstack/react-query'
+import Modal from '@annatarhe/lake-ui/modal'
 
 type PreviewProps = {
+  visible: boolean
   onCancel: () => void
   onOk: () => void
   background: string
@@ -56,12 +57,12 @@ function Preview(props: PreviewProps) {
   })
 
   return (
-    <Dialog
-      onCancel={props.onCancel}
-      onOk={props.onOk}
+    <Modal
+      onClose={props.onCancel}
+      isOpen={props.visible}
       title={t('app.clipping.preview')}
     >
-      <section className='flex mt-2'>
+      <section className='flex mt-2 p-4'>
         <Preview4Clipping
           clipping={props.clipping}
           book={props.book}
@@ -69,7 +70,7 @@ function Preview(props: PreviewProps) {
           ref={previewDOM}
         />
         <aside className='mt-2 flex flex-col ml-4'>
-          <Paper className='w-128'>
+          <Paper className='w-96'>
             <Blockquote cite={props.book?.author} className='font-lxgw'>
               {props.clipping.content}
             </Blockquote>
@@ -98,7 +99,7 @@ function Preview(props: PreviewProps) {
           </Button>
         </aside>
       </section>
-    </Dialog>
+    </Modal>
   )
 }
 

@@ -32,15 +32,14 @@ function UpdateClippingBtn({ clipping, book }: Props) {
           {t('app.clipping.shares')}
         </SidebarText>
       </SidebarButton>
-      {visible && (
-        <Preview
-          onCancel={() => setVisible(false)}
-          onOk={() => setVisible(false)}
-          background={book.image}
-          clipping={clipping}
-          book={book}
-        />
-      )}
+      <Preview
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        onOk={() => setVisible(false)}
+        background={book.image}
+        clipping={clipping}
+        book={book}
+      />
     </SidebarContainer>
   )
 }

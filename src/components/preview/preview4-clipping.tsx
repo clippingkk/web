@@ -17,6 +17,7 @@ type Preview4ClippingProps = {
   theme: Theme
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) {
   const { clipping, book, theme } = props
   const { t } = useTranslation()
@@ -65,7 +66,7 @@ function Preview4Clipping(props: Preview4ClippingProps, ref: ForwardedRef<any>) 
         />
         <h4 className='my-2 text-sm'>{clipping.creator.name}</h4>
         <span className='text-xs'>
-          {t('app.clipping.share.excerptAt', { date: createdAt })}
+          {t('app.clipping.share.excerptAt', { date: createdAt, 'interpolation': { 'escapeValue': false } })}
         </span>
       </div>
 
