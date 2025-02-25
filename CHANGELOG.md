@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.24](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.23...v5.12.24) (2025-02-25)
+
+
+### Bug Fixes
+
+* **deps:** upgrade deps ([53ef5be](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/53ef5bee0ce8e9c5d79fd5a97ded7cfcd729c87c))
+
 ### [5.12.23](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.22...v5.12.23) (2025-02-25)
 
 
