@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.23](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.22...v5.12.23) (2025-02-25)
+
+
+### Features
+
+* **tailwind:** upgrade tailwind to v4 ([63e55da](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/63e55da5688e89995f8947d4223c197e0aadcf3e))
+
+
+### Bug Fixes
+
+* **ai:** update ai summary modal to lake-ui ([4fe5c00](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4fe5c007abefa71bccc9f40caaab703b0533f5d9))
+* remove heapdump and update api fetching page ([6a38868](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6a388682ed636ea6d142561ddcacbb1915c400fc))
+* **ui:** import lake-ui and update promptpal node sdk ([21215be](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/21215be6abc05512989654ec9d16369b83656794))
+* **ui:** use modal from lake-ui ([c4460a7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/c4460a74d8ee13634ea672b2aa42084314a026be))
+
 ### [5.12.22](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.21...v5.12.22) (2025-02-22)
 
 
