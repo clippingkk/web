@@ -11,6 +11,9 @@ importers:
       '@annatarhe/blurhash-react':
         specifier: ^0.0.2
         version: 0.0.2(react@19.0.0)
+      '@annatarhe/lake-ui':
+        specifier: ^0.0.15
+        version: 0.0.15(lucide-react@0.474.0(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@apollo/client':
         specifier: ^3.12.8
         version: 3.12.8(@types/react@19.0.8)(graphql-ws@5.16.2(graphql@16.10.0))(graphql@16.10.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -120,8 +123,8 @@ importers:
         specifier: ^1.9.0
         version: 1.9.0
       '@prompt-pal/node-sdk':
-        specifier: npm:@jsr/prompt-pal__node-sdk@^0.4.6
-        version: '@jsr/prompt-pal__node-sdk@0.4.6'
+        specifier: npm:@jsr/prompt-pal__node-sdk@^0.4.7
+        version: '@jsr/prompt-pal__node-sdk@0.4.7'
       '@reduxjs/toolkit':
         specifier: ^2.5.1
         version: 2.5.1(react-redux@9.2.0(@types/react@19.0.8)(react@19.0.0)(redux@5.0.1))(react@19.0.0)
@@ -514,6 +517,13 @@ packages:
     resolution: {integrity: sha512-lenJZPt0X2LEXZVJsJHb26ykdXt+fM3jv+oOV7B5jwoq11xlLtBLWimDd189+//93/hY1NF/A2PatRYQlT3J1A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  '@annatarhe/lake-ui@0.0.15':
+    resolution: {integrity: sha512-KagUU9AMV10BgERyrYTYVwUh5fEhNtX6pvCUFBwfKjndDovTgJq7k+pXDn+oek33pLw1Zi+qrLCJjYTzyiRsPQ==}
+    peerDependencies:
+      lucide-react: ^0.475.0
+      react: ^19.0.0
+      react-dom: ^19.0.0
 
   '@apollo/client-react-streaming@0.11.8':
     resolution: {integrity: sha512-BEAHvAMSEt+dEMBY39hIoTDcOkjGJX473tlRudt3KnLE/R8eR0dKMtsaIAfWep1F9kvxv4oYR8MWUg20wj3qiA==}
@@ -1884,6 +1894,12 @@ packages:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
 
+  '@floating-ui/react@0.27.4':
+    resolution: {integrity: sha512-05mXdkUiVh8NCEcYKQ2C9SV9IkZ9k/dFtYmaEIN2riLv80UHoXylgBM76cgPJYfLJM3dJz7UE5MOVH0FypMd2Q==}
+    peerDependencies:
+      react: '>=17.0.0'
+      react-dom: '>=17.0.0'
+
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
@@ -2479,8 +2495,8 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
-  '@jsr/prompt-pal__node-sdk@0.4.6':
-    resolution: {integrity: sha512-qXpSwCcU3x4PE1BE1u337SWFOVjBfrZEkbcZuwXK7Qb6krPAiPHLBCoNmJpdg//E1AIm1L6kCrtCfbIaf55JGQ==, tarball: https://npm.jsr.io/~/11/@jsr/prompt-pal__node-sdk/0.4.6.tgz}
+  '@jsr/prompt-pal__node-sdk@0.4.7':
+    resolution: {integrity: sha512-82RzgQvAnYj6kqyh5/aKhERf/TNFf9s1AHmTDrX/Rkfs2kBFKDbG6AhCdgCxUE25zrg8hYIw5cj8dN8fRxI6oQ==, tarball: https://npm.jsr.io/~/11/@jsr/prompt-pal__node-sdk/0.4.7.tgz}
 
   '@leancloud/adapter-types@3.0.0':
     resolution: {integrity: sha512-/1l2PWJ6pXizHphBorMN7B0d2YjmxZJf1s+bitvLALt7wBid5qbGpHqGGKE/yRdNlCKwl9FbXG1x5wUFZfQwHQ==}
@@ -10139,6 +10155,9 @@ packages:
   tailwind-merge@2.6.0:
     resolution: {integrity: sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==}
 
+  tailwind-merge@3.0.2:
+    resolution: {integrity: sha512-l7z+OYZ7mu3DTqrL88RiKrKIqO3NcpEO8V/Od04bNpvk0kiIFndGEoqfuzvj4yuhRkHKjRkII2z+KS2HfPcSxw==}
+
   tailwindcss@3.4.17:
     resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}
     engines: {node: '>=14.0.0'}
@@ -11044,6 +11063,15 @@ snapshots:
     dependencies:
       blurhash: 2.0.5
       react: 19.0.0
+
+  '@annatarhe/lake-ui@0.0.15(lucide-react@0.474.0(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@floating-ui/react': 0.27.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      clsx: 2.1.1
+      lucide-react: 0.474.0(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      tailwind-merge: 3.0.2
 
   '@apollo/client-react-streaming@0.11.8(@apollo/client@3.12.8(@types/react@19.0.8)(graphql-ws@5.16.2(graphql@16.10.0))(graphql@16.10.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(graphql@16.10.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -13260,6 +13288,14 @@ snapshots:
       react-dom: 19.0.0(react@19.0.0)
       tabbable: 6.2.0
 
+  '@floating-ui/react@0.27.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@floating-ui/utils': 0.2.9
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      tabbable: 6.2.0
+
   '@floating-ui/utils@0.2.9': {}
 
   '@formkit/auto-animate@0.8.2': {}
@@ -14203,7 +14239,7 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@jsr/prompt-pal__node-sdk@0.4.6': {}
+  '@jsr/prompt-pal__node-sdk@0.4.7': {}
 
   '@leancloud/adapter-types@3.0.0': {}
 
@@ -24008,6 +24044,8 @@ snapshots:
   tabbable@6.2.0: {}
 
   tailwind-merge@2.6.0: {}
+
+  tailwind-merge@3.0.2: {}
 
   tailwindcss@3.4.17:
     dependencies:
