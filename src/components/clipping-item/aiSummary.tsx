@@ -7,7 +7,7 @@ import { getLanguage } from '../../utils/locales'
 import { useQuery } from '@tanstack/react-query'
 import Markdown from 'react-markdown'
 import { Loader2 } from 'lucide-react'
-import { Modal } from '@/components/ui/modal'
+import Modal from '@annatarhe/lake-ui/modal'
 import { MarkdownComponents } from '../RichTextEditor/markdown-components'
 
 type ClippingAISummaryModalProps = {
@@ -62,9 +62,9 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
             return Promise.resolve()
           }
         }).then((final) => {
-        setData([final.message])
-        return final
-      })
+          setData([final.message])
+          return final
+        })
     },
     enabled: open && !!cid && !!book,
   })
@@ -81,7 +81,7 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
       onClose={onClose}
       title={t('app.clipping.aiSummary')}
     >
-      <div className='relative min-h-[200px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden px-1 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50'>
+      <div className='relative min-h-[200px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden p-8 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50'>
         {isLoading && (
           <div className='absolute inset-0 flex items-center justify-center bg-white/5 backdrop-blur-xs'>
             <Loader2 className='h-8 w-8 animate-spin text-gray-600 dark:text-gray-300' />

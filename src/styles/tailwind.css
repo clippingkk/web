@@ -1,6 +1,6 @@
 @plugin '@tailwindcss/forms';
 
-@source '../../node_modules/@annatarhe/lake-ui/**/*.tsx';
+@source '../../node_modules/@annatarhe/lake-ui/dist/**/*.js';
 
 @custom-variant dark (&:is([data-mantine-color-scheme="dark"] *));
 

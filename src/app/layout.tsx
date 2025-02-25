@@ -139,6 +139,7 @@ async function Layout(props: LayoutProps) {
               />
               <ReactQueryDevtools initialIsOpen={false} />
               <div data-id='modal' />
+              <div data-st-role='modal' />
             </>
           </ClientOnlyProviders>
         </MantineProvider>
