@@ -7,9 +7,8 @@ import { API_HOST } from '@/constants/config'
 import Link from 'next/link'
 import CliApiToken from './cli-api'
 import { ProfileQuery  } from '@/schema/generated'
-import { Tooltip } from '@mantine/core'
+import Tooltip from '@annatarhe/lake-ui/tooltip'
 import UserName from '@/components/profile/user-name'
-import styles from './profile.module.css'
 import PersonalityView from './personality'
 import PageTrack from '@/components/track/page-track'
 import AvatarSection from './avatar-section'
@@ -26,18 +25,6 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
 
   const { t } = await useTranslation()
 
-  // const chartData = useMemo(() => {
-  //   const c = []
-  //   for (let i = 12; i > 0; i--) {
-  //     const date = dayjs().startOf('month').subtract(i, 'month').format('YYYY-MM')
-  //     c.push({
-  //       date,
-  //       count: data.me.analysis.monthly.find(x => x.date === date)?.count ?? 0
-  //     })
-  //   }
-  //   return c
-  // }, [data.me.analysis.monthly])
-
   const year = (new Date()).getFullYear() - ((new Date()).getMonth() > 6 ? 0 : 1)
 
   const isInMyPage = uid === profile.id
@@ -46,7 +33,7 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
     <div className='w-full flex items-center justify-center'>
       <PageTrack page='profile' params={{userid: profile.id}} />
       <AvatarSection profile={profile} uid={uid} isInMyPage={isInMyPage} />
-      <div className={styles.info}>
+      <div className='flex gap-4 flex-col'>
         <div className='flex items-center'>
           <UserName
             name={profile.name}
@@ -76,6 +63,8 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
         <WechatBindButton profile={profile} isInMyPage={isInMyPage} uid={uid} />
 
         <UserActions isInMyPage={isInMyPage} profile={profile} />
+        <div>
+
         <Link
           href={`/report/yearly?uid=${profile.id}&year=${year}`}
           className='px-4 py-2 rounded-sm bg-blue-400 text-gray-200 hover:bg-blue-600 mt-6'
@@ -83,14 +72,14 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
           {t('app.profile.report.yearlyTitle')}
         </Link>
         <Tooltip
-          label={t('app.profile.rssTip') ?? ''}
-          withArrow
-          transitionProps={{ transition: 'pop', duration: 200 }}
+          noWrap
+          content={t('app.profile.rssTip')}
+          disabled={false}
         >
           <a
             href={`${API_HOST}/api/rss/user/${profile.id}/clippings`}
             target='_blank'
-            className='ml-4 px-4 py-2 rounded-sm hover:bg-blue-400'
+            className='block px-4 py-2 rounded-sm hover:bg-blue-400'
             rel="noreferrer"
           >
             RSS
@@ -99,6 +88,7 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
         {isInMyPage && (
           <PersonalityView uid={profile.id} domain={profile.domain} />
         )}
+        </div>
       </div>
     </div>
   )

@@ -10,7 +10,6 @@ import { Divider, Text } from '@mantine/core'
 import PersonalActivity from '@/components/profile/activity'
 import ClippingList from './clipping-list'
 
-
 type PageProps = {
   params: Promise<{ userid: string }>
   searchParams: Promise<{ with_profile_editor?: string }>
