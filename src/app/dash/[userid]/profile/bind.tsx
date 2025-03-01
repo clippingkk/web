@@ -1,10 +1,10 @@
 'use client'
 import React, { useState } from 'react'
-// import { QRNormal, QRImage } from 'react-qrbtf'
 import { QRCodeSVG } from 'qrcode.react'
 import Dialog from '@/components/dialog/dialog'
 import { useTranslation } from 'react-i18next'
 import { ProfileQuery, useWechatBindQuery } from '@/schema/generated'
+import { MessageCircle } from 'lucide-react'
 
 function BindQRCode() {
   const { data } = useWechatBindQuery()
@@ -13,11 +13,16 @@ function BindQRCode() {
   }
 
   return (
-    <QRCodeSVG
-      // className='animate__fadeInDown'
-      value={data.wechatBindKey}
-      size={256}
-    />
+    <div className="p-2 rounded-xl bg-white shadow-md">
+      <QRCodeSVG
+        value={data.wechatBindKey}
+        size={256}
+        bgColor={"#FFFFFF"}
+        fgColor={"#000000"}
+        level={"H"}
+        includeMargin={false}
+      />
+    </div>
   )
 }
 
@@ -50,10 +55,11 @@ function WechatBindButton(props: Props) {
   return (
     <div>
       <button
-        className='bg-blue-400 text-gray-200 py-2 px-4 rounded-sm text-lg mb-4 hover:bg-blue-600'
+        className='flex items-center gap-2 py-2.5 px-4 rounded-xl transition-all duration-300 bg-gradient-to-r from-green-500/90 to-emerald-600/90 hover:from-green-600/90 hover:to-emerald-700/90 text-white shadow-md hover:shadow-lg'
         onClick={() => setVisible(true)}
       >
-        {t('app.profile.wechatBind')}
+        <MessageCircle className="w-5 h-5" />
+        <span>{t('app.profile.wechatBind')}</span>
       </button>
       {visible && (
         <Dialog
@@ -61,9 +67,10 @@ function WechatBindButton(props: Props) {
           onCancel={() => { setVisible(false) }}
           onOk={() => { setVisible(true) }}
         >
-          <div className='p-8 flex flex-col justify-center items-center'>
-            <h2 className='text-2xl text-black mb-4'>{t('app.profile.wechatBindTip')}</h2>
+          <div className='p-8 flex flex-col justify-center items-center bg-gradient-to-br from-white/90 to-gray-100/90 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-md rounded-xl'>
+            <h2 className='text-xl font-medium text-gray-800 dark:text-gray-200 mb-6'>{t('app.profile.wechatBindTip')}</h2>
             <BindQRCode />
+            <p className='mt-4 text-sm text-gray-500 dark:text-gray-400'>{t('app.profile.scanToConnect')}</p>
           </div>
         </Dialog>
       )}

@@ -6,9 +6,9 @@ import { useTranslation } from '@/i18n'
 import { Metadata } from 'next'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
-import { Divider, Text } from '@mantine/core'
 import PersonalActivity from '@/components/profile/activity'
 import ClippingList from './clipping-list'
+import { BookOpen } from 'lucide-react'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -62,28 +62,42 @@ async function Page(props: PageProps) {
   const { t } = await useTranslation()
   console.log('withProfileEditor', withProfileEditor)
   return (
-    <section>
-      <div className='flex rounded-sm items-center justify-center py-12 w-full mx-auto mt-20 anna-fade-in bg-gray-500 bg-opacity-50 backdrop-blur-sm shadow-2xl'>
-        <div className='flex flex-col items-center justify-center w-full'>
-          <ProfilePageContent profile={profile.me} myUid={myUid} />
-
-          <div className='w-full mt-6'>
-            <PersonalActivity
-              data={profile.me.analysis.daily}
-            />
-          </div>
+    <section className="w-full">
+      {/* Main profile section */}
+      <div className="anna-fade-in">
+        <ProfilePageContent profile={profile.me} myUid={myUid} />
+        
+        {/* Activity chart section */}
+        <div className="mt-8 w-full rounded-2xl overflow-hidden backdrop-blur-lg bg-gradient-to-br from-white/70 via-white/60 to-white/40 dark:from-gray-900/70 dark:via-gray-800/60 dark:to-gray-900/40 shadow-xl border border-gray-200 dark:border-gray-700 p-6">
+          <h2 className="text-xl font-medium text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+            <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            {t('app.profile.activity')}
+          </h2>
+          <PersonalActivity
+            data={profile.me.analysis.daily}
+          />
         </div>
       </div>
 
-      <Divider
-        label={<Text className=' dark:text-gray-100'>{t('app.profile.recents')}</Text>}
-        labelPosition='center'
-        className='my-8'
-      />
+      {/* Recent clippings section */}
+      <div className="pt-6">
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent flex-grow"></div>
+          <h2 className="text-xl font-medium text-gray-800 dark:text-gray-200 flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-blue-500" />
+            {t('app.profile.recents')}
+          </h2>
+          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent flex-grow"></div>
+        </div>
 
-      {myUid && (
-        <ClippingList uid={profile.me.id} userDomain={profile.me.domain} />
-      )}
+        {myUid && (
+          <div className="backdrop-blur-md rounded-2xl shadow-lg">
+            <ClippingList uid={profile.me.id} userDomain={profile.me.domain} />
+          </div>
+        )}
+      </div>
     </section>
   )
 }
