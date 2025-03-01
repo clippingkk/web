@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.26](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.25...v5.12.26) (2025-03-01)
+
+
+### Bug Fixes
+
+* **profile:** make code-highlight as lazy component ([2d97d54](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2d97d540386d338a5a7c21aa377cf7f1aea3ef90))
+
 ### [5.12.25](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.24...v5.12.25) (2025-03-01)
 
 
