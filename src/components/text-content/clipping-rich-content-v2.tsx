@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next'
 import NounEditContent from '../noun/noun-edit'
 import { offset, useFloating, arrow, FloatingArrow } from '@floating-ui/react'
 import NounTooltipCard from './noun-tooltip-card'
-import { useClickOutside } from '@mantine/hooks'
-import styles from './style.module.css'
+import { useClickOutside } from '../../hooks/dom'
 
 type ClippingRichContentProps = {
   isPremium?: boolean

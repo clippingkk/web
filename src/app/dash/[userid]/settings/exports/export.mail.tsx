@@ -1,17 +1,18 @@
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
 import { Button, Modal, TextInput } from '@mantine/core'
 import { ExportDestination, ProfileDocument, ProfileQuery, ProfileQueryVariables, useExportDataToMutation } from '@/schema/generated'
 import { EnvelopeIcon } from '@heroicons/react/24/outline'
-import { useDisclosure } from '@mantine/hooks'
 import { useParams } from 'next/navigation'
 import { useSuspenseQuery } from '@apollo/client'
 
 function ExportToMail() {
-  const [visible, { open, close }] = useDisclosure()
+  const [visible, setVisible] = useState(false)
+  const open = () => setVisible(true)
+  const close = () => setVisible(false)
   const { t } = useTranslation()
 
   const userDomain = useParams<{ userid: string }>().userid

@@ -108,7 +108,6 @@
     "@mantine/core": "^7.17.0",
     "@mantine/dropzone": "^7.17.0",
     "@mantine/form": "^7.17.0",
-    "@mantine/hooks": "^7.17.0",
     "@mantine/modals": "^7.17.0",
     "@mantine/next": "^6.0.22",
     "@mantine/notifications": "^7.17.0",

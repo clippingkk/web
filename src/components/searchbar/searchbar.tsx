@@ -8,7 +8,6 @@ import { UserContent } from '../../store/user/type'
 import { useSearchQueryLazyQuery } from '../../schema/generated'
 import { Input, Modal } from '@mantine/core'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import { useHotkeys } from '@mantine/hooks'
 
 type SearchBarProps = {
   visible: boolean
@@ -18,10 +17,27 @@ type SearchBarProps = {
 export function useCtrlP() {
   const [visible, setVisible] = useState(false)
 
-  useHotkeys([
-    ['ctrl+p', () => { setVisible(true) }],
-    ['mod+k', () => { setVisible(true) }]
-  ])
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // For Ctrl+P (Windows/Linux) or Cmd+P (Mac)
+      if ((event.ctrlKey || event.metaKey) && event.key === 'p') {
+        event.preventDefault(); // Prevent browser's print dialog
+        setVisible(true);
+      }
+      // For Cmd+K (Mac) or Ctrl+K (Windows/Linux)
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault();
+        setVisible(true);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    
+    // Cleanup function to remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [])
 
   useEffect(() => {
     if (visible) {

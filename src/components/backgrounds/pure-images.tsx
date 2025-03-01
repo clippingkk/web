@@ -1,6 +1,6 @@
 'use client'
 
-import { useColorScheme } from '@mantine/hooks'
+import { useEffect, useState } from 'react'
 import React, { useMemo } from 'react'
 
 type PureImagesProps = {
@@ -14,13 +14,31 @@ type PureImagesProps = {
 
 function PureImages(props: PureImagesProps) {
   const { lightingColor, width = '100vw', height = '100vh' } = props
-  const colorScheme = useColorScheme()
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  useEffect(() => {
+    // Initial check
+    setIsDarkMode(document.body.classList.contains('dark'))
+    
+    // Set up an observer to detect changes to the body class
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.attributeName === 'class') {
+          setIsDarkMode(document.body.classList.contains('dark'))
+        }
+      })
+    })
+    
+    observer.observe(document.body, { attributes: true })
+    
+    return () => observer.disconnect()
+  }, [])
   const lightingColorValue = useMemo(() => {
     if (typeof lightingColor === 'string') {
       return lightingColor
     }
-    return colorScheme === 'dark' ? lightingColor.dark : lightingColor.light
-  }, [colorScheme, lightingColor])
+    return isDarkMode ? lightingColor.dark : lightingColor.light
+  }, [isDarkMode, lightingColor])
   return (
     <svg width={width} height={height}>
       <filter id="surface">
