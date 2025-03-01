@@ -1,3 +1,6 @@
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: true,
+// })
 // const { withSentryConfig } = require('@sentry/nextjs')
 
 import type { NextConfig } from 'next'

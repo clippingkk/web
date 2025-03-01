@@ -78,7 +78,7 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
     setSelectingText(newText)
   }, [selectingText])
 
-  const coRef = useClickOutside(() => {
+  const coRef = useClickOutside<HTMLDivElement>(() => {
     setSelectingText(undefined)
   })
 

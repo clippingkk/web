@@ -5,15 +5,15 @@ import ProfileEditor from './profile-editor'
 import ProfileBindPhone from './bind-phone'
 import { API_HOST } from '@/constants/config'
 import Link from 'next/link'
-import CliApiToken from './cli-api'
 import { ProfileQuery  } from '@/schema/generated'
-import Tooltip from '@annatarhe/lake-ui/tooltip'
 import UserName from '@/components/profile/user-name'
 import PersonalityView from './personality'
 import PageTrack from '@/components/track/page-track'
 import AvatarSection from './avatar-section'
 import UserActions from './actions'
-import { Book, Rss, BookOpen, BarChart3 } from 'lucide-react'
+import { Rss, BookOpen, BarChart3 } from 'lucide-react'
+
+const CliApiToken = React.lazy(() => import('./cli-api'))
 
 type ProfilePageContentProps = {
   myUid?: number
