@@ -20,6 +20,8 @@
       "delete": "Delete",
       "bind": "Bind",
       "bound": "bound",
+      "showLess": "Show less",
+      "showMore": "Show more",
       "errors": {
         "404": {
           "content": "Page Not Found",

@@ -20,6 +20,8 @@
       "delete": "삭제",
       "bind": "묶다",
       "bound": "경계",
+      "showLess": "닫기",
+      "showMore": "열기",
       "errors": {
         "404": {
           "title": "페이지를 찾을 수 없습니다",

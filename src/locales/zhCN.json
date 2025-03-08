@@ -20,6 +20,8 @@
       "delete": "删除",
       "bind": "绑定",
       "bound": "已绑定",
+      "showLess": "闭合",
+      "showMore": "展开",
       "errors": {
         "404": {
           "title": "页面不存在",
