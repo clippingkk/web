@@ -62,16 +62,16 @@ async function Hero(props: HeroProps) {
               </Link>
 
               {AppFeatures.enablePremiumPayment && (
-                <Button
-                  component={Link}
+                <Link
                   href='/pricing'
-                  variant='gradient'
-                  gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-                  className='text-xl ml-6 transition-all active:scale-95 duration-150'
-                  rightSection={<ChevronRightIcon className='w-4 h-4' />}
+                  className='ml-6 px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-medium text-xl flex items-center gap-2 hover:shadow-lg hover:shadow-indigo-500/30 transition-all hover:-translate-y-1 active:scale-95 duration-150'
                 >
-                  😎 {t('app.plan.premium.name')}
-                </Button>
+                  <span className="flex items-center">
+                    <span className="mr-2">✨</span>
+                    {t('app.plan.premium.name')}
+                  </span>
+                  <ChevronRightIcon className='w-4 h-4 transition-transform group-hover:translate-x-1' />
+                </Link>
               )}
             </div>
             <Button

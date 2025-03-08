@@ -1,26 +1,48 @@
 {
-  "app.upload.tip": "Upload Your Kindle Clippings",
-  "app.upload.private.description": "Drag and drop your Kindle clippings file to share your favorite passages",
-  "app.upload.drag.here": "Drag Your Clippings File Here",
-  "app.upload.drop.now": "Release to Upload",
-  "app.upload.file.hint": "Your file will be processed automatically when dropped here",
-  "app.upload.file.supported": "Supported format: \"My Clippings.txt\"",
-  "app.upload.private.on": "Private Mode",
-  "app.upload.private.off": "Public Mode",
-  "app.upload.private.on.description": "Your clippings will be visible only to you",
-  "app.upload.private.off.description": "Your clippings will be shared with the community",
-  "app.upload.tips.extracting": "Processing Your Clippings",
-  "app.upload.tips.wait": "Please wait while we process your clippings",
-  "app.upload.help.title": "Need Help?",
-  "app.upload.help.how_to_title": "How to export your Kindle clippings",
-  "app.upload.help.how_to_description": "Connect your Kindle to computer via USB, and find the \"My Clippings.txt\" file in Documents folder.",
-  "app.upload.help.watch_video": "Watch Tutorial Video",
-  "app.upload.help.documentation": "View Documentation",
-  "app.upload.help.doc_link": "https://help.clippingkk.com",
-  "app.upload.progress.0": "Waiting",
-  "app.upload.progress.1": "Processing",
-  "app.upload.progress.2": "Analyzing",
-  "app.upload.progress.3": "Uploading",
-  "app.upload.progress.4": "Complete",
-  "app.upload.progress.5": "Error"
+  "app": {
+    "upload": {
+      "tip": "Upload Your Kindle Clippings",
+      "private": {
+        "description": "Drag and drop your Kindle clippings file to share your favorite passages",
+        "on": {
+          "title": "Private Mode",
+          "description": "Your clippings will be visible only to you"
+        },
+        "off": {
+          "title": "Public Mode",
+          "description": "Your clippings will be shared with the community"
+        }
+      },
+      "drag": {
+        "here": "Drag Your Clippings File Here"
+      },
+      "drop": {
+        "now": "Release to Upload"
+      },
+      "file": {
+        "hint": "Your file will be processed automatically when dropped here",
+        "supported": "Supported format: \"My Clippings.txt\""
+      },
+      "tips": {
+        "extracting": "Processing Your Clippings",
+        "wait": "Please wait while we process your clippings"
+      },
+      "help": {
+        "title": "Need Help?",
+        "how_to_title": "How to export your Kindle clippings",
+        "how_to_description": "Connect your Kindle to computer via USB, and find the \"My Clippings.txt\" file in Documents folder.",
+        "watch_video": "Watch Tutorial Video",
+        "documentation": "View Documentation",
+        "doc_link": "https://help.clippingkk.com"
+      },
+      "progress": {
+        "0": "Waiting",
+        "1": "Processing",
+        "2": "Analyzing",
+        "3": "Uploading",
+        "4": "Complete",
+        "5": "Error"
+      }
+    }
+  }
 }

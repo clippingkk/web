@@ -49,7 +49,7 @@ function PricingContent(props: PricingContentProps) {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
         <div className="absolute bottom-1/2 right-1/4 w-64 h-64 bg-cyan-600/20 rounded-full filter blur-3xl opacity-20"></div>
       </div>
-      
+
       <Container size="lg" className="py-12 px-4">
         {/* Header section */}
         <div className="text-center mb-16">
@@ -57,14 +57,14 @@ function PricingContent(props: PricingContentProps) {
             <Sparkles className="h-4 w-4 mr-2 text-indigo-400" />
             <span className="text-sm font-medium text-indigo-400">{t('app.pricing.unlock')}</span>
           </div>
-          
-          <Title className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
             {t('app.pricing.title')}
-          </Title>
-          
-          <Text className="text-xl opacity-80 max-w-3xl mx-auto">
+          </h2>
+
+          <p className=" w-full text-xl opacity-80 max-w-3xl mx-auto">
             {t('app.pricing.subtitle')}
-          </Text>
+          </p>
         </div>
 
         {/* Pricing cards */}
