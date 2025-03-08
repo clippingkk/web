@@ -82,7 +82,7 @@ function HomePageContent(props: HomePageContentProps) {
 
   return (
     <>
-      <div className='flex flex-wrap items-center justify-center'>
+      <div className='flex flex-wrap items-center justify-center mt-16'>
         {(books.books.length > 0) &&
           books.books.map((item, index) => (
             <BookCover

@@ -121,13 +121,15 @@ async function Page(props: PageProps) {
             uid={myUidInt!} />
         </div>
       )}
-      <header className='flex items-center justify-center my-10'>
-        <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>{t('app.home.title')}</h2>
+      <header className='flex flex-col md:flex-row items-center justify-center gap-4 my-12'>
+        <h2 className='text-center font-medium tracking-tight bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-transparent text-4xl relative z-10'>
+          {t('app.home.title')}
+        </h2>
         <Link
           href={`/dash/${myUidInt}/unchecked`}
-          className='bg-blue-400 duration-300 inline-block py-2 px-4 ml-2 transition-all hover:bg-blue-700 rounded-sm hover:shadow-sm'>
-
-          {t('app.home.unchecked')}
+          className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium py-2 px-6 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px]'>
+          <span className='relative z-10'>{t('app.home.unchecked')}</span>
+          <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
         </Link>
       </header>
       {!firstBook && booksResponse.books.length === 0 && (
