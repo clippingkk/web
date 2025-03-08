@@ -1,4 +1,4 @@
-import { useTranslation } from "@/i18n"
+import { useTranslation } from '@/i18n'
 
 async function Layout(props: { children: React.ReactNode }) {
   const { t } = await useTranslation()

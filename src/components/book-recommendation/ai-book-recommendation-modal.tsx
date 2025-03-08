@@ -30,7 +30,7 @@ function AIBookRecommendationModal({ open, onClose, uid, books }: AIBookRecommen
   ).join('\n') || ''
 
   const { isLoading, error } = useQuery({
-    queryKey: ['ai', 'book-recommendation', uid, books?.length],
+    queryKey: ['ai', 'book-recommendation', uid, books?.length, booksInfo],
     queryFn: async () => {
       // This is a placeholder - adjust the actual API call based on your backend implementation
       return client.executeStream<string, CKPromptBookRecommandsVariables>(

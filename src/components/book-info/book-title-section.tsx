@@ -1,6 +1,6 @@
-import { useTranslation } from "@/i18n/client"
-import { WenquBook } from "@/services/wenqu"
-import { Clock, Star } from "lucide-react"
+import { useTranslation } from '@/i18n/client'
+import { WenquBook } from '@/services/wenqu'
+import { Clock, Star } from 'lucide-react'
 
 type Props = {
   book: WenquBook

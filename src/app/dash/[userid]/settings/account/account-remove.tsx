@@ -1,5 +1,6 @@
+'use client'
 import React, { useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-hot-toast'
 import { USER_LOGOUT } from '@/store/user/type'
@@ -8,13 +9,10 @@ import { Button, Modal } from '@mantine/core'
 import { useDeleteMyAccountMutation } from '@/schema/generated'
 import { notifications } from '@mantine/notifications'
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
-import profile from '../../../../../utils/profile'
-import { onCleanServerCookie } from '../../../../../components/navigation-bar/logout'
+import profile from '@/utils/profile'
+import { onCleanServerCookie } from '@/components/navigation-bar/logout'
 
-type AccountRemoveButtonProps = {
-}
-
-function AccountRemoveButton(props: AccountRemoveButtonProps) {
+function AccountRemoveButton() {
   const { t } = useTranslation()
   const [confirming, setConfirming] = useState(false)
   const [doDelete] = useDeleteMyAccountMutation()
@@ -38,9 +36,9 @@ function AccountRemoveButton(props: AccountRemoveButtonProps) {
       setTimeout(() => {
         replace('/')
       }, 5_000)
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
-      toast.error(err)
+      toast.error(err instanceof Error ? err.message : 'Something went wrong')
     }
   }, [dispatch, doDelete, replace, t])
 

@@ -4,9 +4,9 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../../components/avatar/avatar'
 import PublicBookItem from '../../../components/public-book-item/public-book-item'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '../../../services/wenqu'
+import { WenquBook } from '../../../services/wenqu'
 import logo from '../../../assets/logo.png'
-import { FetchClippingQueryVariables, FetchYearlyReportDocument, FetchYearlyReportQuery, FetchYearlyReportQueryVariables } from '../../../schema/generated'
+import { FetchYearlyReportQuery } from '../../../schema/generated'
 import { useMultipleBook } from '../../../hooks/book'
 
 type ReportBookItemTypes = {

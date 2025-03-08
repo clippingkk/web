@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
-import { UploadStep } from '../../../../services/uploader'
+import { UploadStep } from '@/services/uploader'
 import { useTranslation } from '@/i18n/client'
-import AnimateOnChange from '../../../../components/SimpleAnimation/AnimateOnChange'
-import { CheckCircle, AlertCircle, ArrowRight, Loader2 } from 'lucide-react'
+import AnimateOnChange from '@/components/SimpleAnimation/AnimateOnChange'
+import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 
 type LoadingModalProps = {
   stepAt: UploadStep
@@ -17,6 +17,7 @@ function LoadingModal(props: LoadingModalProps) {
     return Math.min(100, Math.round((props.at / props.count) * 100)) || 0
   }, [props.at, props.count])
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getStepIcon = (step: UploadStep) => {
     switch (step) {
       case UploadStep.Done:
@@ -50,21 +51,21 @@ function LoadingModal(props: LoadingModalProps) {
             {t('app.upload.tips.wait') ?? 'Please wait while we process your clippings'}
           </p>
         </div>
-        
+
         <div className="w-full mb-8 px-4">
           <div className="relative">
             <div className="absolute top-4 left-0 w-full h-0.5 bg-gray-200 dark:bg-gray-700 z-0"></div>
-            <div 
+            <div
               className="absolute top-4 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 z-10 transition-all duration-500 ease-in-out"
               style={{ width: `${props.stepAt === UploadStep.Done ? 100 : progress}%` }}
             ></div>
-            
+
             <div className="relative z-20 flex justify-between">
               {Object.values(UploadStep).filter(step => typeof step === 'number').map((step, index) => {
-                const stepKey = `app.upload.progress.${step}`;
-                const stepLabel = t(stepKey, { defaultValue: `Step ${index + 1}` });
-                const shortLabel = stepLabel.split(' ')[0];
-                
+                const stepKey = `app.upload.progress.${step}`
+                const stepLabel = t(stepKey, { defaultValue: `Step ${index + 1}` })
+                const shortLabel = stepLabel.split(' ')[0]
+
                 return (
                   <div key={step} className="flex flex-col items-center">
                     <div className={`
@@ -92,7 +93,7 @@ function LoadingModal(props: LoadingModalProps) {
                       {shortLabel}
                     </span>
                   </div>
-                );
+                )
               })}
             </div>
           </div>
@@ -115,7 +116,7 @@ function LoadingModal(props: LoadingModalProps) {
                 </span>
               </AnimateOnChange>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold">
                 {t(`app.upload.progress.${props.stepAt}`)}
@@ -125,20 +126,20 @@ function LoadingModal(props: LoadingModalProps) {
               </div>
             </div>
           </div>
-          
+
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
-            <div 
+            <div
               className="h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-out"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-          
+
           <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
             <span>{props.at} of {props.count}</span>
             <span>{progress}%</span>
           </div>
         </div>
-        
+
         {props.message && (
           <div className={`
             w-full p-3 rounded-lg text-sm 

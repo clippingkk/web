@@ -2,13 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react'
 import OTPInput from 'react-auth-code-input'
 import ButtonSimple from '../button/button-simple'
 import { useTranslation } from 'react-i18next'
-import { ApolloError, FetchResult } from '@apollo/client'
-import { DoLoginV3Mutation } from '../../schema/generated'
 
 
 type OTPBoxProps = {
   autoValidate?: boolean
   loading: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit(val: string): Promise<any>
 }
 

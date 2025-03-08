@@ -1,4 +1,3 @@
-import { delay } from '../utils/timer'
 import { request } from './ajax'
 
 export type TUploadResponse = {

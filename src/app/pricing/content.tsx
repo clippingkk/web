@@ -1,5 +1,5 @@
 'use client'
-import { Button, Title, Text, Container, Divider } from '@mantine/core'
+import { Button, Text, Container, Divider } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import React, { useMemo } from 'react'

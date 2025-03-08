@@ -10,7 +10,6 @@ import { Metadata } from 'next'
 import { getApolloServerClient } from '@/services/apollo.server'
 
 type YearlyLegacyPageProps = {
-  params: Promise<{}>
   searchParams: Promise<{ year?: string, uid: string }>
 }
 

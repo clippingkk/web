@@ -1,13 +1,9 @@
 'use client'
-import { Divider, Highlight, Text, Title } from '@mantine/core'
+import { Divider, Text, Title } from '@mantine/core'
 import React from 'react'
-import { usePageTrack } from '../../../hooks/tracke'
-import { Metadata } from 'next'
+import { usePageTrack } from '@/hooks/tracke'
 
-type PolicySupportPageProps = {
-}
-
-function PolicySupportPage(props: PolicySupportPageProps) {
+function PolicySupportPage() {
   usePageTrack('support')
   return (
     <section className='page p-20 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200'>

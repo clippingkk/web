@@ -1,17 +1,17 @@
 'use client'
-import React, { useMemo } from 'react'
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import React from 'react'
+import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useSelector } from 'react-redux'
-import { Order, OrderCategory, SubscriptionStatus, useFetchOrdersQuery } from '../../../../../schema/generated'
-import { TGlobalStore } from '../../../../../store'
-import { Badge, Button, Chip, Table } from '@mantine/core'
+import { Order, SubscriptionStatus, useFetchOrdersQuery } from '@/schema/generated'
+import { TGlobalStore } from '@/store'
+import { Badge, Button, Table } from '@mantine/core'
 import { useMutation } from '@tanstack/react-query'
-import { cancelPaymentSubscription } from '../../../../../services/payment'
+import { cancelPaymentSubscription } from '@/services/payment'
 import { toast } from 'react-hot-toast'
-import { toastPromiseDefaultOption } from '../../../../../services/misc'
+import { toastPromiseDefaultOption } from '@/services/misc'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import { UserContent } from '../../../../../store/user/type'
+import { UserContent } from '@/store/user/type'
 
 type SubscriptionOrderListProps = {
   orders: Order[]
@@ -69,10 +69,7 @@ function SubscriptionOrderList(props: SubscriptionOrderListProps) {
 
 }
 
-type OrdersTableProps = {
-}
-
-function OrdersTable(props: OrdersTableProps) {
+function OrdersTable() {
   const p = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const uid = p.id
 

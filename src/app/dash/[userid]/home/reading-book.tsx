@@ -5,7 +5,7 @@ import ClippingContent from '@/components/clipping-content'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import { Clipping } from '@/schema/generated'
 import { WenquBook } from '@/services/wenqu'
-import { ArrowRight, Quote } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 type ReadingBookProps = {
   uid: number

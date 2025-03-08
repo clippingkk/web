@@ -1,5 +1,5 @@
-import { WenquBook } from "@/services/wenqu"
-import { Calendar, BookOpen } from "lucide-react"
+import { WenquBook } from '@/services/wenqu'
+import { Calendar, BookOpen } from 'lucide-react'
 
 type Props = {
   book: WenquBook

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from '@/i18n/client'
-import { ExternalLink, HelpCircle, FileText, Info, Youtube } from 'lucide-react'
+import { ExternalLink, HelpCircle, FileText, Youtube } from 'lucide-react'
 
 function ClippingsUploadHelp() {
   const { t } = useTranslation(undefined, 'upload')

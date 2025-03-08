@@ -1,6 +1,5 @@
 'use client'
 import React, { useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { usePageTrack } from '@/hooks/tracke'
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import { useMultipleBook } from '@/hooks/book'
@@ -8,7 +7,6 @@ import { IN_APP_CHANNEL } from '@/services/channel'
 import { APP_API_STEP_LIMIT } from '@/constants/config'
 import { LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
-import { Divider } from '@mantine/core'
 import { FetchSquareDataQuery, useFetchSquareDataQuery } from '@/schema/generated'
 
 type SquarePageContentProps = {
@@ -17,8 +15,6 @@ type SquarePageContentProps = {
 
 function SquarePageContent(props: SquarePageContentProps) {
   usePageTrack('square')
-  const { t } = useTranslation()
-
   const masonaryColumnCount = useMasonaryColumnCount()
 
   const reachEnd = useRef(false)

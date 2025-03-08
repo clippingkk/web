@@ -17,9 +17,9 @@ function BindQRCode() {
       <QRCodeSVG
         value={data.wechatBindKey}
         size={256}
-        bgColor={"#FFFFFF"}
-        fgColor={"#000000"}
-        level={"H"}
+        bgColor={'#FFFFFF'}
+        fgColor={'#000000'}
+        level={'H'}
         includeMargin={false}
       />
     </div>

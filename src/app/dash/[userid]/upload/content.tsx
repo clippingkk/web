@@ -82,8 +82,8 @@ function UploaderPageContent() {
             flex flex-col items-center justify-center py-16 px-6 md:py-24 mb-8 
             cursor-pointer relative overflow-hidden
             ${isDragging
-              ? 'border-blue-500 bg-blue-100 dark:bg-blue-900/20'
-              : 'border-gray-300 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 bg-white/50 dark:bg-gray-800/50'}
+      ? 'border-blue-500 bg-blue-100 dark:bg-blue-900/20'
+      : 'border-gray-300 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 bg-white/50 dark:bg-gray-800/50'}
             backdrop-blur-sm shadow-lg
           `}
           onDragOver={stopDragOver}

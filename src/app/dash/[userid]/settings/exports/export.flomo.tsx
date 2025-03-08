@@ -1,14 +1,14 @@
+'use client'
 import Image from 'next/image'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
 import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
-import FieldInput from '../../../../../components/input'
+import FieldInput from '@/components/input'
 import { Button, Modal } from '@mantine/core'
-import BrandNotionLogo from '@/assets/brand-notion.svg'
 import BrandFlomoLogo from '@/assets/brand-flomo.png'
-import { ExportDestination, useExportDataToMutation } from '../../../../../schema/generated'
+import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)

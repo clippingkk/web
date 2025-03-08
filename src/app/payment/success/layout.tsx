@@ -4,7 +4,6 @@ import NavigateGuide from '../../../components/navigation-bar/navigate-guide'
 import { cookies } from 'next/headers'
 
 type LayoutProps = {
-  params: any
   children: React.ReactNode
 }
 

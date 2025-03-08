@@ -94,14 +94,14 @@ function ClippingList(props: ClippingListProps) {
           render={(row) => {
             const clipping = row.data
             return (
-                <ClippingItem
-                  item={clipping}
-                  domain={userDomain || uid.toString()}
-                  book={books.books.find(x => x.doubanId.toString() === clipping.bookID)}
-                  creator={clipping.creator}
-                  key={clipping.id}
-                  inAppChannel={IN_APP_CHANNEL.clippingFromBook}
-                />
+              <ClippingItem
+                item={clipping}
+                domain={userDomain || uid.toString()}
+                book={books.books.find(x => x.doubanId.toString() === clipping.bookID)}
+                creator={clipping.creator}
+                key={clipping.id}
+                inAppChannel={IN_APP_CHANNEL.clippingFromBook}
+              />
             )
           }}
         />

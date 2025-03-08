@@ -1,7 +1,7 @@
-import BlurhashView from "@annatarhe/blurhash-react"
-import { Share2 } from "lucide-react"
-import { WenquBook } from "../../services/wenqu"
-import { useTranslation } from "@/i18n/client"
+import BlurhashView from '@annatarhe/blurhash-react'
+import { Share2 } from 'lucide-react'
+import { WenquBook } from '../../services/wenqu'
+import { useTranslation } from '@/i18n/client'
 
 type Props = {
   book: WenquBook

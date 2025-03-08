@@ -49,6 +49,7 @@ function AuthByAppleButton(props: AuthAppleProps) {
       disabled={props.disabled}
       onSuccess={onSuccess}
       onError={
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (error: any) => {
           toast.error('Auth by Apple: ' + error.error)
         }

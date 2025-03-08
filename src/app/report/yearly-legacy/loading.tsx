@@ -1,9 +1,6 @@
 import React from 'react'
 
-type LoadingProps = {
-}
-
-function Loading(props: LoadingProps) {
+function Loading() {
   return (
     <div className='container mx-auto'>
       <div className='grid grid-cols-3 mt-32 mb-16 gap-6'>
