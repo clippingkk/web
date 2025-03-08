@@ -6,6 +6,12 @@
       "required": "超过限额，请升级到高级帐户",
       "webhookRequired": "Webhook 仅在高级计划中可用。 请升级到高级版"
     },
+    "pricing": {
+      "unlock": "解锁高级功能",
+      "title": "选择完美计划",
+      "subtitle": "选择最适合您需求的计划，解锁 ClippingKK 提供的所有功能。",
+      "questions": "对我们的计划有疑问？请联系我们："
+    },
     "ai": {
       "clippingHelp": "AI 生成的对于该片段的讲解",
       "professionalize": "语气职业化",
@@ -22,6 +28,15 @@
       "bound": "已绑定",
       "showLess": "闭合",
       "showMore": "展开",
+      "unlimited": {
+        "books": "无限书籍收藏"
+      },
+      "web": {
+        "access": "完整网页访问权限"
+      },
+      "data": {
+        "security": "安全数据存储"
+      },
       "errors": {
         "404": {
           "title": "页面不存在",

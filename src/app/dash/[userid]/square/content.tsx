@@ -73,34 +73,27 @@ function SquarePageContent(props: SquarePageContentProps) {
   })
 
   return (
-    <section className='flex items-center justify-center flex-col'>
-      <h2 className='text-3xl lg:text-5xl text-slate-900 dark:text-slate-100 my-8'>
-
-        🪩 {t('app.menu.square')}
-      </h2>
-      <Divider className='w-full my-4' />
-      <Masonry
-        items={sqData}
-        columnCount={masonaryColumnCount}
-        className='with-slide-in'
-        columnGutter={30}
-        onRender={maybeLoadMore}
-        render={(row) => {
-          const clipping = row.data
-          return (
-            <ClippingItem
-              key={clipping.id}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              item={clipping as any}
-              domain={clipping.creator.domain.length > 2 ? clipping.creator.domain : clipping.creator.id.toString()}
-              book={books.books.find(x => x.id.toString() == clipping.bookID)}
-              creator={clipping.creator}
-              inAppChannel={IN_APP_CHANNEL.clippingFromUser}
-            />
-          )
-        }}
-      />
-    </section>
+    <Masonry
+      items={sqData}
+      columnCount={masonaryColumnCount}
+      className='with-slide-in'
+      columnGutter={30}
+      onRender={maybeLoadMore}
+      render={(row) => {
+        const clipping = row.data
+        return (
+          <ClippingItem
+            key={clipping.id}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            item={clipping as any}
+            domain={clipping.creator.domain.length > 2 ? clipping.creator.domain : clipping.creator.id.toString()}
+            book={books.books.find(x => x.doubanId.toString() == clipping.bookID)}
+            creator={clipping.creator}
+            inAppChannel={IN_APP_CHANNEL.clippingFromUser}
+          />
+        )
+      }}
+    />
   )
 }
 

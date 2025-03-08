@@ -11,7 +11,16 @@ const initI18next = async (lng: string, ns?: string | string[]) => {
     .use(initReactI18next)
     .use(
       resourcesToBackend(
-        (language: string) => import(`../locales/${language}.json`)
+        (language: string, ns: string) => {
+          let lng = language
+          if (lng.startsWith('zh')) {
+            lng = 'zhCN'
+          }
+          if (ns && ns !== 'translation') {
+            return import(`../locales/${lng}/${ns}.json`)
+          }
+          return import(`../locales/${lng}.json`)
+        }
       )
     )
     .init(getOptions(lng, ns))
