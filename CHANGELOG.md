@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.28](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.27...v5.12.28) (2025-03-08)
+
+
+### Bug Fixes
+
+* **ci:** add missing component ([5abacb6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5abacb6b684734a3a6d8710f23cde1de6e261701))
+* **searchbar:** update styles in search bar ([2437b9a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/2437b9a8b5aed0d713014df1c21efb41e924f928))
+* **upload:** refact upload and pricing page for better UI by AI ([ee2957f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ee2957fabd7923db1db0f4ee1facae84af5d46c0))
+* **upload:** update upload page and translation ([ac6635e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ac6635ea8ca3e02d54bfc38cb8c8ef9b47d1c0a0))
+
 ### [5.12.27](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.26...v5.12.27) (2025-03-08)
 
 
