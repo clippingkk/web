@@ -31,6 +31,7 @@
     "node": "23"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
     "@graphql-codegen/cli": "^5.0.5",
     "@graphql-codegen/client-preset": "^4.7.0",
     "@graphql-codegen/introspection": "4.0.3",
