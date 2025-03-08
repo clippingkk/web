@@ -11,6 +11,8 @@ const config = [
       'tailwind.config.js',
       'src/gql/**/*.ts',
       'src/**/*.mdx',
+      'src/types.g.ts',
+      'src/schema/generated.tsx'
     ],
     'rules': {
       'indent': [
