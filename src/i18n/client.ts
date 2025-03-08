@@ -21,7 +21,14 @@ i18next
   .use(LanguageDetector)
   .use(
     resourcesToBackend(
-      (language: string) => import(`../locales/${language}.json`)
+      (language: string) => {
+        console.log('language', language)
+        let lng = language
+        if (lng.startsWith('zh')) {
+          lng = 'zhCN'
+        }
+        return import(`../locales/${lng}.json`)
+      }
     )
   )
   .init({
