@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.29](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.28...v5.12.29) (2025-03-08)
+
+
+### Bug Fixes
+
+* **lint:** fix lint issues ([e7029c3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/e7029c37757bfcc1ffa4604ad98edb506c877fd1))
+* **lint:** fix lint issues ([abd86c3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/abd86c38fa50b8938eaadf845bd83da8044781d3))
+
 ### [5.12.28](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.27...v5.12.28) (2025-03-08)
 
 
