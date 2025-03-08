@@ -112,7 +112,7 @@ async function Page(props: PageProps) {
     <section className='h-full page'>
       {firstBook && (
         <div className='mt-8 with-slide-in'>
-          <h2 className='text-center font-light text-black text-3xl dark:text-gray-200'>
+          <h2 className='text-center font-medium tracking-tight bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent text-4xl relative z-10 flex items-center justify-center mb-8'>
             {t('app.home.reading')}
           </h2>
           <ReadingBook

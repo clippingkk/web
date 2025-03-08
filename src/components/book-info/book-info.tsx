@@ -20,7 +20,6 @@ type TBookInfoProp = {
 function BookInfo({ book, uid, duration }: TBookInfoProp) {
   const { t } = useTranslation()
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
-  const [summaryExpanded, setSummaryExpanded] = useState(false)
 
   const togglePreviewVisible = useCallback(() => {
     setSharePreviewVisible(v => !v)
