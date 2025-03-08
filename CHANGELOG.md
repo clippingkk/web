@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.27](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.26...v5.12.27) (2025-03-08)
+
+
+### Bug Fixes
+
+* **book:** upgrade book cover ([9a3876b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9a3876be24e0e1d7f9ae223edadcbf37fc24c6d1))
+* **deps:** upgrade deps ([79a2463](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/79a2463159369ca5c5897c1e2cc37e54a2801ad3))
+* **home:** add book recommendation ([269a3a0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/269a3a0b281e2abf2121d6a5990633e1f5f89df1))
+* **home:** update home page ([3467eb6](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/3467eb659851bc00c5e56bb563b233ae01d28106))
+* **home:** update styles ([2754138](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/27541387a85db6a141dd134898f83a08a7b72210))
+* **i18n:** fix incorrect translation setup ([ce9f29b](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ce9f29b0fc1e34bb19eed6ddd5ec834aa4b0d886))
+
 ### [5.12.26](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.25...v5.12.26) (2025-03-01)
 
 
