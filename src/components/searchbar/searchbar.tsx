@@ -1,66 +1,35 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { TGlobalStore } from '../../store'
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
-import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
+import { useTranslation } from '@/i18n/client'
 import { UserContent } from '../../store/user/type'
 import { useSearchQueryLazyQuery } from '../../schema/generated'
-import { Input, Modal } from '@mantine/core'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import { Search, XCircle, Command } from 'lucide-react'
+import { createPortal } from 'react-dom'
+import SearchClippingItem from './clipping-item'
+import Empty from './empty'
+import Loading from './loading'
 
 type SearchBarProps = {
   visible: boolean
   onClose: () => void
 }
 
-export function useCtrlP() {
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      // For Ctrl+P (Windows/Linux) or Cmd+P (Mac)
-      if ((event.ctrlKey || event.metaKey) && event.key === 'p') {
-        event.preventDefault(); // Prevent browser's print dialog
-        setVisible(true);
-      }
-      // For Cmd+K (Mac) or Ctrl+K (Windows/Linux)
-      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
-        event.preventDefault();
-        setVisible(true);
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    
-    // Cleanup function to remove the event listener
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [])
-
-  useEffect(() => {
-    if (visible) {
-      disableBodyScroll(document.body)
-    } else {
-      enableBodyScroll(document.body)
-    }
-  }, [visible])
-
-  return {
-    visible,
-    setVisible
-  }
-}
-
 function SearchBar(props: SearchBarProps) {
-  const { visible } = props
+  const { visible, onClose } = props
   const { t } = useTranslation()
   const [doQuery, { data, loading, called }] = useSearchQueryLazyQuery()
   const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const [searchText, setSearchText] = useState('')
+
+  const throttleTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
+    setSearchText(value) // Update search text state immediately for UI purposes
+
     if (loading) {
       return
     }
@@ -68,65 +37,137 @@ function SearchBar(props: SearchBarProps) {
       return
     }
 
-    doQuery({
-      variables: {
-        query: value
-      }
-    })
+    // Clear existing timeout if any
+    if (throttleTimeoutRef.current) {
+      clearTimeout(throttleTimeoutRef.current)
+    }
+
+    // Set a new timeout for 500ms
+    throttleTimeoutRef.current = setTimeout(() => {
+      doQuery({
+        variables: {
+          query: value
+        }
+      })
+    }, 500)
   }, [doQuery, loading])
 
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (throttleTimeoutRef.current) {
+        clearTimeout(throttleTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (visible && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [visible])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose()
+      }
+    }
+
+    if (visible) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [visible, onClose])
+
+  if (!visible) return null
+
+  // Portal content that will be rendered to the body
   return (
-    <Modal
-      opened={visible}
-      onClose={props.onClose}
-      closeOnClickOutside
-      size='xl'
-      closeOnEscape
-      centered
-      withCloseButton={false}
-      className='dark:bg-slate-900 bg-slate-100'
-      overlayProps={{
-        backgroundOpacity: 0.55,
-        blur: 4,
-      }}
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-16 sm:pt-20 md:pt-24 with-slide-in"
     >
-      <Input
-        onChange={onInputChange}
-        size='xl'
-        type='search'
-        autoFocus
-        placeholder={t('app.menu.search.placeholder') ?? ''}
-        leftSection={
-          <MagnifyingGlassIcon className='w-6 h-6' />
-        }
+      <div
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+        aria-hidden="true"
       />
-      <div className='flex flex-col flex-1 container'>
-        {called && !loading && data?.search.clippings.length === 0 && (
-          <div className='w-full flex items-center justify-center py-8 flex-col'>
-            <span className='text-5xl mb-4'>😭</span>
-            <span className='text-base dark:text-gray-100'>{t('app.menu.search.empty')}</span>
+      <div
+        ref={modalRef}
+        className="w-full max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl relative rounded-lg shadow-2xl overflow-hidden with-slide-in"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="search-modal-title"
+      >
+        {/* Gradient border effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 p-[2px] rounded-lg pointer-events-none" />
+
+        <div className="relative bg-white dark:bg-slate-900 rounded-lg shadow-xl flex flex-col">
+          {/* Search header */}
+          <div className="flex items-center gap-2 p-3 border-b dark:border-slate-700 bg-gradient-to-r from-indigo-500/10 to-purple-500/10">
+            <Search className="w-5 h-5 text-purple-500" aria-hidden="true" />
+            <input
+              ref={inputRef}
+              onChange={onInputChange}
+              type="search"
+              className="w-full bg-transparent border-none outline-none text-lg placeholder:text-slate-400 dark:text-white focus:ring-0"
+              placeholder={t('app.menu.search.placeholder') ?? 'Search for clippings...'}
+              autoFocus
+            />
+            <div className="flex items-center gap-2">
+              <kbd className="hidden sm:inline-flex items-center px-2 py-1 text-xs font-semibold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 rounded">
+                <Command className="w-3 h-3 mr-1" />
+                K
+              </kbd>
+              <button
+                onClick={onClose}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                aria-label="Close search"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
           </div>
-        )}
-        <ul className='list-none overflow-y-auto py-4 mx-8 lg:mx-0' style={{
-          maxHeight: '80vh'
-        }}>
-          {data?.search.clippings.map(c => (
-            <li
-              className='dark:bg-slate-800 bg-slate-400 mt-4 list-none dark:hover:bg-slate-900 hover:bg-slate-500 with-slide-in rounded-sm duration-150 transition-all active:scale-95'
-              key={c.id}
-            >
-              <Link
-                href={`/dash/${profile.domain.length > 3 ? profile.domain : profile.id}/clippings/${c.id}`}
-                className='block py-8 px-4'
-                onClick={props.onClose}>
-                <p className='text-xl leading-normal'>{c.content}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+
+          {/* Search results */}
+          <div className="overflow-y-auto max-h-[70vh] p-4">
+            {called && !loading && data?.search.clippings.length === 0 && (
+              <Empty />
+            )}
+
+            {loading && (
+              <Loading />
+            )}
+
+            <ul className="space-y-3">
+              {data?.search.clippings.map(c => (
+                <SearchClippingItem
+                  key={c.id}
+                  clipping={c}
+                  profile={profile}
+                  onClick={onClose}
+                  highlightText={searchText}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-    </Modal>
+    </div>
   )
 }
 
-export default SearchBar
+type Props = SearchBarProps
+
+function SearchBarContainer(props: Props) {
+  const { visible, ...rest } = props
+  if (!visible) return null
+  return createPortal(
+    <SearchBar visible={visible} {...rest} />,
+    document.querySelector('[data-id="modal"]') ?? document.body
+  )
+}
+
+export default SearchBarContainer
