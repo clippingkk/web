@@ -11,7 +11,6 @@ type SwitcherProps = {
 function Switcher({
   checked,
   onChange,
-  name,
   disabled,
 }: SwitcherProps) {
   return (

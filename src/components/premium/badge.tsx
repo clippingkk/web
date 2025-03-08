@@ -1,10 +1,7 @@
 import { Badge } from '@mantine/core'
 import React from 'react'
 
-type PremiumBadgeProps = {
-}
-
-function PremiumBadge(props: PremiumBadgeProps) {
+function PremiumBadge() {
   return (
     <Badge
       variant="gradient"

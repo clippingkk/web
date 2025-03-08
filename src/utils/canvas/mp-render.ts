@@ -25,6 +25,7 @@ export type PostShareConfig = {
 export interface IPostShareRender {
   setup(): void
   renderBackground(): Promise<void>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   saveToLocal(): Promise<any>
   renderText(): Promise<void>
   renderTitle(): Promise<void>

@@ -19,8 +19,7 @@ export function getPaymentOrderInfo(sessionId: string) {
 }
 
 export function cancelPaymentSubscription(subscriptionId: string) {
-  return request<{
-  }>('/v2/payment/subscription/cancel', {
+  return request('/v2/payment/subscription/cancel', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

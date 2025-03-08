@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { WenquBook } from '../../services/wenqu'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-hot-toast'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
 import ThemePicker from './theme-picker'
-import { Blockquote, Dialog, Divider, Modal, Paper, Popover, Text, Title, Tooltip } from '@mantine/core'
-import { Clipping, User } from '../../schema/generated'
+import { Blockquote, Divider, Modal, Paper, Text, Title } from '@mantine/core'
 
 type BookSharePreviewProps = {
   onCancel: () => void
@@ -17,19 +15,9 @@ type BookSharePreviewProps = {
 }
 
 function BookSharePreview(props: BookSharePreviewProps) {
-  const { opened, onCancel, onOk, background, book, uid } = props
-  const [loading, setLoading] = useState(true)
-  const [errMsg, setErrMsg] = useState('')
+  const { opened } = props
   const [currentTheme, setCurrentTheme] = useState(KonzertThemeMap.young.id)
 
-  const onImageLoad = useCallback((e: any) => {
-    setLoading(false)
-  }, [])
-  const onImageError = useCallback((e: any) => {
-    toast.error(e.toString())
-    setLoading(false)
-    setErrMsg('')
-  }, [])
   const shareURL = useMemo(() => {
     if (!props.uid) {
       return
@@ -78,8 +66,6 @@ function BookSharePreview(props: BookSharePreviewProps) {
         <div>
           <img
             src={shareURL}
-            onLoad={onImageLoad}
-            onError={onImageError}
             className={'w-[375px] rounded-sm overflow-y-auto'}
             alt={t('app.common.loading') ?? 'loading'}
           />

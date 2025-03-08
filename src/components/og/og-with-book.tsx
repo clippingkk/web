@@ -14,6 +14,7 @@ export function generateMetadata(uid: string, book?: WenquBook | null): Metadata
   const bookTitle = book?.title
   const metaTitle = `${bookTitle} - 书摘 - clippingkk`
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const logoLink = book?.image ?? (APP_URL_ORIGIN + logo.src)
   return {
     metadataBase: new URL(APP_URL_ORIGIN),

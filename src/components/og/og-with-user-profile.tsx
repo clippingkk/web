@@ -1,8 +1,6 @@
-import React from 'react'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import logo from '../../assets/logo.png'
-import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
-import { ProfileQuery, User } from '../../schema/generated'
+import { ProfileQuery } from '../../schema/generated'
 import { Metadata } from 'next'
 
 type OGWithUserProfileProps = {
@@ -16,6 +14,7 @@ export function generateMetadata(props: OGWithUserProfileProps): Metadata {
   const desc = `${props.profile?.name}; 整理了 ${props.profile?.clippingsCount} 条书摘; ${props.profile?.bio}`
 
   const plainAvatar = props.profile?.avatar ?? ''
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const avatar = (plainAvatar.length > 4) ? (
     plainAvatar.startsWith('http') ?
       plainAvatar :

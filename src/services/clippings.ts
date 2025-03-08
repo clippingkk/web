@@ -1,4 +1,4 @@
-import { request, IBaseResponseData } from './ajax'
+import { request } from './ajax'
 import { TClippingItem } from '../store/clippings/parser'
 
 interface IBaseClippingItem {

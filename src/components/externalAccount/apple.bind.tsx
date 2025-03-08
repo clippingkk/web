@@ -3,10 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import WithLoading from '../with-loading'
 
-type AppleLoginBindProps = {
-}
-
-function AppleLoginBind(props: AppleLoginBindProps) {
+function AppleLoginBind() {
   const { t } = useTranslation()
   return (
     <WithLoading

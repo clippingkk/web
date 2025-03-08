@@ -1,15 +1,7 @@
-import React from 'react'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import { FetchYearlyReportQuery } from '../../schema/generated'
 import { WenquBook } from '../../services/wenqu'
-import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 import { Metadata } from 'next'
-
-type OGWithReportProps = {
-  data?: FetchYearlyReportQuery
-  books: WenquBook[]
-  year: number
-}
 
 const url = APP_URL_ORIGIN
 export function generateMetadata(year: number, data: FetchYearlyReportQuery, bs: WenquBook[]): Metadata {

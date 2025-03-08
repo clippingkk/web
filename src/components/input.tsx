@@ -36,6 +36,7 @@ function FieldInput(props: FieldInputProps) {
       <input
         {...props.inputProps}
         type={props.type ?? 'text'}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         className={`text-2xl p-4 border-2 ${(sizeWidth as any)[size]} bg-gray-400 focus:outline-hidden disabled:text-gray-500 ` + (props.error ? 'border-red-400' : 'border-transparent')}
         value={props.value}
         placeholder={t(`app.auth.${props.name}`) ?? ''}

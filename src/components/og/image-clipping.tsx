@@ -9,6 +9,7 @@ type ClippingOpenGraphImageProps = {
 
 const logoSize = 80
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const maxLines = 7
 
 function OGImageClipping(props: ClippingOpenGraphImageProps) {

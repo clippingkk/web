@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import Image from 'next/image'
 import { NftItem } from '../../schema/generated'
 import { NFTMetadata } from '../../services/nft'
 

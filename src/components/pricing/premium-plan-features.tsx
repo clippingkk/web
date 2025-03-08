@@ -1,4 +1,4 @@
-import { HoverCard, Text, Badge } from '@mantine/core'
+import { Badge } from '@mantine/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import CommonFeatures from './common-features'
@@ -9,6 +9,7 @@ type PremiumPlanFeaturesProps = {
   children?: React.ReactNode
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function FeatureItem({ children, highlight = false }: { children: React.ReactNode, highlight?: boolean }) {
   return (
     <li className='flex items-start'>

@@ -1,19 +1,9 @@
-import { log } from '../../utils/sentry'
-
 export type TClippingItem = {
   title: string
   content: string
   pageAt: string
   bookId: string
   createdAt: string
-}
-
-enum KindleClippingFileLines {
-  TitleLine = 0,
-  InfoLine = 1,
-  SpaceLine = 2,
-  ContentLine = 3,
-  LastLine = 4
 }
 
 enum FileLanuages {
@@ -24,6 +14,7 @@ enum FileLanuages {
 class ClippingTextParser {
   private lines: string[][] = []
   private position: number = 0
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private processingItem: TClippingItem = {} as any
   private result: TClippingItem[] = []
   // private readonly infoRegexp: RegExp
@@ -145,6 +136,7 @@ class ClippingTextParser {
   private exactLastLine() {
     this.processingItem.bookId = '0'
     this.result.push(this.processingItem)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.processingItem = {} as any
   }
 

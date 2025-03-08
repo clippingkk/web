@@ -5,7 +5,6 @@ import { getReactQueryClient } from '../../../services/ajax'
 import PaymentSuccessContent from './content'
 
 type PaymentSuccessPageProps = {
-  params: Promise<{}>
   searchParams: Promise<{ sessionId: string, uid: string }>
 }
 

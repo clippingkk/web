@@ -1,12 +1,8 @@
-import { Button, HoverCard, Text } from '@mantine/core'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { BookOpen, Globe, Shield } from 'lucide-react'
 
-type CommonFeaturesProps = {
-}
-
-function CommonFeatures(props: CommonFeaturesProps) {
+function CommonFeatures() {
   const { t } = useTranslation()
   return (
     <>

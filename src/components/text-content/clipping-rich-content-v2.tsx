@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FetchClippingQuery } from '../../schema/generated'
-import { HoverCard, Modal, Highlight, useMantineColorScheme } from '@mantine/core'
+import { Modal, Highlight, useMantineColorScheme } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import NounEditContent from '../noun/noun-edit'
 import { offset, useFloating, arrow, FloatingArrow } from '@floating-ui/react'

@@ -50,6 +50,7 @@ function NounEditContent(props: NounEditContentProps) {
       id,
       noun,
       scope: NounScope.All,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any
   })
 

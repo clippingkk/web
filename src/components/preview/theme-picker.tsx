@@ -1,4 +1,4 @@
-import { Button, SegmentedControl } from '@mantine/core'
+import { SegmentedControl } from '@mantine/core'
 import React from 'react'
 import { KonzertThemeMap } from '../../services/utp'
 

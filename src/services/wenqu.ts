@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { WENQU_SIMPLE_TOKEN, WENQU_API_HOST } from '../constants/config'
 // import * as Sentry from '@sentry/react'
 

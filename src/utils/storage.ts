@@ -36,7 +36,7 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
       const payloadString = JSON.stringify(payload)
       localStorage.setItem(USER_TOKEN_KEY, payloadString)
       authInfo = payloadString
-    } catch (e) {
+    } catch {
       // any error occurs, just erase cookies and local storage.
       localStorage.removeItem(USER_TOKEN_KEY)
       Cookies.remove('token')

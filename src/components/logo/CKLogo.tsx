@@ -7,6 +7,7 @@ type CKLogoProps = {
   size?: number
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const logoBlurhash = 'LOA_3?K-0;:~x[n-NNkRAenO,-TJ'
 
 function CKLogo(props: CKLogoProps) {

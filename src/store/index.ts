@@ -18,6 +18,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ thunk: false })
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   preloadedState: typeof window !== 'undefined' ? (window as any).__PRELOADED_STATE__ : {}
 })
 

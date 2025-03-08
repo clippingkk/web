@@ -7,6 +7,7 @@ type FreePlanFeaturesProps = {
   children?: React.ReactNode
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function FeatureItem({ children }: { children: React.ReactNode }) {
   return (
     <li className='mb-6 flex items-start'>

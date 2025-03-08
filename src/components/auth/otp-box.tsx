@@ -24,6 +24,7 @@ function OTPBox(props: OTPBoxProps) {
     }
     try {
       await props.onSubmit(otp)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setHasErrorMsg(e.message)
     }

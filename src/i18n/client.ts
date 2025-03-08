@@ -47,7 +47,7 @@ i18next
   })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function useTranslation(lng?: string, ns?: string, options?: any) {
+export function useTranslation(_lng?: string, ns?: string, options?: any) {
   const ret = useTranslationOrg(ns, options)
   const { i18n } = ret
   useEffect(() => {

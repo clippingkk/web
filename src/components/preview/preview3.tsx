@@ -19,16 +19,14 @@ type PreviewProps = {
 
 function Preview(props: PreviewProps) {
   const [loading, setLoading] = useState(true)
-  const [errMsg, setErrMsg] = useState('')
   const [currentTheme, setCurrentTheme] = useState(KonzertThemeMap.young.id)
 
-  const onImageLoad = useCallback((e: any) => {
+  const onImageLoad = useCallback(() => {
     setLoading(false)
   }, [])
-  const onImageError = useCallback((e: any) => {
-    toast.error(e.toString())
+  const onImageError = useCallback(() => {
+    toast.error('Image loading failed')
     setLoading(false)
-    setErrMsg('')
   }, [])
 
   const shareURL = useMemo(() => {

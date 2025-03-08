@@ -1,8 +1,6 @@
-import React from 'react'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import { WenquBook } from '../../services/wenqu'
 import logo from '../../assets/logo.png'
-import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 import { Clipping, User } from '../../schema/generated'
 import { Metadata } from 'next'
 
@@ -17,6 +15,7 @@ export function generateMetadata(props: OGWithClippingProps): Metadata {
   const bookTitle = props.book?.title ?? props.clipping?.title
   const metaTitle = `${bookTitle} - ${props.clipping?.creator.name} 的书摘录 - clippingkk`
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const logoLink = props.book?.image ?? (APP_URL_ORIGIN + logo.src)
 
   return {

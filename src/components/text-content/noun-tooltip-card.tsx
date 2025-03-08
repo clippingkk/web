@@ -1,5 +1,5 @@
 import React from 'react'
-import { FetchClippingQuery, Noun } from '../../schema/generated'
+import { FetchClippingQuery } from '../../schema/generated'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@mantine/core'
 import NounContentRender from '../noun/content-render'
@@ -15,7 +15,7 @@ type NounTooltipCardProps = {
 }
 
 function NounTooltipCard(props: NounTooltipCardProps) {
-  const { noun, segment, creatable, updatable, deletable, onNounAdd, onNounUpdate } = props
+  const { noun, segment, creatable, updatable, onNounAdd, onNounUpdate } = props
   const { t } = useTranslation()
   if (creatable && !noun) {
     return (

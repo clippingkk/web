@@ -1,6 +1,6 @@
 export async function useTranslation(
-  lng?: string,
-  ns?: string | string[],
+  _lng?: string,
+  _ns?: string | string[],
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   options: { keyPrefix?: string } = {}
 ) {

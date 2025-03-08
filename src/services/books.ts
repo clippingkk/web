@@ -1,5 +1,4 @@
 import { request } from './ajax'
-import { supportsWebp } from '../utils/image'
 import { IClippingItem, IHttpClippingItem } from './clippings'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 
@@ -7,13 +6,13 @@ interface Book {
   id: number
   rating: number
   author: string
-	originTitle: string
-	image: string
-	doubanId: string
-	title: string
-	url: string
-	authorIntro: string
-	summary: string
+  originTitle: string
+  image: string
+  doubanId: string
+  title: string
+  url: string
+  authorIntro: string
+  summary: string
 }
 
 export interface IHttpBook extends Book {
@@ -23,8 +22,6 @@ export interface IHttpBook extends Book {
 export interface IBook extends Book {
   pubdate: Date
 }
-
-let isSupportWebp: boolean
 
 export function covertHttpBook2Book(book: IHttpBook): IBook {
   const isCDNImage = book.image.indexOf('http') !== 0
@@ -38,13 +35,11 @@ export function covertHttpBook2Book(book: IHttpBook): IBook {
 
 export async function getBooks(userid: number, offset: number): Promise<IBook[]> {
   const response = await (request(`/clippings/books/${userid}?take=20&from=${offset}`) as Promise<IHttpBook[]>)
-  isSupportWebp = await supportsWebp()
   return response.map(covertHttpBook2Book)
 }
 
 export async function searchBookDetail(doubanId: string): Promise<IBook> {
   const response = await (request(`/clippings/book/${doubanId}`) as Promise<IHttpBook>)
-  isSupportWebp = await supportsWebp()
   return covertHttpBook2Book(response)
 }
 

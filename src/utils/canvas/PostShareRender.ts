@@ -1,7 +1,6 @@
 import { FetchQRCode } from '../../services/mp'
 import { PostShareConfig, BasicUserInfo } from './mp-render'
 import { BaseCanvasRender } from './BaseCanvasRender'
-import { UserContent } from '../../store/user/type'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 
 export class PostShareRender extends BaseCanvasRender {
@@ -27,10 +26,10 @@ export class PostShareRender extends BaseCanvasRender {
       const img: HTMLImageElement = new Image()
       // 咋回事，好像得 qiniu 支持什么鬼的。烦死了
       let realSrc = src
-      
+
       if (!src.includes('annatarhe.com')) {
         realSrc = CDN_DEFAULT_DOMAIN + '/' + realSrc
-      // img.crossOrigin = "anonymous"
+        // img.crossOrigin = "anonymous"
       }
       img.onload = () => {
         resolve(img)
@@ -174,7 +173,7 @@ export class PostShareRender extends BaseCanvasRender {
     this.ctx.restore()
 
     this.ctx.save()
-    this.ctx.font = this.config.baseTextSize * 0.6 + 'px Roboto' 
+    this.ctx.font = this.config.baseTextSize * 0.6 + 'px Roboto'
     this.ctx.fillStyle = '#ffffff'
     this.ctx.textAlign = 'center'
     this.ctx.textBaseline = 'middle'

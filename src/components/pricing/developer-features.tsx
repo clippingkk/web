@@ -2,7 +2,7 @@ import { Button, HoverCard, Text, Badge } from '@mantine/core'
 import { CodeHighlight } from '@mantine/code-highlight'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Terminal, GitBranch, Webhook, ExternalLink } from 'lucide-react'
+import { Terminal, Webhook, ExternalLink } from 'lucide-react'
 
 const cliExample = `
 ck-cli 

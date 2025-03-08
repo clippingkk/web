@@ -1,9 +1,6 @@
 import React from 'react'
 
-type SpinnerIconProps = {
-}
-
-function SpinnerIcon(props: SpinnerIconProps) {
+function SpinnerIcon() {
   return (
     <svg
       aria-hidden="true"
