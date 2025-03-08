@@ -111,7 +111,13 @@
       "title": "내 책들",
       "unchecked": "일치하지 않는 책",
       "notfound": "뭐! 아직 메모를 읽지 않았습니까?",
-      "uploadTip": "업로드하려면 나를 클릭하세요."
+      "uploadTip": "업로드하려면 나를 클릭하세요.",
+      "aiRecommend": "AI 추천",
+      "aiRecommendations": "AI 책 추천",
+      "aiThinking": "AI가 다음 좋은 책을 생각하고 있습니다...",
+      "personalizedRecommendations": "개인화된 추천",
+      "aiDisclaimer": "추천은 당신의 읽기 기록을 기반으로 AI가 생성했으며 완벽하지 않을 수 있습니다.",
+      "noRecommendations": "아직 사용 가능한 추천이 없습니다. 나중에 다시 시도해 주세요."
     },
     "clipping": {
       "update": "책 업데이트",

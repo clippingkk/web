@@ -111,7 +111,13 @@
       "title": "我的书籍",
       "unchecked": "未分类图书",
       "notfound": "什么！你竟然还没有读书笔记？",
-      "uploadTip": "还不快点我上传"
+      "uploadTip": "还不快点我上传",
+      "aiRecommend": "AI 推荐",
+      "aiRecommendations": "AI 图书推荐",
+      "aiThinking": "AI 正在思考您的下一本好书...",
+      "personalizedRecommendations": "您的个性化推荐",
+      "aiDisclaimer": "推荐是基于您的阅读历史由AI生成的，可能不完美。",
+      "noRecommendations": "暂时没有可用的推荐。请稍后再试。"
     },
     "clipping": {
       "update": "书目更新",

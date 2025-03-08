@@ -13,6 +13,7 @@ import ReadingBook from './reading-book'
 import { useTranslation } from '@/i18n'
 import Link from 'next/link'
 import NoContentAlert from './no-content'
+import AIBookRecommendationButton from '../../../../components/book-recommendation/ai-book-recommendation-button'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -51,16 +52,16 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 // the home page only available for myself
 async function Page(props: PageProps) {
-  const { userid } = (await props.params)
-  const cs = await cookies()
-  const myUid = cs.get('uid')?.value
+
+  const [params, ck] = await Promise.all([props.params, cookies()])
+  const { userid } = params
+  const myUid = ck.get('uid')?.value
 
   if (!myUid) {
     return redirect(`/dash/${userid}/profile`)
   }
 
   const myUidInt = myUid ? parseInt(myUid) : undefined
-
 
   const apolloClient = getApolloServerClient()
   const profileResponse = await apolloClient.query<ProfileQuery, ProfileQueryVariables>({
@@ -71,17 +72,22 @@ async function Page(props: PageProps) {
     },
     context: {
       headers: {
-        'Authorization': 'Bearer ' + cs.get('token')?.value
+        'Authorization': 'Bearer ' + ck.get('token')?.value
       },
     }
   })
   const { data: booksResponse } = await apolloClient.query<BooksQuery, BooksQueryVariables>({
     query: BooksDocument,
     fetchPolicy: 'network-only',
+    context: {
+      headers: {
+        'Authorization': 'Bearer ' + ck.get('token')?.value
+      },
+    },
     variables: {
       id: myUidInt,
       pagination: {
-        limit: 3,
+        limit: 10,
         offset: 0
       },
     },
@@ -125,12 +131,18 @@ async function Page(props: PageProps) {
         <h2 className='text-center font-medium tracking-tight bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-transparent text-4xl relative z-10'>
           {t('app.home.title')}
         </h2>
-        <Link
-          href={`/dash/${myUidInt}/unchecked`}
-          className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium py-2 px-6 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px]'>
-          <span className='relative z-10'>{t('app.home.unchecked')}</span>
-          <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-        </Link>
+        <div className='flex items-center gap-3 mt-4 md:mt-0'>
+          <Link
+            href={`/dash/${myUidInt}/unchecked`}
+            className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium py-2 px-6 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px]'>
+            <span className='relative z-10'>{t('app.home.unchecked')}</span>
+            <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+          </Link>
+          <AIBookRecommendationButton
+            uid={myUidInt!}
+            books={booksResponse.books}
+          />
+        </div>
       </header>
       {!firstBook && booksResponse.books.length === 0 && (
         <div className='flex flex-wrap items-center justify-center'>
