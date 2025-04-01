@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.31](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.30...v5.12.31) (2025-04-01)
+
+
+### Bug Fixes
+
+* **nav:** update navbar ([9904517](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/990451777254ccdd7a56dfa1af083bcc45be7b2d))
+* **preview:** update preview ([66c9fcf](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/66c9fcf6f054b58fa33b0853866cc70146b24b21))
+* update clipping preview page ([9b9b29e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/9b9b29e5096e1bd9bcfff19476cafee901a16fe2))
+* update deps ([49fd564](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/49fd564a76686416f7e3cf01edfadba5805b0606))
+* update preview book ([d2c084f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d2c084f92971888b7576154e4a9ca5fc2671c454))
+
 ### [5.12.30](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.29...v5.12.30) (2025-03-08)
 
 
