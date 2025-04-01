@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import Dialog from '../dialog/dialog'
-import { WenquBook } from '../../services/wenqu'
+import LakeModal from '@annatarhe/lake-ui/modal'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
@@ -8,8 +7,10 @@ import ThemePicker from './theme-picker'
 import { Blockquote, Divider, Paper, Title } from '@mantine/core'
 import { Clipping, User } from '../../schema/generated'
 import LoadingIcon from '../icons/loading.svg'
+import { WenquBook } from '@/services/wenqu'
 
 type PreviewProps = {
+  visible: boolean
   onCancel: () => void
   onOk: () => void
   background: string
@@ -18,6 +19,7 @@ type PreviewProps = {
 }
 
 function Preview(props: PreviewProps) {
+  const { visible, onCancel } = props
   const [loading, setLoading] = useState(true)
   const [currentTheme, setCurrentTheme] = useState(KonzertThemeMap.young.id)
 
@@ -44,9 +46,9 @@ function Preview(props: PreviewProps) {
 
   const { t } = useTranslation()
   return (
-    <Dialog
-      onCancel={props.onCancel}
-      onOk={props.onOk}
+    <LakeModal
+      onClose={onCancel}
+      isOpen={visible}
       title={t('app.clipping.preview')}
     >
       <section className='flex mt-2'>
@@ -97,7 +99,7 @@ function Preview(props: PreviewProps) {
           </a>
         </aside>
       </section>
-    </Dialog>
+    </LakeModal>
   )
 }
 

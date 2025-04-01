@@ -5,7 +5,7 @@ import { BookCopy } from 'lucide-react'
 import { useState } from 'react'
 import { SidebarContainer, SidebarButton, SidebarIcon, SidebarText } from './base/container'
 import { WenquBook } from '@/services/wenqu'
-import Preview from '../preview/preview4'
+import Preview from '../preview/preview3'
 
 type Props = {
   book?: WenquBook | null
