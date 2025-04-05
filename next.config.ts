@@ -38,6 +38,7 @@ const config: NextConfig = {
   webpack: (config, { webpack }) => {
     config.experiments = { ...config.experiments, topLevelAwait: true }
     config.externals['node:fs'] = 'commonjs node:fs'
+    config.externals['inspector/promises'] = 'commonjs node:inspector/promises'
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
