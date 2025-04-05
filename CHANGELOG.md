@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.34](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.33...v5.12.34) (2025-04-05)
+
+
+### Bug Fixes
+
+* **instrumentation:** move startup script inside of src ([4a49ca3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4a49ca3cf160f25b7261563ea1b88ae9825beb04))
+
 ### [5.12.33](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.32...v5.12.33) (2025-04-05)
 
 
