@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.37](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.36...v5.12.37) (2025-04-05)
+
+
+### Bug Fixes
+
+* add missing directory permission for nextjs user in Docker ([b78313f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b78313f9c9677ec6786778e6752e1a8b9fccf38e))
+
 ### [5.12.36](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.35...v5.12.36) (2025-04-05)
 
 
