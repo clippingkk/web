@@ -56,6 +56,13 @@ RUN chown nextjs:nodejs .next && chown nextjs:nodejs /app
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# ------- Instrumentation patch -------
+COPY --from=builder /app/instrumentation.js ./instrumentation.js
+# Patch server.js so it starts instrumentation
+RUN sed -i '1i\import { register } from "./instrumentation.js";\nregister();\n' server.js
+# ------- End of instrumentation patch -------
+
+
 USER nextjs
 EXPOSE 3000
 ENV PORT 3000

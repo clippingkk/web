@@ -35,26 +35,28 @@ const config: NextConfig = {
     NEXT_PUBLIC_PP_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_PP_TOKEN || ''),
     infuraKey: JSON.stringify(process.env.infuraKey || '')
   },
-  webpack: (config, { webpack }) => {
-    config.experiments = { ...config.experiments, topLevelAwait: true }
-    config.externals['node:fs'] = 'commonjs node:fs'
-    config.externals['inspector/promises'] = 'commonjs node:inspector/promises'
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      'inspector/promises': false
-    }
-    config.plugins.push(
-      new webpack.NormalModuleReplacementPlugin(
-        /^node:/,
-        (resource: { request: string }) => {
-          resource.request = resource.request.replace(/^node:/, '')
-        },
-      ),
-    )
+  // webpack: (config, { webpack, isServer }) => {
+  //   if (isServer) {
+  //     config.experiments = { ...config.experiments, topLevelAwait: true }
+  //     config.externals['node:fs'] = 'commonjs node:fs'
+  //     config.externals['node:inspector/promises'] = 'commonjs node:inspector/promises'
+  //     config.resolve.fallback = {
+  //       ...config.resolve.fallback,
+  //       fs: false,
+  //       'inspector/promises': false
+  //     }
+  //     config.plugins.push(
+  //       new webpack.NormalModuleReplacementPlugin(
+  //         /^node:/,
+  //         (resource: { request: string }) => {
+  //           resource.request = resource.request.replace(/^node:/, '')
+  //         },
+  //       ),
+  //     )
+  //   }
 
-    return config
-  },
+  //   return config
+  // },
   async headers() {
     return [
       {
