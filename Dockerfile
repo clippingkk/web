@@ -10,6 +10,7 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./src/types.g.ts ./
 RUN npm install -g corepack@latest
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
+RUN pnpm add @opentelemetry/sdk-node @opentelemetry/exporter-trace-otlp-http @opentelemetry/sdk-trace-base @opentelemetry/resources @opentelemetry/id-generator-aws-xray
 
 FROM base AS builder
 WORKDIR /app
