@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.43](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.42...v5.12.43) (2025-04-05)
+
+
+### Bug Fixes
+
+* **instrumentation:** fix instrumentation ([134d63a](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/134d63a0757b50671c0ab22c87de8d6b4944b5b7))
+* **standalone:** Add OpenTelemetry dependencies for AWS X-Ray tracing support ([27669d0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/27669d0dcf1e9b385b6342be5937b275f544eb3e))
+
 ### [5.12.42](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.41...v5.12.42) (2025-04-05)
 
 
