@@ -1,21 +1,16 @@
 export async function register() {
-  console.log('Instrumentation registered', process.env)
   if (process.env.NODE_ENV !== 'production') {
     return
   }
-  console.log('Instrumentation step 2')
   if (process.env.NEXT_RUNTIME !== 'nodejs') {
     return
   }
-  console.log('Instrumentation step 3')
+  if (process.env.DEBUG === '1') {
+    heapSnapshot()
+  }
   if (process.env.OTEL_ENABLED === '1') {
     await otel()
   }
-  console.log('Instrumentation step 4')
-  if (process.env.DEBUG === '1') {
-    await heapSnapshot()
-  }
-  console.log('Instrumentation step 5')
 }
 
 async function otel(){
