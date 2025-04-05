@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.42](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.41...v5.12.42) (2025-04-05)
+
+
+### Bug Fixes
+
+* fix dockerfile ([55aa805](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/55aa80515da78ee8ed7aeb73433eb2499b49dc2a))
+
 ### [5.12.41](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.40...v5.12.41) (2025-04-05)
 
 

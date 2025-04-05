@@ -1,6 +1,6 @@
 {
   "name": "kindle-viewer-website",
-  "version": "5.12.41",
+  "version": "5.12.42",
   "description": "kindle-viewer-website",
   "main": "index.js",
   "scripts": {
