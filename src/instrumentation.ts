@@ -1,11 +1,12 @@
 export async function register() {
+  console.log('hhhhhhh')
   if (process.env.NODE_ENV !== 'production') {
     return
   }
   if (process.env.NEXT_RUNTIME === 'nodejs' && process.env.OTEL_ENABLED === '1') {
-    await import('./server/otel')
+    await import('./node/otel')
   }
   if (process.env.DEBUG === '1') {
-    await import('./server/profiler')
+    await import('./node/profiler')
   }
 }
