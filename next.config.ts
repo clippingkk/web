@@ -11,6 +11,7 @@ const config: NextConfig = {
   generateBuildId: () => {
     return process.env.GIT_COMMIT ?? ''
   },
+  
   // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
   cacheMaxMemorySize: 0,
   experimental: {
