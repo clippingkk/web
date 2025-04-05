@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.39](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.38...v5.12.39) (2025-04-05)
+
+
+### Bug Fixes
+
+* **instrumentation:** add ugly patch for instrumentation ([d89d98f](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d89d98fd20af680a8227de23a84e1899fa14c126))
+
 ### [5.12.38](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.37...v5.12.38) (2025-04-05)
 
 
