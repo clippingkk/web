@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.38](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.37...v5.12.38) (2025-04-05)
+
+
+### Bug Fixes
+
+* Add node:inspector/promises to webpack externals config ([6711319](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/671131942f7e75196d3eb9312fe98af96ba4ca58))
+
 ### [5.12.37](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.36...v5.12.37) (2025-04-05)
 
 
