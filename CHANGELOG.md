@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.35](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.34...v5.12.35) (2025-04-05)
+
+
+### Bug Fixes
+
+* **node:** remove node prefix since nextjs not supported ([f8393b2](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/f8393b2a31aa19edd9762f5d2d93ed986585b294))
+
 ### [5.12.34](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.33...v5.12.34) (2025-04-05)
 
 
