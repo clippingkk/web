@@ -1,5 +1,5 @@
-import { Session } from 'node:inspector/promises'
-import fs from 'node:fs'
+import { Session } from 'inspector/promises'
+import fs from 'fs'
 
 async function dumpHeapSnapshot() {
   const session = new Session()

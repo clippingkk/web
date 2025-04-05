@@ -1,5 +1,4 @@
 export async function register() {
-  console.log('hhhhhhh')
   if (process.env.NODE_ENV !== 'production') {
     return
   }
