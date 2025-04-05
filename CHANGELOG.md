@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.12.33](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.32...v5.12.33) (2025-04-05)
+
+
+### Bug Fixes
+
+* **debug:** add otel and heap dump way ([868bdde](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/868bdde46784150614f22a49655d805fb97fa292))
+
 ### [5.12.32](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.31...v5.12.32) (2025-04-05)
 
 
