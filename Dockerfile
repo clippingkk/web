@@ -59,7 +59,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # ------- Instrumentation patch -------
 COPY --from=builder /app/instrumentation.js ./instrumentation.js
 # Patch server.js so it starts instrumentation
-RUN sed -i '1i\const { register } = require("./instrumentation.js");\nregister();\n' server.js
+
+RUN echo "\n\nconst { register } = require('./instrumentation.js');\nregister();\n" >> server.js
 # ------- End of instrumentation patch -------
 
 
