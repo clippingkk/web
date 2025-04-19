@@ -174,7 +174,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                   <LinkIndicator>
                     <User size={18} className="text-slate-700 dark:text-slate-200" />
                   </LinkIndicator>
-                  <span>{t('app.menu.profile')}</span>
+                  <span>{t('app.menu.my')}</span>
                 </Link>
                 
                 <button 

@@ -3,7 +3,7 @@ import { useTranslation } from '@/i18n'
 async function Layout(props: { children: React.ReactNode }) {
   const { t } = await useTranslation()
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="container px-4 sm:px-6 lg:px-8">
       <div className="relative">
         {/* Decorative background */}
         <div className="absolute -z-10 inset-x-0 top-0 h-40 bg-gradient-to-r from-purple-600 to-blue-600 opacity-20 blur-3xl rounded-b-3xl" />

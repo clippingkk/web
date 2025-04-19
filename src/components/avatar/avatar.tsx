@@ -24,7 +24,7 @@ function Avatar(props: AvatarProps) {
   }
 
   if (isPremium) {
-    cls += ' px-1 py-1 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 '
+    cls += ' px-1 py-1 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 rounded-full'
   }
 
   const { ref, isHovering } = useHover<HTMLDivElement>()

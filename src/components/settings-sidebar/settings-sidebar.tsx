@@ -22,7 +22,7 @@ function SettingsSidebar({ title }: SettingsSidebarProps) {
     { id: 'orders', label: t('app.settings.orders.title'), icon: <QueueListIcon className='w-4 h-4' /> },
     { id: 'webhooks', label: t('app.settings.webhook.title'), icon: <GlobeAltIcon className='w-4 h-4' /> },
     { id: 'exports', label: t('app.settings.export.title'), icon: <DocumentArrowDownIcon className='w-4 h-4' /> },
-    { id: 'account', label: 'Account', icon: <UserIcon className='w-4 h-4' />, className: 'ml-auto' }
+    { id: 'account', label: t('app.settings.account'), icon: <UserIcon className='w-4 h-4' />, className: 'ml-auto' }
   ]
 
   return (

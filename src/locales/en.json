@@ -55,6 +55,7 @@
       "my": "My Profile",
       "settings": "Settings",
       "logout": "Logout",
+      "viewProfile": "View Profile",
       "loginByQRCode": {
         "title": "Login by QRCode"
       },
@@ -164,6 +165,7 @@
         "count": "count, 40 words at least. Don't let your tongue before your thinking.",
         "submit": "Submit",
         "placeholder": "What do you think this clipping? You can write down and communicate with others.",
+        "empty": "No comments yet",
         "tip": {
           "tooShort": "Too short, need more thinking.",
           "success": "Yes, shared your's feeling"
@@ -253,6 +255,7 @@
     "settings": {
       "title": "Global Settings(for web)",
       "theme": "Theme",
+      "account": "Account",
       "webhook": {
         "title": "Web Hook",
         "submit": "Submit",

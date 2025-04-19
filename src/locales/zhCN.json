@@ -55,6 +55,7 @@
       "my": "我的信息",
       "settings": "设置",
       "logout": "退出",
+      "viewProfile": "查看我的信息",
       "loginByQRCode": {
         "title": "扫码登陆"
       },
@@ -164,6 +165,7 @@
         "title": "评论",
         "count": "个字, 至少为 40 个字. 学而不思则惘.",
         "submit": "提交",
+        "empty": "还没有评论",
         "tip": {
           "tooShort": "太短了，再多想想？",
           "success": "搞定，已经分享给其他朋友了"
@@ -253,6 +255,7 @@
     "settings": {
       "title": "全局配置(网站)",
       "theme": "黑暗模式",
+      "account": "账户",
       "webhook": {
         "title": "Webhook",
         "submit": "提交",

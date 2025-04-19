@@ -55,6 +55,7 @@
       "my": "내 정보",
       "settings": "설정",
       "logout": "그만두 다",
+      "viewProfile": "프로필 보기",
       "loginByQRCode": {
         "title": "qrcode로 로그인"
       },
@@ -164,6 +165,7 @@
         "title": "논평",
         "count": "단어, 40 단어 이상 생각하지 않고 배우는 것은 답답합니다.",
         "submit": "제출",
+        "empty": "아직 논평이 없습니다.",
         "tip": {
           "tooShort": "너무 짧습니다. 그것에 대해 더 생각하십니까?",
           "success": "완료, 다른 친구와 공유"
@@ -253,6 +255,7 @@
     "settings": {
       "title": "글로벌 구성 (웹 사이트)",
       "theme": "야간 모드",
+      "account": "계정",
       "webhook": {
         "title": "Web Hook",
         "submit": "제출하다",
