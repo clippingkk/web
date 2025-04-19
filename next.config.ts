@@ -13,7 +13,7 @@ const config: NextConfig = {
   },
   
   // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
-  cacheMaxMemorySize: 0,
+  // cacheMaxMemorySize: 0,
   experimental: {
     // ppr: true,
     // useLightningcss: true,
