@@ -16,7 +16,7 @@ const config: NextConfig = {
   cacheMaxMemorySize: 0,
   experimental: {
     // ppr: true,
-    // useLightningcss: true,
+    useLightningcss: true,
     // typedEnv: true,
     // typedRoutes: true,
   },

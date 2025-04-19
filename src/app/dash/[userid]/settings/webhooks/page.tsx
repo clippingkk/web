@@ -1,186 +1,90 @@
-'use client'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { TGlobalStore } from '@/store'
-import { useFormik } from 'formik'
-import { toast } from 'react-hot-toast'
-import * as Yup from 'yup'
-import { useTranslation } from 'react-i18next'
-import { Button, Tooltip, Modal, TextInput } from '@mantine/core'
-import { FetchMyWebHooksQuery, useCreateNewWebHookMutation, useDeleteAWebHookMutation, useFetchMyWebHooksQuery, useProfileQuery, WebHookStep } from '@/schema/generated'
-import { useIsPremium } from '@/hooks/profile'
-import WebhookTable from '../components/webhook-table'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { getApolloServerClient } from '@/services/apollo.server'
+import { ProfileQuery, ProfileQueryVariables, ProfileDocument, FetchMyWebHooksDocument, FetchMyWebHooksQueryVariables, FetchMyWebHooksQuery } from '@/schema/generated'
+import WebHooksContent from './content'
+import { checkIsPremium } from '@/compute/user'
+import WebhookCreateButton from './create-button'
+import { ExternalLink, Webhook } from 'lucide-react'
+import { useTranslation } from '@/i18n'
 
-const webhookColumns: ColumnDef<FetchMyWebHooksQuery['me']['webhooks'][0]>[] = [{
-  header: 'id',
-  accessorKey: 'id'
-}, {
-  header: 'step',
-  accessorKey: 'step'
-}, {
-  header: 'url',
-  accessorKey: 'hookUrl'
-}, {
-  header: 'action',
-}]
+type Props = {
+  params: Promise<{ userid: string }>
+}
+async function WebhooksPage(props: Props) {
+  const [params, ck, { t }] = await Promise.all([props.params, cookies(), useTranslation()])
+  const { userid } = params
+  const myUid = ck.get('uid')?.value
 
-function WebHooks() {
-  const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  if (!myUid) {
+    return redirect(`/dash/${userid}/profile`)
+  }
 
-  const { data: me } = useProfileQuery({
+  const myUidInt = myUid ? parseInt(myUid) : undefined
+
+  const apolloClient = getApolloServerClient()
+  const { data: profileResponse } = await apolloClient.query<ProfileQuery, ProfileQueryVariables>({
+    query: ProfileDocument,
+    fetchPolicy: 'network-only',
     variables: {
-      id: uid
+      id: myUidInt
     },
-    skip: uid <= 0
-  })
-
-  const isPremium = useIsPremium(me?.me.premiumEndAt)
-
-  const { data: webhooksResp, client, refetch } = useFetchMyWebHooksQuery({
-    variables: {
-      id: uid
-    },
-    skip: uid <= 0
-  })
-
-  const { t } = useTranslation()
-
-  const [createMutation] = useCreateNewWebHookMutation()
-  const [deleteMutation] = useDeleteAWebHookMutation({
-    onCompleted: () => {
-      refetch()
-      toast.success(t('app.common.done'))
+    context: {
+      headers: {
+        'Authorization': 'Bearer ' + ck.get('token')?.value
+      },
     }
   })
 
-  const [visible, setVisible] = useState(false)
-  const formik = useFormik({
-    initialValues: {
-      hookUrl: '',
+  const { data: webhooksResp } = await apolloClient.query<FetchMyWebHooksQuery, FetchMyWebHooksQueryVariables>({
+    query: FetchMyWebHooksDocument,
+    variables: {
+      id: myUidInt
     },
-    validationSchema: Yup.object({
-      hookUrl: Yup.string().url().max(255),
-    }),
-    async onSubmit(vals) {
-      if (vals.hookUrl.length <= 3 || !formik.isValid) {
-        return
-      }
-      return createMutation({
-        variables: {
-          step: WebHookStep.OnCreateClippings,
-          hookUrl: vals.hookUrl
-        }
-      }).then(() => {
-        toast.success(t('app.common.done'))
-        formik.resetForm()
-        client.resetStore()
-        refetch()
-        setVisible(false)
-      })
+    context: {
+      headers: {
+        'Authorization': 'Bearer ' + ck.get('token')?.value
+      },
     }
   })
 
-  const table = useReactTable({
-    columns: webhookColumns,
-    getCoreRowModel: getCoreRowModel(),
-    data: webhooksResp?.me.webhooks ?? []
-  })
+  const isPremium = checkIsPremium(profileResponse.me.premiumEndAt)
 
   return (
-    <div className='w-full text-center'>
-      <a
-        href="https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae"
-        target='_blank'
-        referrerPolicy='no-referrer'
-        className='text-gray-800 dark:text-gray-200 text-sm hover:underline' rel="noreferrer"
-      >
-        {t('app.settings.webhook.docLink')}
-      </a>
-      <div className=' mx-4 lg:mx-20'>
-        <WebhookTable
-          table={table}
-          onRowDelete={id => {
-            return deleteMutation({
-              variables: {
-                id
-              }
-            })
-          }}
-        />
-      </div>
-      <Tooltip
-        withArrow
-        transitionProps={{
-          transition: 'pop',
-          duration: 300
-        }}
-        disabled={isPremium}
-        label={!isPremium ? t('app.payment.webhookRequired') : null}>
-        <Button
-          variant="gradient"
-          className='bg-linear-to-br from-indigo-400 to-cyan-500'
-          disabled={!isPremium}
-          onClick={() => {
-            setVisible(true)
-          }}
-        >
-          New
-        </Button>
-      </Tooltip>
-
-      <Modal
-        opened={visible}
-        title={t('app.settings.webhook.title')}
-        onClose={() => setVisible(false)}
-        size={'lg'}
-        centered
-      >
-        <form className='w-full' onSubmit={formik.handleSubmit}>
-          <TextInput
-            withAsterisk
-            type='url'
-            className='mt-4'
-            size='md'
-            label={t('app.settings.webhook.title')}
-            placeholder='https://example.com'
-            {...formik.getFieldProps('hookUrl')} />
-          <div
-            className='w-full text-right flex gap-4 justify-end mt-4'
-          >
-            <Button
-              onClick={() => {
-                setVisible(false)
-              }}
+    <>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <Webhook size={24} className="text-indigo-600 dark:text-indigo-400" />
+          <div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              {t('app.settings.webhook.title')}
+            </h1>
+            <a
+              href="https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae"
+              target="_blank"
+              referrerPolicy="no-referrer"
+              rel="noreferrer"
+              className="flex items-center justify-center gap-2 text-indigo-700 dark:text-indigo-300 font-medium hover:text-indigo-900 dark:hover:text-indigo-200 transition-colors text-sm"
             >
-              {t('app.common.cancel')}
-            </Button>
-            <Tooltip
-              withArrow
-              transitionProps={{
-                transition: 'pop',
-                duration: 300
-              }}
-              disabled={formik.isValid && isPremium}
-              label={!isPremium ? t('app.payment.webhookRequired') : (
-                formik.errors.hookUrl
-              )}
-            >
-              <Button
-                variant="gradient"
-                className='bg-linear-to-br from-indigo-400 to-cyan-500'
-                disabled={formik.values.hookUrl.length <= 3 || !formik.isValid || !isPremium}
-                loading={formik.isSubmitting}
-                type='submit'
-              >
-                {t('app.settings.webhook.submit')}
-              </Button>
-            </Tooltip>
+              <span>{t('app.settings.webhook.docLink')}</span>
+              <ExternalLink size={12} />
+            </a>
           </div>
-        </form>
-      </Modal>
-    </div>
+        </div>
+        <WebhookCreateButton isPremium={isPremium} />
+      </div>
+      
+      {/* Main Content */}
+      <div className="rounded-xl overflow-hidden bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg shadow-lg border border-white/20 dark:border-slate-700/20">
+        <div className="space-y-6">
+          <WebHooksContent
+            isPremium={isPremium}
+            webhooks={webhooksResp.me.webhooks}
+          />
+        </div>
+      </div>
+    </>
   )
 }
 
-export default WebHooks
+export default WebhooksPage

@@ -1,11 +1,13 @@
 import { FlatCompat } from '@eslint/eslintrc'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
 })
 
 const config = [
-  ...compat.extends('next', 'next/core-web-vitals', 'next/typescript', 'plugin:@tanstack/query/recommended'),
+  ...pluginQuery.configs['flat/recommended'],
+  ...compat.extends('next', 'next/core-web-vitals', 'next/typescript'),
   {
     'ignores': [
       'tailwind.config.js',

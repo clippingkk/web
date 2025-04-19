@@ -52,7 +52,6 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 // the home page only available for myself
 async function Page(props: PageProps) {
-
   const [params, ck] = await Promise.all([props.params, cookies()])
   const { userid } = params
   const myUid = ck.get('uid')?.value

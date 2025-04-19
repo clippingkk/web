@@ -64,7 +64,7 @@ async function Footer() {
               {version && (
                 <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500">
                   <code className="bg-gray-100 dark:bg-gray-800/50 px-2 py-0.5 rounded font-mono">
-                    v{version}
+                    {version}
                   </code>
                 </div>
               )}
