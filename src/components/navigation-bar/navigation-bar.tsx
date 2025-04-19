@@ -15,6 +15,7 @@ import { ArrowUpTrayIcon, BookOpenIcon, Squares2X2Icon } from '@heroicons/react/
 import { useSelectedLayoutSegment } from 'next/navigation'
 import styles from './navigation-bar.module.css'
 import { ProfileQuery } from '../../schema/generated'
+import LinkIndicator from '../link-indicator'
 
 const leftMenu = [
   {
@@ -84,7 +85,9 @@ function NavigationBar(props: NavigationBarProps) {
                   href={item.dest(profile.domain.length > 2 ? profile.domain : profile.id)}
                 >
                   <>
-                    {item.emoji()}
+                    <LinkIndicator>
+                      {item.emoji()}
+                    </LinkIndicator>
                     <span
                       className=' ml-2 lg:text-lg'
                     >

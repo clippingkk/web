@@ -15,6 +15,8 @@ import AvatarOnNavigationBar from './avatar'
 import { useIsPremium } from '../../hooks/profile'
 import profile from '../../utils/profile'
 import { onCleanServerCookie } from './logout'
+import LinkIndicator from '../link-indicator'
+import { cn } from '@/utils/cn'
 
 // Custom Dropdown component
 type DropdownProps = {
@@ -72,32 +74,6 @@ const Divider = ({ className = '' }: { className?: string }) => (
   <hr className={`border-t border-slate-200 dark:border-slate-700 ${className}`} />
 )
 
-type MenuItemProps = {
-  icon: React.ReactNode
-  label: string
-  onClick?: () => void
-  href?: string
-  color?: string
-}
-
-const MenuItem = ({ icon, label, onClick, href, color = 'default' }: MenuItemProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Component: any = href ? Link : 'button'
-  const props = href ? { href } : { onClick, type: 'button' }
-  
-  return (
-    <Component
-      {...props}
-      className={`w-full flex items-center gap-2 p-3 rounded-lg transition-all duration-200 ${color === 'danger' 
-        ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20' 
-        : 'hover:bg-slate-100 dark:hover:bg-slate-800/50'}`}
-    >
-      <span className="text-lg">{icon}</span>
-      <span>{label}</span>
-    </Component>
-  )
-}
-
 type LoggedNavigationBarProps = {
   profile: UserContent
   uidOrDomain: string | number
@@ -147,7 +123,9 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                          transition-colors duration-200 flex items-center justify-center"
               aria-label={t('app.menu.settings')}
             >
-              <Settings size={20} className="text-slate-700 dark:text-slate-200" />
+              <LinkIndicator>
+                <Settings size={20} className="text-slate-700 dark:text-slate-200" />
+              </LinkIndicator>
             </Link>
           </Tooltip>
         </li>
@@ -173,7 +151,9 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                   isPremium={isPremium}
                 />
                 <div>
-                  <h3 className="font-bold text-lg">{profileData.name}</h3>
+                  <Tooltip content={profileData.name} noWrap>
+                    <h3 className="font-bold text-lg max-w-48 text-ellipsis overflow-hidden">{profileData.name}</h3>
+                  </Tooltip>
                   <Link 
                     href={`/dash/${uidOrDomain}/profile`}
                     className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
@@ -187,32 +167,47 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
               
               {/* Menu Items */}
               <div className="flex flex-col">
-                <MenuItem 
-                  icon={<User size={18} />}
-                  label={t('app.menu.profile')}
+                <Link 
                   href={`/dash/${uidOrDomain}/profile`}
-                />
+                  className="flex items-center gap-2 p-3 rounded-lg transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                >
+                  <LinkIndicator>
+                    <User size={18} className="text-slate-700 dark:text-slate-200" />
+                  </LinkIndicator>
+                  <span>{t('app.menu.profile')}</span>
+                </Link>
                 
-                <MenuItem 
-                  icon={<Smartphone size={18} />}
-                  label={t('app.menu.loginByQRCode.title')}
+                <button 
+                  className="flex items-center gap-2 p-3 rounded-lg transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 cursor-pointer"
                   onClick={onPhoneLogin}
-                />
+                >
+                  <Smartphone size={18} className="text-slate-700 dark:text-slate-200" />
+                  <span>{t('app.menu.loginByQRCode.title')}</span>
+                </button>
                 
-                <MenuItem 
-                  icon={<Settings size={18} />}
-                  label={t('app.menu.settings')}
+                <Link
                   href={`/dash/${uidOrDomain}/settings/web`}
-                />
+                  className="flex items-center gap-2 p-3 rounded-lg transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                >
+                  <LinkIndicator>
+                    <Settings size={18} className="text-slate-700 dark:text-slate-200" />
+                  </LinkIndicator>
+                  <span>{t('app.menu.settings')}</span>
+                </Link>
                 
                 <Divider className="my-2" />
                 
-                <MenuItem 
-                  icon={<LogOut size={18} />}
-                  label={t('app.menu.logout')}
+                <button 
+                  className={
+                    cn('flex items-center gap-2 p-3 rounded-lg transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 cursor-pointer',
+                      'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
+                    )
+                  }
                   onClick={handleLogout}
-                  color="danger"
-                />
+                >
+                  <LogOut size={18} className="text-red-400" />
+                  <span>{t('app.menu.logout')}</span>
+                </button>
               </div>
             </div>
           </Dropdown>

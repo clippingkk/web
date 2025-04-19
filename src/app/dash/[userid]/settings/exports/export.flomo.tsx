@@ -5,8 +5,8 @@ import React, { useState } from 'react'
 import { useTranslation } from '@/i18n/client'
 import { toast } from 'react-hot-toast'
 import * as Yup from 'yup'
-import FieldInput from '@/components/input'
-import { Button, Modal } from '@mantine/core'
+import InputField from '@annatarhe/lake-ui/form-input-field'
+import Modal from '@annatarhe/lake-ui/modal'
 import BrandFlomoLogo from '@/assets/brand-flomo.png'
 import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 
@@ -44,48 +44,43 @@ function ExportToFlomo() {
   })
   return (
     <React.Fragment>
-      <Button
-        variant="gradient"
-        className='bg-linear-to-br from-indigo-400 to-cyan-500'
+      <button
         onClick={() => setVisible(true)}
-        size='lg'
+        className="flex flex-col items-center justify-center w-full h-full p-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/80 transition-colors duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
       >
         <Image
-          className='py-4 px-4'
+          className='mb-3'
           src={BrandFlomoLogo}
-          width={BrandFlomoLogo.width / 2}
-          height={BrandFlomoLogo.height / 2}
+          width={BrandFlomoLogo.width / 2.5}
+          height={BrandFlomoLogo.height / 2.5}
           alt='flomo'
         />
-      </Button>
+        <span className="font-medium text-gray-800 dark:text-gray-200">
+          {t('app.settings.export.flomo.title', 'Flomo')}
+        </span>
+      </button>
       <Modal
-        opened={visible}
+        isOpen={visible}
         onClose={() => setVisible(false)}
-        centered
-        size='lg'
-        overlayProps={{ backgroundOpacity: 0.55, blur: 8 }}
         title={t('app.settings.export.flomo.title')}
       >
-        <div className='w-full'>
+        <div className='w-full p-4'>
           <form className='w-full' onSubmit={formik.handleSubmit}>
-            <FieldInput
+            <InputField
               name='endpoint'
+              className='w-full flex items-center'
+              placeholder='Flomo Endpoint'
               value={formik.values.endpoint}
               error={formik.errors.endpoint}
               onChange={formik.handleChange}
             />
-            <div
-              className='w-full text-right'
-            >
-
-              <Button
-                // className='w-64 bg-blue-400 rounded-sm py-4 hover:bg-blue-500 duration-150'
-                variant="gradient"
-                className='bg-linear-to-br from-indigo-400 to-cyan-500'
+            <div className='w-full text-right mt-4'>
+              <button
                 type='submit'
+                className='px-5 py-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 active:scale-95'
               >
                 {t('app.settings.export.flomo.submit')}
-              </Button>
+              </button>
             </div>
 
           </form>
