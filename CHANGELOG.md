@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.13.1](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.13.0...v5.13.1) (2025-04-19)
+
+
+### Bug Fixes
+
+* **build:** Disable experimental lightningcss feature in next.config.ts ([5995854](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/5995854b3349c9877dfee4686268dcadb01b9f76))
+
 ## [5.13.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.43...v5.13.0) (2025-04-19)
 
 
