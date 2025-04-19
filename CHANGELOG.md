@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.0](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.43...v5.13.0) (2025-04-19)
+
+
+### Features
+
+* **settings:** polish the settings page ([d986064](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/d986064892db6c91632fa63716bb4ad802e5f2b6))
+
+
+### Bug Fixes
+
+* **app:** update deps ([26b8309](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/26b8309e2b323880b106e9a28f82efcacf1afcad))
+* **deps:** upgrade deps ([b71194e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/b71194e3c882a1f5b24df95800650e3a96b374c7))
+* **order:** fix order page ([bc5c760](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/bc5c7600a7c9be16c3be92f1936ef411b152a43a))
+* **orders:** update order page ([ed4d16d](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/ed4d16dcf3952e6918b2a56898a806d8ca40df13))
+* **order:** update styles in order ([0801b1e](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/0801b1ea61214b7a6823907c9f2784dd5fcec996))
+* **ui:** update clipping and setting page ([8fcd446](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/8fcd446d270ec37b103df944953af669e32d114d))
+
 ### [5.12.43](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.12.42...v5.12.43) (2025-04-05)
 
 
