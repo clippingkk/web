@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.13.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.13.3...v5.13.4) (2025-04-19)
+
+
+### Bug Fixes
+
+* **ci:** remove cache in build ([4e5d718](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/4e5d718b6bd41eb18bd367d33c7b416d97200c88))
+
 ### [5.13.3](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.13.2...v5.13.3) (2025-04-19)
 
 
