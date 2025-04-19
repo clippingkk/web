@@ -1,3 +1,4 @@
+'use client'
 import { Order } from '@/schema/generated'
 import { useTranslation } from '@/i18n/client'
 import { createColumnHelper, useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table'
