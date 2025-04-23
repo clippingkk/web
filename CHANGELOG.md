@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.5](https://github.com/clippingkk/web/compare/v5.13.4...v5.13.5) (2025-04-23)
+
+
+### Bug Fixes
+
+* **admin:** replace Mantine UI with custom Tailwind components for admin pages ([d399aa7](https://github.com/clippingkk/web/commit/d399aa72c1d8cdd26815b4a44e0735445c09ba86))
+* **ci:** add issues write permission to GitHub workflow ([54834cc](https://github.com/clippingkk/web/commit/54834cccc6f3e514c503efb4a661b907bddc8f44))
+* **ci:** add release-please and enable docker image push to Aliyun registry ([5fa3fb6](https://github.com/clippingkk/web/commit/5fa3fb63825beab25c88652583bd1dd8fe4e7f86))
+* **ci:** only build and push docker image when release is created ([121b150](https://github.com/clippingkk/web/commit/121b150db9164864990e481a3731777ffe4e8e91))
+
 ### [5.13.4](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.13.3...v5.13.4) (2025-04-19)
 
 
