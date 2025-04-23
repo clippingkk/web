@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.6](https://github.com/clippingkk/web/compare/v5.13.5...v5.13.6) (2025-04-23)
+
+
+### Bug Fixes
+
+* **ci:** simplify docker image tags and add latest tag for releases ([5ffccee](https://github.com/clippingkk/web/commit/5ffcceeb8e0d997602a638f3a9f47f25b65f4edf))
+
 ## [5.13.5](https://github.com/clippingkk/web/compare/v5.13.4...v5.13.5) (2025-04-23)
 
 
