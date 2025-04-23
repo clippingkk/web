@@ -2,7 +2,7 @@
 import { ExternalLink, Loader2 } from 'lucide-react'
 import { useTranslation } from '@/i18n/client'
 import { useFetchUserPersonalityQuery } from '@/schema/generated'
-import { Modal } from '@/components/ui/modal'
+import Modal from '@annatarhe/lake-ui/modal'
 import { useState } from 'react'
 import Markdown from 'react-markdown'
 import { MarkdownComponents } from '@/components/RichTextEditor/markdown-components'
@@ -44,7 +44,6 @@ function PersonalityView(props: PersonalityViewProps) {
         isOpen={isOpen}
         onClose={close}
         title={t('app.profile.personality.title')}
-        className='max-w-4xl'
       >
         <div className='w-full min-h-[240px] flex items-center flex-col px-4 relative'>
           {loading && (
