@@ -1,6 +1,13 @@
 import { HttpLink, InMemoryCacheConfig } from '@apollo/client'
 import { API_HOST } from '../constants/config'
 import { uniqBy } from 'lodash'
+import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+
+if (process.env.NODE_ENV !== 'production') {
+  // Adds messages only in a dev environment
+  loadDevMessages()
+  loadErrorMessages()
+}
 
 function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
   return fetch(url, options)

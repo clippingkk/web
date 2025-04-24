@@ -16,6 +16,7 @@ type UserContent = Pick<User, 'id' | 'name' | 'email' | 'avatar' | 'createdAt'>
 
 async function onAuthEnd(data: { user: UserContent, token: string }) {
   const { user, token } = data
+  await syncLoginStateToServer({ uid: user.id, token: token })
   localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
     profile: user,
     token: token,
@@ -39,7 +40,6 @@ async function onAuthEnd(data: { user: UserContent, token: string }) {
     'USER_ID': me.id.toString(),
   })
   updateToken(profile.token)
-  await syncLoginStateToServer({ uid: me.id, token: profile.token })
   // Cookies.set('token', profile.token, { expires: 365 })
   // Cookies.set('uid', profile.uid.toString(), { expires: 365 })
 }

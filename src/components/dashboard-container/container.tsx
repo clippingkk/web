@@ -7,8 +7,9 @@ import Footer from '../footer/Footer'
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '@/schema/generated'
 import { cookies } from 'next/headers'
 import { USER_TOKEN_KEY } from '../../constants/storage'
-import { getApolloServerClient } from '../../services/apollo.server'
+import { doApolloServerQuery } from '../../services/apollo.server'
 import { redirect } from 'next/navigation'
+import { ApolloError } from '@apollo/client'
 
 type DashboardContainerProps = {
   uidOrDomain?: number | string
@@ -20,7 +21,6 @@ async function DashboardContainer(props: DashboardContainerProps) {
   const { uidOrDomain, header, children } = props
   const ck = await cookies()
   const token = ck.get(USER_TOKEN_KEY)
-  // const bg = useAtomValue(appBackgroundAtom)
 
   const isUidType = !Number.isNaN(parseInt(props.uidOrDomain as string))
 
@@ -28,21 +28,36 @@ async function DashboardContainer(props: DashboardContainerProps) {
     return redirect('/')
   }
 
-  const ac = getApolloServerClient()
+  let myProfile: ProfileQuery | null = null
 
-  const { data: myProfile } = await ac.query<ProfileQuery, ProfileQueryVariables>({
-
-    query: ProfileDocument,
-    variables: {
-      id: isUidType ? ~~uidOrDomain! : undefined,
-      domain: isUidType ? undefined : String(uidOrDomain)
-    },
-    context: {
-      headers: token ? {
-        Authorization: 'Bearer ' + token.value
-      } : null
+  try {
+    const { data } = await doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
+      query: ProfileDocument,
+      variables: {
+        id: isUidType ? ~~uidOrDomain! : undefined,
+        domain: isUidType ? undefined : String(uidOrDomain)
+      },
+      context: {
+        headers: token ? {
+          Authorization: 'Bearer ' + token.value
+        } : null
+      }
+    })
+    myProfile = data
+  } catch (e) {
+    if (e instanceof ApolloError) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const statusCode = (e.networkError as any)?.statusCode as number
+      if (statusCode === 401) {
+        return redirect('/auth/auth-v4?clean=true')
+      }
+      // user not found. maybe need to login again
+      if (statusCode === 404) {
+        return redirect('/auth/auth-v4?clean=true')
+      }
     }
-  })
+    throw e
+  }
 
   // const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
   //   if (!bg) {

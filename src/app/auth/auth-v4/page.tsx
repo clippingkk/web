@@ -9,6 +9,7 @@ import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import GalleryBackgroundView from '@/components/galleryBackgroundView'
+import ForceClean from './clean'
 
 export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/auth-v4')
@@ -42,6 +43,7 @@ async function Page() {
 
   return (
     <HydrationBoundary state={d}>
+      <ForceClean />
       <div className='w-full h-full bg-slate-100 dark:bg-slate-900 relative'>
         <GalleryBackgroundView publicData={data.data} />
         <div
