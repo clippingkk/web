@@ -4,13 +4,11 @@ import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { useCallback, useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useDispatch } from 'react-redux'
 import { useTranslation } from '@/i18n/client'
 import { Search, Settings, LogOut, Smartphone, User } from 'lucide-react'
 import toast from 'react-hot-toast'
 import mixpanel from 'mixpanel-browser'
 
-import { USER_LOGOUT, UserContent } from '@/store/user/type'
 import AvatarOnNavigationBar from './avatar'
 import { useIsPremium } from '@/hooks/profile'
 import profile from '@/utils/profile'
@@ -75,7 +73,11 @@ const Divider = ({ className = '' }: { className?: string }) => (
 )
 
 type LoggedNavigationBarProps = {
-  profile: UserContent
+  profile: {
+    name: string
+    avatar: string
+    premiumEndAt: string
+  }
   uidOrDomain: string | number
   onPhoneLogin: () => void
   onSearch: () => void
@@ -85,17 +87,15 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
   const { uidOrDomain, onPhoneLogin, onSearch, profile: profileData } = props
   const { t } = useTranslation()
   const router = useRouter()
-  const dispatch = useDispatch()
   const isPremium = useIsPremium(profileData.premiumEndAt)
 
   const handleLogout = useCallback(async () => {
     await onCleanServerCookie()
     profile.onLogout()
-    dispatch({ type: USER_LOGOUT })
     toast.success(t('app.menu.logout.success') || 'Bye bye')
     mixpanel.track('logout')
     router.push('/')
-  }, [dispatch, router, t])
+  }, [router, t])
 
   return (
     <nav aria-label="User navigation">

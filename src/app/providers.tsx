@@ -4,13 +4,10 @@ import '../utils/mixpanel'
 import React from 'react'
 import { Provider as JotaiProvider } from 'jotai'
 import { useDarkModeStatus } from '../hooks/theme'
-import { Provider } from 'react-redux'
-import store from '../store'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { createReactQueryClient, makeApolloClientWithCredentials } from '../services/ajax'
 import { reactQueryPersister } from '../services/storage'
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support'
-import InitProvider from './init.provider'
 import { I18nextProvider } from 'react-i18next'
 import { usePointerUpdate } from '../hooks/pointer'
 import { useTranslation } from '../i18n/client'
@@ -43,22 +40,18 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
     >
       <I18nextProvider i18n={i18n}>
         <JotaiProvider>
-          <Provider store={store}>
-            <PersistQueryClientProvider
-              client={rq}
-              persistOptions={{
-                persister: reactQueryPersister
-              }}
+          <PersistQueryClientProvider
+            client={rq}
+            persistOptions={{
+              persister: reactQueryPersister
+            }}
+          >
+            <ApolloNextAppProvider
+              makeClient={makeApolloClientWithCredentials(loggedInfo)}
             >
-              <ApolloNextAppProvider
-                makeClient={makeApolloClientWithCredentials(loggedInfo)}
-              >
-                <InitProvider>
-                  {children}
-                </InitProvider>
-              </ApolloNextAppProvider>
-            </PersistQueryClientProvider>
-          </Provider>
+              {children}
+            </ApolloNextAppProvider>
+          </PersistQueryClientProvider>
         </JotaiProvider>
       </I18nextProvider>
     </MetaMaskProvider>

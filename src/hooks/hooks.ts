@@ -4,17 +4,17 @@ import * as sentry from '@sentry/react'
 import { useEffect } from 'react'
 import profile from '../utils/profile'
 import { ApolloError, MutationResult } from '@apollo/client'
-import { useDispatch } from 'react-redux'
-import { AUTH_LOGIN, UserContent } from '../store/user/type'
 import { updateToken } from '../services/ajax'
 import { USER_TOKEN_KEY } from '../constants/storage'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from '../schema/generated'
-import { Dispatch } from 'redux'
 import { syncLoginStateToServer } from '../actions/login'
+import { User } from '@/gql/graphql'
 
-async function onAuthEnd(dispatch: Dispatch, data: { user: UserContent, token: string }) {
+type UserContent = Pick<User, 'id' | 'name' | 'email' | 'avatar' | 'createdAt'>
+
+async function onAuthEnd(data: { user: UserContent, token: string }) {
   const { user, token } = data
   localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
     profile: user,
@@ -42,7 +42,6 @@ async function onAuthEnd(dispatch: Dispatch, data: { user: UserContent, token: s
   await syncLoginStateToServer({ uid: me.id, token: profile.token })
   // Cookies.set('token', profile.token, { expires: 365 })
   // Cookies.set('uid', profile.uid.toString(), { expires: 365 })
-  dispatch({ type: AUTH_LOGIN, profile: me, token: profile.token })
 }
 
 export function useAuthBy3rdPartSuccessed(
@@ -54,7 +53,6 @@ export function useAuthBy3rdPartSuccessed(
 ) {
   // const navigate = useNavigate()
   const { push: navigate } = useRouter()
-  const dispatch = useDispatch()
   useEffect(() => {
     if (!called) {
       return
@@ -73,7 +71,7 @@ export function useAuthBy3rdPartSuccessed(
       return
     }
 
-    onAuthEnd(dispatch, authResponse).then(() => {
+    onAuthEnd(authResponse).then(() => {
       mixpanel.track('login')
       // redirect
       setTimeout(() => {
@@ -82,7 +80,7 @@ export function useAuthBy3rdPartSuccessed(
         navigate(`/dash/${domain}/home?from_auth=1`)
       }, 100)
     })
-  }, [called, loading, error, authResponse, dispatch, navigate])
+  }, [called, loading, error, authResponse, navigate])
 }
 
 export function useLoginV3Successed(
@@ -92,7 +90,6 @@ export function useLoginV3Successed(
   authResponse?: DoLoginV3Mutation['loginV3']
 ) {
   const { push: navigate } = useRouter()
-  const dispatch = useDispatch()
   useEffect(() => {
     if (!called) {
       return
@@ -111,7 +108,7 @@ export function useLoginV3Successed(
       return
     }
 
-    onAuthEnd(dispatch, authResponse).then(() => {
+    onAuthEnd(authResponse).then(() => {
       mixpanel.track('loginV3')
       // redirect
       setTimeout(() => {
@@ -120,7 +117,7 @@ export function useLoginV3Successed(
         navigate(`/dash/${domain}/${authResponse.isNewUser ? 'newbie' : 'home'}?from_auth=1`)
       }, 100)
     })
-  }, [called, loading, error, authResponse, dispatch, navigate])
+  }, [called, loading, error, authResponse, navigate])
 }
 
 export function useAuthByPhoneSuccessed(
@@ -131,7 +128,6 @@ export function useAuthByPhoneSuccessed(
 ) {
   // const navigate = useNavigate()
   const { push: navigate } = useRouter()
-  const dispatch = useDispatch()
   useEffect(() => {
     if (!called) {
       return
@@ -146,7 +142,7 @@ export function useAuthByPhoneSuccessed(
       return
     }
 
-    onAuthEnd(dispatch, authResponse).then(() => {
+    onAuthEnd(authResponse).then(() => {
       mixpanel.track('login')
       // redirect
       setTimeout(() => {
@@ -165,10 +161,9 @@ export function useAuthSuccessed(
   authResponse?: AuthQuery['auth']
 ) {
   const { push: navigate } = useRouter()
-  const dispatch = useDispatch()
   useEffect(() => {
     if (called && !error && authResponse && !loading) {
-      onAuthEnd(dispatch, authResponse)
+      onAuthEnd(authResponse)
       const me = authResponse.user
       // redirect
       setTimeout(() => {
@@ -180,11 +175,10 @@ export function useAuthSuccessed(
 
 export function useSignupSuccess(result: MutationResult<SignupMutation>) {
   const { push: navigate } = useRouter()
-  const dispatch = useDispatch()
   useEffect(() => {
     const { called, error, data, loading } = result
     if (called && !error && data && !loading) {
-      onAuthEnd(dispatch, data.signup)
+      onAuthEnd(data.signup)
       const me = data.signup.user
       mixpanel.track('signup', {
         email: me.email,

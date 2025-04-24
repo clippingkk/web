@@ -1,8 +1,6 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
-import { changeBackground } from '@/store/app/type'
-import { useDispatch } from 'react-redux'
 import { usePageTrack } from '@/hooks/tracke'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
@@ -22,7 +20,6 @@ function BookPageContent(props: BookPageContentProps) {
   usePageTrack('book', {
     bookId: bookData.id
   })
-  const dispatch = useDispatch()
 
   const hasMore = useRef(true)
   const { data: clippingsData, fetchMore } = useQuery<BookQuery>(BookDocument, {
@@ -34,12 +31,6 @@ function BookPageContent(props: BookPageContentProps) {
       }
     },
   })
-  useEffect(() => {
-    if (!bookData) {
-      return
-    }
-    dispatch(changeBackground(bookData.image))
-  }, [bookData, changeBackground])
 
   const masonaryColumnCount = useMasonaryColumnCount()
   const maybeLoadMore = useInfiniteLoader((_, __, currentItems) => {

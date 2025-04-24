@@ -1,9 +1,7 @@
 'use client'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from '@/i18n/client'
-import { useDispatch } from 'react-redux'
 import { toast } from 'react-hot-toast'
-import { USER_LOGOUT } from '@/store/user/type'
 import { useRouter } from 'next/navigation'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useDeleteMyAccountMutation } from '@/schema/generated'
@@ -18,15 +16,12 @@ function AccountRemoveButton() {
   const [doDelete] = useDeleteMyAccountMutation()
   const { replace } = useRouter()
 
-  const dispatch = useDispatch()
-
   const doDeleteMyAccount = useCallback(async () => {
     try {
       await doDelete()
       // do logout
       profile.onLogout()
       toast.success('Bye bye')
-      dispatch({ type: USER_LOGOUT })
       // show tips
       notifications.show({
         icon: (<AlertOctagon className='w-4 h-4' />),
@@ -40,7 +35,7 @@ function AccountRemoveButton() {
       console.error(err)
       toast.error(err instanceof Error ? err.message : 'Something went wrong')
     }
-  }, [dispatch, doDelete, replace, t])
+  }, [doDelete, replace, t])
 
   return (
     <>
