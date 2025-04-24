@@ -2,11 +2,10 @@ import { Container } from '@mantine/core'
 import logo from '../../assets/logo.png'
 import { QRCodeCanvas } from 'qrcode.react'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { TGlobalStore } from '../../store/index'
+import { getLocalToken } from '@/services/ajax'
 
 function LoginByQRCode() {
-  const theToken = useSelector<TGlobalStore, string>(app => app.user.token)
+  const theToken = getLocalToken()
   return (
     <Container>
       <div className=' flex flex-col justify-center items-center'>

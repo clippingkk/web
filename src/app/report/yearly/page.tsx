@@ -53,7 +53,6 @@ async function YearlyPage(props: YearlyLegacyPageProps) {
       year
     },
   })
-  // const me = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const dbIds = reportInfoResponse.
     data.
     reportYearly.

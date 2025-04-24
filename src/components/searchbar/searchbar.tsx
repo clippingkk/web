@@ -1,8 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { useSelector } from 'react-redux'
-import { TGlobalStore } from '../../store'
 import { useTranslation } from '@/i18n/client'
-import { UserContent } from '../../store/user/type'
 import { useSearchQueryLazyQuery } from '../../schema/generated'
 import { Search, XCircle, Command } from 'lucide-react'
 import { createPortal } from 'react-dom'
@@ -13,13 +10,13 @@ import Loading from './loading'
 type SearchBarProps = {
   visible: boolean
   onClose: () => void
+  profile?: { id: number, domain: string }
 }
 
 function SearchBar(props: SearchBarProps) {
-  const { visible, onClose } = props
+  const { visible, onClose, profile } = props
   const { t } = useTranslation()
   const [doQuery, { data, loading, called }] = useSearchQueryLazyQuery()
-  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const inputRef = useRef<HTMLInputElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
   const [searchText, setSearchText] = useState('')

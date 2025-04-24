@@ -1,17 +1,16 @@
 'use client'
 import mixpanel from 'mixpanel-browser'
 import * as sentry from '@sentry/react'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import profile from '../utils/profile'
 import { ApolloError, MutationResult } from '@apollo/client'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { AUTH_LOGIN, UserContent } from '../store/user/type'
 import { updateToken } from '../services/ajax'
 import { USER_TOKEN_KEY } from '../constants/storage'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from '../schema/generated'
-import { TGlobalStore } from '../store'
 import { Dispatch } from 'redux'
 import { syncLoginStateToServer } from '../actions/login'
 
@@ -202,17 +201,4 @@ export function useSignupSuccess(result: MutationResult<SignupMutation>) {
       navigate('/auth/auth-v4')
     }
   }, [result])
-}
-
-export function useGoAuthLink() {
-  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
-
-  const goLinkUrl = useMemo(() => {
-    if (profile && profile.id > 0) {
-      return `/dash/${profile.domain.length > 1 ? profile.domain : profile.id}/home`
-    }
-    return '/auth/auth-v4'
-  }, [profile])
-
-  return goLinkUrl
 }

@@ -114,7 +114,7 @@ function NavigationBar(props: NavigationBarProps) {
           </h2>
         </Link>
       )}
-      <SearchBar visible={visible} onClose={onSearchbarClose} />
+      <SearchBar profile={profile} visible={visible} onClose={onSearchbarClose} />
       <Modal
         withCloseButton={false}
         opened={loginByQRCodeModalVisible}

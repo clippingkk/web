@@ -18,7 +18,7 @@ const Layout = async (props: LayoutProps) => {
   const cs = await cookies()
   const myUid = cs.get('uid')?.value
   return (
-    <DashboardContainer uidOrDomain={myUid} header={<NavigateGuide title='Canceled' />}>
+    <DashboardContainer uidOrDomain={myUid} header={<NavigateGuide uid={myUid ? ~~myUid : undefined} title='Canceled' />}>
       {props.children}
     </DashboardContainer>
   )

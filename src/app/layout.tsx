@@ -135,7 +135,7 @@ async function Layout(props: LayoutProps) {
               <div id="dialog"></div>
               <div id="toast"></div>
               <div id='searchbar' className='raycast'></div>
-              <GlobalUpload />
+              <GlobalUpload uid={uid ? ~~uid : undefined} />
               <Toaster
                 position='top-center'
               />

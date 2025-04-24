@@ -2,20 +2,22 @@
 import { useState, useCallback, useEffect } from 'react'
 import FloatingProgress from '../progress/floating'
 import { useUploadData } from '@/hooks/my-file'
-import { useSelector } from 'react-redux'
-import { TGlobalStore } from '@/store'
 import { useActionTrack } from '@/hooks/tracke'
 import { usePathname } from 'next/navigation'
 import DropOverlay from './drop-overlay'
 
-function GlobalUpload() {
+type Props = {
+  uid?: number
+}
+
+function GlobalUpload({ uid }: Props) {
   const onUploadTrack = useActionTrack('upload')
 
   const pathname = usePathname()
 
   const isUploadPage = /dash\/\d+\/upload/.test(pathname)
 
-  const id = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const id = uid ?? 0
   const { onUpload,step, at, count } = useUploadData(true, id > 0)
   const [isDraging, setIsDraging] = useState(false)
   const onDropEnd = useCallback((e: DragEvent) => {

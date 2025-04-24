@@ -15,7 +15,7 @@ async function Layout(props: LayoutProps) {
   const myUid = cs.get('uid')?.value
   const { t } = await useTranslation()
   return (
-    <DashboardContainer uidOrDomain={myUid} header={<NavigateGuide title={t('app.plan.premium.name') ?? ''} />}>
+    <DashboardContainer uidOrDomain={myUid} header={<NavigateGuide uid={myUid ? ~~myUid : undefined} title={t('app.plan.premium.name') ?? ''} />}>
       {props.children}
     </DashboardContainer>
   )

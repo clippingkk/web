@@ -150,7 +150,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                   size="md"
                   isPremium={isPremium}
                 />
-                <div>
+                <div className='flex flex-col gap-4'>
                   <Tooltip content={profileData.name} noWrap>
                     <h3 className="font-bold text-lg max-w-48 text-ellipsis overflow-hidden">{profileData.name}</h3>
                   </Tooltip>

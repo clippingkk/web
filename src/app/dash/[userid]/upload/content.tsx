@@ -1,16 +1,13 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { usePageTrack, useActionTrack } from '../../../../hooks/tracke'
 import { useTranslation } from '@/i18n/client'
-import { UploadStep } from '../../../../services/uploader'
+import { UploadStep } from '@/services/uploader'
 import LoadingModal from './loading-modal'
-import { TGlobalStore } from '../../../../store'
 import ClippingsUploadHelp from './help'
-import { useUploadData } from '../../../../hooks/my-file'
+import { useUploadData } from '@/hooks/my-file'
 import { useRouter } from 'next/navigation'
-import AnimateOnChange from '../../../../components/SimpleAnimation/AnimateOnChange'
-import { UserContent } from '../../../../store/user/type'
+import AnimateOnChange from '@/components/SimpleAnimation/AnimateOnChange'
 import { Upload, Lock, Unlock, FileText } from 'lucide-react'
 
 function useSwitcher() {
@@ -25,7 +22,11 @@ function useSwitcher() {
   }
 }
 
-function UploaderPageContent() {
+type Props = {
+  profile: { id: number, domain: string }
+}
+
+function UploaderPageContent({ profile }: Props) {
   usePageTrack('uploader')
 
   const { isOn, onSwitchChange } = useSwitcher()
@@ -53,7 +54,6 @@ function UploaderPageContent() {
 
   const { push: navigate } = useRouter()
 
-  const profile = useSelector<TGlobalStore, UserContent>(s => s.user.profile)
   const domain = profile.domain.length > 2 ? profile.domain : profile.id
 
   useEffect(() => {

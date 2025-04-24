@@ -6,9 +6,14 @@ export const metadata: Metadata = {
   title: 'Welcome to ClippingKK',
 }
 
-function Page() {
+type Props = {
+  params: Promise<{ userid: string }>
+}
+
+async function Page(props: Props) {
+  const { userid } = await props.params
   return (
-    <NewbiePageContent />
+    <NewbiePageContent uid={~~userid} />
   )
 }
 

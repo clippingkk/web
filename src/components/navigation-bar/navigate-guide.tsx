@@ -5,9 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { useProfileQuery } from '../../schema/generated'
-import { TGlobalStore } from '../../store'
 import UserName from '../profile/user-name'
 import { getMyHomeLink } from '../../utils/profile'
 import { useRouter } from 'next/navigation'
@@ -15,12 +13,13 @@ import styles from './navigation-bar.module.css'
 
 type NavigateGuideProps = {
   title?: string
+  uid?: number
 }
 
 function NavigateGuide(props: NavigateGuideProps) {
   const router = useRouter()
 
-  const pid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
+  const pid = props.uid ?? 0
   const { data: p } = useProfileQuery({
     variables: {
       id: pid

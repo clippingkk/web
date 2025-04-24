@@ -152,7 +152,7 @@ async function Page(props: PageProps) {
               />
 
               <hr className='bg-gray-400 my-12' />
-              <Reactions reactions={clipping.reactionData} cid={clipping.id || -1} />
+              <Reactions reactions={clipping.reactionData} uid={~~uid} cid={clipping.id || -1} />
               <hr className='bg-gray-400 my-12' />
               <footer className='flex justify-between flex-col lg:flex-row mt-4'>
                 {me?.id === 0 && (

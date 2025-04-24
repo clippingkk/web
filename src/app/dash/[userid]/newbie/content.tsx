@@ -3,17 +3,15 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import ButtonSimple from '@/components/button/button-simple'
 import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
 import FieldInput from '@/components/input'
 import ProgressBlock from '@/components/progress/progress-block'
 import { useUpdateProfileMutation } from '@/schema/generated'
 import { toastPromiseDefaultOption, uploadImage } from '@/services/misc'
-import { TGlobalStore } from '@/store'
 
 // redirected from a new signup by loginV3
-function NewbiePageContent() {
+function NewbiePageContent({ uid }: { uid: number }) {
   // TODO:
   // 1. update name
   // 2. update domain
@@ -25,7 +23,6 @@ function NewbiePageContent() {
 
   const { t } = useTranslation()
 
-  const uid = useSelector<TGlobalStore, number>(s => s.user.profile.id)
   const [doUpdateUserProfile, doUpdateResponse] = useUpdateProfileMutation()
 
   const [phase, setPhase] = useState(0)

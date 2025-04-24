@@ -1,11 +1,10 @@
-import { UserContent } from '@/store/user/type'
 import Link from 'next/link'
 import { Book, Quote } from 'lucide-react'
 import { useMemo } from 'react'
 
 type Props = {
   clipping: { id: number, content: string, title?: string, bookName?: string }
-  profile: Pick<UserContent, 'id' | 'domain'>
+  profile?: { id: number, domain: string }
   onClick: () => void
   highlightText?: string
 }
@@ -56,7 +55,7 @@ function SearchClippingItem(props: Props) {
       </div>
 
       <Link
-        href={`/dash/${profile.domain.length > 3 ? profile.domain : profile.id}/clippings/${c.id}`}
+        href={`/dash/${(profile?.domain ?? '').length > 3 ? profile?.domain : profile?.id}/clippings/${c.id}`}
         className="block relative p-5 rounded-lg dark:bg-slate-800/90 bg-white/90 backdrop-blur-md transition-all duration-300"
         onClick={onClick}
         aria-label={`View clipping: ${c.content.substring(0, 50)}${c.content.length > 50 ? '...' : ''}`}
