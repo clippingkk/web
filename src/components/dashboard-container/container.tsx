@@ -2,8 +2,6 @@ import React from 'react'
 import NavigationBar from '../navigation-bar/navigation-bar'
 import Footer from '../footer/Footer'
 
-// import { useAtomValue } from 'jotai'
-// import { appBackgroundAtom } from '../../store/global'
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '@/schema/generated'
 import { cookies } from 'next/headers'
 import { USER_TOKEN_KEY } from '../../constants/storage'
@@ -24,39 +22,40 @@ async function DashboardContainer(props: DashboardContainerProps) {
 
   const isUidType = !Number.isNaN(parseInt(props.uidOrDomain as string))
 
-  if (!props.uidOrDomain) {
-    return redirect('/')
-  }
+  console.log('xxxxxxxxx', isUidType, props.uidOrDomain)
 
   let myProfile: ProfileQuery | null = null
 
-  try {
-    const { data } = await doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
-      query: ProfileDocument,
-      variables: {
-        id: isUidType ? ~~uidOrDomain! : undefined,
-        domain: isUidType ? undefined : String(uidOrDomain)
-      },
-      context: {
-        headers: token ? {
-          Authorization: 'Bearer ' + token.value
-        } : null
-      }
-    })
-    myProfile = data
-  } catch (e) {
-    if (e instanceof ApolloError) {
+  if (uidOrDomain) {
+
+    try {
+      const { data } = await doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
+        query: ProfileDocument,
+        variables: {
+          id: isUidType ? ~~uidOrDomain! : undefined,
+          domain: isUidType ? undefined : String(uidOrDomain)
+        },
+        context: {
+          headers: token ? {
+            Authorization: 'Bearer ' + token.value
+          } : null
+        }
+      })
+      myProfile = data
+    } catch (e) {
+      if (e instanceof ApolloError) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const statusCode = (e.networkError as any)?.statusCode as number
-      if (statusCode === 401) {
-        return redirect('/auth/auth-v4?clean=true')
+        const statusCode = (e.networkError as any)?.statusCode as number
+        if (statusCode === 401) {
+          return redirect('/auth/auth-v4?clean=true')
+        }
+        // user not found. maybe need to login again
+        if (statusCode === 404) {
+          return redirect('/auth/auth-v4?clean=true')
+        }
       }
-      // user not found. maybe need to login again
-      if (statusCode === 404) {
-        return redirect('/auth/auth-v4?clean=true')
-      }
+      throw e
     }
-    throw e
   }
 
   // const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
