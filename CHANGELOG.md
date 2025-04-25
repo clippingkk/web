@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.8](https://github.com/clippingkk/web/compare/v5.13.7...v5.13.8) (2025-04-25)
+
+
+### Bug Fixes
+
+* **clipping:** allow anonymous access ([1460bc2](https://github.com/clippingkk/web/commit/1460bc2ce168a37e22f680bb40f134ec36fab70f))
+
 ## [5.13.7](https://github.com/clippingkk/web/compare/v5.13.6...v5.13.7) (2025-04-25)
 
 
