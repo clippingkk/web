@@ -1,5 +1,5 @@
 import { ApolloError, ApolloLink, OperationVariables, QueryOptions } from '@apollo/client'
-import { registerApolloClient, ApolloClient, InMemoryCache } from '@apollo/experimental-nextjs-app-support'
+import { registerApolloClient, ApolloClient, InMemoryCache } from '@apollo/client-integration-nextjs'
 import { apolloCacheConfig, httpLink } from './apollo.shard'
 import { authLink } from './ajax'
 import { redirect } from 'next/navigation'
