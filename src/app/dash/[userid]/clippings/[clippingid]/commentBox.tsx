@@ -1,10 +1,9 @@
 'use client'
 import { useApolloClient } from '@apollo/client'
 import React, { useCallback, useRef, useState } from 'react'
-import { UserContent } from '@/store/user/type'
 import { useTranslation } from 'react-i18next'
 import Avatar from '@/components/avatar/avatar'
-import { Clipping, useCreateCommentMutation } from '@/schema/generated'
+import { Clipping, useCreateCommentMutation, User } from '@/schema/generated'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '@/services/misc'
 import { Button } from '@mantine/core'
@@ -20,7 +19,7 @@ import Tooltip from '@annatarhe/lake-ui/tooltip'
 type CommentBoxProps = {
   book: WenquBook | null
   clipping: Pick<Clipping, 'id' | 'content'>
-  me: UserContent
+  me: Pick<User, 'id' | 'name' | 'avatar'>
 }
 
 const COMMENT_MIN_LEN = 40

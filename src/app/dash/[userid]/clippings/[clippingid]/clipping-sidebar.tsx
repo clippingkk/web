@@ -1,6 +1,5 @@
 import React from 'react'
 import { WenquBook } from '@/services/wenqu'
-import { UserContent } from '@/store/user/type'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import { Clipping, User } from '@/schema/generated'
 import ClippingShareButton from '@/components/clipping-sidebars/share-clipping-btn'
@@ -14,7 +13,7 @@ import AISummaryBtn from '@/components/clipping-sidebars/ai-summary-btn'
 type ClippingSidebarProps = {
   clipping?: Pick<Clipping, 'id' | 'visible' | 'content' | 'title' | 'createdAt' | 'nextClipping' | 'prevClipping'> & { creator: Pick<User, 'id' | 'name' | 'domain' | 'avatar' > }
   book: WenquBook | null
-  me?: UserContent
+  me?: Pick<User, 'id' | 'name' | 'domain' | 'avatar'>
   inAppChannel: IN_APP_CHANNEL
 }
 

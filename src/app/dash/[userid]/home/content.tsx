@@ -3,16 +3,17 @@ import React, { useEffect, useState } from 'react'
 import ListFooter from '@/components/list-footer/list-footer'
 import { useMultipleBook } from '@/hooks/book'
 import BookCover from '@/components/book-cover/book-cover'
-import { UserContent } from '@/store/user/type'
 import { useSyncClippingsToServer } from '@/hooks/my-file'
 import { useRouter } from 'next/navigation'
 import { BooksSkeleton } from './skeleton'
-import { BooksDocument, BooksQuery, BooksQueryVariables, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated'
+import { BooksDocument, BooksQuery, BooksQueryVariables, ProfileDocument, ProfileQuery, ProfileQueryVariables, User } from '@/schema/generated'
 import { useQuery, useSuspenseQuery } from '@apollo/client'
 
 const STEP = 10
 
-function useUserNewbie(userProfile: UserContent | null, onNewbie: () => void) {
+type UserProfile = Pick<User, 'id' | 'avatar' | 'bio' | 'name' | 'createdAt' | 'updatedAt'>
+
+function useUserNewbie(userProfile: UserProfile | null, onNewbie: () => void) {
   useEffect(() => {
     if (!userProfile || userProfile.id === 0) {
       return
