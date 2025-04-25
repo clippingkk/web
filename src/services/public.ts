@@ -1,9 +1,9 @@
+import { User } from '@/schema/generated'
 import { request } from './ajax'
 import { IHttpBook, covertHttpBook2Book } from './books'
-import { UserContent } from '../store/user/type'
 
 export type TopHttpResponse = {
-  users: UserContent[]
+  users: Pick<User, 'id' | 'name' | 'avatar'>[]
   books: IHttpBook[],
 }
 

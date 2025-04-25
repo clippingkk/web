@@ -15,7 +15,7 @@ export type SymbolGroupedData = {
 
 type ReactionCellProps = {
   cid: number
-  myUid: number
+  myUid?: number
   symbol: string
   data: SymbolGroupedData
 }
@@ -49,7 +49,7 @@ function ReactionCell(props: ReactionCellProps) {
   })
 
   const onCellClick = useCallback(() => {
-    if (myUid <= 0) {
+    if (!myUid || myUid <= 0) {
       navigate.push('/auth/auth-v4')
       return
     }

@@ -8,7 +8,7 @@ const availableReactions = ['👍', '❤️', '⭐️', '🐶', '😱']
 type ReactionsProps = {
   cid: number
   reactions?: FetchClippingQuery['clipping']['reactionData']
-  uid: number
+  uid?: number
 }
 
 function Reactions(props: ReactionsProps) {
