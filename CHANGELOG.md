@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.7](https://github.com/clippingkk/web/compare/v5.13.6...v5.13.7) (2025-04-25)
+
+
+### Bug Fixes
+
+* **app:** fix build issue and enable turbo build ([a5d6e1c](https://github.com/clippingkk/web/commit/a5d6e1c0cca0497e4c4240913aaa20396a2ccc49))
+* **app:** remove local redux for user profile ([ee733cc](https://github.com/clippingkk/web/commit/ee733cc114907fc140c5e6f41a94d0a28ff47276))
+* **app:** remove redux ([b66e0c4](https://github.com/clippingkk/web/commit/b66e0c4b02445ab1a401dd0df5b3c98c1c30f9ed))
+* **app:** remove unused store ([3958164](https://github.com/clippingkk/web/commit/3958164416be0c3043a50b003e1b04f0442a2fac))
+* **app:** update Apollo client package from experimental to integration ([a4956d5](https://github.com/clippingkk/web/commit/a4956d5464681d375f82c94622d51cf48422bf19))
+* **auth:** fix auth in modern way ([de84db7](https://github.com/clippingkk/web/commit/de84db734d1703847786318198c002a39e353a74))
+* **profile:** update profile editor ([c2312c6](https://github.com/clippingkk/web/commit/c2312c68429d4456f00063befc1dc4e9ad9dc155))
+
 ## [5.13.6](https://github.com/clippingkk/web/compare/v5.13.5...v5.13.6) (2025-04-23)
 
 
