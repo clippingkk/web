@@ -47,6 +47,9 @@ importers:
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.1.0)
+      '@hookform/resolvers':
+        specifier: ^5.0.1
+        version: 5.0.1(react-hook-form@7.56.1(react@19.1.0))
       '@lexical/code':
         specifier: ^0.30.0
         version: 0.30.0
@@ -314,6 +317,9 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
+      react-hook-form:
+        specifier: ^7.56.1
+        version: 7.56.1(react@19.1.0)
       react-hot-toast:
         specifier: ^2.5.2
         version: 2.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -2296,6 +2302,11 @@ packages:
     peerDependencies:
       react: '>= 16 || ^19.0.0-rc'
 
+  '@hookform/resolvers@5.0.1':
+    resolution: {integrity: sha512-u/+Jp83luQNx9AdyW2fIPGY6Y7NG68eN2ZW8FOJYL+M0i4s49+refdJdOp/A9n9HFQtQs3HIDHQvX3ZET2o7YA==}
+    peerDependencies:
+      react-hook-form: ^7.55.0
+
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -4096,6 +4107,9 @@ packages:
 
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
+
+  '@standard-schema/utils@0.3.0':
+    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
 
   '@statelyai/inspect@0.4.0':
     resolution: {integrity: sha512-VxQldRlKYcu6rzLY83RSXVwMYexkH6hNx85B89YWYyXYWtNGaWHFCwV7a/Kz8FFPeUz8EKVAnyMOg2kNpn07wQ==}
@@ -9383,6 +9397,12 @@ packages:
   react-fast-compare@2.0.4:
     resolution: {integrity: sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==}
 
+  react-hook-form@7.56.1:
+    resolution: {integrity: sha512-qWAVokhSpshhcEuQDSANHx3jiAEFzu2HAaaQIzi/r9FNPm1ioAvuJSD4EuZzWd7Al7nTRKcKPnBKO7sRn+zavQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || ^19
+
   react-hot-toast@2.5.2:
     resolution: {integrity: sha512-Tun3BbCxzmXXM7C+NI4qiv6lT0uwGh4oAfeJyNOjYUejTsm35mK9iCaYLGv8cBz9L5YxZLx/2ii7zsIwPtPUdw==}
     engines: {node: '>=10'}
@@ -13927,6 +13947,11 @@ snapshots:
     dependencies:
       react: 19.1.0
 
+  '@hookform/resolvers@5.0.1(react-hook-form@7.56.1(react@19.1.0))':
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.56.1(react@19.1.0)
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.6':
@@ -16422,6 +16447,8 @@ snapshots:
       '@sinonjs/commons': 3.0.0
 
   '@socket.io/component-emitter@3.1.2': {}
+
+  '@standard-schema/utils@0.3.0': {}
 
   '@statelyai/inspect@0.4.0(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))(xstate@5.19.2)':
     dependencies:
@@ -22777,6 +22804,10 @@ snapshots:
       react: 19.1.0
 
   react-fast-compare@2.0.4: {}
+
+  react-hook-form@7.56.1(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   react-hot-toast@2.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:

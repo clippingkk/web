@@ -1,8 +1,9 @@
 'use client'
-import { useFormik } from 'formik'
 import React, { useCallback, useEffect, useState } from 'react'
-import * as Yup from 'yup'
-import FieldInput from '@/components/input'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import InputField from '@annatarhe/lake-ui/form-input-field'
 import FieldTextarea from '@/components/textarea'
 import { toast } from 'react-hot-toast'
 import { uploadImage } from '@/services/misc'
@@ -23,6 +24,15 @@ type ProfileEditorProps = {
   withProfileEditor?: string
 }
 
+const profileFormSchema = z.object({
+  name: z.string().optional(),
+  bio: z.string().max(255).optional(),
+  domain: z.string().min(3).max(32).trim().toLowerCase().regex(/^\w+[\.|-]?\w+$/),
+  avatar: z.instanceof(File).nullable().optional()
+})
+
+type ProfileFormValues = z.infer<typeof profileFormSchema>
+
 function ProfileEditor(props: ProfileEditorProps) {
   const [visible, setVisible] = useState(false)
   const withProfileEditor = props.withProfileEditor
@@ -34,73 +44,77 @@ function ProfileEditor(props: ProfileEditorProps) {
 
   const [doUpdate, { client }] = useUpdateProfileMutation()
   const { t } = useTranslation()
-  const formik = useFormik({
-    initialValues: {
+  
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors, isValid },
+    reset,
+    setValue,
+  } = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileFormSchema),
+    defaultValues: {
       name: '',
       bio: '',
       domain: props.domain,
-      avatar: null as File | null
-    },
-    validationSchema: Yup.object({
-      name: Yup.string(),
-      bio: Yup.string().max(255),
-      domain: Yup.string().min(3).max(32).trim().lowercase().matches(/^\w+[\.|-]?\w+$/),
-      avatar: Yup.mixed().optional().nullable()
-    }),
-    async onSubmit(vals) {
-      // pre upload image here
-      if (vals.bio.split('\n').length > 4) {
-        toast.error(t('app.profile.editor.max4line'))
-        return
-      }
-      if (!formik.isValid) {
-        toast.error(t('app.profile.editor.invalid'))
-        return
-      }
-      let avatarUrl = ''
-      if (vals.avatar) {
-        try {
-          const resp = await uploadImage(vals.avatar)
-          avatarUrl = resp.filePath
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (e: any) {
-          toast.error(e)
-          throw e
-        }
-      }
-
-      // 因为不能重复填写
-      const domain = props.domain.length > 2 ? '' : vals.domain
-
-      try {
-        await doUpdate({
-          variables: {
-            name: vals.name !== '' ? vals.name : null,
-            avatar: avatarUrl !== '' ? avatarUrl : null,
-            bio: vals.bio !== '' ? vals.bio : null,
-            domain
-          }
-        })
-        formik.resetForm()
-        setVisible(false)
-        client.resetStore()
-        toast.success(t('app.profile.editor.updated'))
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (err: any) {
-        console.error(err)
-        toast.error(err)
-      }
+      avatar: null
     }
   })
+  
+  const onSubmit = async (values: ProfileFormValues) => {
+    // pre upload image here
+    if (values.bio && values.bio.split('\n').length > 4) {
+      toast.error(t('app.profile.editor.max4line'))
+      return
+    }
+    if (!isValid) {
+      toast.error(t('app.profile.editor.invalid'))
+      return
+    }
+    
+    let avatarUrl = ''
+    if (values.avatar) {
+      try {
+        const resp = await uploadImage(values.avatar)
+        avatarUrl = resp.filePath
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        toast.error(e)
+        throw e
+      }
+    }
+
+    // 因为不能重复填写
+    const domain = props.domain.length > 2 ? '' : values.domain
+
+    try {
+      await doUpdate({
+        variables: {
+          name: values.name && values.name !== '' ? values.name : null,
+          avatar: avatarUrl !== '' ? avatarUrl : null,
+          bio: values.bio && values.bio !== '' ? values.bio : null,
+          domain
+        }
+      })
+      reset()
+      setVisible(false)
+      client.resetStore()
+      toast.success(t('app.profile.editor.updated'))
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error(err)
+      toast.error(err)
+    }
+  }
 
   useEffect(() => {
-    formik.setFieldValue('bio', props.bio)
-  }, [props.bio])
+    setValue('bio', props.bio)
+  }, [props.bio, setValue])
 
   const onEditCancel = useCallback(() => {
-    formik.resetForm()
+    reset()
     setVisible(false)
-  }, [])
+  }, [reset])
 
   return (
     <React.Fragment>
@@ -121,31 +135,23 @@ function ProfileEditor(props: ProfileEditorProps) {
         onClose={onEditCancel}
       >
         <div className='p-4'>
-          <form className='flex flex-col' onSubmit={formik.handleSubmit}>
+          <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
             {props.withNameChange && (
-              <FieldInput
+              <InputField
                 type='text'
-                name='name'
-                onChange={formik.handleChange}
-                error={formik.errors.name}
-                value={formik.values.name}
+                {...register('name')}
+                error={errors.name?.message}
               />
             )}
-            <FieldInput
+            <InputField
               type='text'
-              name='domain'
-              onChange={formik.handleChange}
-              inputProps={{
-                disabled: props.domain.length > 2
-              }}
-              error={formik.errors.domain}
-              value={formik.values.domain}
+              {...register('domain')}
+              disabled={props.domain.length > 2}
+              error={errors.domain?.message}
             />
             <FieldTextarea
-              name='bio'
-              onChange={formik.handleChange}
-              error={formik.errors.bio}
-              value={formik.values.bio}
+              {...register('bio')}
+              error={errors.bio?.message}
               inputProps={{
                 rows: 4
               }}
@@ -158,13 +164,7 @@ function ProfileEditor(props: ProfileEditorProps) {
               <Button
                 className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-xs px-4 py-2 disabled:text-gray-500'
                 type='submit'
-                disabled={(!formik.isValid) || (
-                  false
-                // formik.values.name === '' &&
-                // formik.values.bio === '' &&
-                // (!formik.values.avatar) &&
-                // (props.domain.length > 2 ? true : formik.values.domain.length < 3)
-                )}
+                disabled={!isValid}
               >
                 {t('app.common.doUpdate')}
               </Button>
