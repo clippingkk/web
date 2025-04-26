@@ -1,5 +1,6 @@
-import { Button, Divider, Group, Modal, useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { Button, Divider, Group } from '@mantine/core'
 import React, { useCallback, useState } from 'react'
+import Modal from '@annatarhe/lake-ui/modal'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { Dropzone } from '@mantine/dropzone'
@@ -18,7 +19,6 @@ function AvatarPicker(props: AvatarPickerProps) {
   const { t } = useTranslation()
   const { uid, onCancel, opened, onSubmit } = props
   const [nextImage, setNextImage] = useState<string | File | null>(null)
-  const theme = useMantineTheme()
 
   const onConfirm = useCallback(async () => {
     if (!nextImage) {
@@ -35,18 +35,11 @@ function AvatarPicker(props: AvatarPickerProps) {
     )
   }, [onSubmit, nextImage])
 
-  const { colorScheme } = useMantineColorScheme()
-
   return (
     <Modal
       title={t('app.auth.avatar')}
-      overlayProps={{
-        opacity: 0.5,
-        blur: 6,
-        color: colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]
-      }}
       onClose={onCancel}
-      opened={opened}
+      isOpen={opened}
     >
       <div>
         <NFTGallary

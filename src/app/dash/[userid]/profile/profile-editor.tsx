@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import InputField from '@annatarhe/lake-ui/form-input-field'
-import FieldTextarea from '@/components/textarea'
+import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
 import { toast } from 'react-hot-toast'
 import { uploadImage } from '@/services/misc'
 import { useTranslation } from 'react-i18next'
@@ -149,12 +149,10 @@ function ProfileEditor(props: ProfileEditorProps) {
               disabled={props.domain.length > 2}
               error={errors.domain?.message}
             />
-            <FieldTextarea
+            <TextareaField
               {...register('bio')}
               error={errors.bio?.message}
-              inputProps={{
-                rows: 4
-              }}
+              rows={4}
             />
 
             <div className='flex items-center justify-end'>

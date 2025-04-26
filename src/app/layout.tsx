@@ -8,7 +8,6 @@ import '../styles/tailwind.css'
 import '../styles/cmdk-raycast.css'
 
 import '@mantine/core/styles.css'
-import '@mantine/spotlight/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/code-highlight/styles.css'
 // next.js not allow to use modern css. just remove it when next.js support it

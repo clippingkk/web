@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
-import Dialog from '@/components/dialog/dialog'
+import Modal from '@annatarhe/lake-ui/modal'
 import { useTranslation } from 'react-i18next'
 import { ProfileQuery, useWechatBindQuery } from '@/schema/generated'
 import { MessageCircle } from 'lucide-react'
@@ -61,19 +61,17 @@ function WechatBindButton(props: Props) {
         <MessageCircle className="w-5 h-5" />
         <span>{t('app.profile.wechatBind')}</span>
       </button>
-      {visible && (
-        <Dialog
-          title={t('app.profile.wechatBind')}
-          onCancel={() => { setVisible(false) }}
-          onOk={() => { setVisible(true) }}
-        >
-          <div className='p-8 flex flex-col justify-center items-center bg-gradient-to-br from-white/90 to-gray-100/90 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-md rounded-xl'>
-            <h2 className='text-xl font-medium text-gray-800 dark:text-gray-200 mb-6'>{t('app.profile.wechatBindTip')}</h2>
-            <BindQRCode />
-            <p className='mt-4 text-sm text-gray-500 dark:text-gray-400'>{t('app.profile.scanToConnect')}</p>
-          </div>
-        </Dialog>
-      )}
+      <Modal
+        title={t('app.profile.wechatBind')}
+        onClose={() => { setVisible(false) }}
+        isOpen={visible}
+      >
+        <div className='p-8 flex flex-col justify-center items-center bg-gradient-to-br from-white/90 to-gray-100/90 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-md rounded-xl'>
+          <h2 className='text-xl font-medium text-gray-800 dark:text-gray-200 mb-6'>{t('app.profile.wechatBindTip')}</h2>
+          <BindQRCode />
+          <p className='mt-4 text-sm text-gray-500 dark:text-gray-400'>{t('app.profile.scanToConnect')}</p>
+        </div>
+      </Modal>
     </div>
   )
 }

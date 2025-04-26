@@ -2,11 +2,12 @@
 import { CommandLineIcon } from '@heroicons/react/24/outline'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import Dialog from '@/components/dialog/dialog'
+import Modal from '@annatarhe/lake-ui/modal'
 import { CodeHighlight } from '@mantine/code-highlight'
 import { getLocalToken } from '@/services/ajax'
 import { useClaimCliApiTokenMutation } from '@/schema/generated'
-import { Button, Tooltip } from '@mantine/core'
+import { Button } from '@mantine/core'
+import Tooltip from '@annatarhe/lake-ui/tooltip'
 
 function CliApiToken() {
   const [doClaim, { data }] = useClaimCliApiTokenMutation()
@@ -51,9 +52,7 @@ ck-cli
   return (
     <div>
       <Tooltip
-        label={'CLI'}
-        withArrow
-        transitionProps={{ transition: 'pop', duration: 200 }}
+        content={'CLI'}
       >
         <Button
           onClick={() => {
@@ -65,11 +64,9 @@ ck-cli
         </Button>
       </Tooltip>
       {visible && (
-        <Dialog
-          onCancel={() => {
-            setVisible(false)
-          }}
-          onOk={() => {
+        <Modal
+          isOpen={visible}
+          onClose={() => {
             setVisible(false)
           }}
           title='cli api token'
@@ -97,7 +94,7 @@ ck-cli
             <br />
             3. refresh and wait it sync
           </div>
-        </Dialog>
+        </Modal>
       )}
     </div>
   )

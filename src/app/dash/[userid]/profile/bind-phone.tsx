@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import BindPhone from '@/components/bind-phone'
-import Dialog from '@/components/dialog/dialog'
 import { useBindUserPhoneMutation } from '@/schema/generated'
-import { Button, Tooltip } from '@mantine/core'
+import { Button } from '@mantine/core'
+import Tooltip from '@annatarhe/lake-ui/tooltip'
+import Modal from '@annatarhe/lake-ui/modal'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 
 function ProfileBindPhone() {
@@ -32,9 +33,7 @@ function ProfileBindPhone() {
   return (
     <React.Fragment>
       <Tooltip
-        label={t('app.profile.phoneBind')}
-        withArrow
-        transitionProps={{ transition: 'pop', duration: 200 }}
+        content={t('app.profile.phoneBind')}
       >
         <Button
           bg={'transparent'}
@@ -43,21 +42,17 @@ function ProfileBindPhone() {
           <DevicePhoneMobileIcon className='w-6 h-6' />
         </Button>
       </Tooltip>
-      {visible && (
-        <Dialog
-          title={t('app.profile.editor.title')}
-          onCancel={() => setVisible(false)}
-          onOk={() => {
-            setVisible(false)
-          }}
-        >
-          <div className='w-full md:w-144 h-48 md:h-96 flex flex-col justify-center'>
-            <BindPhone
-              onFinalCheck={(pn, code) => doAuth({ variables: { phone: pn, code } })}
-            />
-          </div>
-        </Dialog>
-      )}
+      <Modal
+        isOpen={visible}
+        title={t('app.profile.editor.title')}
+        onClose={() => setVisible(false)}
+      >
+        <div className='w-full md:w-144 h-48 md:h-96 flex flex-col justify-center'>
+          <BindPhone
+            onFinalCheck={(pn, code) => doAuth({ variables: { phone: pn, code } })}
+          />
+        </div>
+      </Modal>
     </React.Fragment>
   )
 }

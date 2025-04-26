@@ -36,7 +36,6 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
       
       {/* Profile card with gradient background and blur effect */}
       <div className='w-full rounded-2xl overflow-hidden backdrop-blur-lg bg-gradient-to-br from-white/70 via-white/60 to-white/40 dark:from-gray-900/70 dark:via-gray-800/60 dark:to-gray-900/40 shadow-xl border border-gray-200 dark:border-gray-700'>
-        
         {/* Header section with avatar and basic info */}
         <div className='relative w-full h-40 bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-600 dark:to-purple-700'>
           <div className='absolute -bottom-16 left-8 z-10'>
