@@ -31,7 +31,7 @@ function Avatar(props: AvatarProps) {
 
   if (props.img === '') {
     return (
-      <div className={'rounded-full bg-gray-500 animate-pulse ' + cls} />
+      <div className={'rounded-full bg-gray-500 animate-pulse ' + cls} onClick={props.onClick} />
     )
   }
   return (
