@@ -45,7 +45,7 @@ function PersonalityView(props: PersonalityViewProps) {
         onClose={close}
         title={t('app.profile.personality.title')}
       >
-        <div className='w-full min-h-[240px] flex items-center flex-col px-4 relative'>
+        <div className='w-full min-h-[240px] flex items-center flex-col px-4 relative max-h-[80vh] overflow-y-auto p-4'>
           {loading && (
             <div className='absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-xs'>
               <Loader2 className='w-8 h-8 animate-spin text-primary' />
