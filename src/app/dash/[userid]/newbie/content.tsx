@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
 import ButtonSimple from '@/components/button/button-simple'
 import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
 import FieldInput from '@/components/input'

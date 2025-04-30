@@ -14,6 +14,7 @@ import { Button } from '@mantine/core'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import Modal from '@annatarhe/lake-ui/modal'
 import { CogIcon } from '@heroicons/react/24/solid'
+import { Globe2Icon, PenIcon, User2Icon } from 'lucide-react'
 
 type ProfileEditorProps = {
   uid: number
@@ -48,7 +49,7 @@ function ProfileEditor(props: ProfileEditorProps) {
   const { 
     register, 
     handleSubmit, 
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     reset,
     setValue,
   } = useForm<ProfileFormValues>({
@@ -135,37 +136,71 @@ function ProfileEditor(props: ProfileEditorProps) {
         onClose={onEditCancel}
       >
         <div className='p-4'>
-          <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
+          <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
             {props.withNameChange && (
               <InputField
                 type='text'
+                label={
+                  <div className='flex items-center gap-2 mb-2'>
+                    <User2Icon className='w-6 h-6' />
+                    <span>Name</span>
+                  </div>
+                }
+                placeholder={'Name'}
                 {...register('name')}
                 error={errors.name?.message}
               />
             )}
             <InputField
               type='text'
+              label={
+                <div className='flex items-center gap-2 mb-2'>
+                  <Globe2Icon className='w-6 h-6' />
+                  <span>Domain</span>
+                </div>
+              }
+              placeholder={'Domain'}
               {...register('domain')}
               disabled={props.domain.length > 2}
               error={errors.domain?.message}
             />
             <TextareaField
+              label={
+                <div className='flex items-center gap-2 mb-2'>
+                  <PenIcon className='w-6 h-6' />
+                  <span>Bio</span>
+                </div>
+              }
+              placeholder={'Bio'}
               {...register('bio')}
               error={errors.bio?.message}
               rows={4}
             />
-
-            <div className='flex items-center justify-end'>
-              <button className='hover:bg-gray-200 hover:shadow-lg duration-300 rounded-xs px-4 py-2 mr-4' onClick={onEditCancel}>
+            <div className='flex items-center justify-end mt-6 gap-4'>
+              <button 
+                className='px-4 py-2 rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700' 
+                onClick={onEditCancel}
+                type='button'
+              >
                 {t('app.common.cancel')}
               </button>
-              <Button
-                className='bg-blue-400 hover:bg-blue-500 duration-300 hover:shadow-lg rounded-xs px-4 py-2 disabled:text-gray-500'
+              <button
+                className={`px-4 py-2 rounded-md font-medium text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300 disabled:cursor-not-allowed ${isSubmitting ? 'cursor-wait' : ''}`}
                 type='submit'
-                disabled={!isValid}
+                disabled={!isValid || isSubmitting}
               >
-                {t('app.common.doUpdate')}
-              </Button>
+                {isSubmitting ? (
+                  <span className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {t('app.common.processing')}
+                  </span>
+                ) : (
+                  t('app.common.doUpdate')
+                )}
+              </button>
             </div>
           </form>
 

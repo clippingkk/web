@@ -5,8 +5,9 @@ import GithubLogo from '../icons/github.logo.svg'
 import MetamaskBindButton from './metamask.bind'
 import AppleLoginBind from './apple.bind'
 import GithubBindButton from './github.bind'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
 import { useFetchExternalAccountQuery } from '../../schema/generated'
+import AccountCard from './account-card'
 
 type ExternalAccountListProps = {
   uid: number
@@ -30,46 +31,36 @@ function ExternalAccountList(props: ExternalAccountListProps) {
   const { t } = useTranslation()
 
   return (
-    <div className=''>
-      <h3 className='mb-2'>
+    <div className="w-full">
+      <h3 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
         {t('app.profile.externalAccountList')}
       </h3>
-      <div className='flex items-center justify-start'>
-        <MetamaskLogo size={32} />
-        <div className='ml-10'>
-          {address.length > 0 ? (
-            <ul>
-              {address.map(a => (
-                <li key={a}>{a}</li>
-              ))}
-            </ul>
-          ) : (
-            <MetamaskBindButton />
-          )}
-        </div>
-      </div>
+      
+      <div className="flex flex-col gap-4">
+        <AccountCard
+          icon={<MetamaskLogo size={24} />}
+          title="Metamask"
+          isBound={address.length > 0}
+          accountInfo={address}
+          bindComponent={<MetamaskBindButton />}
+        />
 
-      <div className='flex items-center justify-start mt-4'>
-        <IconAppleLogo size={32} />
-        <div className='ml-10'>
-          {appleUnique ? (
-            <span>{t('app.common.bound')}</span>
-          ) : (
-            <AppleLoginBind />
-          )}
-        </div>
+        <AccountCard
+          icon={<IconAppleLogo size={24} />}
+          title="Apple"
+          isBound={!!appleUnique}
+          accountInfo={t('app.common.bound')}
+          bindComponent={<AppleLoginBind />}
+        />
+        
+        <AccountCard
+          icon={<GithubLogo size={24} />}
+          title="GitHub"
+          isBound={!!data?.me.externalInfo.githubBound}
+          accountInfo={t('app.common.bound')}
+          bindComponent={<GithubBindButton />}
+        />
       </div>
-      <div className='flex items-center justify-start mt-4'>
-        <GithubLogo size={32} />
-        <div className='ml-10'>
-          {data?.me.externalInfo.githubBound ? (
-            <span>{t('app.common.bound')}</span>
-          ) : (
-            <GithubBindButton />
-          )}
-        </div>
-      </div>
-
     </div>
   )
 }
