@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.9](https://github.com/clippingkk/web/compare/v5.13.8...v5.13.9) (2025-04-30)
+
+
+### Bug Fixes
+
+* **profile:** add max height and scroll for personality modal content ([ae2c0e2](https://github.com/clippingkk/web/commit/ae2c0e2199b1215918213bc2f22aa63f8e6f0fde))
+* **profile:** Add onClick handler to avatar placeholder and modernize avatar picker UI ([c835b30](https://github.com/clippingkk/web/commit/c835b30addaa17998d165e972b96a34213f8e9d8))
+
 ## [5.13.8](https://github.com/clippingkk/web/compare/v5.13.7...v5.13.8) (2025-04-25)
 
 
