@@ -1,6 +1,6 @@
 import { Badge } from '@mantine/core'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n'
 import CommonFeatures from './common-features'
 import DeveloperFeatures from './developer-features'
 import { HardDrive, Sparkles, Phone, LifeBuoy, Rss, Check, Zap } from 'lucide-react'
@@ -28,8 +28,8 @@ function FeatureItem({ children, highlight = false }: { children: React.ReactNod
   )
 }
 
-function PremiumPlanFeatures(props: PremiumPlanFeaturesProps) {
-  const { t } = useTranslation()
+async function PremiumPlanFeatures(props: PremiumPlanFeaturesProps) {
+  const { t } = await useTranslation()
   return (
     <div className="space-y-6">
       <ul className='text-lg space-y-4'>

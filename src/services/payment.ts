@@ -1,10 +1,13 @@
 import { request } from './ajax'
 
-export function getPaymentSubscription(priceId: string) {
+export function getPaymentSubscription(priceId: string, options?: {
+  headers?: Record<string, string>
+}) {
   return request<{ checkoutUrl: string }>('/v2/payment-subscription', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      ...(options?.headers ?? {})
     },
     body: JSON.stringify({ priceId })
   })

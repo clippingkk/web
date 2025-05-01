@@ -1,9 +1,9 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n'
 import { BookOpen, Globe, Shield } from 'lucide-react'
 
-function CommonFeatures() {
-  const { t } = useTranslation()
+async function CommonFeatures() {
+  const { t } = await useTranslation()
   return (
     <>
       <li className='flex items-start'>

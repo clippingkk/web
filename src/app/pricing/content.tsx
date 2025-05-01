@@ -1,46 +1,24 @@
-'use client'
 import { Button, Text, Container, Divider } from '@mantine/core'
-import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useTranslation } from '@/i18n'
 import FreePlanFeatures from '../../components/pricing/free-plan-features'
 import PlanCard from '../../components/pricing/plan-card'
 import PremiumPlanFeatures from '../../components/pricing/premium-plan-features'
-import { StripePremiumPriceId } from '../../constants/config'
-import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '../../schema/generated'
-import { getPaymentSubscription } from '../../services/payment'
-import { skipToken, useSuspenseQuery } from '@apollo/client'
+import { ProfileQuery } from '../../schema/generated'
 import { Sparkles, Book, ChevronRight } from 'lucide-react'
+import { checkIsPremium } from '@/compute/user'
 
 type PricingContentProps = {
-  uid?: number
+  profile?: ProfileQuery['me'] | null
+  checkoutUrl?: string
 }
 
-function PricingContent(props: PricingContentProps) {
-  const { uid } = props
-  const { t } = useTranslation()
+async function PricingContent(props: PricingContentProps) {
+  const { profile, checkoutUrl } = props
+  const { t } = await useTranslation()
 
-  const { data } = useQuery({
-    queryKey: ['payment-subscription', StripePremiumPriceId],
-    queryFn: () => getPaymentSubscription(StripePremiumPriceId),
-    enabled: Boolean(uid && uid > 0),
-  })
-
-  const { data: p } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, uid && uid > 0 ? {
-    variables: {
-      id: uid
-    }
-  } : skipToken)
-
-  const isPremium = useMemo(() => {
-    const endAt = p?.me.premiumEndAt
-    if (!endAt) {
-      return false
-    }
-
-    return new Date(endAt).getTime() > new Date().getTime()
-  }, [p?.me.premiumEndAt])
+  const isPremium = checkIsPremium(profile?.premiumEndAt)
 
   return (
     <div className='w-full relative'>
@@ -83,7 +61,7 @@ function PricingContent(props: PricingContentProps) {
                 <div className='w-full justify-center'>
                   <Button
                     component={Link}
-                    href={p ? `/dash/${p.me.id}/home` : '/auth/auth-v4'}
+                    href={profile?.id ? `/dash/${profile.id}/home` : '/auth/auth-v4'}
                     fullWidth
                     variant='gradient'
                     gradient={{ from: 'indigo', to: 'cyan' }}
@@ -112,7 +90,7 @@ function PricingContent(props: PricingContentProps) {
                 <div className='w-full'>
                   {isPremium ? (
                     <Link
-                      href={`/dash/${p?.me.id}/home`}
+                      href={`/dash/${profile?.id}/home`}
                       className="inline-flex items-center justify-center w-full py-4 px-6 rounded-xl text-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-medium text-lg hover:shadow-lg hover:translate-y-[-2px] transition-all duration-300"
                     >
                       <Book className="w-5 h-5 mr-2" />
@@ -120,7 +98,7 @@ function PricingContent(props: PricingContentProps) {
                     </Link>
                   ) : (
                     <Link
-                      href={data?.checkoutUrl ?? '/auth/auth-v4'}
+                      href={checkoutUrl ?? '/auth/auth-v4'}
                       className="inline-flex items-center justify-center w-full py-4 px-6 rounded-xl text-center bg-gradient-to-r from-fuchsia-500 to-indigo-600 hover:from-fuchsia-600 hover:to-indigo-700 text-white font-medium text-lg hover:shadow-lg hover:translate-y-[-2px] transition-all duration-300"
                     >
                       <Sparkles className="w-5 h-5 mr-2" />

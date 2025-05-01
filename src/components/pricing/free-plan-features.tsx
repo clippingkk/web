@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n'
 import CommonFeatures from './common-features'
 import { HardDrive, Sparkles, Phone, LifeBuoy, Check } from 'lucide-react'
 
@@ -17,8 +17,8 @@ function FeatureItem({ children }: { children: React.ReactNode }) {
   )
 }
 
-function FreePlanFeatures(props: FreePlanFeaturesProps) {
-  const { t } = useTranslation()
+async function FreePlanFeatures(props: FreePlanFeaturesProps) {
+  const { t } = await useTranslation()
   return (
     <div className="space-y-6">
       <ul className='text-lg space-y-4'>
