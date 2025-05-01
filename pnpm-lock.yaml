@@ -89,9 +89,6 @@ importers:
       '@mantine/next':
         specifier: ^6.0.22
         version: 6.0.22(@emotion/react@11.14.0(@types/react@19.1.2)(react@19.1.0))(@emotion/server@11.11.0)(next@15.3.1(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@mantine/notifications':
-        specifier: ^7.17.5
-        version: 7.17.5(@mantine/core@7.17.5(@mantine/hooks@7.17.0(react@19.1.0))(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mantine/hooks@7.17.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@marsidev/react-turnstile':
         specifier: ^1.1.0
         version: 1.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -2705,14 +2702,6 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  '@mantine/notifications@7.17.5':
-    resolution: {integrity: sha512-dLbrSm7ct97fb0Yv8ImVj9mVNkjnD/xkDCP1PANt/shM9xDh0TguqQTvborb+8Wxh1g+RtWVML/an5rVsHbKmg==}
-    peerDependencies:
-      '@mantine/core': 7.17.5
-      '@mantine/hooks': 7.17.5
-      react: ^18.x || ^19.x
-      react-dom: ^18.x || ^19.x
-
   '@mantine/ssr@6.0.22':
     resolution: {integrity: sha512-ZW89nrL39sfOEOSRlUEP92y5ItWFAbKOYwtgGBS7vHZ56hd6cOWH7bLr5GoQZGLJFywB/0lIpMk+pGsaA8YVEQ==}
     peerDependencies:
@@ -2720,11 +2709,6 @@ packages:
       '@emotion/server': '>=11.4.0'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
-
-  '@mantine/store@7.17.5':
-    resolution: {integrity: sha512-HQzy4rBlUFyw+39TgiAV+TGuQivMWYeQlnMctKJlaxwVY5ZTdF2IpJ/JZcjkGrmrZvBwUQ8IOMFvt2eZc20P1Q==}
-    peerDependencies:
-      react: ^18.x || ^19.x
 
   '@mantine/styles@6.0.22':
     resolution: {integrity: sha512-Rud/IQp2EFYDiP4csRy2XBrho/Ct+W2/b+XbvCRTeQTmpFy/NfAKm/TWJa5zPvuv/iLTjGkVos9SHw/DteESpQ==}
@@ -14489,15 +14473,6 @@ snapshots:
       - '@emotion/react'
       - '@emotion/server'
 
-  '@mantine/notifications@7.17.5(@mantine/core@7.17.5(@mantine/hooks@7.17.0(react@19.1.0))(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@mantine/hooks@7.17.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
-    dependencies:
-      '@mantine/core': 7.17.5(@mantine/hooks@7.17.0(react@19.1.0))(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@mantine/hooks': 7.17.0(react@19.1.0)
-      '@mantine/store': 7.17.5(react@19.1.0)
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-      react-transition-group: 4.4.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-
   '@mantine/ssr@6.0.22(@emotion/react@11.14.0(@types/react@19.1.2)(react@19.1.0))(@emotion/server@11.11.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@emotion/react': 11.14.0(@types/react@19.1.2)(react@19.1.0)
@@ -14506,10 +14481,6 @@ snapshots:
       html-react-parser: 1.4.12(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
-
-  '@mantine/store@7.17.5(react@19.1.0)':
-    dependencies:
-      react: 19.1.0
 
   '@mantine/styles@6.0.22(@emotion/react@11.14.0(@types/react@19.1.2)(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:

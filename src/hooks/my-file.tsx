@@ -11,7 +11,6 @@ import { useCreateClippingsMutation } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { duration3Days } from './book'
-import { notifications } from '@mantine/notifications'
 import { graphql } from '../gql'
 import { digestMessage } from '../utils/crypto'
 import { uploadProcessMachine } from './my-file.machine'
@@ -148,10 +147,9 @@ export function useUploadData(
       // 这里会覆盖之前的数据，后续可以考虑是不是弄个队列
       localStorage.setItem(localClippingsStashKey, JSON.stringify(chunkedData))
       send({ type: 'Next' })
-      notifications.show({
+      toast(t('app.upload.tips.parsedInfoTitle'), {
         icon: (<CheckCircleIcon className="w-4 h-4" />),
-        title: t('app.upload.tips.parsedInfoTitle'),
-        message: t('app.upload.tips.parsedInfoContent'),
+        // message: t('app.upload.tips.parsedInfoContent'),
       })
       return
     }

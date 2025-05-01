@@ -5,7 +5,6 @@ import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useDeleteMyAccountMutation } from '@/schema/generated'
-import { notifications } from '@mantine/notifications'
 import { AlertTriangle, AlertOctagon, Trash2 } from 'lucide-react'
 import profile from '@/utils/profile'
 import { onCleanServerCookie } from '@/components/navigation-bar/logout'
@@ -23,10 +22,9 @@ function AccountRemoveButton() {
       profile.onLogout()
       toast.success('Bye bye')
       // show tips
-      notifications.show({
+      toast(t('app.settings.danger.removeAccountDone'), {
         icon: (<AlertOctagon className='w-4 h-4' />),
-        title: t('app.settings.danger.removeAccountDone'),
-        message: t('app.settings.danger.removeAccountDoneTip'),
+        // message: t('app.settings.danger.removeAccountDoneTip'),
       })
       setTimeout(() => {
         replace('/')
