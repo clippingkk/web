@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.10](https://github.com/clippingkk/web/compare/v5.13.9...v5.13.10) (2025-05-01)
+
+
+### Bug Fixes
+
+* **link:** add LinkIndicator component to navigation and hero links ([a422987](https://github.com/clippingkk/web/commit/a4229878484757d9c84c9183b56c9b870f897772))
+* **pricing:** migrate pricing page to server components and update i18n imports ([37e305d](https://github.com/clippingkk/web/commit/37e305d2ae13cbfaf5e46e4061a236260afb8149))
+* **pricing:** replace simple loading with detailed pricing page skeleton UI ([7c72242](https://github.com/clippingkk/web/commit/7c7224298884f402d12a518b9e248c9ec860e773))
+
 ## [5.13.9](https://github.com/clippingkk/web/compare/v5.13.8...v5.13.9) (2025-04-30)
 
 
