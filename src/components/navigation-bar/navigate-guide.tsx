@@ -10,6 +10,7 @@ import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
 import { ProfileQuery, ProfileQueryVariables } from '@/gql/graphql'
 import { useTranslation } from '@/i18n'
+import LinkIndicator from '../link-indicator'
 
 type NavigateGuideProps = {
   title?: string
@@ -50,7 +51,9 @@ async function NavigateGuide(props: NavigateGuideProps) {
               className="flex items-center justify-center h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200"
               aria-label={t('common.back')}
             >
-              <ChevronLeft className="w-5 h-5" />
+              <LinkIndicator>
+                <ChevronLeft className="w-5 h-5" />
+              </LinkIndicator>
             </Link>
             <div className="flex items-center gap-2">
               <Crown className="w-5 h-5 text-yellow-300" />

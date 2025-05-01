@@ -8,6 +8,7 @@ import styles from './Hero.module.css'
 import PureImages from '../backgrounds/pure-images'
 import Image from 'next/image'
 import buttonStyles from '../../components/button/lighten.module.css'
+import LinkIndicator from '../link-indicator'
 
 function VideoTipsArea() {
   return null
@@ -58,7 +59,9 @@ async function Hero(props: HeroProps) {
               <Link
                 href={myUid ? `/dash/${myUid}/home` : '/auth/auth-v4'}
                 className={buttonStyles.lightenButton}>
-                {t('app.go')}
+                <LinkIndicator>
+                  {t('app.go')}
+                </LinkIndicator>
               </Link>
 
               {AppFeatures.enablePremiumPayment && (
@@ -70,7 +73,9 @@ async function Hero(props: HeroProps) {
                     <span className="mr-2">✨</span>
                     {t('app.plan.premium.name')}
                   </span>
-                  <ChevronRightIcon className='w-4 h-4 transition-transform group-hover:translate-x-1' />
+                  <LinkIndicator>
+                    <ChevronRightIcon className='w-4 h-4 transition-transform group-hover:translate-x-1' />
+                  </LinkIndicator>
                 </Link>
               )}
             </div>
