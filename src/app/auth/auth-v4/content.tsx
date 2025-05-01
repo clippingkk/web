@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation'
 import ThirdPartEntry from './thirdPartEntry'
 import { signDataByWeb3 } from '@/utils/wallet'
 import { useTranslation } from '@/i18n/client'
-import { Divider } from '@mantine/core'
 import EmailLoginEntry from './emailEntry'
 import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '@/hooks/hooks'
 import { useSDK } from '@metamask/sdk-react'
@@ -199,7 +198,7 @@ function AuthV4Content() {
   return (
     <div className='px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg'>
       <EmailLoginEntry machine={state} sendEvent={send} />
-      <Divider variant='vertical' className='mx-8' />
+      <hr className='w-full mx-8' />
       <div className='mt-6 lg:mt-0'>
         <h3 className='text-lg mb-8 font-bold'>{t('app.auth.thirdPart.title')}</h3>
         <ThirdPartEntry machine={state} onEvent={send} />

@@ -4,7 +4,6 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import party from 'party-js'
-import { Text } from '@mantine/core'
 import { getPaymentOrderInfo } from '@/services/payment'
 
 type PaymentSuccessContentProps = {
@@ -41,14 +40,14 @@ function PaymentSuccessContent(props: PaymentSuccessContentProps) {
 
   return (
     <div className=' w-full h-full flex flex-col items-center justify-center dark:text-gray-100 pt-20'>
-      <Text
+      <span
         className=' text-6xl'
-      >Congratulation! </Text>
-      <Text
+      >Congratulation! </span>
+      <span
         className=' text-2xl mt-20'
       >
         Welcome to join Premium
-      </Text>
+      </span>
       <Link
         href={homeLink}
         className='mt-8'

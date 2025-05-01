@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from '@mantine/core'
+import Switch from '@annatarhe/lake-ui/form-switch-field'
 
 type SimpleSwitcherProps = {
   checked: boolean
@@ -10,9 +10,9 @@ function SimpleSwitcher(props: SimpleSwitcherProps) {
   const { checked, onChange } = props
   return (
     <Switch
-      checked={checked}
-      onChange={e => onChange(e.currentTarget.checked)}
-      size='xl'
+      value={checked}
+      onChange={e => onChange(e)}
+      label={undefined}
     />
   )
 }
