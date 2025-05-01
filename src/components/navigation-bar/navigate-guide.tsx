@@ -1,52 +1,58 @@
-'use client'
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
-import { Button } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
 import logo from '../../assets/logo.png'
 import React from 'react'
-import { useProfileQuery } from '../../schema/generated'
+import { ProfileDocument } from '../../schema/generated'
 import UserName from '../profile/user-name'
-import { getMyHomeLink } from '../../utils/profile'
-import { useRouter } from 'next/navigation'
+import { getMyHomeLink } from '../../utils/profile.utils'
 import styles from './navigation-bar.module.css'
+import { doApolloServerQuery } from '@/services/apollo.server'
+import { cookies } from 'next/headers'
+import { ProfileQuery, ProfileQueryVariables } from '@/gql/graphql'
 
 type NavigateGuideProps = {
   title?: string
   uid?: number
 }
 
-function NavigateGuide(props: NavigateGuideProps) {
-  const router = useRouter()
+async function NavigateGuide(props: NavigateGuideProps) {
+  const ck = await cookies()
+  const uid = ck.get('uid')?.value
+  const tk = ck.get('token')?.value
 
   const pid = props.uid ?? 0
-  const { data: p } = useProfileQuery({
-    variables: {
-      id: pid
-    },
-    skip: pid < 1,
-  })
+  let p: ProfileQuery['me'] | null = null
+  if (uid && tk) {
+    const { data } = await doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
+      query: ProfileDocument,
+      variables: {
+        id: pid
+      },
+      context: {
+        headers: {
+          'Authorization': 'Bearer ' + tk,
+        },
+      },
+    })
+    p = data.me
+  }
 
   return (
     <nav className={styles.navbar + ' bg-gray-800 bg-opacity-30 dark:bg-opacity-80 sticky top-0 py-4 w-full flex items-center z-30 shadow-lg backdrop-filter backdrop-blur-xl with-slide-in'}>
       <div className='container mx-auto flex items-center justify-between py-4'>
         <div className=' text-gray-800 dark:text-white flex items-center'>
-          <Button
-            variant='light'
-            onClick={() => {
-              router.back()
-            }}
-          >
+          <Link href='/' className='flex items-center'>
             <ChevronLeftIcon className='w-4 h-4 text-white' />
-          </Button>
+          </Link>
           <h6 className='ml-4 text-xl font-bold'>{props.title}</h6>
         </div>
         <div>
           {p ? (
-            <Link href={getMyHomeLink(p.me)}>
+            <Link href={getMyHomeLink(p)}>
               <UserName
-                name={p.me.name}
-                premiumEndAt={p.me.premiumEndAt}
+                name={p.name}
+                premiumEndAt={p.premiumEndAt}
               />
             </Link>
           ) : (

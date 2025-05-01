@@ -138,8 +138,8 @@ function PricingContent(props: PricingContentProps) {
           <Divider className="max-w-md mx-auto mb-10" />
           <Text className="text-lg opacity-70">
             {t('app.pricing.questions')}
-            <a href="mailto:support@clippingkk.org" className="text-indigo-400 hover:text-indigo-500 ml-1 underline">
-              support@clippingkk.org
+            <a href="mailto:annatar.he+clippingkk@gmail.com" className="text-indigo-400 hover:text-indigo-500 ml-1 underline">
+              annatar.he+clippingkk@gmail.com
             </a>
           </Text>
         </div>
