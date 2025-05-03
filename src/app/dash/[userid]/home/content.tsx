@@ -36,17 +36,11 @@ function useUserNewbie(userProfile: UserProfile | null, onNewbie: () => void) {
 type HomePageContentProps = {
   userid: string
   myUid?: number
+  targetProfile: ProfileQuery['me']
 }
 
 function HomePageContent(props: HomePageContentProps) {
-  const { userid: userDomain, myUid } = props
-  const isTypeUid = !Number.isNaN(parseInt(userDomain))
-  const { data: targetProfileData } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, {
-    variables: {
-      id: isTypeUid ? ~~userDomain : undefined,
-      domain: isTypeUid ? undefined : userDomain
-    }
-  })
+  const { userid: userDomain, myUid, targetProfile: userProfile } = props
 
   const { data: myProfile } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, {
     variables: {
@@ -54,7 +48,6 @@ function HomePageContent(props: HomePageContentProps) {
     }
   })
 
-  const userProfile = targetProfileData.me
   const uid = myProfile.me.id
 
   const { push: navigate } = useRouter()
@@ -69,7 +62,7 @@ function HomePageContent(props: HomePageContentProps) {
   const [reachEnd, setReachEnd] = useState(false)
   const { data, fetchMore } = useQuery<BooksQuery, BooksQueryVariables>(BooksDocument, {
     variables: {
-      id: targetProfileData.me.id,
+      id: userProfile.id,
       pagination: {
         limit: STEP,
         offset: 0

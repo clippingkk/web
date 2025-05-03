@@ -3,7 +3,7 @@ import HomePageContent from './content'
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import { Metadata } from 'next'
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument, BooksQuery, BooksDocument, BooksQueryVariables } from '@/schema/generated'
-import { getApolloServerClient } from '@/services/apollo.server'
+import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { getReactQueryClient } from '@/services/ajax'
@@ -13,7 +13,8 @@ import ReadingBook from './reading-book'
 import { useTranslation } from '@/i18n'
 import Link from 'next/link'
 import NoContentAlert from './no-content'
-import AIBookRecommendationButton from '../../../../components/book-recommendation/ai-book-recommendation-button'
+import AIBookRecommendationButton from '@/components/book-recommendation/ai-book-recommendation-button'
+import { ApolloQueryResult } from '@apollo/client'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -23,12 +24,10 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const [ck, params] = await Promise.all([cookies(), props.params])
   const pathUid: string = params.userid
   const uid = parseInt(pathUid)
-  const client = getApolloServerClient()
-
   const tk = ck.get('token')?.value
 
   try {
-    const profileResponse = await client.query<ProfileQuery, ProfileQueryVariables>({
+    const profileResponse = await doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
       query: ProfileDocument,
       fetchPolicy: 'network-only',
       variables: {
@@ -52,9 +51,10 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 // the home page only available for myself
 async function Page(props: PageProps) {
-  const [params, ck] = await Promise.all([props.params, cookies()])
+  const [params, ck, { t }] = await Promise.all([props.params, cookies(), useTranslation()])
   const { userid } = params
   const myUid = ck.get('uid')?.value
+  const token = ck.get('token')?.value
 
   if (!myUid) {
     return redirect(`/dash/${userid}/profile`)
@@ -62,35 +62,54 @@ async function Page(props: PageProps) {
 
   const myUidInt = myUid ? parseInt(myUid) : undefined
 
-  const apolloClient = getApolloServerClient()
-  const profileResponse = await apolloClient.query<ProfileQuery, ProfileQueryVariables>({
-    query: ProfileDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      id: myUidInt
-    },
-    context: {
-      headers: {
-        'Authorization': 'Bearer ' + ck.get('token')?.value
+  const reqs: [Promise<ApolloQueryResult<ProfileQuery>>, Promise<ApolloQueryResult<BooksQuery>>, Promise<ApolloQueryResult<ProfileQuery>>?] = [
+    doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
+      query: ProfileDocument,
+      fetchPolicy: 'network-only',
+      variables: {
+        id: myUidInt
       },
-    }
-  })
-  const { data: booksResponse } = await apolloClient.query<BooksQuery, BooksQueryVariables>({
-    query: BooksDocument,
-    fetchPolicy: 'network-only',
-    context: {
-      headers: {
-        'Authorization': 'Bearer ' + ck.get('token')?.value
+      context: {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+      }
+    }),
+    doApolloServerQuery<BooksQuery, BooksQueryVariables>({
+      query: BooksDocument,
+      fetchPolicy: 'network-only',
+      context: {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
       },
-    },
-    variables: {
-      id: myUidInt,
-      pagination: {
-        limit: 10,
-        offset: 0
+      variables: {
+        id: myUidInt,
+        pagination: {
+          limit: 10,
+          offset: 0
+        },
       },
-    },
-  })
+    }),
+  ]
+
+  if (myUid !== userid) {
+    reqs.push(doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
+      query: ProfileDocument,
+      fetchPolicy: 'network-only',
+      variables: {
+        id: Number.isNaN(userid) ? undefined : Number(userid),
+        domain: Number.isNaN(userid) ? userid : undefined
+      },
+      context: {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+      }
+    }))
+  }
+
+  const [profileResponse, booksResponse, accessingProfileResponse] = await Promise.all(reqs)
 
   let firstBook: WenquBook | null = null
 
@@ -110,7 +129,6 @@ async function Page(props: PageProps) {
     }
   }
 
-  const { t } = await useTranslation()
   const recents = profileResponse.data.me.recents
 
   return (
@@ -135,20 +153,20 @@ async function Page(props: PageProps) {
             href={`/dash/${myUidInt}/unchecked`}
             className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium py-2 px-6 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px]'>
             <span className='relative z-10'>{t('app.home.unchecked')}</span>
-            <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+            <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
           </Link>
           <AIBookRecommendationButton
             uid={myUidInt!}
-            books={booksResponse.books}
+            books={booksResponse.data.books}
           />
         </div>
       </header>
-      {!firstBook && booksResponse.books.length === 0 && (
+      {!firstBook && booksResponse.data.books.length === 0 && (
         <div className='flex flex-wrap items-center justify-center'>
           <NoContentAlert domain={userid} />
         </div>
       )}
-      <HomePageContent userid={userid} myUid={myUidInt} />
+      <HomePageContent userid={userid} myUid={myUidInt} targetProfile={accessingProfileResponse?.data?.me ?? profileResponse.data.me} />
     </section>
   )
 }

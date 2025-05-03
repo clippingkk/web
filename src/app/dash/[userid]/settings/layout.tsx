@@ -16,7 +16,7 @@ async function SettingsPageContent(props: SettingsPageProps) {
       />
       
       {/* Main Content */}
-      <div className='w-full p-8 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm'>
+      <div className='w-full p-8 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm min-h-128'>
         {children}
       </div>
     </div>

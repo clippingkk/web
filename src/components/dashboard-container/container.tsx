@@ -22,8 +22,6 @@ async function DashboardContainer(props: DashboardContainerProps) {
 
   const isUidType = !Number.isNaN(parseInt(props.uidOrDomain as string))
 
-  console.log('xxxxxxxxx', isUidType, props.uidOrDomain)
-
   let myProfile: ProfileQuery | null = null
 
   if (uidOrDomain) {

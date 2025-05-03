@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 function ForceClean() {
   useEffect(() => {
     const isForceClean = window.location.search.includes('clean')
-    console.log('cleaning...', window.location.search, isForceClean)
     if (!isForceClean) {
       return
     }

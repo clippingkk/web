@@ -37,5 +37,6 @@ interface Window {
       signIn(): Promise
     }
   }
+  __APOLLO_STATE__?: Record<string, any>
 }
 
