@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.11](https://github.com/clippingkk/web/compare/v5.13.10...v5.13.11) (2025-05-03)
+
+
+### Bug Fixes
+
+* **api:** remove console logs and restore apollo cache from window state ([b87456c](https://github.com/clippingkk/web/commit/b87456cac1b8de7f0966b2f3ae72398863eb951b))
+* **auth:** update UI components and adjust dev port to 3101 ([2393359](https://github.com/clippingkk/web/commit/239335989944c369995507057ee6cbd43695b546))
+* **seo:** add nextjs cache and llms.txt for SEO optimization ([477fbcc](https://github.com/clippingkk/web/commit/477fbcccb0af58abc68aa80c3e540ad072c14b53))
+
 ## [5.13.10](https://github.com/clippingkk/web/compare/v5.13.9...v5.13.10) (2025-05-01)
 
 
