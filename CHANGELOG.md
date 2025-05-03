@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.12](https://github.com/clippingkk/web/compare/v5.13.11...v5.13.12) (2025-05-03)
+
+
+### Bug Fixes
+
+* **md:** improve markdown styling and reorder imports for better readability ([d2c2e39](https://github.com/clippingkk/web/commit/d2c2e39f3b7dcb674c31cf1c8f74fff7ff793954))
+
 ## [5.13.11](https://github.com/clippingkk/web/compare/v5.13.10...v5.13.11) (2025-05-03)
 
 
