@@ -3,7 +3,7 @@ import React from 'react'
 import { IN_APP_CHANNEL } from '../../services/channel'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import styles from './clipping-lite.module.css'
-import { Tooltip } from '@mantine/core'
+import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { Clipping, User } from '../../schema/generated'
 
 type ClippingLiteProps = {
@@ -53,10 +53,10 @@ function ClippingLite(props: ClippingLiteProps) {
         <div className='flex justify-between items-center'>
           <div className='flex items-center '>
             <SimpleAvatar avatar={c.creator.avatar} />
-            <span className='ml-2'>{c.creator.name}</span>
+            <span className='ml-2 max-w-24 text-ellipsis overflow-hidden'>{c.creator.name}</span>
           </div>
           <div className='ml-4'>
-            <Tooltip label={c.title} withArrow transitionProps={{ duration: 200, transition: 'pop' }}>
+            <Tooltip content={c.title}>
               <span className='text-right font-lxgw line-clamp-2'>{c.title}</span>
             </Tooltip>
           </div>

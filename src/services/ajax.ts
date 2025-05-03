@@ -181,7 +181,7 @@ export function makeApolloClientWithCredentials(credentials: { uid?: number, tok
       links.push(new SSRMultipartLink({ stripDefer: true }))
     }
 
-    links.push(errorLink, authLinkRSC, httpLink)
+    links.push(authLinkRSC, httpLink, errorLink)
 
     return new ApolloClient({
       cache: new InMemoryCache(apolloCacheConfig),
