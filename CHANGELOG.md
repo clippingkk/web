@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.0](https://github.com/clippingkk/web/compare/v5.13.12...v5.14.0) (2025-05-11)
+
+
+### Features
+
+* **webhook:** implement webhook detail page with history records and status display ([d103529](https://github.com/clippingkk/web/commit/d1035298ec5792a99509fd2924347a1c5841e44b))
+
 ## [5.13.12](https://github.com/clippingkk/web/compare/v5.13.11...v5.13.12) (2025-05-03)
 
 
