@@ -1,0 +1,29 @@
+{
+  "app": {
+    "settings": {
+      "webhook": {
+        "title": "Webhook 配置",
+        "docLink": "文档",
+        "id": "Webhook ID",
+        "step": "事件类型",
+        "url": "链接地址",
+        "onCreateClippings": "创建摘录时",
+        "detail": {
+          "title": "Webhook 详情",
+          "infoTitle": "基本信息",
+          "recordsTitle": "历史记录",
+          "recordsCount": "共 {{count}} 条记录",
+          "content": "请求内容",
+          "statusMessage": "错误信息",
+          "noRecords": "暂无 webhook 触发记录",
+          "loadMore": "加载更多"
+        }
+      }
+    },
+    "common": {
+      "back": "返回 webhook 列表",
+      "delete": "删除",
+      "done": "完成"
+    }
+  }
+}

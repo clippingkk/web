@@ -184,7 +184,7 @@ export function makeApolloClientWithCredentials(credentials: { uid?: number, tok
     links.push(authLinkRSC, httpLink, errorLink)
 
     return new ApolloClient({
-      cache: new InMemoryCache(apolloCacheConfig).restore(window.__APOLLO_STATE__ ?? {}),
+      cache: new InMemoryCache(apolloCacheConfig),
       link: ApolloLink.from(links),
       connectToDevTools: process.env.DEV === 'true',
     })

@@ -1,0 +1,29 @@
+{
+  "app": {
+    "settings": {
+      "webhook": {
+        "title": "웹훅",
+        "docLink": "문서",
+        "id": "웹훅 ID",
+        "step": "이벤트",
+        "url": "URL",
+        "onCreateClippings": "발췌문 생성 시",
+        "detail": {
+          "title": "웹훅 상세정보",
+          "infoTitle": "정보",
+          "recordsTitle": "기록",
+          "recordsCount": "총 {{count}}개 기록",
+          "content": "요청 본문",
+          "statusMessage": "오류 메시지",
+          "noRecords": "이 웹훅에 대한 기록이 없습니다",
+          "loadMore": "더 불러오기"
+        }
+      }
+    },
+    "common": {
+      "back": "웹훅 목록으로 돌아가기",
+      "delete": "삭제",
+      "done": "완료"
+    }
+  }
+}

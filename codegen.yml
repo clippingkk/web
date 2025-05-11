@@ -3,7 +3,7 @@ schema: src/schema/schema.json
 # schema:
 #   - "http://127.0.0.1:19654/api/v2/graphql":
 #       headers:
-#         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE3MzA2NTQzNzEsImlhdCI6MTcxNTEwMjM3MSwiaXNzIjoiY2stc2VydmVyQCJ9.uSHruxYYI300QXtQkKBTquGqNccs5K8-ju0sgkgf8xA"
+#         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE3NjE4NDU0MzIsImlhdCI6MTc0NjI5MzQzMiwiaXNzIjoiY2stc2VydmVyQCJ9.AtsFRJuiHVr88uY02ZVo4ThgmjOBsUK2by-KwOk89sU"
 documents:
   - "src/schema/**/*.graphql"
   - "src/**/*.tsx"

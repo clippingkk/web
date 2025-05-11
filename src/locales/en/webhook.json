@@ -1,0 +1,29 @@
+{
+  "app": {
+    "settings": {
+      "webhook": {
+        "title": "Webhooks",
+        "docLink": "Documentation",
+        "id": "Webhook ID",
+        "step": "Event",
+        "url": "URL",
+        "onCreateClippings": "On Create Clippings",
+        "detail": {
+          "title": "Webhook Details",
+          "infoTitle": "Info",
+          "recordsTitle": "History",
+          "recordsCount": "{{count}} records total",
+          "content": "Request Body",
+          "statusMessage": "Error Message",
+          "noRecords": "No records found for this webhook",
+          "loadMore": "Load More Records"
+        }
+      }
+    },
+    "common": {
+      "back": "Back to webhooks",
+      "delete": "Delete",
+      "done": "Done"
+    }
+  }
+}
