@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.13](https://github.com/clippingkk/web/compare/v5.13.12...v5.13.13) (2025-05-20)
+
+
+### Features
+
+* **webhook:** implement webhook detail page with history records and status display ([d103529](https://github.com/clippingkk/web/commit/d1035298ec5792a99509fd2924347a1c5841e44b))
+
+
+### Bug Fixes
+
+* **home:** add dynamic moving lights background with enhanced hero UI ([7a3dafc](https://github.com/clippingkk/web/commit/7a3dafc3f5048deb3b3bfaf717de8a5063c9f79e))
+* **pkg:** update pkg and language ([e409d45](https://github.com/clippingkk/web/commit/e409d45242b687d0ed37eac4c8ce4f3c116030dd))
+
+
+### Miscellaneous Chores
+
+* release 5.13.13 ([dd1d259](https://github.com/clippingkk/web/commit/dd1d259dca221ca2a314eaf7b467cc0e650d9fa9))
+
 ## [5.13.12](https://github.com/clippingkk/web/compare/v5.13.11...v5.13.12) (2025-05-03)
 
 
