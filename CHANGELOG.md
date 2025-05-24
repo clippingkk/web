@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.15](https://github.com/clippingkk/web/compare/v5.13.14...v5.13.15) (2025-05-24)
+
+
+### Features
+
+* implement theme-aware UI with enhanced gradients and visual effects ([31383dc](https://github.com/clippingkk/web/commit/31383dc3579a02e3e9629857203a9b57697ddbd8))
+
+
+### Miscellaneous Chores
+
+* release 5.13.15 ([a0b1392](https://github.com/clippingkk/web/commit/a0b139275a2d88ecbae681d93f4149b8a2459a9a))
+
 ## [5.13.14](https://github.com/clippingkk/web/compare/v5.13.13...v5.13.14) (2025-05-24)
 
 
