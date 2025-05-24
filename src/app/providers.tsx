@@ -1,17 +1,19 @@
 'use client'
 import '../utils/mixpanel'
 
-import React from 'react'
-import { Provider as JotaiProvider } from 'jotai'
-import { useDarkModeStatus } from '../hooks/theme'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { createReactQueryClient, makeApolloClientWithCredentials } from '../services/ajax'
-import { reactQueryPersister } from '../services/storage'
+import { useTranslation } from '@/i18n/client'
 import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
+import { MetaMaskProvider } from '@metamask/sdk-react'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { Provider as JotaiProvider } from 'jotai'
+import React from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { usePointerUpdate } from '../hooks/pointer'
-import { useTranslation } from '../i18n/client'
-import { MetaMaskProvider } from '@metamask/sdk-react'
+import {
+  createReactQueryClient,
+  makeApolloClientWithCredentials,
+} from '../services/ajax'
+import { reactQueryPersister } from '../services/storage'
 
 type ClientOnlyProvidersProps = {
   loggedInfo: {
@@ -23,7 +25,6 @@ type ClientOnlyProvidersProps = {
 
 function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const { loggedInfo, children } = props
-  useDarkModeStatus()
   const { i18n } = useTranslation()
   const rq = createReactQueryClient()
   usePointerUpdate()
@@ -43,7 +44,7 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
           <PersistQueryClientProvider
             client={rq}
             persistOptions={{
-              persister: reactQueryPersister
+              persister: reactQueryPersister,
             }}
           >
             <ApolloNextAppProvider

@@ -1,17 +1,17 @@
-import React, { useRef, useState } from 'react'
-import { WenquBook } from '../../services/wenqu'
-import { useTranslation } from 'react-i18next'
 import FileSaver from 'file-saver'
+import { useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 import { KonzertThemeMap } from '../../services/utp'
+import { WenquBook } from '../../services/wenqu'
 import ThemePicker from './theme-picker'
-import { Blockquote, Divider, Paper, Title } from '@mantine/core'
-import Button from '../button'
-import { Clipping, User } from '../../schema/generated'
-import Preview4Clipping from './preview4-clipping'
-import { toBlob } from 'html-to-image'
-import { useMutation } from '@tanstack/react-query'
+
 import Modal from '@annatarhe/lake-ui/modal'
+import { useMutation } from '@tanstack/react-query'
+import { toBlob } from 'html-to-image'
+import { Clipping, User } from '../../schema/generated'
+import Button from '../button'
+import Preview4Clipping from './preview4-clipping'
 
 type PreviewProps = {
   visible: boolean
@@ -19,7 +19,9 @@ type PreviewProps = {
   onOk: () => void
   background: string
   // clipping: Omit<Clipping, 'aiSummary' | 'reactions' | 'source' | 'comments'>
-  clipping: Pick<Clipping, 'id' | 'title' | 'content' | 'createdAt'> & { creator: Pick<User, 'id' | 'name' | 'avatar'> }
+  clipping: Pick<Clipping, 'id' | 'title' | 'content' | 'createdAt'> & {
+    creator: Pick<User, 'id' | 'name' | 'avatar'>
+  }
   book: WenquBook | null
 }
 
@@ -39,7 +41,7 @@ function Preview(props: PreviewProps) {
         skipAutoScale: false,
         canvasWidth: 375,
         width: 375,
-        cacheBust: true
+        cacheBust: true,
       })
       if (!blob) {
         throw new Error('no blob')
@@ -54,7 +56,7 @@ function Preview(props: PreviewProps) {
     onError: (err: any) => {
       console.log(err)
       toast.error(err.toString())
-    }
+    },
   })
 
   return (
@@ -63,37 +65,42 @@ function Preview(props: PreviewProps) {
       isOpen={props.visible}
       title={t('app.clipping.preview')}
     >
-      <section className='flex mt-2 p-4'>
+      <section className="mt-2 flex p-4">
         <Preview4Clipping
           clipping={props.clipping}
           book={props.book}
           theme={currentTheme}
           ref={previewDOM}
         />
-        <aside className='mt-2 flex flex-col ml-4'>
-          <Paper className='w-96'>
-            <Blockquote cite={props.book?.author} className='font-lxgw'>
+        <aside className="mt-2 ml-4 flex flex-col">
+          <div className="w-96 rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+            <blockquote
+              className="font-lxgw border-l-4 border-teal-500 py-2 pl-4 text-gray-700 italic dark:text-gray-200"
+              cite={props.book?.author}
+            >
               {props.clipping.content}
-            </Blockquote>
-          </Paper>
-          <Divider className='my-10' />
+            </blockquote>
+          </div>
+          <hr className="my-10 border-t border-gray-200 dark:border-gray-700" />
 
-          <div className='w-full'>
-            <Title order={6} className='mb-4'>Theme</Title>
+          <div className="w-full">
+            <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+              Theme
+            </h3>
             <ThemePicker
-              className='w-full'
+              className="w-full"
               current={currentTheme}
               onChange={(t) => {
                 setCurrentTheme(t)
               }}
             />
           </div>
-          <div className='flex-1 w-full' />
+          <div className="w-full flex-1" />
           <Button
             onClick={() => onSave()}
             isLoading={isPending}
-            variant='secondary'
-            className='from-teal-500/80 to-teal-600/80 after:from-teal-500/40 after:to-teal-500/40 hover:shadow-teal-500/20'
+            variant="secondary"
+            className="from-teal-500/80 to-teal-600/80 after:from-teal-500/40 after:to-teal-500/40 hover:shadow-teal-500/20"
           >
             {t('app.clipping.save')}
           </Button>

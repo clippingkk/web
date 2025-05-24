@@ -1,8 +1,7 @@
-import React from 'react'
-import Image from 'next/image'
+import CodeHighlight from '@/components/highlighter/client'
 import { useTranslation } from '@/i18n'
+import Image from 'next/image'
 import WebArchImage from '../../assets/web_arch.png'
-import { CodeHighlight } from '@mantine/code-highlight'
 
 const exampleCode = `
 extern crate ck_cli;
@@ -46,62 +45,63 @@ fn parse_en_file() {
 async function FeatureModern() {
   const { t } = await useTranslation()
   return (
-    <div className='flex items-center w-full justify-around py-16 flex-col'>
-      <h3 className={'lg:text-7xl text-4xl text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible font-extrabold from-red-400 to-pink-500 bg-clip-text text-transparent bg-linear-to-br'}>
+    <div className="flex w-full flex-col items-center justify-around py-16">
+      <h3
+        className={
+          'mb-8 flex max-w-xs overflow-x-visible bg-linear-to-br from-red-400 to-pink-500 bg-clip-text pb-4 text-center text-4xl font-extrabold text-transparent lg:mb-0 lg:text-7xl'
+        }
+      >
         {t('app.index.features.modern.title')}
       </h3>
 
       <div>
-        <div className=' flex items-center flex-col'>
+        <div className="flex flex-col items-center">
           <Image
             src={WebArchImage}
             alt="Web arch"
             width={WebArchImage.width}
             height={WebArchImage.height}
             style={{
-              maxWidth: '100vw'
+              maxWidth: '100vw',
             }}
           />
-          <div className='flex justify-center flex-col items-center lg:items-start'>
-            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br'}>
+          <div className="flex flex-col items-center justify-center lg:items-start">
+            <h3
+              className={
+                'font-lxgw mb-8 flex overflow-x-visible bg-linear-to-br from-blue-300 to-orange-400 bg-clip-text pb-4 text-center text-4xl font-bold text-transparent lg:mb-0 lg:text-7xl'
+              }
+            >
               {t('app.index.features.modern.f1')}
             </h3>
-            <span className='text-center block dark:text-gray-100'>
+            <span className="block text-center dark:text-gray-100">
               {t('app.index.features.modern.f1Desc')}
             </span>
           </div>
-          <div>
-          </div>
+          <div></div>
         </div>
 
-        <div className=' flex justify-around mt-40 flex-col lg:flex-row'>
+        <div className="mt-40 flex flex-col justify-around lg:flex-row">
           <div
-            className=' px-4 lg:px-0'
+            className="px-4 lg:px-0"
             style={{
-              maxWidth: '100vw'
+              maxWidth: '100vw',
             }}
           >
-            <CodeHighlight
-              language='c'
-              withCopyButton={false}
-              // highlightLines={{
-              //   26: { color: 'blue' },
-              //   27: { color: 'blue' },
-              //   35: { color: 'blue' },
-              // }}
-              code={exampleCode}
-            />
+            <CodeHighlight lang="c" code={exampleCode} />
           </div>
-          <div className='flex justify-center flex-col items-center lg:items-start'>
-            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br mt-12 lg:mt-0'}>
+          <div className="flex flex-col items-center justify-center lg:items-start">
+            <h3
+              className={
+                'font-lxgw mt-12 mb-8 flex overflow-x-visible bg-linear-to-br from-blue-300 to-orange-400 bg-clip-text pb-4 text-center text-4xl font-bold text-transparent lg:mt-0 lg:mb-0 lg:text-7xl'
+              }
+            >
               {t('app.index.features.modern.f2')}
             </h3>
-            <span className='text-center block dark:text-gray-100'>
+            <span className="block text-center dark:text-gray-100">
               {t('app.index.features.modern.f2Desc')}
             </span>
           </div>
         </div>
-
 
         {/* <div className=' flex justify-around mt-40'>
           <div className='flex justify-center flex-col'>
@@ -116,7 +116,6 @@ async function FeatureModern() {
             hello
           </div>
         </div> */}
-
       </div>
     </div>
   )

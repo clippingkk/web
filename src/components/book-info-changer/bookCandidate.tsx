@@ -1,7 +1,7 @@
 import BlurhashImage from '@annatarhe/blurhash-react'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { Star } from 'lucide-react'
 import { WenquBook } from '../../services/wenqu'
+import Rating from '../rating'
 
 type BookCandidateProps = {
   book: WenquBook
@@ -34,15 +34,7 @@ function BookCandidate(props: BookCandidateProps) {
           {book.title}
           <div className="inline-block">
             <Tooltip content={`douban: ${book.rating}/10`}>
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={16}
-                    className={`${i < Math.round(book.rating / 2) ? 'fill-yellow-400 text-yellow-400' : 'fill-transparent text-gray-300 dark:text-gray-600'}`}
-                  />
-                ))}
-              </div>
+              <Rating rating={book.rating} />
             </Tooltip>
           </div>
         </h3>

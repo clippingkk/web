@@ -1,5 +1,5 @@
+import CodeBlock from '@/components/highlighter/client'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
-import { CodeHighlight } from '@mantine/code-highlight'
 import ReactMarkdown from 'react-markdown'
 
 type MarkdownPreviewProps = {
@@ -65,12 +65,8 @@ function MarkdownPreview(props: MarkdownPreviewProps) {
             const match = /language-(\w+)/.exec(className || '')
             const lang = match ? match[1] : 'tsx'
             return (
-              <CodeHighlight
-                code={String(children)}
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                language={lang as any}
-                className="my-4"
-              />
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              <CodeBlock code={String(children)} lang={lang as any} />
             )
           },
           blockquote: ({ className, children, ref, ...props }) => (

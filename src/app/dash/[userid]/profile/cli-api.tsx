@@ -1,14 +1,14 @@
 'use client'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import Modal from '@annatarhe/lake-ui/modal'
-import { CodeHighlight } from '@mantine/code-highlight'
-import { getLocalToken } from '@/services/ajax'
-import { useClaimCliApiTokenMutation } from '@/schema/generated'
 import Button from '@/components/button'
-import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { Terminal, Clipboard, ExternalLink, RefreshCw } from 'lucide-react'
+import CodeHighlight from '@/components/highlighter/client'
 import { useTranslation } from '@/i18n/client'
+import { useClaimCliApiTokenMutation } from '@/schema/generated'
+import { getLocalToken } from '@/services/ajax'
+import Modal from '@annatarhe/lake-ui/modal'
+import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { Clipboard, ExternalLink, RefreshCw, Terminal } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 function CliApiToken() {
   const { t } = useTranslation()
@@ -26,8 +26,8 @@ function CliApiToken() {
     }
     doClaim({
       variables: {
-        token: t
-      }
+        token: t,
+      },
     })
   }, [visible, doClaim])
 
@@ -52,85 +52,91 @@ ck-cli
 
   return (
     <div>
-      <Tooltip
-        content={t('CLI')}
-      >
+      <Tooltip content={t('CLI')}>
         <Button
           onClick={() => setVisible(true)}
-          variant='ghost'
+          variant="ghost"
           className="hover:bg-gray-100 dark:hover:bg-gray-800"
         >
-          <Terminal className="w-5 h-5" strokeWidth={2.5} />
+          <Terminal className="h-5 w-5" strokeWidth={2.5} />
         </Button>
       </Tooltip>
       <Modal
         isOpen={visible}
         onClose={() => setVisible(false)}
-        title={(
-          <div className='flex items-center gap-2'>
-            <Terminal className="w-5 h-5" strokeWidth={2.5} />
+        title={
+          <div className="flex items-center gap-2">
+            <Terminal className="h-5 w-5" strokeWidth={2.5} />
             {t('CLI API Token')}
           </div>
-        )}
+        }
       >
-        <div 
-          className="p-6 space-y-6 backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 rounded-lg shadow-xl"
-          onClickCapture={e => e.preventDefault()}
+        <div
+          className="space-y-6 rounded-lg bg-white/90 p-6 shadow-xl backdrop-blur-sm dark:bg-gray-800/90"
+          onClickCapture={(e) => e.preventDefault()}
         >
           {loading ? (
-            <div className="flex justify-center items-center py-10">
-              <RefreshCw className="w-8 h-8 animate-spin text-primary-500" />
+            <div className="flex items-center justify-center py-10">
+              <RefreshCw className="text-primary-500 h-8 w-8 animate-spin" />
             </div>
           ) : (
             <div className="space-y-8">
               <div className="space-y-3">
-                <h3 className="text-xl font-bold flex items-center gap-2">
-                  <span className="inline-flex justify-center items-center w-8 h-8 rounded-full bg-primary-500 text-white">1</span>
+                <h3 className="flex items-center gap-2 text-xl font-bold">
+                  <span className="bg-primary-500 inline-flex h-8 w-8 items-center justify-center rounded-full text-white">
+                    1
+                  </span>
                   {t('Download CLI')}
                 </h3>
                 <div className="pl-10">
                   <a
                     href="https://github.com/clippingkk/cli/releases"
                     target="_blank"
-                    className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline font-medium"
+                    className="text-primary-600 dark:text-primary-400 inline-flex items-center gap-2 font-medium hover:underline"
                     rel="noreferrer"
                   >
-                    clippingkk/cli <ExternalLink className="w-4 h-4" />
+                    clippingkk/cli <ExternalLink className="h-4 w-4" />
                   </a>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     {t('Download and set the CLI executable on your system')}
                   </p>
                 </div>
               </div>
-              
+
               <div className="space-y-3">
-                <h3 className="text-xl font-bold flex items-center gap-2">
-                  <span className="inline-flex justify-center items-center w-8 h-8 rounded-full bg-primary-500 text-white">2</span>
+                <h3 className="flex items-center gap-2 text-xl font-bold">
+                  <span className="bg-primary-500 inline-flex h-8 w-8 items-center justify-center rounded-full text-white">
+                    2
+                  </span>
                   {t('Run Command')}
                 </h3>
-                <div className="pl-10 w-full">
-                  <div className="bg-gray-900 dark:bg-black rounded-lg overflow-hidden">
-                    <CodeHighlight code={cliScriptExample} language="bash" />
+                <div className="w-full pl-10">
+                  <div className="overflow-hidden rounded-lg bg-gray-900 dark:bg-black">
+                    <CodeHighlight code={cliScriptExample} lang="bash" />
                   </div>
                   <button
                     onClick={onCopyToClipboard}
-                    className="mt-3 flex items-center gap-2 px-4 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 transition-all transform hover:scale-105 font-medium"
+                    className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 mt-3 flex transform items-center gap-2 rounded-md px-4 py-2 font-medium text-white transition-all hover:scale-105"
                     disabled={!data?.claimAPIKey}
                   >
-                    <Clipboard className="w-4 h-4" />
+                    <Clipboard className="h-4 w-4" />
                     {t('Copy to Clipboard')}
                   </button>
                 </div>
               </div>
-              
+
               <div className="space-y-3">
-                <h3 className="text-xl font-bold flex items-center gap-2">
-                  <span className="inline-flex justify-center items-center w-8 h-8 rounded-full bg-primary-500 text-white">3</span>
+                <h3 className="flex items-center gap-2 text-xl font-bold">
+                  <span className="bg-primary-500 inline-flex h-8 w-8 items-center justify-center rounded-full text-white">
+                    3
+                  </span>
                   {t('Refresh and Sync')}
                 </h3>
                 <div className="pl-10">
                   <p className="text-gray-700 dark:text-gray-200">
-                    {t('After running the command, refresh the page and wait for your clippings to sync')}
+                    {t(
+                      'After running the command, refresh the page and wait for your clippings to sync'
+                    )}
                   </p>
                 </div>
               </div>

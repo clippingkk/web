@@ -7,14 +7,11 @@ import '../styles/global.css'
 import '../styles/react-animation.css'
 import '../styles/tailwind.css'
 
-import '@mantine/code-highlight/styles.css'
-import '@mantine/core/styles.css'
 // next.js not allow to use modern css. just remove it when next.js support it
 // import '@annatarhe/lake-ui/style.css'
 
 import GlobalUpload from '@/components/uploads/global'
 import { STORAGE_LANG_KEY } from '@/constants/storage'
-import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Metadata } from 'next'
 import { Lato } from 'next/font/google'
@@ -24,9 +21,7 @@ import React from 'react'
 import { Toaster } from 'react-hot-toast'
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
-import { colorSchemeManager } from '../hooks/theme'
 import '../prefers-dark'
-import { theme } from '../styles/mantine'
 import '../utils/locales'
 import '../utils/settings'
 import ClientOnlyProviders from './providers'
@@ -118,33 +113,29 @@ async function Layout(props: LayoutProps) {
         } as React.CSSProperties
       }
     >
-      <head>
-        <ColorSchemeScript />
-      </head>
+      <head></head>
       <Script
         defer
         src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
       />
       <body>
-        <MantineProvider theme={theme} colorSchemeManager={colorSchemeManager}>
-          <ClientOnlyProviders
-            loggedInfo={{ token, uid: uid ? ~~uid : undefined }}
-          >
-            <>
-              {props.children}
-              <div id="dialog"></div>
-              <div id="toast"></div>
-              <div id="searchbar" className="raycast"></div>
-              <GlobalUpload uid={uid ? ~~uid : undefined} />
-              <Toaster position="top-center" />
-              <ReactQueryDevtools initialIsOpen={false} />
-              <div data-id="modal" />
-              <div data-st-role="modal" />
-              <div data-st-role="tooltip" />
-            </>
-          </ClientOnlyProviders>
-        </MantineProvider>
+        <ClientOnlyProviders
+          loggedInfo={{ token, uid: uid ? ~~uid : undefined }}
+        >
+          <>
+            {props.children}
+            <div id="dialog"></div>
+            <div id="toast"></div>
+            <div id="searchbar" className="raycast"></div>
+            <GlobalUpload uid={uid ? ~~uid : undefined} />
+            <Toaster position="top-center" />
+            <ReactQueryDevtools initialIsOpen={false} />
+            <div data-id="modal" />
+            <div data-st-role="modal" />
+            <div data-st-role="tooltip" />
+          </>
+        </ClientOnlyProviders>
       </body>
     </html>
   )
