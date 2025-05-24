@@ -1,16 +1,16 @@
+import { useTranslation } from '@/i18n/client'
+import { KonzertThemeMap } from '@/services/utp'
+import { WenquBook } from '@/services/wenqu'
 import FileSaver from 'file-saver'
 import { useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useTranslation } from 'react-i18next'
-import { KonzertThemeMap } from '../../services/utp'
-import { WenquBook } from '../../services/wenqu'
 import ThemePicker from './theme-picker'
 
 import Modal from '@annatarhe/lake-ui/modal'
 import { useMutation } from '@tanstack/react-query'
 import { toBlob } from 'html-to-image'
 import { Clipping, User } from '../../schema/generated'
-import Button from '../button'
+import Button from '../button/button'
 import Preview4Clipping from './preview4-clipping'
 
 type PreviewProps = {

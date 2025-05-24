@@ -1,5 +1,5 @@
 'use client'
-import Button from '@/components/button'
+import Button from '@/components/button/button'
 import SpinnerIcon from '@/components/loading/spinner'
 import PublicBookItem from '@/components/public-book-item/public-book-item'
 import { useBookSearch, useSingleBook } from '@/hooks/book'

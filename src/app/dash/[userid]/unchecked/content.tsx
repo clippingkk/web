@@ -1,25 +1,25 @@
 'use client'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import ClippingItem from '../../../../components/clipping-item/clipping-item'
-import Divider from '../../../../components/divider/divider'
-import MasonryContainer from '../../../../components/masonry-container'
-import { IN_APP_CHANNEL } from '../../../../services/channel'
+import ClippingItem from '@/components/clipping-item/clipping-item'
+import Divider from '@/components/divider/divider'
+import MasonryContainer from '@/components/masonry-container'
+import { useTranslation } from '@/i18n/client'
 import { useBookQuery } from '@/schema/generated'
+import { IN_APP_CHANNEL } from '@/services/channel'
 
 type Props = {
-  profile: { id: number, domain: string }
+  profile: { id: number; domain: string }
 }
 
 function UncheckedPageContent({ profile }: Props) {
-  const domain = profile.domain.length > 2 ? profile.domain : profile.id.toString()
+  const domain =
+    profile.domain.length > 2 ? profile.domain : profile.id.toString()
   const { data: clippingsData } = useBookQuery({
     variables: {
       id: 0,
       pagination: {
         limit: 50,
-        offset: 0
-      }
+        offset: 0,
+      },
     },
   })
   const { t } = useTranslation()
@@ -29,7 +29,7 @@ function UncheckedPageContent({ profile }: Props) {
       <Divider title={t('app.home.unchecked')} />
       <MasonryContainer>
         <>
-          {clippingsData?.book.clippings.map(clipping => (
+          {clippingsData?.book.clippings.map((clipping) => (
             <ClippingItem
               item={clipping}
               domain={domain}

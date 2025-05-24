@@ -1,6 +1,6 @@
+import { useTranslation } from '@/i18n/client'
 import { DocumentTextIcon, PencilSquareIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import MarkdownPreview from './md-preview'
 
 type MarkdownEditorProps = {

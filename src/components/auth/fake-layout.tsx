@@ -1,9 +1,9 @@
 'use client'
-import React, { useState } from 'react'
-import { useTranslation } from '@/i18n/client'
 import BindPhone from '@/components/bind-phone'
 import LoadingIcon from '@/components/icons/loading.svg'
-import Button from '../button'
+import { useTranslation } from '@/i18n/client'
+import React, { useState } from 'react'
+import Button from '../button/button'
 
 type AuthCallbackPageContainerProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,30 +19,30 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
   const { t } = useTranslation()
   return (
     <>
-      <div className='px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg'>
+      <div className="bg-opacity-70 dark:bg-opacity-90 flex flex-col rounded-sm bg-slate-200 px-8 py-4 shadow-lg backdrop-blur-sm lg:flex-row dark:bg-slate-900">
         <div
-          className={'duration-150 container ' + (willBind ? 'opacity-50 ' : '')}
+          className={'container duration-150 ' + (willBind ? 'opacity-50' : '')}
         >
-          <h3 className=' text-2xl lg:text-5xl dark:text-gray-100'>
+          <h3 className="text-2xl lg:text-5xl dark:text-gray-100">
             {t('app.authCallback.logged')}
           </h3>
-          <h4 className=' text-xl lg:text-3xl mt-4 dark:text-gray-100'>
+          <h4 className="mt-4 text-xl lg:text-3xl dark:text-gray-100">
             {t('app.authCallback.prevAccountTip')}
           </h4>
-          <div className='my-8 flex flex-col lg:flex-row items-center justify-end gap-4'>
+          <div className="my-8 flex flex-col items-center justify-end gap-4 lg:flex-row">
             <Button
-              className='h-20 text-2xl lg:text-5xl'
-              variant='outline'
-              size='xl'
+              className="h-20 text-2xl lg:text-5xl"
+              variant="outline"
+              size="xl"
               onClick={props.doBind}
             >
               {t('app.authCallback.createAccountDirectly')}
             </Button>
             {!willBind && (
               <Button
-                className='h-20 text-2xl lg:text-4xl bg-gradient-to-br from-blue-500 via-teal-500 to-orange-500 before:from-blue-500 before:to-orange-500'
-                variant='primary'
-                size='xl'
+                className="h-20 bg-gradient-to-br from-blue-500 via-teal-500 to-orange-500 text-2xl before:from-blue-500 before:to-orange-500 lg:text-4xl"
+                variant="primary"
+                size="xl"
                 onClick={() => {
                   setWillBind(true)
                 }}
@@ -53,17 +53,15 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
           </div>
         </div>
         {willBind && (
-          <div className='with-fade-in w-full mx-auto'>
+          <div className="with-fade-in mx-auto w-full">
             <span>No phone number bind yet</span>
-            <BindPhone
-              onFinalCheck={props.onAuthCallback}
-            />
+            <BindPhone onFinalCheck={props.onAuthCallback} />
           </div>
         )}
         {props.loading && (
-          <div className='flex w-full h-full absolute inset-0 bg-black bg-opacity-50 justify-center items-center flex-col backdrop-blur-xs with-fade-in'>
-            <LoadingIcon className='animate-spin' />
-            <span className='dark:text-white text-sm mt-4'>Submitting...</span>
+          <div className="bg-opacity-50 with-fade-in absolute inset-0 flex h-full w-full flex-col items-center justify-center bg-black backdrop-blur-xs">
+            <LoadingIcon className="animate-spin" />
+            <span className="mt-4 text-sm dark:text-white">Submitting...</span>
           </div>
         )}
       </div>

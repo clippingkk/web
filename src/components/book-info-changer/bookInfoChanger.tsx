@@ -1,14 +1,14 @@
+import { useTranslation } from '@/i18n/client'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useApolloClient } from '@apollo/client'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useTranslation } from 'react-i18next'
 import { useBookSearch } from '../../hooks/book'
 import { useUpdateClippingBookIdMutation } from '../../schema/generated'
 import { WenquBook } from '../../services/wenqu'
 import BookCandidate from './bookCandidate'
 
-import Button from '../button'
+import Button from '../button/button'
 import LoadingIcon from '../icons/loading.svg'
 import Empty from './empty'
 

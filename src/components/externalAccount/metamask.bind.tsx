@@ -1,11 +1,11 @@
-import { useApolloClient } from '@apollo/client'
-import React, { useCallback } from 'react'
-import { toast } from 'react-hot-toast'
-import { signDataByWeb3 } from '@/utils/wallet'
-import WithLoading from '../with-loading'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
 import { useBindWeb3AddressMutation } from '@/schema/generated'
+import { signDataByWeb3 } from '@/utils/wallet'
+import { useApolloClient } from '@apollo/client'
 import { useSDK } from '@metamask/sdk-react'
+import { useCallback } from 'react'
+import { toast } from 'react-hot-toast'
+import WithLoading from '../with-loading'
 
 type MetamaskBindButtonProps = {
   onBound?: (address: string) => void
@@ -16,41 +16,42 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
   const [doBind, doBindResult] = useBindWeb3AddressMutation()
   const client = useApolloClient()
   const { sdk: metamaskSDK } = useSDK()
-  const onMetamaskLogin = useCallback(async () => {
+  const onMetamaskLogin = useCallback(() => {
     if (!metamaskSDK) {
       return
     }
     let account = ''
-    return signDataByWeb3(metamaskSDK)
-      .then(res => {
-        account = res.address!
-        return doBind({
-          variables: {
-            payload: {
-              address: res.address!,
-              signature: res.signature!,
-              text: res.text
+    return (
+      signDataByWeb3(metamaskSDK)
+        .then((res) => {
+          account = res.address!
+          return doBind({
+            variables: {
+              payload: {
+                address: res.address!,
+                signature: res.signature!,
+                text: res.text,
+              },
+            },
+          }).then(() => {
+            toast.success(t('app.common.bound'))
+            client.resetStore()
+            if (props.onBound) {
+              props.onBound(account)
             }
-          }
-        }).then(() => {
-          toast.success(t('app.common.bound'))
-          client.resetStore()
-          if (props.onBound) {
-            props.onBound(account)
-          }
+          })
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      }).catch((err: any) => {
-        toast.error(err.message)
-      })
+        .catch((err: any) => {
+          toast.error(err.message)
+        })
+    )
   }, [])
 
   return (
-    <WithLoading
-      loading={doBindResult.loading}
-    >
+    <WithLoading loading={doBindResult.loading}>
       <button
-        className='px-4 py-2 rounded-sm hover:shadow-lg bg-purple-400 flex justify-center items-center hover:scale-105 duration-150 disabled:bg-gray-400 disabled:hover:scale-100 disabled:hover:shadow-none w-full'
+        className="flex w-full items-center justify-center rounded-sm bg-purple-400 px-4 py-2 duration-150 hover:scale-105 hover:shadow-lg disabled:bg-gray-400 disabled:hover:scale-100 disabled:hover:shadow-none"
         onClick={onMetamaskLogin}
       >
         {t('app.common.bind')}

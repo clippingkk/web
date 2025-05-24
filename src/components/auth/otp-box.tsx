@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from '@/i18n/client'
+import { useCallback, useEffect, useState } from 'react'
 import OTPInput from 'react-auth-code-input'
 import ButtonSimple from '../button/button-simple'
-import { useTranslation } from 'react-i18next'
-
 
 type OTPBoxProps = {
   autoValidate?: boolean
@@ -38,10 +37,8 @@ function OTPBox(props: OTPBoxProps) {
   const { t } = useTranslation()
 
   return (
-    <div className='w-full with-fade-in'>
-      <p
-        className=' text-slate-900 dark:text-white whitespace-break-spaces text-center mb-4'
-      >
+    <div className="with-fade-in w-full">
+      <p className="mb-4 text-center whitespace-break-spaces text-slate-900 dark:text-white">
         {t('app.auth.info.otpSent')}
       </p>
 
@@ -49,17 +46,19 @@ function OTPBox(props: OTPBoxProps) {
         onChange={(val: string) => {
           setOtp(val)
         }}
-        allowedCharacters='numeric'
+        allowedCharacters="numeric"
         inputClassName={
-          'w-full h-24 text-center text-2xl bg-gray-100 bg-opacity-90' + (hasErrorMsg ? ' border-red-500 bg-red-300' : '')}
-        containerClassName='grid grid-cols-6 gap-4 w-full'
+          'w-full h-24 text-center text-2xl bg-gray-100 bg-opacity-90' +
+          (hasErrorMsg ? ' border-red-500 bg-red-300' : '')
+        }
+        containerClassName="grid grid-cols-6 gap-4 w-full"
       />
 
       <ButtonSimple
         loading={loading}
         onClick={onSubmit}
         disabled={loading || otp.length !== 6}
-        text='Confirm'
+        text="Confirm"
       />
     </div>
   )

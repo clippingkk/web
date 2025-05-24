@@ -1,13 +1,13 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-hot-toast'
 import BindPhone from '@/components/bind-phone'
+import Button from '@/components/button/button'
+import { useTranslation } from '@/i18n/client'
 import { useBindUserPhoneMutation } from '@/schema/generated'
-import Button from '@/components/button'
-import Tooltip from '@annatarhe/lake-ui/tooltip'
 import Modal from '@annatarhe/lake-ui/modal'
+import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 function ProfileBindPhone() {
   const [visible, setVisible] = useState(false)
@@ -32,14 +32,9 @@ function ProfileBindPhone() {
 
   return (
     <React.Fragment>
-      <Tooltip
-        content={t('app.profile.phoneBind')}
-      >
-        <Button
-          variant='ghost'
-          onClick={() => setVisible(true)}
-        >
-          <DevicePhoneMobileIcon className='w-6 h-6' />
+      <Tooltip content={t('app.profile.phoneBind')}>
+        <Button variant="ghost" onClick={() => setVisible(true)}>
+          <DevicePhoneMobileIcon className="h-6 w-6" />
         </Button>
       </Tooltip>
       <Modal
@@ -47,9 +42,11 @@ function ProfileBindPhone() {
         title={t('app.profile.editor.title')}
         onClose={() => setVisible(false)}
       >
-        <div className='w-full md:w-144 h-48 md:h-96 flex flex-col justify-center'>
+        <div className="flex h-48 w-full flex-col justify-center md:h-96 md:w-144">
           <BindPhone
-            onFinalCheck={(pn, code) => doAuth({ variables: { phone: pn, code } })}
+            onFinalCheck={(pn, code) =>
+              doAuth({ variables: { phone: pn, code } })
+            }
           />
         </div>
       </Modal>

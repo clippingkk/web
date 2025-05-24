@@ -5,12 +5,12 @@ import ReportBookSection from '@/components/reports/report-book-section'
 import ReportHero from '@/components/reports/report-hero'
 import { useMultipleBook } from '@/hooks/book'
 import { useBackgroundImage } from '@/hooks/theme'
+import { useTranslation } from '@/i18n/client'
 import { Clipping, FetchYearlyReportQuery } from '@/schema/generated'
 import { WenquBook } from '@/services/wenqu'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 type PageContainerProps = {
   bgImage?: string | { src: string; blurHash: string }

@@ -1,5 +1,5 @@
 'use client'
-import Button from '@/components/button'
+import Button from '@/components/button/button'
 import { CF_TURNSTILE_SITE_KEY } from '@/constants/config'
 import { useTranslation } from '@/i18n/client'
 import InputField from '@annatarhe/lake-ui/form-input-field'

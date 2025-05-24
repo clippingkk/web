@@ -1,7 +1,7 @@
 'use client'
+import { useTranslation } from '@/i18n/client'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { FetchClippingQuery } from '../../schema/generated'
 import NounEditContent from '../noun/noun-edit'
 import ContentSegment from './content-segment'

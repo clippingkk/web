@@ -1,5 +1,5 @@
 'use client'
-import Button from '@/components/button'
+import Button from '@/components/button/button'
 import CodeHighlight from '@/components/highlighter/client'
 import { useTranslation } from '@/i18n/client'
 import { useClaimCliApiTokenMutation } from '@/schema/generated'

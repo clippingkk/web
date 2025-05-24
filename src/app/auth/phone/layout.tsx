@@ -1,15 +1,15 @@
 'use client'
-import React, { useEffect } from 'react'
-import Card from '@/components/card/card'
-import Link from 'next/link'
-import Image from 'next/image'
-import { GithubClientID } from '@/constants/config'
-import { usePageTrack, useActionTrack } from '@/hooks/tracke'
-import profile from '@/utils/profile'
-import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/navigation'
 import logo from '@/assets/logo.png'
+import Card from '@/components/card/card'
 import GithubLogo from '@/components/icons/github.logo.svg'
+import { GithubClientID } from '@/constants/config'
+import { useActionTrack, usePageTrack } from '@/hooks/tracke'
+import { useTranslation } from '@/i18n/client'
+import profile from '@/utils/profile'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 
 type AuthPageProps = {
   children: React.ReactElement
@@ -31,10 +31,10 @@ function AuthPage(props: AuthPageProps) {
   const onGithubClick = useActionTrack('login:github')
 
   return (
-    (<section className='anna-page-container flex h-screen items-center justify-center'>
-      <Card className='with-slide-in'>
+    <section className="anna-page-container flex h-screen items-center justify-center">
+      <Card className="with-slide-in">
         <>
-          <div className='flex items-center justify-center flex-col mb-4'>
+          <div className="mb-4 flex flex-col items-center justify-center">
             <Image
               src={logo}
               alt="clippingkk logo"
@@ -43,34 +43,40 @@ function AuthPage(props: AuthPageProps) {
               height={96}
             />
           </div>
-          <div className='w-full flex items-center justify-center rounded-sm'>
+          <div className="flex w-full items-center justify-center rounded-sm">
             <Link
               href="/auth/phone"
-              className={'flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400 bg-indigo-400'}>
+              className={
+                'flex bg-indigo-400 px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400'
+              }
+            >
               {t('app.auth.phone')}
             </Link>
 
             <Link
               href="/auth/signin"
-              className={'flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400'}>
+              className={
+                'flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400'
+              }
+            >
               {t('app.auth.signin')}
             </Link>
           </div>
-          <hr className='my-2' />
+          <hr className="my-2" />
           {children}
-          <hr className='my-2' />
-          <div className='flex items-center justify-center'>
+          <hr className="my-2" />
+          <div className="flex items-center justify-center">
             <a
               href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
               onClick={onGithubClick}
-              title='github login'
+              title="github login"
             >
               <GithubLogo />
             </a>
           </div>
         </>
       </Card>
-    </section>)
+    </section>
   )
 }
 

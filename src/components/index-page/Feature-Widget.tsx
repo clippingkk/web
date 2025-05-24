@@ -1,6 +1,6 @@
 'use client'
+import { useTranslation } from '@/i18n/client'
 import React, { useCallback, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useWebWidgetScript } from '../../hooks/widget'
 
 function FeatureWidget() {
@@ -14,27 +14,36 @@ function FeatureWidget() {
   const contentDOM = useRef<HTMLDivElement | null>(null)
 
   // https://codesandbox.io/s/7mp5pjp00j?file=/src/index.js
-  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!contentDOM.current) {
-      return
-    }
-    // perf: please do not do calcute every mouse move
-    const textDimensions = containerDOM.current?.getBoundingClientRect()
-    const cursorPositionInsideText = {
-      x: e.clientX - Math.round(textDimensions?.left ?? 0),
-      y: e.clientY - Math.round(textDimensions?.top ?? 0)
-    }
+  const onMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (!contentDOM.current) {
+        return
+      }
+      // perf: please do not do calcute every mouse move
+      const textDimensions = containerDOM.current?.getBoundingClientRect()
+      const cursorPositionInsideText = {
+        x: e.clientX - Math.round(textDimensions?.left ?? 0),
+        y: e.clientY - Math.round(textDimensions?.top ?? 0),
+      }
 
-    const deg = {
-      x: 3.5 * ((cursorPositionInsideText.x / (textDimensions?.width ?? 1)) * 2 - 1),
-      y: 3.5 * ((cursorPositionInsideText.y / (textDimensions?.height ?? 1)) * 2 - 1)
-    }
+      const deg = {
+        x:
+          3.5 *
+          ((cursorPositionInsideText.x / (textDimensions?.width ?? 1)) * 2 - 1),
+        y:
+          3.5 *
+          ((cursorPositionInsideText.y / (textDimensions?.height ?? 1)) * 2 -
+            1),
+      }
 
-    contentDOM.current.style.transform = `rotateX(${-deg.y}deg)  rotateY(${deg.x}deg)`
-  }, [])
+      contentDOM.current.style.transform = `rotateX(${-deg.y}deg)  rotateY(${deg.x}deg)`
+    },
+    []
+  )
 
   return (
-    <div className='flex items-center w-full justify-around py-16 lg:py-64 lg:flex-row flex-col'
+    <div
+      className="flex w-full flex-col items-center justify-around py-16 lg:flex-row lg:py-64"
       onMouseMove={onMouseMove}
     >
       <div
@@ -46,13 +55,12 @@ function FeatureWidget() {
         <div
           ref={contentDOM}
           style={{
-            'transformStyle': 'preserve-3d',
-            'transform': 'rotateX(0deg) rotateY(0deg)'
+            transformStyle: 'preserve-3d',
+            transform: 'rotateX(0deg) rotateY(0deg)',
           }}
         >
-
           {/* widget start */}
-          <blockquote className="ck-clipping-card" data-cid='20420'>
+          <blockquote className="ck-clipping-card" data-cid="20420">
             <p lang="zh" dir="ltr" className="ck-content">
               我在想：“什么是地狱？”我认为，地狱就是“再也不能爱”这样的痛苦
             </p>
@@ -67,11 +75,15 @@ function FeatureWidget() {
         </div>
       </div>
 
-      <div className='flex flex-col items-center lg:items-start'>
-        <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-orange-300 to-blue-300 bg-clip-text text-transparent bg-linear-to-br'}>
+      <div className="flex flex-col items-center lg:items-start">
+        <h3
+          className={
+            'font-lxgw mb-8 flex overflow-x-visible bg-linear-to-br from-orange-300 to-blue-300 bg-clip-text pb-4 text-center text-4xl font-bold text-transparent lg:mb-0 lg:text-7xl'
+          }
+        >
           {t('app.index.features.open.f4')}
         </h3>
-        <span className='text-center block dark:text-gray-100'>
+        <span className="block text-center dark:text-gray-100">
           {t('app.index.features.open.f4Desc')}
         </span>
       </div>
