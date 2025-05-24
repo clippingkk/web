@@ -1,14 +1,22 @@
 'use client'
-import { useFormik } from 'formik'
-import React, { useState } from 'react'
 import { useTranslation } from '@/i18n/client'
-import { toast } from 'react-hot-toast'
-import * as Yup from 'yup'
+import {
+  ExportDestination,
+  ProfileDocument,
+  ProfileQuery,
+  ProfileQueryVariables,
+  useExportDataToMutation,
+} from '@/schema/generated'
+import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import { ExportDestination, ProfileDocument, ProfileQuery, ProfileQueryVariables, useExportDataToMutation } from '@/schema/generated'
-import { useParams } from 'next/navigation'
 import { useSuspenseQuery } from '@apollo/client'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail } from 'lucide-react'
+import { useParams } from 'next/navigation'
+import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import { z } from 'zod'
 
 function ExportToMail() {
   const [visible, setVisible] = useState(false)
@@ -18,56 +26,74 @@ function ExportToMail() {
 
   const userDomain = useParams<{ userid: string }>().userid
   const isTypeUid = !Number.isNaN(parseInt(userDomain))
-  const { data: p } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, {
-    variables: {
-      id: isTypeUid ? ~~userDomain : undefined,
-      domain: isTypeUid ? undefined : userDomain
+  const { data: p } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(
+    ProfileDocument,
+    {
+      variables: {
+        id: isTypeUid ? ~~userDomain : undefined,
+        domain: isTypeUid ? undefined : userDomain,
+      },
     }
+  )
+
+  const formSchema = z.object({
+    endpoint: z
+      .string()
+      .email(
+        t('app.settings.export.email.invalidEmail') || 'Invalid email address'
+      )
+      .max(255),
   })
 
-  const [mutate, { loading }] = useExportDataToMutation({
+  type FormValues = z.infer<typeof formSchema>
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      endpoint: p.me.email || '',
+    },
+  })
+
+  const [mutate] = useExportDataToMutation({
     onCompleted() {
       toast.success(t('app.settings.export.success'))
+      reset()
       close()
     },
     onError(err) {
-      toast.error(err.toString())
-    }
+      toast.error(err.message)
+    },
   })
 
-  const formik = useFormik({
-    initialValues: {
-      endpoint: p.me.email,
-    },
-    validationSchema: Yup.object({
-      endpoint: Yup.string().email().max(255),
-    }),
-    onSubmit(vals) {
-      if (!formik.isValid) {
-        return
-      }
-      return mutate({
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const result = await mutate({
         variables: {
           destination: ExportDestination.Mail,
-          args: vals.endpoint!
-        }
-      }).then((d) => {
-        if (d.data) {
-          formik.resetForm()
-        }
-        if (d.errors) {
-          formik.setErrors({ endpoint: d.errors[0].message })
-        }
+          args: data.endpoint,
+        },
       })
+
+      if (result.errors?.length) {
+        throw new Error(result.errors[0].message)
+      }
+    } catch (err) {
+      // Error is already handled by the mutation's onError callback
+      console.error(err)
     }
-  })
+  }
   return (
-    <React.Fragment>
+    <>
       <button
         onClick={open}
-        className="flex flex-col items-center justify-center w-full h-full p-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/80 transition-colors duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+        className="flex h-full w-full flex-col items-center justify-center rounded-lg bg-white p-4 transition-colors duration-200 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none dark:bg-gray-800 dark:hover:bg-gray-700/80 dark:focus:ring-indigo-400 dark:focus:ring-offset-gray-900"
       >
-        <Mail className="w-12 h-12 mb-3 text-blue-600 dark:text-blue-400" />
+        <Mail className="mb-3 h-12 w-12 text-blue-600 dark:text-blue-400" />
         <span className="font-medium text-gray-800 dark:text-gray-200">
           {t('app.settings.export.email.button', 'Email')}
         </span>
@@ -77,41 +103,64 @@ function ExportToMail() {
         onClose={close}
         title={t('app.settings.export.email.title')}
       >
-        <form className='w-full p-4' onSubmit={formik.handleSubmit}>
-          <p className="text-gray-700 dark:text-gray-300 mb-4">{t('app.settings.export.email.tips')}</p>
-          
+        <form className="w-full p-4" onSubmit={handleSubmit(onSubmit)}>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            {t('app.settings.export.email.tips')}
+          </p>
+
           <div className="mb-4">
-            <input
-              placeholder={t('app.settings.export.email.title')}
-              type='email'
-              className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400'
-              {...formik.getFieldProps('endpoint')}
+            <Controller
+              name="endpoint"
+              control={control}
+              render={({ field }) => (
+                <InputField
+                  {...field}
+                  type="email"
+                  placeholder={t('app.settings.export.email.title')}
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-400 dark:focus:ring-blue-400"
+                />
+              )}
             />
-            {formik.errors.endpoint && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{formik.errors.endpoint}</p>
-            )}
           </div>
-          
-          <div className='flex justify-end w-full mt-4'>
+
+          <div className="mt-4 flex w-full justify-end">
             <button
-              type='submit'
-              disabled={loading}
-              className='w-full px-5 py-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed'
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full rounded-lg bg-blue-600 px-5 py-2 font-medium text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none active:scale-95 active:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-70 dark:focus:ring-offset-gray-900"
             >
-              {loading ? (
+              {isSubmitting ? (
                 <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg
+                    className="mr-2 -ml-1 h-4 w-4 animate-spin text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                   {t('app.common.loading', 'Loading...')}
                 </span>
-              ) : t('app.settings.export.email.submit')}
+              ) : (
+                t('app.settings.export.email.submit')
+              )}
             </button>
           </div>
         </form>
       </Modal>
-    </React.Fragment>
+    </>
   )
 }
 

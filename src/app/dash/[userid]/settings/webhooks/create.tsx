@@ -1,12 +1,14 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { useCreateNewWebHookMutation, WebHookStep } from '@/schema/generated'
-import { useRouter } from 'next/navigation'
-import { toast } from 'react-hot-toast'
 import Button from '@/components/button'
+import { useTranslation } from '@/i18n/client'
+import { useCreateNewWebHookMutation, WebHookStep } from '@/schema/generated'
+import InputField from '@annatarhe/lake-ui/form-input-field'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import { z } from 'zod'
 
 type Props = {
   onClose: () => void
@@ -15,65 +17,92 @@ type Props = {
 
 function WebHookCreate({ onClose, isPremium }: Props) {
   const { t } = useTranslation()
-  const [createMutation] = useCreateNewWebHookMutation()
   const router = useRouter()
-  const formik = useFormik({
-    initialValues: {
-      hookUrl: '',
-    },
-    validationSchema: Yup.object({
-      hookUrl: Yup.string().url().max(255),
-    }),
-    async onSubmit(vals) {
-      if (vals.hookUrl.length <= 3 || !formik.isValid) {
-        return
-      }
-      return createMutation({
-        variables: {
-          step: WebHookStep.OnCreateClippings,
-          hookUrl: vals.hookUrl
-        }
-      }).then(() => {
-        toast.success(t('app.common.done'))
-        formik.resetForm()
-        router.refresh()
-        onClose()
-      })
-    }
+  const formSchema = z.object({
+    hookUrl: z
+      .string()
+      .url(t('app.settings.webhook.invalidUrl') || 'Invalid URL')
+      .max(
+        255,
+        t('app.settings.webhook.urlTooLong') ||
+          'URL must be at most 255 characters'
+      ),
   })
 
+  type FormValues = z.infer<typeof formSchema>
+
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isValid, isSubmitting },
+    watch,
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      hookUrl: '',
+    },
+  })
+  const [createMutation] = useCreateNewWebHookMutation({
+    onCompleted() {
+      toast.success(t('app.common.done'))
+      reset()
+      router.refresh()
+      onClose()
+    },
+    onError(err) {
+      toast.error(err.message)
+    },
+  })
+
+  const hookUrl = watch('hookUrl')
+  const isFormValid = isValid && hookUrl.length > 3
+
+  const onSubmit = async (data: FormValues) => {
+    if (!isFormValid) {
+      return
+    }
+
+    createMutation({
+      variables: {
+        step: WebHookStep.OnCreateClippings,
+        hookUrl: data.hookUrl,
+      },
+    })
+  }
+
   return (
-    <form className="w-full p-4" onSubmit={formik.handleSubmit}>
-      <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          <span>{t('app.settings.webhook.title')}</span>
-          <span className="text-red-500 ml-1">*</span>
-        </label>
-        <input
-          type="url"
-          className="w-full px-4 py-2.5 bg-white dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-          placeholder="https://example.com"
-          {...formik.getFieldProps('hookUrl')}
-        />
-        {formik.touched.hookUrl && formik.errors.hookUrl && (
-          <p className="text-sm text-red-500 mt-1">{formik.errors.hookUrl}</p>
+    <form className="w-full p-4" onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name="hookUrl"
+        control={control}
+        render={({ field }) => (
+          <InputField
+            {...field}
+            type="url"
+            label="Hook URL"
+            className="flex w-full items-center"
+            placeholder="https://example.com"
+          />
         )}
-      </div>
-  
-      <div className="flex justify-end gap-4 mt-6">
-        <Button
-          onClick={() => onClose()}
-        >
+      />
+
+      <div className="mt-6 flex justify-end gap-4">
+        <Button type="button" onClick={onClose}>
           {t('app.common.cancel')}
         </Button>
-    
+
         <Tooltip
-          disabled={formik.isValid && isPremium}
-          content={!isPremium ? t('app.payment.webhookRequired') : formik.errors.hookUrl}
+          disabled={isFormValid && isPremium}
+          content={
+            !isPremium
+              ? t('app.payment.webhookRequired')
+              : errors.hookUrl?.message
+          }
         >
           <Button
-            disabled={formik.values.hookUrl.length <= 3 || !formik.isValid || !isPremium}
-            loading={formik.isSubmitting}
+            disabled={!isFormValid || !isPremium}
+            loading={isSubmitting}
             type="submit"
           >
             {t('app.settings.webhook.submit')}
