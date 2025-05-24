@@ -6,6 +6,23 @@
 
 html {
   font-size: 12px;
+  font-display: swap;
+}
+
+html[lang="zh"] {
+  font-family: var(--font-lxgw);
+}
+
+html[lang="ja"] {
+  font-family: var(--font-lxgw);
+}
+
+html[lang="ko"] {
+  font-family: var(--font-lxgw);
+}
+
+html[lang="en"] {
+  font-family: var(--font-lato);
 }
 
 body {

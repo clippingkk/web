@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { FetchClippingQuery } from '../../schema/generated'
-import { Modal, Highlight, useMantineColorScheme } from '@mantine/core'
+import Modal from '@annatarhe/lake-ui/modal'
+import { arrow, FloatingArrow, offset, useFloating } from '@floating-ui/react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import NounEditContent from '../noun/noun-edit'
-import { offset, useFloating, arrow, FloatingArrow } from '@floating-ui/react'
-import NounTooltipCard from './noun-tooltip-card'
 import { useClickOutside } from '../../hooks/dom'
+import { FetchClippingQuery } from '../../schema/generated'
+import NounEditContent from '../noun/noun-edit'
+import NounTooltipCard from './noun-tooltip-card'
 
 type ClippingRichContentProps = {
   isPremium?: boolean
@@ -23,20 +23,25 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
     bookId,
     clippingId,
     isPremium = false,
-    isGrandAdmin = false
+    isGrandAdmin = false,
   } = props
   const { t } = useTranslation()
 
   const nouns = useMemo(() => {
-    const m = new Map<string, FetchClippingQuery['clipping']['richContent']['nouns'][0]>()
-    richContent?.nouns.forEach(n => {
+    const m = new Map<
+      string,
+      FetchClippingQuery['clipping']['richContent']['nouns'][0]
+    >()
+    richContent?.nouns.forEach((n) => {
       m.set(n.noun, n)
     })
     return m
   }, [richContent?.nouns])
 
   const [selectingText, setSelectingText] = useState<string | undefined>()
-  const [editingNoun, setEditingNoun] = useState<{ id: number, noun: string } | undefined>(undefined)
+  const [editingNoun, setEditingNoun] = useState<
+    { id: number; noun: string } | undefined
+  >(undefined)
 
   const onNounAdd = useCallback((noun: string) => {
     setSelectingText(undefined)
@@ -73,7 +78,7 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
     refs.setPositionReference({
       getBoundingClientRect() {
         return box
-      }
+      },
     })
     setSelectingText(newText)
   }, [selectingText])
@@ -90,42 +95,25 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
     }
   }, [selectingText])
 
-  const highlights = useMemo(() => {
-    return richContent?.nouns.map(n => n.noun) ?? []
-  }, [richContent?.nouns])
-
-  const { colorScheme } = useMantineColorScheme()
-
   return (
     <>
-      <div className={className} ref={coRef} >
-        <Highlight
-          inherit
-          onMouseUp={onClippingSelect}
-          highlight={highlights}
-          highlightStyles={{
-            backgroundImage:
-              colorScheme === 'dark' ? 'linear-gradient(45deg, #9e9e9e, rgba(103, 97, 97, 1))' : 'linear-gradient(45deg, #444, #222)',
-            fontWeight: 700,
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-        >
-          {richContent?.plain ?? ''}
-        </Highlight>
+      <div className={className} ref={coRef}>
+        <div onMouseUp={onClippingSelect}>{richContent?.plain ?? ''}</div>
         <div
           ref={refs.setFloating}
           style={{
             ...floatingStyles,
           }}
-          popover='manual'
-          className={'z-50 p-4 rounded-xl relative with-fade-in bg-linear-to-b from-slate-50 to-slate-200 dark:from-slate-900 dark:to-slate-950 isolate shadow-lg overflow-visible m-0'}
+          popover="manual"
+          className={
+            'with-fade-in relative isolate z-50 m-0 overflow-visible rounded-xl bg-linear-to-b from-slate-50 to-slate-200 p-4 shadow-lg dark:from-slate-900 dark:to-slate-950'
+          }
         >
           <FloatingArrow
             ref={arrowRef}
             context={context}
             tipRadius={2}
-            className='fill-slate-50 dark:fill-slate-900'
+            className="fill-slate-50 dark:fill-slate-900"
           />
           <NounTooltipCard
             noun={nouns.get(selectingText ?? '')}
@@ -139,18 +127,13 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
         </div>
       </div>
       <Modal
-        opened={!!editingNoun}
-        centered
-        zIndex={300}
-        overlayProps={{
-          color: 'black',
-          opacity: 0.55,
-          blur: 50,
-        }}
-        size={'xl'}
-        transitionProps={{ transition: 'fade', duration: 150 }}
+        isOpen={!!editingNoun}
         onClose={() => setEditingNoun(undefined)}
-        title={editingNoun?.id === -1 ? t('app.nouns.title.add') : t('app.nouns.title.update')}
+        title={
+          editingNoun?.id === -1
+            ? t('app.nouns.title.add')
+            : t('app.nouns.title.update')
+        }
       >
         {editingNoun ? (
           <NounEditContent

@@ -1,5 +1,4 @@
-import { Switch } from '@mantine/core'
-import React from 'react'
+import Switch from '@annatarhe/lake-ui/form-switch-field'
 
 type SwitcherProps = {
   checked: boolean
@@ -8,17 +7,14 @@ type SwitcherProps = {
   name?: string
 }
 
-function Switcher({
-  checked,
-  onChange,
-  disabled,
-}: SwitcherProps) {
+function Switcher({ checked, onChange, disabled }: SwitcherProps) {
   return (
     <Switch
       // label={name}
-      checked={checked}
+      label={null}
+      value={checked}
       disabled={disabled}
-      onChange={e => onChange(e.currentTarget.checked)}
+      onChange={(e) => onChange(e)}
     />
   )
 }

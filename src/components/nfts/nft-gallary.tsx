@@ -1,5 +1,4 @@
-import { Title } from '@mantine/core'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { NftItem, useFetchMyNfTsQuery } from '../../schema/generated'
 import NFTGallaryItem from './nft-gallary-item'
 
@@ -13,35 +12,31 @@ type NFTGallaryProps = {
 function NFTGallary(props: NFTGallaryProps) {
   const { data, loading } = useFetchMyNfTsQuery({
     variables: {
-      uid: props.uid
-    }
+      uid: props.uid,
+    },
   })
 
   const nftList = useMemo(() => {
     const ls = data?.me.nfts.edges ?? []
-    return ls.filter(x => x.contractType === 'ERC721')
+    return ls.filter((x) => x.contractType === 'ERC721')
   }, [data?.me.nfts.edges])
 
   if (loading) {
-    return (
-      <span>loading NFTs...</span>
-    )
+    return <span>loading NFTs...</span>
   }
 
   if (!loading && nftList.length === 0) {
     return (
-      <Title order={6}>Sorry, You have no NFT for now. maybe try it later</Title>
+      <h6 className="text-center">
+        Sorry, You have no NFT for now. maybe try it later
+      </h6>
     )
   }
 
   return (
-    <div className=' w-144 grid grid-cols-2'>
-      {nftList.map(x => (
-        <NFTGallaryItem
-          data={x}
-          key={x.tokenID}
-          onClick={props.onPick}
-        />
+    <div className="grid w-144 grid-cols-2">
+      {nftList.map((x) => (
+        <NFTGallaryItem data={x} key={x.tokenID} onClick={props.onPick} />
       ))}
     </div>
   )

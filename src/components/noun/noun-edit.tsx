@@ -1,12 +1,20 @@
-import React, { useEffect } from 'react'
-import { Form, useForm, zodResolver } from '@mantine/form'
-import { NounScope, useCreateNounMutationMutation, useFetchNounQuery, useUpdateNounMutationMutation } from '../../schema/generated'
-import { z } from 'zod'
-import { Button, Divider, Fieldset, NumberInput, Select, TextInput, Textarea } from '@mantine/core'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
+import InputField from '@annatarhe/lake-ui/form-input-field'
+import SelectField from '@annatarhe/lake-ui/form-select-field'
+import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader } from 'lucide-react'
+import { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { z } from 'zod'
+import {
+  NounScope,
+  useCreateNounMutationMutation,
+  useFetchNounQuery,
+  useUpdateNounMutationMutation,
+} from '../../schema/generated'
 import { toastPromiseDefaultOption } from '../../services/misc'
-import LoadingIcon from '../icons/loading.svg'
 
 type NounEditContentProps = {
   id: -1 | number
@@ -20,45 +28,47 @@ type NounEditContentProps = {
 
 const schema = z.object({
   id: z.number().optional(),
-  noun: z.string().max(100).readonly(),
+  noun: z.string().max(100),
   content: z.string().max(10000),
   bookId: z.string().optional().nullable(),
   clippingId: z.number().optional().nullable(),
   scope: z.enum(['all', 'book', 'clipping', 'forbid']),
 })
 
-type formType = z.infer<typeof schema>
+type FormValues = z.infer<typeof schema>
 
 // TODO: support BookId and ClippingID editing
 function NounEditContent(props: NounEditContentProps) {
-  const { id, noun, isGrandAdmin, isPremium, onClose } = props
+  const { id, noun, onClose } = props
+  const { t } = useTranslation()
 
-  const [createNoun, { loading: createLoading }] = useCreateNounMutationMutation({
-    onCompleted: () => {
-      onClose()
-    }
-  })
-  const [updateNoun, { loading: updateLoading }] = useUpdateNounMutationMutation({
-    onCompleted: () => {
-      onClose()
-    }
-  })
+  const [createNoun, { loading: createLoading }] =
+    useCreateNounMutationMutation({
+      onCompleted: () => {
+        onClose()
+      },
+    })
+  const [updateNoun, { loading: updateLoading }] =
+    useUpdateNounMutationMutation({
+      onCompleted: () => {
+        onClose()
+      },
+    })
 
-  const f = useForm<formType>({
-    validate: zodResolver(schema),
-    initialValues: {
+  const { control, handleSubmit, setValue, reset } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: {
       id,
       noun,
       scope: NounScope.All,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any
+    },
   })
 
   const { data: fetchedNoun, loading } = useFetchNounQuery({
     variables: {
-      id
+      id,
     },
-    skip: id < 0
+    skip: id < 0,
   })
 
   useEffect(() => {
@@ -66,21 +76,47 @@ function NounEditContent(props: NounEditContentProps) {
       return
     }
     const n = fetchedNoun.noun
-    f.setValues({
-      noun: n.noun,
-      content: n.content,
-      bookId: n.bookId,
-      scope: NounScope.All,
-    })
-  }, [fetchedNoun])
+    setValue('noun', n.noun)
+    setValue('content', n.content)
+    setValue('bookId', n.bookId)
+    setValue('scope', NounScope.All)
+  }, [fetchedNoun, setValue])
 
   useEffect(() => {
     return () => {
-      f.reset()
+      reset()
     }
-  }, [])
+  }, [reset])
 
-  const [t] = useTranslation()
+  const onSubmit = handleSubmit((data) => {
+    if (id === -1) {
+      toast.promise(
+        createNoun({
+          variables: {
+            input: {
+              noun: data.noun!,
+              content: data.content,
+              scope: data.scope as NounScope,
+            },
+          },
+        }),
+        toastPromiseDefaultOption
+      )
+    } else {
+      toast.promise(
+        updateNoun({
+          variables: {
+            id,
+            input: {
+              content: data.content,
+              scope: data.scope as NounScope,
+            },
+          },
+        }),
+        toastPromiseDefaultOption
+      )
+    }
+  })
 
   if (!id) {
     return null
@@ -88,101 +124,107 @@ function NounEditContent(props: NounEditContentProps) {
 
   if (id > 0 && loading) {
     return (
-      <div className='min-h-60 flex items-center justify-center'>
-        <LoadingIcon />
+      <div className="flex min-h-60 items-center justify-center">
+        <Loader className="h-8 w-8 animate-spin text-[#045fab]" />
       </div>
     )
   }
 
   return (
-    <div>
-      <Form form={f}>
-        <Fieldset legend={t('app.nouns.form.id.fieldset')}>
-          <NumberInput
-            name='id'
-            label={t('app.nouns.form.id.label')}
-            disabled
-            {...f.getInputProps('id')} />
-        </Fieldset>
-        <Fieldset legend={t('app.nouns.form.noun.fieldset')} className='gap-4 flex flex-col'>
-          <Select
-            name='scope'
-            label={t('app.nouns.form.scope.label')}
-            data={[
-              { value: 'all', label: t('app.nouns.form.scope.data.all') },
-              { value: 'book', label: t('app.nouns.form.scope.data.book'), disabled: !isPremium },
-              { value: 'clipping', label: t('app.nouns.form.scope.data.clipping'), disabled: !isPremium },
-              { value: 'forbid', label: t('app.nouns.form.scope.data.forbid'), disabled: !isGrandAdmin },
-            ]}
-            {...f.getInputProps('scope')}
-          />
-          <TextInput
-            name='noun'
-            label={t('app.nouns.form.noun.label')}
-            placeholder={t('app.nouns.form.noun.placeholder')}
-            disabled
-            {...f.getInputProps('noun')}
-          />
-          <Textarea
-            label={t('app.nouns.form.content.label')}
-            name='content'
-            cols={8}
-            rows={10}
-            placeholder={t('app.nouns.form.content.placeholder')}
-            {...f.getInputProps('content')}
-          />
-        </Fieldset>
-        <Divider className='my-8' />
-        <div className='flex justify-end gap-4'>
-          <Button
-            variant='outline'
+    <div className="w-full">
+      <form onSubmit={onSubmit}>
+        <Controller
+          name="id"
+          control={control}
+          disabled
+          render={({ field }) => (
+            <InputField
+              {...field}
+              type="number"
+              label={t('app.nouns.form.id.label')}
+              disabled
+            />
+          )}
+        />
+
+        <Controller
+          name="scope"
+          control={control}
+          render={({ field }) => (
+            <SelectField
+              {...field}
+              label={t('app.nouns.form.scope.label')}
+              options={[
+                { value: 'all', label: t('app.nouns.form.scope.data.all') },
+                { value: 'book', label: t('app.nouns.form.scope.data.book') },
+                {
+                  value: 'clipping',
+                  label: t('app.nouns.form.scope.data.clipping'),
+                },
+                {
+                  value: 'forbid',
+                  label: t('app.nouns.form.scope.data.forbid'),
+                },
+              ]}
+            />
+          )}
+        />
+
+        <Controller
+          name="noun"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              label={t('app.nouns.form.noun.label')}
+              disabled
+            />
+          )}
+        />
+
+        <Controller
+          name="content"
+          control={control}
+          render={({ field }) => (
+            <TextareaField
+              {...field}
+              rows={10}
+              label={t('app.nouns.form.content.label')}
+              placeholder={t('app.nouns.form.content.placeholder')}
+            />
+          )}
+        />
+
+        <div className="my-8 border-t border-gray-300/20 dark:border-gray-700/30" />
+
+        <div className="flex justify-end gap-4">
+          <button
+            type="button"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
             onClick={() => {
               onClose()
-              f.reset()
+              reset()
             }}
           >
             {t('app.nouns.form.cancel')}
-          </Button>
+          </button>
 
-          <Button
-            loading={createLoading || updateLoading}
-            onClick={() => {
-              if (f.validate().hasErrors) {
-                return
-              }
-              if (id === -1) {
-                toast.promise(
-                  createNoun({
-                    variables: {
-                      input: {
-                        noun: f.values.noun!,
-                        content: f.values.content,
-                        scope: f.values.scope as NounScope
-                      }
-                    }
-                  }),
-                  toastPromiseDefaultOption
-                )
-              } else {
-                toast.promise(
-                  updateNoun({
-                    variables: {
-                      id,
-                      input: {
-                        content: f.values.content,
-                        scope: f.values.scope as NounScope
-                      }
-                    }
-                  }),
-                  toastPromiseDefaultOption
-                )
-              }
-            }}
+          <button
+            type="submit"
+            disabled={createLoading || updateLoading}
+            className="rounded-md bg-[#045fab] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:opacity-70"
           >
-            {t('app.nouns.form.submit')}
-          </Button>
+            {createLoading || updateLoading ? (
+              <span className="flex items-center gap-2">
+                <Loader className="h-4 w-4 animate-spin" />
+                {t('app.nouns.form.submitting')}
+              </span>
+            ) : (
+              t('app.nouns.form.submit')
+            )}
+          </button>
         </div>
-      </Form>
+      </form>
     </div>
   )
 }

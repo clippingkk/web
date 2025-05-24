@@ -1,10 +1,10 @@
 'use client'
-import React, { useCallback, useMemo, useState } from 'react'
-import { FetchClippingQuery } from '../../schema/generated'
-import { Modal } from '@mantine/core'
-import ContentSegment from './content-segment'
+import Modal from '@annatarhe/lake-ui/modal'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FetchClippingQuery } from '../../schema/generated'
 import NounEditContent from '../noun/noun-edit'
+import ContentSegment from './content-segment'
 
 type ClippingRichContentProps = {
   isPremium?: boolean
@@ -22,19 +22,24 @@ function ClippingRichContent(props: ClippingRichContentProps) {
     bookId,
     clippingId,
     isPremium = false,
-    isGrandAdmin = false
+    isGrandAdmin = false,
   } = props
   const { t } = useTranslation()
 
   const nouns = useMemo(() => {
-    const m = new Map<string, FetchClippingQuery['clipping']['richContent']['nouns'][0]>()
-    richContent?.nouns.forEach(n => {
+    const m = new Map<
+      string,
+      FetchClippingQuery['clipping']['richContent']['nouns'][0]
+    >()
+    richContent?.nouns.forEach((n) => {
       m.set(n.noun, n)
     })
     return m
   }, [richContent?.nouns])
 
-  const [editingNoun, setEditingNoun] = useState<{ id: number, noun: string } | undefined>(undefined)
+  const [editingNoun, setEditingNoun] = useState<
+    { id: number; noun: string } | undefined
+  >(undefined)
 
   const onNounAdd = useCallback((noun: string) => {
     setEditingNoun({ id: -1, noun })
@@ -61,18 +66,13 @@ function ClippingRichContent(props: ClippingRichContentProps) {
         ))}
       </div>
       <Modal
-        opened={!!editingNoun}
-        centered
-        zIndex={300}
-        overlayProps={{
-          color: 'black',
-          opacity: 0.55,
-          blur: 50,
-        }}
-        size={'xl'}
-        transitionProps={{ transition: 'fade', duration: 150 }}
+        isOpen={!!editingNoun}
         onClose={() => setEditingNoun(undefined)}
-        title={editingNoun?.id === -1 ? t('app.nouns.title.add') : t('app.nouns.title.update')}
+        title={
+          editingNoun?.id === -1
+            ? t('app.nouns.title.add')
+            : t('app.nouns.title.update')
+        }
       >
         {editingNoun ? (
           <NounEditContent

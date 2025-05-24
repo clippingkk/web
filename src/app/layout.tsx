@@ -1,41 +1,42 @@
-import '../styles/devices.min.css'
 import 'react-phone-input-2/lib/style.css'
+import '../styles/devices.min.css'
 // import 'emoji-mart/css/emoji-mart.css'
-import '../styles/react-animation.css'
-import '../styles/global.css'
-import '../styles/effect-glow.css'
-import '../styles/tailwind.css'
 import '../styles/cmdk-raycast.css'
+import '../styles/effect-glow.css'
+import '../styles/global.css'
+import '../styles/react-animation.css'
+import '../styles/tailwind.css'
 
-import '@mantine/core/styles.css'
 import '@mantine/code-highlight/styles.css'
+import '@mantine/core/styles.css'
 // next.js not allow to use modern css. just remove it when next.js support it
 // import '@annatarhe/lake-ui/style.css'
 
-import '../prefers-dark'
-import '../utils/settings'
-import '../utils/locales'
-import { Toaster } from 'react-hot-toast'
-import React from 'react'
-import { CDN_DEFAULT_DOMAIN } from '../constants/config'
-import ClientOnlyProviders from './providers'
-import { Metadata } from 'next'
-import Script from 'next/script'
-import { metadata as indexPageMetadata } from '../components/og/og-with-index'
-import { Lato } from 'next/font/google'
+import GlobalUpload from '@/components/uploads/global'
+import { STORAGE_LANG_KEY } from '@/constants/storage'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { theme } from '../styles/mantine'
-import { colorSchemeManager } from '../hooks/theme'
+import { Metadata } from 'next'
+import { Lato } from 'next/font/google'
 import { cookies } from 'next/headers'
-import GlobalUpload from '@/components/uploads/global'
+import Script from 'next/script'
+import React from 'react'
+import { Toaster } from 'react-hot-toast'
+import { metadata as indexPageMetadata } from '../components/og/og-with-index'
+import { CDN_DEFAULT_DOMAIN } from '../constants/config'
+import { colorSchemeManager } from '../hooks/theme'
+import '../prefers-dark'
+import { theme } from '../styles/mantine'
+import '../utils/locales'
+import '../utils/settings'
+import ClientOnlyProviders from './providers'
 // import localFont from 'next/font/local'
 
 const lato = Lato({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-lato',
-  weight: ['100', '300', '400', '700', '900']
+  weight: ['100', '300', '400', '700', '900'],
 })
 
 // const lxgw = localFont({
@@ -54,7 +55,6 @@ const lato = Lato({
 //   fallback: ['Helvetica']
 // })
 
-
 const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 type LayoutProps = {
   children: React.ReactElement
@@ -62,7 +62,10 @@ type LayoutProps = {
 
 export const viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'rgba(33, 150, 243, 0.9)' },
+    {
+      media: '(prefers-color-scheme: light)',
+      color: 'rgba(33, 150, 243, 0.9)',
+    },
     { media: '(prefers-color-scheme: dark)', color: 'rgba(30, 34, 31, 0.9)' },
   ],
 }
@@ -97,50 +100,48 @@ export const metadata: Metadata = {
   },
 }
 
-// maybe try: https://github.com/vercel/next.js/issues/48356
-// TODO:
-
-// <link href="https://cdn.annatarhe.com" rel='preconnect' crossOrigin='use-credentials' />
-// <link href="https://ck-cdn.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
-// <link href="https://clippingkk-api.annatarhe.com" rel='preconnect' crossOrigin='use-credentials' />
-// <link href="https://wenqu.annatarhe.cn" rel='preconnect' crossOrigin='use-credentials' />
-// <link href="https://bam.nr-data.net" rel="preconnect" crossOrigin='use-credentials' />
-// ReactDOM.preconnect('https://cdn.annatarhe.com', { crossOrigin: 'use-credentials' })
-
 async function Layout(props: LayoutProps) {
   const cs = await cookies()
   const token = cs.get('token')?.value
   const uid = cs.get('uid')?.value
+  const defaultLng = cs.get(STORAGE_LANG_KEY)?.value ?? 'en'
 
   // const loggedInfo = (uid && token) ? await cloakSSROnlySecret(JSON.stringify({ uid: ~~uid, token }), RSC_LOGGED_INFO_KEY) : '{}'
 
   return (
     <html
       className={`${lato.variable}`}
-      style={{
-        '--font-lxgw': 'LxgwWenKai',
-      } as React.CSSProperties}
+      lang={defaultLng}
+      style={
+        {
+          '--font-lxgw': 'LxgwWenKai',
+        } as React.CSSProperties
+      }
     >
       <head>
         <ColorSchemeScript />
       </head>
-      <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}' />
+      <Script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
+      />
       <body>
         <MantineProvider theme={theme} colorSchemeManager={colorSchemeManager}>
-          <ClientOnlyProviders loggedInfo={{ token, uid: uid ? ~~uid : undefined }}>
+          <ClientOnlyProviders
+            loggedInfo={{ token, uid: uid ? ~~uid : undefined }}
+          >
             <>
               {props.children}
               <div id="dialog"></div>
               <div id="toast"></div>
-              <div id='searchbar' className='raycast'></div>
+              <div id="searchbar" className="raycast"></div>
               <GlobalUpload uid={uid ? ~~uid : undefined} />
-              <Toaster
-                position='top-center'
-              />
+              <Toaster position="top-center" />
               <ReactQueryDevtools initialIsOpen={false} />
-              <div data-id='modal' />
-              <div data-st-role='modal' />
-              <div data-st-role='tooltip' />
+              <div data-id="modal" />
+              <div data-st-role="modal" />
+              <div data-st-role="tooltip" />
             </>
           </ClientOnlyProviders>
         </MantineProvider>

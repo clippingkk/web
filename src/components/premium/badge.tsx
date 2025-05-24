@@ -1,15 +1,19 @@
-import { Badge } from '@mantine/core'
-import React from 'react'
+'use client'
+import { useTranslation } from '@/i18n/client'
 
-function PremiumBadge() {
+interface PremiumBadgeProps {
+  className?: string
+}
+
+function PremiumBadge({ className = '' }: PremiumBadgeProps) {
+  const { t } = useTranslation()
+
   return (
-    <Badge
-      variant="gradient"
-      gradient={{ from: 'indigo', to: 'cyan' }}
-      className='ml-2'
+    <span
+      className={`ml-2 inline-block rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 px-2 py-1 text-xs font-medium text-white ${className}`}
     >
-      Premium
-    </Badge>
+      {t('common.premium')}
+    </span>
   )
 }
 

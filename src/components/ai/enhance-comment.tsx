@@ -1,9 +1,10 @@
-import { Button, LoadingOverlay, Modal } from '@mantine/core'
-import { useAiEnhanceCommentMutation } from '../../schema/generated'
-import React, { useCallback, useState } from 'react'
-import MarkdownPreview from '../markdown-editor/md-preview'
+import Modal from '@annatarhe/lake-ui/modal'
+import { Loader2 } from 'lucide-react'
+import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { useAiEnhanceCommentMutation } from '../../schema/generated'
+import MarkdownPreview from '../markdown-editor/md-preview'
 
 type AICommentEnhancerProps = {
   bookName?: string
@@ -31,76 +32,80 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
     onCompleted() {
       toast.success('Got an AI improved comment!')
       setOpened(true)
-    }
+    },
   })
 
-  const onEnhance = useCallback((promptId: Prompts) => {
-    return doEnhance({
-      variables: {
-        promptId: promptId,
-        bookName: props.bookName,
-        clippingId: props.clippingId,
-        content: props.comment,
-      }
-    })
-  }, [doEnhance, props.bookName, props.clippingId, props.comment])
+  const onEnhance = useCallback(
+    (promptId: Prompts) => {
+      return doEnhance({
+        variables: {
+          promptId: promptId,
+          bookName: props.bookName,
+          clippingId: props.clippingId,
+          content: props.comment,
+        },
+      })
+    },
+    [doEnhance, props.bookName, props.clippingId, props.comment]
+  )
 
   return (
     <>
-      <Button.Group className='gap-2'>
-        <Button
-          variant="gradient"
-          className='bg-linear-to-r from-gray-500 to-pink-400'
-          loading={loading}
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          disabled={loading}
+          className="flex items-center justify-center rounded bg-gradient-to-r from-gray-500 to-pink-400 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
           onClick={() => onEnhance(Prompts.Professional)}
         >
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {t('app.ai.professionalize')}
-        </Button>
-        <Button
-          variant="gradient"
-          className='bg-linear-to-r from-pink-400 to-green-500'
-          loading={loading}
+        </button>
+        <button
+          type="button"
+          disabled={loading}
+          className="flex items-center justify-center rounded bg-gradient-to-r from-pink-400 to-green-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
           onClick={() => onEnhance(Prompts.Deeper)}
         >
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {t('app.ai.deeplize')}
-        </Button>
-        <Button
-          variant="gradient"
-          className='bg-linear-to-r from-green-500 to-sky-400'
-          loading={loading}
+        </button>
+        <button
+          type="button"
+          disabled={loading}
+          className="flex items-center justify-center rounded bg-gradient-to-r from-green-500 to-sky-400 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
           onClick={() => onEnhance(Prompts.Intriguing)}
         >
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Make it more intriguing
-        </Button>
-      </Button.Group>
+        </button>
+      </div>
       <Modal
-        opened={opened || loading}
+        isOpen={opened || loading}
         onClose={() => setOpened(false)}
         title="Enhanced Comment"
-        size="lg"
-        centered>
-        <LoadingOverlay
-          visible={loading}
-        />
+      >
         <MarkdownPreview
           value={data?.aiEnhanceComment.content ?? '## Loading'}
         />
-        <div className='flex justify-end w-full '>
-          <Button
+        <div className="flex w-full justify-end">
+          <button
+            type="button"
             onClick={() => setOpened(false)}
-            className='bg-gray-300 text-black mr-4'
+            className="mr-4 rounded bg-gray-300 px-4 py-2 font-medium text-black transition-colors hover:bg-gray-400"
           >
             {t('app.common.cancel')}
-          </Button>
-          <Button
-            variant='gradient'
-            className='bg-linear-to-br from-green-300 to-pink-400 text-black'
+          </button>
+          <button
+            type="button"
+            className="rounded bg-gradient-to-br from-green-300 to-pink-400 px-4 py-2 font-medium text-black transition-opacity hover:opacity-90"
             onClick={() => {
               setOpened(false)
               props.onAccept(data?.aiEnhanceComment.content ?? '')
-            }}>
+            }}
+          >
             {t('app.common.accept')}
-          </Button>
+          </button>
         </div>
       </Modal>
     </>

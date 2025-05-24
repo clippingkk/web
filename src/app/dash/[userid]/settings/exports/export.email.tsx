@@ -1,102 +1,113 @@
-import Image from 'next/image'
-import { useFormik } from 'formik'
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-hot-toast'
-import * as Yup from 'yup'
 import BrandNotionLogo from '@/assets/brand-notion.svg'
-import FieldInput from '../../../../../components/input'
-import { Button, Modal } from '@mantine/core'
-import { ExportDestination, useExportDataToMutation } from '../../../../../schema/generated'
+import { useTranslation } from '@/i18n/client'
+import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
+import InputField from '@annatarhe/lake-ui/form-input-field'
+import Modal from '@annatarhe/lake-ui/modal'
+import { zodResolver } from '@hookform/resolvers/zod'
+import Image from 'next/image'
+import React, { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import { z } from 'zod'
 
 function ExportToEmail() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
   const [mutate] = useExportDataToMutation({})
-  const formik = useFormik({
-    initialValues: {
+
+  // Define validation schema with Zod
+  const validationSchema = z.object({
+    notionToken: z
+      .string()
+      .min(5, t('validation.min', { count: 5 }))
+      .max(255, t('validation.max', { count: 255 })),
+    notionPageId: z
+      .string()
+      .min(5, t('validation.min', { count: 5 }))
+      .max(255, t('validation.max', { count: 255 })),
+  })
+
+  // Define form type
+  type FormValues = z.infer<typeof validationSchema>
+
+  const { control, handleSubmit, reset } = useForm<FormValues>({
+    resolver: zodResolver(validationSchema),
+    defaultValues: {
       notionToken: '',
-      notionPageId: ''
+      notionPageId: '',
     },
-    validationSchema: Yup.object({
-      notionToken: Yup.string().min(5).max(255),
-      notionPageId: Yup.string().min(5).max(255),
-    }),
-    onSubmit(vals) {
-      // validate
-      if (!formik.isValid || vals.notionPageId.length < 5 || vals.notionToken.length < 5) {
-        return
-      }
-      mutate({
-        variables: {
-          destination: ExportDestination.Notion,
-          args: `${vals.notionToken}|${vals.notionPageId}`
-        }
-      }).then(() => {
+  })
+
+  const onSubmit = (values: FormValues) => {
+    mutate({
+      variables: {
+        destination: ExportDestination.Notion,
+        args: `${values.notionToken}|${values.notionPageId}`,
+      },
+    })
+      .then(() => {
         toast.success(t('app.settings.export.success'))
-        formik.resetForm()
+        reset()
         setVisible(false)
-      }).catch(e => {
+      })
+      .catch((e) => {
         toast.error(e.toString())
       })
-    }
-  })
+  }
   return (
     <React.Fragment>
-      <Button
-        variant="gradient"
-        className='bg-linear-to-br from-indigo-400 to-cyan-500'
+      <button
+        type="button"
+        className="rounded-md bg-gradient-to-br from-indigo-400 to-cyan-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
         onClick={() => setVisible(true)}
-        size='lg'
       >
         <Image
           src={BrandNotionLogo}
           width={BrandNotionLogo.width}
           height={BrandNotionLogo.height}
-          className='py-4 px-4'
-          alt='notion'
+          className="px-4 py-4"
+          alt="notion"
         />
-      </Button>
+      </button>
       <Modal
-        opened={visible}
-        centered
-        size='xl'
+        isOpen={visible}
         onClose={() => setVisible(false)}
-        overlayProps={{ opacity: 0.55, blur: 8 }}
         title={t('app.settings.export.notion.title')}
       >
-        <div className='w-full'>
+        <div className="w-full">
           <iframe
             src="//player.bilibili.com/player.html?aid=503430935&bvid=BV1Tg411G7gG&cid=349347987&page=1"
             scrolling="no"
-            allow='fullscreen'
-            className='border-0 w-144 max-h-96 m-auto hidden lg:block'
-            height='768px'
-            width='1024px'
+            allow="fullscreen"
+            className="m-auto hidden max-h-96 w-144 border-0 lg:block"
+            height="768px"
+            width="1024px"
           />
-          <form className='w-full flex flex-col justify-center items-center' onSubmit={formik.handleSubmit}>
-            <FieldInput
-              name='notionToken'
-              value={formik.values.notionToken}
-              error={formik.errors.notionToken}
-              onChange={formik.handleChange}
+          <form
+            className="flex w-full flex-col items-center justify-center"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Controller
+              name="notionToken"
+              control={control}
+              render={({ field }) => (
+                <InputField {...field} name="notionToken" />
+              )}
             />
-            <FieldInput
-              name='notionPageId'
-              value={formik.values.notionPageId}
-              error={formik.errors.notionPageId}
-              onChange={formik.handleChange}
+            <Controller
+              name="notionPageId"
+              control={control}
+              render={({ field }) => (
+                <InputField {...field} name="notionPageId" />
+              )}
             />
-            <div
-              className='w-full text-right'
-            >
-              <Button
-                variant="gradient"
-                className='bg-linear-to-br from-indigo-400 to-cyan-500'
-                type='submit'
+            <div className="w-full text-right">
+              <button
+                type="submit"
+                className="rounded-md bg-gradient-to-br from-indigo-400 to-cyan-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
               >
                 {t('app.settings.export.notion.submit')}
-              </Button>
+              </button>
             </div>
           </form>
         </div>

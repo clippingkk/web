@@ -1,26 +1,33 @@
-import { Avatar, AvatarProps } from '@mantine/core'
 import clsx from 'classnames'
-import React from 'react'
+import Image from 'next/image'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 
 type AvatarOnNavigationBarProps = {
   avatarUrl?: string
-  size?: AvatarProps['size']
+  size?: number
   isPremium: boolean
 }
 
 function AvatarOnNavigationBar(props: AvatarOnNavigationBarProps) {
   const { avatarUrl, size, isPremium } = props
 
-  const avatar = avatarUrl?.startsWith('http') ? avatarUrl : `${CDN_DEFAULT_DOMAIN}/${avatarUrl}`
+  const avatar = avatarUrl?.startsWith('http')
+    ? avatarUrl
+    : `${CDN_DEFAULT_DOMAIN}/${avatarUrl}`
 
   return (
     <div
-      className={clsx(isPremium && 'px-1 py-1 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400')}>
-      <Avatar
+      className={clsx(
+        isPremium &&
+          'rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 px-1 py-1'
+      )}
+    >
+      <Image
         src={avatar}
-        size={size}
-        radius={'xl'}
+        width={size}
+        height={size}
+        alt="avatar"
+        className="rounded-full"
       />
     </div>
   )
