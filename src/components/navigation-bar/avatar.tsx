@@ -9,7 +9,7 @@ type AvatarOnNavigationBarProps = {
 }
 
 function AvatarOnNavigationBar(props: AvatarOnNavigationBarProps) {
-  const { avatarUrl, size, isPremium } = props
+  const { avatarUrl, size = 24, isPremium } = props
 
   const avatar = avatarUrl?.startsWith('http')
     ? avatarUrl

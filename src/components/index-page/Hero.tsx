@@ -16,15 +16,15 @@ async function Hero(props: HeroProps) {
 
   return (
     <div
-      className={'relative h-screen w-full overflow-hidden bg-slate-900'}
+      className="relative h-screen w-full overflow-hidden bg-gradient-to-b from-blue-200 to-indigo-200 dark:from-slate-900 dark:to-slate-950"
       style={{
         maxWidth: '100vw',
       }}
     >
       {/* Background layers */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-slate-950 to-slate-900">
+      <div className="absolute inset-0 z-0">
         <PureImages lightingColor={'rgb(2, 6, 23)'} />
-        <div className="absolute inset-0 bg-black opacity-60"></div>
+        <div className="absolute inset-0 bg-blue-50/70 backdrop-blur-sm dark:bg-black/60"></div>
         {/* Client-side moving lights */}
         <div className="absolute inset-0">
           <MovingLightsBackground />
@@ -37,7 +37,7 @@ async function Hero(props: HeroProps) {
           <div className="flex flex-col items-center text-center">
             {/* Main heading with enhanced gradient and size */}
             <h1
-              className="font-lato relative m-0 mb-4 bg-gradient-to-r from-orange-300 via-pink-400 to-sky-400 bg-clip-text text-8xl font-black tracking-tight text-transparent md:text-9xl"
+              className="font-lato relative m-0 mb-4 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 bg-clip-text text-8xl font-black tracking-tight text-transparent md:text-9xl dark:from-blue-300 dark:via-indigo-400 dark:to-violet-400"
               style={{
                 height: 128,
               }}
@@ -46,7 +46,7 @@ async function Hero(props: HeroProps) {
             </h1>
 
             {/* Slogan with enhanced style */}
-            <h2 className="font-lato mt-2 mb-10 bg-gradient-to-r from-green-300 via-blue-400 to-indigo-500 bg-clip-text text-3xl leading-relaxed font-bold tracking-wide text-transparent md:text-5xl">
+            <h2 className="font-lato mt-2 mb-10 bg-gradient-to-r from-sky-500 via-blue-500 to-violet-500 bg-clip-text text-3xl leading-relaxed font-bold tracking-wide text-transparent md:text-5xl dark:from-blue-300 dark:via-indigo-400 dark:to-violet-400">
               {t('app.slogan')}
             </h2>
 
@@ -90,7 +90,7 @@ async function Hero(props: HeroProps) {
             <a
               href="https://www.bilibili.com/video/BV1Nb41187Lo"
               target="_blank"
-              className="mt-4 flex items-center gap-1 text-sm text-gray-300 transition-colors duration-200 hover:text-white hover:underline"
+              className="mt-4 flex items-center gap-1 text-sm text-indigo-600 transition-colors duration-200 hover:text-blue-700 hover:underline dark:text-slate-300 dark:hover:text-white"
               referrerPolicy="no-referrer"
             >
               {t('How to use?')}
