@@ -50,33 +50,41 @@ async function Hero(props: HeroProps) {
               {t('app.slogan')}
             </h2>
 
-            {/* Call to action buttons with enhanced styling */}
-            <div className="my-10 flex flex-col items-center justify-center gap-6 md:flex-row">
+            {/* Primary Call to Action - Go button with enhanced fancy effects */}
+            <div className="my-10 flex items-center justify-center">
               <Link
                 href={myUid ? `/dash/${myUid}/home` : '/auth/auth-v4'}
-                className="group relative z-10 scale-105 overflow-hidden rounded-lg bg-gradient-to-br from-pink-500 to-purple-600 px-10 py-5 text-2xl font-bold text-white shadow-lg shadow-purple-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/40 active:scale-95"
+                className="group relative z-10 scale-110 overflow-hidden rounded-2xl bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700 px-14 py-6 text-3xl font-black text-white shadow-2xl shadow-purple-500/40 transition-all duration-500 hover:-translate-y-2 hover:scale-105 hover:shadow-[0_0_30px_5px] hover:shadow-purple-500/50 active:scale-95 active:shadow-inner"
               >
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="relative z-10 flex items-center gap-3">
                   <span>{t('app.go')}</span>
-                  <ChevronRightIcon className="h-6 w-6 transition-transform group-hover:translate-x-1" />
+                  <ChevronRightIcon className="h-7 w-7 transition-transform duration-300 group-hover:translate-x-2" />
                 </span>
-                <span className="absolute inset-0 z-0 bg-gradient-to-r from-fuchsia-600 to-purple-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                {/* Fancy hover effects */}
+                <span className="absolute inset-0 z-0 bg-gradient-to-r from-fuchsia-600 via-purple-700 to-indigo-600 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+                {/* Glow effect */}
+                <span className="absolute -inset-1 z-0 scale-[1.15] rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 opacity-0 blur-xl transition-all duration-500 group-hover:opacity-70"></span>
+                {/* Shine effect */}
+                <span className="absolute inset-0 z-0 translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 transition-transform duration-1000 group-hover:translate-x-[-300%]"></span>
               </Link>
+            </div>
 
-              {AppFeatures.enablePremiumPayment && (
+            {/* Secondary section for premium payment - lighter design */}
+            {AppFeatures.enablePremiumPayment && (
+              <div className="mt-4 mb-8">
                 <Link
                   href="/pricing"
-                  className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 px-8 py-4 text-xl font-medium text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/30 active:scale-95"
+                  className="group relative block overflow-hidden rounded-lg bg-gradient-to-br from-cyan-500/80 to-blue-600/80 px-6 py-3 text-lg font-medium text-white/90 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:text-white hover:shadow-lg hover:shadow-cyan-500/20 active:scale-98"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     <span className="mr-1">✨</span>
                     <span>{t('app.plan.premium.name')}</span>
-                    <ChevronRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    <ChevronRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
-                  <span className="absolute inset-0 z-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                  <span className="absolute inset-0 z-0 h-full w-full bg-gradient-to-r from-blue-500/40 to-cyan-500/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
                 </Link>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* How to use link with subtle styling */}
             <a

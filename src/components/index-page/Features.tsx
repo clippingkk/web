@@ -1,10 +1,10 @@
-import React from 'react'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
-import FeaturesOpen from './Features-Open'
-import FeatureWidget from './Feature-Widget'
+import React from 'react'
 import FeatureModern from './Feature-Modern'
-import FeatureSense from './Feature-Sense'
 import FeatureReborn from './Feature-Reborn'
+import FeatureSense from './Feature-Sense'
+import FeatureWidget from './Feature-Widget'
+import FeaturesOpen from './Features-Open'
 
 type featureColorPattern = {
   title: string[]
@@ -19,7 +19,7 @@ const colorPatterns: featureColorPattern[] = [
       'to-blue-500',
       'bg-clip-text',
       'text-transparent',
-      'bg-linear-to-r'
+      'bg-linear-to-r',
     ],
     rows: [
       'from-green-400 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
@@ -28,36 +28,38 @@ const colorPatterns: featureColorPattern[] = [
       'from-purple-400 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
       'from-green-400 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
       'from-green-400 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
-    ]
-  }, {
+    ],
+  },
+  {
     title: [
       'from-red-400',
       'to-pink-500',
       'bg-clip-text',
       'text-transparent',
-      'bg-linear-to-r'
+      'bg-linear-to-r',
     ],
     rows: [
       'from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-r ',
       'from-orange-400 to-pink-400 bg-clip-text text-transparent bg-linear-to-r ',
       'from-pink-400 to-red-400 bg-clip-text text-transparent bg-linear-to-r ',
       'from-purple-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
-    ]
-  }, {
+    ],
+  },
+  {
     title: [
       'from-indigo-400',
       'to-purple-500',
       'bg-clip-text',
       'text-transparent',
-      'bg-linear-to-r'
+      'bg-linear-to-r',
     ],
     rows: [
       'from-blue-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
       'from-green-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
       'from-orange-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
       'from-purple-400 to-indigo-400 bg-clip-text text-transparent bg-linear-to-r ',
-    ]
-  }
+    ],
+  },
 ]
 
 type FeatureSectionType = {
@@ -74,36 +76,39 @@ type FeatureSectionType = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function FeatureSection(props: FeatureSectionType) {
   return (
-    <div className='flex items-center w-full justify-around py-16 lg:flex-row flex-col'>
-      <h3 className={'lg:text-7xl text-4xl text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible ' + props.colorPattern.title.join(' ')}>
+    <div className="flex w-full flex-col items-center justify-around py-16 lg:flex-row">
+      <h3
+        className={
+          'mb-8 flex max-w-xs overflow-x-visible pb-4 text-center text-4xl lg:mb-0 lg:text-7xl ' +
+          props.colorPattern.title.join(' ')
+        }
+      >
         {props.title}
       </h3>
-      <ul className='text-3xl lg:text-6xl lg:ml-12 ml-6'>
-        {props.items.map(((x, i) => (
-          <li key={x.feature} className='mb-10'>
+      <ul className="ml-6 text-3xl lg:ml-12 lg:text-6xl">
+        {props.items.map((x, i) => (
+          <li key={x.feature} className="mb-10">
             {x.link ? (
               <a
                 href={x.link}
-                target='_blank'
+                target="_blank"
                 className={props.colorPattern.rows[i] + ' hover:underline'}
                 rel="noreferrer"
               >
                 {x.feature}
-                <ArrowTopRightOnSquareIcon className=' text-blue-400 h-4 w-4 lg:h-5 lg:w-5 inline-block mb-2 lg:mb-8' />
+                <ArrowTopRightOnSquareIcon className="mb-2 inline-block h-4 w-4 text-blue-400 lg:mb-8 lg:h-5 lg:w-5" />
               </a>
             ) : (
-              <h4 className={props.colorPattern.rows[i]}>
-                {x.feature}
-              </h4>
+              <h4 className={props.colorPattern.rows[i]}>{x.feature}</h4>
             )}
             {x.desc && (
-              <h6 className={props.colorPattern.rows[i] + ' text-base mt-4'}>
+              <h6 className={props.colorPattern.rows[i] + ' mt-4 text-base'}>
                 {x.desc}
               </h6>
             )}
             {x.block}
           </li>
-        )))}
+        ))}
       </ul>
     </div>
   )
@@ -111,8 +116,10 @@ function FeatureSection(props: FeatureSectionType) {
 
 function Features() {
   return (
-    <div className='w-full flex justify-center flex-col p-10'>
-      <h2 className='text-3xl text-center dark:text-gray-100 text-slate-900'>Feature List</h2>
+    <div className="flex w-full flex-col justify-center">
+      <h2 className="text-center text-3xl text-slate-900 dark:text-gray-100">
+        Feature List
+      </h2>
       <FeaturesOpen />
       {/* <FeatureSection
         title={t('app.index.features.open.title')}
@@ -187,6 +194,5 @@ function Features() {
     </div>
   )
 }
-
 
 export default Features

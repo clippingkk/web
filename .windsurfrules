@@ -31,8 +31,9 @@ You are an expert full-stack developer proficient in TypeScript, React, Next.js,
 - Use modern UI frameworks (e.g., Tailwind CSS) for styling.
 - Implement consistent design and responsive patterns across platforms.
 - the website should support dark mode.
-- the UI style should be bold and simple. with aggressive plain colors and grate blur effect.
+- the UI style should be simple. with plain colors and great blur effect. the primary color is `#045fab`.
 - use icons from `lucide-react`.
+- do not use `@mantine`.
 
 ### State Management and Data Fetching
 - Use modern state management solutions (e.g., TanStack React Query) to handle global state and data fetching.
