@@ -1,15 +1,16 @@
+import Modal from '@annatarhe/lake-ui/modal'
 import { useApolloClient } from '@apollo/client'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useBookSearch } from '../../hooks/book'
+import { useUpdateClippingBookIdMutation } from '../../schema/generated'
 import { WenquBook } from '../../services/wenqu'
 import BookCandidate from './bookCandidate'
-import { toast } from 'react-hot-toast'
-import { useUpdateClippingBookIdMutation } from '../../schema/generated'
-import { Input, Modal } from '@mantine/core'
+
 import Button from '../button'
 import LoadingIcon from '../icons/loading.svg'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import Empty from './empty'
 
 type BookInfoChangerProps = {
   clippingID: number
@@ -42,114 +43,101 @@ function BookInfoChanger(props: BookInfoChangerProps) {
     }
 
     // return toast.promise(new Promise(r => setTimeout(r, 4000)), {
-    return toast.promise(doUpdate({
-      variables: {
-        cid: props.clippingID,
-        doubanId: selectedBook.doubanId
+    return toast.promise(
+      doUpdate({
+        variables: {
+          cid: props.clippingID,
+          doubanId: selectedBook.doubanId,
+        },
+      }),
+      {
+        loading: t('app.common.saving'),
+        success: () => {
+          client.resetStore()
+          setBookName('')
+          props.onClose()
+          return t('app.common.done')
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        error: (err: any) => t(err),
       }
-    }), {
-      loading: t('app.common.saving'),
-      success: () => {
-        client.resetStore()
-        setBookName('')
-        props.onClose()
-        return t('app.common.done')
-      },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      error: (err: any) => t(err),
-    })
+    )
   }, [selectedBook?.id, props.clippingID])
 
   return (
     <Modal
-      centered
       onClose={() => {
         setBookName('')
         props.onClose()
       }}
-      opened={props.visible}
-      size='xl'
+      isOpen={props.visible}
       title={t('app.clipping.update')}
-      overlayProps={{
-        blur: 16,
-        opacity: 0.7,
-      }}
     >
-      <Modal.Body>
-        <div>
-          <Input
-            leftSection={<MagnifyingGlassIcon className='w-4 h-4 ml-2' />}
-            type='search'
-            max={64}
-            value={bookName}
-            onChange={e => setBookName(e.target.value)}
-            size='xl'
-            placeholder={t('app.clipping.updatePlaceholder') ?? ''}
-          />
-        </div>
-        <div>
-          <p
-            className='bg-linear-to-br p-2'
-          >{
-              t('app.clipping.updateCandidatesCount', {
-                count: candidates.data?.count ?? 0
-              })
-            }</p>
-          <p
-            className='bg-linear-to-br p-2 mt-2'
-          >{
-              t('app.clipping.updateSelectedTip', {
-                title: selectedBook?.title ?? 'null'
-              })
-            }</p>
-          <ul
-            className='overflow-y-auto'
-            style={{
-              maxHeight: '65vh'
-            }}
-          >
-            {candidates.isFetching && (
-              <div className='w-full flex justify-center items-center h-96'>
-                <LoadingIcon className=' animate-spin' />
-              </div>
-            )}
-            {candidates.isFetched && !candidates.isLoading && candidates.data?.count === 0 && (
-              <div className='w-full flex justify-center items-center h-96 flex-col'>
-                <span className=' text-9xl'>🤨</span>
-                <p className='mt-2'>{t('app.menu.search.empty')}</p>
-              </div>
-            )}
-            {candidates.data?.books.map(x => (
-              <BookCandidate
-                key={x.id}
-                book={x}
-                selected={x.id === selectedBook?.id}
-                onSelecte={b => {
-                  if (selectedBook && selectedBook.id === b.id) {
-                    setSelectedBook(null)
-                  } else {
-                    setSelectedBook(b)
-                  }
-                }}
-              />
-            ))}
-          </ul>
-        </div>
+      <div>
+        <input
+          // leftSection={<MagnifyingGlassIcon className="ml-2 h-4 w-4" />}
+          type="search"
+          max={64}
+          value={bookName}
+          onChange={(e) => setBookName(e.target.value)}
+          placeholder={t('app.clipping.updatePlaceholder') ?? ''}
+        />
+      </div>
+      <div>
+        <p className="bg-linear-to-br p-2">
+          {t('app.clipping.updateCandidatesCount', {
+            count: candidates.data?.count ?? 0,
+          })}
+        </p>
+        <p className="mt-2 bg-linear-to-br p-2">
+          {t('app.clipping.updateSelectedTip', {
+            title: selectedBook?.title ?? 'null',
+          })}
+        </p>
+        <ul
+          className="overflow-y-auto"
+          style={{
+            maxHeight: '65vh',
+          }}
+        >
+          {candidates.isFetching && (
+            <div className="flex h-96 w-full items-center justify-center">
+              <LoadingIcon className="animate-spin" />
+            </div>
+          )}
+          {candidates.isFetched &&
+            !candidates.isLoading &&
+            candidates.data?.count === 0 && <Empty />}
+          {candidates.data?.books.map((x) => (
+            <BookCandidate
+              key={x.id}
+              book={x}
+              selected={x.id === selectedBook?.id}
+              onSelecte={(b) => {
+                if (selectedBook && selectedBook.id === b.id) {
+                  setSelectedBook(null)
+                } else {
+                  setSelectedBook(b)
+                }
+              }}
+            />
+          ))}
+        </ul>
+      </div>
 
-        <div>
-          <Button
-            variant='primary'
-            fullWidth
-            onClick={onSubmit}
-            size='lg'
-            isLoading={loading}
-            className='mt-8 bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 before:from-indigo-500 before:to-cyan-500'
-            disabled={!selectedBook}
-          >
-            {t('app.common.doUpdate')}
-          </Button>
-        </div>
-      </Modal.Body>
+      <div>
+        <Button
+          variant="primary"
+          fullWidth
+          onClick={onSubmit}
+          size="lg"
+          isLoading={loading}
+          className="mt-8 bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 before:from-indigo-500 before:to-cyan-500"
+          disabled={!selectedBook}
+        >
+          {t('app.common.doUpdate')}
+        </Button>
+      </div>
     </Modal>
   )
 }
