@@ -26,6 +26,7 @@ function BlockToolbarView(props: BlockToolbarViewProps) {
         className="hover:bg-opacity-90 p-2 hover:bg-slate-700"
         onClick={() => onLLMImprove()}
       >
+        <span>LLM</span>
         {/* <RiSparkling2Fill className="w-4 h-4" /> */}
       </Button>
 
