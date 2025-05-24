@@ -1,5 +1,6 @@
-import { Button, Badge } from '@mantine/core'
+import { Badge } from '@mantine/core'
 import { CodeHighlight } from '@mantine/code-highlight'
+import Button from '../button'
 import React from 'react'
 import { useTranslation } from '@/i18n'
 import { Terminal, Webhook, ExternalLink } from 'lucide-react'
@@ -25,18 +26,19 @@ async function DeveloperFeatures() {
             <div className='flex flex-col'>
               <span className='mb-2 font-medium'>Command Line Interface</span>
               <CodeHighlight language='bash' code={cliExample} className="rounded-lg overflow-hidden" />
-              <Button
-                component='a'
+              <a
                 href='https://github.com/clippingkk/cli'
                 target='_blank'
-                className='mt-4'
-                rightSection={<ExternalLink size={16} />}
-                variant="light"
-                color="blue"
-                size="sm"
+                className='mt-4 inline-block'
               >
-                View Code
-              </Button>
+                <Button
+                  rightIcon={<ExternalLink size={16} />}
+                  variant="outline"
+                  size="sm"
+                >
+                  View Code
+                </Button>
+              </a>
             </div>
           }>
             <Badge className="inline-flex mx-1 cursor-pointer hover:opacity-80" variant="light" color="indigo">

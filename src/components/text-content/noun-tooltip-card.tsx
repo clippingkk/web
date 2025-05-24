@@ -1,7 +1,7 @@
 import React from 'react'
 import { FetchClippingQuery } from '../../schema/generated'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@mantine/core'
+import Button from '../button'
 import NounContentRender from '../noun/content-render'
 
 type NounTooltipCardProps = {
@@ -23,7 +23,7 @@ function NounTooltipCard(props: NounTooltipCardProps) {
         <p className='w-full text-center text-xl'>{segment}</p>
         <p className='text-gray-500 text-sm'>{t('app.nouns.empty.tip')}</p>
         <div className='mt-4 flex justify-end'>
-          <Button onClick={() => onNounAdd(segment)}>{t('app.nouns.empty.add')}</Button>
+          <Button variant="primary" size="md" onClick={() => onNounAdd(segment)}>{t('app.nouns.empty.add')}</Button>
         </div>
       </>
     )

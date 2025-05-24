@@ -1,4 +1,5 @@
-import { Button, TextInput } from '@mantine/core'
+import { TextInput } from '@mantine/core'
+import Button from '@/components/button'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import OTPInput from 'react-auth-code-input'
 import { AuthMachine, AuthEvents } from './auth.state'
@@ -94,9 +95,9 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
               </span>
               <div>
                 <Button
-                  size="xs"
-                  variant='white'
-                  rightSection={<ChevronRightIcon className="w-4 h-4" />}
+                  size="sm"
+                  variant='ghost'
+                  rightIcon={<ChevronRightIcon className="w-4 h-4" />}
                   onClick={() => sendEvent({ type: 'CHANGE_TO_OTP' })}>
                   {t('app.auth.otpTitle')}
                 </Button>
@@ -123,9 +124,9 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
             <span>{t('app.auth.pwd')}</span>
             <div>
               <Button
-                size="xs"
-                variant='white'
-                rightSection={<ChevronRightIcon className="w-4 h-4" />}
+                size="sm"
+                variant='ghost'
+                rightIcon={<ChevronRightIcon className="w-4 h-4" />}
                 onClick={() => sendEvent({ type: 'CHANGE_TO_PASSWORD' })}>
                 {machine.can({ type: 'CHANGE_TO_PASSWORD' }) && t('app.auth.otpTitle')}
                 {machine.can({ type: 'CHANGE_TO_OTP' }) && t('app.auth.pwd')}
@@ -146,7 +147,9 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
             <div className="ml-4">
               {machine.can({ type: 'RESEND' }) && (
                 <Button
-                  loading={machine.matches({ Passcode: { OTP: 'sending' } })}
+                  isLoading={machine.matches({ Passcode: { OTP: 'sending' } })}
+                  variant="secondary"
+                  size="sm"
                   onClick={() => sendEvent({ type: 'RESEND' })}
                 >
                   {t('app.auth.resend')}
@@ -170,7 +173,8 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
       <Button
         fullWidth
         size="lg"
-        className="mt-4"
+        className="mt-4 bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700"
+        variant="primary"
         disabled={!machine.can({ type: 'MANUAL_LOGIN' })}
         onClick={() => sendEvent({ type: 'MANUAL_LOGIN' })}
       >

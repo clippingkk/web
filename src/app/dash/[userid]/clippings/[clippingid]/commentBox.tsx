@@ -6,7 +6,7 @@ import Avatar from '@/components/avatar/avatar'
 import { Clipping, useCreateCommentMutation, User } from '@/schema/generated'
 import { toast } from 'react-hot-toast'
 import { toastPromiseDefaultOption } from '@/services/misc'
-import { Button } from '@mantine/core'
+import Button from '@/components/button'
 import AICommentEnhancer from '@/components/ai/enhance-comment'
 import { WenquBook } from '@/services/wenqu'
 import CKLexicalBaseEditor from '@/components/RichTextEditor'
@@ -116,12 +116,12 @@ function CommentBox(props: CommentBoxProps) {
           </div>
           
           <Button
-            color='indigo'
-            className='bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 hover:shadow-lg'
-            loading={loading}
+            variant='primary'
+            className='bg-gradient-to-r from-indigo-500 to-purple-500 after:from-indigo-500/40 after:to-purple-500/40 hover:shadow-indigo-500/20'
+            isLoading={loading}
             disabled={content.length < COMMENT_MIN_LEN}
             onClick={onSubmit}
-            rightSection={<Send className='w-4 h-4' />}
+            rightIcon={<Send className='w-4 h-4' />}
           >
             {t('app.clipping.comments.submit')}
           </Button>

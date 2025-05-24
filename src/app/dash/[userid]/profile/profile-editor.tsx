@@ -10,7 +10,7 @@ import { uploadImage } from '@/services/misc'
 import { useTranslation } from 'react-i18next'
 import ExternalAccountList from '@/components/externalAccount/list'
 import { useUpdateProfileMutation } from '@/schema/generated'
-import { Button } from '@mantine/core'
+import Button from '@/components/button'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import Modal from '@annatarhe/lake-ui/modal'
 import { CogIcon } from '@heroicons/react/24/solid'
@@ -124,7 +124,7 @@ function ProfileEditor(props: ProfileEditorProps) {
       >
         <Button
           onClick={() => setVisible(true)}
-          bg='transparent'
+          variant='ghost'
           title={t('app.profile.editor.title') ?? ''}
         >
           <CogIcon className='w-6 h-6' />

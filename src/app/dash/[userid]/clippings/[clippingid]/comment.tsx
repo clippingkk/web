@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Avatar from '@/components/avatar/avatar'
 import { Comment as CommentData, User } from '@/schema/generated'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Button } from '@mantine/core'
+import Button from '@/components/button'
 import { ChevronDown, ChevronUp, User as UserIcon } from 'lucide-react'
 import CKLexicalBaseEditor from '@/components/RichTextEditor/index'
 import { LexicalEditor } from 'lexical'
@@ -72,14 +72,15 @@ function Comment(props: CommentProps) {
             className='absolute bottom-0 right-0 left-0 flex items-end justify-center py-4'
           >
             <Button
-              variant='light'
+              variant='ghost'
               onClick={() => {
                 setIsFold(v => !v)
               }}
-              className='bg-white/80 dark:bg-slate-700/80 hover:bg-white dark:hover:bg-slate-700 transition-all duration-300 text-indigo-600 dark:text-indigo-400 hover:shadow-md'
-              leftSection={isFold ? 
+              className='bg-white/80 dark:bg-slate-700/80 hover:bg-white dark:hover:bg-slate-700 text-indigo-600 dark:text-indigo-400 hover:shadow-md'
+              leftIcon={isFold ? 
                 <ChevronDown className='w-4 h-4 text-indigo-500' /> : 
                 <ChevronUp className='w-4 h-4 text-indigo-500' />}
+              size="sm"
             >
               {t(isFold ? 'unfold' : 'fold')}
             </Button>

@@ -6,7 +6,8 @@ import { WenquBook } from '../../services/wenqu'
 import BookCandidate from './bookCandidate'
 import { toast } from 'react-hot-toast'
 import { useUpdateClippingBookIdMutation } from '../../schema/generated'
-import { Button, Input, Modal } from '@mantine/core'
+import { Input, Modal } from '@mantine/core'
+import Button from '../button'
 import LoadingIcon from '../icons/loading.svg'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
@@ -137,14 +138,12 @@ function BookInfoChanger(props: BookInfoChangerProps) {
 
         <div>
           <Button
-            variant='gradient'
-            gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+            variant='primary'
             fullWidth
             onClick={onSubmit}
-            mt={8}
             size='lg'
-            loading={loading}
-            className='active:scale-95 transition-all duration-75'
+            isLoading={loading}
+            className='mt-8 bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 before:from-indigo-500 before:to-cyan-500'
             disabled={!selectedBook}
           >
             {t('app.common.doUpdate')}

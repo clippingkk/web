@@ -5,7 +5,8 @@ import FileSaver from 'file-saver'
 import { toast } from 'react-hot-toast'
 import { KonzertThemeMap } from '../../services/utp'
 import ThemePicker from './theme-picker'
-import { Blockquote, Button, Divider, Paper, Title } from '@mantine/core'
+import { Blockquote, Divider, Paper, Title } from '@mantine/core'
+import Button from '../button'
 import { Clipping, User } from '../../schema/generated'
 import Preview4Clipping from './preview4-clipping'
 import { toBlob } from 'html-to-image'
@@ -90,10 +91,9 @@ function Preview(props: PreviewProps) {
           <div className='flex-1 w-full' />
           <Button
             onClick={() => onSave()}
-            loading={isPending}
-            variant='filled'
-            className='bg-teal-400'
-            color='teal'
+            isLoading={isPending}
+            variant='secondary'
+            className='from-teal-500/80 to-teal-600/80 after:from-teal-500/40 after:to-teal-500/40 hover:shadow-teal-500/20'
           >
             {t('app.clipping.save')}
           </Button>

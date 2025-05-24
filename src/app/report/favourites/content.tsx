@@ -1,5 +1,6 @@
 'use client'
-import { Button, Input, Modal } from '@mantine/core'
+import { Input, Modal } from '@mantine/core'
+import Button from '@/components/button'
 import React, { useCallback, useRef, useState } from 'react'
 import BlurhashView from '@annatarhe/blurhash-react'
 import { toPng } from 'html-to-image'
@@ -51,8 +52,8 @@ function FavBookCard(
           ) : (
             <div className='h-full w-full flex justify-center items-center'>
               <Button
-                variant='gradient'
-                className=' bg-linear-to-br from-indigo-300 to-cyan-600'
+                variant='primary'
+                className='bg-gradient-to-br from-indigo-300 to-cyan-600 after:from-indigo-300/40 after:to-cyan-600/40'
               >
                 Select one
               </Button>
@@ -167,7 +168,8 @@ function ReportFavouritesPage() {
 
         <div className='fixed right-6 top-6'>
           <Button
-            className=' rounded-full bg-linear-to-br from-indigo-400 to-cyan-500'
+            className='rounded-full bg-gradient-to-br from-indigo-400 to-cyan-500 after:from-indigo-400/40 after:to-cyan-500/40'
+            variant='primary'
             onClick={onShareImage}
           >
             Share

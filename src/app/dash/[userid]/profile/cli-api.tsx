@@ -5,7 +5,7 @@ import Modal from '@annatarhe/lake-ui/modal'
 import { CodeHighlight } from '@mantine/code-highlight'
 import { getLocalToken } from '@/services/ajax'
 import { useClaimCliApiTokenMutation } from '@/schema/generated'
-import { Button } from '@mantine/core'
+import Button from '@/components/button'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { Terminal, Clipboard, ExternalLink, RefreshCw } from 'lucide-react'
 import { useTranslation } from '@/i18n/client'
@@ -57,8 +57,8 @@ ck-cli
       >
         <Button
           onClick={() => setVisible(true)}
-          bg={'transparent'}
-          className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          variant='ghost'
+          className="hover:bg-gray-100 dark:hover:bg-gray-800"
         >
           <Terminal className="w-5 h-5" strokeWidth={2.5} />
         </Button>

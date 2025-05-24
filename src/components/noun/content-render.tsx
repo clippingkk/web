@@ -1,6 +1,6 @@
 import React from 'react'
 import MarkdownPreview from '../markdown-editor/md-preview'
-import { Button } from '@mantine/core'
+import Button from '../button'
 import { FetchClippingQuery } from '../../schema/generated'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
@@ -22,7 +22,8 @@ function NounContentRender(props: NounContentRenderProps) {
         <h3 className='text-xl'>{noun?.noun}</h3>
         {updatable && (
           <Button
-            size='xs'
+            size='sm'
+            variant='secondary'
             onClick={() => onUpdate(noun.id, noun.noun)}
           >{t('app.nouns.form.update')}</Button>
         )}

@@ -2,7 +2,7 @@
 // import { Button } from '../../ui/button'
 // import { Textarea } from '../../ui/textarea'
 
-import { Button } from '@mantine/core'
+import Button from '../button'
 
 type BlockToolbarViewProps = {
   offsetY: number
@@ -21,8 +21,9 @@ function BlockToolbarView(props: BlockToolbarViewProps) {
       }}
     >
       <Button
-        size="icon"
-        className="hover:bg-slate-700 hover:bg-opacity-90"
+        size="sm"
+        variant="ghost"
+        className="hover:bg-slate-700 hover:bg-opacity-90 p-2"
         onClick={() => onLLMImprove()}
       >
         {/* <RiSparkling2Fill className="w-4 h-4" /> */}

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-hot-toast'
 import BindPhone from '@/components/bind-phone'
 import { useBindUserPhoneMutation } from '@/schema/generated'
-import { Button } from '@mantine/core'
+import Button from '@/components/button'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import Modal from '@annatarhe/lake-ui/modal'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
@@ -36,7 +36,7 @@ function ProfileBindPhone() {
         content={t('app.profile.phoneBind')}
       >
         <Button
-          bg={'transparent'}
+          variant='ghost'
           onClick={() => setVisible(true)}
         >
           <DevicePhoneMobileIcon className='w-6 h-6' />

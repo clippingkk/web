@@ -1,5 +1,5 @@
 import MetamaskLogo from '../icons/metamask.logo.svg'
-import { Button } from '@mantine/core'
+import Button from '../button'
 
 type MetamaskButtonViewProps = {
   loading: boolean
@@ -11,16 +11,17 @@ function MetamaskButtonView(props: MetamaskButtonViewProps) {
   const { loading: disabled, onClick: onMetamaskLogin, loading } = props
   return (
     <Button
-      loading={loading}
-      className='h-[47px] rounded-sm hover:shadow-lg bg-purple-400 flex justify-center items-center hover:scale-105 hover:bg-purple-500! duration-150 w-full flex-col'
-      color='rgb(192 132 252 / var(--tw-bg-opacity))'
+      isLoading={loading}
+      className='h-[62px] bg-gradient-to-br from-purple-500 to-purple-600 after:from-purple-500/40 after:to-purple-600/40 hover:shadow-purple-500/20'
       fullWidth
-      h={'62px'}
+      size="lg"
       onClick={onMetamaskLogin}
       disabled={disabled}
     >
-      <MetamaskLogo size={24} />
-      <span className='text-lg ml-4'>Metamask</span>
+      <div className="flex items-center gap-4">
+        <MetamaskLogo size={24} />
+        <span className='text-lg'>Metamask</span>
+      </div>
     </Button>
   )
 }

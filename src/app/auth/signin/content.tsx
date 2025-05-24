@@ -8,7 +8,8 @@ import * as Yup from 'yup'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { CF_TURNSTILE_SITE_KEY } from '@/constants/config'
 import { useAuthLazyQuery } from '@/schema/generated'
-import { Button, Input } from '@mantine/core'
+import { Input } from '@mantine/core'
+import Button from '@/components/button'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -81,13 +82,12 @@ function SigninPageContent() {
         <h5 className='bg-red-600 my-4 text-white p-4 rounded-sm w-full text-xl'>{resp.error?.message}</h5>
       )}
       <Button
-        variant='gradient'
-        gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-        className='transition-all active:scale-95 duration-150 mt-8'
+        variant='primary'
+        className='mt-8 bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 before:from-indigo-500 before:to-cyan-500'
         fullWidth
-        loading={resp.loading}
+        isLoading={resp.loading}
         disabled={formDisabled}
-        h={48}
+        size="xl"
         type="submit"
       >
         {t('app.auth.submit')}

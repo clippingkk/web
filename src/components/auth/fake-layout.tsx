@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useTranslation } from '@/i18n/client'
 import BindPhone from '@/components/bind-phone'
 import LoadingIcon from '@/components/icons/loading.svg'
-import { Button } from '@mantine/core'
+import Button from '../button'
 
 type AuthCallbackPageContainerProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,16 +31,18 @@ function AuthCallbackPageContainer(props: AuthCallbackPageContainerProps) {
           </h4>
           <div className='my-8 flex flex-col lg:flex-row items-center justify-end gap-4'>
             <Button
-              className='h-20 from-teal-400 via-teal-500 to-teal-400 bg-linear-to-br rounded-lg text-2xl lg:text-5xl duration-150'
+              className='h-20 text-2xl lg:text-5xl'
               variant='outline'
-              color='red'
+              size='xl'
               onClick={props.doBind}
             >
               {t('app.authCallback.createAccountDirectly')}
             </Button>
             {!willBind && (
               <Button
-                className='h-20 from-blue-400 via-teal-400 to-orange-400 bg-linear-to-br rounded-lg text-2xl lg:text-4xl hover:shadow-lg hover:scale-105 duration-150'
+                className='h-20 text-2xl lg:text-4xl bg-gradient-to-br from-blue-500 via-teal-500 to-orange-500 before:from-blue-500 before:to-orange-500'
+                variant='primary'
+                size='xl'
                 onClick={() => {
                   setWillBind(true)
                 }}

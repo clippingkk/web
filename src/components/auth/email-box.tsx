@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { CF_TURNSTILE_SITE_KEY } from '../../constants/config'
 import { REGEX_EMAIL } from '../../services/regex'
-import { Button } from '@mantine/core'
+import Button from '../button'
 import { useTranslation } from 'react-i18next'
 
 type EmailBoxProps = {
@@ -51,11 +51,11 @@ function EmailBox(props: EmailBoxProps) {
       </fieldset>
       <div className='w-full mt-4'>
         <Button
-          className='text-white w-full rounded-sm bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'
+          className='bg-gradient-to-br from-blue-500 to-blue-600 after:from-blue-500/40 after:to-blue-500/40 hover:shadow-blue-500/20'
           fullWidth
           size='lg'
           type='submit'
-          loading={loading}
+          isLoading={loading}
           disabled={turnstileToken === '' || !REGEX_EMAIL.test(email)}
         >
           {t('app.auth.sendOtp')}
