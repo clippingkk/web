@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.14](https://github.com/clippingkk/web/compare/v5.13.13...v5.13.14) (2025-05-24)
+
+
+### Features
+
+* **app:** migrate from mantine code highlight to shiki with server/client components ([9f5534c](https://github.com/clippingkk/web/commit/9f5534c116e86cdd273cfe5cb15424c5317fbd60))
+* migrate from mantine to custom UI components with Tailwind styling ([58e8977](https://github.com/clippingkk/web/commit/58e8977a74f5aa47efeaa94f7083e5388dc8eaa2))
+
+
+### Bug Fixes
+
+* **app:** remove mantine dependencies from package.json ([0617e25](https://github.com/clippingkk/web/commit/0617e254361f84e911bf25b5f8c0dbeca968a61c))
+* **app:** update pkg ([059f193](https://github.com/clippingkk/web/commit/059f193e816b24870bf709bdc8bd01ab129ac2fa))
+* **app:** upgrade Node.js version to 24.x across build configurations ([6fb1a59](https://github.com/clippingkk/web/commit/6fb1a59f496c80af1317e2be1b10e696977dbf68))
+* **index:** enhance UI components with modern design system and consistent styling ([d31f5cc](https://github.com/clippingkk/web/commit/d31f5cc6557d3f8d6bfaef44f7edf91e09da8329))
+* **nav:** reorganize imports and improve UI styling in navigation bar ([bbaefae](https://github.com/clippingkk/web/commit/bbaefaeebc54dc04204e1abf6f8caeb7cc57be37))
+
+
+### Miscellaneous Chores
+
+* release 5.13.14 ([575392d](https://github.com/clippingkk/web/commit/575392d329bcfdde667e765281b6e22c60068ad0))
+
 ## [5.13.13](https://github.com/clippingkk/web/compare/v5.13.12...v5.13.13) (2025-05-20)
 
 
