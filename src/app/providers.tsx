@@ -5,7 +5,6 @@ import { useTranslation } from '@/i18n/client'
 import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
 import { MetaMaskProvider } from '@metamask/sdk-react'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { Provider as JotaiProvider } from 'jotai'
 import React from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { usePointerUpdate } from '../hooks/pointer'
@@ -40,20 +39,18 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
       }}
     >
       <I18nextProvider i18n={i18n}>
-        <JotaiProvider>
-          <PersistQueryClientProvider
-            client={rq}
-            persistOptions={{
-              persister: reactQueryPersister,
-            }}
+        <PersistQueryClientProvider
+          client={rq}
+          persistOptions={{
+            persister: reactQueryPersister,
+          }}
+        >
+          <ApolloNextAppProvider
+            makeClient={makeApolloClientWithCredentials(loggedInfo)}
           >
-            <ApolloNextAppProvider
-              makeClient={makeApolloClientWithCredentials(loggedInfo)}
-            >
-              {children}
-            </ApolloNextAppProvider>
-          </PersistQueryClientProvider>
-        </JotaiProvider>
+            {children}
+          </ApolloNextAppProvider>
+        </PersistQueryClientProvider>
       </I18nextProvider>
     </MetaMaskProvider>
   )

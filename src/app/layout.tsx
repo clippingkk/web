@@ -113,7 +113,6 @@ async function Layout(props: LayoutProps) {
         } as React.CSSProperties
       }
     >
-      <head></head>
       <Script
         defer
         src="https://static.cloudflareinsights.com/beacon.min.js"
