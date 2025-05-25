@@ -154,26 +154,7 @@ export function makeApolloClient() {
   // })
 }
 
-export function makeApolloClientWithCredentials(credentials: { uid?: number, token?: string }) {
-  const token = credentials.token
-  const authLinkRSC = new ApolloLink((operation, forward) => {
-    operation.setContext(({ headers = {} }) => {
-      if (!token) {
-        return headers
-      }
-
-      return {
-        headers: {
-          ...headers,
-          'Authorization': `Bearer ${token}`,
-          'X-Accept-Language': getLanguage()
-        }
-      }
-    })
-
-    return forward(operation)
-  })
-
+export function makeApolloClientWithCredentials() {
   // same as makeApolloClient
   return () => {
     const links: ApolloLink[] = []
@@ -181,7 +162,7 @@ export function makeApolloClientWithCredentials(credentials: { uid?: number, tok
       links.push(new SSRMultipartLink({ stripDefer: true }))
     }
 
-    links.push(authLinkRSC, httpLink, errorLink)
+    links.push(authLink, httpLink, errorLink)
 
     return new ApolloClient({
       cache: new InMemoryCache(apolloCacheConfig),

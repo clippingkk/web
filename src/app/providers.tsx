@@ -1,31 +1,24 @@
 'use client'
 import '../utils/mixpanel'
 
-import { useTranslation } from '@/i18n/client'
 import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
 import { MetaMaskProvider } from '@metamask/sdk-react'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import React from 'react'
-import { I18nextProvider } from 'react-i18next'
 import { usePointerUpdate } from '../hooks/pointer'
 import {
-  createReactQueryClient,
+  getReactQueryClient,
   makeApolloClientWithCredentials,
 } from '../services/ajax'
 import { reactQueryPersister } from '../services/storage'
 
 type ClientOnlyProvidersProps = {
-  loggedInfo: {
-    token?: string
-    uid?: number
-  }
   children: React.ReactNode
 }
 
 function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
-  const { loggedInfo, children } = props
-  const { i18n } = useTranslation()
-  const rq = createReactQueryClient()
+  const { children } = props
+  const rq = getReactQueryClient()
   usePointerUpdate()
   return (
     <MetaMaskProvider
@@ -38,20 +31,16 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
         // Other options.
       }}
     >
-      <I18nextProvider i18n={i18n}>
-        <PersistQueryClientProvider
-          client={rq}
-          persistOptions={{
-            persister: reactQueryPersister,
-          }}
-        >
-          <ApolloNextAppProvider
-            makeClient={makeApolloClientWithCredentials(loggedInfo)}
-          >
-            {children}
-          </ApolloNextAppProvider>
-        </PersistQueryClientProvider>
-      </I18nextProvider>
+      <PersistQueryClientProvider
+        client={rq}
+        persistOptions={{
+          persister: reactQueryPersister,
+        }}
+      >
+        <ApolloNextAppProvider makeClient={makeApolloClientWithCredentials()}>
+          {children}
+        </ApolloNextAppProvider>
+      </PersistQueryClientProvider>
     </MetaMaskProvider>
   )
 }
