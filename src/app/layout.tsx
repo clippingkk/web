@@ -97,7 +97,6 @@ export const metadata: Metadata = {
 
 async function Layout(props: LayoutProps) {
   const cs = await cookies()
-  const token = cs.get('token')?.value
   const uid = cs.get('uid')?.value
   const defaultLng = cs.get(STORAGE_LANG_KEY)?.value ?? 'en'
 
@@ -119,9 +118,7 @@ async function Layout(props: LayoutProps) {
         data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
       />
       <body>
-        <ClientOnlyProviders
-          loggedInfo={{ token, uid: uid ? ~~uid : undefined }}
-        >
+        <ClientOnlyProviders>
           <>
             {props.children}
             <div id="dialog"></div>
