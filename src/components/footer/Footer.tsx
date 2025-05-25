@@ -93,7 +93,7 @@ async function Footer() {
                 </div>
               )}
 
-              <div className="pt-2">
+              <div className="pt-2 dark:text-slate-300">
                 <FooterLink href="#" icon={Server}>
                   {t('footer.hostedOn', 'Hosted on')} Server
                 </FooterLink>
@@ -106,7 +106,7 @@ async function Footer() {
             <h3 className="text-sm font-semibold tracking-wider text-slate-500 uppercase dark:text-slate-400">
               {t('footer.links', 'Links')}
             </h3>
-            <div className="space-y-4 text-sm">
+            <div className="space-y-4 text-sm dark:text-slate-300">
               <FooterLink
                 href="https://github.com/clippingkk/web"
                 icon={Github}
@@ -127,7 +127,7 @@ async function Footer() {
             <h3 className="text-sm font-semibold tracking-wider text-slate-500 uppercase dark:text-slate-400">
               {t('footer.legal', 'Legal')}
             </h3>
-            <div className="space-y-4 text-sm">
+            <div className="space-y-4 text-sm dark:text-slate-300">
               <ICPInfo />
               <p className="text-sm text-slate-500">
                 &copy; {currentYear} AnnatarHe

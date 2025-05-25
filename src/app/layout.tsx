@@ -104,7 +104,7 @@ async function Layout(props: LayoutProps) {
 
   return (
     <html
-      className={`${lato.variable}`}
+      className={`${lato.variable} dark`}
       lang={defaultLng}
       style={
         {

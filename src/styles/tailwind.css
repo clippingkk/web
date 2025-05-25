@@ -2,7 +2,7 @@
 
 @source '../../node_modules/@annatarhe/lake-ui/dist/**/*.js';
 
-@custom-variant dark (&:is([data-mantine-color-scheme="dark"] *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-lxgw: var(--font-lxgw);
