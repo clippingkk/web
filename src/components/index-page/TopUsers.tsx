@@ -53,7 +53,7 @@ async function TopUsers(props: TopUsersProps) {
 
         {/* Users grid with improved styling */}
         <div className="relative">
-          <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
+          <ul className="flex flex-wrap justify-center gap-6">
             {users.length === 0 ? (
               <li className="col-span-full py-12 text-center text-slate-500 dark:text-slate-400">
                 <p>{t('app.no.users') || 'No users found'}</p>
