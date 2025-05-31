@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.16](https://github.com/clippingkk/web/compare/v5.13.15...v5.13.16) (2025-05-31)
+
+
+### Bug Fixes
+
+* **landing:** fix user display in landing page ([8e883f8](https://github.com/clippingkk/web/commit/8e883f8a2ae944e97c79af00c071ccb64682f694))
+* **landing:** integrate ClippingKK web widget with mock data in feature section ([7b560ea](https://github.com/clippingkk/web/commit/7b560eabb09aedb3855d1c1e7fe68d947846cb53))
+
 ## [5.13.15](https://github.com/clippingkk/web/compare/v5.13.14...v5.13.15) (2025-05-25)
 
 
