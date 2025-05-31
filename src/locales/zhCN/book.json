@@ -1,0 +1,18 @@
+{
+  "app": {
+    "book": {
+      "changeInfoModal": {
+        "title": "更新剪藏书籍信息",
+        "searchPlaceholder": "输入书名搜索...",
+        "candidatesCount": "找到 {{count}} 本候选书籍",
+        "selectedTip": "已选择: {{title}}",
+        "savingToast": "保存中...",
+        "doneToast": "已完成！",
+        "submitButton": "更新信息"
+      },
+      "bookCandidate": {
+        "ratingTooltip": "豆瓣: {{rating}}/10"
+      }
+    }
+  }
+}

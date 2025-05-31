@@ -1,0 +1,18 @@
+{
+  "app": {
+    "book": {
+      "changeInfoModal": {
+        "title": "클리핑 정보 업데이트",
+        "searchPlaceholder": "책 제목을 입력하여 검색...",
+        "candidatesCount": "{{count}}개의 후보를 찾았습니다",
+        "selectedTip": "선택됨: {{title}}",
+        "savingToast": "저장 중...",
+        "doneToast": "완료!",
+        "submitButton": "정보 업데이트"
+      },
+      "bookCandidate": {
+        "ratingTooltip": "두반: {{rating}}/10"
+      }
+    }
+  }
+}

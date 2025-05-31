@@ -1,0 +1,18 @@
+{
+  "app": {
+    "book": {
+      "changeInfoModal": {
+        "title": "Update Clipping Information",
+        "searchPlaceholder": "Enter book title to search...",
+        "candidatesCount": "Found {{count}} candidates",
+        "selectedTip": "Selected: {{title}}",
+        "savingToast": "Saving...",
+        "doneToast": "Done!",
+        "submitButton": "Update Information"
+      },
+      "bookCandidate": {
+        "ratingTooltip": "Douban: {{rating}}/10"
+      }
+    }
+  }
+}

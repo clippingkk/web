@@ -1,10 +1,15 @@
 'use client'
+import BookInfoChanger from '@/components/book-info-changer/bookInfoChanger'
 import { useTranslation } from '@/i18n/client'
 import { Clipping, User } from '@/schema/generated'
 import { BookCopy } from 'lucide-react'
 import { useState } from 'react'
-import { SidebarContainer, SidebarButton, SidebarIcon, SidebarText } from './base/container'
-import BookInfoChanger from '@/components/book-info-changer/bookInfoChanger'
+import {
+  SidebarButton,
+  SidebarContainer,
+  SidebarIcon,
+  SidebarText,
+} from './base/container'
 
 type Props = {
   clipping?: Pick<Clipping, 'id' | 'title'> & { creator: Pick<User, 'id'> }
@@ -21,18 +26,18 @@ function UpdateClippingBtn({ clipping, me }: Props) {
 
   return (
     <SidebarContainer>
-      <SidebarButton onClick={() => {
-        if (!clipping) {
-          return
-        }
-        setUpdateClippingBookId(clipping.id)
-      }}>
+      <SidebarButton
+        onClick={() => {
+          if (!clipping) {
+            return
+          }
+          setUpdateClippingBookId(clipping.id)
+        }}
+      >
         <SidebarIcon>
-          <BookCopy className="w-full h-full" />
+          <BookCopy className="h-full w-full" />
         </SidebarIcon>
-        <SidebarText>
-          {t('app.clipping.update')}
-        </SidebarText>
+        <SidebarText>{t('app.clipping.update')}</SidebarText>
       </SidebarButton>
       <BookInfoChanger
         bookName={clipping?.title}
@@ -43,7 +48,7 @@ function UpdateClippingBtn({ clipping, me }: Props) {
         }}
         onConfirm={() => {
           setUpdateClippingBookId(-1)
-          return Promise.resolve(1)
+          return Promise.resolve()
         }}
       />
     </SidebarContainer>
