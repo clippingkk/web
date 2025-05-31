@@ -121,76 +121,25 @@ function Features() {
         Feature List
       </h2>
       <FeaturesOpen />
-      {/* <FeatureSection
-        title={t('app.index.features.open.title')}
-        colorPattern={colorPatterns[0]}
-        items={[{
-          feature: t('app.index.features.open.f1'),
-          link: 'https://www.bilibili.com/video/BV1Tg411G7gG'
-        }, {
-          feature: t('app.index.features.open.f2'),
-          link: 'https://annatarhe.notion.site/flomo-170afd99f866403d922a363b5b1b7706',
-          desc: t('app.index.features.open.f2Desc'),
-        }, {
-          feature: t('app.index.features.open.f3'),
-          link: 'https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae'
-        }, {
-          feature: t('app.index.features.open.f4'),
-          link: 'https://web-widget-script.pages.dev/',
-          desc: t('app.index.features.open.f4Desc'),
-        }]}
-      /> */}
-      <FeatureWidget />
+      <FeatureWidget
+        widgetClippingData={{
+          id: process.env.NODE_ENV === 'development' ? '21' : '20420',
+          content:
+            '我在想：“什么是地狱？”我认为，地狱就是“再也不能爱”这样的痛苦',
+          book: '卡拉马佐夫兄弟',
+          author: '费奥多尔·陀思妥耶夫斯基',
+          location: '第12章',
+          createdAt: '2021-12-13T14:01:17Z',
+          creator: {
+            id: '1',
+            name: 'AnnatarHe',
+            avatar: 'https://avatars.githubusercontent.com/u/8704175?v=4',
+          },
+        }}
+      />
       <FeatureModern />
-      {/* <FeatureSection
-        colorPattern={colorPatterns[1]}
-        title={t('app.index.features.modern.title')}
-        items={[{
-          feature: t('app.index.features.modern.f1'),
-          desc: t('app.index.features.modern.f1Desc'),
-        }, {
-          feature: t('app.index.features.modern.f2'),
-          desc: t('app.index.features.modern.f2Desc'),
-        }, {
-          feature: t('app.index.features.modern.f3'),
-          desc: t('app.index.features.modern.f3Desc'),
-        }]}
-      /> */}
       <FeatureSense />
-      {/* <FeatureSection
-        colorPattern={colorPatterns[2]}
-        title={t('app.index.features.sense.title')}
-        items={[{
-          feature: t('app.index.features.sense.f1'),
-          link: 'https://apps.apple.com/us/app/clippingkk/id1537830952',
-          desc: t('app.index.features.sense.f1Desc'),
-        }, {
-          feature: t('app.index.features.sense.f2'),
-          desc: t('app.index.features.sense.f2Desc'),
-        }, {
-          feature: t('app.index.features.sense.f3'),
-          desc: t('app.index.features.sense.f3Desc'),
-        }]}
-      /> */}
       <FeatureReborn />
-      {/* <FeatureSection
-        colorPattern={colorPatterns[0]}
-        title={t('app.index.features.reading4.title')}
-        items={[{
-          feature: t('app.index.features.reading4.f1'),
-          desc: t('app.index.features.reading4.f1Desc'),
-        }, {
-          feature: t('app.index.features.reading4.f2'),
-          desc: t('app.index.features.reading4.f2Desc'),
-        }, {
-          feature: t('app.index.features.reading4.f3'),
-          desc: t('app.index.features.reading4.f3Desc'),
-          link: 'https://github.com/clippingkk/cli'
-        }, {
-          feature: t('app.index.features.reading4.f4'),
-          desc: t('app.index.features.reading4.f4Desc'),
-        }]}
-      /> */}
     </div>
   )
 }

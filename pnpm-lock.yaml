@@ -11,6 +11,9 @@ importers:
       '@annatarhe/blurhash-react':
         specifier: ^0.0.2
         version: 0.0.2(react@19.1.0)
+      '@annatarhe/clippingkk-widget':
+        specifier: ^0.0.9
+        version: 0.0.9
       '@annatarhe/lake-ui':
         specifier: ^0.0.26
         version: 0.0.26(lucide-react@0.511.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -502,6 +505,9 @@ packages:
     resolution: {integrity: sha512-lenJZPt0X2LEXZVJsJHb26ykdXt+fM3jv+oOV7B5jwoq11xlLtBLWimDd189+//93/hY1NF/A2PatRYQlT3J1A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  '@annatarhe/clippingkk-widget@0.0.9':
+    resolution: {integrity: sha512-YckNnme78QbOk3vO7UJx4lTVs0NaBba+J86DVrL2DwLI3pEB1exXPABTq8vuDpvN9atcGIBkQGK6g8ptyCh6Ow==}
 
   '@annatarhe/lake-ui@0.0.26':
     resolution: {integrity: sha512-OYgdVsEHYb0Qebj6X7mL9Asiz3nXaWtFL06+5Gx/PIkQjaEuv8oPy+9v7UgmULCMCojJE6aCAltQMP5n6lZ8yw==}
@@ -10740,6 +10746,8 @@ snapshots:
     dependencies:
       blurhash: 2.0.5
       react: 19.1.0
+
+  '@annatarhe/clippingkk-widget@0.0.9': {}
 
   '@annatarhe/lake-ui@0.0.26(lucide-react@0.511.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:

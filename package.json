@@ -84,6 +84,7 @@
   },
   "dependencies": {
     "@annatarhe/blurhash-react": "^0.0.2",
+    "@annatarhe/clippingkk-widget": "^0.0.9",
     "@annatarhe/lake-ui": "^0.0.26",
     "@apollo/client": "^3.13.8",
     "@apollo/client-integration-nextjs": "^0.12.2",

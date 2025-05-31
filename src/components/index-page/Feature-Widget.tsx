@@ -1,12 +1,17 @@
 'use client'
 import { useTranslation } from '@/i18n/client'
+import { ClippingData, register } from '@annatarhe/clippingkk-widget'
 import React, { useCallback, useRef, useState } from 'react'
-import { useWebWidgetScript } from '../../hooks/widget'
 
-function FeatureWidget() {
+register()
+
+type Props = {
+  widgetClippingData: ClippingData
+}
+
+function FeatureWidget({ widgetClippingData }: Props) {
   const { t } = useTranslation()
 
-  useWebWidgetScript()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [perspective, setPerspective] = useState(900)
 
@@ -60,7 +65,7 @@ function FeatureWidget() {
           }}
         >
           {/* widget start */}
-          <blockquote className="ck-clipping-card" data-cid="20420">
+          {/* <blockquote className="ck-clipping-card" data-cid="20420">
             <p lang="zh" dir="ltr" className="ck-content">
               我在想：“什么是地狱？”我认为，地狱就是“再也不能爱”这样的痛苦
             </p>
@@ -70,7 +75,13 @@ function FeatureWidget() {
             <p className="ck-info">
               <span>AnnatarHe</span> 摘录于 <time>2021-12-13T14:01:17Z</time>
             </p>
-          </blockquote>
+          </blockquote> */}
+          <clippingkk-web-widget
+            clippingid={~~widgetClippingData.id}
+            theme="dark"
+            clippingdata={JSON.stringify(widgetClippingData)}
+            className="font-lxgw p-4"
+          />
           {/* widget end */}
         </div>
       </div>
