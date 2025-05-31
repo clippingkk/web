@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.17](https://github.com/clippingkk/web/compare/v5.13.16...v5.13.17) (2025-05-31)
+
+
+### Features
+
+* **book:** add i18n support for book info changer and improve UI/UX ([fd0d0bb](https://github.com/clippingkk/web/commit/fd0d0bb54303451971658d716079bd3d5653e9fd))
+* **i18n:** add i18n support for navigation, error pages and clipping details ([cde3657](https://github.com/clippingkk/web/commit/cde3657dd08bb1584159daac4c8e7d6cf2a985aa))
+
+
+### Miscellaneous Chores
+
+* release 5.13.17 ([7e99738](https://github.com/clippingkk/web/commit/7e9973883c6c6382fa0642d1446827dd8005c3f7))
+
 ## [5.13.16](https://github.com/clippingkk/web/compare/v5.13.15...v5.13.16) (2025-05-31)
 
 
