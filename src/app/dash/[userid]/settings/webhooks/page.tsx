@@ -32,7 +32,7 @@ async function WebhooksPage(props: Props) {
     return redirect(`/dash/${userid}/profile`)
   }
 
-  const myUidInt = myUid ? parseInt(myUid) : undefined
+  const myUidInt = parseInt(myUid)
 
   const { data: profileResponse } = await doApolloServerQuery<
     ProfileQuery,

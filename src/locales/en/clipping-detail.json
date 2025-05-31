@@ -1,0 +1,12 @@
+{
+  "app": {
+    "clipping": {
+      "embed": {
+        "dataUnavailable": "Clipping data is not available.",
+        "copied": "Copied! Paste it into your website.",
+        "copyFailed": "Failed to copy.",
+        "title": "Embed HTML"
+      }
+    }
+  }
+}

@@ -8,6 +8,7 @@ import { useUpdateClippingBookIdMutation } from '../../schema/generated'
 import { WenquBook } from '../../services/wenqu'
 import BookCandidate from './bookCandidate'
 
+import InputField from '@annatarhe/lake-ui/form-input-field'
 import Button from '../button/button'
 import LoadingIcon from '../icons/loading.svg'
 import Empty from './empty'
@@ -73,8 +74,8 @@ function BookInfoChanger(props: BookInfoChangerProps) {
       isOpen={props.visible}
       title={t('app.clipping.update')}
     >
-      <div>
-        <input
+      <div className="p-4">
+        <InputField
           // leftSection={<MagnifyingGlassIcon className="ml-2 h-4 w-4" />}
           type="search"
           max={64}
@@ -83,7 +84,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
           placeholder={t('app.clipping.updatePlaceholder') ?? ''}
         />
       </div>
-      <div>
+      <div className="p-4">
         <p className="bg-linear-to-br p-2">
           {t('app.clipping.updateCandidatesCount', {
             count: candidates.data?.count ?? 0,
@@ -125,7 +126,7 @@ function BookInfoChanger(props: BookInfoChangerProps) {
         </ul>
       </div>
 
-      <div>
+      <div className="p-4">
         <Button
           variant="primary"
           fullWidth

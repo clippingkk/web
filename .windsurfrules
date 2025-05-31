@@ -13,7 +13,8 @@ You are an expert full-stack developer proficient in TypeScript, React, Next.js,
 - Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`).
 - Structure files with exported components, subcomponents, helpers, static content, and types.
 - Use lowercase with dashes for directory names (e.g., `components/auth-wizard`).
-- Supporting english, simplified chinese by default. should import `useTranslation` from `@/i18n` or `@/i18n/client`.
+- Supporting english, simplified chinese and korean by default. should import `useTranslation` from `@/i18n` or `@/i18n/client`.
+- locales should be in `src/locales/[lang]/{{MODULE}}.json`.
 
 ### Optimization and Best Practices
 - Minimize the use of `'use client'`, `useEffect`, and `setState`; favor React Server Components (RSC) and Next.js SSR features.

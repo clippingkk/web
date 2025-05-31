@@ -1,0 +1,26 @@
+{
+  "app": {
+    "menu": {
+      "logout": {
+        "success": "안녕히 가세요",
+        "title": "로그아웃"
+      },
+      "search": {
+        "title": "검색"
+      },
+      "settings": "설정",
+      "viewProfile": "프로필 보기",
+      "my": "마이페이지",
+      "bindPhone": "휴대폰 연동",
+      "read": "읽기",
+      "square": "광장",
+      "upload": "업로드"
+    },
+    "slogan": "읽기 · 성찰 · 깨우침: 선함을 발견하고, 진리를 추구하며, 서로를 밝히다.",
+    "loginByQRCode": {
+      "title": "QR 코드로 로그인",
+      "scanInstruction": "휴대폰의 ClippingKK 앱으로 위의 QR 코드를 스캔하세요.",
+      "downloadInstruction": "아직 다운로드하지 않으셨다면, 앱스토어에서 'ClippingKK'를 검색해 보세요."
+    }
+  }
+}

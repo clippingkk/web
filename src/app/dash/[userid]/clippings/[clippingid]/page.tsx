@@ -1,34 +1,44 @@
-import React from 'react'
-import { duration3Days } from '@/hooks/book'
-import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument, ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated'
-import { getReactQueryClient } from '@/services/ajax'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import { generateMetadata as clippingGenerateMetadata } from '@/components/og/og-with-clipping'
-import { Metadata } from 'next'
-import { getApolloServerClient } from '@/services/apollo.server'
-import { cookies } from 'next/headers'
-import styles from './clipping.module.css'
-import Link from 'next/link'
+import ClippingRichContent from '@/components/text-content/clipping-rich-content'
+import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
+import { duration3Days } from '@/hooks/book'
 import { useTranslation } from '@/i18n'
+import {
+  FetchClippingDocument,
+  FetchClippingQuery,
+  FetchClippingQueryVariables,
+  ProfileDocument,
+  ProfileQuery,
+  ProfileQueryVariables,
+} from '@/schema/generated'
+import { isGrandAdmin } from '@/services/admin'
+import { getReactQueryClient } from '@/services/ajax'
+import { getApolloServerClient } from '@/services/apollo.server'
+import { IN_APP_CHANNEL } from '@/services/channel'
+import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
+import { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+import ClippingSidebar from './clipping-sidebar'
+import styles from './clipping.module.css'
 import CommentContainer from './comment-container'
 import Reactions from './reactions'
-import ClippingRichContent from '@/components/text-content/clipping-rich-content'
-import { isGrandAdmin } from '@/services/admin'
-import ClippingSidebar from './clipping-sidebar'
-import { IN_APP_CHANNEL } from '@/services/channel'
-import Image from 'next/image'
-import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 
 type PageProps = {
-  params: Promise<{ clippingid: string, userid: string }>
+  params: Promise<{ clippingid: string; userid: string }>
   searchParams: Promise<{ iac: string }>
 }
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const { clippingid } = (await props.params)
+  const { clippingid } = await props.params
   const cid = ~~clippingid
 
   const client = getApolloServerClient()
-  const clippingsResponse = await client.query<FetchClippingQuery, FetchClippingQueryVariables>({
+  const clippingsResponse = await client.query<
+    FetchClippingQuery,
+    FetchClippingQueryVariables
+  >({
     query: FetchClippingDocument,
     fetchPolicy: 'network-only',
     variables: {
@@ -42,7 +52,8 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   if (bookID && bookID.length > 3) {
     const bs = await rq.fetchQuery({
       queryKey: ['wenqu', 'books', 'dbId', bookID],
-      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
+      queryFn: () =>
+        wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
       staleTime: duration3Days,
       gcTime: duration3Days,
     })
@@ -51,7 +62,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
   return clippingGenerateMetadata({
     clipping: clippingsResponse.data.clipping,
-    book: b
+    book: b,
   })
 }
 
@@ -63,19 +74,24 @@ async function Page(props: PageProps) {
   const iac = (await props.searchParams).iac
   const cid = ~~clippingid
   const client = getApolloServerClient()
-  const clippingsResponse = await client.query<FetchClippingQuery, FetchClippingQueryVariables>({
+  const clippingsResponse = await client.query<
+    FetchClippingQuery,
+    FetchClippingQueryVariables
+  >({
     query: FetchClippingDocument,
     fetchPolicy: 'network-only',
     variables: {
       id: ~~cid,
     },
     context: {
-      headers: token ? {
-        headers: {
-          'Authorization': 'Bearer ' + token
-        },
-      } : undefined
-    }
+      headers: token
+        ? {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          }
+        : undefined,
+    },
   })
 
   let myProfile: ProfileQuery['me'] | undefined = undefined
@@ -86,10 +102,12 @@ async function Page(props: PageProps) {
         id: ~~uid,
       },
       context: {
-        headers: token ? {
-          'Authorization': 'Bearer ' + token
-        } : undefined
-      }
+        headers: token
+          ? {
+              Authorization: 'Bearer ' + token,
+            }
+          : undefined,
+      },
     })
     myProfile = p.data.me
   }
@@ -100,7 +118,8 @@ async function Page(props: PageProps) {
   if (bookID && bookID.length > 3) {
     const bs = await rq.fetchQuery({
       queryKey: ['wenqu', 'books', 'dbId', bookID],
-      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
+      queryFn: () =>
+        wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
       staleTime: duration3Days,
       gcTime: duration3Days,
     })
@@ -110,7 +129,9 @@ async function Page(props: PageProps) {
   const clipping = clippingsResponse.data.clipping
   const creator = clipping.creator
   const me = myProfile
-  const isPremium = me?.premiumEndAt ?new Date(me.premiumEndAt).getTime() > new Date().getTime(): false
+  const isPremium = me?.premiumEndAt
+    ? new Date(me.premiumEndAt).getTime() > new Date().getTime()
+    : false
   // const clippingAt = useLocalTime(clipping?.clipping.createdAt)
   const clippingAt = clipping?.createdAt
   const { t } = await useTranslation()
@@ -118,26 +139,32 @@ async function Page(props: PageProps) {
   return (
     <>
       <div className={`${styles.clipping} page anna-fade-in`}>
-        <div className='flex mt-4 lg:mt-24 flex-col lg:flex-row with-slide-in gap-4'>
+        <div className="with-slide-in mt-4 flex flex-col gap-4 lg:mt-24 lg:flex-row">
           <div
-            className={'my-4 p-4 rounded-xl shadow-sm dark:bg-slate-800 bg-opacity-50 flex-3 text-black dark:text-slate-200 lg:p-10'}
+            className={
+              'bg-opacity-50 my-4 flex-3 rounded-xl p-4 text-black shadow-sm lg:p-10 dark:bg-slate-800 dark:text-slate-200'
+            }
             data-glow
-            style={{
-              '--base': 80,
-              '--spread': 500,
-              '--outer': 1,
-              backdropFilter: 'blur(calc(var(--cardblur, 5) * 1px))'
-            } as React.CSSProperties}
+            style={
+              {
+                '--base': 80,
+                '--spread': 500,
+                '--outer': 1,
+                backdropFilter: 'blur(calc(var(--cardblur, 5) * 1px))',
+              } as React.CSSProperties
+            }
           >
             <>
-              <h1 className='lg:text-3xl text-xl font-bold my-2 font-lxgw'>
+              <h1 className="font-lxgw my-2 text-xl font-bold lg:text-3xl">
                 {bookData?.title ?? clipping.title}
                 {/* <h6 className='text-gray-500 text-xs ml-4 inline-block dark:text-gray-300'>
                 {clipping.clipping.title}
               </h6> */}
               </h1>
-              <h3 className='font-light lg:text-lg my-4 font-lxgw'>{bookData?.author}</h3>
-              <hr className='bg-gray-400 my-12' />
+              <h3 className="font-lxgw my-4 font-light lg:text-lg">
+                {bookData?.author}
+              </h3>
+              <hr className="my-12 bg-gray-400" />
               {/* <ClippingContent
               className='lg:text-4xl text-3xl lg:leading-loose leading-normal font-lxgw'
               content={clipping?.clipping.content ?? ''}
@@ -145,29 +172,42 @@ async function Page(props: PageProps) {
               <ClippingRichContent
                 isPremium={isPremium}
                 isGrandAdmin={isGrandAdmin({ id: me?.id })}
-                className='lg:text-4xl text-3xl lg:leading-loose leading-normal font-lxgw'
+                className="font-lxgw text-3xl leading-normal lg:text-4xl lg:leading-loose"
                 richContent={clipping.richContent}
                 clippingId={clipping.id}
                 bookId={clipping.bookID}
               />
 
-              <hr className='bg-gray-400 my-12' />
-              <Reactions reactions={clipping.reactionData} uid={uid ? ~~uid : undefined} cid={clipping.id || -1} />
-              <hr className='bg-gray-400 my-12' />
-              <footer className='flex justify-between flex-col lg:flex-row mt-4'>
+              <hr className="my-12 bg-gray-400" />
+              <Reactions
+                reactions={clipping.reactionData}
+                uid={uid ? ~~uid : undefined}
+                cid={clipping.id || -1}
+              />
+              <hr className="my-12 bg-gray-400" />
+              <footer className="mt-4 flex flex-col justify-between lg:flex-row">
                 {me?.id === 0 && (
-                  (<Link href={'/auth/auth-v4'} className='flex justify-start items-center w-full'>
+                  <Link
+                    href={'/auth/auth-v4'}
+                    className="flex w-full items-center justify-start"
+                  >
                     <Image
-                      src={creator?.avatar.startsWith('http') ? creator.avatar : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`}
-                      className='w-12 h-12 rounded-full transform hover:scale-110 duration-300 shadow-2xl object-cover inline-block'
+                      src={
+                        creator?.avatar.startsWith('http')
+                          ? creator.avatar
+                          : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`
+                      }
+                      className="inline-block h-12 w-12 transform rounded-full object-cover shadow-2xl duration-300 hover:scale-110"
                       alt={creator.name}
                       width={48}
                       height={48}
                     />
-                    <span className='ml-4 text-gray-700 dark:text-gray-200 font-light'>{creator?.name}</span>
-                  </Link>)
+                    <span className="ml-4 font-light text-gray-700 dark:text-gray-200">
+                      {creator?.name}
+                    </span>
+                  </Link>
                 )}
-                <time className='lg:text-base text-sm font-light w-full text-gray-700 flex items-center justify-end'>
+                <time className="flex w-full items-center justify-end text-sm font-light text-gray-700 lg:text-base">
                   {t('app.clipping.at')}: {clippingAt}
                 </time>
               </footer>

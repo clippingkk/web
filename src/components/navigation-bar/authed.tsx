@@ -94,7 +94,7 @@ type LoggedNavigationBarProps = {
 
 function LoggedNavigationBar(props: LoggedNavigationBarProps) {
   const { uidOrDomain, onPhoneLogin, onSearch, profile: profileData } = props
-  const { t } = useTranslation()
+  const { t } = useTranslation(undefined, 'navigation')
   const router = useRouter()
   const isPremium = useIsPremium(profileData.premiumEndAt)
 
@@ -161,13 +161,13 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                 />
                 <div className="flex flex-col gap-4">
                   <Tooltip content={profileData.name} noWrap>
-                    <h3 className="max-w-48 overflow-hidden text-lg font-bold text-ellipsis">
+                    <h3 className="max-w-48 overflow-hidden text-lg font-bold text-ellipsis dark:text-white">
                       {profileData.name}
                     </h3>
                   </Tooltip>
                   <Link
                     href={`/dash/${uidOrDomain}/profile`}
-                    className="text-sm text-indigo-600 hover:underline dark:text-indigo-400"
+                    className="text-sm text-indigo-600 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300"
                   >
                     {t('app.menu.viewProfile')}
                   </Link>
@@ -180,7 +180,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
               <div className="flex flex-col">
                 <Link
                   href={`/dash/${uidOrDomain}/profile`}
-                  className="flex items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                  className="flex items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800/50"
                 >
                   <LinkIndicator>
                     <User
@@ -192,7 +192,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                 </Link>
 
                 <button
-                  className="flex cursor-pointer items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                  className="flex cursor-pointer items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800/50"
                   onClick={onPhoneLogin}
                 >
                   <Smartphone
@@ -204,7 +204,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
 
                 <Link
                   href={`/dash/${uidOrDomain}/settings/web`}
-                  className="flex items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                  className="flex items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800/50"
                 >
                   <LinkIndicator>
                     <Settings
@@ -225,7 +225,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
                   onClick={handleLogout}
                 >
                   <LogOut size={18} className="text-red-400" />
-                  <span>{t('app.menu.logout')}</span>
+                  <span>{t('app.menu.logout.title')}</span>
                 </button>
               </div>
             </div>

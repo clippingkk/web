@@ -1,48 +1,82 @@
 'use client'
 import { useTranslation } from '@/i18n/client'
-import { useCallback } from 'react'
 import { Clipping, User } from '@/schema/generated'
 import { WenquBook } from '@/services/wenqu'
-import toast from 'react-hot-toast'
+import { ClippingData } from '@annatarhe/clippingkk-widget'
 import { Code2 } from 'lucide-react'
-import { SidebarContainer, SidebarButton, SidebarIcon, SidebarText } from './base/container'
+import { useCallback } from 'react'
+import toast from 'react-hot-toast'
+import {
+  SidebarButton,
+  SidebarContainer,
+  SidebarIcon,
+  SidebarText,
+} from './base/container'
 
 type Props = {
-  clipping?: Pick<Clipping, 'id' | 'content' | 'title' | 'createdAt'> & { creator: Pick<User, 'id' | 'name'> }
+  clipping?: Pick<
+    Clipping,
+    'id' | 'content' | 'title' | 'createdAt' | 'pageAt'
+  > & {
+    creator: Pick<User, 'id' | 'name' | 'avatar'>
+  }
   book: WenquBook | null
 }
 
 function CopyEmbedHTMLBtn({ clipping, book }: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation(undefined, 'clipping-detail')
   const onCopyEmbedHtml = useCallback(() => {
+    if (!clipping) {
+      toast.error(
+        t(
+          'app.clipping.embed.dataUnavailable',
+          'Clipping data is not available.'
+        )
+      )
+      return
+    }
+
+    const dataToEmbed: Partial<ClippingData> = {
+      id: clipping.id.toString(),
+      content: clipping.content,
+      book: book?.title ?? clipping.title,
+      author: book?.author ?? '',
+      location: clipping.pageAt,
+      createdAt: clipping.createdAt,
+      creator: {
+        id: clipping.creator.id.toString(),
+        name: clipping.creator.name,
+        avatar: clipping.creator.avatar,
+      },
+    }
+
     const template = `
-    <blockquote class="ck-clipping-card" data-cid='${clipping?.id}'>
-  <p lang="zh" dir="ltr" class="ck-content">
-  ${clipping?.content}
-  </p>
-  <p class="ck-author">
-    —— 《${book?.title ?? clipping?.title}》 <small>${book?.author ?? ''}</small>
-  </p>
-  <p class="ck-info">
-    <span>${clipping?.creator.name}</span> 摘录于 <time>${clipping?.createdAt}</time>
-  </p>
-</blockquote>
-<script async src="https://web-widget-script.pages.dev/bundle.js" charset="utf-8"></script>
+<clippingkk-web-widget
+  clippingid="${clipping.id}"
+  theme="light"
+  clippingdata='${JSON.stringify(dataToEmbed)}'>
+</clippingkk-web-widget>
 `
-    navigator.clipboard.writeText(template).then(() => {
-      toast.success('copied. just paste to your website')
-    })
-  }, [clipping, book])
+    navigator.clipboard
+      .writeText(template)
+      .then(() => {
+        toast.success(
+          t('app.clipping.embed.copied', 'Copied! Paste it into your website.')
+        )
+      })
+      .catch((err) => {
+        console.error('Failed to copy embed HTML:', err)
+        toast.error(t('app.clipping.embed.copyFailed', 'Failed to copy.'))
+      })
+  }, [clipping, book, t])
 
   return (
     <SidebarContainer>
-      <SidebarButton onClick={onCopyEmbedHtml}>
+      <SidebarButton onClick={onCopyEmbedHtml} disabled={!clipping}>
         <SidebarIcon>
-          <Code2 className="w-full h-full" />
+          <Code2 className="h-full w-full" />
         </SidebarIcon>
-        <SidebarText>
-          {t('app.clipping.embed.title')}
-        </SidebarText>
+        <SidebarText>{t('app.clipping.embed.title')}</SidebarText>
       </SidebarButton>
     </SidebarContainer>
   )

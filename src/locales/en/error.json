@@ -1,0 +1,8 @@
+{
+  "error": {
+    "title": "Something went wrong!",
+    "generic": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try again",
+    "goHome": "Return to home page"
+  }
+}

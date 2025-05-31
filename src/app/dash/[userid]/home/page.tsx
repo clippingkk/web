@@ -1,20 +1,26 @@
-import React from 'react'
-import HomePageContent from './content'
-import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
-import { Metadata } from 'next'
-import { ProfileQuery, ProfileQueryVariables, ProfileDocument, BooksQuery, BooksDocument, BooksQueryVariables } from '@/schema/generated'
-import { doApolloServerQuery } from '@/services/apollo.server'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { getReactQueryClient } from '@/services/ajax'
-import { WenquBook, WenquSearchResponse, wenquRequest } from '@/services/wenqu'
-import { duration3Days } from '@/hooks/book'
-import ReadingBook from './reading-book'
-import { useTranslation } from '@/i18n'
-import Link from 'next/link'
-import NoContentAlert from './no-content'
 import AIBookRecommendationButton from '@/components/book-recommendation/ai-book-recommendation-button'
+import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
+import { duration3Days } from '@/hooks/book'
+import { useTranslation } from '@/i18n'
+import {
+  BooksDocument,
+  BooksQuery,
+  BooksQueryVariables,
+  ProfileDocument,
+  ProfileQuery,
+  ProfileQueryVariables,
+} from '@/schema/generated'
+import { getReactQueryClient } from '@/services/ajax'
+import { doApolloServerQuery } from '@/services/apollo.server'
+import { WenquBook, WenquSearchResponse, wenquRequest } from '@/services/wenqu'
 import { ApolloQueryResult } from '@apollo/client'
+import { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import HomePageContent from './content'
+import NoContentAlert from './no-content'
+import ReadingBook from './reading-book'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -26,22 +32,29 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const uid = parseInt(pathUid)
   const tk = ck.get('token')?.value
 
+  if (!tk) {
+    return profileGenerateMetadata({})
+  }
+
   try {
-    const profileResponse = await doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
+    const profileResponse = await doApolloServerQuery<
+      ProfileQuery,
+      ProfileQueryVariables
+    >({
       query: ProfileDocument,
       fetchPolicy: 'network-only',
       variables: {
         id: Number.isNaN(uid) ? -1 : uid,
-        domain: Number.isNaN(uid) ? pathUid : null
+        domain: Number.isNaN(uid) ? pathUid : null,
       },
-      context: tk ? {
+      context: {
         headers: {
-          'Authorization': 'Bearer ' + tk,
+          Authorization: 'Bearer ' + tk,
         },
-      } : undefined
+      },
     })
     return profileGenerateMetadata({
-      profile: profileResponse.data.me
+      profile: profileResponse.data.me,
     })
   } catch (e) {
     console.error(e)
@@ -51,7 +64,11 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 // the home page only available for myself
 async function Page(props: PageProps) {
-  const [params, ck, { t }] = await Promise.all([props.params, cookies(), useTranslation()])
+  const [params, ck, { t }] = await Promise.all([
+    props.params,
+    cookies(),
+    useTranslation(undefined, 'home'),
+  ])
   const { userid } = params
   const myUid = ck.get('uid')?.value
   const token = ck.get('token')?.value
@@ -62,54 +79,61 @@ async function Page(props: PageProps) {
 
   const myUidInt = myUid ? parseInt(myUid) : undefined
 
-  const reqs: [Promise<ApolloQueryResult<ProfileQuery>>, Promise<ApolloQueryResult<BooksQuery>>, Promise<ApolloQueryResult<ProfileQuery>>?] = [
+  const reqs: [
+    Promise<ApolloQueryResult<ProfileQuery>>,
+    Promise<ApolloQueryResult<BooksQuery>>,
+    Promise<ApolloQueryResult<ProfileQuery>>?,
+  ] = [
     doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
       query: ProfileDocument,
       fetchPolicy: 'network-only',
       variables: {
-        id: myUidInt
+        id: myUidInt,
       },
       context: {
         headers: {
-          'Authorization': 'Bearer ' + token
+          Authorization: 'Bearer ' + token,
         },
-      }
+      },
     }),
     doApolloServerQuery<BooksQuery, BooksQueryVariables>({
       query: BooksDocument,
       fetchPolicy: 'network-only',
       context: {
         headers: {
-          'Authorization': 'Bearer ' + token
+          Authorization: 'Bearer ' + token,
         },
       },
       variables: {
         id: myUidInt,
         pagination: {
           limit: 10,
-          offset: 0
+          offset: 0,
         },
       },
     }),
   ]
 
   if (myUid !== userid) {
-    reqs.push(doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
-      query: ProfileDocument,
-      fetchPolicy: 'network-only',
-      variables: {
-        id: Number.isNaN(userid) ? undefined : Number(userid),
-        domain: Number.isNaN(userid) ? userid : undefined
-      },
-      context: {
-        headers: {
-          'Authorization': 'Bearer ' + token
+    reqs.push(
+      doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
+        query: ProfileDocument,
+        fetchPolicy: 'network-only',
+        variables: {
+          id: Number.isNaN(userid) ? undefined : Number(userid),
+          domain: Number.isNaN(userid) ? userid : undefined,
         },
-      }
-    }))
+        context: {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        },
+      })
+    )
   }
 
-  const [profileResponse, booksResponse, accessingProfileResponse] = await Promise.all(reqs)
+  const [profileResponse, booksResponse, accessingProfileResponse] =
+    await Promise.all(reqs)
 
   let firstBook: WenquBook | null = null
 
@@ -121,7 +145,10 @@ async function Page(props: PageProps) {
     if (firstBookId) {
       const b = await getReactQueryClient().fetchQuery({
         queryKey: ['wenqu', 'books', firstBookId],
-        queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${firstBookId}`),
+        queryFn: () =>
+          wenquRequest<WenquSearchResponse>(
+            `/books/search?dbId=${firstBookId}`
+          ),
         staleTime: duration3Days,
         gcTime: duration3Days,
       })
@@ -132,28 +159,30 @@ async function Page(props: PageProps) {
   const recents = profileResponse.data.me.recents
 
   return (
-    <section className='h-full page'>
+    <section className="page h-full">
       {firstBook && (
-        <div className='mt-8 with-slide-in'>
-          <h2 className='text-center font-medium tracking-tight bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent text-4xl relative z-10 flex items-center justify-center mb-8'>
+        <div className="with-slide-in mt-8">
+          <h2 className="relative z-10 mb-8 flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent">
             {t('app.home.reading')}
           </h2>
           <ReadingBook
             book={firstBook}
             clipping={recents?.[0]}
-            uid={myUidInt!} />
+            uid={myUidInt!}
+          />
         </div>
       )}
-      <header className='flex flex-col md:flex-row items-center justify-center gap-4 my-12'>
-        <h2 className='text-center font-medium tracking-tight bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-transparent text-4xl relative z-10'>
+      <header className="my-12 flex flex-col items-center justify-center gap-4 md:flex-row">
+        <h2 className="relative z-10 bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent">
           {t('app.home.title')}
         </h2>
-        <div className='flex items-center gap-3 mt-4 md:mt-0'>
+        <div className="mt-4 flex items-center gap-3 md:mt-0">
           <Link
             href={`/dash/${myUidInt}/unchecked`}
-            className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium py-2 px-6 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px]'>
-            <span className='relative z-10'>{t('app.home.unchecked')}</span>
-            <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+            className="group relative overflow-hidden rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-medium text-white shadow-md transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg"
+          >
+            <span className="relative z-10">{t('app.home.unchecked')}</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </Link>
           <AIBookRecommendationButton
             uid={myUidInt!}
@@ -162,11 +191,17 @@ async function Page(props: PageProps) {
         </div>
       </header>
       {!firstBook && booksResponse.data.books.length === 0 && (
-        <div className='flex flex-wrap items-center justify-center'>
+        <div className="flex flex-wrap items-center justify-center">
           <NoContentAlert domain={userid} />
         </div>
       )}
-      <HomePageContent userid={userid} myUid={myUidInt} targetProfile={accessingProfileResponse?.data?.me ?? profileResponse.data.me} />
+      <HomePageContent
+        userid={userid}
+        myUid={myUidInt}
+        targetProfile={
+          accessingProfileResponse?.data?.me ?? profileResponse.data.me
+        }
+      />
     </section>
   )
 }

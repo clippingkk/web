@@ -1,0 +1,9 @@
+{
+  "app": {
+    "home": {
+      "reading": "Currently Reading",
+      "title": "My Clippings",
+      "unchecked": "Unchecked Clippings"
+    }
+  }
+}

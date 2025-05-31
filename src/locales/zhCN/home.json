@@ -1,0 +1,9 @@
+{
+  "app": {
+    "home": {
+      "reading": "当前在读",
+      "title": "我的剪藏",
+      "unchecked": "未整理的剪藏"
+    }
+  }
+}

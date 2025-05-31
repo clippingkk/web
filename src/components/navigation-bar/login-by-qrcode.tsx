@@ -1,12 +1,14 @@
+import { useTranslation } from '@/i18n/client'
 import { getLocalToken } from '@/services/ajax'
 import { QRCodeCanvas } from 'qrcode.react'
 import logo from '../../assets/logo.png'
 
 function LoginByQRCode() {
   const theToken = getLocalToken()
+  const { t } = useTranslation(undefined, 'navigation')
   return (
     <div className="flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center p-8">
         <QRCodeCanvas
           value={theToken}
           size={250}
@@ -17,12 +19,12 @@ function LoginByQRCode() {
             excavate: true,
           }}
         />
-        <div className="mt-4 text-center">
-          <span>
-            Please scan the QRCode above by `ClippingKK` on your phone
+        <div className="mt-4 flex flex-col gap-1 text-center">
+          <span className="text-sm dark:text-white">
+            {t('app.loginByQRCode.scanInstruction')}
           </span>
-          <span>
-            If you havn`t download yet, you can try to search in AppStore
+          <span className="text-sm dark:text-white">
+            {t('app.loginByQRCode.downloadInstruction')}
           </span>
         </div>
       </div>

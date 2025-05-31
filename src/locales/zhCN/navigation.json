@@ -1,0 +1,26 @@
+{
+  "app": {
+    "menu": {
+      "logout": {
+        "success": "再见",
+        "title": "登出"
+      },
+      "search": {
+        "title": "搜索"
+      },
+      "settings": "设置",
+      "viewProfile": "查看个人资料",
+      "my": "我的主页",
+      "bindPhone": "绑定手机",
+      "read": "阅读",
+      "square": "广场",
+      "upload": "上传"
+    },
+    "slogan": "阅读 · 深思 · 启迪：发现善良，追寻真理，照亮彼此",
+    "loginByQRCode": {
+      "title": "通过二维码登录",
+      "scanInstruction": "请使用手机上的“ClippingKK”APP扫描上方的二维码。",
+      "downloadInstruction": "如果您尚未下载，可以在应用商店搜索“ClippingKK”。"
+    }
+  }
+}

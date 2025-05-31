@@ -1,0 +1,26 @@
+{
+  "app": {
+    "menu": {
+      "logout": {
+        "success": "Bye bye",
+        "title": "Logout"
+      },
+      "search": {
+        "title": "Search"
+      },
+      "settings": "Settings",
+      "viewProfile": "View Profile",
+      "my": "My Page",
+      "bindPhone": "Bind Phone",
+      "read": "Read",
+      "square": "Square",
+      "upload": "Upload"
+    },
+    "slogan": "Read · Reflect · Enlighten: Uncover Kindness. Pursue Truth. Illuminate One Another.",
+    "loginByQRCode": {
+      "title": "Login by QR Code",
+      "scanInstruction": "Please scan the QRCode above with the ClippingKK app on your phone.",
+      "downloadInstruction": "If you haven't downloaded it yet, you can search for 'ClippingKK' in the AppStore."
+    }
+  }
+}

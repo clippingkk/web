@@ -15,7 +15,12 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "i18n-ally.localesPaths": "./src/locales",
+  "i18n-ally.localesPaths": [
+    "src/locales/en",
+    "src/locales/zhCN",
+    "src/locales/ko",
+    "src/i18n"
+  ],
   "i18n-ally.disabled": false,
   "i18n-ally.keystyle": "nested",
 }
