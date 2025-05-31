@@ -86,10 +86,10 @@ async function Page(props: PageProps) {
     context: {
       headers: token
         ? {
-            headers: {
-              Authorization: 'Bearer ' + token,
-            },
-          }
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        }
         : undefined,
     },
   })
@@ -104,8 +104,8 @@ async function Page(props: PageProps) {
       context: {
         headers: token
           ? {
-              Authorization: 'Bearer ' + token,
-            }
+            Authorization: 'Bearer ' + token,
+          }
           : undefined,
       },
     })
