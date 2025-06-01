@@ -1,9 +1,13 @@
 'use client'
 import { useTranslation } from '@/i18n/client'
-import { ProfileQuery, useFollowUserMutation, useUnfollowUserMutation } from '@/schema/generated'
+import {
+  ProfileQuery,
+  useFollowUserMutation,
+  useUnfollowUserMutation,
+} from '@/schema/generated'
 import { toastPromiseDefaultOption } from '@/services/misc'
+import { UserMinus, UserPlus } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { UserPlus, UserMinus } from 'lucide-react'
 
 type Props = {
   isInMyPage: boolean
@@ -22,9 +26,11 @@ function UserActions(props: Props) {
 
   return (
     <button
-      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all duration-300 ${profile.isFan 
-        ? 'bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600' 
-        : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-md hover:shadow-lg'}`}
+      className={`flex items-center gap-2 rounded-xl px-4 py-2.5 transition-all duration-300 ${
+        profile.isFan
+          ? 'bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
+          : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md hover:from-blue-600 hover:to-purple-700 hover:shadow-lg'
+      }`}
       title={t(`app.profile.fans.${profile.isFan ? 'un' : ''}follow`) ?? ''}
       disabled={followLoading || unfollowLoading}
       onClick={() => {
@@ -36,17 +42,21 @@ function UserActions(props: Props) {
         let mutationJob: Promise<any>
         if (profile.isFan) {
           mutationJob = doUnfollow({
-            variables: params
+            variables: params,
           })
         } else {
           mutationJob = doFollow({
-            variables: params
+            variables: params,
           })
         }
         return toast.promise(mutationJob, toastPromiseDefaultOption)
       }}
     >
-      {profile.isFan ? <UserMinus className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />}
+      {profile.isFan ? (
+        <UserMinus className="h-4 w-4" />
+      ) : (
+        <UserPlus className="h-4 w-4" />
+      )}
       <span>{t(`app.profile.fans.${profile.isFan ? 'un' : ''}follow`)}</span>
     </button>
   )

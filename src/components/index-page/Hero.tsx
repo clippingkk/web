@@ -1,8 +1,8 @@
+import { AppFeatures } from '@/constants/features'
 import { useTranslation } from '@/i18n/index'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
-import { AppFeatures } from '../../constants/features'
 import PureImages from '../backgrounds/pure-images'
 import MovingLightsBackground from './moving-lights-background'
 
