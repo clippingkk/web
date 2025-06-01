@@ -12,6 +12,15 @@
       },
       "bookCandidate": {
         "ratingTooltip": "Douban: {{rating}}/10"
+      },
+      "meta": {
+        "published": "Published",
+        "pages": "Pages"
+      },
+      "summary": {
+        "title": "Summary",
+        "showMore": "Show more",
+        "showLess": "Show less"
       }
     }
   }

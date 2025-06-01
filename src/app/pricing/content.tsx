@@ -1,11 +1,11 @@
+import FreePlanFeatures from '@/components/pricing/free-plan-features'
+import PlanCard from '@/components/pricing/plan-card'
+import PremiumPlanFeatures from '@/components/pricing/premium-plan-features'
 import { checkIsPremium } from '@/compute/user'
 import { useTranslation } from '@/i18n'
+import { ProfileQuery } from '@/schema/generated'
 import { Book, ChevronRight, Sparkles } from 'lucide-react'
 import Link from 'next/link'
-import FreePlanFeatures from '../../components/pricing/free-plan-features'
-import PlanCard from '../../components/pricing/plan-card'
-import PremiumPlanFeatures from '../../components/pricing/premium-plan-features'
-import { ProfileQuery } from '../../schema/generated'
 
 type PricingContentProps = {
   profile?: ProfileQuery['me'] | null
@@ -14,7 +14,7 @@ type PricingContentProps = {
 
 async function PricingContent(props: PricingContentProps) {
   const { profile, checkoutUrl } = props
-  const { t } = await useTranslation()
+  const { t } = await useTranslation(undefined, 'pricing')
 
   const isPremium = checkIsPremium(profile?.premiumEndAt)
 
@@ -40,16 +40,16 @@ async function PricingContent(props: PricingContentProps) {
           <div className="mb-6 inline-flex items-center rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 px-4 py-2 shadow-lg shadow-indigo-500/5 backdrop-blur-sm">
             <Sparkles className="mr-2 h-5 w-5 text-indigo-400" />
             <span className="text-sm font-medium tracking-wide text-indigo-400">
-              {t('app.pricing.unlock')}
+              {t('unlock')}
             </span>
           </div>
 
-          <h2 className="mb-8 bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-600 bg-clip-text text-5xl font-black tracking-tight text-transparent md:text-6xl lg:text-7xl">
-            {t('app.pricing.title')}
+          <h2 className="mb-8 bg-gradient-to-r from-indigo-500 via-violet-500 to-rose-400 bg-clip-text text-5xl font-black tracking-tight text-transparent md:text-6xl lg:text-7xl dark:from-indigo-400 dark:via-violet-400 dark:to-rose-300">
+            {t('title')}
           </h2>
 
-          <p className="mx-auto w-full max-w-3xl text-xl leading-relaxed font-light opacity-80 md:text-2xl">
-            {t('app.pricing.subtitle')}
+          <p className="mx-auto w-full max-w-3xl text-xl leading-relaxed font-light opacity-80 md:text-2xl dark:text-white">
+            {t('subtitle')}
           </p>
         </div>
 
@@ -70,8 +70,8 @@ async function PricingContent(props: PricingContentProps) {
           </div>
 
           <PlanCard
-            title={t('app.plan.free.name')}
-            description={t('app.plan.free.description')}
+            title={t('plan.free.name')}
+            description={t('plan.free.description')}
             plan="free"
             features={
               <FreePlanFeatures>
@@ -83,7 +83,7 @@ async function PricingContent(props: PricingContentProps) {
                     className="group relative z-10 inline-flex w-full items-center justify-center overflow-hidden rounded-xl bg-[#045fab] px-6 py-4 text-xl font-bold text-white shadow-lg shadow-[#045fab]/30 transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl hover:shadow-[#045fab]/50 active:scale-[0.98]"
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      {t('app.plan.free.goto')}
+                      {t('plan.free.goto')}
                     </span>
                     {/* Fancy hover effects */}
                     <span className="absolute inset-0 z-0 bg-[#0470c3] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
@@ -100,11 +100,11 @@ async function PricingContent(props: PricingContentProps) {
           <PlanCard
             title={
               <h2 className="bg-gradient-to-r from-amber-400 to-fuchsia-500 bg-clip-text text-5xl font-bold text-transparent">
-                {t('app.plan.premium.name')}
+                {t('plan.premium.name')}
               </h2>
             }
             plan="premium"
-            description={t('app.plan.premium.description')}
+            description={t('plan.premium.description')}
             features={
               <PremiumPlanFeatures>
                 <div className="w-full">
@@ -115,7 +115,7 @@ async function PricingContent(props: PricingContentProps) {
                     >
                       <span className="relative z-10 flex items-center gap-2">
                         <Book className="h-5 w-5" />
-                        {t('app.go')}
+                        {t('go')}
                       </span>
                       {/* Fancy hover effects */}
                       <span className="absolute inset-0 z-0 bg-[#0470c3] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
@@ -131,7 +131,7 @@ async function PricingContent(props: PricingContentProps) {
                     >
                       <span className="relative z-10 flex items-center gap-2">
                         <Sparkles className="h-5 w-5" />
-                        {t('app.plan.premium.goto')}
+                        {t('plan.premium.goto')}
                       </span>
                       {/* Fancy hover effects */}
                       <span className="absolute inset-0 z-0 bg-[#7b1fa2] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
@@ -162,21 +162,23 @@ async function PricingContent(props: PricingContentProps) {
             </div>
             <div className="relative flex justify-center">
               <span className="rounded-full bg-indigo-500/10 px-4 py-1 text-sm font-medium text-indigo-300 ring-1 ring-indigo-500/20 backdrop-blur-sm">
-                {t('app.pricing.help')}
+                {t('help')}
               </span>
             </div>
           </div>
 
-          <p className="mb-6 text-lg opacity-80 md:text-xl">
-            {t('app.pricing.questions')}
+          <p className="mb-6 text-lg opacity-80 md:text-xl dark:text-white">
+            {t('questions')}
           </p>
 
           <a
             href="mailto:annatar.he+clippingkk@gmail.com"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#045fab]/10 px-6 py-3 text-[#045fab] backdrop-blur-sm transition-all duration-300 hover:bg-[#045fab]/15 hover:text-[#045fab] hover:shadow-lg hover:shadow-[#045fab]/20 hover:-translate-y-1"
+            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#045fab]/10 px-6 py-3 text-[#045fab] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-[#045fab]/15 hover:text-[#045fab] hover:shadow-lg hover:shadow-[#045fab]/20"
             referrerPolicy="no-referrer"
           >
-            <span className="font-medium relative z-10">annatar.he+clippingkk@gmail.com</span>
+            <span className="relative z-10 font-medium">
+              annatar.he+clippingkk@gmail.com
+            </span>
             <span className="absolute inset-0 z-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/5 to-indigo-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
           </a>
         </div>

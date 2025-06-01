@@ -72,7 +72,7 @@ async function Footer() {
               </h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                 {t(
-                  'footer.tagline',
+                  'app.slogan',
                   'Share your favorite book clippings with the world'
                 )}
               </p>

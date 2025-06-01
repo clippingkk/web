@@ -1,3 +1,4 @@
+'use client'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import autoAnimate from '@formkit/auto-animate'
 

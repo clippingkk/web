@@ -12,6 +12,15 @@
       },
       "bookCandidate": {
         "ratingTooltip": "豆瓣: {{rating}}/10"
+      },
+      "meta": {
+        "published": "出版日期",
+        "pages": "页数"
+      },
+      "summary": {
+        "title": "摘要",
+        "showMore": "展开",
+        "showLess": "闭合"
       }
     }
   }

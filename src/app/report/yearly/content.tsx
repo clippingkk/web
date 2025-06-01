@@ -1,103 +1,30 @@
-'use client'
 import logo from '@/assets/logo.png'
 import Avatar from '@/components/avatar/avatar'
 import ReportBookSection from '@/components/reports/report-book-section'
 import ReportHero from '@/components/reports/report-hero'
-import { useMultipleBook } from '@/hooks/book'
-import { useBackgroundImage } from '@/hooks/theme'
-import { useTranslation } from '@/i18n/client'
-import { Clipping, FetchYearlyReportQuery } from '@/schema/generated'
+import { useTranslation } from '@/i18n'
+import { FetchYearlyReportQuery } from '@/schema/generated'
 import { WenquBook } from '@/services/wenqu'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
-import React, { useEffect, useMemo, useState } from 'react'
+import PageContainer from './page-container'
 
-type PageContainerProps = {
-  bgImage?: string | { src: string; blurHash: string }
-  children: React.ReactElement
-}
-
-function PageContainer(props: PageContainerProps) {
-  const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
-    let backgroundImage: string | undefined
-    const bgImg = props.bgImage
-    if (!bgImg) {
-      return undefined
-    }
-    if (typeof bgImg === 'string') {
-      backgroundImage = `url(${bgImg})`
-    }
-
-    if (typeof bgImg === 'object') {
-      backgroundImage = `url(${bgImg.src})`
-    }
-    return {
-      backgroundImage,
-    }
-  }, [props.bgImage])
-  return (
-    <section
-      className="flex min-h-screen w-screen flex-col items-center justify-center bg-cover bg-center bg-no-repeat"
-      style={containerStyle}
-    >
-      <div className="dark:bg-opacity-80 bg-opacity-60 flex min-h-screen w-screen flex-col items-center justify-center bg-gray-400 backdrop-blur-xl dark:bg-gray-900">
-        {props.children}
-      </div>
-    </section>
-  )
-}
 type ReportYearlyProps = {
   uid: number
   year: number
   reportInfoServerData: FetchYearlyReportQuery
   dbIds: string[]
+  books: WenquBook[]
 }
 
-function ReportYearly(props: ReportYearlyProps) {
-  const { year, dbIds, reportInfoServerData: data } = props
-
-  const { books } = useMultipleBook(dbIds)
-  const { t } = useTranslation()
-
-  const [_, setRandomQuote] = useState<{
-    book: WenquBook
-    clipping: Pick<Clipping, 'id' | 'content'>
-  } | null>(null)
-
-  useEffect(() => {
-    function flushQuote() {
-      const bkss = data.reportYearly.books
-      if (bkss.length === 0) {
-        setRandomQuote(null)
-        return
-      }
-      const cks = bkss[Math.floor(Math.random() * bkss.length)]
-      const bk = books.find((x) => x.doubanId.toString() === cks.doubanId)
-      if (cks.clippings.length === 0 || !bk) {
-        setRandomQuote(null)
-        return
-      }
-      const ck = cks.clippings[Math.floor(Math.random() * cks.clippings.length)]
-      setRandomQuote({
-        book: bk,
-        clipping: ck,
-      })
-    }
-    flushQuote()
-    const t = setInterval(() => {
-      flushQuote()
-    }, 10_000)
-    return () => {
-      clearInterval(t)
-    }
-  }, [books, data.reportYearly.books])
-
-  const defaultBgImage = useBackgroundImage()
+async function ReportYearly(props: ReportYearlyProps) {
+  const { year, reportInfoServerData: data, books } = props
+  const { t } = await useTranslation()
 
   return (
     <div className="anna-page-container h-min-screen flex w-full items-center justify-center bg-cover bg-center bg-no-repeat">
       <div className="dark:bg-opacity-80 bg-opacity-60 min-h-screen w-full bg-gray-400 backdrop-blur-xl dark:bg-gray-900">
-        <PageContainer bgImage={defaultBgImage}>
+        <PageContainer>
           <div className="container flex min-h-screen flex-col items-center justify-center">
             <div className="w-full flex-1" />
             <ReportHero
@@ -144,9 +71,9 @@ function ReportYearly(props: ReportYearlyProps) {
           ))}
         </div>
 
-        <PageContainer bgImage={defaultBgImage}>
+        <PageContainer>
           <div>
-            <h2 className="mb-8 text-center text-xl text-gray-700 lg:text-3xl 2xl:text-6xl dark:text-gray-200">
+            <h2 className="mb-8 text-center text-xl font-bold text-gray-700 lg:text-3xl 2xl:text-6xl dark:text-gray-200">
               {t('app.slogan')}
             </h2>
             <p className="w-full px-8 text-center text-sm text-gray-700 lg:text-lg 2xl:text-xl dark:text-gray-500">

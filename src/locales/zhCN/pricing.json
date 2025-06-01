@@ -1,0 +1,20 @@
+{
+  "unlock": "解锁高级功能",
+  "title": "选择完美计划",
+  "subtitle": "选择最适合您需求的计划，解锁 ClippingKK 提供的所有功能。",
+  "help": "帮助与支持",
+  "questions": "对我们的计划有疑问？请联系我们：",
+  "plan": {
+    "free": {
+      "name": "免费计划",
+      "description": "助您开始使用 ClippingKK 的基础功能。",
+      "goto": "免费开始"
+    },
+    "premium": {
+      "name": "高级计划",
+      "description": "解锁所有特性、无限量剪藏及优先支持。",
+      "goto": "升级到高级版"
+    }
+  },
+  "go": "前往控制台"
+}

@@ -1,0 +1,20 @@
+{
+  "unlock": "Unlock Premium Features",
+  "title": "Choose the Perfect Plan",
+  "subtitle": "Select the plan that best fits your needs and unlock all the features ClippingKK has to offer.",
+  "help": "Help & Support",
+  "questions": "Have questions about our plans? Contact us at",
+  "plan": {
+    "free": {
+      "name": "Free Plan",
+      "description": "Basic features to get you started with ClippingKK.",
+      "goto": "Get Started Free"
+    },
+    "premium": {
+      "name": "Premium Plan",
+      "description": "Unlock all features, unlimited clippings, and priority support.",
+      "goto": "Upgrade to Premium"
+    }
+  },
+  "go": "Go to Dashboard"
+}

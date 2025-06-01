@@ -12,6 +12,15 @@
       },
       "bookCandidate": {
         "ratingTooltip": "두반: {{rating}}/10"
+      },
+      "meta": {
+        "published": "게시됨",
+        "pages": "페이지 수"
+      },
+      "summary": {
+        "title": "요약",
+        "showMore": "열기",
+        "showLess": "닫기"
       }
     }
   }
