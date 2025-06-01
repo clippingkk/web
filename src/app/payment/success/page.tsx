@@ -1,16 +1,14 @@
+import { getReactQueryClient } from '@/services/ajax'
+import { getPaymentOrderInfo } from '@/services/payment'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
-import React from 'react'
-import { getPaymentOrderInfo } from '../../../services/payment'
-import { getReactQueryClient } from '../../../services/ajax'
 import PaymentSuccessContent from './content'
 
 type PaymentSuccessPageProps = {
-  searchParams: Promise<{ sessionId: string, uid: string }>
+  searchParams: Promise<{ sessionId: string; uid: string }>
 }
 
 async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
-  // const sessionId = useRouter().query.sessionId as string
-  const { sessionId, uid } = (await props.searchParams)
+  const { sessionId, uid } = await props.searchParams
 
   const rq = getReactQueryClient()
 
@@ -26,11 +24,8 @@ async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
 
   return (
     <HydrationBoundary state={d}>
-      <div className=' w-full h-full flex flex-col items-center justify-center dark:text-gray-100 pt-20'>
-        <PaymentSuccessContent
-          sessionId={sessionId}
-          homeLink={homeLink}
-        />
+      <div className="flex h-full w-full flex-col items-center justify-center pt-20 dark:text-gray-100">
+        <PaymentSuccessContent sessionId={sessionId} homeLink={homeLink} />
       </div>
     </HydrationBoundary>
   )
