@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.18](https://github.com/clippingkk/web/compare/v5.13.17...v5.13.18) (2025-06-01)
+
+
+### Features
+
+* **report:** reorganize i18n files and improve UI components with dark mode support ([e9f8d87](https://github.com/clippingkk/web/commit/e9f8d87b1aee124e1b9bc561acfc94f6e5b53cf2))
+
+
+### Bug Fixes
+
+* **app:** update imports and optimize file paths using module aliases ([7590030](https://github.com/clippingkk/web/commit/7590030b4ab32de34551e217393d8fbe497c9e55))
+* **style:** format code with prettier and improve imports organization ([57e78fd](https://github.com/clippingkk/web/commit/57e78fdd6862a18078b046d27a869e61144ad26c))
+
+
+### Miscellaneous Chores
+
+* release 5.13.18 ([476f2a4](https://github.com/clippingkk/web/commit/476f2a403a7e7dea9c3fe0327b6c25efa2b4e2ca))
+
 ## [5.13.17](https://github.com/clippingkk/web/compare/v5.13.16...v5.13.17) (2025-05-31)
 
 
