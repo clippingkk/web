@@ -1,8 +1,8 @@
-import { useTranslation } from '@/i18n/client'
+import { useTranslation } from '@/i18n'
 import { ExternalLink, FileText, HelpCircle, Youtube } from 'lucide-react'
 
-function ClippingsUploadHelp() {
-  const { t } = useTranslation(undefined, 'upload')
+async function ClippingsUploadHelp() {
+  const { t } = await useTranslation(undefined, 'upload')
 
   return (
     <div className="w-full rounded-xl bg-white/70 p-6 shadow-lg backdrop-blur-sm dark:bg-gray-800/70">
