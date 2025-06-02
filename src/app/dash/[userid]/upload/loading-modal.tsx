@@ -1,6 +1,8 @@
 import AnimateOnChange from '@/components/SimpleAnimation/AnimateOnChange'
 import { useTranslation } from '@/i18n/client'
+import { cn } from '@/lib/utils'
 import { UploadStep } from '@/services/uploader'
+import Modal from '@annatarhe/lake-ui/modal'
 import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
 import { useMemo } from 'react'
 
@@ -9,9 +11,11 @@ type LoadingModalProps = {
   count: number
   at: number
   message?: string
+  visible?: boolean
 }
 
 function LoadingModal(props: LoadingModalProps) {
+  const { visible = false } = props
   const { t } = useTranslation()
   const progress = useMemo(() => {
     return Math.min(100, Math.round((props.at / props.count) * 100)) || 0
@@ -40,8 +44,12 @@ function LoadingModal(props: LoadingModalProps) {
   }
 
   return (
-    <div className="anna-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md">
-      <div className="mx-4 flex w-full max-w-xl flex-col items-center rounded-xl border border-gray-200 bg-white px-6 py-8 shadow-2xl dark:border-gray-800 dark:bg-gray-900">
+    <Modal
+      title={t('app.upload.tips.extracting')}
+      isOpen={visible}
+      onClose={() => {}}
+    >
+      <div className="p-6">
         <div className="mb-8 w-full">
           <h2 className="mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-center text-2xl font-bold text-transparent md:text-3xl">
             {t('app.upload.tips.extracting')}
@@ -75,7 +83,19 @@ function LoadingModal(props: LoadingModalProps) {
                   return (
                     <div key={step} className="flex flex-col items-center">
                       <div
-                        className={`flex h-8 w-8 items-center justify-center rounded-full ${isCurrentStep(step as UploadStep) ? 'bg-blue-500 text-white dark:bg-blue-600' : ''} ${isPastStep(step as UploadStep) ? 'bg-green-100 text-green-500 dark:bg-green-900' : ''} ${!isCurrentStep(step as UploadStep) && !isPastStep(step as UploadStep) ? 'bg-gray-100 dark:bg-gray-800' : ''} transition-all duration-300`}
+                        className={cn(
+                          'flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300',
+                          isCurrentStep(step as UploadStep)
+                            ? 'bg-blue-500 text-white dark:bg-blue-600'
+                            : '',
+                          isPastStep(step as UploadStep)
+                            ? 'bg-green-100 text-green-500 dark:bg-green-900'
+                            : '',
+                          !isCurrentStep(step as UploadStep) &&
+                            !isPastStep(step as UploadStep)
+                            ? 'bg-gray-100 dark:bg-gray-800'
+                            : ''
+                        )}
                       >
                         {isCurrentStep(step as UploadStep) && (
                           <Loader2 size={18} className="animate-spin" />
@@ -84,14 +104,26 @@ function LoadingModal(props: LoadingModalProps) {
                           <CheckCircle size={18} />
                         )}
                         {!isCurrentStep(step as UploadStep) &&
-                          !isPastStep(step as UploadStep) && (
+                        !isPastStep(step as UploadStep) && (
                           <span className="text-xs text-gray-500 dark:text-gray-400">
                             {index + 1}
                           </span>
                         )}
                       </div>
                       <span
-                        className={`mt-2 text-center text-xs ${isCurrentStep(step as UploadStep) ? 'font-medium text-blue-500 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'} ${isPastStep(step as UploadStep) ? 'text-green-500 dark:text-green-400' : ''} `}
+                        className={cn(
+                          'mt-2 text-center text-xs',
+                          isCurrentStep(step as UploadStep)
+                            ? 'font-medium text-blue-500 dark:text-blue-400'
+                            : '',
+                          isPastStep(step as UploadStep)
+                            ? 'text-green-500 dark:text-green-400'
+                            : '',
+                          !isCurrentStep(step as UploadStep) &&
+                            !isPastStep(step as UploadStep)
+                            ? 'text-gray-500 dark:text-gray-400'
+                            : ''
+                        )}
                       >
                         {shortLabel}
                       </span>
@@ -105,7 +137,19 @@ function LoadingModal(props: LoadingModalProps) {
         <div className="mb-6 w-full rounded-lg bg-gray-50 p-4 dark:bg-gray-800/50">
           <div className="mb-2 flex items-center">
             <div
-              className={`mr-4 flex h-12 w-12 items-center justify-center rounded-full ${props.stepAt === UploadStep.Done ? 'bg-green-100 text-green-500 dark:bg-green-900/30' : ''} ${props.stepAt === UploadStep.Error ? 'bg-red-100 text-red-500 dark:bg-red-900/30' : ''} ${props.stepAt !== UploadStep.Done && props.stepAt !== UploadStep.Error ? 'bg-blue-100 text-blue-500 dark:bg-blue-900/30' : ''} `}
+              className={cn(
+                'mr-4 flex h-12 w-12 items-center justify-center rounded-full',
+                props.stepAt === UploadStep.Done
+                  ? 'bg-green-100 text-green-500 dark:bg-green-900/30'
+                  : '',
+                props.stepAt === UploadStep.Error
+                  ? 'bg-red-100 text-red-500 dark:bg-red-900/30'
+                  : '',
+                props.stepAt !== UploadStep.Done &&
+                  props.stepAt !== UploadStep.Error
+                  ? 'bg-blue-100 text-blue-500 dark:bg-blue-900/30'
+                  : ''
+              )}
             >
               <AnimateOnChange>
                 <span className="text-3xl">
@@ -124,7 +168,18 @@ function LoadingModal(props: LoadingModalProps) {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold">
+              <h3
+                className={cn(
+                  'text-lg font-semibold',
+                  props.stepAt === UploadStep.Done &&
+                    'text-green-500 dark:text-green-400',
+                  props.stepAt === UploadStep.Error &&
+                    'text-red-500 dark:text-red-400',
+                  props.stepAt !== UploadStep.Done &&
+                    props.stepAt !== UploadStep.Error &&
+                    'text-blue-500 dark:text-blue-400'
+                )}
+              >
                 {t(`app.upload.progress.${props.stepAt}`)}
               </h3>
               <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -156,7 +211,7 @@ function LoadingModal(props: LoadingModalProps) {
           </div>
         )}
       </div>
-    </div>
+    </Modal>
   )
 }
 

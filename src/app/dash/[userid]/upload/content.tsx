@@ -140,14 +140,13 @@ function UploaderPageContent({ profile }: Props) {
         </p>
       </div>
 
-      {step !== UploadStep.None && (
-        <LoadingModal
-          stepAt={step as UploadStep}
-          count={count}
-          at={at}
-          message={messages[0]}
-        />
-      )}
+      <LoadingModal
+        visible={step === UploadStep.None}
+        stepAt={step as UploadStep}
+        count={count}
+        at={at}
+        message={messages[0]}
+      />
     </>
   )
 }

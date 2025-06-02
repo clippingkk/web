@@ -1,10 +1,9 @@
 {
-  "cSpell.words": [
-    "mantine"
-  ],
   "files.associations": {
     "*.json": "jsonc"
   },
+  "eslint.enable": true,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -23,4 +22,8 @@
   ],
   "i18n-ally.disabled": false,
   "i18n-ally.keystyle": "nested",
+  "eslint.format.enable": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 }
