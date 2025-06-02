@@ -85,10 +85,10 @@ function LoadingModal(props: LoadingModalProps) {
                         )}
                         {!isCurrentStep(step as UploadStep) &&
                           !isPastStep(step as UploadStep) && (
-                            <span className="text-xs text-gray-500 dark:text-gray-400">
-                              {index + 1}
-                            </span>
-                          )}
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            {index + 1}
+                          </span>
+                        )}
                       </div>
                       <span
                         className={`mt-2 text-center text-xs ${isCurrentStep(step as UploadStep) ? 'font-medium text-blue-500 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'} ${isPastStep(step as UploadStep) ? 'text-green-500 dark:text-green-400' : ''} `}
@@ -111,8 +111,8 @@ function LoadingModal(props: LoadingModalProps) {
                 <span className="text-3xl">
                   {props.stepAt !== UploadStep.Done &&
                     props.stepAt !== UploadStep.Error && (
-                      <Loader2 size={28} className="animate-spin" />
-                    )}
+                    <Loader2 size={28} className="animate-spin" />
+                  )}
                   {props.stepAt === UploadStep.Done && (
                     <CheckCircle size={28} />
                   )}
