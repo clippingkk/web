@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.19](https://github.com/clippingkk/web/compare/v5.13.18...v5.13.19) (2025-06-02)
+
+
+### Bug Fixes
+
+* show loading modal during all upload steps instead of only initial step ([34176c8](https://github.com/clippingkk/web/commit/34176c85aa3f3fd1d1dadc9e7e0bc54bdef49e09))
+* **style:** fix indentation in loading modal component ([885ba12](https://github.com/clippingkk/web/commit/885ba12e9e9960b892b919eb44651ca4b12e23f2))
+* **upload:** migrate upload loading modal to use lake-ui modal component with improved styling ([c30ef5b](https://github.com/clippingkk/web/commit/c30ef5b4615a7845ad8156ced6620f862a2cce2d))
+* **upload:** restructure upload page with server components and improved UI ([d69133b](https://github.com/clippingkk/web/commit/d69133bead6503bc27fe42d5de22b639fa947513))
+
 ## [5.13.18](https://github.com/clippingkk/web/compare/v5.13.17...v5.13.18) (2025-06-01)
 
 
