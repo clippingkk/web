@@ -36,7 +36,7 @@ const ProfileDetails = async ({ profile, uid, isInMyPage, year }: ProfileDetails
             {profile.phone === '' && isInMyPage && (
               <ProfileBindPhone />
             )}
-            {isInMyPage && (
+            {isInMyPage && uid && (
               <ProfileEditor
                 uid={uid}
                 bio={profile.bio}
