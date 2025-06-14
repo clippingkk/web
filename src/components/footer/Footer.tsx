@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useTranslation } from '@/i18n'
 import { Code, Coffee, ExternalLink, Github, Heart, Server } from 'lucide-react'
 
@@ -127,7 +128,13 @@ async function Footer() {
             <h3 className="text-sm font-semibold tracking-wider text-slate-500 uppercase dark:text-slate-400">
               {t('footer.legal', 'Legal')}
             </h3>
-            <div className="space-y-4 text-sm dark:text-slate-300">
+            <div className="space-y-4 text-sm flex flex-col dark:text-slate-300">
+              <Link href="/policy/privacy" className="transition-colors duration-300 hover:text-blue-400 dark:hover:text-blue-300">
+                {t('footer.privacyPolicy', 'Privacy Policy')}
+              </Link>
+              <Link href="/policy/support" className="transition-colors duration-300 hover:text-blue-400 dark:hover:text-blue-300">
+                {t('footer.support', 'Support')}
+              </Link>
               <ICPInfo />
               <p className="text-sm text-slate-500">
                 &copy; {currentYear} AnnatarHe
