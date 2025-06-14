@@ -13,9 +13,11 @@ type SettingsSidebarProps = {
 function SettingsSidebar({ title }: SettingsSidebarProps) {
   const { t } = useTranslation()
   const pathname = usePathname()
-  const paths = pathname?.split('/')
-  const activeKey = paths.pop()
-  const basePath = paths.join('/')
+
+  // Extract basePath using regex pattern matching
+  const match = pathname?.match(/dash\/(.*)\/settings\/(\w+)/)
+  const basePath = match ? `/dash/${match[1]}/settings` : ''
+  const activeKey = match ? match[2] : ''
 
   const tabs = [
     { id: 'web', label: t('app.settings.title'), icon: <Cog8ToothIcon className='w-4 h-4' /> },
