@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.20](https://github.com/clippingkk/web/compare/v5.13.19...v5.13.20) (2025-06-14)
+
+
+### Bug Fixes
+
+* **deps:** update deps ([d28a187](https://github.com/clippingkk/web/commit/d28a187278bb4290d4200f753b25844ce50a9718))
+* **footer:** add privacy policy and support links to footer navigation ([d27aa43](https://github.com/clippingkk/web/commit/d27aa43542c0a25e1f4282c4093985b66ae13b33))
+* **profile:** add uid check before rendering ProfileEditor in profile details ([59e885d](https://github.com/clippingkk/web/commit/59e885d8fb8a79f0e138975df22368bef3674fb9))
+* **profile:** split profile page into header and details components with animated gradient ([1a5835c](https://github.com/clippingkk/web/commit/1a5835c66ecec73f65a4ad249d76f018d2a4de93))
+* **settings:** improve settings sidebar path extraction with regex pattern matching ([daf5e26](https://github.com/clippingkk/web/commit/daf5e26c441e2b8ff4eb77ffde30630b18e98785))
+
 ## [5.13.19](https://github.com/clippingkk/web/compare/v5.13.18...v5.13.19) (2025-06-02)
 
 
