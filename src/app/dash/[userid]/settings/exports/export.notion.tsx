@@ -9,7 +9,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 function ExportToNotion() {
   const [visible, setVisible] = useState(false)
