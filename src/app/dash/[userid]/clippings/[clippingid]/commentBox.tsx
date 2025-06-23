@@ -74,7 +74,8 @@ function CommentBox(props: CommentBoxProps) {
           <Avatar
             img={props.me.avatar}
             name={props.me.name}
-            className="h-10 w-10 ring-2 ring-indigo-400/50 md:h-12 md:w-12 dark:ring-indigo-500/50"
+            isPremium={false}
+            className="h-10 w-10 md:h-12 md:w-12"
           />
         ) : (
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white md:h-12 md:w-12">
