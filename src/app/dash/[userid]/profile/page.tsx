@@ -1,5 +1,6 @@
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import PersonalActivity from '@/components/profile/activity'
+import ProfileTabs from '@/components/profile-tabs/profile-tabs'
 import { useTranslation } from '@/i18n'
 import {
   ProfileDocument,
@@ -7,10 +8,8 @@ import {
   ProfileQueryVariables,
 } from '@/schema/generated'
 import { doApolloServerQuery } from '@/services/apollo.server'
-import { BookOpen } from 'lucide-react'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
-import ClippingList from './clipping-list'
 import ProfilePageContent from './content'
 
 type PageProps = {
@@ -101,23 +100,17 @@ async function Page(props: PageProps) {
           </h2>
           <PersonalActivity data={profile.me.analysis.daily} />
         </div>
+
       </div>
 
-      {/* Recent clippings section */}
+      {/* Tabbed content section */}
       <div className="pt-6">
-        <div className="mb-8 flex items-center justify-center gap-4">
-          <div className="h-px flex-grow bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600"></div>
-          <h2 className="flex items-center gap-2 text-xl font-medium text-gray-800 dark:text-gray-200">
-            <BookOpen className="h-5 w-5 text-blue-500" />
-            {t('app.profile.recents')}
-          </h2>
-          <div className="h-px flex-grow bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600"></div>
-        </div>
-
         {myUid && (
-          <div className="rounded-2xl shadow-lg backdrop-blur-md">
-            <ClippingList uid={profile.me.id} userDomain={profile.me.domain} />
-          </div>
+          <ProfileTabs 
+            uid={profile.me.id}
+            userDomain={profile.me.domain}
+            profile={profile.me}
+          />
         )}
       </div>
     </section>

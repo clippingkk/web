@@ -39,17 +39,21 @@ query profile($id: Int, $domain: String, $pagination: MeQueryPagination) {
         count
       }
     }
-    comments {
-      id
-      content
-      belongsTo {
+
+    commentList {
+      count
+      items {
         id
         content
-        bookID
-        creator {
+        belongsTo {
           id
-          avatar
-          name
+          content
+          bookID
+          creator {
+            id
+            avatar
+            name
+          }
         }
       }
     }
