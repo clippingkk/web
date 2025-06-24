@@ -101,15 +101,13 @@ const RecentComments = ({
                 )}
               </div>
               
-              {hasMore && (
-                <Link
-                  href={`/dash/${userDomain || userId}/comments`}
-                  className="group/link flex items-center gap-2 rounded-xl bg-blue-100/60 dark:bg-blue-900/30 px-4 py-2 text-sm font-semibold text-blue-700 dark:text-blue-300 transition-all duration-200 hover:bg-blue-200/60 dark:hover:bg-blue-800/40 hover:scale-105 shadow-md"
-                >
-                  View all
-                  <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-0.5" />
-                </Link>
-              )}
+              <Link
+                href={`/dash/${userDomain || userId}/comments`}
+                className="group/link flex items-center gap-2 rounded-xl bg-blue-100/60 dark:bg-blue-900/30 px-4 py-2 text-sm font-semibold text-blue-700 dark:text-blue-300 transition-all duration-200 hover:bg-blue-200/60 dark:hover:bg-blue-800/40 hover:scale-105 shadow-md"
+              >
+                View all
+                <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-0.5" />
+              </Link>
             </div>
           )}
           
