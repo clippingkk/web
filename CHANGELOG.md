@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.21](https://github.com/clippingkk/web/compare/v5.13.20...v5.13.21) (2025-06-24)
+
+
+### Features
+
+* **comments:** add dedicated comments page and enhance profile UI ([08205d0](https://github.com/clippingkk/web/commit/08205d0f88773909407fd326082abdd3b2b58098))
+* **profile:** add tabbed interface for clippings and comments ([0b0716a](https://github.com/clippingkk/web/commit/0b0716ae73d6b792ec53f74c7dd4f029caa9494b))
+* **profile:** enhance UI with glassmorphism and modern animations ([a8d154e](https://github.com/clippingkk/web/commit/a8d154ec252ef239d8084f9f9ecbaeadb3b07583))
+* **recent-comments:** always show comments page link in header ([81fc279](https://github.com/clippingkk/web/commit/81fc279c3087640ec5675cfb22df806bba1e5c1a))
+
+
+### Bug Fixes
+
+* **comment:** simplify avatar appearance by removing ring styles and adding premium flag ([bb7f9a0](https://github.com/clippingkk/web/commit/bb7f9a0f31a2d6bd26db1d3a0287e342e89cec54))
+* **zod:** update zod imports to use v4 namespace across export components ([535b3a5](https://github.com/clippingkk/web/commit/535b3a55e59c9c792ddad392952fd9a1e90f209c))
+
+
+### Miscellaneous Chores
+
+* release 5.13.21 ([e9fb85e](https://github.com/clippingkk/web/commit/e9fb85e43d90e5b842c86288feb026bf015e417d))
+
 ## [5.13.20](https://github.com/clippingkk/web/compare/v5.13.19...v5.13.20) (2025-06-14)
 
 
