@@ -5,7 +5,6 @@ import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
 import { MetaMaskProvider } from '@metamask/sdk-react'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import React from 'react'
-import { usePointerUpdate } from '../hooks/pointer'
 import {
   getReactQueryClient,
   makeApolloClientWithCredentials,
@@ -19,7 +18,6 @@ type ClientOnlyProvidersProps = {
 function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const { children } = props
   const rq = getReactQueryClient()
-  usePointerUpdate()
   return (
     <MetaMaskProvider
       sdkOptions={{
