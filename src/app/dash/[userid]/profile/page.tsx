@@ -10,6 +10,7 @@ import { doApolloServerQuery } from '@/services/apollo.server'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import ProfilePageContent from './content'
+import { useTranslation } from '@/i18n'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -38,10 +39,11 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 }
 
 async function Page(props: PageProps) {
-  const [params, searchParams, ck] = await Promise.all([
+  const [params, searchParams, ck, { t }] = await Promise.all([
     props.params,
     props.searchParams,
     cookies(),
+    useTranslation()
   ])
   const withProfileEditor = searchParams.with_profile_editor
   const pathUid: string = params.userid

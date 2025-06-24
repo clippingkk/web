@@ -110,7 +110,7 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
                   commentList={profile.commentList}
                   userId={profile.id}
                   userDomain={profile.domain}
-                  showHeader={false}
+                  // showHeader={false}
                   maxItems={10}
                 />
               </div>

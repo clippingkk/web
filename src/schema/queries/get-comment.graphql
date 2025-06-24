@@ -1,0 +1,28 @@
+query getComment($id: Int!) {
+  getComment(id: $id) {
+    id
+    belongsTo {
+      id
+      title
+      content
+      bookID
+    }
+    creator {
+      id
+      name
+      avatar
+      domain
+      bio
+    }
+    replyTo {
+      id
+      name
+      domain
+    }
+    content
+    enabled
+    createdAt
+    updatedAt
+    deletedAt
+  }
+}

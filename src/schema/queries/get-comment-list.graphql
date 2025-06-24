@@ -1,0 +1,29 @@
+query getCommentList($cid: Int, $uid: Int, $pagination: Pagination) {
+  getCommentList(cid: $cid, uid: $uid, pagination: $pagination) {
+    count
+    items {
+      id
+      belongsTo {
+        id
+        title
+        content
+      }
+      creator {
+        id
+        name
+        avatar
+        domain
+      }
+      replyTo {
+        id
+        name
+        domain
+      }
+      content
+      enabled
+      createdAt
+      updatedAt
+      deletedAt
+    }
+  }
+}
