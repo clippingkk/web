@@ -13,7 +13,7 @@ const CommentItem = ({ comment, showAvatar = true }: CommentItemProps) => {
   const creator = clipping.creator
 
   return (
-    <div className="group relative overflow-hidden">
+    <div className="group relative">
       {/* Animated background glow */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       
