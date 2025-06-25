@@ -4,6 +4,7 @@ import CommentDetail from './comment-detail'
 import type { Metadata } from 'next'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
+import { USER_ID_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{
@@ -56,16 +57,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function CommentPage({ params }: Props) {
-  const { userid, commentid } = await params
-  const uid = parseInt(userid, 10)
+async function CommentPage({ params }: Props) {
+  const { commentid } = await params
+
+  const ck = await cookies()
+
+  const uid = parseInt(ck.get(USER_ID_KEY)?.value || '0', 10)
   const id = parseInt(commentid, 10)
   
-  if (isNaN(uid) || isNaN(id)) {
+  if (isNaN(uid) || uid <= 0 || isNaN(id)) {
     notFound()
   }
 
-  const ck = await cookies()
   const token = ck.get('token')?.value
   
   const { data, error } = await doApolloServerQuery<GetCommentQuery>({
@@ -90,10 +93,8 @@ export default async function CommentPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <CommentDetail comment={comment} />
-      </div>
-    </div>
+    <CommentDetail comment={comment} />
   )
 }
+
+export default CommentPage

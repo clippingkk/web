@@ -164,6 +164,7 @@
     "lucide-react": "^0.511.0",
     "masonic": "^4.1.0",
     "mixpanel-browser": "^2.65.0",
+    "motion": "^12.19.1",
     "next": "15.3.3",
     "opentelemetry-node-metrics": "^3.0.0",
     "parse-unit": "^1.0.1",

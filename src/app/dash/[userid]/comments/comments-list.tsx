@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import { useGetCommentListQuery, GetCommentListQuery } from '@/schema/generated'
 // import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
 import CommentCard from './comment-card'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { Comment } from '@/schema/generated'
 
 type Props = {
