@@ -52,7 +52,7 @@ const CommentItem = ({ comment, showAvatar = true }: CommentItemProps) => {
             {/* Enhanced original clipping context */}
             <div className="relative group/quote">
               <div className="absolute -inset-1 bg-gradient-to-r from-gray-200/50 to-gray-300/50 dark:from-gray-700/50 dark:to-gray-600/50 rounded-xl blur opacity-50"></div>
-              <div className="relative rounded-xl bg-gradient-to-br from-gray-50/90 to-gray-100/90 dark:from-gray-800/90 dark:to-gray-700/90 p-4 border-l-4 border-gradient-to-b from-blue-400 to-purple-500 shadow-inner">
+              <div className="relative rounded-xl bg-gradient-to-br from-gray-50/90 to-gray-100/90 dark:from-gray-800/90 dark:to-gray-700/90 p-4 border-gradient-to-b from-blue-400 to-purple-500 shadow-inner">
                 
                 {/* Quote content */}
                 <div className="flex items-start gap-3 mb-3">
