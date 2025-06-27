@@ -116,3 +116,69 @@ When schema changes occur:
 - Use generated GraphQL types for all data operations
 - Implement proper loading states and error boundaries
 - Consider server/client component boundaries for optimal performance
+
+## UI Style Guidelines
+
+### Design Principles
+- **Simple & Elegant**: Minimize visual noise, focus on content and readability
+- **Subtle Gradients**: Use closely related colors for smooth, sophisticated gradients
+- **Consistent Spacing**: Use Tailwind's spacing scale consistently throughout
+
+### Color System
+- **Primary Color**: `blue-400` (applies to both light and dark themes)
+  - Light theme: `bg-blue-400`, `text-blue-400`, `border-blue-400`
+  - Dark theme: `dark:bg-blue-400`, `dark:text-blue-400`, `dark:border-blue-400`
+- **Gradient Colors**: Use adjacent color values for subtle gradients
+  - Example: `from-blue-300 via-blue-400 to-blue-500`
+  - Alternative: `from-blue-400 to-indigo-400` for slight hue shifts
+- **Neutral Palette**: 
+  - Light mode: `gray-50` to `gray-900`
+  - Dark mode: `zinc-800` to `zinc-50`
+
+### Theme Support
+- **Implementation**: Use Tailwind's dark mode classes with `class` strategy
+
+### Component Styling Patterns
+```tsx
+// Example button with theme support
+<button className="
+  bg-blue-400 hover:bg-blue-500 
+  dark:bg-blue-400 dark:hover:bg-blue-500
+  text-white transition-colors duration-200
+  px-4 py-2 rounded-lg shadow-sm
+">
+
+// Example gradient background
+<div className="
+  bg-gradient-to-br from-blue-300 to-blue-500
+  dark:from-blue-400 dark:to-blue-600
+">
+
+// Example card with subtle shadow
+<div className="
+  bg-white dark:bg-zinc-800
+  border border-gray-200 dark:border-zinc-700
+  shadow-sm hover:shadow-md transition-shadow
+  rounded-xl p-6
+">
+```
+
+### Typography
+- **Font Stack**: System fonts for optimal performance
+- **Text Colors**: 
+  - Primary: `text-gray-900 dark:text-zinc-50`
+  - Secondary: `text-gray-600 dark:text-zinc-400`
+  - Muted: `text-gray-400 dark:text-zinc-500`
+- **Font Sizes**: Use Tailwind's default scale (`text-sm`, `text-base`, `text-lg`, etc.)
+
+### Interactive Elements
+- **Hover States**: Subtle color shifts, no dramatic changes
+- **Focus States**: Clear focus rings using `focus:ring-2 focus:ring-blue-400`
+- **Transitions**: Always include smooth transitions (`transition-all duration-200`)
+- **Disabled States**: Use `opacity-50 cursor-not-allowed`
+
+### Layout Guidelines
+- **Container**: Max width with responsive padding
+- **Spacing**: Consistent use of Tailwind spacing units
+- **Border Radius**: Prefer `rounded-lg` or `rounded-xl` for modern feel
+- **Shadows**: Use sparingly - `shadow-sm` for cards, `shadow-md` on hover
