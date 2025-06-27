@@ -82,10 +82,10 @@ export function Button({
     switch (variant) {
       case 'primary':
         return [
-          'bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-700 text-white shadow-lg shadow-purple-500/20',
-          'hover:-translate-y-1 hover:shadow-[0_0_20px_3px] hover:shadow-purple-500/30',
-          'after:absolute after:inset-0 after:z-0 after:rounded-lg after:bg-gradient-to-r after:from-fuchsia-600 after:via-purple-700 after:to-indigo-600 after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100',
-          'before:absolute before:-inset-1 before:z-0 before:scale-[1.05] before:rounded-lg before:bg-gradient-to-r before:from-pink-500 before:to-purple-600 before:opacity-0 before:blur-md before:transition-all before:duration-300 hover:before:opacity-50',
+          'bg-gradient-to-br from-sky-400 via-blue-500 to-cyan-600 text-white shadow-lg shadow-blue-500/20',
+          'hover:-translate-y-1 hover:shadow-[0_0_20px_3px] hover:shadow-blue-500/30',
+          'after:absolute after:inset-0 after:z-0 after:rounded-lg after:bg-gradient-to-r after:from-blue-500 after:via-sky-600 after:to-cyan-600 after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100',
+          'before:absolute before:-inset-1 before:z-0 before:scale-[1.05] before:rounded-lg before:bg-gradient-to-r before:from-sky-400 before:to-blue-500 before:opacity-0 before:blur-md before:transition-all before:duration-300 hover:before:opacity-50',
         ].join(' ')
       case 'secondary':
         return [
