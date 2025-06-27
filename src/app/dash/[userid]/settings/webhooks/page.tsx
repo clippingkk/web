@@ -14,6 +14,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import WebHooksContent from './content'
 import WebhookCreateButton from './create-button'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{ userid: string }>
@@ -25,8 +26,8 @@ async function WebhooksPage(props: Props) {
     useTranslation(),
   ])
   const { userid } = params
-  const myUid = ck.get('uid')?.value
-  const tk = ck.get('token')?.value
+  const myUid = ck.get(USER_ID_KEY)?.value
+  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
 
   if (!myUid || !tk) {
     return redirect(`/dash/${userid}/profile`)

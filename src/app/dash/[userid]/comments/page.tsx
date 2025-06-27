@@ -4,6 +4,7 @@ import CommentsList from './comments-list'
 import type { Metadata } from 'next'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
+import { COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{
@@ -29,7 +30,7 @@ export default async function CommentsPage({ params }: Props) {
   }
 
   const ck = await cookies()
-  const token = ck.get('token')?.value
+  const token = ck.get(COOKIE_TOKEN_KEY)?.value
   
   const { data, error } = await doApolloServerQuery<GetCommentListQuery, GetCommentListQueryVariables>({
     query: GetCommentListDocument,

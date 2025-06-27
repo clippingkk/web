@@ -4,7 +4,7 @@ import CommentDetail from './comment-detail'
 import type { Metadata } from 'next'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
-import { USER_ID_KEY } from '@/constants/storage'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const ck = await cookies()
-  const token = ck.get('token')?.value
+  const token = ck.get(COOKIE_TOKEN_KEY)?.value
 
   const { data } = await doApolloServerQuery<GetCommentQuery>({
     query: GetCommentDocument,
@@ -69,7 +69,7 @@ async function CommentPage({ params }: Props) {
     notFound()
   }
 
-  const token = ck.get('token')?.value
+  const token = ck.get(COOKIE_TOKEN_KEY)?.value
   
   const { data, error } = await doApolloServerQuery<GetCommentQuery>({
     query: GetCommentDocument,

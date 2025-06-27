@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import profile from '../utils/profile'
 import { ApolloError, MutationResult } from '@apollo/client'
 import { updateToken } from '../services/ajax'
-import { USER_TOKEN_KEY } from '../constants/storage'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from '../schema/generated'
@@ -17,13 +17,13 @@ type UserContent = Pick<User, 'id' | 'name' | 'email' | 'avatar' | 'createdAt'>
 async function onAuthEnd(data: { user: UserContent, token: string }) {
   const { user, token } = data
   await syncLoginStateToServer({ uid: user.id, token: token })
-  localStorage.setItem(USER_TOKEN_KEY, JSON.stringify({
+  localStorage.setItem(COOKIE_TOKEN_KEY, JSON.stringify({
     profile: user,
     token: token,
     createdAt: Date.now()
   }))
-  sessionStorage.setItem('token', token)
-  sessionStorage.setItem('uid', user.id.toString())
+  sessionStorage.setItem(COOKIE_TOKEN_KEY, token)
+  sessionStorage.setItem(USER_ID_KEY, user.id.toString())
 
   profile.token = token
   profile.uid = user.id

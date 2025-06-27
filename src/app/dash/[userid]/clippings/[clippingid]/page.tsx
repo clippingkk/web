@@ -25,6 +25,7 @@ import ClippingSidebar from './clipping-sidebar'
 import styles from './clipping.module.css'
 import CommentContainer from './comment-container'
 import Reactions from './reactions'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type PageProps = {
   params: Promise<{ clippingid: string; userid: string }>
@@ -69,8 +70,8 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 async function Page(props: PageProps) {
   const { clippingid } = await props.params
   const cs = await cookies()
-  const token = cs.get('token')?.value
-  const uid = cs.get('uid')?.value
+  const token = cs.get(COOKIE_TOKEN_KEY)?.value
+  const uid = cs.get(USER_ID_KEY)?.value
   const iac = (await props.searchParams).iac
   const cid = ~~clippingid
   const client = getApolloServerClient()

@@ -11,7 +11,7 @@ import '../styles/tailwind.css'
 // import '@annatarhe/lake-ui/style.css'
 
 import GlobalUpload from '@/components/uploads/global'
-import { STORAGE_LANG_KEY } from '@/constants/storage'
+import { STORAGE_LANG_KEY, USER_ID_KEY } from '@/constants/storage'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Metadata } from 'next'
 import { Lato } from 'next/font/google'
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
 
 async function Layout(props: LayoutProps) {
   const cs = await cookies()
-  const uid = cs.get('uid')?.value
+  const uid = cs.get(USER_ID_KEY)?.value
   const defaultLng = cs.get(STORAGE_LANG_KEY)?.value ?? 'en'
 
   // const loggedInfo = (uid && token) ? await cloakSSROnlySecret(JSON.stringify({ uid: ~~uid, token }), RSC_LOGGED_INFO_KEY) : '{}'

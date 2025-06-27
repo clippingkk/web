@@ -1,6 +1,6 @@
 import mixpanel from 'mixpanel-browser'
 import * as sentry from '@sentry/react'
-import { IUserToken, USER_TOKEN_KEY } from '../constants/storage'
+import { IUserToken, USER_ID_KEY, COOKIE_TOKEN_KEY } from '../constants/storage'
 import Cookies from 'js-cookie'
 import { updateToken } from '../services/ajax'
 import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '../schema/generated'
@@ -12,11 +12,11 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
     return
   }
 
-  let authInfo = localStorage.getItem(USER_TOKEN_KEY)
+  let authInfo = localStorage.getItem(COOKIE_TOKEN_KEY)
   if (!authInfo) {
     // try to parse from cookies
-    const cookieToken = Cookies.get('token')
-    const uid = Cookies.get('uid')
+    const cookieToken = Cookies.get(COOKIE_TOKEN_KEY)
+    const uid = Cookies.get(USER_ID_KEY)
     if (!cookieToken || !uid) {
       return
     }
@@ -34,13 +34,13 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
         createdAt: Date.now()
       }
       const payloadString = JSON.stringify(payload)
-      localStorage.setItem(USER_TOKEN_KEY, payloadString)
+      localStorage.setItem(COOKIE_TOKEN_KEY, payloadString)
       authInfo = payloadString
     } catch {
       // any error occurs, just erase cookies and local storage.
-      localStorage.removeItem(USER_TOKEN_KEY)
-      Cookies.remove('token')
-      Cookies.remove('uid')
+      localStorage.removeItem(COOKIE_TOKEN_KEY)
+      Cookies.remove(COOKIE_TOKEN_KEY)
+      Cookies.remove(USER_ID_KEY)
       profile.onLogout()
     }
     if (!authInfo) {
@@ -50,8 +50,8 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
 
   const auth: IUserToken = JSON.parse(authInfo)
   // TODO: check createdAt
-  sessionStorage.setItem('token', auth.token)
-  sessionStorage.setItem('uid', auth.profile.id.toString())
+  sessionStorage.setItem(COOKIE_TOKEN_KEY, auth.token)
+  sessionStorage.setItem(USER_ID_KEY, auth.profile.id.toString())
   sentry.setUser({
     email: auth.profile.email,
     id: auth.profile.id.toString(),

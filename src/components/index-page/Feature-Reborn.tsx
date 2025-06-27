@@ -10,6 +10,7 @@ import { useTranslation } from '@/i18n'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
+import { USER_ID_KEY } from '@/constants/storage'
 
 type DownloadChannelProps = {
   icon: string
@@ -102,7 +103,7 @@ async function FeatureReborn() {
   const { t } = await useTranslation()
 
   const ck = await cookies()
-  const uid = ck.get('uid')?.value
+  const uid = ck.get(USER_ID_KEY)?.value
   const goLinkUrl = uid ? `/dash/${uid}/home` : '/auth/auth-v4'
   
   return (

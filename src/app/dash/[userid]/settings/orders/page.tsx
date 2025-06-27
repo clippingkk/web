@@ -8,6 +8,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { CreditCard, Receipt } from 'lucide-react'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{ userid: string }>
@@ -16,7 +17,7 @@ type Props = {
 async function OrdersTable(props: Props) {
   const [params, ck, { t }] = await Promise.all([props.params, cookies(), useTranslation()])
   const { userid } = params
-  const myUid = ck.get('uid')?.value
+  const myUid = ck.get(USER_ID_KEY)?.value
 
   if (!myUid) {
     return redirect(`/dash/${userid}/profile`)
@@ -36,7 +37,7 @@ async function OrdersTable(props: Props) {
     },
     context: {
       headers: {
-        'Authorization': 'Bearer ' + ck.get('token')?.value
+        'Authorization': 'Bearer ' + ck.get(COOKIE_TOKEN_KEY)?.value
       },
     }
   })

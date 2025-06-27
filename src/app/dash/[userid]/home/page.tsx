@@ -21,6 +21,7 @@ import { redirect } from 'next/navigation'
 import HomePageContent from './content'
 import NoContentAlert from './no-content'
 import ReadingBook from './reading-book'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -30,7 +31,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const [ck, params] = await Promise.all([cookies(), props.params])
   const pathUid: string = params.userid
   const uid = parseInt(pathUid)
-  const tk = ck.get('token')?.value
+  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
 
   if (!tk) {
     return profileGenerateMetadata({})
@@ -70,8 +71,8 @@ async function Page(props: PageProps) {
     useTranslation(undefined, 'home'),
   ])
   const { userid } = params
-  const myUid = ck.get('uid')?.value
-  const token = ck.get('token')?.value
+  const myUid = ck.get(USER_ID_KEY)?.value
+  const token = ck.get(COOKIE_TOKEN_KEY)?.value
 
   if (!myUid) {
     return redirect(`/dash/${userid}/profile`)

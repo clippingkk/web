@@ -7,6 +7,7 @@ import { StripePremiumPriceId } from '@/constants/config'
 import { getPaymentSubscription } from '@/services/payment'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 export const metadata: Metadata = {
   ...pricingMetadata,
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
 
 async function PricingPage() {
   const cs = await cookies()
-  const uid = cs.get('uid')?.value
-  const tk = cs.get('token')?.value
+  const uid = cs.get(USER_ID_KEY)?.value
+  const tk = cs.get(COOKIE_TOKEN_KEY)?.value
 
   let checkoutUrl = ''
   let profile: ProfileQuery['me'] | null = null

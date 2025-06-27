@@ -12,6 +12,7 @@ import { BookDocument, BookQuery, BookQueryVariables } from '@/schema/generated'
 import dayjs from 'dayjs'
 import Divider from '@/components/divider/divider'
 import { useTranslation } from '@/i18n'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type PageProps = {
   params: Promise<{ bookid: string, userid: string }>
@@ -42,11 +43,11 @@ async function Page(props: PageProps) {
   const { t } = await useTranslation()
   const { bookid, userid } = (await props.params)
   const ck = await cookies()
-  const uidStr = ck.get('uid')?.value
+  const uidStr = ck.get(USER_ID_KEY)?.value
   const uid = uidStr ? parseInt(uidStr) : undefined
   const dbId = bookid ?? ''
 
-  const token = ck.get('token')?.value
+  const token = ck.get(COOKIE_TOKEN_KEY)?.value
 
   if (!uid) {
     return null

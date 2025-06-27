@@ -9,6 +9,7 @@ import { ApolloClient, InMemoryCache, SSRMultipartLink } from '@apollo/client-in
 import Cookies from 'js-cookie'
 import { cache } from 'react'
 import { apolloCacheConfig } from './apollo.shard'
+import { COOKIE_TOKEN_KEY } from '../constants/storage'
 
 export interface IBaseResponseData<T> {
   status: number
@@ -20,7 +21,7 @@ export function getLocalToken() {
   let lToken = ''
 
   if (typeof document !== 'undefined' && document.cookie) {
-    lToken = Cookies.get('token') ?? ''
+    lToken = Cookies.get(COOKIE_TOKEN_KEY) ?? ''
   }
 
   if (!lToken && typeof localStorage !== 'undefined') {

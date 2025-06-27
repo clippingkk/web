@@ -8,6 +8,7 @@ import Hero from './Hero'
 import TopBooks from './TopBooks'
 import TopClippings from './TopClippings'
 import TopUsers from './TopUsers'
+import { USER_ID_KEY } from '@/constants/storage'
 
 type IndexPageProps = {
   publicData?: PublicDataQuery
@@ -21,7 +22,7 @@ type IndexPageProps = {
 async function IndexPage(props: IndexPageProps) {
   const { publicData: data, books: bs } = props
   const cs = await cookies()
-  const myUid = cs.get('uid')?.value
+  const myUid = cs.get(USER_ID_KEY)?.value
 
   return (
     <>

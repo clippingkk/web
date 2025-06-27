@@ -10,6 +10,7 @@ import { ProfileDocument } from '../../schema/generated'
 import { getMyHomeLink } from '../../utils/profile.utils'
 import LinkIndicator from '../link-indicator'
 import UserName from '../profile/user-name'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type NavigateGuideProps = {
   title?: string
@@ -19,8 +20,8 @@ type NavigateGuideProps = {
 async function NavigateGuide(props: NavigateGuideProps) {
   const { t } = await useTranslation()
   const ck = await cookies()
-  const uid = ck.get('uid')?.value
-  const tk = ck.get('token')?.value
+  const uid = ck.get(USER_ID_KEY)?.value
+  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
 
   const pid = props.uid ?? 0
   let p: ProfileQuery['me'] | null = null

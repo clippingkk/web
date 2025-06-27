@@ -1,6 +1,7 @@
 import React from 'react'
 import DashboardContainer from '@/components/dashboard-container/container'
 import { cookies } from 'next/headers'
+import { USER_ID_KEY } from '@/constants/storage'
 
 function Profile404Page() {
   return (
@@ -17,7 +18,7 @@ function Profile404Page() {
 
 Profile404Page.getLayout = async function getLayout(page: React.ReactElement) {
   const cs = await cookies()
-  const myUid = cs.get('uid')?.value
+  const myUid = cs.get(USER_ID_KEY)?.value
   return (
     <DashboardContainer uidOrDomain={myUid}>
       {page}

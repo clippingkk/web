@@ -4,7 +4,7 @@ import Footer from '../footer/Footer'
 
 import { ProfileQuery, ProfileQueryVariables, ProfileDocument } from '@/schema/generated'
 import { cookies } from 'next/headers'
-import { USER_TOKEN_KEY } from '../../constants/storage'
+import { COOKIE_TOKEN_KEY } from '../../constants/storage'
 import { doApolloServerQuery } from '../../services/apollo.server'
 import { redirect } from 'next/navigation'
 import { ApolloError } from '@apollo/client'
@@ -18,7 +18,7 @@ type DashboardContainerProps = {
 async function DashboardContainer(props: DashboardContainerProps) {
   const { uidOrDomain, header, children } = props
   const ck = await cookies()
-  const token = ck.get(USER_TOKEN_KEY)
+  const token = ck.get(COOKIE_TOKEN_KEY)
 
   const isUidType = !Number.isNaN(parseInt(props.uidOrDomain as string))
 

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { ArrowLeftCircle, ArrowRightCircle, BookOpenCheck } from 'lucide-react'
 import { useTranslation } from '@/i18n'
+import { COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -16,7 +17,7 @@ async function AdminPanel(props: PageProps) {
   const [ck, params, sp, { t }] = await Promise.all([cookies(), props.params, props.searchParams, useTranslation()])
   const uid = ~~params.userid
 
-  const token = ck.get('token')
+  const token = ck.get(COOKIE_TOKEN_KEY)
 
   const offset = sp.offset ? ~~sp.offset : 0
 

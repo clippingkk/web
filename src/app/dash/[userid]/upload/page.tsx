@@ -10,6 +10,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import UploaderPageContent from './content'
 import ClippingsUploadHelp from './help'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{ userid: string }>
@@ -26,7 +27,7 @@ async function Page(props: Props) {
     useTranslation(undefined, 'upload'),
   ])
   const { userid } = params
-  const myUid = ck.get('uid')?.value
+  const myUid = ck.get(USER_ID_KEY)?.value
 
   if (!myUid) {
     return redirect(`/dash/${userid}/profile`)
@@ -46,7 +47,7 @@ async function Page(props: Props) {
     },
     context: {
       headers: {
-        Authorization: 'Bearer ' + ck.get('token')?.value,
+        Authorization: 'Bearer ' + ck.get(COOKIE_TOKEN_KEY)?.value,
       },
     },
   })

@@ -7,6 +7,7 @@ import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import WebhookDetailContent from './components/content'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{ wid: string; userid: string }>
@@ -16,8 +17,8 @@ async function WebhookDetailPage(props: Props) {
   const [params, ck] = await Promise.all([props.params, cookies()])
   const { wid, userid } = params
 
-  const tk = ck.get('token')?.value
-  const myUid = ck.get('uid')?.value
+  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
+  const myUid = ck.get(USER_ID_KEY)?.value
 
   if (!myUid || !tk) {
     return redirect(`/dash/${userid}/profile`)

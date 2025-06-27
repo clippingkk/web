@@ -11,6 +11,7 @@ import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import ProfilePageContent from './content'
 import { useTranslation } from '@/i18n'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -47,10 +48,10 @@ async function Page(props: PageProps) {
   ])
   const withProfileEditor = searchParams.with_profile_editor
   const pathUid: string = params.userid
-  const myUidStr = ck.get('uid')?.value
+  const myUidStr = ck.get(USER_ID_KEY)?.value
   const myUid = myUidStr ? parseInt(myUidStr) : undefined
 
-  const tk = ck.get('token')?.value
+  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
 
   const headers: Record<string, string> = {}
   if (tk) {

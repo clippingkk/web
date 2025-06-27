@@ -1,5 +1,6 @@
 'use client'
 import Cookies from 'js-cookie'
+import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 class MyProfile {
   private _token = ''
@@ -15,10 +16,10 @@ class MyProfile {
     let u = localStorage.getItem(MyProfile.UID_KEY)
 
     if (!t) {
-      t = Cookies.get('token') ?? ''
+      t = Cookies.get(COOKIE_TOKEN_KEY) ?? ''
     }
     if (!u) {
-      u = Cookies.get('uid') ?? null
+      u = Cookies.get(USER_ID_KEY) ?? null
     }
 
     if (t) {
@@ -48,8 +49,8 @@ class MyProfile {
   onLogout() {
     this._token = ''
     this._uid = -1
-    Cookies.remove('token')
-    Cookies.remove('uid')
+    Cookies.remove(COOKIE_TOKEN_KEY)
+    Cookies.remove(USER_ID_KEY)
     localStorage.clear()
     sessionStorage.clear()
   }
