@@ -1,8 +1,10 @@
 'use client'
 import React, { useState, useRef, useCallback } from 'react'
+import ReactCrop, { Crop, PixelCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
 import Modal from '@annatarhe/lake-ui/modal'
 import Button from '@/components/button/button'
-import { Upload, Crop, Save } from 'lucide-react'
+import { Upload, Save } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 interface BackgroundUploadModalProps {
@@ -16,12 +18,15 @@ const REQUIRED_HEIGHT = 400
 const ASPECT_RATIO = REQUIRED_WIDTH / REQUIRED_HEIGHT
 
 const BackgroundUploadModal = ({ isOpen, onClose, onSave }: BackgroundUploadModalProps) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [_selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string>('')
   const [croppedUrl, setCroppedUrl] = useState<string>('')
   const [isProcessing, setIsProcessing] = useState(false)
   const [imageError, setImageError] = useState<string>('')
+  const [crop, setCrop] = useState<Crop>()
+  const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const handleFileSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,61 +47,70 @@ const BackgroundUploadModal = ({ isOpen, onClose, onSave }: BackgroundUploadModa
 
     setSelectedFile(file)
     setImageError('')
+    setCroppedUrl('')
     
     // Create preview URL
     const url = URL.createObjectURL(file)
     setPreviewUrl(url)
   }, [])
 
-  const handleCrop = useCallback(() => {
-    if (!selectedFile || !canvasRef.current) return
+  const onImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const { width, height } = e.currentTarget
+    const crop = centerCrop(
+      makeAspectCrop(
+        {
+          unit: '%',
+          width: 90,
+        },
+        ASPECT_RATIO,
+        width,
+        height,
+      ),
+      width,
+      height,
+    )
+    setCrop(crop)
+  }, [])
+
+  const generateCroppedImage = useCallback(async () => {
+    if (!completedCrop || !imgRef.current || !canvasRef.current) return
 
     setIsProcessing(true)
     
-    const img = new Image()
-    img.onload = () => {
-      const canvas = canvasRef.current!
-      const ctx = canvas.getContext('2d')!
-      
-      // Set canvas size to required dimensions
-      canvas.width = REQUIRED_WIDTH
-      canvas.height = REQUIRED_HEIGHT
-      
-      // Calculate crop dimensions to maintain aspect ratio
-      const imgAspectRatio = img.width / img.height
-      let cropWidth, cropHeight, offsetX = 0, offsetY = 0
-      
-      if (imgAspectRatio > ASPECT_RATIO) {
-        // Image is wider than required aspect ratio
-        cropHeight = img.height
-        cropWidth = cropHeight * ASPECT_RATIO
-        offsetX = (img.width - cropWidth) / 2
-      } else {
-        // Image is taller than required aspect ratio
-        cropWidth = img.width
-        cropHeight = cropWidth / ASPECT_RATIO
-        offsetY = (img.height - cropHeight) / 2
+    const image = imgRef.current
+    const canvas = canvasRef.current
+    const crop = completedCrop
+
+    const scaleX = image.naturalWidth / image.width
+    const scaleY = image.naturalHeight / image.height
+    const ctx = canvas.getContext('2d')!
+
+    const pixelRatio = window.devicePixelRatio
+    canvas.width = REQUIRED_WIDTH * pixelRatio
+    canvas.height = REQUIRED_HEIGHT * pixelRatio
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+    ctx.imageSmoothingQuality = 'high'
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      REQUIRED_WIDTH,
+      REQUIRED_HEIGHT,
+    )
+
+    canvas.toBlob((blob) => {
+      if (blob) {
+        const croppedImageUrl = URL.createObjectURL(blob)
+        setCroppedUrl(croppedImageUrl)
       }
-      
-      // Draw the cropped image
-      ctx.drawImage(
-        img,
-        offsetX, offsetY, cropWidth, cropHeight,
-        0, 0, REQUIRED_WIDTH, REQUIRED_HEIGHT
-      )
-      
-      // Convert to blob and create URL
-      canvas.toBlob((blob) => {
-        if (blob) {
-          const croppedImageUrl = URL.createObjectURL(blob)
-          setCroppedUrl(croppedImageUrl)
-        }
-        setIsProcessing(false)
-      }, 'image/jpeg', 0.9)
-    }
-    
-    img.src = previewUrl
-  }, [selectedFile, previewUrl])
+      setIsProcessing(false)
+    }, 'image/jpeg', 0.9)
+  }, [completedCrop])
   const handleClose = useCallback(() => {
     // Clean up URLs
     if (previewUrl) URL.revokeObjectURL(previewUrl)
@@ -108,6 +122,8 @@ const BackgroundUploadModal = ({ isOpen, onClose, onSave }: BackgroundUploadModa
     setCroppedUrl('')
     setImageError('')
     setIsProcessing(false)
+    setCrop(undefined)
+    setCompletedCrop(undefined)
     
     onClose()
   }, [previewUrl, croppedUrl, onClose])
@@ -178,27 +194,38 @@ const BackgroundUploadModal = ({ isOpen, onClose, onSave }: BackgroundUploadModa
           </div>
         </div>
 
-        {/* Image Preview */}
+        {/* Image Crop */}
         {previewUrl && (
           <div className="space-y-4">
             <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Original Image:
+              Crop Image to {REQUIRED_WIDTH}x{REQUIRED_HEIGHT}px:
             </div>
-            <div className="relative">
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="w-full max-h-48 object-contain rounded-lg border border-gray-200 dark:border-gray-700"
-              />
+            <div className="relative max-h-96 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+              <ReactCrop
+                crop={crop}
+                onChange={(_, percentCrop) => setCrop(percentCrop)}
+                onComplete={(c) => setCompletedCrop(c)}
+                aspect={ASPECT_RATIO}
+                minWidth={100}
+                minHeight={100 / ASPECT_RATIO}
+                keepSelection
+              >
+                <img
+                  ref={imgRef}
+                  src={previewUrl}
+                  alt="Crop preview"
+                  onLoad={onImageLoad}
+                  className="max-h-96 w-full object-contain"
+                />
+              </ReactCrop>
             </div>
               
             <Button
-              onClick={handleCrop}
-              disabled={isProcessing}
+              onClick={generateCroppedImage}
+              disabled={!completedCrop || isProcessing}
               className="w-full"
             >
-              <Crop className="w-4 h-4 mr-2" />
-              {isProcessing ? 'Processing...' : 'Crop to Size'}
+              {isProcessing ? 'Processing...' : 'Generate Preview'}
             </Button>
           </div>
         )}
