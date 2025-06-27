@@ -5,15 +5,13 @@ import CommentHeader from './comment-header'
 import CommentContent from './comment-content'
 import RelatedClipping from './related-clipping'
 import AuthorInfo from './author-info'
+import LinkIndicator from '@/components/link-indicator'
 
 type Props = {
   comment: GetCommentQuery['getComment']
 }
 
-console.log('CommentDetail component loaded', motion)
-
 function CommentDetail({ comment }: Props) {
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -26,9 +24,11 @@ function CommentDetail({ comment }: Props) {
         href={`/dash/${comment.creator.id}/comments`}
         className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
       >
-        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
+        <LinkIndicator className='mr-2'>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </LinkIndicator>
         Back to comments
       </Link>
 

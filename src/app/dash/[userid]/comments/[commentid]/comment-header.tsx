@@ -33,9 +33,9 @@ function CommentHeader({ comment }: Props) {
     }
   }
 
-  const formattedDate = dayjs(new Date(comment.createdAt)).format('MMMM d, yyyy \'at\' h:mm a')
+  const formattedDate = dayjs(new Date(comment.createdAt)).format('YYYY-MM-DD HH:mm:ss')
   const updatedDate = comment.updatedAt && comment.updatedAt !== comment.createdAt
-    ? dayjs(new Date(comment.updatedAt)).format('MMMM d, yyyy \'at\' h:mm a')
+    ? dayjs(new Date(comment.updatedAt)).format('YYYY-MM-DD HH:mm:ss')
     : null
 
   return (

@@ -1,5 +1,6 @@
 import { GetCommentQuery } from '@/schema/generated'
 import * as motion from 'motion/react-client'
+import Image from 'next/image'
 
 type Props = {
   creator: GetCommentQuery['getComment']['creator']
@@ -18,10 +19,12 @@ function AuthorInfo({ creator }: Props) {
       </h2>
       <div className="flex items-center space-x-4">
         {creator.avatar ? (
-          <img 
+          <Image 
             src={creator.avatar} 
             alt={creator.name}
             className="w-16 h-16 rounded-full border-2 border-white dark:border-gray-700"
+            width={64}
+            height={64}
           />
         ) : (
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xl font-bold">
