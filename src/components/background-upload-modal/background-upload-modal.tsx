@@ -23,7 +23,13 @@ const BackgroundUploadModal = ({ isOpen, onClose, onSave }: BackgroundUploadModa
   const [croppedUrl, setCroppedUrl] = useState<string>('')
   const [isProcessing, setIsProcessing] = useState(false)
   const [imageError, setImageError] = useState<string>('')
-  const [crop, setCrop] = useState<Crop>()
+  const [crop, setCrop] = useState<Crop | undefined>({
+    unit: '%',
+    width: 1200,
+    height: 400,
+    x: 0,
+    y: 0,
+  })
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
@@ -200,22 +206,24 @@ const BackgroundUploadModal = ({ isOpen, onClose, onSave }: BackgroundUploadModa
             <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Crop Image to {REQUIRED_WIDTH}x{REQUIRED_HEIGHT}px:
             </div>
-            <div className="relative max-h-96 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="relative max-h-96 overflow-auto rounded-lg border border-gray-200 dark:border-gray-700">
               <ReactCrop
                 crop={crop}
                 onChange={(_, percentCrop) => setCrop(percentCrop)}
                 onComplete={(c) => setCompletedCrop(c)}
                 aspect={ASPECT_RATIO}
-                minWidth={100}
-                minHeight={100 / ASPECT_RATIO}
+                maxWidth={1200}
+                maxHeight={400}
                 keepSelection
+                locked
               >
                 <img
                   ref={imgRef}
                   src={previewUrl}
                   alt="Crop preview"
                   onLoad={onImageLoad}
-                  className="max-h-96 w-full object-contain"
+                  className="max-h-96 object-contain"
+                  style={{ width: 1200 }}
                 />
               </ReactCrop>
             </div>
