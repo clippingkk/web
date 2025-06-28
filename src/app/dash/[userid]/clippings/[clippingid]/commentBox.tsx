@@ -11,7 +11,7 @@ import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { useApolloClient } from '@apollo/client'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { $getRoot, LexicalEditor } from 'lexical'
-import { Send, User as UserIcon } from 'lucide-react'
+import { Send, User as UserIcon, Info } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -101,6 +101,11 @@ function CommentBox(props: CommentBoxProps) {
             onContentChange={onContentChange}
             ref={ed}
           />
+        </div>
+
+        <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-500 dark:text-zinc-400">
+          <Info className="h-3 w-3" />
+          <span>Tip: You can use markdown syntax (e.g., **bold**, *italic*, `code`, [links](url))</span>
         </div>
 
         <div
