@@ -132,8 +132,8 @@ When schema changes occur:
   - Example: `from-blue-300 via-blue-400 to-blue-500`
   - Alternative: `from-blue-400 to-indigo-400` for slight hue shifts
 - **Neutral Palette**: 
-  - Light mode: `gray-50` to `gray-900`
-  - Dark mode: `zinc-800` to `zinc-50`
+  - Light mode: `zinc-800` to `zinc-50`
+  - Dark mode: `gray-50` to `gray-900`
 
 ### Theme Support
 - **Implementation**: Use Tailwind's dark mode classes with `class` strategy

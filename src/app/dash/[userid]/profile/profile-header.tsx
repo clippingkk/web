@@ -38,6 +38,7 @@ const ProfileHeader = ({ profile, uid, isInMyPage }: ProfileHeaderProps) => {
             <Button
               onClick={handleOpenModal}
               variant="outline"
+              disabled
               className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-white/30 dark:border-gray-700/30 hover:bg-white/90 dark:hover:bg-gray-800/90 transition-all duration-200 text-sm px-3 py-1.5"
             >
               <Edit3 className="w-4 h-4 mr-2" />
