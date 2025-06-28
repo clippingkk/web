@@ -68,32 +68,35 @@ function CommentBox(props: CommentBoxProps) {
   }, [])
 
   return (
-    <div className="mb-6 flex flex-col rounded-lg bg-slate-100/30 p-4 backdrop-blur-sm transition-all duration-300 hover:shadow-md md:flex-row dark:bg-slate-800/30">
-      <div className="flex flex-row items-center p-2 md:flex-col md:items-start">
+    <div className="flex gap-4">
+      <div className="flex-shrink-0">
         {props.me.avatar ? (
           <Avatar
             img={props.me.avatar}
             name={props.me.name}
             isPremium={false}
-            className="h-10 w-10 md:h-12 md:w-12"
+            className="h-10 w-10"
           />
         ) : (
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white md:h-12 md:w-12">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-blue-500 text-white">
             <UserIcon className="h-5 w-5" />
           </div>
         )}
-        <Tooltip content={props.me.name}>
-          <h5 className="ml-3 max-w-48 overflow-hidden text-sm font-medium text-ellipsis text-slate-700 md:mt-2 md:ml-0 dark:text-slate-300">
-            {props.me.name}
-          </h5>
-        </Tooltip>
       </div>
 
-      <div className="flex flex-1 flex-col justify-center md:pl-4">
-        <div className="w-full">
+      <div className="flex-1 min-w-0">
+        <div className="mb-2">
+          <Tooltip content={props.me.name}>
+            <h5 className="text-sm font-medium text-gray-900 dark:text-zinc-100">
+              {props.me.name}
+            </h5>
+          </Tooltip>
+        </div>
+        
+        <div className="rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 overflow-hidden transition-all duration-200 focus-within:border-blue-400 dark:focus-within:border-blue-400 focus-within:shadow-sm focus-within:shadow-blue-400/20">
           <CKLexicalBaseEditor
             editable
-            className="min-h-40 w-full rounded-lg bg-white p-3 shadow-md transition-all duration-300 focus:ring-2 focus:ring-indigo-500/50 dark:bg-slate-900 dark:text-slate-200"
+            className="min-h-32 w-full p-4 focus:outline-none"
             markdown={content}
             onContentChange={onContentChange}
             ref={ed}
@@ -101,37 +104,36 @@ function CommentBox(props: CommentBoxProps) {
         </div>
 
         <div
-          className="mt-4 flex w-full flex-col items-center justify-between gap-3 md:flex-row"
+          className="mt-3 flex items-center justify-between gap-3"
           ref={ref}
         >
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             {content.length > COMMENT_MIN_LEN ? (
-              <div className="flex items-center">
-                <AICommentEnhancer
-                  bookName={props.book?.title}
-                  clippingId={props.clipping.id}
-                  comment={content}
-                  onAccept={(newComment) => {
-                    toast.success('Accept AI enhanced comment!')
-                    setContent(newComment)
-                  }}
-                />
-              </div>
+              <AICommentEnhancer
+                bookName={props.book?.title}
+                clippingId={props.clipping.id}
+                comment={content}
+                onAccept={(newComment) => {
+                  toast.success('Accept AI enhanced comment!')
+                  setContent(newComment)
+                }}
+              />
             ) : (
-              <div className="rounded-full bg-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 dark:bg-slate-700 dark:text-slate-400">
+              <span className="text-xs text-gray-500 dark:text-zinc-400">
                 {content.length} / {COMMENT_MIN_LEN}{' '}
                 {t('app.clipping.comments.count')}
-              </div>
+              </span>
             )}
           </div>
 
           <Button
             variant="primary"
-            className="bg-gradient-to-r from-indigo-500 to-purple-500 after:from-indigo-500/40 after:to-purple-500/40 hover:shadow-indigo-500/20"
+            className="bg-blue-400 hover:bg-blue-500 dark:bg-blue-400 dark:hover:bg-blue-500 text-white shadow-sm hover:shadow-md transition-all duration-200"
             isLoading={loading}
             disabled={content.length < COMMENT_MIN_LEN}
             onClick={onSubmit}
             rightIcon={<Send className="h-4 w-4" />}
+            size="sm"
           >
             {t('app.clipping.comments.submit')}
           </Button>

@@ -79,34 +79,35 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
         ],
         theme: {
           text: {
-            underline: 'underline',
-            bold: 'font-bold',
-            strikethrough: 'line-through',
-            code: 'px-1 py border-1 border-gray-300 bg-gray-200 rounded-sm text-slate-800',
+            underline: 'underline decoration-2 underline-offset-2',
+            bold: 'font-semibold',
+            italic: 'italic',
+            strikethrough: 'line-through opacity-70',
+            code: 'px-1.5 py-0.5 mx-0.5 bg-gray-100 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-md font-mono text-sm text-blue-600 dark:text-blue-400',
           },
-          link: 'text-blue-500 hover:text-blue-600 hover:underline cursor-pointer',
-          quote: 'my-4 border-l-4 border-gray-300 pl-4 italic',
+          link: 'text-blue-400 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 underline underline-offset-2 decoration-1 cursor-pointer transition-colors duration-200',
+          quote: 'my-4 pl-4 py-2 border-l-4 border-blue-400 bg-gray-50 dark:bg-zinc-800/50 rounded-r-lg italic text-gray-700 dark:text-zinc-300',
           list: {
-            ol: 'list-decimal ml-4',
-            ul: 'list-disc ml-4',
-            listitem: 'my-2',
+            ol: 'list-decimal list-inside ml-2 space-y-1',
+            ul: 'list-disc list-inside ml-2 space-y-1',
+            listitem: 'my-1 text-gray-700 dark:text-zinc-300',
           },
-          table: 'my-4 table-auto',
-          tableCell: 'py-1 px-2 border border-gray-300',
-          tableRow: 'border-b border-gray-300',
-          code: 'p-1 bg-gray-200 rounded-sm',
+          table: 'my-4 w-full border-collapse overflow-hidden rounded-lg shadow-sm',
+          tableCell: 'px-4 py-2 border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
+          tableRow: 'hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors duration-200',
+          code: 'p-3 my-4 bg-gray-100 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg font-mono text-sm overflow-x-auto',
           codeHighlight: {
-            background: 'bg-gray-200',
+            background: 'bg-gray-100 dark:bg-zinc-800',
           },
           paragraph:
-            'my-4 duration-100 transition-all',
+            'my-3 leading-relaxed text-gray-700 dark:text-zinc-300',
           heading: {
-            h1: 'text-4xl font-bold my-4',
-            h2: 'text-3xl font-bold my-3',
-            h3: 'text-2xl font-bold my-2',
-            h4: 'text-xl font-bold my-1',
-            h5: 'text-lg font-bold my',
-            h6: 'text-base font-bold',
+            h1: 'text-3xl font-bold my-6 text-gray-900 dark:text-zinc-50',
+            h2: 'text-2xl font-bold my-5 text-gray-900 dark:text-zinc-50',
+            h3: 'text-xl font-semibold my-4 text-gray-900 dark:text-zinc-50',
+            h4: 'text-lg font-semibold my-3 text-gray-900 dark:text-zinc-50',
+            h5: 'text-base font-semibold my-2 text-gray-900 dark:text-zinc-50',
+            h6: 'text-sm font-semibold my-2 text-gray-900 dark:text-zinc-50',
           },
         },
         editorState: () =>
@@ -118,7 +119,11 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
           contentEditable={
             <ContentEditable className={className} style={style} />
           }
-          placeholder={<div className='left-1/2 top-1/2 absolute -translate-x-1/2 -translate-y-1/2'>Enter some text...</div>}
+          placeholder={
+            <div className='absolute top-7 left-5 text-gray-400 dark:text-zinc-500 pointer-events-none select-none'>
+              Enter some text...
+            </div>
+          }
           ErrorBoundary={LexicalErrorBoundary}
         />
         <HistoryPlugin />

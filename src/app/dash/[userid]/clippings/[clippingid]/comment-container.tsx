@@ -19,35 +19,40 @@ async function CommentContainer({ me, clipping, book }: Props) {
   }
 
   return (
-    <div className='w-full mb-8 transition-all duration-300 ease-in-out'>
-      <div
-        className='w-full h-full rounded-lg p-6 backdrop-blur-lg bg-slate-200 dark:bg-slate-800 bg-opacity-60 dark:bg-opacity-60 shadow-md hover:shadow-lg transition-all duration-300'
-      >
-        <div className='space-y-6'>
-          <div className='flex items-center gap-2 border-b border-slate-300 dark:border-slate-700 pb-4'>
-            <MessageSquare className='h-6 w-6 text-indigo-500 dark:text-indigo-400' />
-            <h3 className='text-2xl lg:text-3xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent'>
+    <div className='w-full mb-8'>
+      <div className='w-full rounded-2xl bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 shadow-sm overflow-hidden'>
+        <div className='bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-zinc-800 dark:to-zinc-800 p-6 border-b border-gray-200 dark:border-zinc-800'>
+          <div className='flex items-center gap-3'>
+            <div className='p-2 bg-blue-400 dark:bg-blue-400 rounded-xl'>
+              <MessageSquare className='h-5 w-5 text-white' />
+            </div>
+            <h3 className='text-xl font-semibold text-gray-900 dark:text-zinc-50'>
               {t('app.clipping.comments.title')}
             </h3>
           </div>
-          
+        </div>
+        
+        <div className='p-6 space-y-6'>
           {clipping && me && (
-            <div className='py-2'>
+            <div className='pb-6 border-b border-gray-100 dark:border-zinc-800'>
               <CommentBox me={me} book={book} clipping={clipping} />
             </div>
           )}
           
           {clipping?.comments.length ? (
-            <ul className='space-y-4 divide-y divide-slate-300 dark:divide-slate-700'>
+            <div className='space-y-4'>
               {clipping.comments.map(m => (
-                <li key={m.id} className='pt-4 first:pt-0'>
+                <div key={m.id} className='transition-all duration-200 hover:translate-x-1'>
                   <Comment comment={m} />
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           ) : (
-            <div className='py-4 text-center text-slate-500 dark:text-slate-400 italic'>
-              {t('app.clipping.comments.empty')}
+            <div className='py-12 text-center'>
+              <MessageSquare className='h-12 w-12 text-gray-300 dark:text-zinc-600 mx-auto mb-3' />
+              <p className='text-gray-500 dark:text-zinc-400'>
+                {t('app.clipping.comments.empty')}
+              </p>
             </div>
           )}
         </div>
