@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.0](https://github.com/clippingkk/web/compare/v5.13.21...v5.14.0) (2025-06-28)
+
+
+### Features
+
+* add animated background and upload modal components ([b2b1932](https://github.com/clippingkk/web/commit/b2b19325956194a2a7d7a570bb932c7a4da216b1))
+* add elegant divider component with enhanced styling ([3ef9447](https://github.com/clippingkk/web/commit/3ef9447f85e8ecffbb7050a067f1e32b34669105))
+* add loading states for parallel route slots ([0f6f405](https://github.com/clippingkk/web/commit/0f6f4055ac3387ce3d44c620fa8174a061acd2f6))
+* add markdown syntax tip to comment editor ([33dd7bc](https://github.com/clippingkk/web/commit/33dd7bcf24a384d1f278e9772c359b9e3acf703c))
+* **components:** refactor comments page and add beautiful confirm dialog ([206b61b](https://github.com/clippingkk/web/commit/206b61baa7d608a527724adae3e0867c94314f17))
+* enhance comment UI with elegant design and improved editor ([b22788a](https://github.com/clippingkk/web/commit/b22788acd4e6c837afc0174b6dae1bca8f19109a))
+* enhance UI with modern gradients and elegant textures ([a2aa87f](https://github.com/clippingkk/web/commit/a2aa87f27a8ac21d13c6c6bdc57385fb6ce75f93))
+* redesign clipping layout with unified card design and modern navigation ([351c493](https://github.com/clippingkk/web/commit/351c493e847000986aa89c466ed9ad7ef950b97b))
+
+
+### Bug Fixes
+
+* **comment-item:** remove overflow-hidden for better glow effects ([cdd8cd4](https://github.com/clippingkk/web/commit/cdd8cd485af1507c8f60e7fd09e5272971829006))
+* resolve TypeScript error in crop state reset ([f25fb52](https://github.com/clippingkk/web/commit/f25fb5220011b82c5d00141f5aede5c53ee313b4))
+* resolve unused variable linting error ([8553265](https://github.com/clippingkk/web/commit/855326593a0b110478c8648fd00ea1a37200cf2c))
+
 ## [5.13.21](https://github.com/clippingkk/web/compare/v5.13.20...v5.13.21) (2025-06-24)
 
 
