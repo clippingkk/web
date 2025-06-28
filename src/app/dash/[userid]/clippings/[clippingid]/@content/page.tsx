@@ -7,6 +7,7 @@ import Link from 'next/link'
 import React from 'react'
 import Reactions from './reactions'
 import { getClippingData } from '../data'
+import ElegantDivider from '@/components/divider/elegant-divider'
 
 type PageProps = {
   params: Promise<{ clippingid: string; userid: string }>
@@ -38,9 +39,7 @@ async function ClippingContent(props: PageProps) {
       </div>
 
       {/* Elegant divider */}
-      <div className="relative h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-pulse" />
-      </div>
+      <ElegantDivider color="blue" intensity="medium" />
 
       {/* Main content with enhanced typography */}
       <div className="relative py-8">
@@ -55,9 +54,7 @@ async function ClippingContent(props: PageProps) {
       </div>
 
       {/* Elegant divider */}
-      <div className="relative h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/20 to-transparent animate-pulse" />
-      </div>
+      <ElegantDivider color="purple" intensity="medium" />
 
       {/* Reactions section with modern styling */}
       <div className="py-4">
@@ -69,7 +66,7 @@ async function ClippingContent(props: PageProps) {
       </div>
 
       {/* Elegant divider */}
-      <div className="relative h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent" />
+      <ElegantDivider color="gray" intensity="light" />
 
       {/* Footer with enhanced design */}
       <footer className="pt-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">

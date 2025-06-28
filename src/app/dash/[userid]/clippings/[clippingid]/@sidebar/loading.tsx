@@ -18,6 +18,34 @@ export default function SidebarLoading() {
           </div>
         </div>
 
+        {/* AI Summary Featured Section Skeleton */}
+        <div className="mb-6">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-200 via-violet-200 to-indigo-300 dark:from-purple-800 dark:via-violet-800 dark:to-indigo-900 p-6 shadow-lg animate-pulse">
+            {/* Sparkle effects skeleton */}
+            <div className="absolute top-4 right-4 w-6 h-6 bg-white/30 rounded-full"></div>
+            <div className="absolute bottom-4 left-4 w-4 h-4 bg-white/20 rounded-full"></div>
+            
+            {/* Main content skeleton */}
+            <div className="flex items-center gap-4">
+              {/* Icon container skeleton */}
+              <div className="bg-white/20 rounded-xl p-3 w-14 h-14"></div>
+              
+              {/* Text content skeleton */}
+              <div className="flex-1 space-y-2">
+                <div className="h-3 bg-white/30 rounded w-20"></div>
+                <div className="h-5 bg-white/40 rounded w-24"></div>
+                <div className="h-3 bg-white/30 rounded w-32"></div>
+              </div>
+              
+              {/* Arrow skeleton */}
+              <div className="w-5 h-5 bg-white/30 rounded"></div>
+            </div>
+            
+            {/* Bottom gradient line skeleton */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/40"></div>
+          </div>
+        </div>
+
         {/* Quick Actions Section Skeleton */}
         <div>
           <div className="flex items-center gap-2 mb-3">
@@ -25,7 +53,6 @@ export default function SidebarLoading() {
             <div className="h-3 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-20"></div>
           </div>
           <div className="grid grid-cols-2 gap-2">
-            <div className="col-span-2 h-10 bg-gradient-to-r from-gray-200 via-gray-250 to-gray-300 dark:from-zinc-700 dark:via-zinc-650 dark:to-zinc-600 rounded-lg"></div>
             <div className="h-10 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg"></div>
             <div className="h-10 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg"></div>
             <div className="h-10 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg"></div>

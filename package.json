@@ -80,6 +80,7 @@
     "redux-mock-store": "^1.5.5",
     "standard-version": "^9.5.0",
     "ts-jest": "^29.4.0",
+    "tw-animate-css": "^1.3.4",
     "typescript": "^5.8.3"
   },
   "dependencies": {

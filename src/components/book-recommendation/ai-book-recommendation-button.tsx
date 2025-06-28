@@ -17,26 +17,28 @@ const AIBookRecommendationButton: React.FC<AIBookRecommendationButtonProps> = ({
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="group relative overflow-hidden bg-gradient-to-r from-fuchsia-600 to-violet-600 text-white font-medium py-2 px-6 rounded-md shadow-md transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px] flex items-center"
+        className="group w-full flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200/50 dark:border-purple-800/30 hover:border-purple-300 dark:hover:border-purple-700 transition-all duration-200"
         aria-label={t('app.home.aiRecommendations') || 'AI Book Recommendations'}
       >
-        {/* Button Label */}
-        <span className="relative z-10 flex items-center">
-          <Sparkles className="w-4 h-4 mr-2 animate-pulse text-yellow-300" />
-          {t('app.home.aiRecommend') || 'AI Recommend'}
-        </span>
-
-        {/* Animated Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-700 to-fuchsia-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-        {/* Animated Particles Effect */}
-        <div className="absolute inset-0 overflow-hidden opacity-30">
-          <div className="absolute top-0 left-0 w-1 h-1 rounded-full bg-white animate-float-up transform -translate-x-1/2"></div>
-          <div className="absolute top-0 left-1/4 w-1 h-1 rounded-full bg-white animate-float-up animation-delay-300 transform -translate-x-1/2"></div>
-          <div className="absolute top-0 left-1/2 w-1.5 h-1.5 rounded-full bg-white animate-float-up animation-delay-600 transform -translate-x-1/2"></div>
-          <div className="absolute top-0 left-3/4 w-1 h-1 rounded-full bg-white animate-float-up animation-delay-900 transform -translate-x-1/2"></div>
-          <div className="absolute top-0 right-0 w-1 h-1 rounded-full bg-white animate-float-up animation-delay-1200 transform -translate-x-1/2"></div>
+        {/* Simple icon */}
+        <div className="p-2 bg-purple-100 dark:bg-purple-800/50 rounded-lg">
+          <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400" />
         </div>
+        
+        {/* Simple text */}
+        <div className="flex-1 text-left">
+          <div className="text-sm font-medium text-gray-900 dark:text-zinc-100">
+            {t('app.home.aiRecommend', 'AI Book Recommendations')}
+          </div>
+          <div className="text-xs text-gray-500 dark:text-zinc-500">
+            Discover your next great read
+          </div>
+        </div>
+        
+        {/* Simple arrow */}
+        <svg className="w-4 h-4 text-purple-500 dark:text-purple-400 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
       </button>
 
       {/* AI Book Recommendation Modal */}

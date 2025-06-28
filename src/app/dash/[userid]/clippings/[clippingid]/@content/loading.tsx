@@ -8,7 +8,9 @@ export default function ContentLoading() {
       </div>
 
       {/* Elegant divider skeleton */}
-      <div className="relative h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent" />
+      <div className="relative h-px my-8 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-pulse" style={{ animationDuration: '3s' }} />
+      </div>
 
       {/* Main content skeleton */}
       <div className="py-8 space-y-4">
@@ -18,8 +20,10 @@ export default function ContentLoading() {
         <div className="h-8 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg w-4/5"></div>
       </div>
 
-      {/* Divider */}
-      <div className="relative h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent" />
+      {/* Elegant divider skeleton */}
+      <div className="relative h-px my-8 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/20 to-transparent animate-pulse" style={{ animationDuration: '3s', animationDelay: '1s' }} />
+      </div>
 
       {/* Reactions skeleton */}
       <div className="py-4 flex gap-4">
@@ -28,8 +32,10 @@ export default function ContentLoading() {
         <div className="h-10 w-24 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg"></div>
       </div>
 
-      {/* Divider */}
-      <div className="relative h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent" />
+      {/* Elegant divider skeleton */}
+      <div className="relative h-px my-8 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-400/15 to-transparent animate-pulse" style={{ animationDuration: '3s', animationDelay: '2s' }} />
+      </div>
 
       {/* Footer skeleton */}
       <footer className="pt-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">

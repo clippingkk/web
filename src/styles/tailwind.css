@@ -1,5 +1,7 @@
 @plugin '@tailwindcss/forms';
 
+@import 'tw-animate-css';
+
 @source '../../node_modules/@annatarhe/lake-ui/dist/**/*.js';
 
 @custom-variant dark (&:where(.dark, .dark *));
