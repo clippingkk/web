@@ -21,10 +21,10 @@ async function CommentsContent(props: PageProps) {
       <div className='pb-6 border-b border-gray-100 dark:border-zinc-800'>
         <CommentBox me={me} book={bookData} clipping={clipping} />
         {
-          <div className='space-y-4'>
+          <div className='py-4'>
             {clipping.comments.map(m => (
               <div key={m.id} className='transition-all duration-200 hover:translate-x-1'>
-                <Comment comment={m} />
+                <Comment comment={m} currentUser={me} />
               </div>
             ))}
             {clipping.comments.length === 0 && (

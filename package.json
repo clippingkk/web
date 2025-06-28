@@ -99,6 +99,7 @@
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.1.1",
     "@lexical/code": "^0.32.1",
+    "@lexical/hashtag": "^0.32.1",
     "@lexical/link": "^0.32.1",
     "@lexical/list": "^0.32.1",
     "@lexical/mark": "^0.32.1",

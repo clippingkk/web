@@ -28,7 +28,7 @@ export interface ConfirmOptions {
 interface ConfirmDialogProps extends ConfirmOptions {
   // isOpen: boolean
   onConfirm: () => void
-  onCancel: () => void
+  onCancel?: () => void
 }
 
 const variantStyles = {
@@ -74,13 +74,13 @@ function ConfirmDialog({
   const [isOpen, setIsOpen] = useState(false)
   const onHandleCancel = () => {
     setIsOpen(false)
-    onCancel()
+    onCancel?.()
   }
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: (open) => {
       setIsOpen(open)
-      if (!open) onCancel()
+      if (!open) onCancel?.()
     },
     middleware: [offset(15), flip(), shift()],
     whileElementsMounted: autoUpdate

@@ -18,26 +18,26 @@ function AISummaryBtn({ clipping, me, book }: Props) {
   const [aiSummaryVisible, setAISummaryVisible] = useState(false)
 
   return (
-    <li className='w-full mb-4'>
+    <>
       <SidebarContainer>
         <SidebarButton onClick={() => setAISummaryVisible(true)}>
-          <SidebarIcon className="text-amber-500 group-hover:text-amber-600">
+          <SidebarIcon className="text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300">
             <Sparkles className="w-full h-full" />
           </SidebarIcon>
           <SidebarText>
             {t('app.clipping.aiSummary')}
           </SidebarText>
         </SidebarButton>
-        <ClippingAISummaryModal
-          uid={me?.id}
-          cid={clipping?.id}
-          book={book}
-          clippingContent={clipping?.content || ''}
-          open={aiSummaryVisible}
-          onClose={() => setAISummaryVisible(false)}
-        />
       </SidebarContainer>
-    </li>
+      <ClippingAISummaryModal
+        uid={me?.id}
+        cid={clipping?.id}
+        book={book}
+        clippingContent={clipping?.content || ''}
+        open={aiSummaryVisible}
+        onClose={() => setAISummaryVisible(false)}
+      />
+    </>
   )
 }
 

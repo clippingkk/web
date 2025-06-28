@@ -37,21 +37,32 @@ function ClippingSidebar(props: ClippingSidebarProps) {
 
   return (
     <>
-      <ul className="w-full list-none p-0">
-        <AISummaryBtn clipping={clipping} me={me} book={book} />
-        <ClippingShareButton book={book} clipping={clipping} />
-        <DoubanLinkBtn book={book} />
-        <CopyEmbedHTMLBtn clipping={clipping} book={book} />
-        <VisibleToggle clipping={clipping} me={me} />
-        <UpdateClippingBtn clipping={clipping} me={me} />
-      </ul>
-      <ul className="w-full list-none p-0">
+      {/* Actions Section */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-semibold text-gray-600 dark:text-zinc-400 uppercase tracking-wider mb-4">
+          Actions
+        </h3>
+        <div className="space-y-2">
+          <AISummaryBtn clipping={clipping} me={me} book={book} />
+          <ClippingShareButton book={book} clipping={clipping} />
+          <DoubanLinkBtn book={book} />
+          <CopyEmbedHTMLBtn clipping={clipping} book={book} />
+          <VisibleToggle clipping={clipping} me={me} />
+          <UpdateClippingBtn clipping={clipping} me={me} />
+        </div>
+      </div>
+
+      {/* Navigation Section */}
+      <div className="border-t border-gray-200 dark:border-zinc-700 pt-6">
+        <h3 className="text-sm font-semibold text-gray-600 dark:text-zinc-400 uppercase tracking-wider mb-4">
+          Navigation
+        </h3>
         <SiblingNav
           clipping={clipping}
           iac={inAppChannel}
           domain={clippingDomain}
         />
-      </ul>
+      </div>
     </>
   )
 }

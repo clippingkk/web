@@ -13,15 +13,20 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import { EditorRefPlugin } from '@lexical/react/LexicalEditorRefPlugin'
+import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
+import { HashtagNode } from '@lexical/hashtag'
+import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
 import toast from 'react-hot-toast'
+import { LexicalTheme } from './theme'
 
 // define your extension array
 type LexicalEditorProps = {
@@ -70,6 +75,7 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
           TableNode,
           TableRowNode,
           TableCellNode,
+          HashtagNode,
           // AIPenDiffParagraphNode,
           // AIPenParagraphNode,
           // {
@@ -77,39 +83,7 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
           //   with: (node: ParagraphNode) => new AIPenParagraphNode(),
           // },
         ],
-        theme: {
-          text: {
-            underline: 'underline decoration-2 underline-offset-2',
-            bold: 'font-semibold',
-            italic: 'italic',
-            strikethrough: 'line-through opacity-70',
-            code: 'px-1.5 py-0.5 mx-0.5 bg-gray-100 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-md font-mono text-sm text-blue-600 dark:text-blue-400',
-          },
-          link: 'text-blue-400 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 underline underline-offset-2 decoration-1 cursor-pointer transition-colors duration-200',
-          quote: 'my-4 pl-4 py-2 border-l-4 border-blue-400 bg-gray-50 dark:bg-zinc-800/50 rounded-r-lg italic text-gray-700 dark:text-zinc-300',
-          list: {
-            ol: 'list-decimal list-inside ml-2 space-y-1',
-            ul: 'list-disc list-inside ml-2 space-y-1',
-            listitem: 'my-1 text-gray-700 dark:text-zinc-300',
-          },
-          table: 'my-4 w-full border-collapse overflow-hidden rounded-lg shadow-sm',
-          tableCell: 'px-4 py-2 border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
-          tableRow: 'hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors duration-200',
-          code: 'p-3 my-4 bg-gray-100 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg font-mono text-sm overflow-x-auto',
-          codeHighlight: {
-            background: 'bg-gray-100 dark:bg-zinc-800',
-          },
-          paragraph:
-            'my-3 leading-relaxed text-gray-700 dark:text-zinc-300',
-          heading: {
-            h1: 'text-3xl font-bold my-6 text-gray-900 dark:text-zinc-50',
-            h2: 'text-2xl font-bold my-5 text-gray-900 dark:text-zinc-50',
-            h3: 'text-xl font-semibold my-4 text-gray-900 dark:text-zinc-50',
-            h4: 'text-lg font-semibold my-3 text-gray-900 dark:text-zinc-50',
-            h5: 'text-base font-semibold my-2 text-gray-900 dark:text-zinc-50',
-            h6: 'text-sm font-semibold my-2 text-gray-900 dark:text-zinc-50',
-          },
-        },
+        theme: LexicalTheme,
         editorState: () =>
           $convertFromMarkdownString(markdown ?? '', TRANSFORMERS),
       }}
@@ -131,6 +105,9 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
         <OnChangePlugin onChange={onChange} />
         <TablePlugin />
         <LinkPlugin />
+        <CheckListPlugin />
+        <HashtagPlugin />
+        <CodeHighlightPlugin />
         <ClickableLinkPlugin />
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         {editor && (

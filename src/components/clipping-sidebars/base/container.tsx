@@ -10,17 +10,14 @@ type Props = {
 
 export function SidebarContainer({ children, className }: Props) {
   return (
-    <li className="mb-4 w-full">
-      <div
-        className={cn(
-          'group relative overflow-hidden rounded-xl backdrop-blur-xs transition-all',
-          className
-        )}
-      >
-        <div className="absolute inset-0 bg-linear-to-r from-purple-500/10 to-teal-500/10 transition-colors group-hover:from-purple-500/20 group-hover:to-teal-500/20" />
-        <div className="relative">{children}</div>
-      </div>
-    </li>
+    <div
+      className={cn(
+        'group relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-zinc-800/50 dark:to-zinc-700/50 border border-gray-200/50 dark:border-zinc-600/50 transition-all duration-300 hover:shadow-md hover:from-blue-100/70 hover:to-indigo-100/70 dark:hover:from-zinc-700/70 dark:hover:to-zinc-600/70',
+        className
+      )}
+    >
+      <div className="relative">{children}</div>
+    </div>
   )
 }
 
@@ -33,7 +30,7 @@ export function SidebarButton({
   return (
     <button
       className={cn(
-        'flex w-full items-center gap-2 p-4 disabled:opacity-50',
+        'flex w-full items-center gap-3 p-4 text-left transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/50 dark:hover:bg-zinc-800/50 rounded-xl',
         className
       )}
       onClick={onClick}
@@ -48,7 +45,7 @@ export function SidebarIcon({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'h-4 w-4 text-purple-500 transition-colors group-hover:text-purple-600',
+        'h-5 w-5 text-blue-600 dark:text-blue-400 transition-colors group-hover:text-blue-700 dark:group-hover:text-blue-300 flex-shrink-0',
         className
       )}
     >
@@ -61,7 +58,7 @@ export function SidebarText({ children, className }: Props) {
   return (
     <span
       className={cn(
-        'w-full font-medium text-gray-700 transition-colors group-hover:text-gray-900 dark:text-gray-300 dark:group-hover:text-white',
+        'flex-1 font-medium text-gray-800 dark:text-zinc-200 transition-colors group-hover:text-gray-900 dark:group-hover:text-zinc-50 text-sm leading-relaxed',
         className
       )}
     >

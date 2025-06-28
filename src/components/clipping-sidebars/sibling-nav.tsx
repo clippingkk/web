@@ -65,13 +65,13 @@ async function SiblingNav(props: Props) {
   const { prev, next } = getSiblingLink(iac, domain, clipping)
 
   return (
-    <>
+    <div className="space-y-2">
       {prev && (
         <SidebarContainer>
           <Tooltip content={t('app.clipping.sidebar.prev')}>
-            <Link href={prev} className="group">
+            <Link href={prev} className="group block">
               <SidebarButton>
-                <SidebarIcon>
+                <SidebarIcon className="text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
                   <ArrowUp className="h-full w-full" />
                 </SidebarIcon>
                 <SidebarText>{t('app.clipping.sidebar.prev')}</SidebarText>
@@ -83,9 +83,9 @@ async function SiblingNav(props: Props) {
       {next && (
         <SidebarContainer>
           <Tooltip content={t('app.clipping.sidebar.next')}>
-            <Link href={next} className="group">
+            <Link href={next} className="group block">
               <SidebarButton>
-                <SidebarIcon className="text-teal-500 group-hover:text-teal-600">
+                <SidebarIcon className="text-teal-600 dark:text-teal-400 group-hover:text-teal-700 dark:group-hover:text-teal-300">
                   <ArrowDown className="h-full w-full" />
                 </SidebarIcon>
                 <SidebarText>{t('app.clipping.sidebar.next')}</SidebarText>
@@ -94,7 +94,14 @@ async function SiblingNav(props: Props) {
           </Tooltip>
         </SidebarContainer>
       )}
-    </>
+      {!prev && !next && (
+        <div className="text-center py-4">
+          <span className="text-sm text-gray-500 dark:text-zinc-400">
+            {t('app.clipping.sidebar.noNavigation', 'No more clippings')}
+          </span>
+        </div>
+      )}
+    </div>
   )
 }
 
