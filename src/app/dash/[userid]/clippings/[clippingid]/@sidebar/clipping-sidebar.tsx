@@ -36,25 +36,23 @@ function ClippingSidebar(props: ClippingSidebarProps) {
     : me?.id.toString()
 
   return (
-    <div className="bg-opacity-50 dark:bg-opacity-50 my-4 flex-1 rounded-sm bg-slate-200 p-4 shadow-sm backdrop-blur-sm dark:bg-slate-800">
-      <div className="flex h-full w-full flex-col items-center justify-between">
-        <ul className="w-full list-none p-0">
-          <AISummaryBtn clipping={clipping} me={me} book={book} />
-          <ClippingShareButton book={book} clipping={clipping} />
-          <DoubanLinkBtn book={book} />
-          <CopyEmbedHTMLBtn clipping={clipping} book={book} />
-          <VisibleToggle clipping={clipping} me={me} />
-          <UpdateClippingBtn clipping={clipping} me={me} />
-        </ul>
-        <ul className="w-full list-none p-0">
-          <SiblingNav
-            clipping={clipping}
-            iac={inAppChannel}
-            domain={clippingDomain}
-          />
-        </ul>
-      </div>
-    </div>
+    <>
+      <ul className="w-full list-none p-0">
+        <AISummaryBtn clipping={clipping} me={me} book={book} />
+        <ClippingShareButton book={book} clipping={clipping} />
+        <DoubanLinkBtn book={book} />
+        <CopyEmbedHTMLBtn clipping={clipping} book={book} />
+        <VisibleToggle clipping={clipping} me={me} />
+        <UpdateClippingBtn clipping={clipping} me={me} />
+      </ul>
+      <ul className="w-full list-none p-0">
+        <SiblingNav
+          clipping={clipping}
+          iac={inAppChannel}
+          domain={clippingDomain}
+        />
+      </ul>
+    </>
   )
 }
 

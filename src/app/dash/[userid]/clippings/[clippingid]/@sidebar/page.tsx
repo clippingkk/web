@@ -1,5 +1,5 @@
 import { IN_APP_CHANNEL } from '@/services/channel'
-import ClippingSidebar from '../clipping-sidebar'
+import ClippingSidebar from './clipping-sidebar'
 import { getClippingData } from '../data'
 
 type PageProps = {

@@ -5,7 +5,7 @@ import { isGrandAdmin } from '@/services/admin'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import Reactions from '../reactions'
+import Reactions from './reactions'
 import { getClippingData } from '../data'
 
 type PageProps = {
