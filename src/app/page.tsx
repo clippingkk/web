@@ -6,11 +6,10 @@ import { PublicDataDocument, PublicDataQuery } from '../schema/generated'
 import { duration3Days } from '../hooks/book'
 import IndexPage from '../components/index-page/index.page'
 import { useBackgroundImageServer as getBackgroundImageServer } from '../hooks/theme.server'
-import { getApolloServerClient } from '../services/apollo.server'
+import { doApolloServerQuery } from '../services/apollo.server'
 
 async function Page() {
-  const client = getApolloServerClient()
-  const data = await client.query<PublicDataQuery>({
+  const data = await doApolloServerQuery<PublicDataQuery>({
     query: PublicDataDocument,
     fetchPolicy: 'network-only'
   })

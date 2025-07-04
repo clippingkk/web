@@ -6,7 +6,7 @@ import MetamaskBindButton from './metamask.bind'
 import AppleLoginBind from './apple.bind'
 import GithubBindButton from './github.bind'
 import { useTranslation } from '@/i18n/client'
-import { useFetchExternalAccountQuery } from '../../schema/generated'
+import { useFetchExternalAccountQuery } from '@/schema/generated'
 import AccountCard from './account-card'
 
 type ExternalAccountListProps = {
