@@ -1,4 +1,6 @@
+import { ScrollToTopOnLoad } from '@/components/scroll-to-top-on-load'
 import styles from './clipping.module.css'
+
 
 type Props = {
   children: React.ReactNode
@@ -11,6 +13,7 @@ function Layout(props: Props) {
   const { content, sidebar, comments } = props
   return (
     <div className={`${styles.clipping} anna-fade-in flex flex-col`}>
+      <ScrollToTopOnLoad />
       <div className="with-slide-in w-full mt-4 lg:mt-24 mb-8">
         {/* Single card container for content and sidebar */}
         <div className="relative w-full rounded-3xl overflow-hidden">
