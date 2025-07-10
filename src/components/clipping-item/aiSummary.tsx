@@ -6,9 +6,9 @@ import { WenquBook } from '../../services/wenqu'
 import { getLanguage } from '../../utils/locales'
 import { useQuery } from '@tanstack/react-query'
 import Markdown from 'react-markdown'
-import { Loader2 } from 'lucide-react'
 import Modal from '@annatarhe/lake-ui/modal'
 import { MarkdownComponents } from '../RichTextEditor/markdown-components'
+import { PulseLoader } from '../book-recommendation/pulse-loader'
 
 type ClippingAISummaryModalProps = {
   uid?: number
@@ -82,11 +82,7 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
       title={t('app.clipping.aiSummary')}
     >
       <div className='relative min-h-[200px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden p-8 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50'>
-        {isLoading && (
-          <div className='absolute inset-0 flex items-center justify-center bg-white/5 backdrop-blur-xs'>
-            <Loader2 className='h-8 w-8 animate-spin text-gray-600 dark:text-gray-300' />
-          </div>
-        )}
+        {isLoading && <PulseLoader />}
         {errMsg ? (
           <div className='rounded-lg border border-red-200 bg-red-50/50 p-4 dark:border-red-800/50 dark:bg-red-900/20'>
             <p className='font-lxgw text-lg text-red-800 dark:text-red-200'>{errMsg}</p>

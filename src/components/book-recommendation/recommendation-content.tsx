@@ -3,7 +3,7 @@ import { Sparkles } from 'lucide-react'
 import Markdown from 'react-markdown'
 import { useTranslation } from '@/i18n/client'
 import { MarkdownComponents } from '../RichTextEditor/markdown-components'
-import { LoadingState } from './loading-state'
+import { PulseLoader } from './pulse-loader'
 
 interface RecommendationContentProps {
   recommendationData: string[]
@@ -15,8 +15,8 @@ export function RecommendationContent({ recommendationData, isLoading }: Recomme
   
   return (
     <div className='space-y-6'>
-      {isLoading && <LoadingState isOverlay />}
-      <div className='bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-400 dark:to-blue-600 p-6 rounded-lg'>
+      <div className='bg-gradient-to-r from-blue-300 to-blue-500 dark:from-blue-400 dark:to-blue-600 p-6 rounded-lg relative'>
+        {isLoading && <PulseLoader />}
         <h3 className='text-xl font-medium text-white mb-3 flex items-center'>
           <Sparkles className='w-5 h-5 mr-2' />
           {t('app.home.personalizedRecommendations') || 'Your Personalized Recommendations'}
