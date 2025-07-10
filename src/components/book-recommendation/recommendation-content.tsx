@@ -22,7 +22,7 @@ export function RecommendationContent({ recommendationData, isLoading }: Recomme
           {t('app.home.personalizedRecommendations') || 'Your Personalized Recommendations'}
         </h3>
         <div className='prose dark:prose-invert prose-sm max-w-none'>
-          <Markdown components={MarkdownComponents}>{recommendationData.join('\n')}</Markdown>
+          <Markdown components={MarkdownComponents}>{recommendationData.join('')}</Markdown>
         </div>
       </div>
       <div className='text-sm text-gray-500 dark:text-gray-400 italic'>
