@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.1](https://github.com/clippingkk/web/compare/v5.14.0...v5.14.1) (2025-07-07)
+
+
+### Bug Fixes
+
+* refactor AI book recommendation modal for better maintainability ([62f1764](https://github.com/clippingkk/web/commit/62f1764eebf8366f7e978e4ee1fa9f750093ac72))
+* update Hero component colors and add LinkIndicator ([aee1f60](https://github.com/clippingkk/web/commit/aee1f609b0460ceb5ca89785dc662e067fe6017b))
+* update imports to use consistent patterns ([523d3e1](https://github.com/clippingkk/web/commit/523d3e11a38f031e490b6b321a3b9a8a88a8059d))
+
 ## [5.14.0](https://github.com/clippingkk/web/compare/v5.13.21...v5.14.0) (2025-06-28)
 
 
