@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.2](https://github.com/clippingkk/web/compare/v5.14.1...v5.14.2) (2025-07-10)
+
+
+### Bug Fixes
+
+* add scroll-to-top functionality on clipping page load ([a14d5c0](https://github.com/clippingkk/web/commit/a14d5c016fbfccae8bbdcdf97b42d62d201fc5e5))
+* **deps:** upgrade deps ([b867bae](https://github.com/clippingkk/web/commit/b867bae5e9b0b0e3d09c4f66526cc67c6570ea54))
+* replace intrusive loading overlays with subtle pulse indicator ([60edfc9](https://github.com/clippingkk/web/commit/60edfc9a5db7ee8fa4426b72018eb793e1fa22b2))
+
 ## [5.14.1](https://github.com/clippingkk/web/compare/v5.14.0...v5.14.1) (2025-07-07)
 
 
