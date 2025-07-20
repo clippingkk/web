@@ -27,7 +27,7 @@ function AIBookRecommendationModal({ open, onClose, uid, books }: AIBookRecommen
 
   // Create book information string for the API
   const booksInfo = bookList.books.slice(0, 10).map(book =>
-    `Title: ${book.title}, Author: ${book.author}, Summary: ${book.summary.slice(0, 300)}`
+    `Title: ${book.title}, Author: ${book.author}, Summary: ${(book.summary ?? '').slice(0, 300)}`
   ).join('\n') || ''
 
   const { isLoading, error } = useQuery({
