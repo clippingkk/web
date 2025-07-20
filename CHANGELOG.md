@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.3](https://github.com/clippingkk/web/compare/v5.14.2...v5.14.3) (2025-07-20)
+
+
+### Features
+
+* add Claude Code configuration and GitHub Actions workflow ([8c1eb87](https://github.com/clippingkk/web/commit/8c1eb8790a33544d1f0156113aefdc2c3a6b64b8))
+
+
+### Bug Fixes
+
+* add null safety for book.summary in AI recommendation modal ([7befbb2](https://github.com/clippingkk/web/commit/7befbb2493b38d204de4d96337a3a66c4a019a2a))
+* add null safety for book.summary in AI recommendation modal ([668d352](https://github.com/clippingkk/web/commit/668d352633d758c267531712128187174265b3e4))
+* **ai:** fix formatting issue when ai data received ([b46b156](https://github.com/clippingkk/web/commit/b46b1562c5e0f3698b995f81ab5f5a42da9c5052))
+
+
+### Miscellaneous Chores
+
+* release 5.14.3 ([ddf21ae](https://github.com/clippingkk/web/commit/ddf21ae91d4846833a95c2449db050f527d6f0c5))
+
 ## [5.14.2](https://github.com/clippingkk/web/compare/v5.14.1...v5.14.2) (2025-07-10)
 
 
