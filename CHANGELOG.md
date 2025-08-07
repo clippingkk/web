@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.4](https://github.com/clippingkk/web/compare/v5.14.3...v5.14.4) (2025-08-07)
+
+
+### Bug Fixes
+
+* update dependencies to latest versions ([2a148b9](https://github.com/clippingkk/web/commit/2a148b9078263eb2f51e2771502638415c40a2d3))
+
 ## [5.14.3](https://github.com/clippingkk/web/compare/v5.14.2...v5.14.3) (2025-07-20)
 
 
