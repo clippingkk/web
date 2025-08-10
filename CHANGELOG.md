@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.5](https://github.com/clippingkk/web/compare/v5.14.4...v5.14.5) (2025-08-10)
+
+
+### Bug Fixes
+
+* **docker:** comment out instrumentation setup in Dockerfile ([83ccb07](https://github.com/clippingkk/web/commit/83ccb0708b24dd34e04c9c4ba215dc41f8f4ef1c))
+
 ## [5.14.4](https://github.com/clippingkk/web/compare/v5.14.3...v5.14.4) (2025-08-10)
 
 
