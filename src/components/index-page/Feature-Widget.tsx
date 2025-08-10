@@ -1,9 +1,13 @@
 'use client'
 import { useTranslation } from '@/i18n/client'
-import { ClippingData, register } from '@annatarhe/clippingkk-widget'
+import type { ClippingData } from '@annatarhe/clippingkk-widget'
 import React, { useCallback, useRef, useState } from 'react'
 
-register()
+if (typeof window !== 'undefined') {
+  import('@annatarhe/clippingkk-widget').then(({ register }) => {
+    register()
+  })
+}
 
 type Props = {
   widgetClippingData: ClippingData

@@ -7,7 +7,7 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import React from 'react'
 import {
   getReactQueryClient,
-  makeApolloClientWithCredentials,
+  makeApolloClient,
 } from '../services/ajax'
 import { reactQueryPersister } from '../services/storage'
 
@@ -35,7 +35,7 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
           persister: reactQueryPersister,
         }}
       >
-        <ApolloNextAppProvider makeClient={makeApolloClientWithCredentials()}>
+        <ApolloNextAppProvider makeClient={makeApolloClient}>
           {children}
         </ApolloNextAppProvider>
       </PersistQueryClientProvider>

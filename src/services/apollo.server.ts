@@ -7,8 +7,8 @@ import { redirect } from 'next/navigation'
 const { getClient } = registerApolloClient(() => new ApolloClient({
   cache: new InMemoryCache(apolloCacheConfig),
   link: ApolloLink.from([
-    httpLink,
     authLink,
+    httpLink,
   ]),
 })
 )

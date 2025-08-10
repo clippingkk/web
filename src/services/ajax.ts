@@ -163,7 +163,7 @@ export function makeApolloClientWithCredentials() {
       links.push(new SSRMultipartLink({ stripDefer: true }))
     }
 
-    links.push(authLink, httpLink, errorLink)
+    links.push(errorLink, authLink, httpLink)
 
     return new ApolloClient({
       cache: new InMemoryCache(apolloCacheConfig),

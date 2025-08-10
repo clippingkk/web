@@ -68,27 +68,10 @@ export const viewport = {
 export const metadata: Metadata = {
   ...indexPageMetadata,
   icons: {
-    // <link rel="apple-touch-icon" sizes="57x57" href={faviconPrefix + "/apple-icon-57x57.png"} />
-    // <link rel="apple-touch-icon" sizes="60x60" href={faviconPrefix + "/apple-icon-60x60.png"} />
-    // <link rel="apple-touch-icon" sizes="72x72" href={faviconPrefix + "/apple-icon-72x72.png"} />
-    // <link rel="apple-touch-icon" sizes="76x76" href={faviconPrefix + "/apple-icon-76x76.png"} />
-    // <link rel="apple-touch-icon" sizes="114x114" href={faviconPrefix + "/apple-icon-114x114.png"} />
-    // <link rel="apple-touch-icon" sizes="120x120" href={faviconPrefix + "/apple-icon-120x120.png"} />
-    // <link rel="apple-touch-icon" sizes="144x144" href={faviconPrefix + "/apple-icon-144x144.png"} />
-    // <link rel="apple-touch-icon" sizes="152x152" href={faviconPrefix + "/apple-icon-152x152.png"} />
-    // <link rel="apple-touch-icon" sizes="180x180" href={faviconPrefix + "/apple-icon-180x180.png"} />
     apple: `${faviconPrefix}/apple-icon-180x180.png`,
-    // <link rel="icon" type="image/png" sizes="192x192" href={faviconPrefix + "/android-icon-192x192.png"} />
-    // <link rel="icon" type="image/png" sizes="32x32" href={faviconPrefix + "/favicon-32x32.png"} />
-    // <link rel="icon" type="image/png" sizes="96x96" href={faviconPrefix + "/favicon-96x96.png"} />
-    // <link rel="icon" type="image/png" sizes="16x16" href={faviconPrefix + "/favicon-16x16.png"} />
-    icon: `${faviconPrefix}//android-icon-192x192.png`,
+    icon: `${faviconPrefix}/android-icon-192x192.png`,
   },
   manifest: `${faviconPrefix}/manifest.json`,
-
-  // <link rel="manifest" href={faviconPrefix + "/manifest.json"} />
-  // <meta name="msapplication-TileColor" content="#ffffff" />
-  // <meta name="msapplication-TileImage" content={faviconPrefix + "/ms-icon-144x144.png"} />
   other: {
     'msapplication-TileColor': '#ffffff',
     'msapplication-TileImage': `${faviconPrefix}/ms-icon-144x144.png`,
