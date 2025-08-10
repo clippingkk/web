@@ -59,5 +59,6 @@ query profile($id: Int, $domain: String, $pagination: MeQueryPagination) {
     }
 
     clippingsCount
+    booksCount
   }
 }

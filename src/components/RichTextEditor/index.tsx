@@ -7,7 +7,7 @@ import { LinkNode } from '@lexical/link'
 import { ListItemNode, ListNode } from '@lexical/list'
 import { MarkNode } from '@lexical/mark'
 import { $convertFromMarkdownString, $convertToMarkdownString, TRANSFORMERS } from '@lexical/markdown'
-import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
+// import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
@@ -101,7 +101,7 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
           ErrorBoundary={LexicalErrorBoundary}
         />
         <HistoryPlugin />
-        <AutoFocusPlugin />
+        {/* <AutoFocusPlugin /> */}
         <OnChangePlugin onChange={onChange} />
         <TablePlugin />
         <LinkPlugin />
