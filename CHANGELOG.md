@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.4](https://github.com/clippingkk/web/compare/v5.14.3...v5.14.4) (2025-08-10)
+
+
+### Features
+
+* **profile:** add elegant analytics display for reading statistics ([6ba85aa](https://github.com/clippingkk/web/commit/6ba85aa3b5da357cea8f02ff494ea21f6f03b127))
+
+
+### Bug Fixes
+
+* **app:** cleanup code and fix Apollo link order ([0e5c72c](https://github.com/clippingkk/web/commit/0e5c72ca4c2a303a8379e3e4fd270d921c5093b1))
+* update dependencies to latest versions ([2a148b9](https://github.com/clippingkk/web/commit/2a148b9078263eb2f51e2771502638415c40a2d3))
+
+
+### Miscellaneous Chores
+
+* release 5.14.4 ([c658dc4](https://github.com/clippingkk/web/commit/c658dc41f86d6350f41d283a766e202ffd88e1f4))
+
 ## [5.14.3](https://github.com/clippingkk/web/compare/v5.14.2...v5.14.3) (2025-07-20)
 
 
