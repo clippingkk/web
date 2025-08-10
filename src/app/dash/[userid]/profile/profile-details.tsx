@@ -10,6 +10,7 @@ import ProfileBindPhone from './bind-phone'
 import WechatBindButton from './bind'
 import PersonalityView from './personality'
 import UserActions from './actions'
+import ProfileAnalytics from '@/components/profile/profile-analytics'
 
 const CliApiToken = React.lazy(() => import('./cli-api'))
 
@@ -73,6 +74,13 @@ const ProfileDetails = async ({ profile, uid, isInMyPage, year }: ProfileDetails
           {profile.bio || t('app.profile.noBio')}
         </div>
       </div>
+      
+      {/* Analytics section */}
+      <ProfileAnalytics 
+        clippingsCount={profile.clippingsCount}
+        booksCount={profile.booksCount}
+        createdAt={profile.createdAt}
+      />
       
       {/* Connect section */}
       <div className='mt-6'>

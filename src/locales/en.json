@@ -251,7 +251,18 @@
       "personality": {
         "title": "Personality",
         "tooltip": "predict personality by AI base on your recent reading books"
-      }
+      },
+      "analytics": {
+        "title": "Reading Analytics",
+        "clippings": "Total Clippings",
+        "books": "Books Read",
+        "dailyAvg": "Daily Average",
+        "memberDays": "Member Days",
+        "readingStreak": "Reading Activity",
+        "active": "Active Reader",
+        "getStarted": "Start Your Reading Journey"
+      },
+      "noBio": "No bio yet"
     },
     "settings": {
       "title": "Global Settings(for web)",

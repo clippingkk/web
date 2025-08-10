@@ -251,7 +251,18 @@
       "personality": {
         "title": "个性",
         "tooltip": "根据您最近阅读的书籍，通过人工智能预测个性"
-      }
+      },
+      "analytics": {
+        "title": "阅读数据分析",
+        "clippings": "摘录总数",
+        "books": "阅读书籍",
+        "dailyAvg": "日均摘录",
+        "memberDays": "加入天数",
+        "readingStreak": "阅读活跃度",
+        "active": "活跃读者",
+        "getStarted": "开启你的阅读之旅"
+      },
+      "noBio": "暂无简介"
     },
     "settings": {
       "title": "全局配置(网站)",

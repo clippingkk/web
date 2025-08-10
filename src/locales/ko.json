@@ -251,7 +251,18 @@
       "personality": {
         "title": "성격",
         "tooltip": "AI가 최근에 읽은 책을 기반으로 성격을 예측합니다."
-      }
+      },
+      "analytics": {
+        "title": "독서 분석",
+        "clippings": "총 클리핑",
+        "books": "읽은 책",
+        "dailyAvg": "일일 평균",
+        "memberDays": "회원 기간",
+        "readingStreak": "독서 활동",
+        "active": "활발한 독자",
+        "getStarted": "독서 여행을 시작하세요"
+      },
+      "noBio": "아직 소개가 없습니다"
     },
     "settings": {
       "title": "글로벌 구성 (웹 사이트)",
