@@ -1,5 +1,5 @@
-import React from 'react'
 import Image from 'next/image'
+import React from 'react'
 
 type IconAppleLogoProps = {
   size: number
@@ -9,11 +9,11 @@ type IconAppleLogoProps = {
 function IconAppleLogo(props: IconAppleLogoProps) {
   return (
     <Image
-      src='/apple.logo.svg'
+      src="/apple.logo.svg"
       width={props.size}
       height={props.size}
       className={props.className}
-      alt='apple'
+      alt="apple"
     />
   )
 }

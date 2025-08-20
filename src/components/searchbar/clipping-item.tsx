@@ -1,10 +1,10 @@
-import Link from 'next/link'
 import { Book, Quote } from 'lucide-react'
+import Link from 'next/link'
 import { useMemo } from 'react'
 
 type Props = {
-  clipping: { id: number, content: string, title?: string, bookName?: string }
-  profile?: { id: number, domain: string }
+  clipping: { id: number; content: string; title?: string; bookName?: string }
+  profile?: { id: number; domain: string }
   onClick: () => void
   highlightText?: string
 }
@@ -19,7 +19,10 @@ function SearchClippingItem(props: Props) {
     }
 
     // Case insensitive search
-    const regex = new RegExp(`(${highlightText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
+    const regex = new RegExp(
+      `(${highlightText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`,
+      'gi'
+    )
     const parts = c.content.split(regex)
 
     return parts.map((part, index) => {
@@ -39,15 +42,15 @@ function SearchClippingItem(props: Props) {
   }, [c.content, highlightText])
 
   return (
-    <li
-      className="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group with-slide-in"
-    >
+    <li className="relative rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group with-slide-in">
       {/* Enhanced gradient background with animation */}
-      <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/20 via-purple-500/20 to-pink-500/20 
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-indigo-600/20 via-purple-500/20 to-pink-500/20 
         dark:from-indigo-600/10 dark:via-purple-500/10 dark:to-pink-500/10 
         group-hover:from-indigo-600/30 group-hover:via-purple-500/30 group-hover:to-pink-500/30 
         dark:group-hover:from-indigo-600/20 dark:group-hover:via-purple-500/20 dark:group-hover:to-pink-500/20 
-        rounded-lg opacity-75 transition-all duration-500 group-hover:opacity-100 group-hover:blur-[0.5px]" />
+        rounded-lg opacity-75 transition-all duration-500 group-hover:opacity-100 group-hover:blur-[0.5px]"
+      />
 
       {/* Subtle border glow effect */}
       <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500">

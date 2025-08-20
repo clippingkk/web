@@ -1,16 +1,16 @@
-import { ProfileQuery, ProfileQueryVariables } from '@/gql/graphql'
-import { useTranslation } from '@/i18n'
-import { doApolloServerQuery } from '@/services/apollo.server'
 import { ChevronLeft, Crown, Home } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
+import type { ProfileQuery, ProfileQueryVariables } from '@/gql/graphql'
+import { useTranslation } from '@/i18n'
+import { doApolloServerQuery } from '@/services/apollo.server'
 import logo from '../../assets/logo.png'
 import { ProfileDocument } from '../../schema/generated'
 import { getMyHomeLink } from '../../utils/profile.utils'
 import LinkIndicator from '../link-indicator'
 import UserName from '../profile/user-name'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type NavigateGuideProps = {
   title?: string

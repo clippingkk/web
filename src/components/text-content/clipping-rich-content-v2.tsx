@@ -1,9 +1,9 @@
-import { useTranslation } from '@/i18n/client'
 import Modal from '@annatarhe/lake-ui/modal'
 import { arrow, FloatingArrow, offset, useFloating } from '@floating-ui/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from '@/i18n/client'
 import { useClickOutside } from '../../hooks/dom'
-import { FetchClippingQuery } from '../../schema/generated'
+import type { FetchClippingQuery } from '../../schema/generated'
 import NounEditContent from '../noun/noun-edit'
 import NounTooltipCard from './noun-tooltip-card'
 

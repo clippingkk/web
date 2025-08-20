@@ -1,6 +1,6 @@
-import { useTranslation } from '@/i18n'
 import { ArrowLeft, UserX } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslation } from '@/i18n'
 
 async function UserNotFound() {
   const { t } = await useTranslation()
@@ -11,25 +11,25 @@ async function UserNotFound() {
         {/* Decorative blur elements */}
         <div className="absolute -top-24 -left-24 w-48 h-48 bg-red-500/30 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-purple-500/30 rounded-full blur-3xl" />
-        
+
         <div className="relative z-10 flex flex-col items-center text-center">
           <div className="bg-red-500/10 dark:bg-red-500/20 p-6 rounded-full mb-6">
             <UserX size={64} className="text-red-500" strokeWidth={2} />
           </div>
-          
+
           <h1 className="text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-purple-600 mb-4">
             404
           </h1>
-          
+
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
             {t('user_not_found')}
           </h2>
-          
+
           <p className="text-gray-600 dark:text-gray-300 mb-8">
             {t('user_not_found_message')}
           </p>
-          
-          <Link 
+
+          <Link
             href="/"
             className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-purple-600 text-white font-medium rounded-lg transition-all hover:shadow-lg hover:shadow-purple-500/30 hover:-translate-y-1"
           >

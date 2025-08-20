@@ -1,8 +1,8 @@
-import { useTranslation } from '@/i18n'
 import { Users } from 'lucide-react'
 import Image from 'next/image'
+import { useTranslation } from '@/i18n'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import { User } from '../../schema/generated'
+import type { User } from '../../schema/generated'
 import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
 import styles from './tops.module.css'
 

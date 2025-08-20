@@ -1,9 +1,14 @@
-mutation updateProfile($name: String, $avatar: String, $bio: String, $domain: String) {
-    updateUserProfile(name: $name, avatar: $avatar, bio: $bio, domain: $domain) {
-        id
-        name
-        avatar
-        bio
-        domain
-    }
+mutation updateProfile(
+  $name: String
+  $avatar: String
+  $bio: String
+  $domain: String
+) {
+  updateUserProfile(name: $name, avatar: $avatar, bio: $bio, domain: $domain) {
+    id
+    name
+    avatar
+    bio
+    domain
+  }
 }

@@ -1,30 +1,39 @@
-import React from 'react'
-import { getReactQueryClient } from '@/services/ajax'
-import { duration3Days } from '@/hooks/book'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
-import BookPageContent from './content'
-import { Metadata } from 'next'
-import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
-import BookInfo from '@/components/book-info/book-info'
-import { cookies } from 'next/headers'
-import { getApolloServerClient } from '@/services/apollo.server'
-import { BookDocument, BookQuery, BookQueryVariables } from '@/schema/generated'
 import dayjs from 'dayjs'
+import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import React from 'react'
+import BookInfo from '@/components/book-info/book-info'
 import Divider from '@/components/divider/divider'
+import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
+import { duration3Days } from '@/hooks/book'
 import { useTranslation } from '@/i18n'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
+import {
+  BookDocument,
+  type BookQuery,
+  type BookQueryVariables,
+} from '@/schema/generated'
+import { getReactQueryClient } from '@/services/ajax'
+import { getApolloServerClient } from '@/services/apollo.server'
+import {
+  type WenquBook,
+  type WenquSearchResponse,
+  wenquRequest,
+} from '@/services/wenqu'
+import BookPageContent from './content'
 
 type PageProps = {
-  params: Promise<{ bookid: string, userid: string }>
+  params: Promise<{ bookid: string; userid: string }>
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const { bookid, userid } = (await props.params)
+  const { bookid, userid } = await props.params
   const dbId = bookid ?? ''
   const rq = getReactQueryClient()
   const bs = await rq.fetchQuery({
     queryKey: ['wenqu', 'books', 'dbId', dbId],
-    queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
+    queryFn: () =>
+      wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
     staleTime: duration3Days,
     gcTime: duration3Days,
   })
@@ -41,7 +50,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 async function Page(props: PageProps) {
   const { t } = await useTranslation()
-  const { bookid, userid } = (await props.params)
+  const { bookid, userid } = await props.params
   const ck = await cookies()
   const uidStr = ck.get(USER_ID_KEY)?.value
   const uid = uidStr ? parseInt(uidStr) : undefined
@@ -55,21 +64,25 @@ async function Page(props: PageProps) {
 
   const ac = getApolloServerClient()
 
-  const { data: clippingsData } = await ac.query<BookQuery, BookQueryVariables>({
-    query: BookDocument,
-    variables: {
-      id: ~~dbId,
-      pagination: {
-        limit: 10,
-        offset: 0
-      }
-    },
-    context: {
-      headers: token ? {
-        'Authorization': 'Bearer ' + token
-      } : {}
+  const { data: clippingsData } = await ac.query<BookQuery, BookQueryVariables>(
+    {
+      query: BookDocument,
+      variables: {
+        id: ~~dbId,
+        pagination: {
+          limit: 10,
+          offset: 0,
+        },
+      },
+      context: {
+        headers: token
+          ? {
+              Authorization: 'Bearer ' + token,
+            }
+          : {},
+      },
     }
-  })
+  )
 
   const rq = getReactQueryClient()
 
@@ -77,7 +90,8 @@ async function Page(props: PageProps) {
   if (dbId && dbId.length > 3) {
     const bs = await rq.fetchQuery({
       queryKey: ['wenqu', 'books', 'dbId', dbId],
-      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
+      queryFn: () =>
+        wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
       staleTime: duration3Days,
       gcTime: duration3Days,
     })
@@ -89,8 +103,11 @@ async function Page(props: PageProps) {
   }
   let duration = 0
   if (clippingsData?.book.startReadingAt && clippingsData?.book.lastReadingAt) {
-    const result = dayjs(clippingsData.book.lastReadingAt)
-      .diff(dayjs(clippingsData.book.startReadingAt), 'd', false)
+    const result = dayjs(clippingsData.book.lastReadingAt).diff(
+      dayjs(clippingsData.book.startReadingAt),
+      'd',
+      false
+    )
     duration = result || 0
   }
 

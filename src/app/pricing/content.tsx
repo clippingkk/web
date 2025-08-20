@@ -1,11 +1,11 @@
+import { Book, ChevronRight, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 import FreePlanFeatures from '@/components/pricing/free-plan-features'
 import PlanCard from '@/components/pricing/plan-card'
 import PremiumPlanFeatures from '@/components/pricing/premium-plan-features'
 import { checkIsPremium } from '@/compute/user'
 import { useTranslation } from '@/i18n'
-import { ProfileQuery } from '@/schema/generated'
-import { Book, ChevronRight, Sparkles } from 'lucide-react'
-import Link from 'next/link'
+import type { ProfileQuery } from '@/schema/generated'
 
 type PricingContentProps = {
   profile?: ProfileQuery['me'] | null
@@ -126,7 +126,7 @@ async function PricingContent(props: PricingContentProps) {
                     </Link>
                   ) : (
                     <Link
-                      href={checkoutUrl ?? '/auth/auth-v4'}
+                      href={(checkoutUrl ?? '/auth/auth-v4') as any}
                       className="group relative z-10 inline-flex w-full items-center justify-center overflow-hidden rounded-xl bg-[#9c27b0] px-6 py-5 text-lg font-bold text-white shadow-xl shadow-[#9c27b0]/40 transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl hover:shadow-[#9c27b0]/60 active:scale-[0.98]"
                     >
                       <span className="relative z-10 flex items-center gap-2">

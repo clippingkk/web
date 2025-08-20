@@ -1,7 +1,7 @@
-import { FetchQRCode } from '../../services/mp'
-import { PostShareConfig, BasicUserInfo } from './mp-render'
-import { BaseCanvasRender } from './BaseCanvasRender'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
+import { FetchQRCode } from '../../services/mp'
+import { BaseCanvasRender } from './BaseCanvasRender'
+import type { BasicUserInfo, PostShareConfig } from './mp-render'
 
 export class PostShareRender extends BaseCanvasRender {
   private offsetY: number = 0
@@ -34,7 +34,7 @@ export class PostShareRender extends BaseCanvasRender {
       img.onload = () => {
         resolve(img)
       }
-      img.onerror = err => {
+      img.onerror = (err) => {
         console.error(err)
         reject(err)
       }
@@ -42,9 +42,17 @@ export class PostShareRender extends BaseCanvasRender {
     })
   }
 
-  renderBackground(start: string = '#f2f2f2', end: string = '#e0e0e0'): Promise<void> {
+  renderBackground(
+    start: string = '#f2f2f2',
+    end: string = '#e0e0e0'
+  ): Promise<void> {
     this.ctx.save()
-    const gradient = this.ctx.createLinearGradient(0, 0, this.scaledWidth, this.scaledHeight)
+    const gradient = this.ctx.createLinearGradient(
+      0,
+      0,
+      this.scaledWidth,
+      this.scaledHeight
+    )
     gradient.addColorStop(0, start)
     gradient.addColorStop(1, end)
     this.ctx.fillStyle = gradient
@@ -111,7 +119,12 @@ export class PostShareRender extends BaseCanvasRender {
     const width = this.scaledWidth - this.scaledPadding * 2
     const height = this.bannerHeight
     const defaultRadius = 5
-    const radius = { tl: defaultRadius, tr: defaultRadius, br: defaultRadius, bl: defaultRadius }
+    const radius = {
+      tl: defaultRadius,
+      tr: defaultRadius,
+      br: defaultRadius,
+      bl: defaultRadius,
+    }
 
     // make blur effect
     // ctx.save()
@@ -127,7 +140,12 @@ export class PostShareRender extends BaseCanvasRender {
     ctx.lineTo(x + width - radius.tr, y)
     ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr)
     ctx.lineTo(x + width, y + height - radius.br)
-    ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height)
+    ctx.quadraticCurveTo(
+      x + width,
+      y + height,
+      x + width - radius.br,
+      y + height
+    )
     ctx.lineTo(x + radius.bl, y + height)
     ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl)
     ctx.lineTo(x, y + radius.tl)
@@ -165,7 +183,11 @@ export class PostShareRender extends BaseCanvasRender {
     this.ctx.drawImage(
       avatar,
       this.scaledPadding + avatarSize / 2,
-      this.offsetY - this.scaledPadding - this.bannerHeight / 2 - avatarSize / 2 - 5,
+      this.offsetY -
+        this.scaledPadding -
+        this.bannerHeight / 2 -
+        avatarSize / 2 -
+        5,
       avatarSize,
       avatarSize
     )
@@ -199,11 +221,17 @@ export class PostShareRender extends BaseCanvasRender {
   }
 
   async renderQRCode(): Promise<void> {
-    const qrcode = await FetchQRCode(`c=${this.config.clipping.id}`, 'pages/landing/landing', this.qrcodeSize, true)
+    const qrcode = await FetchQRCode(
+      `c=${this.config.clipping.id}`,
+      'pages/landing/landing',
+      this.qrcodeSize,
+      true
+    )
     this.ctx.save()
     await this.ctx.drawImage(
       qrcode,
-      this.scaledWidth - (this.qrcodeSize + this.config.padding + this.bannerGap),
+      this.scaledWidth -
+        (this.qrcodeSize + this.config.padding + this.bannerGap),
       this.offsetY - (this.qrcodeSize + this.scaledPadding + this.bannerGap),
       this.qrcodeSize,
       this.qrcodeSize

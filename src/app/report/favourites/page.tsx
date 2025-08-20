@@ -1,7 +1,7 @@
+import type { Metadata } from 'next'
 import React from 'react'
-import ReportFavouritesPage from './content'
 import { metadata as indexPageMetadata } from '../../../components/og/og-with-index'
-import { Metadata } from 'next'
+import ReportFavouritesPage from './content'
 
 export const metadata: Metadata = {
   ...indexPageMetadata,
@@ -9,9 +9,7 @@ export const metadata: Metadata = {
 }
 
 function FavouritesPage() {
-  return (
-    <ReportFavouritesPage />
-  )
+  return <ReportFavouritesPage />
 }
 
 export default FavouritesPage

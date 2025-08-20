@@ -1,5 +1,5 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
-import React from 'react'
+import type React from 'react'
 import FeatureModern from './Feature-Modern'
 import FeatureReborn from './Feature-Reborn'
 import FeatureSense from './Feature-Sense'

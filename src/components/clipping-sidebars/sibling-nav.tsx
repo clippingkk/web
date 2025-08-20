@@ -1,8 +1,8 @@
-import { useTranslation } from '@/i18n'
-import { Clipping } from '@/schema/generated'
-import { IN_APP_CHANNEL } from '@/services/channel'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslation } from '@/i18n'
+import type { Clipping } from '@/schema/generated'
+import { IN_APP_CHANNEL } from '@/services/channel'
 
 function getSiblingLink(
   iac: IN_APP_CHANNEL,
@@ -63,7 +63,7 @@ async function SiblingNav(props: Props) {
       {(prev || next) && (
         <div className="grid grid-cols-1 gap-2">
           {prev && (
-            <Link href={prev} className="group block">
+            <Link href={prev as any} className="group block">
               <div className="relative bg-white/40 dark:bg-zinc-800/40 backdrop-blur-sm rounded-xl p-3 border border-gray-200/40 dark:border-zinc-700/40 hover:bg-white/60 dark:hover:bg-zinc-800/60 hover:border-gray-300/50 dark:hover:border-zinc-600/50 hover:shadow-sm transition-all duration-200">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-gradient-to-br from-emerald-400 to-emerald-500 dark:from-emerald-400 dark:to-emerald-500 rounded-lg shadow-sm group-hover:shadow-md transition-all duration-200">
@@ -78,17 +78,27 @@ async function SiblingNav(props: Props) {
                     </div>
                   </div>
                   <div className="text-gray-400 dark:text-zinc-600 group-hover:text-emerald-500 transition-colors">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </div>
                 </div>
               </div>
             </Link>
           )}
-          
+
           {next && (
-            <Link href={next} className="group block">
+            <Link href={next as any} className="group block">
               <div className="relative bg-white/40 dark:bg-zinc-800/40 backdrop-blur-sm rounded-xl p-3 border border-gray-200/40 dark:border-zinc-700/40 hover:bg-white/60 dark:hover:bg-zinc-800/60 hover:border-gray-300/50 dark:hover:border-zinc-600/50 hover:shadow-sm transition-all duration-200">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-gradient-to-br from-teal-400 to-teal-500 dark:from-teal-400 dark:to-teal-500 rounded-lg shadow-sm group-hover:shadow-md transition-all duration-200">
@@ -103,8 +113,18 @@ async function SiblingNav(props: Props) {
                     </div>
                   </div>
                   <div className="text-gray-400 dark:text-zinc-600 group-hover:text-teal-500 transition-colors">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -119,8 +139,18 @@ async function SiblingNav(props: Props) {
         <div className="relative bg-white/20 dark:bg-zinc-800/20 backdrop-blur-sm rounded-xl p-4 border border-gray-200/20 dark:border-zinc-700/20">
           <div className="text-center">
             <div className="p-3 bg-gray-100 dark:bg-zinc-700 rounded-lg inline-flex mb-2">
-              <svg className="w-5 h-5 text-gray-400 dark:text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <svg
+                className="w-5 h-5 text-gray-400 dark:text-zinc-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
             </div>
             <div className="text-sm font-medium text-gray-600 dark:text-zinc-400">

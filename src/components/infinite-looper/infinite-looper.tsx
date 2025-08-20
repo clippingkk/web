@@ -1,18 +1,14 @@
 'use client'
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './style.css'
 
 type InfiniteLooperProps = {
   speed: number
   direction: 'right' | 'left'
   children: React.ReactNode
-};
+}
 
-function InfiniteLooper({
-  speed,
-  direction,
-  children,
-}: InfiniteLooperProps) {
+function InfiniteLooper({ speed, direction, children }: InfiniteLooperProps) {
   const [looperInstances, setLooperInstances] = useState(1)
   const outerRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
@@ -50,7 +46,6 @@ function InfiniteLooper({
 
     resetAnimation()
   }, [looperInstances])
-
 
   /*
     6 instances, 200 each = 1200

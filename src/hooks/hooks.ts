@@ -1,27 +1,36 @@
 'use client'
-import mixpanel from 'mixpanel-browser'
+import type { ApolloError, MutationResult } from '@apollo/client'
 import * as sentry from '@sentry/react'
-import { useEffect } from 'react'
-import profile from '../utils/profile'
-import { ApolloError, MutationResult } from '@apollo/client'
-import { updateToken } from '../services/ajax'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
+import mixpanel from 'mixpanel-browser'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import toast from 'react-hot-toast'
-import { AuthByPhoneMutation, AuthByWeb3Query, AuthQuery, DoLoginV3Mutation, SignupMutation } from '../schema/generated'
+import type { User } from '@/gql/graphql'
 import { syncLoginStateToServer } from '../actions/login'
-import { User } from '@/gql/graphql'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
+import type {
+  AuthByPhoneMutation,
+  AuthByWeb3Query,
+  AuthQuery,
+  DoLoginV3Mutation,
+  SignupMutation,
+} from '../schema/generated'
+import { updateToken } from '../services/ajax'
+import profile from '../utils/profile'
 
 type UserContent = Pick<User, 'id' | 'name' | 'email' | 'avatar' | 'createdAt'>
 
-async function onAuthEnd(data: { user: UserContent, token: string }) {
+async function onAuthEnd(data: { user: UserContent; token: string }) {
   const { user, token } = data
   await syncLoginStateToServer({ uid: user.id, token: token })
-  localStorage.setItem(COOKIE_TOKEN_KEY, JSON.stringify({
-    profile: user,
-    token: token,
-    createdAt: Date.now()
-  }))
+  localStorage.setItem(
+    COOKIE_TOKEN_KEY,
+    JSON.stringify({
+      profile: user,
+      token: token,
+      createdAt: Date.now(),
+    })
+  )
   sessionStorage.setItem(COOKIE_TOKEN_KEY, token)
   sessionStorage.setItem(USER_ID_KEY, user.id.toString())
 
@@ -31,13 +40,13 @@ async function onAuthEnd(data: { user: UserContent, token: string }) {
   sentry.setUser({
     email: me.email,
     id: me.id.toString(),
-    username: me.name
+    username: me.name,
   })
   mixpanel.identify(me.id.toString())
   mixpanel.people.set({
-    '$email': me.email,
+    $email: me.email,
     'Sign up date': me.createdAt,
-    'USER_ID': me.id.toString(),
+    USER_ID: me.id.toString(),
   })
   updateToken(profile.token)
   // Cookies.set('token', profile.token, { expires: 365 })
@@ -114,7 +123,9 @@ export function useLoginV3Successed(
       setTimeout(() => {
         const me = authResponse.user
         const domain = me.domain.length > 2 ? me.domain : me.id
-        navigate(`/dash/${domain}/${authResponse.isNewUser ? 'newbie' : 'home'}?from_auth=1`)
+        navigate(
+          `/dash/${domain}/${authResponse.isNewUser ? 'newbie' : 'home'}?from_auth=1`
+        )
       }, 100)
     })
   }, [called, loading, error, authResponse, navigate])
@@ -189,7 +200,7 @@ export function useSignupSuccess(result: MutationResult<SignupMutation>) {
       toast.success(
         `欢迎你哦~ ${me.name}，现在需要去邮箱点一下刚刚发你的确认邮件。\n 如果有问题可以发邮件： iamhele1994@gmail.com`,
         {
-          duration: 10_000
+          duration: 10_000,
         }
       )
       navigate('/auth/auth-v4')

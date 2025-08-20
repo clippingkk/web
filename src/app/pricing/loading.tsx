@@ -1,9 +1,9 @@
-import React from 'react'
 import { ChevronRight, Sparkles } from 'lucide-react'
+import React from 'react'
 
 function Loading() {
   return (
-    <div className='w-full relative'>
+    <div className="w-full relative">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
@@ -34,7 +34,7 @@ function Loading() {
           <div className="rounded-2xl p-8 backdrop-blur-md border border-gray-700/30 bg-gray-800/30 hover:bg-gray-800/40 transition-all duration-300 flex flex-col">
             <div className="h-9 w-36 bg-gray-700/50 mb-3 rounded-lg animate-pulse"></div>
             <div className="h-5 bg-gray-700/50 mb-6 rounded-lg animate-pulse"></div>
-            
+
             <div className="space-y-4 mb-8 flex-grow">
               {[...Array(5)].map((_, i) => (
                 <div key={i} className="flex items-start">
@@ -43,7 +43,7 @@ function Loading() {
                 </div>
               ))}
             </div>
-            
+
             <div className="h-12 bg-gray-700/50 rounded-lg animate-pulse"></div>
           </div>
 
@@ -51,7 +51,7 @@ function Loading() {
           <div className="rounded-2xl p-8 backdrop-blur-md border border-gray-700/30 bg-gray-800/30 hover:bg-gray-800/40 transition-all duration-300 flex flex-col">
             <div className="h-9 w-44 bg-gray-700/50 mb-3 rounded-lg animate-pulse"></div>
             <div className="h-5 bg-gray-700/50 mb-6 rounded-lg animate-pulse"></div>
-            
+
             <div className="space-y-4 mb-8 flex-grow">
               {[...Array(7)].map((_, i) => (
                 <div key={i} className="flex items-start">
@@ -60,7 +60,7 @@ function Loading() {
                 </div>
               ))}
             </div>
-            
+
             <div className="h-12 bg-gray-700/50 rounded-lg animate-pulse"></div>
           </div>
         </div>

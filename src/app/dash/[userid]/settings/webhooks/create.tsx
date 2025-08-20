@@ -1,7 +1,4 @@
 'use client'
-import Button from '@/components/button'
-import { useTranslation } from '@/i18n/client'
-import { useCreateNewWebHookMutation, WebHookStep } from '@/schema/generated'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,6 +6,9 @@ import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
+import Button from '@/components/button'
+import { useTranslation } from '@/i18n/client'
+import { useCreateNewWebHookMutation, WebHookStep } from '@/schema/generated'
 
 type Props = {
   onClose: () => void

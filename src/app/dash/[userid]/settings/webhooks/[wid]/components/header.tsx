@@ -1,6 +1,6 @@
-import { useTranslation } from '@/i18n'
 import { ArrowLeft, ExternalLink, Webhook } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslation } from '@/i18n'
 
 interface HeaderProps {
   webhookId: string

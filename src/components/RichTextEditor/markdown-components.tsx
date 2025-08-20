@@ -1,6 +1,6 @@
+import type React from 'react'
+import type { Components } from 'react-markdown'
 import { cn } from '@/lib/utils'
-import React from 'react'
-import { Components } from 'react-markdown'
 
 type HeadingProps = {
   level: 1 | 2 | 3 | 4 | 5 | 6

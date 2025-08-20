@@ -1,6 +1,6 @@
+import Image from 'next/image'
 import CodeHighlight from '@/components/highlighter/client'
 import { useTranslation } from '@/i18n'
-import Image from 'next/image'
 import WebArchImage from '../../assets/web_arch.png'
 
 const exampleCode = `

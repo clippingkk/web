@@ -7,7 +7,7 @@ export function useScrollToTopOnLoad() {
     }
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     })
   }, [])
 }

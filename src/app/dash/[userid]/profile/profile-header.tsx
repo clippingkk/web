@@ -1,11 +1,11 @@
 'use client'
+import { Edit3 } from 'lucide-react'
 import React, { useState } from 'react'
-import AvatarSection from './avatar-section'
-import { ProfileQuery } from '@/schema/generated'
 import AnimatedBackground from '@/components/animated-background/animated-background'
 import BackgroundUploadModal from '@/components/background-upload-modal/background-upload-modal'
 import Button from '@/components/button/button'
-import { Edit3 } from 'lucide-react'
+import type { ProfileQuery } from '@/schema/generated'
+import AvatarSection from './avatar-section'
 
 type ProfileHeaderProps = {
   profile: ProfileQuery['me']
@@ -34,7 +34,7 @@ const ProfileHeader = ({ profile, uid, isInMyPage }: ProfileHeaderProps) => {
       <AnimatedBackground backgroundImage={backgroundImage}>
         {/* Change Background Button - Only show for profile owner */}
         {isInMyPage && (
-          <div className='absolute top-4 right-4 z-30'>
+          <div className="absolute top-4 right-4 z-30">
             <Button
               onClick={handleOpenModal}
               variant="outline"
@@ -48,11 +48,15 @@ const ProfileHeader = ({ profile, uid, isInMyPage }: ProfileHeaderProps) => {
         )}
 
         {/* Enhanced Avatar Section */}
-        <div className='absolute -bottom-20 left-8 z-20'>
-          <div className='relative'>
+        <div className="absolute -bottom-20 left-8 z-20">
+          <div className="relative">
             {/* Avatar glow effect */}
-            <div className='absolute -inset-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-xl opacity-50 animate-pulse'></div>
-            <AvatarSection profile={profile} uid={uid} isInMyPage={isInMyPage} />
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
+            <AvatarSection
+              profile={profile}
+              uid={uid}
+              isInMyPage={isInMyPage}
+            />
           </div>
         </div>
       </AnimatedBackground>

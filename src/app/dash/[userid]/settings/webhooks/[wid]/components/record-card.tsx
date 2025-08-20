@@ -1,10 +1,10 @@
 'use client'
 
-import { useTranslation } from '@/i18n/client'
-import { WebHookRecord } from '@/schema/generated'
-import dayjs from '@/utils/dayjs'
 import { CheckCircle2, ChevronDown, XCircle } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslation } from '@/i18n/client'
+import type { WebHookRecord } from '@/schema/generated'
+import dayjs from '@/utils/dayjs'
 
 interface RecordCardProps {
   record: WebHookRecord

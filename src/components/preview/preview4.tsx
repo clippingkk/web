@@ -1,17 +1,16 @@
-import { useTranslation } from '@/i18n/client'
-import { KonzertThemeMap } from '@/services/utp'
-import { WenquBook } from '@/services/wenqu'
-import FileSaver from 'file-saver'
-import { useRef, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import ThemePicker from './theme-picker'
-
 import Modal from '@annatarhe/lake-ui/modal'
 import { useMutation } from '@tanstack/react-query'
+import FileSaver from 'file-saver'
 import { toBlob } from 'html-to-image'
-import { Clipping, User } from '../../schema/generated'
+import { useRef, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import { KonzertThemeMap } from '@/services/utp'
+import type { WenquBook } from '@/services/wenqu'
+import type { Clipping, User } from '../../schema/generated'
 import Button from '../button/button'
 import Preview4Clipping from './preview4-clipping'
+import ThemePicker from './theme-picker'
 
 type PreviewProps = {
   visible: boolean

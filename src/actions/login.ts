@@ -4,7 +4,10 @@ import { cookies } from 'next/headers'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 
 // on server
-export async function syncLoginStateToServer(data: { uid: number, token: string }) {
+export async function syncLoginStateToServer(data: {
+  uid: number
+  token: string
+}) {
   'use server'
   const { uid, token } = data
   const expires = dayjs().add(1, 'year').toDate()

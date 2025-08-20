@@ -1,9 +1,4 @@
 'use client'
-import Button from '@/components/button/button'
-import ExternalAccountList from '@/components/externalAccount/list'
-import { useTranslation } from '@/i18n/client'
-import { useUpdateProfileMutation } from '@/schema/generated'
-import { uploadImage } from '@/services/misc'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
 import Modal from '@annatarhe/lake-ui/modal'
@@ -15,6 +10,11 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
+import Button from '@/components/button/button'
+import ExternalAccountList from '@/components/externalAccount/list'
+import { useTranslation } from '@/i18n/client'
+import { useUpdateProfileMutation } from '@/schema/generated'
+import { uploadImage } from '@/services/misc'
 
 type ProfileEditorProps = {
   uid: number
@@ -34,7 +34,7 @@ const profileFormSchema = z.object({
     .max(32)
     .trim()
     .toLowerCase()
-    .regex(/^\w+[\.|-]?\w+$/),
+    .regex(/^\w+[.|-]?\w+$/),
   avatar: z.instanceof(File).nullable().optional(),
 })
 

@@ -1,6 +1,6 @@
-import React from 'react'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
+import React from 'react'
 
 function EmojiPicker() {
   // const ref = useRef<HTMLDivElement>(null)
@@ -10,7 +10,7 @@ function EmojiPicker() {
   // new EmojiMart.Picker({
   // ...props,
   // // data: data as any,
-  // //  ref 
+  // //  ref
   // })
   // })
   // }, [])

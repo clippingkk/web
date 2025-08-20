@@ -1,6 +1,3 @@
-import BrandNotionLogo from '@/assets/brand-notion.svg'
-import { useTranslation } from '@/i18n/client'
-import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,6 +6,9 @@ import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
+import BrandNotionLogo from '@/assets/brand-notion.svg'
+import { useTranslation } from '@/i18n/client'
+import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 
 function ExportToEmail() {
   const [visible, setVisible] = useState(false)

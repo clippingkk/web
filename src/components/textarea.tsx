@@ -1,5 +1,5 @@
+import type React from 'react'
 import { useTranslation } from '@/i18n/client'
-import React from 'react'
 
 type FieldTextareaProps = {
   type?: string

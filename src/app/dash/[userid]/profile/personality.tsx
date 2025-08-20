@@ -1,11 +1,11 @@
 'use client'
-import { MarkdownComponents } from '@/components/RichTextEditor/markdown-components'
-import { useTranslation } from '@/i18n/client'
-import { useFetchUserPersonalityQuery } from '@/schema/generated'
 import Modal from '@annatarhe/lake-ui/modal'
 import { ExternalLink, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import Markdown from 'react-markdown'
+import { MarkdownComponents } from '@/components/RichTextEditor/markdown-components'
+import { useTranslation } from '@/i18n/client'
+import { useFetchUserPersonalityQuery } from '@/schema/generated'
 
 type PersonalityViewProps = {
   uid?: number

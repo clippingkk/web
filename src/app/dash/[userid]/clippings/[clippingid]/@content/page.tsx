@@ -1,13 +1,13 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+import ElegantDivider from '@/components/divider/elegant-divider'
 import ClippingRichContent from '@/components/text-content/clipping-rich-content'
 import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useTranslation } from '@/i18n'
 import { isGrandAdmin } from '@/services/admin'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import Reactions from './reactions'
 import { getClippingData } from '../data'
-import ElegantDivider from '@/components/divider/elegant-divider'
+import Reactions from './reactions'
 
 type PageProps = {
   params: Promise<{ clippingid: string; userid: string }>
@@ -16,9 +16,9 @@ type PageProps = {
 async function ClippingContent(props: PageProps) {
   const { clippingid } = await props.params
   const cid = ~~clippingid
-  
+
   const { clipping, me, bookData, uid } = await getClippingData(cid)
-  
+
   const creator = clipping.creator
   const isPremium = me?.premiumEndAt
     ? new Date(me.premiumEndAt).getTime() > new Date().getTime()

@@ -1,10 +1,14 @@
-import { GetCommentListDocument, GetCommentListQuery, GetCommentListQueryVariables } from '@/schema/generated'
-import { notFound } from 'next/navigation'
-import CommentsList from './comments-list'
 import type { Metadata } from 'next'
-import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation'
 import { COOKIE_TOKEN_KEY } from '@/constants/storage'
+import {
+  GetCommentListDocument,
+  type GetCommentListQuery,
+  type GetCommentListQueryVariables,
+} from '@/schema/generated'
+import { doApolloServerQuery } from '@/services/apollo.server'
+import CommentsList from './comments-list'
 
 type Props = {
   params: Promise<{
@@ -14,37 +18,40 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { userid } = await params
-  
+
   return {
     title: `Comments - User ${userid}`,
-    description: 'View all comments and discussions'
+    description: 'View all comments and discussions',
   }
 }
 
 export default async function CommentsPage({ params }: Props) {
   const { userid } = await params
   const uid = parseInt(userid, 10)
-  
+
   if (isNaN(uid)) {
     notFound()
   }
 
   const ck = await cookies()
   const token = ck.get(COOKIE_TOKEN_KEY)?.value
-  
-  const { data, error } = await doApolloServerQuery<GetCommentListQuery, GetCommentListQueryVariables>({
+
+  const { data, error } = await doApolloServerQuery<
+    GetCommentListQuery,
+    GetCommentListQueryVariables
+  >({
     query: GetCommentListDocument,
     variables: {
       uid,
       pagination: {
-        limit: 20
-      }
+        limit: 20,
+      },
     },
     context: {
       headers: {
-        Authorization: token ? `Bearer ${token}` : ''
-      }
-    }
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    },
   })
 
   if (error || !data?.getCommentList) {
@@ -65,10 +72,7 @@ export default async function CommentsPage({ params }: Props) {
         </div>
 
         {/* Comments List */}
-        <CommentsList 
-          initialData={data.getCommentList}
-          userId={uid}
-        />
+        <CommentsList initialData={data.getCommentList} userId={uid} />
       </div>
     </div>
   )

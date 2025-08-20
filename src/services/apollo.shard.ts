@@ -1,7 +1,7 @@
-import { HttpLink, InMemoryCacheConfig } from '@apollo/client'
-import { API_HOST } from '../constants/config'
+import { HttpLink, type InMemoryCacheConfig } from '@apollo/client'
+import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev'
 import { uniqBy } from 'lodash'
-import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { API_HOST } from '../constants/config'
 
 if (process.env.NODE_ENV !== 'production') {
   // Adds messages only in a dev environment
@@ -16,7 +16,7 @@ function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
 export type GraphQLResponseError = {
   name: string
   response: Response
-  result: { code: number, error: string }
+  result: { code: number; error: string }
   statusCode: number
   message: string
 }
@@ -32,35 +32,38 @@ export const apolloCacheConfig: InMemoryCacheConfig = {
       fields: {
         books: {
           keyArgs: ['doubanId'],
-          merge: simpleDistArrayMerge
-        }
-      }
+          merge: simpleDistArrayMerge,
+        },
+      },
     },
     Book: {
       keyFields: ['doubanId'],
       fields: {
         clippings: {
-          merge: simpleDistArrayMerge
-        }
-      }
+          merge: simpleDistArrayMerge,
+        },
+      },
     },
     ClippingListResponse: {
       fields: {
         items: {
-          merge: simpleDistArrayMerge
-        }
-      }
+          merge: simpleDistArrayMerge,
+        },
+      },
     },
     User: {
       fields: {
         recents: {
-          merge: simpleDistArrayMerge
-        }
-      }
-    }
-  }
+          merge: simpleDistArrayMerge,
+        },
+      },
+    },
+  },
 }
 
-function simpleDistArrayMerge(existings: { __ref: string }[] = [], incoming: { __ref: string }[] = []) {
+function simpleDistArrayMerge(
+  existings: { __ref: string }[] = [],
+  incoming: { __ref: string }[] = []
+) {
   return uniqBy([...existings, ...incoming], '__ref')
 }

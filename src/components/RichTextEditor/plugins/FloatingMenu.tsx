@@ -76,7 +76,7 @@ function FloatingMenuPlugin({
     const unregisterCommand = editor.registerCommand(
       ON_SELECTION_CHANGE,
       $handleSelectionChange,
-      NORMAL_PRIORITY,
+      NORMAL_PRIORITY
     )
     return unregisterCommand
   }, [editor, $handleSelectionChange])
@@ -111,7 +111,7 @@ function FloatingMenuPlugin({
     >
       <MenuComponent editor={editor} shouldShow={show} />
     </div>,
-    element ?? DEFAULT_DOM_ELEMENT,
+    element ?? DEFAULT_DOM_ELEMENT
   )
 }
 

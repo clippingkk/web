@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 type cardProps = {
   className?: string
@@ -12,12 +12,7 @@ function Card(props: cardProps) {
   const { className = '', style, onClick, glow, children } = props
   const cls = `m-4 p-4 rounded-sm shadow-sm bg-slate-400 bg-opacity-50 ${className}`
   return (
-    <section
-      className={cls}
-      onClick={onClick}
-      style={style}
-      data-glow={glow}
-    >
+    <section className={cls} onClick={onClick} style={style} data-glow={glow}>
       {children}
     </section>
   )

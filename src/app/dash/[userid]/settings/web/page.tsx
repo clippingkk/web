@@ -1,9 +1,9 @@
 'use client'
-import { STORAGE_LANG_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n/client'
 import Select from '@annatarhe/lake-ui/form-select-field'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
+import { STORAGE_LANG_KEY } from '@/constants/storage'
+import { useTranslation } from '@/i18n/client'
 
 const langOptions = [
   {

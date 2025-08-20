@@ -1,14 +1,14 @@
 'use client'
-import Button from '@/components/button/button'
-import CodeHighlight from '@/components/highlighter/client'
-import { useTranslation } from '@/i18n/client'
-import { useClaimCliApiTokenMutation } from '@/schema/generated'
-import { getLocalToken } from '@/services/ajax'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { Clipboard, ExternalLink, RefreshCw, Terminal } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import Button from '@/components/button/button'
+import CodeHighlight from '@/components/highlighter/client'
+import { useTranslation } from '@/i18n/client'
+import { useClaimCliApiTokenMutation } from '@/schema/generated'
+import { getLocalToken } from '@/services/ajax'
 
 function CliApiToken() {
   const { t } = useTranslation()
@@ -41,7 +41,7 @@ function CliApiToken() {
 ck-cli 
   --token="${k}" 
   parse
-  --input My\ Clippings.txt
+  --input My Clippings.txt
   --output http`
   }, [data?.claimAPIKey])
 

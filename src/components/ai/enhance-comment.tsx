@@ -1,9 +1,9 @@
-import { useTranslation } from '@/i18n/client'
-import { useAiEnhanceCommentMutation } from '@/schema/generated'
 import Modal from '@annatarhe/lake-ui/modal'
 import { Loader2 } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import { useAiEnhanceCommentMutation } from '@/schema/generated'
 import MarkdownPreview from '../markdown-editor/md-preview'
 
 type AICommentEnhancerProps = {

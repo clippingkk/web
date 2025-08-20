@@ -1,34 +1,45 @@
-import { ApolloError, ApolloLink, OperationVariables, QueryOptions } from '@apollo/client'
-import { registerApolloClient, ApolloClient, InMemoryCache } from '@apollo/client-integration-nextjs'
-import { apolloCacheConfig, httpLink } from './apollo.shard'
-import { authLink } from './ajax'
+import {
+  ApolloError,
+  ApolloLink,
+  type OperationVariables,
+  type QueryOptions,
+} from '@apollo/client'
+import {
+  ApolloClient,
+  InMemoryCache,
+  registerApolloClient,
+} from '@apollo/client-integration-nextjs'
 import { redirect } from 'next/navigation'
+import { authLink } from './ajax'
+import { apolloCacheConfig, httpLink } from './apollo.shard'
 
-const { getClient } = registerApolloClient(() => new ApolloClient({
-  cache: new InMemoryCache(apolloCacheConfig),
-  link: ApolloLink.from([
-    authLink,
-    httpLink,
-  ]),
-})
+const { getClient } = registerApolloClient(
+  () =>
+    new ApolloClient({
+      cache: new InMemoryCache(apolloCacheConfig),
+      link: ApolloLink.from([authLink, httpLink]),
+    })
 )
 
 export const getApolloServerClient = getClient
 
-export function doApolloServerQuery<TData, TVariables extends OperationVariables = OperationVariables>(
-  options: QueryOptions<TVariables, TData>
-) {
-  return getApolloServerClient()
-    .query<TData, TVariables>(options)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .catch((e: any) => {
-      if (e instanceof ApolloError) {
+export function doApolloServerQuery<
+  TData,
+  TVariables extends OperationVariables = OperationVariables,
+>(options: QueryOptions<TVariables, TData>) {
+  return (
+    getApolloServerClient()
+      .query<TData, TVariables>(options)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const statusCode = (e.cause as any)?.info?.code as number
-        if (statusCode === 401) {
-          return redirect('/auth/auth-v4?clean=true')
+      .catch((e: any) => {
+        if (e instanceof ApolloError) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const statusCode = (e.cause as any)?.info?.code as number
+          if (statusCode === 401) {
+            return redirect('/auth/auth-v4?clean=true')
+          }
         }
-      }
-      throw e
-    })
+        throw e
+      })
+  )
 }

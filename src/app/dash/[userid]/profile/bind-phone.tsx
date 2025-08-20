@@ -1,13 +1,13 @@
 'use client'
-import BindPhone from '@/components/bind-phone'
-import Button from '@/components/button/button'
-import { useTranslation } from '@/i18n/client'
-import { useBindUserPhoneMutation } from '@/schema/generated'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import BindPhone from '@/components/bind-phone'
+import Button from '@/components/button/button'
+import { useTranslation } from '@/i18n/client'
+import { useBindUserPhoneMutation } from '@/schema/generated'
 
 function ProfileBindPhone() {
   const [visible, setVisible] = useState(false)

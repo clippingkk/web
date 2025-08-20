@@ -1,6 +1,6 @@
-import { useTranslation } from '@/i18n/client'
 import dayjs from 'dayjs'
-import { FetchClippingQuery } from '../../schema/generated'
+import { useTranslation } from '@/i18n/client'
+import type { FetchClippingQuery } from '../../schema/generated'
 import Avatar from '../avatar/avatar'
 import Button from '../button/button'
 import MarkdownPreview from '../markdown-editor/md-preview'

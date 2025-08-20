@@ -1,6 +1,5 @@
 'use client'
 
-import { useTranslation } from '@/i18n/client'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { LogOut, Search, Settings, Smartphone, User } from 'lucide-react'
 import mixpanel from 'mixpanel-browser'
@@ -8,8 +7,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-
 import { useIsPremium } from '@/hooks/profile'
+import { useTranslation } from '@/i18n/client'
 import { cn } from '@/utils/cn'
 import profile from '@/utils/profile'
 import LinkIndicator from '../link-indicator'

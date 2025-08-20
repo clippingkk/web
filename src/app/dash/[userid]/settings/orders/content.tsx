@@ -1,8 +1,13 @@
 'use client'
-import { Order } from '@/schema/generated'
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { Calendar, CreditCard, Receipt } from 'lucide-react'
 import { useTranslation } from '@/i18n/client'
-import { createColumnHelper, useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table'
-import { Receipt, Calendar, CreditCard } from 'lucide-react'
+import type { Order } from '@/schema/generated'
 
 type SubscriptionOrderListProps = {
   orders: Order[]
@@ -17,19 +22,19 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currency || 'USD',
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     })
     return formatter.format(amount / 100)
   }
-  
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     return {
       formatted: date.toLocaleDateString(),
-      relative: getRelativeTimeString(date)
+      relative: getRelativeTimeString(date),
     }
   }
-  
+
   const getRelativeTimeString = (date: Date) => {
     const now = new Date()
     const diffMs = now.getTime() - date.getTime()
@@ -39,12 +44,14 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
     const diffDays = Math.round(diffHours / 24)
     const diffMonths = Math.round(diffDays / 30)
     const diffYears = Math.round(diffDays / 365)
-    
+
     if (diffSecs < 60) return 'just now'
     if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`
-    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`
+    if (diffHours < 24)
+      return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`
     if (diffDays < 30) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`
-    if (diffMonths < 12) return `${diffMonths} month${diffMonths > 1 ? 's' : ''} ago`
+    if (diffMonths < 12)
+      return `${diffMonths} month${diffMonths > 1 ? 's' : ''} ago`
     return `${diffYears} year${diffYears > 1 ? 's' : ''} ago`
   }
 
@@ -55,20 +62,24 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
       columnHelper.accessor('orderID', {
         header: () => (
           <div className="flex items-center space-x-2">
-            <Receipt size={16} className="text-indigo-500 dark:text-indigo-400" />
+            <Receipt
+              size={16}
+              className="text-indigo-500 dark:text-indigo-400"
+            />
             <span>{t('app.settings.orders.orderId')}</span>
           </div>
         ),
         cell: (info) => (
-          <div className="font-mono text-xs md:text-sm">
-            {info.getValue()}
-          </div>
+          <div className="font-mono text-xs md:text-sm">{info.getValue()}</div>
         ),
       }),
       columnHelper.accessor('amount', {
         header: () => (
           <div className="flex items-center space-x-2">
-            <CreditCard size={16} className="text-indigo-500 dark:text-indigo-400" />
+            <CreditCard
+              size={16}
+              className="text-indigo-500 dark:text-indigo-400"
+            />
             <span>{t('app.settings.orders.amount')}</span>
           </div>
         ),
@@ -92,7 +103,10 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
       columnHelper.accessor('orderCreatedAt', {
         header: () => (
           <div className="flex items-center space-x-2">
-            <Calendar size={16} className="text-indigo-500 dark:text-indigo-400" />
+            <Calendar
+              size={16}
+              className="text-indigo-500 dark:text-indigo-400"
+            />
             <span>{t('app.settings.orders.date')}</span>
           </div>
         ),
@@ -105,8 +119,8 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
             </div>
           )
         },
-      })
-    ]
+      }),
+    ],
   })
 
   return (
@@ -114,14 +128,17 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
           <thead className="bg-slate-100 dark:bg-slate-700/50">
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <th 
+                {headerGroup.headers.map((header) => (
+                  <th
                     key={header.id}
                     className="py-4 px-4 text-left text-slate-700 dark:text-slate-300 font-medium"
                   >
-                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                   </th>
                 ))}
               </tr>
@@ -129,24 +146,30 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
           </thead>
           <tbody className="bg-white/30 dark:bg-slate-800/30 divide-y divide-slate-200 dark:divide-slate-700">
             {table.getRowModel().rows.length > 0 ? (
-              table.getRowModel().rows.map(row => (
-                <tr 
+              table.getRowModel().rows.map((row) => (
+                <tr
                   key={row.id}
                   className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/30"
                 >
-                  {row.getVisibleCells().map(cell => (
-                    <td 
+                  {row.getVisibleCells().map((cell) => (
+                    <td
                       key={cell.id}
                       className="py-4 px-4 whitespace-nowrap border-t border-slate-200 dark:border-slate-700"
                     >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </td>
                   ))}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="py-12 text-center text-slate-500 dark:text-slate-400">
+                <td
+                  colSpan={4}
+                  className="py-12 text-center text-slate-500 dark:text-slate-400"
+                >
                   <div className="flex flex-col items-center justify-center space-y-2">
                     <Receipt size={32} className="opacity-40" />
                     <p className="text-sm">{t('app.settings.orders.empty')}</p>
@@ -159,7 +182,6 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
       </div>
     </div>
   )
-
 }
 
 export default SubscriptionContent

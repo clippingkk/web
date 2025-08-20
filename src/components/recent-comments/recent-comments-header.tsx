@@ -1,6 +1,6 @@
-import React from 'react'
-import { MessageCircle, ChevronRight } from 'lucide-react'
+import { ChevronRight, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
+import React from 'react'
 
 type RecentCommentsHeaderProps = {
   count: number
@@ -8,7 +8,11 @@ type RecentCommentsHeaderProps = {
   userDomain?: string | null
 }
 
-export default function RecentCommentsHeader({ count, userId, userDomain }: RecentCommentsHeaderProps) {
+export default function RecentCommentsHeader({
+  count,
+  userId,
+  userDomain,
+}: RecentCommentsHeaderProps) {
   return (
     <div className="mb-8 flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -24,7 +28,7 @@ export default function RecentCommentsHeader({ count, userId, userDomain }: Rece
           </span>
         )}
       </div>
-      
+
       <Link
         href={`/dash/${userDomain || userId}/comments`}
         className="group/link flex items-center gap-2 rounded-xl bg-blue-100/60 dark:bg-blue-900/30 px-4 py-2 text-sm font-semibold text-blue-700 dark:text-blue-300 transition-all duration-200 hover:bg-blue-200/60 dark:hover:bg-blue-800/40 hover:scale-105 shadow-md"

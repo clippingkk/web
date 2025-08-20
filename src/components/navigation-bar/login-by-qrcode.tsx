@@ -1,6 +1,6 @@
+import { QRCodeCanvas } from 'qrcode.react'
 import { useTranslation } from '@/i18n/client'
 import { getLocalToken } from '@/services/ajax'
-import { QRCodeCanvas } from 'qrcode.react'
 import logo from '../../assets/logo.png'
 
 function LoginByQRCode() {

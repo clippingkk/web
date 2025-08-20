@@ -1,20 +1,20 @@
-import { checkIsPremium } from '@/compute/user'
-import { useTranslation } from '@/i18n'
-import {
-  FetchMyWebHooksDocument,
-  FetchMyWebHooksQuery,
-  FetchMyWebHooksQueryVariables,
-  ProfileDocument,
-  ProfileQuery,
-  ProfileQueryVariables,
-} from '@/schema/generated'
-import { doApolloServerQuery } from '@/services/apollo.server'
 import { ExternalLink, Webhook } from 'lucide-react'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { checkIsPremium } from '@/compute/user'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
+import { useTranslation } from '@/i18n'
+import {
+  FetchMyWebHooksDocument,
+  type FetchMyWebHooksQuery,
+  type FetchMyWebHooksQueryVariables,
+  ProfileDocument,
+  type ProfileQuery,
+  type ProfileQueryVariables,
+} from '@/schema/generated'
+import { doApolloServerQuery } from '@/services/apollo.server'
 import WebHooksContent from './content'
 import WebhookCreateButton from './create-button'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{ userid: string }>

@@ -1,7 +1,7 @@
-import { useRef, useEffect } from 'react'
-import CKLexicalBaseEditor from './index'
-import { LexicalEditor } from 'lexical'
 import { $convertFromMarkdownString, TRANSFORMERS } from '@lexical/markdown'
+import type { LexicalEditor } from 'lexical'
+import { useEffect, useRef } from 'react'
+import CKLexicalBaseEditor from './index'
 
 type MarkdownPreviewProps = {
   md: string
@@ -18,7 +18,7 @@ function MarkdownPreview(props: MarkdownPreviewProps) {
   return (
     <CKLexicalBaseEditor
       editable={false}
-      className='w-full px-2 focus:shadow-sm focus:bg-slate-300 focus:outline-hidden rounded-sm transition-all duration-150'
+      className="w-full px-2 focus:shadow-sm focus:bg-slate-300 focus:outline-hidden rounded-sm transition-all duration-150"
       markdown={md}
       ref={editor}
     />

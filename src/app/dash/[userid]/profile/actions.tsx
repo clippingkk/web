@@ -1,13 +1,13 @@
 'use client'
+import { UserMinus, UserPlus } from 'lucide-react'
+import toast from 'react-hot-toast'
 import { useTranslation } from '@/i18n/client'
 import {
-  ProfileQuery,
+  type ProfileQuery,
   useFollowUserMutation,
   useUnfollowUserMutation,
 } from '@/schema/generated'
 import { toastPromiseDefaultOption } from '@/services/misc'
-import { UserMinus, UserPlus } from 'lucide-react'
-import toast from 'react-hot-toast'
 
 type Props = {
   isInMyPage: boolean

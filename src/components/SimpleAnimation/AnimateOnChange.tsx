@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef, useState } from 'react'
+import type React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { animations } from './theme'
 
 type AnimateOnChangeProps = {
@@ -47,7 +48,7 @@ function AnimateOnChange(props: AnimateOnChangeProps) {
     transition: !className && `opacity ${durationOut}ms ease-out`,
     opacity: !className && animation === 'out' ? 0 : 1,
     animationDuration: durationOut + 'ms',
-    ...style
+    ...style,
   }
 
   switch (animation) {

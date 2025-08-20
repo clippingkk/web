@@ -1,10 +1,10 @@
+import Modal from '@annatarhe/lake-ui/modal'
+import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
+import { useMemo } from 'react'
 import AnimateOnChange from '@/components/SimpleAnimation/AnimateOnChange'
 import { useTranslation } from '@/i18n/client'
 import { cn } from '@/lib/utils'
 import { UploadStep } from '@/services/uploader'
-import Modal from '@annatarhe/lake-ui/modal'
-import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
-import { useMemo } from 'react'
 
 type LoadingModalProps = {
   stepAt: UploadStep
@@ -104,11 +104,11 @@ function LoadingModal(props: LoadingModalProps) {
                           <CheckCircle size={18} />
                         )}
                         {!isCurrentStep(step as UploadStep) &&
-                        !isPastStep(step as UploadStep) && (
-                          <span className="text-xs text-gray-500 dark:text-gray-400">
-                            {index + 1}
-                          </span>
-                        )}
+                          !isPastStep(step as UploadStep) && (
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                              {index + 1}
+                            </span>
+                          )}
                       </div>
                       <span
                         className={cn(
@@ -155,8 +155,8 @@ function LoadingModal(props: LoadingModalProps) {
                 <span className="text-3xl">
                   {props.stepAt !== UploadStep.Done &&
                     props.stepAt !== UploadStep.Error && (
-                    <Loader2 size={28} className="animate-spin" />
-                  )}
+                      <Loader2 size={28} className="animate-spin" />
+                    )}
                   {props.stepAt === UploadStep.Done && (
                     <CheckCircle size={28} />
                   )}

@@ -1,12 +1,12 @@
 // fork from: https://github.com/kingflamez/use-screen-size/blob/master/src/index.tsx
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 enum BreakPoint {
   xs = 'xs',
   s = 's',
   m = 'm',
   l = 'l',
-  xl = 'xl'
+  xl = 'xl',
 }
 
 // Screen Size Hook
@@ -17,7 +17,7 @@ export default function useScreenSize() {
     const result = {
       width: isClient ? window.innerWidth : 0,
       height: isClient ? window.innerHeight : 0,
-      screen: BreakPoint.s
+      screen: BreakPoint.s,
     }
     if (result.width < 576) {
       result.screen = BreakPoint.xs
@@ -41,7 +41,7 @@ export default function useScreenSize() {
       return
     }
 
-    function handleResize () {
+    function handleResize() {
       setSize(getSize().screen)
     }
     handleResize()
@@ -57,7 +57,7 @@ const masonaryColumnsMapping = {
   [BreakPoint.s]: 1,
   [BreakPoint.m]: 2,
   [BreakPoint.l]: 3,
-  [BreakPoint.xl]: 3
+  [BreakPoint.xl]: 3,
 }
 
 export function useMasonaryColumnCount() {

@@ -20,9 +20,7 @@ async function Layout(props: { children: React.ReactNode }) {
       </div>
 
       {/* Main content area */}
-      <div className="mt-6 md:mt-10">
-        {props.children}
-      </div>
+      <div className="mt-6 md:mt-10">{props.children}</div>
     </section>
   )
 }

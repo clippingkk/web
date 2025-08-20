@@ -1,13 +1,13 @@
-import { useTranslation } from '@/i18n'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { ExternalLink, Terminal, Webhook } from 'lucide-react'
+import { useTranslation } from '@/i18n'
 import CodeBlock from '../highlighter/server'
 
 const cliExample = `
 ck-cli 
   --token="CLI_TOKEN" 
   parse
-  --input My\ Clippings.txt
+  --input My Clippings.txt
   --output http
 `
 
@@ -31,6 +31,7 @@ async function DeveloperFeatures() {
               href="https://github.com/clippingkk/cli"
               target="_blank"
               className="mx-1 inline-flex cursor-pointer rounded-2xl px-2 py-1 text-xs hover:opacity-80"
+              rel="noopener"
             >
               CLI
               <ExternalLink size={8} />
@@ -55,6 +56,7 @@ async function DeveloperFeatures() {
               href="https://github.com/clippingkk/cli"
               target="_blank"
               className="mx-1 inline-flex cursor-pointer rounded-2xl px-2 py-1 text-xs hover:opacity-80"
+              rel="noopener"
             >
               CI
               <ExternalLink size={8} />

@@ -1,10 +1,13 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
-import { AppleAuthResponse } from '../services/apple'
-import { useRouter } from 'next/navigation'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
-import { AppleLoginPlatforms, useLoginByAppleLazyQuery } from '../schema/generated'
+import {
+  AppleLoginPlatforms,
+  useLoginByAppleLazyQuery,
+} from '../schema/generated'
+import type { AppleAuthResponse } from '../services/apple'
 import AppleLoginButtonView from './auth/apple'
 
 type AuthAppleProps = {
@@ -15,23 +18,26 @@ function AuthByAppleButton(props: AuthAppleProps) {
   const router = useRouter()
   const [doAppleAuth, appleAuthResponse] = useLoginByAppleLazyQuery()
 
-  const onSuccess = useCallback(async (resp: AppleAuthResponse) => {
-    const { code, id_token, state } = resp.authorization
-    const r = await doAppleAuth({
-      variables: {
-        payload: {
-          code: code,
-          idToken: id_token,
-          state: state,
-          platform: AppleLoginPlatforms.Web,
-        }
+  const onSuccess = useCallback(
+    async (resp: AppleAuthResponse) => {
+      const { code, id_token, state } = resp.authorization
+      const r = await doAppleAuth({
+        variables: {
+          payload: {
+            code: code,
+            idToken: id_token,
+            state: state,
+            platform: AppleLoginPlatforms.Web,
+          },
+        },
+      })
+      if (r.data?.loginByApple.noAccountFrom3rdPart) {
+        router.push(`/auth/callback/apple?i=${id_token}`)
+        return
       }
-    })
-    if (r.data?.loginByApple.noAccountFrom3rdPart) {
-      router.push(`/auth/callback/apple?i=${id_token}`)
-      return
-    }
-  }, [doAppleAuth, router])
+    },
+    [doAppleAuth, router]
+  )
 
   // on success
   useAuthBy3rdPartSuccessed(

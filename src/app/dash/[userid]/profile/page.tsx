@@ -1,17 +1,17 @@
+import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import PersonalActivity from '@/components/profile/activity'
 import ProfileTabs from '@/components/profile-tabs/profile-tabs'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
+import { useTranslation } from '@/i18n'
 import {
   ProfileDocument,
-  ProfileQuery,
-  ProfileQueryVariables,
+  type ProfileQuery,
+  type ProfileQueryVariables,
 } from '@/schema/generated'
 import { doApolloServerQuery } from '@/services/apollo.server'
-import { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import ProfilePageContent from './content'
-import { useTranslation } from '@/i18n'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -44,7 +44,7 @@ async function Page(props: PageProps) {
     props.params,
     props.searchParams,
     cookies(),
-    useTranslation()
+    useTranslation(),
   ])
   const withProfileEditor = searchParams.with_profile_editor
   const pathUid: string = params.userid
@@ -84,16 +84,18 @@ async function Page(props: PageProps) {
         <div className="relative group/activity mt-8 w-full">
           {/* Activity section glow */}
           <div className="absolute -inset-1 bg-gradient-to-r from-green-400/20 via-blue-400/20 to-purple-400/20 rounded-3xl blur opacity-40 group-hover/activity:opacity-60 transition-opacity duration-500"></div>
-          
+
           <div className="relative overflow-hidden rounded-3xl border border-white/40 dark:border-gray-700/40 bg-gradient-to-br from-white/80 via-white/70 to-white/60 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/60 p-8 shadow-2xl backdrop-blur-xl">
             {/* Subtle pattern overlay */}
-            <div className="absolute inset-0 rounded-3xl opacity-20 dark:opacity-10"
+            <div
+              className="absolute inset-0 rounded-3xl opacity-20 dark:opacity-10"
               style={{
-                backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)',
-                backgroundSize: '20px 20px'
-              }}>
-            </div>
-            
+                backgroundImage:
+                  'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)',
+                backgroundSize: '20px 20px',
+              }}
+            ></div>
+
             <div className="relative">
               <div className="mb-6 flex items-center gap-3">
                 <div className="relative">
@@ -123,13 +125,12 @@ async function Page(props: PageProps) {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Tabbed content section */}
       <div className="pt-6">
         {myUid && (
-          <ProfileTabs 
+          <ProfileTabs
             uid={profile.me.id}
             userDomain={profile.me.domain}
             profile={profile.me}

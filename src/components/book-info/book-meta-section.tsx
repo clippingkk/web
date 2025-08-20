@@ -1,9 +1,9 @@
 'use client'
 
-import { useTranslation } from '@/i18n/client'
-import { WenquBook } from '@/services/wenqu'
-import dayjs from '@/utils/dayjs'
 import { BookOpen, Calendar } from 'lucide-react'
+import { useTranslation } from '@/i18n/client'
+import type { WenquBook } from '@/services/wenqu'
+import dayjs from '@/utils/dayjs'
 
 type Props = {
   book: WenquBook

@@ -1,6 +1,6 @@
-import React from 'react'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import React from 'react'
 
 type ViewAllButtonProps = {
   count: number
@@ -8,7 +8,11 @@ type ViewAllButtonProps = {
   userDomain?: string | null
 }
 
-export default function ViewAllButton({ count, userId, userDomain }: ViewAllButtonProps) {
+export default function ViewAllButton({
+  count,
+  userId,
+  userDomain,
+}: ViewAllButtonProps) {
   return (
     <div className="mt-8 text-center">
       <Link

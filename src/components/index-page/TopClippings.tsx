@@ -1,5 +1,5 @@
 import { useTranslation } from '@/i18n'
-import { Clipping, User } from '@/schema/generated'
+import type { Clipping, User } from '@/schema/generated'
 import ClippingLite from '../clipping-item/clipping-lite'
 
 type TopClippingsProps = {

@@ -1,10 +1,10 @@
-import { useTranslation } from '@/i18n/client'
-import { useBindWeb3AddressMutation } from '@/schema/generated'
-import { signDataByWeb3 } from '@/utils/wallet'
 import { useApolloClient } from '@apollo/client'
 import { useSDK } from '@metamask/sdk-react'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import { useBindWeb3AddressMutation } from '@/schema/generated'
+import { signDataByWeb3 } from '@/utils/wallet'
 import WithLoading from '../with-loading'
 
 type MetamaskBindButtonProps = {

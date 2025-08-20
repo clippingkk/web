@@ -1,5 +1,5 @@
 import { Gem, Sparkles, Star } from 'lucide-react'
-import React from 'react'
+import type React from 'react'
 
 type PlanCardProps = {
   title: React.ReactNode | string

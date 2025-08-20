@@ -1,8 +1,8 @@
-import { useTranslation } from '@/i18n/client'
 import LakeModal from '@annatarhe/lake-ui/modal'
 import { useMemo, useState } from 'react'
+import { useTranslation } from '@/i18n/client'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
-import { WenquBook } from '../../services/wenqu'
+import type { WenquBook } from '../../services/wenqu'
 import ThemePicker from './theme-picker'
 
 type BookSharePreviewProps = {

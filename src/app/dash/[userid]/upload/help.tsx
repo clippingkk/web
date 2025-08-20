@@ -1,5 +1,5 @@
-import { useTranslation } from '@/i18n'
 import { ExternalLink, FileText, HelpCircle, Youtube } from 'lucide-react'
+import { useTranslation } from '@/i18n'
 
 async function ClippingsUploadHelp() {
   const { t } = await useTranslation(undefined, 'upload')

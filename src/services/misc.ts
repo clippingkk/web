@@ -9,12 +9,12 @@ export function uploadImage(file: File): Promise<TUploadResponse> {
   fd.append('image', file)
   return request('/v1/misc/upload', {
     method: 'POST',
-    body: fd
+    body: fd,
   })
 }
 
 export const toastPromiseDefaultOption = {
   loading: 'Loading',
   success: 'Success',
-  error: (err: Error) => err.toString()
+  error: (err: Error) => err.toString(),
 }

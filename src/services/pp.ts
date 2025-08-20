@@ -15,4 +15,3 @@ const client = new PromptPal(PP_API, PP_TOKEN, {
 })
 
 export default client
-

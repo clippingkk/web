@@ -1,19 +1,29 @@
 'use client'
-import { useMachine } from '@xstate/react'
-import React from 'react'
-import authMachine from './auth.state'
-import { fromPromise } from 'xstate'
-import { AppleAuthVersion, AppleLoginPlatforms, OtpChannel, useAuthByWeb3LazyQuery, useAuthLazyQuery, useDoLoginV3Mutation, useLoginByAppleLazyQuery, useSendOtpMutation } from '@/schema/generated'
-import toast from 'react-hot-toast'
-import { useActionTrack } from '@/hooks/tracke'
-import { GithubClientID } from '@/constants/config'
-import { useRouter } from 'next/navigation'
-import ThirdPartEntry from './thirdPartEntry'
-import { signDataByWeb3 } from '@/utils/wallet'
-import { useTranslation } from '@/i18n/client'
-import EmailLoginEntry from './emailEntry'
-import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '@/hooks/hooks'
 import { useSDK } from '@metamask/sdk-react'
+import { useMachine } from '@xstate/react'
+import { useRouter } from 'next/navigation'
+import React from 'react'
+import toast from 'react-hot-toast'
+import { fromPromise } from 'xstate'
+import { GithubClientID } from '@/constants/config'
+import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '@/hooks/hooks'
+import { useActionTrack } from '@/hooks/tracke'
+import { useTranslation } from '@/i18n/client'
+import {
+  AppleAuthVersion,
+  AppleLoginPlatforms,
+  OtpChannel,
+  useAuthByWeb3LazyQuery,
+  useAuthLazyQuery,
+  useDoLoginV3Mutation,
+  useLoginByAppleLazyQuery,
+  useSendOtpMutation,
+} from '@/schema/generated'
+import { signDataByWeb3 } from '@/utils/wallet'
+import authMachine from './auth.state'
+import EmailLoginEntry from './emailEntry'
+import ThirdPartEntry from './thirdPartEntry'
+
 // import { createBrowserInspector } from '@statelyai/inspect'
 // const { inspect } = createBrowserInspector();
 
@@ -32,175 +42,203 @@ function AuthV4Content() {
   const { sdk: metamaskSDK } = useSDK()
 
   const [doAuth, doAuthData] = useAuthLazyQuery()
-  useLoginV3Successed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.auth)
+  useLoginV3Successed(
+    doAuthData.called,
+    doAuthData.loading,
+    doAuthData.error,
+    doAuthData.data?.auth
+  )
 
   const [doWeb3Auth, doWeb3AuthData] = useAuthByWeb3LazyQuery()
-  useAuthBy3rdPartSuccessed(doWeb3AuthData.called, doWeb3AuthData.loading, doWeb3AuthData.error, doWeb3AuthData.data?.loginByWeb3)
-  const [
-    loginV3,
-    loginV3Response
-  ] = useDoLoginV3Mutation()
+  useAuthBy3rdPartSuccessed(
+    doWeb3AuthData.called,
+    doWeb3AuthData.loading,
+    doWeb3AuthData.error,
+    doWeb3AuthData.data?.loginByWeb3
+  )
+  const [loginV3, loginV3Response] = useDoLoginV3Mutation()
 
-  useLoginV3Successed(loginV3Response.called, loginV3Response.loading, loginV3Response.error, loginV3Response.data?.loginV3)
+  useLoginV3Successed(
+    loginV3Response.called,
+    loginV3Response.loading,
+    loginV3Response.error,
+    loginV3Response.data?.loginV3
+  )
 
   const onGithubClick = useActionTrack('login:github')
-  const [state, send] = useMachine(authMachine.provide({
-    actors: {
-      doSendOTP: fromPromise(async ({ input }) => {
-        if (!input.email || !input.turnstileToken) {
-          throw new Error('Auth by Email: not exist')
-        }
+  const [state, send] = useMachine(
+    authMachine.provide({
+      actors: {
+        doSendOTP: fromPromise(async ({ input }) => {
+          if (!input.email || !input.turnstileToken) {
+            throw new Error('Auth by Email: not exist')
+          }
 
-        const t = toast.loading('Sending OTP...')
-        return doSendOtp({
-          variables: {
-            channel: OtpChannel.Email,
-            address: input.email,
-            cfTurnstileToken: input.turnstileToken
-          }
-        }).then(r => {
-          toast.success('OTP Sent, please check your email box', { id: t })
-          return r
-        }).catch(e => {
-          toast.error(e.message, { id: t })
-          throw e
-        })
-      }),
-      doGithubLogin: fromPromise(async () => {
-        onGithubClick()
-        const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`
-        location.href = githubAuthUrl
-        // TODO: github login callback
-      }),
-      doMetamaskLogin: fromPromise(async ({ input }) => {
-        if (!input.data) {
-          toast.error('Auth by Metamask: not exist')
-          throw new Error('Auth by Metamask: not exist')
-        }
-        const { address, signature, text } = input.data
-        const t = toast.loading('Auth by Metamask: login in progress...')
-        return doWeb3Auth({
-          variables: {
-            payload: {
-              address: address,
-              signature: signature,
-              text: text
-            }
-          }
-        })
-          .then(r => r.data?.loginByWeb3)
-          .then(r => {
-            toast.success('Auth by Metamask: login success', { id: t })
-            if (r?.noAccountFrom3rdPart) {
-              console.log('redirect', 'aaaaa', address, signature, text)
-              router.push(`/auth/callback/metamask?a=${address}&s=${signature}&t=${encodeURIComponent(text)}`)
-              return
-            }
-            return r
-          }).catch(e => {
-            toast.error(e.toString(), { id: t })
-            throw e
-          })
-      }),
-      doAppleLogin: fromPromise(async ({ input }) => {
-        if (!input.data) {
-          toast.error('Auth by Apple: not exist')
-          return
-        }
-        const { code, id_token, state } = input.data
-
-        const t = toast.loading('Auth by Apple: login in progress...')
-        return doAppleAuth({
-          variables: {
-            payload: {
-              code: code,
-              idToken: id_token,
-              state: state,
-              version: AppleAuthVersion.V4,
-              platform: AppleLoginPlatforms.Web,
-            }
-          }
-        })
-          .then(r => r.data?.loginByApple)
-          .then(r => {
-            toast.success('Auth by Apple: login success', { id: t })
-            if (r?.noAccountFrom3rdPart) {
-              router.push(`/auth/callback/apple?i=${id_token}`)
-            }
-            return r
-          }).catch(e => {
-            toast.error(e.toString(), { id: t })
-            throw e
-          })
-      }),
-      connectWeb3Wallet: fromPromise(() => {
-        if (!metamaskSDK) {
-          throw new Error('metamaskSDK not found')
-        }
-        const t = toast.loading('Connecting...')
-        return signDataByWeb3(metamaskSDK).then(r => {
-          toast.success('Connected', { id: t })
-          return r
-        }).catch(e => {
-          toast.error(e.toString(), { id: t })
-          throw e
-        })
-      }),
-      doManualLogin: fromPromise(async ({ input }) => {
-        if (!input.email) {
-          return
-        }
-        const t = toast.loading('Auth by Email: login in progress...')
-        if (!input.otp) {
-          // 这里是用户名密码登录
-          return doAuth({
+          const t = toast.loading('Sending OTP...')
+          return doSendOtp({
             variables: {
-              email: input.email,
-              password: input.password!,
-              cfTurnstileToken: input.turnstileToken!
-            }
-          }).then(r => {
-            if (!r.data) {
-              throw r.error
-            }
-            toast.success('Auth by Email: login success', { id: t })
-            return r.data?.auth
-          }).catch(e => {
-            toast.error(e.toString(), { id: t })
-            throw e
+              channel: OtpChannel.Email,
+              address: input.email,
+              cfTurnstileToken: input.turnstileToken,
+            },
           })
-        }
-
-        return loginV3({
-          variables: {
-            payload: {
-              email: input.email,
-              otp: input.otp!
-            }
+            .then((r) => {
+              toast.success('OTP Sent, please check your email box', { id: t })
+              return r
+            })
+            .catch((e) => {
+              toast.error(e.message, { id: t })
+              throw e
+            })
+        }),
+        doGithubLogin: fromPromise(async () => {
+          onGithubClick()
+          const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`
+          location.href = githubAuthUrl
+          // TODO: github login callback
+        }),
+        doMetamaskLogin: fromPromise(async ({ input }) => {
+          if (!input.data) {
+            toast.error('Auth by Metamask: not exist')
+            throw new Error('Auth by Metamask: not exist')
           }
-        })
-          .then(r => {
-            toast.success('Auth by Email: login success', { id: t })
-            return r.data?.loginV3
-          }).catch(e => {
-            toast.error(e.toString(), { id: t })
-            throw e
+          const { address, signature, text } = input.data
+          const t = toast.loading('Auth by Metamask: login in progress...')
+          return doWeb3Auth({
+            variables: {
+              payload: {
+                address: address,
+                signature: signature,
+                text: text,
+              },
+            },
           })
-      }),
-      setLocalState: fromPromise(({ }) => {
-        return Promise.resolve()
-      })
+            .then((r) => r.data?.loginByWeb3)
+            .then((r) => {
+              toast.success('Auth by Metamask: login success', { id: t })
+              if (r?.noAccountFrom3rdPart) {
+                console.log('redirect', 'aaaaa', address, signature, text)
+                router.push(
+                  `/auth/callback/metamask?a=${address}&s=${signature}&t=${encodeURIComponent(text)}`
+                )
+                return
+              }
+              return r
+            })
+            .catch((e) => {
+              toast.error(e.toString(), { id: t })
+              throw e
+            })
+        }),
+        doAppleLogin: fromPromise(async ({ input }) => {
+          if (!input.data) {
+            toast.error('Auth by Apple: not exist')
+            return
+          }
+          const { code, id_token, state } = input.data
+
+          const t = toast.loading('Auth by Apple: login in progress...')
+          return doAppleAuth({
+            variables: {
+              payload: {
+                code: code,
+                idToken: id_token,
+                state: state,
+                version: AppleAuthVersion.V4,
+                platform: AppleLoginPlatforms.Web,
+              },
+            },
+          })
+            .then((r) => r.data?.loginByApple)
+            .then((r) => {
+              toast.success('Auth by Apple: login success', { id: t })
+              if (r?.noAccountFrom3rdPart) {
+                router.push(`/auth/callback/apple?i=${id_token}`)
+              }
+              return r
+            })
+            .catch((e) => {
+              toast.error(e.toString(), { id: t })
+              throw e
+            })
+        }),
+        connectWeb3Wallet: fromPromise(() => {
+          if (!metamaskSDK) {
+            throw new Error('metamaskSDK not found')
+          }
+          const t = toast.loading('Connecting...')
+          return signDataByWeb3(metamaskSDK)
+            .then((r) => {
+              toast.success('Connected', { id: t })
+              return r
+            })
+            .catch((e) => {
+              toast.error(e.toString(), { id: t })
+              throw e
+            })
+        }),
+        doManualLogin: fromPromise(async ({ input }) => {
+          if (!input.email) {
+            return
+          }
+          const t = toast.loading('Auth by Email: login in progress...')
+          if (!input.otp) {
+            // 这里是用户名密码登录
+            return doAuth({
+              variables: {
+                email: input.email,
+                password: input.password!,
+                cfTurnstileToken: input.turnstileToken!,
+              },
+            })
+              .then((r) => {
+                if (!r.data) {
+                  throw r.error
+                }
+                toast.success('Auth by Email: login success', { id: t })
+                return r.data?.auth
+              })
+              .catch((e) => {
+                toast.error(e.toString(), { id: t })
+                throw e
+              })
+          }
+
+          return loginV3({
+            variables: {
+              payload: {
+                email: input.email,
+                otp: input.otp!,
+              },
+            },
+          })
+            .then((r) => {
+              toast.success('Auth by Email: login success', { id: t })
+              return r.data?.loginV3
+            })
+            .catch((e) => {
+              toast.error(e.toString(), { id: t })
+              throw e
+            })
+        }),
+        setLocalState: fromPromise(({}) => {
+          return Promise.resolve()
+        }),
+      },
+    }),
+    {
+      // inspect
     }
-  }), {
-    // inspect
-  })
+  )
 
   return (
-    <div className='px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg'>
+    <div className="px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg">
       <EmailLoginEntry machine={state} sendEvent={send} />
-      <hr className='w-full mx-8' />
-      <div className='mt-6 lg:mt-0'>
-        <h3 className='text-lg mb-8 font-bold'>{t('app.auth.thirdPart.title')}</h3>
+      <hr className="w-full mx-8" />
+      <div className="mt-6 lg:mt-0">
+        <h3 className="text-lg mb-8 font-bold">
+          {t('app.auth.thirdPart.title')}
+        </h3>
         <ThirdPartEntry machine={state} onEvent={send} />
       </div>
     </div>

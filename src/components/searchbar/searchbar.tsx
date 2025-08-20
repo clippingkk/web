@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react'
+import { Command, Search, XCircle } from 'lucide-react'
+import type React from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from '@/i18n/client'
 import { useSearchQueryLazyQuery } from '../../schema/generated'
-import { Search, XCircle, Command } from 'lucide-react'
-import { createPortal } from 'react-dom'
 import SearchClippingItem from './clipping-item'
 import Empty from './empty'
 import Loading from './loading'
@@ -10,7 +11,7 @@ import Loading from './loading'
 type SearchBarProps = {
   visible: boolean
   onClose: () => void
-  profile?: { id: number, domain: string }
+  profile?: { id: number; domain: string }
 }
 
 function SearchBar(props: SearchBarProps) {
@@ -23,31 +24,34 @@ function SearchBar(props: SearchBarProps) {
 
   const throttleTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  const onInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setSearchText(value) // Update search text state immediately for UI purposes
+  const onInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      setSearchText(value) // Update search text state immediately for UI purposes
 
-    if (loading) {
-      return
-    }
-    if (value.length < 2) {
-      return
-    }
+      if (loading) {
+        return
+      }
+      if (value.length < 2) {
+        return
+      }
 
-    // Clear existing timeout if any
-    if (throttleTimeoutRef.current) {
-      clearTimeout(throttleTimeoutRef.current)
-    }
+      // Clear existing timeout if any
+      if (throttleTimeoutRef.current) {
+        clearTimeout(throttleTimeoutRef.current)
+      }
 
-    // Set a new timeout for 500ms
-    throttleTimeoutRef.current = setTimeout(() => {
-      doQuery({
-        variables: {
-          query: value
-        }
-      })
-    }, 500)
-  }, [doQuery, loading])
+      // Set a new timeout for 500ms
+      throttleTimeoutRef.current = setTimeout(() => {
+        doQuery({
+          variables: {
+            query: value,
+          },
+        })
+      }, 500)
+    },
+    [doQuery, loading]
+  )
 
   // Clean up timeout on unmount
   useEffect(() => {
@@ -66,7 +70,10 @@ function SearchBar(props: SearchBarProps) {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClose()
       }
     }
@@ -84,8 +91,7 @@ function SearchBar(props: SearchBarProps) {
 
   // Portal content that will be rendered to the body
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-16 sm:pt-20 md:pt-24 with-slide-in"
-    >
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-16 sm:pt-20 md:pt-24 with-slide-in">
       <div
         className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
         onClick={onClose}
@@ -110,13 +116,14 @@ function SearchBar(props: SearchBarProps) {
               onChange={onInputChange}
               type="search"
               className="w-full bg-transparent border-none outline-none text-lg placeholder:text-slate-400 dark:text-white focus:ring-0"
-              placeholder={t('app.menu.search.placeholder') ?? 'Search for clippings...'}
+              placeholder={
+                t('app.menu.search.placeholder') ?? 'Search for clippings...'
+              }
               autoFocus
             />
             <div className="flex items-center gap-2">
               <kbd className="hidden sm:inline-flex items-center px-2 py-1 text-xs font-semibold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 rounded">
-                <Command className="w-3 h-3 mr-1" />
-                K
+                <Command className="w-3 h-3 mr-1" />K
               </kbd>
               <button
                 onClick={onClose}
@@ -134,12 +141,10 @@ function SearchBar(props: SearchBarProps) {
               <Empty />
             )}
 
-            {loading && (
-              <Loading />
-            )}
+            {loading && <Loading />}
 
             <ul className="space-y-3">
-              {data?.search.clippings.map(c => (
+              {data?.search.clippings.map((c) => (
                 <SearchClippingItem
                   key={c.id}
                   clipping={c}

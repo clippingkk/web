@@ -11,7 +11,10 @@ export default function SidebarLoading() {
               <div className="h-3 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-2/3"></div>
               <div className="flex gap-1 mt-2">
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="w-3 h-3 bg-gray-300 dark:bg-zinc-600 rounded-full"></div>
+                  <div
+                    key={i}
+                    className="w-3 h-3 bg-gray-300 dark:bg-zinc-600 rounded-full"
+                  ></div>
                 ))}
               </div>
             </div>
@@ -24,23 +27,23 @@ export default function SidebarLoading() {
             {/* Sparkle effects skeleton */}
             <div className="absolute top-4 right-4 w-6 h-6 bg-white/30 rounded-full"></div>
             <div className="absolute bottom-4 left-4 w-4 h-4 bg-white/20 rounded-full"></div>
-            
+
             {/* Main content skeleton */}
             <div className="flex items-center gap-4">
               {/* Icon container skeleton */}
               <div className="bg-white/20 rounded-xl p-3 w-14 h-14"></div>
-              
+
               {/* Text content skeleton */}
               <div className="flex-1 space-y-2">
                 <div className="h-3 bg-white/30 rounded w-20"></div>
                 <div className="h-5 bg-white/40 rounded w-24"></div>
                 <div className="h-3 bg-white/30 rounded w-32"></div>
               </div>
-              
+
               {/* Arrow skeleton */}
               <div className="w-5 h-5 bg-white/30 rounded"></div>
             </div>
-            
+
             {/* Bottom gradient line skeleton */}
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/40"></div>
           </div>

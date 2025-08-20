@@ -1,8 +1,8 @@
-import { useTranslation } from '@/i18n/client'
-import { cn } from '@/lib/utils' // Assuming cn is here, adjust if necessary
-import { WenquBook } from '@/services/wenqu'
 import BlurhashImage from '@annatarhe/blurhash-react'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useTranslation } from '@/i18n/client'
+import { cn } from '@/lib/utils' // Assuming cn is here, adjust if necessary
+import type { WenquBook } from '@/services/wenqu'
 import Rating from '../rating'
 
 type BookCandidateProps = {

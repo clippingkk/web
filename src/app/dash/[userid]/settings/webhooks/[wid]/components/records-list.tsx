@@ -1,9 +1,9 @@
 'use client'
 
-import { useTranslation } from '@/i18n/client'
-import { FetchWebhookQuery } from '@/schema/generated'
 import { History } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslation } from '@/i18n/client'
+import type { FetchWebhookQuery } from '@/schema/generated'
 import RecordCard from './record-card'
 
 interface RecordsListProps {

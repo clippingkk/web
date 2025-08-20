@@ -1,12 +1,12 @@
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 import logo from '@/assets/logo.png'
 import Avatar from '@/components/avatar/avatar'
 import ReportBookSection from '@/components/reports/report-book-section'
 import ReportHero from '@/components/reports/report-hero'
 import { useTranslation } from '@/i18n'
-import { FetchYearlyReportQuery } from '@/schema/generated'
-import { WenquBook } from '@/services/wenqu'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
-import Image from 'next/image'
+import type { FetchYearlyReportQuery } from '@/schema/generated'
+import type { WenquBook } from '@/services/wenqu'
 import PageContainer from './page-container'
 
 type ReportYearlyProps = {

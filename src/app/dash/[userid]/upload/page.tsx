@@ -1,16 +1,16 @@
+import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { useTranslation } from '@/i18n'
 import {
   ProfileDocument,
-  ProfileQuery,
-  ProfileQueryVariables,
+  type ProfileQuery,
+  type ProfileQueryVariables,
 } from '@/schema/generated'
 import { getApolloServerClient } from '@/services/apollo.server'
-import { Metadata } from 'next'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import UploaderPageContent from './content'
 import ClippingsUploadHelp from './help'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{ userid: string }>

@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import { useInView } from 'react-cool-inview'
 
 type TListFooterProp = {
@@ -21,16 +21,12 @@ function ListFooter(props: TListFooterProp) {
     },
   })
   return (
-    <footer className='flex justify-center items-center my-4 mx-0 w-full'>
+    <footer className="flex justify-center items-center my-4 mx-0 w-full">
       <div
-        className='text-gray-600 dark:text-gray-400 block w-full text-center'
+        className="text-gray-600 dark:text-gray-400 block w-full text-center"
         ref={observe}
       >
-        {
-          hasMore ?
-            loadingBlock ?? 'Loading' :
-            'You reach the end'
-        }
+        {hasMore ? (loadingBlock ?? 'Loading') : 'You reach the end'}
       </div>
     </footer>
   )

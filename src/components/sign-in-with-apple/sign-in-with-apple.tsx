@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { SignInWithAppleOptions } from '../../constants/config'
 
-const scriptURL = 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
+const scriptURL =
+  'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
 
 const scriptDomId = 'sign-in-with-app-script'
 function SignInWithApple() {
-
   const [_, setLoading] = useState(true)
 
   useEffect(() => {
@@ -41,7 +41,10 @@ function SignInWithApple() {
     document.addEventListener('AppleIDSignInOnFailure', onAppleSignInFail)
 
     return () => {
-      document.removeEventListener('AppleIDSignInOnSuccess', onAppleSignInSuccess)
+      document.removeEventListener(
+        'AppleIDSignInOnSuccess',
+        onAppleSignInSuccess
+      )
       document.removeEventListener('AppleIDSignInOnFailure', onAppleSignInFail)
       document.removeChild(dom)
     }

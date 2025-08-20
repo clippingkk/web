@@ -1,27 +1,31 @@
+import type { ApolloQueryResult } from '@apollo/client'
+import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import AIBookRecommendationButton from '@/components/book-recommendation/ai-book-recommendation-button'
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { duration3Days } from '@/hooks/book'
 import { useTranslation } from '@/i18n'
 import {
   BooksDocument,
-  BooksQuery,
-  BooksQueryVariables,
+  type BooksQuery,
+  type BooksQueryVariables,
   ProfileDocument,
-  ProfileQuery,
-  ProfileQueryVariables,
+  type ProfileQuery,
+  type ProfileQueryVariables,
 } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { doApolloServerQuery } from '@/services/apollo.server'
-import { WenquBook, WenquSearchResponse, wenquRequest } from '@/services/wenqu'
-import { ApolloQueryResult } from '@apollo/client'
-import { Metadata } from 'next'
-import { cookies } from 'next/headers'
-import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import {
+  type WenquBook,
+  type WenquSearchResponse,
+  wenquRequest,
+} from '@/services/wenqu'
 import HomePageContent from './content'
 import NoContentAlert from './no-content'
 import ReadingBook from './reading-book'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type PageProps = {
   params: Promise<{ userid: string }>

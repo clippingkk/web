@@ -1,15 +1,19 @@
 import { ApolloLink, HttpLink } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { API_HOST } from '../constants/config'
-import profile from '../utils/profile'
-import toast from 'react-hot-toast'
+import {
+  ApolloClient,
+  InMemoryCache,
+  SSRMultipartLink,
+} from '@apollo/client-integration-nextjs'
 import { QueryClient } from '@tanstack/react-query'
-import { getLanguage } from '../utils/locales'
-import { ApolloClient, InMemoryCache, SSRMultipartLink } from '@apollo/client-integration-nextjs'
 import Cookies from 'js-cookie'
 import { cache } from 'react'
-import { apolloCacheConfig } from './apollo.shard'
+import toast from 'react-hot-toast'
+import { API_HOST } from '../constants/config'
 import { COOKIE_TOKEN_KEY } from '../constants/storage'
+import { getLanguage } from '../utils/locales'
+import profile from '../utils/profile'
+import { apolloCacheConfig } from './apollo.shard'
 
 export interface IBaseResponseData<T> {
   status: number
@@ -36,15 +40,20 @@ export function getLocalToken() {
 let token = typeof window === 'undefined' ? null : getLocalToken()
 // let token = localProfile?.token
 
-export async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
+export async function request<T>(
+  url: string,
+  options: RequestInit = {}
+): Promise<T> {
   // set token if not exist
   if (!(options.headers as Record<string, string>)['Authorization'] && token) {
-    (options.headers as Record<string, string>)['Authorization'] = `Bearer ${token}`
+    ;(options.headers as Record<string, string>)['Authorization'] =
+      `Bearer ${token}`
   }
 
   // set language if not exist
   if (!(options.headers as Record<string, string>)['X-Accept-Language']) {
-    (options.headers as Record<string, string>)['X-Accept-Language'] = getLanguage()
+    ;(options.headers as Record<string, string>)['X-Accept-Language'] =
+      getLanguage()
   }
 
   options.credentials = 'include'
@@ -53,8 +62,9 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
   const finalUrl = url.startsWith('http') ? url : `${API_HOST}/api${url}`
 
   try {
-    const response: IBaseResponseData<T> = await fetch(finalUrl, options)
-      .then(res => res.json())
+    const response: IBaseResponseData<T> = await fetch(finalUrl, options).then(
+      (res) => res.json()
+    )
     if (response.status >= 400) {
       throw new Error(response.msg)
     }
@@ -99,7 +109,7 @@ export const authLink = new ApolloLink((operation, forward) => {
 type GraphQLResponseError = {
   name: string
   response: Response
-  result: { code: number, error: string }
+  result: { code: number; error: string }
   statusCode: number
   message: string
 }
@@ -178,9 +188,9 @@ export function createReactQueryClient() {
     defaultOptions: {
       queries: {
         staleTime: 60 * 60,
-        gcTime: 5000
+        gcTime: 5000,
       },
-    }
+    },
   })
 }
 

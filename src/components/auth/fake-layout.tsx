@@ -1,8 +1,9 @@
 'use client'
+import type React from 'react'
+import { useState } from 'react'
 import BindPhone from '@/components/bind-phone'
 import LoadingIcon from '@/components/icons/loading.svg'
 import { useTranslation } from '@/i18n/client'
-import React, { useState } from 'react'
 import Button from '../button/button'
 
 type AuthCallbackPageContainerProps = {

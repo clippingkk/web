@@ -1,20 +1,24 @@
 'use client'
+import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useApolloClient } from '@apollo/client'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { $getRoot, type LexicalEditor } from 'lexical'
+import { Info, Send, User as UserIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useCallback, useRef, useState } from 'react'
+import { toast } from 'react-hot-toast'
 import AICommentEnhancer from '@/components/ai/enhance-comment'
 import Avatar from '@/components/avatar/avatar'
 import Button from '@/components/button/button'
 import CKLexicalBaseEditor from '@/components/RichTextEditor'
 import { useTranslation } from '@/i18n/client'
-import { Clipping, useCreateCommentMutation, User } from '@/schema/generated'
+import {
+  type Clipping,
+  type User,
+  useCreateCommentMutation,
+} from '@/schema/generated'
 import { toastPromiseDefaultOption } from '@/services/misc'
-import { WenquBook } from '@/services/wenqu'
-import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { useApolloClient } from '@apollo/client'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { $getRoot, LexicalEditor } from 'lexical'
-import { Send, User as UserIcon, Info } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useCallback, useRef, useState } from 'react'
-import { toast } from 'react-hot-toast'
+import type { WenquBook } from '@/services/wenqu'
 
 type CommentBoxProps = {
   book: WenquBook | null
@@ -92,7 +96,7 @@ function CommentBox(props: CommentBoxProps) {
             </h5>
           </Tooltip>
         </div>
-        
+
         <div className="rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 overflow-hidden transition-all duration-200 focus-within:border-blue-400 dark:focus-within:border-blue-400 focus-within:shadow-sm focus-within:shadow-blue-400/20">
           <CKLexicalBaseEditor
             editable
@@ -105,13 +109,13 @@ function CommentBox(props: CommentBoxProps) {
 
         <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-500 dark:text-zinc-400">
           <Info className="h-3 w-3" />
-          <span>Tip: You can use markdown syntax (e.g., **bold**, *italic*, `code`, [links](url))</span>
+          <span>
+            Tip: You can use markdown syntax (e.g., **bold**, *italic*, `code`,
+            [links](url))
+          </span>
         </div>
 
-        <div
-          className="mt-3 flex items-center justify-between gap-3"
-          ref={ref}
-        >
+        <div className="mt-3 flex items-center justify-between gap-3" ref={ref}>
           <div className="flex items-center gap-3">
             {content.length > COMMENT_MIN_LEN ? (
               <AICommentEnhancer

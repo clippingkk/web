@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev --turbo --port 3101",
-    "build": "npm run codegen && next build --turbo",
+    "build": "npm run codegen && next build",
     "start": "next start -p $PORT",
-    "lint": "next lint",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --fix",
+    "format": "biome format . --write",
     "test": "jest",
     "test:update": "npm test -- --updateSnapshot",
     "release:base": "standard-version --commit-all",
@@ -31,7 +33,7 @@
     "node": "23"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
+    "@biomejs/biome": "^2.2.0",
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/client-preset": "^4.8.3",
     "@graphql-codegen/introspection": "4.0.3",
@@ -39,9 +41,7 @@
     "@graphql-codegen/typescript-operations": "4.6.1",
     "@graphql-codegen/typescript-react-apollo": "4.3.3",
     "@jest/globals": "^30.0.5",
-    "@next/eslint-plugin-next": "^15.5.0",
     "@tailwindcss/forms": "^0.5.10",
-    "@tanstack/eslint-plugin-query": "^5.83.1",
     "@tanstack/react-query-devtools": "^5.84.2",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
@@ -62,9 +62,6 @@
     "autoprefixer": "^10.4.21",
     "coveralls": "^3.1.1",
     "cross-fetch": "^4.1.0",
-    "eslint": "9.33.0",
-    "eslint-config-next": "^15.5.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
     "graphql": "^16.11.0",
     "graphql-tag": "^2.12.6",
     "jest": "^30.0.5",
@@ -201,7 +198,11 @@
     }
   },
   "lint-staged": {
-    "*.{js,css,json,md,ts,tsx}": [
+    "*.{js,ts,tsx,json}": [
+      "biome check --fix --no-errors-on-unmatched",
+      "git add"
+    ],
+    "*.{css,md}": [
       "prettier --write",
       "git add"
     ]

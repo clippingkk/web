@@ -1,10 +1,10 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
-import { ProfileQuery, useWechatBindQuery } from '@/schema/generated'
 import Modal from '@annatarhe/lake-ui/modal'
 import { MessageCircle } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 import { useState } from 'react'
+import { useTranslation } from '@/i18n/client'
+import { type ProfileQuery, useWechatBindQuery } from '@/schema/generated'
 
 function BindQRCode() {
   const { data } = useWechatBindQuery()

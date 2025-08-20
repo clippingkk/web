@@ -1,11 +1,11 @@
-import { AppFeatures } from '@/constants/features'
-import { useTranslation } from '@/i18n/index'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
+import { AppFeatures } from '@/constants/features'
+import { useTranslation } from '@/i18n/index'
 import PureImages from '../backgrounds/pure-images'
-import MovingLightsBackground from './moving-lights-background'
 import LinkIndicator from '../link-indicator'
+import MovingLightsBackground from './moving-lights-background'
 
 type HeroProps = {
   myUid?: number
@@ -97,6 +97,7 @@ async function Hero(props: HeroProps) {
               target="_blank"
               className="mt-4 flex items-center gap-1 text-sm text-indigo-600 transition-colors duration-200 hover:text-blue-700 hover:underline dark:text-slate-300 dark:hover:text-white"
               referrerPolicy="no-referrer"
+              rel="noopener"
             >
               {t('How to use?')}
               <ArrowTopRightOnSquareIcon className="h-4 w-4" />

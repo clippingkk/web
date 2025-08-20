@@ -1,11 +1,11 @@
-import React from 'react'
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import React from 'react'
 import BookInfo from '@/components/book-info/book-info'
 import ClippingContent from '@/components/clipping-content'
+import type { Clipping } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
-import { Clipping } from '@/schema/generated'
-import { WenquBook } from '@/services/wenqu'
-import { ArrowRight } from 'lucide-react'
+import type { WenquBook } from '@/services/wenqu'
 
 type ReadingBookProps = {
   uid: number

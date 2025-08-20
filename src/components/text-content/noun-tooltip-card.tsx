@@ -1,5 +1,5 @@
 import { useTranslation } from '@/i18n/client'
-import { FetchClippingQuery } from '@/schema/generated'
+import type { FetchClippingQuery } from '@/schema/generated'
 import Button from '../button/button'
 import NounContentRender from '../noun/content-render'
 

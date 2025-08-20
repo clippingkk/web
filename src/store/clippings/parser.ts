@@ -8,7 +8,7 @@ export type TClippingItem = {
 
 enum FileLanuages {
   Chinese,
-  English
+  English,
 }
 
 class ClippingTextParser {
@@ -27,7 +27,7 @@ class ClippingTextParser {
   constructor(file: string) {
     const lines = file.split('\n')
     let temp: string[] = []
-    lines.forEach(line => {
+    lines.forEach((line) => {
       line = line.trim()
       if (line.includes('========')) {
         this.lines.push(temp)
@@ -58,7 +58,7 @@ class ClippingTextParser {
       this.next()
     } while (this.current)
 
-    return this.result.filter(item => item.content && item.content !== '')
+    return this.result.filter((item) => item.content && item.content !== '')
   }
   private exactInfo() {
     const l = this.current[1].split('|')
@@ -82,10 +82,7 @@ class ClippingTextParser {
     }
 
     // 如果是 location 类型的则前面加 #
-    if (
-      pageAt.includes('-') &&
-      !pageAt.startsWith('#')
-    ) {
+    if (pageAt.includes('-') && !pageAt.startsWith('#')) {
       pageAt = '#' + pageAt.trim()
     }
 
@@ -96,7 +93,8 @@ class ClippingTextParser {
     let dateStr = matched.replace('添加于 ', '')
 
     if (this.language === FileLanuages.Chinese) {
-      dateStr = dateStr.replace(/年/, '/')
+      dateStr = dateStr
+        .replace(/年/, '/')
         .replace(/月/, '/')
         .replace(/日/, '/')
         .replace(/星期[\u4e00-\u9fa5]/, '')
@@ -114,7 +112,8 @@ class ClippingTextParser {
   }
 
   private trimSymbols(s: string): string {
-    return s.replace(/^(，|。|！|@|【】|——)+/, '')
+    return s
+      .replace(/^(，|。|！|@|【】|——)+/, '')
       .replace(/(，|。|！|@|【】|——)+$/, '')
       .trim()
   }
@@ -126,7 +125,7 @@ class ClippingTextParser {
 
   private exactTitlte() {
     let title: string = this.current[0]
-    ClippingTextParser.STOP_WORDS.forEach(x => {
+    ClippingTextParser.STOP_WORDS.forEach((x) => {
       title = title.split(x)[0]
     })
 

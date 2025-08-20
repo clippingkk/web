@@ -1,11 +1,19 @@
-import mixpanel from 'mixpanel-browser'
+import type { ApolloClient } from '@apollo/client'
 import * as sentry from '@sentry/react'
-import { IUserToken, USER_ID_KEY, COOKIE_TOKEN_KEY } from '../constants/storage'
 import Cookies from 'js-cookie'
+import mixpanel from 'mixpanel-browser'
+import {
+  COOKIE_TOKEN_KEY,
+  type IUserToken,
+  USER_ID_KEY,
+} from '../constants/storage'
+import {
+  ProfileDocument,
+  type ProfileQuery,
+  type ProfileQueryVariables,
+} from '../schema/generated'
 import { updateToken } from '../services/ajax'
-import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '../schema/generated'
 import profile from './profile'
-import { ApolloClient } from '@apollo/client'
 
 export async function initParseFromLS(ac: ApolloClient<object>) {
   if (typeof localStorage === 'undefined') {
@@ -25,13 +33,13 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
       const ps = await ac.query<ProfileQuery, ProfileQueryVariables>({
         query: ProfileDocument,
         variables: {
-          id: ~~uid
-        }
+          id: ~~uid,
+        },
       })
       const payload = {
         profile: ps.data.me,
         token: cookieToken,
-        createdAt: Date.now()
+        createdAt: Date.now(),
       }
       const payloadString = JSON.stringify(payload)
       localStorage.setItem(COOKIE_TOKEN_KEY, payloadString)
@@ -55,14 +63,14 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
   sentry.setUser({
     email: auth.profile.email,
     id: auth.profile.id.toString(),
-    username: auth.profile.name
+    username: auth.profile.name,
   })
   mixpanel.identify(auth.profile.id.toString())
   if (mixpanel.people) {
     mixpanel.people.set({
-      '$email': auth.profile.email,
+      $email: auth.profile.email,
       'Sign up date': auth.createdAt,
-      'USER_ID': auth.profile.name,
+      USER_ID: auth.profile.name,
     })
   }
 
@@ -73,6 +81,6 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
 
   return {
     profile: auth.profile,
-    token: auth.token
+    token: auth.token,
   }
 }

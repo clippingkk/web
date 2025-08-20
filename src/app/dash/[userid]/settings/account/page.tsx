@@ -1,13 +1,13 @@
 'use client'
-import { onCleanServerCookie } from '@/components/navigation-bar/logout'
-import { useTranslation } from '@/i18n/client'
-import { useDeleteMyAccountMutation } from '@/schema/generated'
-import profile from '@/utils/profile'
 import Modal from '@annatarhe/lake-ui/modal'
 import { AlertOctagon, AlertTriangle, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { onCleanServerCookie } from '@/components/navigation-bar/logout'
+import { useTranslation } from '@/i18n/client'
+import { useDeleteMyAccountMutation } from '@/schema/generated'
+import profile from '@/utils/profile'
 
 function AccountRemoveButton() {
   const { t } = useTranslation()

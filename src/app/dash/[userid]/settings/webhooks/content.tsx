@@ -1,12 +1,6 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
 import {
-  FetchMyWebHooksQuery,
-  useDeleteAWebHookMutation,
-  WebHookStep,
-} from '@/schema/generated'
-import {
-  ColumnDef,
+  type ColumnDef,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
@@ -15,6 +9,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import {
+  type FetchMyWebHooksQuery,
+  useDeleteAWebHookMutation,
+  WebHookStep,
+} from '@/schema/generated'
 import WebhookTable from '../components/webhook-table'
 
 type Props = {

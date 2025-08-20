@@ -1,11 +1,11 @@
 import React from 'react'
-import { PublicDataQuery } from '../schema/generated'
 import { duration3Days } from '../hooks/book'
+import type { PublicDataQuery } from '../schema/generated'
+import { getReactQueryClient } from '../services/ajax'
+import { type WenquSearchResponse, wenquRequest } from '../services/wenqu'
+import BookCover from './book-cover/book-cover'
 import ClippingLite from './clipping-item/clipping-lite'
 import InfiniteLooper from './infinite-looper/infinite-looper'
-import BookCover from './book-cover/book-cover'
-import { WenquSearchResponse, wenquRequest } from '../services/wenqu'
-import { getReactQueryClient } from '../services/ajax'
 
 type AuthBackgroundViewProps = {
   publicData?: PublicDataQuery
@@ -13,36 +13,41 @@ type AuthBackgroundViewProps = {
 
 async function GalleryBackgroundView(props: AuthBackgroundViewProps) {
   const { publicData: data } = props
-  const dbIds = data?.
-    public.
-    books.
-    map(x => x.doubanId).
-    filter(x => x.length > 3) ?? []
+  const dbIds =
+    data?.public.books.map((x) => x.doubanId).filter((x) => x.length > 3) ?? []
 
-  const cs = data?.public.clippings.reduce<PublicDataQuery['public']['clippings'][]>((acc, c, i) => {
-    if (i % 2 === 0) {
-      acc[0].push(c)
-    } else {
-      acc[1].push(c)
-    }
-    return acc
-  }, [[], []]) ?? [[], []]
+  const cs = data?.public.clippings.reduce<
+    PublicDataQuery['public']['clippings'][]
+  >(
+    (acc, c, i) => {
+      if (i % 2 === 0) {
+        acc[0].push(c)
+      } else {
+        acc[1].push(c)
+      }
+      return acc
+    },
+    [[], []]
+  ) ?? [[], []]
 
   const rq = getReactQueryClient()
   const bs = await rq.fetchQuery({
     queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-    queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
+    queryFn: () =>
+      wenquRequest<WenquSearchResponse>(
+        `/books/search?dbIds=${dbIds.join('&dbIds=')}`
+      ),
     staleTime: duration3Days,
     gcTime: duration3Days,
   })
 
   return (
-    <div className='w-full h-full min-h-screen with-fade-in'>
-      <div className='w-full py-10 flex flex-col gap-10'>
+    <div className="w-full h-full min-h-screen with-fade-in">
+      <div className="w-full py-10 flex flex-col gap-10">
         {cs.length === 2 && cs[0].length > 0 && (
           <InfiniteLooper speed={40} direction="right" key={0}>
-            {cs[0].map(c => (
-              <div className='w-96 mx-2' key={c.id}>
+            {cs[0].map((c) => (
+              <div className="w-96 mx-2" key={c.id}>
                 <ClippingLite clipping={c} />
               </div>
             ))}
@@ -50,17 +55,17 @@ async function GalleryBackgroundView(props: AuthBackgroundViewProps) {
         )}
         {bs.books.length > 0 && (
           <InfiniteLooper speed={80} direction="left" key={1}>
-            {bs.books.map(b => (
-              <div className='w-96 mx-2' key={b.id}>
-                <BookCover book={b} domain='' />
+            {bs.books.map((b) => (
+              <div className="w-96 mx-2" key={b.id}>
+                <BookCover book={b} domain="" />
               </div>
             ))}
           </InfiniteLooper>
         )}
         {cs.length === 2 && cs[1].length > 0 && (
           <InfiniteLooper speed={40} direction="right" key={2}>
-            {cs[1].map(c => (
-              <div className='w-96 mx-2' key={c.id}>
+            {cs[1].map((c) => (
+              <div className="w-96 mx-2" key={c.id}>
                 <ClippingLite clipping={c} />
               </div>
             ))}

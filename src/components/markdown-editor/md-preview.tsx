@@ -1,6 +1,6 @@
-import CodeBlock from '@/components/highlighter/client'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import ReactMarkdown from 'react-markdown'
+import CodeBlock from '@/components/highlighter/client'
 
 type MarkdownPreviewProps = {
   value: string

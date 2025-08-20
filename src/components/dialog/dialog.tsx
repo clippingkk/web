@@ -18,16 +18,11 @@ class InnerDialog extends React.PureComponent<dialogProps> {
   render() {
     return (
       <div className={styles.mask} onClick={this.props.onCancel}>
-        <Card
-          className='bg-gray-200 with-fade-in'
-          onClick={this.stopBuble}
-        >
+        <Card className="bg-gray-200 with-fade-in" onClick={this.stopBuble}>
           <>
-            <h3 className='mb-4 text-2xl text-center'>{this.props.title}</h3>
+            <h3 className="mb-4 text-2xl text-center">{this.props.title}</h3>
             <hr />
-            <div>
-              {this.props.children}
-            </div>
+            <div>{this.props.children}</div>
           </>
         </Card>
       </div>

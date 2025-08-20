@@ -1,8 +1,8 @@
+import { Turnstile } from '@marsidev/react-turnstile'
+import { useState } from 'react'
 import { CF_TURNSTILE_SITE_KEY } from '@/constants/config'
 import { useTranslation } from '@/i18n/client'
 import { REGEX_EMAIL } from '@/services/regex'
-import { Turnstile } from '@marsidev/react-turnstile'
-import { useState } from 'react'
 import Button from '../button/button'
 
 type EmailBoxProps = {

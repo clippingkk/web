@@ -5,12 +5,13 @@ import { NodeEventPlugin } from '@lexical/react/LexicalNodeEventPlugin'
 import { useMutation } from '@tanstack/react-query'
 import {
   $getNearestNodeFromDOMNode,
-  LexicalNode,
+  type LexicalNode,
   ParagraphNode,
   RootNode,
 } from 'lexical'
 import { useCallback, useState } from 'react'
 import BlockToolbarView from '../BlockToolbarView'
+
 // import BlockToolbarView from '../BlockToolBarView'
 // import BlockToolbarView from '../../components/editor/block-toolbar'
 // import {
@@ -84,7 +85,7 @@ function BlockToolBar() {
     setActiveNode(node)
     setOffsetY(
       target.getBoundingClientRect().y -
-      (relatedTarget?.getBoundingClientRect().y ?? 0),
+        (relatedTarget?.getBoundingClientRect().y ?? 0)
     )
   }, [])
 
@@ -114,7 +115,7 @@ function BlockToolBar() {
         })
       })
     },
-    [activeNode],
+    [activeNode]
   )
 
   return (

@@ -1,8 +1,5 @@
 'use client'
 
-import logo from '@/assets/logo.png'
-import { useTranslation } from '@/i18n/client'
-import { ProfileQuery } from '@/schema/generated'
 import Modal from '@annatarhe/lake-ui/modal'
 import {
   ArrowUpTrayIcon,
@@ -14,6 +11,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { useCallback, useState } from 'react'
+import logo from '@/assets/logo.png'
+import { useTranslation } from '@/i18n/client'
+import type { ProfileQuery } from '@/schema/generated'
 import LinkIndicator from '../link-indicator'
 import { useCtrlP } from '../searchbar/hooks'
 import SearchBar from '../searchbar/searchbar'

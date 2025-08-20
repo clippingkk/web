@@ -1,13 +1,13 @@
-import Avatar from '@/components/avatar/avatar'
-import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
-import { useTranslation } from '@/i18n/client'
-import { Clipping, User } from '@/schema/generated'
-import { WenquBook } from '@/services/wenqu'
 import { franc } from 'franc-min'
 import convert6393to1 from 'iso-639-3-to-1'
 import { QRCodeSVG } from 'qrcode.react'
-import { ForwardedRef, forwardRef, useMemo } from 'react'
-import { Theme, themeList } from './theme.config'
+import { type ForwardedRef, forwardRef, useMemo } from 'react'
+import Avatar from '@/components/avatar/avatar'
+import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
+import { useTranslation } from '@/i18n/client'
+import type { Clipping, User } from '@/schema/generated'
+import type { WenquBook } from '@/services/wenqu'
+import { type Theme, themeList } from './theme.config'
 
 const lxgwFontLanguages = ['zh', 'jp', 'ko']
 

@@ -1,5 +1,4 @@
 query fetchYearlyReport($year: Int!, $uid: Int!) {
-  
   reportYearly(year: $year, uid: $uid) {
     user {
       id

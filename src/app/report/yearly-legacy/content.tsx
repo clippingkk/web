@@ -1,13 +1,14 @@
 'use client'
+import Image from 'next/image'
+import type React from 'react'
+import { useMemo } from 'react'
 import logo from '@/assets/logo.png'
 import Avatar from '@/components/avatar/avatar'
 import PublicBookItem from '@/components/public-book-item/public-book-item'
 import { useMultipleBook } from '@/hooks/book'
 import { useTranslation } from '@/i18n/client'
-import { FetchYearlyReportQuery } from '@/schema/generated'
-import { WenquBook } from '@/services/wenqu'
-import Image from 'next/image'
-import React, { useMemo } from 'react'
+import type { FetchYearlyReportQuery } from '@/schema/generated'
+import type { WenquBook } from '@/services/wenqu'
 
 type ReportBookItemTypes = {
   book: WenquBook

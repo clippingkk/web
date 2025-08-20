@@ -1,14 +1,18 @@
 'use client'
-import Avatar from '@/components/avatar/avatar'
-import CKLexicalBaseEditor from '@/components/RichTextEditor/index'
-import ConfirmDialog from '@/components/confirm-dialog/confirm-dialog'
-import { Comment as CommentData, User, useDeleteCommentMutation } from '@/schema/generated'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { LexicalEditor } from 'lexical'
+import type { LexicalEditor } from 'lexical'
 import { Trash2, User as UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import { toast } from 'react-hot-toast'
+import Avatar from '@/components/avatar/avatar'
+import ConfirmDialog from '@/components/confirm-dialog/confirm-dialog'
+import CKLexicalBaseEditor from '@/components/RichTextEditor/index'
+import {
+  type Comment as CommentData,
+  type User,
+  useDeleteCommentMutation,
+} from '@/schema/generated'
 
 type CommentProps = {
   comment: Pick<CommentData, 'id' | 'content'> & {
@@ -30,14 +34,14 @@ function Comment(props: CommentProps) {
     onError: (error) => {
       console.error('Failed to delete comment:', error)
       toast.error('Failed to delete comment')
-    }
+    },
   })
 
   const canDelete = currentUser && currentUser.id === creator.id
 
   const handleDelete = () => {
     deleteComment({
-      variables: { id: comment.id }
+      variables: { id: comment.id },
     })
   }
 
@@ -64,7 +68,7 @@ function Comment(props: CommentProps) {
               {creator.name}
             </h5>
           </Tooltip>
-          
+
           {canDelete && (
             <ConfirmDialog
               onConfirm={handleDelete}
@@ -81,9 +85,24 @@ function Comment(props: CommentProps) {
                 aria-label="Delete comment"
               >
                 {isDeleting ? (
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  <svg
+                    className="w-4 h-4 animate-spin"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
                   </svg>
                 ) : (
                   <Trash2 className="w-4 h-4" />
@@ -92,7 +111,7 @@ function Comment(props: CommentProps) {
             </ConfirmDialog>
           )}
         </div>
-        
+
         <div className="rounded-xl bg-gray-100 dark:bg-zinc-800 p-4 border border-gray-200 dark:border-zinc-700">
           <CKLexicalBaseEditor
             editable={false}

@@ -1,13 +1,13 @@
 'use client'
+import { useSDK } from '@metamask/sdk-react'
+// import MetamaskLogo from './icons/metamask.logo.svg'
+import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
-import { signDataByWeb3 } from '../utils/wallet'
-// import MetamaskLogo from './icons/metamask.logo.svg'
-import { useRouter } from 'next/navigation'
 import { useAuthByWeb3LazyQuery } from '../schema/generated'
+import { signDataByWeb3 } from '../utils/wallet'
 import MetamaskButtonView from './auth/metamask'
-import { useSDK } from '@metamask/sdk-react'
 
 function AuthByMetamask() {
   const router = useRouter()
@@ -25,12 +25,14 @@ function AuthByMetamask() {
           payload: {
             address: res.address!,
             signature: res.signature!,
-            text: res.text
-          }
-        }
+            text: res.text,
+          },
+        },
       })
       if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
-        router.push(`/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`)
+        router.push(
+          `/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`
+        )
         return
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,7 +52,12 @@ function AuthByMetamask() {
   //   })
   // }, [])
 
-  useAuthBy3rdPartSuccessed(doAuthData.called, doAuthData.loading, doAuthData.error, doAuthData.data?.loginByWeb3)
+  useAuthBy3rdPartSuccessed(
+    doAuthData.called,
+    doAuthData.loading,
+    doAuthData.error,
+    doAuthData.data?.loginByWeb3
+  )
 
   const disabled = doAuthData.loading
 

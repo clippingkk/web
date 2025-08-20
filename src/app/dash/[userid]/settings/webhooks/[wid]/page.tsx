@@ -1,13 +1,13 @@
-import {
-  FetchWebhookDocument,
-  FetchWebhookQuery,
-  FetchWebhookQueryVariables,
-} from '@/schema/generated'
-import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
+import {
+  FetchWebhookDocument,
+  type FetchWebhookQuery,
+  type FetchWebhookQueryVariables,
+} from '@/schema/generated'
+import { doApolloServerQuery } from '@/services/apollo.server'
 import WebhookDetailContent from './components/content'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 type Props = {
   params: Promise<{ wid: string; userid: string }>

@@ -1,6 +1,6 @@
-import { useTranslation } from '@/i18n/client'
-import { WenquBook } from '@/services/wenqu'
 import { useState } from 'react'
+import { useTranslation } from '@/i18n/client'
+import type { WenquBook } from '@/services/wenqu'
 
 type Props = {
   book: WenquBook

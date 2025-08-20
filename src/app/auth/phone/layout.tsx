@@ -1,4 +1,9 @@
 'use client'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import type React from 'react'
+import { useEffect } from 'react'
 import logo from '@/assets/logo.png'
 import Card from '@/components/card/card'
 import GithubLogo from '@/components/icons/github.logo.svg'
@@ -6,13 +11,9 @@ import { GithubClientID } from '@/constants/config'
 import { useActionTrack, usePageTrack } from '@/hooks/tracke'
 import { useTranslation } from '@/i18n/client'
 import profile from '@/utils/profile'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
 
 type AuthPageProps = {
-  children: React.ReactElement
+  children: React.ReactNode
 }
 
 function AuthPage(props: AuthPageProps) {

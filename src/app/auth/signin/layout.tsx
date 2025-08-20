@@ -1,16 +1,16 @@
 'use client'
+import Image from 'next/image'
+import Link from 'next/link'
+import type React from 'react'
 import logo from '@/assets/logo.png'
 import Card from '@/components/card/card'
 import GithubLogo from '@/components/icons/github.logo.svg'
 import { GithubClientID } from '@/constants/config'
 import { useActionTrack, usePageTrack } from '@/hooks/tracke'
 import { useTranslation } from '@/i18n/client'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
 
 type AuthPageProps = {
-  children: React.ReactElement
+  children: React.ReactNode
 }
 
 function AuthPage(props: AuthPageProps) {

@@ -1,6 +1,6 @@
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { getReactQueryClient } from '@/services/ajax'
 import { getPaymentOrderInfo } from '@/services/payment'
-import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import PaymentSuccessContent from './content'
 
 type PaymentSuccessPageProps = {

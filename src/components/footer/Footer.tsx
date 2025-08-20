@@ -1,6 +1,6 @@
+import { Code, Coffee, ExternalLink, Github, Heart, Server } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslation } from '@/i18n'
-import { Code, Coffee, ExternalLink, Github, Heart, Server } from 'lucide-react'
 
 const version = JSON.parse(process.env.GIT_COMMIT ?? '{}')
 
@@ -129,10 +129,16 @@ async function Footer() {
               {t('footer.legal', 'Legal')}
             </h3>
             <div className="space-y-4 text-sm flex flex-col dark:text-slate-300">
-              <Link href="/policy/privacy" className="transition-colors duration-300 hover:text-blue-400 dark:hover:text-blue-300">
+              <Link
+                href="/policy/privacy"
+                className="transition-colors duration-300 hover:text-blue-400 dark:hover:text-blue-300"
+              >
                 {t('footer.privacyPolicy', 'Privacy Policy')}
               </Link>
-              <Link href="/policy/support" className="transition-colors duration-300 hover:text-blue-400 dark:hover:text-blue-300">
+              <Link
+                href="/policy/support"
+                className="transition-colors duration-300 hover:text-blue-400 dark:hover:text-blue-300"
+              >
                 {t('footer.support', 'Support')}
               </Link>
               <ICPInfo />

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { NftItem, useFetchMyNfTsQuery } from '../../schema/generated'
+import { type NftItem, useFetchMyNfTsQuery } from '../../schema/generated'
 import NFTGallaryItem from './nft-gallary-item'
 
 type NFTGallaryProps = {

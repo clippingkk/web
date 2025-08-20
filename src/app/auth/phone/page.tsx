@@ -1,5 +1,5 @@
+import type { Metadata } from 'next'
 import React from 'react'
-import { Metadata } from 'next'
 import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
 import AuthPhoneContent from './content'
 
@@ -8,9 +8,7 @@ export function generateMetadata(): Metadata {
 }
 
 function Page() {
-  return (
-    <AuthPhoneContent />
-  )
+  return <AuthPhoneContent />
 }
 
 export default Page

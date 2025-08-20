@@ -1,7 +1,9 @@
 'use client'
 import React, { useMemo } from 'react'
-import { FetchClippingQuery } from '@/schema/generated'
-import ReactionCell, { SymbolGroupedData } from '@/components/reaction/reaction-cell'
+import ReactionCell, {
+  type SymbolGroupedData,
+} from '@/components/reaction/reaction-cell'
+import type { FetchClippingQuery } from '@/schema/generated'
 
 const availableReactions = ['👍', '❤️', '⭐️', '🐶', '😱']
 
@@ -29,9 +31,12 @@ function Reactions(props: ReactionsProps) {
         }
       }
 
-      symbolData[ar].creators = reactions.symbolCounts.filter(x => x.symbol === ar).map(x => x.recently.map(x => x.creator)).flat()
+      symbolData[ar].creators = reactions.symbolCounts
+        .filter((x) => x.symbol === ar)
+        .flatMap((x) => x.recently.map((x) => x.creator))
       symbolData[ar].count = symbolData[ar].creators.length
-      symbolData[ar].done = symbolData[ar].creators.findIndex(x => x.id === uid) >= 0
+      symbolData[ar].done =
+        symbolData[ar].creators.findIndex((x) => x.id === uid) >= 0
     }
     return symbolData
   }, [reactions?.symbolCounts, uid])
@@ -39,7 +44,7 @@ function Reactions(props: ReactionsProps) {
   return (
     <div className="w-full">
       <div className="flex flex-wrap gap-3">
-        {Object.keys(symbolCounts).map(k => (
+        {Object.keys(symbolCounts).map((k) => (
           <ReactionCell
             key={k}
             cid={cid}

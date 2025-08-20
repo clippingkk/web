@@ -1,12 +1,20 @@
 import { ImageResponse } from 'next/og'
 import Logo from '@/assets/bootsplash_logo@3x.png'
-import { APP_URL_ORIGIN } from '@/constants/config'
-import { FetchClippingQuery, FetchClippingQueryVariables, FetchClippingDocument } from '@/schema/generated'
-import { getApolloServerClient } from '@/services/apollo.server'
-import { duration3Days } from '@/hooks/book'
-import { getReactQueryClient } from '@/services/ajax'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
 import OGImageClipping from '@/components/og/image-clipping'
+import { APP_URL_ORIGIN } from '@/constants/config'
+import { duration3Days } from '@/hooks/book'
+import {
+  FetchClippingDocument,
+  type FetchClippingQuery,
+  type FetchClippingQueryVariables,
+} from '@/schema/generated'
+import { getReactQueryClient } from '@/services/ajax'
+import { getApolloServerClient } from '@/services/apollo.server'
+import {
+  type WenquBook,
+  type WenquSearchResponse,
+  wenquRequest,
+} from '@/services/wenqu'
 
 export const runtime = 'edge'
 
@@ -19,11 +27,16 @@ export const dynamic = 'force-dynamic'
 export const contentType = 'image/png'
 
 // Image generation
-export default async function Image(req: { params: { userid: string; clippingid: string } }) {
+export default async function Image(req: {
+  params: { userid: string; clippingid: string }
+}) {
   const cid = ~~req.params.clippingid
 
   const client = getApolloServerClient()
-  const clippingsResponse = await client.query<FetchClippingQuery, FetchClippingQueryVariables>({
+  const clippingsResponse = await client.query<
+    FetchClippingQuery,
+    FetchClippingQueryVariables
+  >({
     query: FetchClippingDocument,
     fetchPolicy: 'network-only',
     variables: {
@@ -37,7 +50,8 @@ export default async function Image(req: { params: { userid: string; clippingid:
   if (bookID && bookID.length > 3) {
     const bs = await rq.fetchQuery({
       queryKey: ['wenqu', 'books', 'dbId', bookID],
-      queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
+      queryFn: () =>
+        wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
       staleTime: duration3Days,
       gcTime: duration3Days,
     })
@@ -68,9 +82,7 @@ export default async function Image(req: { params: { userid: string; clippingid:
   }
 
   return new ImageResponse(
-    (
-      <OGImageClipping content={content} b={b} logoSrc={logoSrc} />
-    ),
+    <OGImageClipping content={content} b={b} logoSrc={logoSrc} />,
     {
       ...size,
       fonts: [

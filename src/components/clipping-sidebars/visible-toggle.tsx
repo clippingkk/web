@@ -1,16 +1,16 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
-import {
-  Clipping,
-  User,
-  useToggleClippingVisibleMutation,
-} from '@/schema/generated'
-import { toastPromiseDefaultOption } from '@/services/misc'
 import Switch from '@annatarhe/lake-ui/form-switch-field'
 import { useApolloClient } from '@apollo/client'
 import { Eye, EyeOff } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import {
+  type Clipping,
+  type User,
+  useToggleClippingVisibleMutation,
+} from '@/schema/generated'
+import { toastPromiseDefaultOption } from '@/services/misc'
 import { SidebarButton, SidebarContainer } from './base/container'
 
 type Props = {

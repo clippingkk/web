@@ -1,6 +1,6 @@
-import { useTranslation } from '@/i18n'
-import { FetchWebhookQuery, WebHookStep } from '@/schema/generated'
 import { Webhook } from 'lucide-react'
+import { useTranslation } from '@/i18n'
+import { type FetchWebhookQuery, WebHookStep } from '@/schema/generated'
 import WebhookDetailHeader from './header'
 import RecordsList from './records-list'
 

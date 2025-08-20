@@ -1,7 +1,7 @@
-import React from 'react'
+import { BookOpen, MessageCircle, Quote } from 'lucide-react'
 import Link from 'next/link'
-import { MessageCircle, BookOpen, Quote } from 'lucide-react'
-import { ProfileQuery } from '@/schema/generated'
+import React from 'react'
+import type { ProfileQuery } from '@/schema/generated'
 
 type CommentItemProps = {
   comment: NonNullable<ProfileQuery['me']['commentList']['items'][0]>
@@ -16,17 +16,18 @@ const CommentItem = ({ comment, showAvatar = true }: CommentItemProps) => {
     <div className="group relative">
       {/* Animated background glow */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-      
+
       <div className="relative rounded-2xl bg-gradient-to-br from-white/80 via-white/70 to-white/60 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/60 p-5 shadow-lg backdrop-blur-xl border border-white/40 dark:border-gray-700/40 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:border-blue-300/50 dark:hover:border-blue-500/50">
-        
         {/* Subtle pattern overlay */}
-        <div className="absolute inset-0 rounded-2xl opacity-10 dark:opacity-5"
+        <div
+          className="absolute inset-0 rounded-2xl opacity-10 dark:opacity-5"
           style={{
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.1) 1px, transparent 0)',
-            backgroundSize: '16px 16px'
-          }}>
-        </div>
-        
+            backgroundImage:
+              'radial-gradient(circle at 2px 2px, rgba(59, 130, 246, 0.1) 1px, transparent 0)',
+            backgroundSize: '16px 16px',
+          }}
+        ></div>
+
         <div className="relative flex gap-4">
           {/* Enhanced comment icon */}
           <div className="flex-shrink-0">
@@ -37,7 +38,7 @@ const CommentItem = ({ comment, showAvatar = true }: CommentItemProps) => {
               </div>
             </div>
           </div>
-          
+
           <div className="flex-1 min-w-0 space-y-4">
             {/* Enhanced comment content */}
             <div className="relative">
@@ -48,12 +49,11 @@ const CommentItem = ({ comment, showAvatar = true }: CommentItemProps) => {
                 </p>
               </div>
             </div>
-            
+
             {/* Enhanced original clipping context */}
             <div className="relative group/quote">
               <div className="absolute -inset-1 bg-gradient-to-r from-gray-200/50 to-gray-300/50 dark:from-gray-700/50 dark:to-gray-600/50 rounded-xl blur opacity-50"></div>
               <div className="relative rounded-xl bg-gradient-to-br from-gray-50/90 to-gray-100/90 dark:from-gray-800/90 dark:to-gray-700/90 p-4 border-gradient-to-b from-blue-400 to-purple-500 shadow-inner">
-                
                 {/* Quote content */}
                 <div className="flex items-start gap-3 mb-3">
                   <div className="relative">
@@ -64,7 +64,7 @@ const CommentItem = ({ comment, showAvatar = true }: CommentItemProps) => {
                     {clipping.content}
                   </p>
                 </div>
-                
+
                 {/* Enhanced creator info */}
                 <div className="flex items-center justify-between pt-3 border-t border-gray-200/60 dark:border-gray-600/60">
                   <div className="flex items-center gap-3">
@@ -86,7 +86,7 @@ const CommentItem = ({ comment, showAvatar = true }: CommentItemProps) => {
                       {creator.name}
                     </Link>
                   </div>
-                  
+
                   <Link
                     href={`/dash/${creator.id}/clippings/${clipping.id}`}
                     className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-100/60 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200/60 dark:hover:bg-blue-800/40 transition-all duration-200 hover:scale-105 text-xs font-medium"

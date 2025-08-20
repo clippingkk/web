@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, RefObject } from 'react'
+import { type RefObject, useEffect, useRef, useState } from 'react'
 
 export function useHover<T extends Element>() {
   const [value, setValue] = useState(false)
@@ -18,8 +18,8 @@ export function useHover<T extends Element>() {
     }
   }, [])
   return {
-    ref, 
-    isHovering: value
+    ref,
+    isHovering: value,
   }
 }
 

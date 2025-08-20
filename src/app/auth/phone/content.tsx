@@ -1,13 +1,18 @@
 'use client'
 import React from 'react'
-import { useAuthByPhoneSuccessed } from '../../../hooks/hooks'
 import BindPhone from '../../../components/bind-phone'
+import { useAuthByPhoneSuccessed } from '../../../hooks/hooks'
 import { useAuthByPhoneMutation } from '../../../schema/generated'
 
 function AuthPhoneContent() {
   const [doAuth, doAuthResponse] = useAuthByPhoneMutation()
 
-  useAuthByPhoneSuccessed(doAuthResponse.called, doAuthResponse.loading, doAuthResponse.error, doAuthResponse.data?.authByPhone)
+  useAuthByPhoneSuccessed(
+    doAuthResponse.called,
+    doAuthResponse.loading,
+    doAuthResponse.error,
+    doAuthResponse.data?.authByPhone
+  )
 
   return (
     <React.Fragment>
@@ -21,6 +26,5 @@ function AuthPhoneContent() {
     </React.Fragment>
   )
 }
-
 
 export default AuthPhoneContent

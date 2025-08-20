@@ -1,6 +1,6 @@
-import { useTranslation } from '@/i18n'
 import { BookOpenText } from 'lucide-react'
-import { WenquBook } from '../../services/wenqu'
+import { useTranslation } from '@/i18n'
+import type { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
 
 type TopBooksProps = {

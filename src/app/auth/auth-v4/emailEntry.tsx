@@ -1,7 +1,4 @@
 'use client'
-import Button from '@/components/button/button'
-import { CF_TURNSTILE_SITE_KEY } from '@/constants/config'
-import { useTranslation } from '@/i18n/client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
@@ -12,7 +9,10 @@ import OTPInput from 'react-auth-code-input'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
-import { AuthEvents, AuthMachine } from './auth.state'
+import Button from '@/components/button/button'
+import { CF_TURNSTILE_SITE_KEY } from '@/constants/config'
+import { useTranslation } from '@/i18n/client'
+import type { AuthEvents, AuthMachine } from './auth.state'
 
 type EmailLoginEntryProps = {
   machine: AuthMachine

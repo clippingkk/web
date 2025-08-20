@@ -9,7 +9,10 @@ export default function ContentLoading() {
 
       {/* Elegant divider skeleton */}
       <div className="relative h-px my-8 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-pulse" style={{ animationDuration: '3s' }} />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-pulse"
+          style={{ animationDuration: '3s' }}
+        />
       </div>
 
       {/* Main content skeleton */}
@@ -22,7 +25,10 @@ export default function ContentLoading() {
 
       {/* Elegant divider skeleton */}
       <div className="relative h-px my-8 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/20 to-transparent animate-pulse" style={{ animationDuration: '3s', animationDelay: '1s' }} />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/20 to-transparent animate-pulse"
+          style={{ animationDuration: '3s', animationDelay: '1s' }}
+        />
       </div>
 
       {/* Reactions skeleton */}
@@ -34,7 +40,10 @@ export default function ContentLoading() {
 
       {/* Elegant divider skeleton */}
       <div className="relative h-px my-8 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-400/15 to-transparent animate-pulse" style={{ animationDuration: '3s', animationDelay: '2s' }} />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-400/15 to-transparent animate-pulse"
+          style={{ animationDuration: '3s', animationDelay: '2s' }}
+        />
       </div>
 
       {/* Footer skeleton */}

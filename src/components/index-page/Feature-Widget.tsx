@@ -1,7 +1,8 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
 import type { ClippingData } from '@annatarhe/clippingkk-widget'
-import React, { useCallback, useRef, useState } from 'react'
+import type React from 'react'
+import { useCallback, useRef, useState } from 'react'
+import { useTranslation } from '@/i18n/client'
 
 if (typeof window !== 'undefined') {
   import('@annatarhe/clippingkk-widget').then(({ register }) => {

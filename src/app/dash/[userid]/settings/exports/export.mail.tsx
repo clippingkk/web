@@ -1,12 +1,4 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
-import {
-  ExportDestination,
-  ProfileDocument,
-  ProfileQuery,
-  ProfileQueryVariables,
-  useExportDataToMutation,
-} from '@/schema/generated'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useSuspenseQuery } from '@apollo/client'
@@ -17,6 +9,14 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
+import { useTranslation } from '@/i18n/client'
+import {
+  ExportDestination,
+  ProfileDocument,
+  type ProfileQuery,
+  type ProfileQueryVariables,
+  useExportDataToMutation,
+} from '@/schema/generated'
 
 function ExportToMail() {
   const [visible, setVisible] = useState(false)

@@ -1,8 +1,10 @@
+import type { IPostShareRender } from './mp-render'
 import { PostShareRender } from './PostShareRender'
-import { IPostShareRender } from './mp-render'
 
-
-export class HtmlPostShareRender extends PostShareRender implements IPostShareRender {
+export class HtmlPostShareRender
+  extends PostShareRender
+  implements IPostShareRender
+{
   setup() {
     const ctx = this.dom.getContext('2d')
     this.dom.width = this.config.width * this.config.dpr

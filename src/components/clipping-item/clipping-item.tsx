@@ -1,12 +1,11 @@
-import { useTranslation } from '@/i18n/client'
-import { Clipping, User } from '@/schema/generated'
+import Link from 'next/link'
 import React from 'react'
-import { IN_APP_CHANNEL } from '../../services/channel'
-import { WenquBook } from '../../services/wenqu'
+import { useTranslation } from '@/i18n/client'
+import type { Clipping, User } from '@/schema/generated'
+import type { IN_APP_CHANNEL } from '../../services/channel'
+import type { WenquBook } from '../../services/wenqu'
 import Avatar from '../avatar/avatar'
 import ClippingContent from '../clipping-content'
-
-import Link from 'next/link'
 
 type TClippingItemProps = {
   className?: string

@@ -1,5 +1,5 @@
 import BlurhashView from '@annatarhe/blurhash-react'
-import { WenquBook } from '../../services/wenqu'
+import type { WenquBook } from '../../services/wenqu'
 import styles from './style.module.css'
 
 type PublicBookItemProps = {

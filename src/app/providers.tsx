@@ -4,11 +4,8 @@ import '../utils/mixpanel'
 import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
 import { MetaMaskProvider } from '@metamask/sdk-react'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import React from 'react'
-import {
-  getReactQueryClient,
-  makeApolloClient,
-} from '../services/ajax'
+import type React from 'react'
+import { getReactQueryClient, makeApolloClient } from '../services/ajax'
 import { reactQueryPersister } from '../services/storage'
 
 type ClientOnlyProvidersProps = {

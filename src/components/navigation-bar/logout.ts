@@ -1,7 +1,7 @@
 'use server'
 
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 import { cookies } from 'next/headers'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 
 // remove cookies on server
 export async function onCleanServerCookie() {
@@ -10,4 +10,3 @@ export async function onCleanServerCookie() {
   cs.delete(COOKIE_TOKEN_KEY)
   cs.delete(USER_ID_KEY)
 }
-

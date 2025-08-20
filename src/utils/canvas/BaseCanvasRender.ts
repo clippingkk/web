@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { PostShareConfig } from './mp-render'
-
+import type { PostShareConfig } from './mp-render'
 
 export class BaseCanvasRender {
-  // @ts-ignore
+  // @ts-expect-error
   protected dom: HTMLCanvasElement
-  // @ts-ignore
+  // @ts-expect-error
   protected ctx: CanvasRenderingContext2D
-  // @ts-ignore
+  // @ts-expect-error
   protected config: PostShareConfig
-  protected readonly defaultFontFamily = 'MaShanZheng,YSHaoShenTi,-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif'
+  protected readonly defaultFontFamily =
+    'MaShanZheng,YSHaoShenTi,-apple-system-font,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei UI,Microsoft YaHei,Arial,sans-serif'
 
   // static readonly STOP_WORDS = [',', '.', ' ', '，', '。', '!', '！']
   static readonly STOP_WORDS = ['']
@@ -29,9 +29,11 @@ export class BaseCanvasRender {
   }
 
   get renderFont(): string {
-    return this.config.textFont.join(',') +
+    return (
+      this.config.textFont.join(',') +
       (this.config.textFont.length > 0 ? ',' : '') +
       this.defaultFontFamily
+    )
   }
 
   private setupContentFontStyle() {
@@ -62,7 +64,7 @@ export class BaseCanvasRender {
       }
 
       const temp: string[] = []
-      acc.forEach(x => {
+      acc.forEach((x) => {
         temp.push(...x.split(cur))
       })
       return temp
@@ -78,8 +80,7 @@ export class BaseCanvasRender {
         this.drawOneLineText(line, x, y)
         line = words[n]
         y += lineHeight
-      }
-      else {
+      } else {
         line = testLine
       }
     }

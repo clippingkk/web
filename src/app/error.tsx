@@ -1,8 +1,8 @@
 'use client'
 
-import { useTranslation } from '@/i18n/client'
 import { AlertTriangle, Home, RotateCw } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslation } from '@/i18n/client'
 
 export default function Error({
   error,

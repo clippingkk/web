@@ -1,32 +1,32 @@
-import { RGBColor } from '../../services/mp'
+import type { RGBColor } from '../../services/mp'
 
 export enum Theme {
-    classic = 0,
-    colorful = 1,
-    dark = 2,
-    young = 3,
-    light = 4,
+  classic = 0,
+  colorful = 1,
+  dark = 2,
+  young = 3,
+  light = 4,
 }
 
 export type ThemeConfig = {
-    padding: string
-    bg: string
-    fontColor: string
-    fontFamily: string
-    footerBlur: string
-    footerBg: string
-    qrLineColor?: RGBColor
-    withQRCodeBg?: boolean
+  padding: string
+  bg: string
+  fontColor: string
+  fontFamily: string
+  footerBlur: string
+  footerBg: string
+  qrLineColor?: RGBColor
+  withQRCodeBg?: boolean
 }
 
-export const themeList: {[k in Theme]: ThemeConfig} = {
+export const themeList: { [k in Theme]: ThemeConfig } = {
   [Theme.classic]: {
     padding: '1rem',
     bg: '#fff',
     fontColor: '#000',
     fontFamily: '',
     footerBlur: '30px',
-    footerBg: 'rgba(255, 255, 255, .3)'
+    footerBg: 'rgba(255, 255, 255, .3)',
   },
   [Theme.colorful]: {
     padding: '1rem',
@@ -34,7 +34,7 @@ export const themeList: {[k in Theme]: ThemeConfig} = {
     fontColor: '',
     fontFamily: '',
     footerBlur: '30px',
-    footerBg: 'rgba(255, 255, 255, .3)'
+    footerBg: 'rgba(255, 255, 255, .3)',
   },
   [Theme.dark]: {
     padding: '1rem',
@@ -52,7 +52,7 @@ export const themeList: {[k in Theme]: ThemeConfig} = {
     fontColor: 'rgba(27, 41, 68, 1)',
     fontFamily: '',
     footerBlur: '30px',
-    footerBg: 'rgba(255, 255, 255, .3)'
+    footerBg: 'rgba(255, 255, 255, .3)',
   },
   [Theme.light]: {
     padding: '1rem',
@@ -60,6 +60,6 @@ export const themeList: {[k in Theme]: ThemeConfig} = {
     fontColor: '#343746',
     fontFamily: '',
     footerBlur: '30px',
-    footerBg: 'rgba(255, 255, 255, .3)'
+    footerBg: 'rgba(255, 255, 255, .3)',
   },
 }

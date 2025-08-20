@@ -1,11 +1,12 @@
 'use client'
+import { FileText, Lock, Unlock, Upload } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import type React from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useUploadData } from '@/hooks/my-file'
 import { useActionTrack, usePageTrack } from '@/hooks/tracke'
 import { useTranslation } from '@/i18n/client'
 import { UploadStep } from '@/services/uploader'
-import { FileText, Lock, Unlock, Upload } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import React, { useCallback, useEffect, useState } from 'react'
 import LoadingModal from './loading-modal'
 
 function useSwitcher() {

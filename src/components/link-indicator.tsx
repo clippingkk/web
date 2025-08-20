@@ -14,9 +14,12 @@ type LinkIndicatorProps = {
  * LinkIndicator component that shows loading status when navigating between pages
  * Must be used inside a Next.js Link component
  */
-export default function LinkIndicator({ className, children }: LinkIndicatorProps) {
+export default function LinkIndicator({
+  className,
+  children,
+}: LinkIndicatorProps) {
   const { pending } = useLinkStatus()
-  
+
   if (!pending) {
     return children
   }

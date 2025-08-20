@@ -1,11 +1,10 @@
 'use client'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import autoAnimate from '@formkit/auto-animate'
-
-import { useTranslation } from '@/i18n/client'
 import { useEffect, useRef, useState } from 'react'
-import { FetchYearlyReportQuery } from '../../schema/generated'
-import { WenquBook } from '../../services/wenqu'
+import { useTranslation } from '@/i18n/client'
+import type { FetchYearlyReportQuery } from '../../schema/generated'
+import type { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
 import Rating from '../rating'
 

@@ -1,9 +1,9 @@
 'use client'
-import { useState, useCallback, useEffect } from 'react'
-import FloatingProgress from '../progress/floating'
+import { usePathname } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
 import { useUploadData } from '@/hooks/my-file'
 import { useActionTrack } from '@/hooks/tracke'
-import { usePathname } from 'next/navigation'
+import FloatingProgress from '../progress/floating'
 import DropOverlay from './drop-overlay'
 
 type Props = {
@@ -18,21 +18,27 @@ function GlobalUpload({ uid }: Props) {
   const isUploadPage = /dash\/\d+\/upload/.test(pathname)
 
   const id = uid ?? 0
-  const { onUpload,step, at, count } = useUploadData(true, id > 0)
+  const { onUpload, step, at, count } = useUploadData(true, id > 0)
   const [isDraging, setIsDraging] = useState(false)
-  const onDropEnd = useCallback((e: DragEvent) => {
-    setIsDraging(false)
-    onUploadTrack()
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onUpload(e as any, true)
-  }, [onUpload, onUploadTrack])
+  const onDropEnd = useCallback(
+    (e: DragEvent) => {
+      setIsDraging(false)
+      onUploadTrack()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onUpload(e as any, true)
+    },
+    [onUpload, onUploadTrack]
+  )
 
-  const stopDragOver = useCallback((e: DragEvent) => {
-    if (!isDraging) {
-      setIsDraging(true)
-    }
-    e.preventDefault()
-  }, [isDraging])
+  const stopDragOver = useCallback(
+    (e: DragEvent) => {
+      if (!isDraging) {
+        setIsDraging(true)
+      }
+      e.preventDefault()
+    },
+    [isDraging]
+  )
 
   useEffect(() => {
     if (isUploadPage) {
@@ -49,9 +55,7 @@ function GlobalUpload({ uid }: Props) {
 
   return (
     <>
-      {isDraging && (
-        <DropOverlay onClose={() => setIsDraging(false)} />
-      )}
+      {isDraging && <DropOverlay onClose={() => setIsDraging(false)} />}
       <FloatingProgress step={step} at={at} count={count} />
     </>
   )

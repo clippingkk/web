@@ -1,13 +1,17 @@
+import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import React from 'react'
+import { StripePremiumPriceId } from '@/constants/config'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
+import {
+  ProfileDocument,
+  type ProfileQuery,
+  type ProfileQueryVariables,
+} from '@/schema/generated'
+import { doApolloServerQuery } from '@/services/apollo.server'
+import { getPaymentSubscription } from '@/services/payment'
 import { metadata as pricingMetadata } from '../../components/og/og-with-pricing'
 import PricingContent from './content'
-import { Metadata } from 'next'
-import { cookies } from 'next/headers'
-import { StripePremiumPriceId } from '@/constants/config'
-import { getPaymentSubscription } from '@/services/payment'
-import { doApolloServerQuery } from '@/services/apollo.server'
-import { ProfileDocument, ProfileQuery, ProfileQueryVariables } from '@/schema/generated'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
 
 export const metadata: Metadata = {
   ...pricingMetadata,
@@ -21,30 +25,34 @@ async function PricingPage() {
   let checkoutUrl = ''
   let profile: ProfileQuery['me'] | null = null
   if (uid && tk) {
-    const paymentSubscription = await getPaymentSubscription(StripePremiumPriceId, {
-      headers: {
-        'Authorization': 'Bearer ' + tk,
-      },
-    })
+    const paymentSubscription = await getPaymentSubscription(
+      StripePremiumPriceId,
+      {
+        headers: {
+          Authorization: 'Bearer ' + tk,
+        },
+      }
+    )
     checkoutUrl = paymentSubscription.checkoutUrl
 
-    const profileResponse = await doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
+    const profileResponse = await doApolloServerQuery<
+      ProfileQuery,
+      ProfileQueryVariables
+    >({
       query: ProfileDocument,
       variables: {
-        id: ~~uid
+        id: ~~uid,
       },
       context: {
         headers: {
-          'Authorization': 'Bearer ' + tk,
+          Authorization: 'Bearer ' + tk,
         },
-      }
+      },
     })
     profile = profileResponse.data.me
   }
 
-  return (
-    <PricingContent profile={profile} checkoutUrl={checkoutUrl} />
-  )
+  return <PricingContent profile={profile} checkoutUrl={checkoutUrl} />
 }
 
 export default PricingPage

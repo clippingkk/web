@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 type DeviceIPhoneXProps = {
   className?: string
@@ -23,9 +23,7 @@ function DeviceIPhoneX(props: DeviceIPhoneXProps) {
         <div className="shadow-sm shadow--bl"></div>
       </div>
       <div className="inner-shadow"></div>
-      <div className="screen">
-        {props.children}
-      </div>
+      <div className="screen">{props.children}</div>
     </div>
   )
 }

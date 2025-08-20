@@ -1,6 +1,6 @@
-import { useTranslation } from '@/i18n/client'
 import { useCallback, useEffect, useState } from 'react'
 import OTPInput from 'react-auth-code-input'
+import { useTranslation } from '@/i18n/client'
 import ButtonSimple from '../button/button-simple'
 
 type OTPBoxProps = {

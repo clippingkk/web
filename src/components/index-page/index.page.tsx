@@ -1,6 +1,7 @@
-import { PublicDataQuery } from '@/schema/generated'
 import { cookies } from 'next/headers'
-import { WenquBook } from '../../services/wenqu'
+import { USER_ID_KEY } from '@/constants/storage'
+import type { PublicDataQuery } from '@/schema/generated'
+import type { WenquBook } from '../../services/wenqu'
 import PureImages from '../backgrounds/pure-images'
 import PageTrack from '../track/page-track'
 import Features from './Features'
@@ -8,7 +9,6 @@ import Hero from './Hero'
 import TopBooks from './TopBooks'
 import TopClippings from './TopClippings'
 import TopUsers from './TopUsers'
-import { USER_ID_KEY } from '@/constants/storage'
 
 type IndexPageProps = {
   publicData?: PublicDataQuery

@@ -1,7 +1,7 @@
-import React from 'react'
-import { UploadStep } from '@/services/uploader'
-import { useTranslation } from '@/i18n/client'
 import { Loader2 } from 'lucide-react'
+import React from 'react'
+import { useTranslation } from '@/i18n/client'
+import { UploadStep } from '@/services/uploader'
 
 type FloatingProgressProps = {
   step: UploadStep
@@ -21,10 +21,10 @@ function FloatingProgress(props: FloatingProgressProps) {
         <div className="px-6 py-4 flex items-center gap-3">
           <Loader2 className="w-5 h-5 text-white animate-spin" />
           <div className="flex items-center gap-2 text-white font-medium">
-            <span>
-              {t(`app.upload.progress.${step}`)}
+            <span>{t(`app.upload.progress.${step}`)}</span>
+            <span className="font-bold">
+              {at}/{count}
             </span>
-            <span className="font-bold">{at}/{count}</span>
           </div>
         </div>
       </div>

@@ -1,4 +1,8 @@
-mutation bindWeb3Address($phone: String, $code: String, $payload: web3VerifyPayload!) {
+mutation bindWeb3Address(
+  $phone: String
+  $code: String
+  $payload: web3VerifyPayload!
+) {
   bindWeb3Address(phone: $phone, code: $code, payload: $payload) {
     user {
       id

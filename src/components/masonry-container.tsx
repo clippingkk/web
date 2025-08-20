@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 type MasonryContainerProps = {
   className?: string
@@ -7,7 +7,9 @@ type MasonryContainerProps = {
 
 function MasonryContainer(props: MasonryContainerProps) {
   return (
-    <div className={`masonry-1 lg:masonry-2 xl:masonry-3 masonry-gap-4 mb-16 ${props.className ?? ''}`}>
+    <div
+      className={`masonry-1 lg:masonry-2 xl:masonry-3 masonry-gap-4 mb-16 ${props.className ?? ''}`}
+    >
       {props.children}
     </div>
   )
