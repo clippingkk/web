@@ -21,7 +21,7 @@ type StripeError = {
   type?: string
 }
 
-export default function Error({
+export default function ErrorPage({
   error,
   reset,
 }: {

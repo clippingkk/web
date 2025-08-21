@@ -100,6 +100,7 @@ function ExportToNotion() {
       >
         <div className='w-full p-4'>
           <iframe
+            title='guide'
             src='//player.bilibili.com/player.html?aid=503430935&bvid=BV1Tg411G7gG&cid=349347987&page=1'
             scrolling='no'
             allow='fullscreen'

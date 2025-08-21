@@ -76,6 +76,7 @@ function ExportToEmail() {
       >
         <div className='w-full'>
           <iframe
+            title='guide'
             src='//player.bilibili.com/player.html?aid=503430935&bvid=BV1Tg411G7gG&cid=349347987&page=1'
             scrolling='no'
             allow='fullscreen'

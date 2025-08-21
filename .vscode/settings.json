@@ -2,8 +2,9 @@
   "files.associations": {
     "*.json": "jsonc"
   },
-  "eslint.enable": true,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "eslint.enable": false,
+  "biome.enabled": true,
+  "editor.defaultFormatter": "biomejs.biome",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -24,6 +25,6 @@
   "i18n-ally.keystyle": "nested",
   "eslint.format.enable": true,
   "[typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "biomejs.biome"
   },
 }

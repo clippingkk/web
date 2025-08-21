@@ -4,7 +4,7 @@ import { AlertTriangle, Home, RotateCw } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslation } from '@/i18n/client'
 
-export default function Error({
+export default function ErrorPage({
   error,
   reset,
 }: {

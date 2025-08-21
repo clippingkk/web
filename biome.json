@@ -46,6 +46,7 @@
       "correctness": {
         "useExhaustiveDependencies": "warn",
         "noUnusedImports": "warn",
+        "useUniqueElementIds": "off",
         "noEmptyPattern": "warn"
       },
       "complexity": {
@@ -54,6 +55,8 @@
       "a11y": {
         "recommended": true,
         "useButtonType": "off",
+        "noSvgWithoutTitle": "off",
+        "useKeyWithClickEvents": "off",
         "noStaticElementInteractions": "off"
       }
     }
