@@ -1,20 +1,19 @@
 query fetchClippingsByUid($uid: Int!, $pagination: Pagination!) {
-	clippingList(uid: $uid, pagination: $pagination) {
-		count
-		items {
-			id
-			title
-			content
-			bookID
-			pageAt
-			creator {
-				id
-				avatar
-				clippingsCount
-				name
-				domain
-			}
-		}
-	}
+  clippingList(uid: $uid, pagination: $pagination) {
+    count
+    items {
+      id
+      title
+      content
+      bookID
+      pageAt
+      creator {
+        id
+        avatar
+        clippingsCount
+        name
+        domain
+      }
+    }
+  }
 }
-  

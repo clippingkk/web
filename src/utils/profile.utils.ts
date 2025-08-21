@@ -1,4 +1,4 @@
-import { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/schema/generated'
 
 export function getMyHomeLink(p?: Pick<ProfileQuery['me'], 'id' | 'domain'>) {
   if (!p) {

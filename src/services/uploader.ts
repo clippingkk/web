@@ -4,5 +4,5 @@ export enum UploadStep {
   SearchingBook = 'searchingBook',
   Uploading = 'uploading',
   Done = 'done',
-  Error = 'error'
+  Error = 'error',
 }

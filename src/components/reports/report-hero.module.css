@@ -10,6 +10,6 @@
 }
 
 .cell {
-    opacity: 0;
-    animation: fade-in 350ms forwards;
+  opacity: 0;
+  animation: fade-in 350ms forwards;
 }

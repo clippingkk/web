@@ -12,15 +12,15 @@ function MetamaskButtonView(props: MetamaskButtonViewProps) {
   return (
     <Button
       isLoading={loading}
-      className="h-[62px] bg-gradient-to-br from-purple-500 to-purple-600 after:from-purple-500/40 after:to-purple-600/40 hover:shadow-purple-500/20"
+      className='h-[62px] bg-gradient-to-br from-purple-500 to-purple-600 after:from-purple-500/40 after:to-purple-600/40 hover:shadow-purple-500/20'
       fullWidth
-      size="lg"
+      size='lg'
       onClick={onMetamaskLogin}
       disabled={disabled}
     >
-      <div className="flex items-center gap-4">
+      <div className='flex items-center gap-4'>
         <MetamaskLogo size={24} />
-        <span className="text-lg">Metamask</span>
+        <span className='text-lg'>Metamask</span>
       </div>
     </Button>
   )

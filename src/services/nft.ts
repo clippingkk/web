@@ -5,11 +5,11 @@ export interface NFTMetadataAttribute {
 }
 
 export interface NFTMetadata {
-  name: string;
-  description: string;
-  external_url: string;
-  image: string;
-  attributes: NFTMetadataAttribute[];
+  name: string
+  description: string
+  external_url: string
+  image: string
+  attributes: NFTMetadataAttribute[]
   is_normalized?: boolean
   name_length?: number
   segment_length?: number

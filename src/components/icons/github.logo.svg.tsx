@@ -1,4 +1,3 @@
-import React from 'react'
 import Image from 'next/image'
 
 type GithubLogoProps = {
@@ -17,6 +16,5 @@ function GithubLogoV2(props: GithubLogoProps) {
     />
   )
 }
-
 
 export default GithubLogoV2

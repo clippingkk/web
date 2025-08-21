@@ -2,7 +2,7 @@ export function checkDarkMode() {
   if (typeof window === 'undefined') {
     return
   }
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches
 }
 
 function watchDarkMode() {
@@ -11,7 +11,8 @@ function watchDarkMode() {
   }
   if (!window.matchMedia) return
 
-  window.matchMedia('(prefers-color-scheme: dark)')
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', addDarkModeSelector)
 }
 

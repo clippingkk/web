@@ -1,10 +1,10 @@
-import { GetCommentDocument, GetCommentQuery } from '@/schema/generated'
-import { notFound } from 'next/navigation'
-import CommentDetail from './comment-detail'
 import type { Metadata } from 'next'
-import { doApolloServerQuery } from '@/services/apollo.server'
 import { cookies } from 'next/headers'
-import { USER_ID_KEY, COOKIE_TOKEN_KEY } from '@/constants/storage'
+import { notFound } from 'next/navigation'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
+import { GetCommentDocument, type GetCommentQuery } from '@/schema/generated'
+import { doApolloServerQuery } from '@/services/apollo.server'
+import CommentDetail from './comment-detail'
 
 type Props = {
   params: Promise<{
@@ -16,8 +16,8 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { commentid } = await params
   const id = parseInt(commentid, 10)
-  
-  if (isNaN(id)) {
+
+  if (Number.isNaN(id)) {
     return { title: 'Comment Not Found' }
   }
 
@@ -29,9 +29,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     variables: { id },
     context: {
       headers: {
-        Authorization: token ? `Bearer ${token}` : ''
-      }
-    }
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    },
   })
 
   if (!data?.getComment) {
@@ -39,9 +39,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const comment = data.getComment
-  const truncatedContent = comment.content.length > 160 
-    ? comment.content.substring(0, 160) + '...' 
-    : comment.content
+  const truncatedContent =
+    comment.content.length > 160
+      ? `${comment.content.substring(0, 160)}...`
+      : comment.content
 
   return {
     title: `Comment by ${comment.creator.name} on "${comment.belongsTo.title}"`,
@@ -52,8 +53,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       publishedTime: comment.createdAt,
       modifiedTime: comment.updatedAt,
-      authors: [comment.creator.name]
-    }
+      authors: [comment.creator.name],
+    },
   }
 }
 
@@ -64,21 +65,21 @@ async function CommentPage({ params }: Props) {
 
   const uid = parseInt(ck.get(USER_ID_KEY)?.value || '0', 10)
   const id = parseInt(commentid, 10)
-  
-  if (isNaN(uid) || uid <= 0 || isNaN(id)) {
+
+  if (Number.isNaN(uid) || uid <= 0 || Number.isNaN(id)) {
     notFound()
   }
 
   const token = ck.get(COOKIE_TOKEN_KEY)?.value
-  
+
   const { data, error } = await doApolloServerQuery<GetCommentQuery>({
     query: GetCommentDocument,
     variables: { id },
     context: {
       headers: {
-        Authorization: token ? `Bearer ${token}` : ''
-      }
-    }
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    },
   })
 
   if (error || !data?.getComment) {
@@ -92,9 +93,7 @@ async function CommentPage({ params }: Props) {
     notFound()
   }
 
-  return (
-    <CommentDetail comment={comment} />
-  )
+  return <CommentDetail comment={comment} />
 }
 
 export default CommentPage

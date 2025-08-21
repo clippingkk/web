@@ -26,10 +26,10 @@ function PageContainer(props: PageContainerProps) {
   }, [props.bgImage])
   return (
     <section
-      className="flex min-h-screen w-screen flex-col items-center justify-center bg-cover bg-center bg-no-repeat"
+      className='flex min-h-screen w-screen flex-col items-center justify-center bg-cover bg-center bg-no-repeat'
       style={containerStyle}
     >
-      <div className="dark:bg-opacity-80 bg-opacity-60 flex min-h-screen w-screen flex-col items-center justify-center bg-gray-400 backdrop-blur-xl dark:bg-gray-900">
+      <div className='dark:bg-opacity-80 bg-opacity-60 flex min-h-screen w-screen flex-col items-center justify-center bg-gray-400 backdrop-blur-xl dark:bg-gray-900'>
         {props.children}
       </div>
     </section>

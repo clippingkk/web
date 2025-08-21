@@ -1,6 +1,5 @@
 'use client'
 
-import { STORAGE_LANG_KEY } from '@/constants/storage'
 import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import resourcesToBackend from 'i18next-resources-to-backend'
@@ -10,6 +9,7 @@ import {
   initReactI18next,
   useTranslation as useTranslationOrg,
 } from 'react-i18next'
+import { STORAGE_LANG_KEY } from '@/constants/storage'
 import { getOptions, languages } from './settings'
 
 const runsOnServerSide = typeof window === 'undefined'
@@ -20,18 +20,16 @@ i18next
   .use(initReactI18next)
   .use(LanguageDetector)
   .use(
-    resourcesToBackend(
-      (language: string, ns: string) => {
-        let lng = language
-        if (lng.startsWith('zh')) {
-          lng = 'zhCN'
-        }
-        if (ns && ns !== 'translation') {
-          return import(`../locales/${lng}/${ns}.json`)
-        }
-        return import(`../locales/${lng}.json`)
+    resourcesToBackend((language: string, ns: string) => {
+      let lng = language
+      if (lng.startsWith('zh')) {
+        lng = 'zhCN'
       }
-    )
+      if (ns && ns !== 'translation') {
+        return import(`../locales/${lng}/${ns}.json`)
+      }
+      return import(`../locales/${lng}.json`)
+    })
   )
   .init({
     ...getOptions(defaultLang),
@@ -57,6 +55,6 @@ export function useTranslation(_lng?: string, ns?: string, options?: any) {
     return () => {
       i18n.off('languageChanged')
     }
-  }, [])
+  }, [i18n.off, i18n.on])
   return ret
 }

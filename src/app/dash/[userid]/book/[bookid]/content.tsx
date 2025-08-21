@@ -1,14 +1,14 @@
 'use client'
-import React, { useRef } from 'react'
+import { useQuery } from '@apollo/client'
+import { Masonry, useInfiniteLoader } from 'masonic'
+import { useRef } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import { usePageTrack } from '@/hooks/tracke'
-import { IN_APP_CHANNEL } from '@/services/channel'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
-import { Masonry, useInfiniteLoader } from 'masonic'
-import { BookDocument, BookQuery, Clipping } from '@/schema/generated'
+import { BookDocument, type BookQuery, type Clipping } from '@/schema/generated'
+import { IN_APP_CHANNEL } from '@/services/channel'
+import type { WenquBook } from '@/services/wenqu'
 import BookPageSkeleton from './skeleton'
-import { useQuery } from '@apollo/client'
-import { WenquBook } from '@/services/wenqu'
 
 type BookPageContentProps = {
   userid: string
@@ -18,7 +18,7 @@ type BookPageContentProps = {
 function BookPageContent(props: BookPageContentProps) {
   const { userid: domain, book: bookData } = props
   usePageTrack('book', {
-    bookId: bookData.id
+    bookId: bookData.id,
   })
 
   const hasMore = useRef(true)
@@ -27,30 +27,33 @@ function BookPageContent(props: BookPageContentProps) {
       id: bookData.doubanId,
       pagination: {
         limit: 10,
-        offset: 0
-      }
+        offset: 0,
+      },
     },
   })
 
   const masonaryColumnCount = useMasonaryColumnCount()
-  const maybeLoadMore = useInfiniteLoader((_, __, currentItems) => {
-    if (!hasMore.current) {
-      return Promise.reject(1)
+  const maybeLoadMore = useInfiniteLoader(
+    (_, __, currentItems) => {
+      if (!hasMore.current) {
+        return Promise.reject(1)
+      }
+      return fetchMore({
+        variables: {
+          id: bookData.doubanId,
+          pagination: {
+            limit: 10,
+            offset: currentItems.length,
+          },
+        },
+      })
+    },
+    {
+      isItemLoaded: (index, items) => !!items[index],
+      threshold: 3,
+      totalItems: clippingsData?.book.clippingsCount,
     }
-    return fetchMore({
-      variables: {
-        id: bookData.doubanId,
-        pagination: {
-          limit: 10,
-          offset: currentItems.length
-        }
-      },
-    })
-  }, {
-    isItemLoaded: (index, items) => !!items[index],
-    threshold: 3,
-    totalItems: clippingsData?.book.clippingsCount
-  })
+  )
 
   if (!bookData || !clippingsData) {
     return <BookPageSkeleton />

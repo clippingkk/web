@@ -1,11 +1,12 @@
 'use client'
+import { FileText, Lock, Unlock, Upload } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import type React from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useUploadData } from '@/hooks/my-file'
 import { useActionTrack, usePageTrack } from '@/hooks/tracke'
 import { useTranslation } from '@/i18n/client'
 import { UploadStep } from '@/services/uploader'
-import { FileText, Lock, Unlock, Upload } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import React, { useCallback, useEffect, useState } from 'react'
 import LoadingModal from './loading-modal'
 
 function useSwitcher() {
@@ -81,24 +82,24 @@ function UploaderPageContent({ profile }: Props) {
           className={`absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 ${isDragging ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
         ></div>
 
-        <div className="relative z-10 flex flex-col items-center">
-          <div className="mb-6 animate-pulse text-blue-500 dark:text-blue-400">
+        <div className='relative z-10 flex flex-col items-center'>
+          <div className='mb-6 animate-pulse text-blue-500 dark:text-blue-400'>
             <Upload size={64} strokeWidth={1.5} />
           </div>
 
-          <h3 className="mb-2 text-center text-xl font-semibold md:text-2xl dark:text-slate-300">
+          <h3 className='mb-2 text-center text-xl font-semibold md:text-2xl dark:text-slate-300'>
             {isDragging
               ? (t('app.upload.drop.now') ?? 'Release to Upload')
               : (t('app.upload.drag.here') ?? 'Drag Your Clippings File Here')}
           </h3>
 
-          <p className="max-w-md text-center text-sm text-gray-500 md:text-base dark:text-gray-400">
+          <p className='max-w-md text-center text-sm text-gray-500 md:text-base dark:text-gray-400'>
             {t('app.upload.file.hint') ??
               'Your file will be processed automatically when dropped here'}
           </p>
 
-          <div className="mt-8 flex items-center text-sm text-gray-600 dark:text-gray-400">
-            <FileText size={16} className="mr-2" />
+          <div className='mt-8 flex items-center text-sm text-gray-600 dark:text-gray-400'>
+            <FileText size={16} className='mr-2' />
             <span>
               {t('app.upload.file.supported') ??
                 'Supported format: "My Clippings.txt"'}
@@ -107,15 +108,15 @@ function UploaderPageContent({ profile }: Props) {
         </div>
       </div>
 
-      <div className="mb-8 w-full rounded-xl bg-white/70 p-6 shadow-lg backdrop-blur-sm dark:bg-gray-800/70">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
+      <div className='mb-8 w-full rounded-xl bg-white/70 p-6 shadow-lg backdrop-blur-sm dark:bg-gray-800/70'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center'>
             {isOn ? (
-              <Lock size={20} className="mr-2 text-green-500" />
+              <Lock size={20} className='mr-2 text-green-500' />
             ) : (
-              <Unlock size={20} className="mr-2 text-amber-500" />
+              <Unlock size={20} className='mr-2 text-amber-500' />
             )}
-            <span className="font-medium dark:text-slate-300">
+            <span className='font-medium dark:text-slate-300'>
               {t(`app.upload.private.${isOn ? 'on' : 'off'}.title`) ??
                 (isOn ? 'Private Mode' : 'Public Mode')}
             </span>
@@ -131,7 +132,7 @@ function UploaderPageContent({ profile }: Props) {
           </button>
         </div>
 
-        <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+        <p className='mt-3 text-sm text-gray-600 dark:text-gray-400'>
           {isOn
             ? (t('app.upload.private.on.description') ??
               'Your clippings will be visible only to you')

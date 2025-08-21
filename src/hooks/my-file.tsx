@@ -1,16 +1,18 @@
-import { useTranslation } from '@/i18n/client'
 import { useApolloClient, useMutation } from '@apollo/client'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { useMachine } from '@xstate/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
 import { graphql } from '../gql'
 import { useCreateClippingsMutation } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
 import { UploadStep } from '../services/uploader'
-import { wenquRequest, WenquSearchResponse } from '../services/wenqu'
+import { type WenquSearchResponse, wenquRequest } from '../services/wenqu'
 import { extraFile } from '../store/clippings/creator'
-import ClippingTextParser, { TClippingItem } from '../store/clippings/parser'
+import ClippingTextParser, {
+  type TClippingItem,
+} from '../store/clippings/parser'
 import { digestMessage } from '../utils/crypto'
 import { duration3Days } from './book'
 import { uploadProcessMachine } from './my-file.machine'
@@ -157,7 +159,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         )
         send({ type: 'Next' })
         toast(t('app.upload.tips.parsedInfoTitle'), {
-          icon: <CheckCircleIcon className="h-4 w-4" />,
+          icon: <CheckCircleIcon className='h-4 w-4' />,
           // message: t('app.upload.tips.parsedInfoContent'),
         })
         return
@@ -205,7 +207,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         client.resetStore()
       }
     },
-    [client, exec, t, willSyncServer]
+    [client, exec, t, willSyncServer, onSyncEnd, send]
   )
 
   useEffect(() => {
@@ -215,7 +217,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         setMessages([])
       }, 3000)
     }
-  }, [step])
+  }, [step, send])
 
   return {
     onUpload,
@@ -271,5 +273,5 @@ export function useSyncClippingsToServer(id: number) {
       .finally(() => {
         client.resetStore()
       })
-  }, [id])
+  }, [id, client.resetStore, exec, t])
 }

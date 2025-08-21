@@ -1,11 +1,11 @@
 'use client'
-import Button from '@/components/button'
-import { useTranslation } from '@/i18n/client'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { PlusIcon } from 'lucide-react'
-import WebHookCreate from './create'
 import { useState } from 'react'
+import Button from '@/components/button'
+import { useTranslation } from '@/i18n/client'
+import WebHookCreate from './create'
 
 type Props = {
   isPremium: boolean
@@ -23,9 +23,9 @@ function WebhookCreateButton({ isPremium }: Props) {
         <Button
           disabled={!isPremium}
           onClick={() => setVisible(true)}
-          className="px-6 py-2.5 shadow-lg hover:shadow-xl"
+          className='px-6 py-2.5 shadow-lg hover:shadow-xl'
         >
-          <PlusIcon size={18} className="mr-2" />
+          <PlusIcon size={18} className='mr-2' />
           <span>New</span>
         </Button>
       </Tooltip>

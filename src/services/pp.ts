@@ -5,7 +5,7 @@ import { getLocalToken } from './ajax'
 const client = new PromptPal(PP_API, PP_TOKEN, {
   defaultTimeout: 120_000,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  applyTemporaryToken(ctx) {
+  applyTemporaryToken(_ctx) {
     return Promise.resolve({
       token: `Bearer ${getLocalToken()}`,
       limit: 1000,
@@ -15,4 +15,3 @@ const client = new PromptPal(PP_API, PP_TOKEN, {
 })
 
 export default client
-

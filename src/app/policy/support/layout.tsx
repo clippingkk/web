@@ -1,7 +1,7 @@
-import DashboardContainer from '@/components/dashboard-container/container'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
-import React from 'react'
+import type React from 'react'
+import DashboardContainer from '@/components/dashboard-container/container'
 import { USER_ID_KEY } from '@/constants/storage'
 
 type LayoutProps = {

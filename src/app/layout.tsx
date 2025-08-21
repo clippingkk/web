@@ -10,21 +10,22 @@ import '../styles/tailwind.css'
 // next.js not allow to use modern css. just remove it when next.js support it
 // import '@annatarhe/lake-ui/style.css'
 
-import GlobalUpload from '@/components/uploads/global'
-import { STORAGE_LANG_KEY, USER_ID_KEY } from '@/constants/storage'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { Lato } from 'next/font/google'
 import { cookies } from 'next/headers'
 import Script from 'next/script'
-import React from 'react'
+import type React from 'react'
 import { Toaster } from 'react-hot-toast'
+import GlobalUpload from '@/components/uploads/global'
+import { STORAGE_LANG_KEY, USER_ID_KEY } from '@/constants/storage'
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 import '../prefers-dark'
 import '../utils/locales'
 import '../utils/settings'
 import ClientOnlyProviders from './providers'
+
 // import localFont from 'next/font/local'
 
 const lato = Lato({
@@ -52,7 +53,7 @@ const lato = Lato({
 
 const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 type LayoutProps = {
-  children: React.ReactElement
+  children: React.ReactNode
 }
 
 export const viewport = {
@@ -97,23 +98,21 @@ async function Layout(props: LayoutProps) {
     >
       <Script
         defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
+        src='https://static.cloudflareinsights.com/beacon.min.js'
         data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
       />
       <body>
         <ClientOnlyProviders>
-          <>
-            {props.children}
-            <div id="dialog"></div>
-            <div id="toast"></div>
-            <div id="searchbar" className="raycast"></div>
-            <GlobalUpload uid={uid ? ~~uid : undefined} />
-            <Toaster position="top-center" />
-            <ReactQueryDevtools initialIsOpen={false} />
-            <div data-id="modal" />
-            <div data-st-role="modal" />
-            <div data-st-role="tooltip" />
-          </>
+          {props.children}
+          <div id='dialog'></div>
+          <div id='toast'></div>
+          <div id='searchbar' className='raycast'></div>
+          <GlobalUpload uid={uid ? ~~uid : undefined} />
+          <Toaster position='top-center' />
+          <ReactQueryDevtools initialIsOpen={false} />
+          <div data-id='modal' />
+          <div data-st-role='modal' />
+          <div data-st-role='tooltip' />
         </ClientOnlyProviders>
       </body>
     </html>

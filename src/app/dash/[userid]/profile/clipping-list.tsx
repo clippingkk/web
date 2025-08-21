@@ -1,11 +1,14 @@
 'use client'
-import React from 'react'
-import { FetchClippingsByUidQuery, useFetchClippingsByUidQuery } from '@/schema/generated'
 import { Masonry, useInfiniteLoader } from 'masonic'
-import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
+import React from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
-import { IN_APP_CHANNEL } from '@/services/channel'
 import { useMultipleBook } from '@/hooks/book'
+import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
+import {
+  type FetchClippingsByUidQuery,
+  useFetchClippingsByUidQuery,
+} from '@/schema/generated'
+import { IN_APP_CHANNEL } from '@/services/channel'
 
 type ClippingListProps = {
   uid: number
@@ -14,49 +17,65 @@ type ClippingListProps = {
 
 function ClippingList(props: ClippingListProps) {
   const { uid, userDomain } = props
-  const [renderList, setRenderList] = React.useState<FetchClippingsByUidQuery['clippingList']['items']>([])
+  const [renderList, setRenderList] = React.useState<
+    FetchClippingsByUidQuery['clippingList']['items']
+  >([])
   const { data, loading, fetchMore } = useFetchClippingsByUidQuery({
     variables: {
       uid,
       pagination: {
         limit: 20,
-      }
+      },
     },
     onCompleted(data) {
       setRenderList(data.clippingList.items)
     },
   })
   const masonaryColumnCount = useMasonaryColumnCount()
-  const maybeLoadMore = useInfiniteLoader((_, __, currentItems: FetchClippingsByUidQuery['clippingList']['items']) => {
-    if (renderList.length === 0 || !data) {
-      return
+  const maybeLoadMore = useInfiniteLoader(
+    (
+      _,
+      __,
+      currentItems: FetchClippingsByUidQuery['clippingList']['items']
+    ) => {
+      if (renderList.length === 0 || !data) {
+        return
+      }
+      if (currentItems.length >= data.clippingList.count) {
+        return Promise.reject(1)
+      }
+      return fetchMore({
+        variables: {
+          uid,
+          pagination: {
+            limit: 10,
+            lastId: currentItems[currentItems.length - 1].id,
+          },
+        },
+      }).then((resp) => {
+        setRenderList((prev) =>
+          [...prev, ...resp.data.clippingList.items].reduce(
+            (acc, cur) => {
+              if (!acc.find((x) => x.id === cur.id)) {
+                acc.push(cur)
+              }
+              return acc
+            },
+            [] as FetchClippingsByUidQuery['clippingList']['items']
+          )
+        )
+      })
+    },
+    {
+      isItemLoaded: (index, items) => !!items[index],
+      threshold: 3,
+      totalItems: data?.clippingList.count ?? 0,
     }
-    if (currentItems.length >= data.clippingList.count) {
-      return Promise.reject(1)
-    }
-    return fetchMore({
-      variables: {
-        uid,
-        pagination: {
-          limit: 10,
-          lastId: currentItems[currentItems.length - 1].id
-        }
-      },
-    }).then((resp) => {
-      setRenderList(prev => [...prev, ...resp.data.clippingList.items].reduce((acc, cur) => {
-        if (!acc.find(x => x.id === cur.id)) {
-          acc.push(cur)
-        }
-        return acc
-      }, [] as FetchClippingsByUidQuery['clippingList']['items']))
-    })
-  }, {
-    isItemLoaded: (index, items) => !!items[index],
-    threshold: 3,
-    totalItems: data?.clippingList.count ?? 0
-  })
+  )
 
-  const books = useMultipleBook(data?.clippingList.items.map(x => x.bookID) ?? [])
+  const books = useMultipleBook(
+    data?.clippingList.items.map((x) => x.bookID) ?? []
+  )
 
   if (loading && !data) {
     return (
@@ -79,10 +98,10 @@ function ClippingList(props: ClippingListProps) {
   }
 
   return (
-    <div className="transition-all duration-300">
+    <div className='transition-all duration-300'>
       {renderList.length === 0 && !loading ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 dark:text-gray-400">No clippings found</p>
+        <div className='text-center py-12'>
+          <p className='text-gray-500 dark:text-gray-400'>No clippings found</p>
         </div>
       ) : (
         <Masonry
@@ -97,7 +116,9 @@ function ClippingList(props: ClippingListProps) {
               <ClippingItem
                 item={clipping}
                 domain={userDomain || uid.toString()}
-                book={books.books.find(x => x.doubanId.toString() === clipping.bookID)}
+                book={books.books.find(
+                  (x) => x.doubanId.toString() === clipping.bookID
+                )}
                 creator={clipping.creator}
                 key={clipping.id}
                 inAppChannel={IN_APP_CHANNEL.clippingFromBook}

@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { NftItem } from '../../schema/generated'
-import { NFTMetadata } from '../../services/nft'
+import { useEffect, useMemo, useState } from 'react'
+import type { NftItem } from '../../schema/generated'
+import type { NFTMetadata } from '../../services/nft'
 
 type NFTGallaryItemProps = {
   data: NftItem
@@ -54,9 +54,7 @@ function NFTGallaryItem(props: NFTGallaryItemProps) {
   }
 
   if (!isImageLoaded || !realImageUrl) {
-    return (
-      <div className=' w-28 h-28 animate-pulse bg-gray-500' />
-    )
+    return <div className=' w-28 h-28 animate-pulse bg-gray-500' />
   }
   return (
     <div
@@ -77,12 +75,8 @@ function NFTGallaryItem(props: NFTGallaryItemProps) {
           alt={props.data.name}
         />
         <div className='p-2 rounded-b-lg'>
-          <h6 className=' text-white text-sm'>
-            {props.data.name}
-          </h6>
-          <span className=' text-white text-xs'>
-            {metadata?.name ?? ''}
-          </span>
+          <h6 className=' text-white text-sm'>{props.data.name}</h6>
+          <span className=' text-white text-xs'>{metadata?.name ?? ''}</span>
         </div>
       </div>
     </div>

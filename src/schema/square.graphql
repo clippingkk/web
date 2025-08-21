@@ -13,4 +13,4 @@ query fetchSquareData($pagination: Pagination!) {
       domain
     }
   }
-} 
+}

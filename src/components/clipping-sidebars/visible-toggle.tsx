@@ -1,16 +1,16 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
-import {
-  Clipping,
-  User,
-  useToggleClippingVisibleMutation,
-} from '@/schema/generated'
-import { toastPromiseDefaultOption } from '@/services/misc'
 import Switch from '@annatarhe/lake-ui/form-switch-field'
 import { useApolloClient } from '@apollo/client'
 import { Eye, EyeOff } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import {
+  type Clipping,
+  type User,
+  useToggleClippingVisibleMutation,
+} from '@/schema/generated'
+import { toastPromiseDefaultOption } from '@/services/misc'
 import { SidebarButton, SidebarContainer } from './base/container'
 
 type Props = {
@@ -40,14 +40,14 @@ function VisibleToggle({ clipping, me }: Props) {
 
   return (
     <SidebarContainer>
-      <SidebarButton className="justify-between">
-        <div className="flex items-center gap-2">
+      <SidebarButton className='justify-between'>
+        <div className='flex items-center gap-2'>
           {isVisible ? (
-            <Eye className="h-4 w-4 text-purple-500" />
+            <Eye className='h-4 w-4 text-purple-500' />
           ) : (
-            <EyeOff className="h-4 w-4 text-teal-500" />
+            <EyeOff className='h-4 w-4 text-teal-500' />
           )}
-          <label className="font-medium text-gray-700 dark:text-gray-300">
+          <label className='font-medium text-gray-700 dark:text-gray-300'>
             {t('app.clipping.visible')}
           </label>
         </div>

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
+import { useEffect, useState } from 'react'
 
 export function useCtrlP() {
   const [visible, setVisible] = useState(false)
@@ -40,6 +40,6 @@ export function useCtrlP() {
 
   return {
     visible,
-    setVisible
+    setVisible,
   }
 }

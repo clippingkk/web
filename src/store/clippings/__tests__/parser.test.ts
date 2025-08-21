@@ -1,6 +1,6 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import ClippingTextParser from '../parser'
-import fs from 'fs'
-import path from 'path'
 
 function readFile(p: string) {
   return fs.readFileSync(path.resolve(__dirname, p)).toString()

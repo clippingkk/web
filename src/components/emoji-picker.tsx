@@ -1,4 +1,3 @@
-import React from 'react'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 
@@ -10,7 +9,7 @@ function EmojiPicker() {
   // new EmojiMart.Picker({
   // ...props,
   // // data: data as any,
-  // //  ref 
+  // //  ref
   // })
   // })
   // }, [])

@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Loading() {
   return (
     <div className='container w-full mt-4 lg:mt-20'>

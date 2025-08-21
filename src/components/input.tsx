@@ -1,16 +1,16 @@
-import React from 'react'
+import type React from 'react'
 import { useTranslation } from 'react-i18next'
 
 export enum FieldInputSize {
   small,
   normal,
-  large
+  large,
 }
 
 const sizeWidth = {
   [FieldInputSize.large]: 'lg:w-144 w-96',
   [FieldInputSize.small]: 'lg:w-96 w-64',
-  [FieldInputSize.normal]: 'lg:w-144 w-96'
+  [FieldInputSize.normal]: 'lg:w-144 w-96',
 }
 
 type FieldInputProps = {
@@ -32,12 +32,17 @@ function FieldInput(props: FieldInputProps) {
       <label
         htmlFor={props.name}
         className='mr-4 text-2xl w-32 text-right dark:text-white'
-      >{t(`app.auth.${props.name}`)}: </label>
+      >
+        {t(`app.auth.${props.name}`)}:{' '}
+      </label>
       <input
         {...props.inputProps}
         type={props.type ?? 'text'}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        className={`text-2xl p-4 border-2 ${(sizeWidth as any)[size]} bg-gray-400 focus:outline-hidden disabled:text-gray-500 ` + (props.error ? 'border-red-400' : 'border-transparent')}
+        className={
+          `text-2xl p-4 border-2 ${(sizeWidth as any)[size]} bg-gray-400 focus:outline-hidden disabled:text-gray-500 ` +
+          (props.error ? 'border-red-400' : 'border-transparent')
+        }
         value={props.value}
         placeholder={t(`app.auth.${props.name}`) ?? ''}
         name={props.name}
@@ -52,6 +57,5 @@ function FieldInput(props: FieldInputProps) {
     </div>
   )
 }
-
 
 export default FieldInput

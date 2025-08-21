@@ -1,12 +1,12 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useTranslation } from '@/i18n/client'
 import ButtonSimple from '@/components/button/button-simple'
 import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
 import FieldInput from '@/components/input'
 import ProgressBlock from '@/components/progress/progress-block'
+import { useTranslation } from '@/i18n/client'
 import { useUpdateProfileMutation } from '@/schema/generated'
 import { toastPromiseDefaultOption, uploadImage } from '@/services/misc'
 
@@ -36,14 +36,14 @@ function NewbiePageContent({ uid }: { uid: number }) {
     if (newName.length > 32) {
       return true
     }
-    if (/[<>\\+\ ]/.test(newName)) {
+    if (/[<>\\+ ]/.test(newName)) {
       return true
     }
     return false
   }, [newName])
 
   const newDomainSubmitDisabled = useMemo(() => {
-    return !(/[a-z\.]{3,32}/.test(newDomain))
+    return !/[a-z.]{3,32}/.test(newDomain)
   }, [newDomain])
 
   const { push: navigate } = useRouter()
@@ -60,12 +60,11 @@ function NewbiePageContent({ uid }: { uid: number }) {
 
   return (
     <div className='w-full h-full pt-10'>
-      <h2 className='text-3xl text-center dark:text-white'>Update my profile</h2>
+      <h2 className='text-3xl text-center dark:text-white'>
+        Update my profile
+      </h2>
       <div className='mt-4'>
-        <ProgressBlock
-          value={phase + 1}
-          max={6}
-        >
+        <ProgressBlock value={phase + 1} max={6}>
           <div>
             <h3 className='w-full text-center mt-2 block dark:text-white'>
               Progress: {phase + 1} / 6
@@ -78,7 +77,9 @@ function NewbiePageContent({ uid }: { uid: number }) {
       <div className='w-96 mt-28 flex justify-center items-center mx-auto'>
         {phase === 0 && (
           <div className='w-full with-fade-in'>
-            <h5 className='text-center text-lg mb-2 dark:text-white'>Choose my name</h5>
+            <h5 className='text-center text-lg mb-2 dark:text-white'>
+              Choose my name
+            </h5>
             <span className=' w-full text-center mb-2 block dark:text-white'>
               <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>&lt;</kbd>
               <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>&gt;</kbd>
@@ -87,11 +88,11 @@ function NewbiePageContent({ uid }: { uid: number }) {
               not allowed
             </span>
             <input
-              type="text"
+              type='text'
               maxLength={32}
               minLength={3}
               value={newName}
-              onChange={e => {
+              onChange={(e) => {
                 const val = e.target.value
                 // cannot startsWith number or something
                 setNewName(val)
@@ -102,17 +103,19 @@ function NewbiePageContent({ uid }: { uid: number }) {
             <ButtonSimple
               loading={doUpdateResponse.loading}
               onClick={() => {
-                toast.promise(
-                  doUpdateUserProfile({
-                    variables: {
-                      name: newName
-                    }
-                  }),
-                  toastPromiseDefaultOption
-                ).then(() => {
-                  setPhase(1)
-                  setNewDomain(newName.toLowerCase())
-                })
+                toast
+                  .promise(
+                    doUpdateUserProfile({
+                      variables: {
+                        name: newName,
+                      },
+                    }),
+                    toastPromiseDefaultOption
+                  )
+                  .then(() => {
+                    setPhase(1)
+                    setNewDomain(newName.toLowerCase())
+                  })
               }}
               disabled={newNameSubmitDisabled}
               text='Confirm'
@@ -123,17 +126,21 @@ function NewbiePageContent({ uid }: { uid: number }) {
         {phase === 1 && (
           <div className='w-full with-fade-in'>
             <div className='w-full mb-4'>
-              <h5 className='text-center text-lg mb-2 dark:text-white'>choose my domain</h5>
-              <span className=' w-full text-center block dark:text-white'>TODO: rules here</span>
+              <h5 className='text-center text-lg mb-2 dark:text-white'>
+                choose my domain
+              </h5>
+              <span className=' w-full text-center block dark:text-white'>
+                TODO: rules here
+              </span>
             </div>
             <input
-              type="text"
+              type='text'
               maxLength={32}
               minLength={3}
               value={newDomain}
               className='w-full px-2 py-4 rounded-sm'
               placeholder='my.name.domain'
-              onChange={e => {
+              onChange={(e) => {
                 const val = e.target.value
                 // cannot startsWith number or something
                 setNewDomain(val)
@@ -143,16 +150,18 @@ function NewbiePageContent({ uid }: { uid: number }) {
               disabled={newDomainSubmitDisabled}
               loading={doUpdateResponse.loading}
               onClick={() => {
-                toast.promise(
-                  doUpdateUserProfile({
-                    variables: {
-                      domain: newDomain
-                    }
-                  }),
-                  toastPromiseDefaultOption
-                ).then(() => {
-                  setPhase(2)
-                })
+                toast
+                  .promise(
+                    doUpdateUserProfile({
+                      variables: {
+                        domain: newDomain,
+                      },
+                    }),
+                    toastPromiseDefaultOption
+                  )
+                  .then(() => {
+                    setPhase(2)
+                  })
               }}
               text='Confirm my domain'
             />
@@ -166,22 +175,14 @@ function NewbiePageContent({ uid }: { uid: number }) {
             }}
           />
         )}
-        {phase === 3 && (
-          <div>
-            TODO: bind apple
-          </div>
-        )}
-        {phase === 4 && (
-          <div>
-            TODO: bind github
-          </div>
-        )}
+        {phase === 3 && <div>TODO: bind apple</div>}
+        {phase === 4 && <div>TODO: bind github</div>}
         {phase === 5 && (
           <div>
             <FieldInput
               type='file'
               name='avatar'
-              onChange={e => {
+              onChange={(e) => {
                 if (!e.target.files) {
                   return
                 }
@@ -189,7 +190,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
                 setAvatar(f)
               }}
               inputProps={{
-                accept: 'image/png, image/jpeg'
+                accept: 'image/png, image/jpeg',
               }}
               value={undefined}
             />
@@ -205,10 +206,10 @@ function NewbiePageContent({ uid }: { uid: number }) {
                   const resp = await uploadImage(avatar)
                   await doUpdateUserProfile({
                     variables: {
-                      avatar: resp.filePath
-                    }
+                      avatar: resp.filePath,
+                    },
                   })
-                  setPhase(p => p + 1)
+                  setPhase((p) => p + 1)
                   toast.success(t('app.profile.editor.updated'), { id: tl })
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (e: any) {
@@ -220,12 +221,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
           </div>
         )}
 
-        {phase >= 6 && (
-          <div>
-            Syncing...
-          </div>
-        )}
-
+        {phase >= 6 && <div>Syncing...</div>}
       </div>
     </div>
   )

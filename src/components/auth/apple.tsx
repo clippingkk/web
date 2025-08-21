@@ -1,7 +1,7 @@
-import AppleSignin from 'react-apple-signin-auth'
-import WithLoading from '../with-loading'
-import { AppleAuthResponse } from '@/services/apple'
 import { useMemo } from 'react'
+import AppleSignin from 'react-apple-signin-auth'
+import type { AppleAuthResponse } from '@/services/apple'
+import WithLoading from '../with-loading'
 
 type AppleLoginButtonViewProps = {
   loading: boolean
@@ -36,7 +36,6 @@ function AuthAppleButton(props: Props) {
   )
 }
 
-
 function AppleLoginButtonView(props: AppleLoginButtonViewProps) {
   const { loading, disabled, onSuccess, version = 'v2', onError } = props
 
@@ -49,18 +48,15 @@ function AppleLoginButtonView(props: AppleLoginButtonViewProps) {
   }, [version])
 
   return (
-    <WithLoading
-      loading={loading}
-      disabled={disabled}
-    >
+    <WithLoading loading={loading} disabled={disabled}>
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore */}
       <AppleSignin
         authOptions={appleAuthOptions}
-        uiType="dark"
-        className="apple-auth-btn"
+        uiType='dark'
+        className='apple-auth-btn'
         noDefaultStyle={false}
-        buttonExtraChildren="Continue with Apple"
+        buttonExtraChildren='Continue with Apple'
         onSuccess={onSuccess}
         onError={onError}
         skipScript={false}

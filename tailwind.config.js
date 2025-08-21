@@ -12,7 +12,7 @@ module.exports = {
         primary: '#045fab',
       },
       scale: {
-        '102': '1.02',
+        102: '1.02',
       },
       boxShadow: {
         '3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
@@ -20,10 +20,11 @@ module.exports = {
       animation: {
         'gradient-xy': 'gradient-xy 15s ease infinite',
         'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'pulse-slow-reverse': 'pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite reverse',
+        'pulse-slow-reverse':
+          'pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite reverse',
         'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
-        'shimmer': 'shimmer 3s ease-in-out infinite',
-        'float': 'float 6s ease-in-out infinite',
+        shimmer: 'shimmer 3s ease-in-out infinite',
+        float: 'float 6s ease-in-out infinite',
         'float-delayed': 'float 6s ease-in-out infinite 2s',
         'float-slow': 'float 8s ease-in-out infinite 1s',
         'fade-in': 'fade-in 0.5s ease-out forwards',
@@ -39,7 +40,7 @@ module.exports = {
             'background-position': 'right center',
           },
         },
-        'shimmer': {
+        shimmer: {
           '0%': {
             transform: 'translateX(-100%)',
           },
@@ -50,7 +51,7 @@ module.exports = {
             transform: 'translateX(100%)',
           },
         },
-        'float': {
+        float: {
           '0%, 100%': {
             transform: 'translateY(0px)',
             opacity: '1',

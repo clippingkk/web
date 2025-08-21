@@ -1,6 +1,8 @@
 /* eslint-disable */
-let isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1
-let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+const isAndroid =
+  navigator.userAgent.indexOf('Android') > -1 ||
+  navigator.userAgent.indexOf('Adr') > -1
+const isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
 
 // 这是必须要写的，用来创建一些设置
 function setupWebViewJavascriptBridge(callback: any) {
@@ -11,7 +13,7 @@ function setupWebViewJavascriptBridge(callback: any) {
     } else {
       document.addEventListener(
         'WebViewJavascriptBridgeReady',
-        function () {
+        () => {
           callback(WebViewJavascriptBridge)
         },
         false
@@ -34,7 +36,7 @@ function setupWebViewJavascriptBridge(callback: any) {
     WVJBIframe.style.display = 'none'
     WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
     document.documentElement.appendChild(WVJBIframe)
-    setTimeout(function () {
+    setTimeout(() => {
       document.documentElement.removeChild(WVJBIframe)
     }, 0)
     console.log('tag', 'ios')
@@ -47,12 +49,12 @@ class CKBaseJSBrdige {
     return window.WVJBCallbacks
   }
   constructor() {
-    setupWebViewJavascriptBridge(function (bridge: any) {
+    setupWebViewJavascriptBridge((bridge: any) => {
       if (isAndroid) {
         // 初始化
-        bridge.init(function (message: any, responseCallback: any) {
+        bridge.init((_message: any, responseCallback: any) => {
           var data = {
-            'Javascript Responds': 'Wee!'
+            'Javascript Responds': 'Wee!',
           }
           responseCallback(data)
         })
@@ -62,14 +64,14 @@ class CKBaseJSBrdige {
 
   // js调APP方法 （参数分别为:app提供的方法名  传给app的数据  回调）
   callHandler(name: string, data: any, callback: any) {
-    setupWebViewJavascriptBridge(function (bridge: any) {
+    setupWebViewJavascriptBridge((bridge: any) => {
       bridge.callHandler(name, data, callback)
     })
   }
   // APP调js方法 （参数分别为:js提供的方法名  回调）
   registerHandler(name: string, callback: any) {
-    setupWebViewJavascriptBridge(function (bridge: any) {
-      bridge.registerHandler(name, function (data: any, responseCallback: any) {
+    setupWebViewJavascriptBridge((bridge: any) => {
+      bridge.registerHandler(name, (data: any, responseCallback: any) => {
         callback(data, responseCallback)
       })
     })

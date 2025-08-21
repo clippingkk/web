@@ -1,5 +1,4 @@
-import { Metadata } from 'next'
-import React from 'react'
+import type { Metadata } from 'next'
 import NewbiePageContent from './content'
 
 export const metadata: Metadata = {
@@ -12,9 +11,7 @@ type Props = {
 
 async function Page(props: Props) {
   const { userid } = await props.params
-  return (
-    <NewbiePageContent uid={~~userid} />
-  )
+  return <NewbiePageContent uid={~~userid} />
 }
 
 export default Page

@@ -1,17 +1,21 @@
+import type { Metadata } from 'next'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import { FetchYearlyReportQuery } from '../../schema/generated'
-import { WenquBook } from '../../services/wenqu'
-import { Metadata } from 'next'
+import type { FetchYearlyReportQuery } from '../../schema/generated'
+import type { WenquBook } from '../../services/wenqu'
 
 const url = APP_URL_ORIGIN
-export function generateMetadata(year: number, data: FetchYearlyReportQuery, bs: WenquBook[]): Metadata {
+export function generateMetadata(
+  year: number,
+  data: FetchYearlyReportQuery,
+  bs: WenquBook[]
+): Metadata {
   const metaTitle = `${data.reportYearly.user.name} 在 ${year} 年共读了 ${data?.reportYearly.books.length} 本书 - Clippingkk - kindle 书摘管理`
   const plainAvatar = data?.reportYearly.user.avatar
-  const avatar = plainAvatar?.startsWith('http') ?
-    plainAvatar :
-    `${CDN_DEFAULT_DOMAIN}/${plainAvatar}`
+  const avatar = plainAvatar?.startsWith('http')
+    ? plainAvatar
+    : `${CDN_DEFAULT_DOMAIN}/${plainAvatar}`
 
-  const desc = `${data?.reportYearly.user.name} 读了这些书 ${bs.map(x => x.title).join(', ')}`
+  const desc = `${data?.reportYearly.user.name} 读了这些书 ${bs.map((x) => x.title).join(', ')}`
 
   return {
     metadataBase: new URL(APP_URL_ORIGIN),
@@ -20,20 +24,18 @@ export function generateMetadata(year: number, data: FetchYearlyReportQuery, bs:
       url,
       type: 'website',
       title: metaTitle,
-      images: [
-        avatar
-      ],
+      images: [avatar],
       description: desc,
       siteName: 'Clippingkk',
     },
     description: desc,
-    keywords: `${bs.map(x => x.title).join(', ')}, ${data?.reportYearly.user.name}, clippingkk, 书摘`,
+    keywords: `${bs.map((x) => x.title).join(', ')}, ${data?.reportYearly.user.name}, clippingkk, 书摘`,
     twitter: {
       card: 'summary',
       site: '@AnnatarHe',
       creator: '@AnnatarHe',
       title: metaTitle,
       description: desc,
-    }
+    },
   }
 }

@@ -1,25 +1,29 @@
+import { cookies } from 'next/headers'
+import { cache } from 'react'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { duration3Days } from '@/hooks/book'
 import {
   FetchClippingDocument,
-  FetchClippingQuery,
-  FetchClippingQueryVariables,
+  type FetchClippingQuery,
+  type FetchClippingQueryVariables,
   ProfileDocument,
-  ProfileQuery,
-  ProfileQueryVariables,
+  type ProfileQuery,
+  type ProfileQueryVariables,
 } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
-import { cookies } from 'next/headers'
-import { cache } from 'react'
+import {
+  type WenquBook,
+  type WenquSearchResponse,
+  wenquRequest,
+} from '@/services/wenqu'
 
 export const getClippingData = cache(async (clippingId: number) => {
   const cs = await cookies()
   const token = cs.get(COOKIE_TOKEN_KEY)?.value
   const uid = cs.get(USER_ID_KEY)?.value
   const client = getApolloServerClient()
-  
+
   const clippingsResponse = await client.query<
     FetchClippingQuery,
     FetchClippingQueryVariables
@@ -32,15 +36,15 @@ export const getClippingData = cache(async (clippingId: number) => {
     context: {
       headers: token
         ? {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        }
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         : undefined,
     },
   })
 
-  let myProfile: ProfileQuery['me'] | undefined = undefined
+  let myProfile: ProfileQuery['me'] | undefined
   if (uid) {
     const p = await client.query<ProfileQuery, ProfileQueryVariables>({
       query: ProfileDocument,
@@ -50,8 +54,8 @@ export const getClippingData = cache(async (clippingId: number) => {
       context: {
         headers: token
           ? {
-            Authorization: 'Bearer ' + token,
-          }
+              Authorization: `Bearer ${token}`,
+            }
           : undefined,
       },
     })

@@ -1,11 +1,13 @@
-import { APP_URL_ORIGIN } from '../../constants/config'
-import { WenquBook } from '../../services/wenqu'
+import type { Metadata } from 'next'
 import logo from '../../assets/logo.png'
-import { Clipping, User } from '../../schema/generated'
-import { Metadata } from 'next'
+import { APP_URL_ORIGIN } from '../../constants/config'
+import type { Clipping, User } from '../../schema/generated'
+import type { WenquBook } from '../../services/wenqu'
 
 type OGWithClippingProps = {
-  clipping?: Pick<Clipping, 'id' | 'title' | 'content'> & { creator: Pick<User, 'id' | 'name'> }
+  clipping?: Pick<Clipping, 'id' | 'title' | 'content'> & {
+    creator: Pick<User, 'id' | 'name'>
+  }
   book: WenquBook | null
 }
 
@@ -16,7 +18,7 @@ export function generateMetadata(props: OGWithClippingProps): Metadata {
   const metaTitle = `${bookTitle} - ${props.clipping?.creator.name} 的书摘录 - clippingkk`
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const logoLink = props.book?.image ?? (APP_URL_ORIGIN + logo.src)
+  const _logoLink = props.book?.image ?? APP_URL_ORIGIN + logo.src
 
   return {
     metadataBase: new URL(APP_URL_ORIGIN),
@@ -35,6 +37,6 @@ export function generateMetadata(props: OGWithClippingProps): Metadata {
       creator: props.clipping?.creator.name ?? '',
       title: metaTitle,
       description: props.clipping?.content ?? '',
-    }
+    },
   }
 }

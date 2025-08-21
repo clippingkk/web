@@ -1,5 +1,5 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
-import React from 'react'
+import type React from 'react'
 import FeatureModern from './Feature-Modern'
 import FeatureReborn from './Feature-Reborn'
 import FeatureSense from './Feature-Sense'
@@ -12,7 +12,7 @@ type featureColorPattern = {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const colorPatterns: featureColorPattern[] = [
+const _colorPatterns: featureColorPattern[] = [
   {
     title: [
       'from-green-400',
@@ -74,9 +74,9 @@ type FeatureSectionType = {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function FeatureSection(props: FeatureSectionType) {
+function _FeatureSection(props: FeatureSectionType) {
   return (
-    <div className="flex w-full flex-col items-center justify-around py-16 lg:flex-row">
+    <div className='flex w-full flex-col items-center justify-around py-16 lg:flex-row'>
       <h3
         className={
           'mb-8 flex max-w-xs overflow-x-visible pb-4 text-center text-4xl lg:mb-0 lg:text-7xl ' +
@@ -85,24 +85,24 @@ function FeatureSection(props: FeatureSectionType) {
       >
         {props.title}
       </h3>
-      <ul className="ml-6 text-3xl lg:ml-12 lg:text-6xl">
+      <ul className='ml-6 text-3xl lg:ml-12 lg:text-6xl'>
         {props.items.map((x, i) => (
-          <li key={x.feature} className="mb-10">
+          <li key={x.feature} className='mb-10'>
             {x.link ? (
               <a
                 href={x.link}
-                target="_blank"
-                className={props.colorPattern.rows[i] + ' hover:underline'}
-                rel="noreferrer"
+                target='_blank'
+                className={`${props.colorPattern.rows[i]} hover:underline`}
+                rel='noreferrer'
               >
                 {x.feature}
-                <ArrowTopRightOnSquareIcon className="mb-2 inline-block h-4 w-4 text-blue-400 lg:mb-8 lg:h-5 lg:w-5" />
+                <ArrowTopRightOnSquareIcon className='mb-2 inline-block h-4 w-4 text-blue-400 lg:mb-8 lg:h-5 lg:w-5' />
               </a>
             ) : (
               <h4 className={props.colorPattern.rows[i]}>{x.feature}</h4>
             )}
             {x.desc && (
-              <h6 className={props.colorPattern.rows[i] + ' mt-4 text-base'}>
+              <h6 className={`${props.colorPattern.rows[i]} mt-4 text-base`}>
                 {x.desc}
               </h6>
             )}
@@ -116,8 +116,8 @@ function FeatureSection(props: FeatureSectionType) {
 
 function Features() {
   return (
-    <div className="flex w-full flex-col justify-center">
-      <h2 className="text-center text-3xl text-slate-900 dark:text-gray-100">
+    <div className='flex w-full flex-col justify-center'>
+      <h2 className='text-center text-3xl text-slate-900 dark:text-gray-100'>
         Feature List
       </h2>
       <FeaturesOpen />

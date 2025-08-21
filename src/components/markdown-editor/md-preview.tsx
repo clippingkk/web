@@ -1,6 +1,6 @@
-import CodeBlock from '@/components/highlighter/client'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import ReactMarkdown from 'react-markdown'
+import CodeBlock from '@/components/highlighter/client'
 
 type MarkdownPreviewProps = {
   value: string
@@ -9,7 +9,7 @@ type MarkdownPreviewProps = {
 function MarkdownPreview(props: MarkdownPreviewProps) {
   const { value } = props
   return (
-    <div className="text-lg">
+    <div className='text-lg'>
       <ReactMarkdown
         components={{
           h1: ({ className, ref, ...props }) => (
@@ -34,29 +34,29 @@ function MarkdownPreview(props: MarkdownPreviewProps) {
             />
           ),
           ul: ({ ref, ...props }) => (
-            <ul className="list-disc pl-4" {...props} />
+            <ul className='list-disc pl-4' {...props} />
           ),
           ol: ({ type, ref, ...props }) => (
-            <ol className="list-decimal pl-4" {...props} />
+            <ol className='list-decimal pl-4' {...props} />
           ),
           li: ({ className, ref, ...props }) => (
             <li className={`list-item text-lg ${className}`} {...props} />
           ),
           p: ({ ref, ...props }) => (
             <p
-              className={'my-2 leading-relaxed ' + props.className}
+              className={`my-2 leading-relaxed ${props.className}`}
               {...props}
             />
           ),
           a: ({ className, children, ...props }) => {
             return (
               <a
-                target="_blank"
+                target='_blank'
                 className={`relative text-lg ${className} hover:underline`}
                 {...props}
               >
                 {children}
-                <ArrowTopRightOnSquareIcon className="absolute top-0 -right-4 ml-2 inline-block h-4 w-4" />
+                <ArrowTopRightOnSquareIcon className='absolute top-0 -right-4 ml-2 inline-block h-4 w-4' />
               </a>
             )
           },

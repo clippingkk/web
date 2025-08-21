@@ -1,7 +1,7 @@
 @reference "../../styles/tailwind.css";
 
 @property --rotate {
-  syntax: '<angle>';
+  syntax: "<angle>";
   initial-value: 132deg;
   inherits: false;
 }
@@ -17,7 +17,7 @@
 }
 
 .lightenButton::before {
-  content: '';
+  content: "";
   width: 104%;
   height: 102%;
   border-radius: 8px;
@@ -30,7 +30,7 @@
 
 .lightenButton::after {
   position: absolute;
-  content: '';
+  content: "";
   top: calc(var(--card-height) / 6);
   left: 0;
   right: 0;

@@ -6,6 +6,6 @@ export function useIsPremium(premiumEndAt?: string) {
       return false
     }
 
-    return new Date(premiumEndAt).getTime() > new Date().getTime()
+    return new Date(premiumEndAt).getTime() > Date.now()
   }, [premiumEndAt])
 }

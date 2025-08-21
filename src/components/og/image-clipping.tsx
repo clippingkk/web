@@ -1,5 +1,4 @@
-import React from 'react'
-import { WenquBook } from '../../services/wenqu'
+import type { WenquBook } from '../../services/wenqu'
 
 type ClippingOpenGraphImageProps = {
   content: string
@@ -10,7 +9,7 @@ type ClippingOpenGraphImageProps = {
 const logoSize = 80
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const maxLines = 7
+const _maxLines = 7
 
 function OGImageClipping(props: ClippingOpenGraphImageProps) {
   const { content, b, logoSrc } = props
@@ -33,7 +32,7 @@ function OGImageClipping(props: ClippingOpenGraphImageProps) {
   }
 
   if (content.length > 23 * 17) {
-    renderContent = content.slice(0, 23 * 15) + '...'
+    renderContent = `${content.slice(0, 23 * 15)}...`
   }
 
   return (
@@ -49,15 +48,17 @@ function OGImageClipping(props: ClippingOpenGraphImageProps) {
         justifyContent: 'center',
       }}
     >
-      <div style={{
-        display: 'flex',
-        width: '100%',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        marginBottom: '1rem',
-        marginTop: '1rem',
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          marginBottom: '1rem',
+          marginTop: '1rem',
+        }}
+      >
         <img src={logoSrc} width={logoSize} height={logoSize} />
       </div>
       <div
@@ -69,18 +70,23 @@ function OGImageClipping(props: ClippingOpenGraphImageProps) {
           justifyContent: 'flex-end',
         }}
       >
+        <h2 style={{ fontSize: contentFontSize, lineHeight: '1.5' }}>
+          {renderContent}
+        </h2>
 
-        <h2 style={{ fontSize: contentFontSize, lineHeight: '1.5', }}>{renderContent}</h2>
-
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100%',
-          alignItems: 'flex-end',
-          justifyContent: 'space-between'
-        }}>
-          <h4 style={{ fontSize: '2rem', }}>{b?.title}</h4>
-          <h5 style={{ fontSize: '1.5rem', textAlign: 'right' }}>{b?.author}</h5>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: '100%',
+            alignItems: 'flex-end',
+            justifyContent: 'space-between',
+          }}
+        >
+          <h4 style={{ fontSize: '2rem' }}>{b?.title}</h4>
+          <h5 style={{ fontSize: '1.5rem', textAlign: 'right' }}>
+            {b?.author}
+          </h5>
         </div>
       </div>
     </div>

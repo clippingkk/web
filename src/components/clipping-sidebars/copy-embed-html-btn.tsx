@@ -1,11 +1,11 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
-import { Clipping, User } from '@/schema/generated'
-import { WenquBook } from '@/services/wenqu'
-import { ClippingData } from '@annatarhe/clippingkk-widget'
+import type { ClippingData } from '@annatarhe/clippingkk-widget'
 import { Code2 } from 'lucide-react'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import type { Clipping, User } from '@/schema/generated'
+import type { WenquBook } from '@/services/wenqu'
 import {
   SidebarButton,
   SidebarContainer,
@@ -74,7 +74,7 @@ function CopyEmbedHTMLBtn({ clipping, book }: Props) {
     <SidebarContainer>
       <SidebarButton onClick={onCopyEmbedHtml} disabled={!clipping}>
         <SidebarIcon>
-          <Code2 className="h-full w-full" />
+          <Code2 className='h-full w-full' />
         </SidebarIcon>
         <SidebarText>{t('app.clipping.embed.title')}</SidebarText>
       </SidebarButton>

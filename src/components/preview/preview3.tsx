@@ -1,12 +1,12 @@
-import React, { useCallback, useMemo, useState } from 'react'
 import LakeModal from '@annatarhe/lake-ui/modal'
-import { useTranslation } from 'react-i18next'
+import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
+import type { WenquBook } from '@/services/wenqu'
+import type { Clipping, User } from '../../schema/generated'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
-import ThemePicker from './theme-picker'
-import { Clipping, User } from '../../schema/generated'
 import LoadingIcon from '../icons/loading.svg'
-import { WenquBook } from '@/services/wenqu'
+import ThemePicker from './theme-picker'
 
 type PreviewProps = {
   visible: boolean
@@ -38,10 +38,16 @@ function Preview(props: PreviewProps) {
       cid: props.clipping.id,
       bid: props.book.id,
       uid: props.clipping.creator.id,
-      theme: currentTheme
+      theme: currentTheme,
     }
     return getUTPLink(UTPService.clipping, data)
-  }, [props.clipping.id, props.book?.id, currentTheme])
+  }, [
+    props.clipping.id,
+    props.book?.id,
+    currentTheme,
+    props.book,
+    props.clipping.creator.id,
+  ])
 
   const { t } = useTranslation()
   return (
@@ -57,13 +63,17 @@ function Preview(props: PreviewProps) {
             onLoad={onImageLoad}
             onLoadStart={() => setLoading(true)}
             onError={onImageError}
-            className={'h-[812px] w-[375px] rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 object-cover'}
+            className={
+              'h-[812px] w-[375px] rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 object-cover'
+            }
             alt={t('app.common.loading') ?? 'loading'}
           />
           {loading && (
             <div className='absolute inset-0 flex justify-center items-center bg-slate-800 bg-opacity-80 backdrop-blur-sm rounded-lg'>
               <LoadingIcon className='w-10 h-10 animate-spin text-indigo-400' />
-              <span className='ml-3 text-white font-medium'>{t('app.common.loading')}</span>
+              <span className='ml-3 text-white font-medium'>
+                {t('app.common.loading')}
+              </span>
             </div>
           )}
         </div>
@@ -73,7 +83,9 @@ function Preview(props: PreviewProps) {
             <blockquote className='font-lxgw text-lg italic text-gray-700 dark:text-gray-300 border-l-4 border-indigo-500 pl-4 py-2'>
               <p>{props.clipping.content}</p>
               {props.book?.author && (
-                <footer className='text-sm text-gray-500 dark:text-gray-400 mt-2'>— {props.book.author}</footer>
+                <footer className='text-sm text-gray-500 dark:text-gray-400 mt-2'>
+                  — {props.book.author}
+                </footer>
               )}
             </blockquote>
           </div>
@@ -81,7 +93,9 @@ function Preview(props: PreviewProps) {
           <div className='w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-8' />
 
           <div className='w-full'>
-            <h6 className='text-sm font-semibold uppercase tracking-wider mb-4 text-gray-700 dark:text-gray-300'>Theme</h6>
+            <h6 className='text-sm font-semibold uppercase tracking-wider mb-4 text-gray-700 dark:text-gray-300'>
+              Theme
+            </h6>
             <ThemePicker
               className='w-full'
               current={currentTheme}
@@ -95,7 +109,7 @@ function Preview(props: PreviewProps) {
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
             className='text-white text-lg w-full bg-gradient-to-br from-indigo-500 to-teal-500 block text-center py-4 mt-6 rounded-md shadow-md hover:shadow-xl hover:from-indigo-600 hover:to-teal-600 transition-all duration-300 font-medium'
             target='_blank'
-            rel="noreferrer"
+            rel='noreferrer'
           >
             {t('app.clipping.save')}
           </a>

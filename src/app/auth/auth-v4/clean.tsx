@@ -1,7 +1,7 @@
 'use client'
+import { useEffect } from 'react'
 import { onCleanServerCookie } from '@/components/navigation-bar/logout'
 import profile from '@/utils/profile'
-import { useEffect } from 'react'
 
 function ForceClean() {
   useEffect(() => {

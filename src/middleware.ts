@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from './constants/storage'
 
 export function middleware(request: NextRequest) {
@@ -18,7 +18,11 @@ export function middleware(request: NextRequest) {
   if (!uid) {
     return NextResponse.next()
   }
-  if (uid && !url.pathname.includes('callback') && url.searchParams.has('clean')) {
+  if (
+    uid &&
+    !url.pathname.includes('callback') &&
+    url.searchParams.has('clean')
+  ) {
     request.cookies.delete(COOKIE_TOKEN_KEY)
     request.cookies.delete(USER_ID_KEY)
     return NextResponse.next()

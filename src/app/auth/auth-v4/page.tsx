@@ -1,15 +1,15 @@
-import React from 'react'
-import AuthV4Content from './content'
-import { Metadata } from 'next'
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import type { Metadata } from 'next'
+import type React from 'react'
+import GalleryBackgroundView from '@/components/galleryBackgroundView'
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
-import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import { duration3Days } from '@/hooks/book'
-import { PublicDataQuery, PublicDataDocument } from '@/schema/generated'
+import { PublicDataDocument, type PublicDataQuery } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
-import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
-import GalleryBackgroundView from '@/components/galleryBackgroundView'
+import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
 import ForceClean from './clean'
+import AuthV4Content from './content'
 
 export function generateMetadata(): Metadata {
   return authGenerateMetadata('auth/auth-v4')
@@ -20,22 +20,22 @@ async function Page() {
   const data = await client.query<PublicDataQuery>({
     query: PublicDataDocument,
     variables: {
-      limit: 50
+      limit: 50,
     },
-    fetchPolicy: 'network-only'
+    fetchPolicy: 'network-only',
   })
 
-  const dbIds = data.
-    data.
-    public.
-    books.
-    map(x => x.doubanId).
-    filter(x => x.length > 3) ?? []
+  const dbIds =
+    data.data.public.books.map((x) => x.doubanId).filter((x) => x.length > 3) ??
+    []
 
   const rq = getReactQueryClient()
   await rq.prefetchQuery({
     queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-    queryFn: () => wenquRequest<WenquSearchResponse>(`/books/search?dbIds=${dbIds.join('&dbIds=')}`),
+    queryFn: () =>
+      wenquRequest<WenquSearchResponse>(
+        `/books/search?dbIds=${dbIds.join('&dbIds=')}`
+      ),
     staleTime: duration3Days,
     gcTime: duration3Days,
   })
@@ -48,11 +48,14 @@ async function Page() {
         <GalleryBackgroundView publicData={data.data} />
         <div
           className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
-          style={{
-            '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
-            '--end-color': 'oklch(45.08% 0.133 252.21 / 77.28%)',
-            backgroundImage: 'radial-gradient(var(--start-color) 0%, var(--end-color) 100%)',
-          } as React.CSSProperties}
+          style={
+            {
+              '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
+              '--end-color': 'oklch(45.08% 0.133 252.21 / 77.28%)',
+              backgroundImage:
+                'radial-gradient(var(--start-color) 0%, var(--end-color) 100%)',
+            } as React.CSSProperties
+          }
         >
           <div className='w-full h-full bg-slate-200/5 backdrop-blur-xs flex justify-center items-center'>
             <AuthV4Content />

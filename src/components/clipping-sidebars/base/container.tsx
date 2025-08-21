@@ -1,5 +1,5 @@
+import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
-import { ReactNode } from 'react'
 
 type Props = {
   children: ReactNode
@@ -16,7 +16,7 @@ export function SidebarContainer({ children, className }: Props) {
         className
       )}
     >
-      <div className="relative">{children}</div>
+      <div className='relative'>{children}</div>
     </div>
   )
 }

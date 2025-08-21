@@ -1,4 +1,3 @@
-import React from 'react'
 import Switch from '@annatarhe/lake-ui/form-switch-field'
 
 type SimpleSwitcherProps = {
@@ -9,11 +8,7 @@ type SimpleSwitcherProps = {
 function SimpleSwitcher(props: SimpleSwitcherProps) {
   const { checked, onChange } = props
   return (
-    <Switch
-      value={checked}
-      onChange={e => onChange(e)}
-      label={undefined}
-    />
+    <Switch value={checked} onChange={(e) => onChange(e)} label={undefined} />
   )
 }
 

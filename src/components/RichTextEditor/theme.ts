@@ -1,6 +1,6 @@
-import { EditorThemeClasses } from 'lexical'
+import type { EditorThemeClasses } from 'lexical'
 
-export const LexicalTheme: EditorThemeClasses  = {
+export const LexicalTheme: EditorThemeClasses = {
   text: {
     underline: 'underline decoration-2 underline-offset-2',
     bold: 'font-semibold',
@@ -11,7 +11,8 @@ export const LexicalTheme: EditorThemeClasses  = {
     superscript: 'text-xs align-super',
   },
   link: 'text-blue-400 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 underline underline-offset-2 decoration-1 cursor-pointer transition-colors duration-200',
-  quote: 'my-4 pl-4 py-2 border-l-4 border-blue-400 bg-gray-50 dark:bg-zinc-800/50 rounded-r-lg italic text-gray-700 dark:text-zinc-300',
+  quote:
+    'my-4 pl-4 py-2 border-l-4 border-blue-400 bg-gray-50 dark:bg-zinc-800/50 rounded-r-lg italic text-gray-700 dark:text-zinc-300',
   list: {
     ol: 'list-decimal list-inside ml-2 space-y-1',
     ul: 'list-disc list-inside ml-2 space-y-1',
@@ -23,19 +24,26 @@ export const LexicalTheme: EditorThemeClasses  = {
     },
   },
   table: 'my-4 w-full border-collapse overflow-hidden rounded-lg shadow-sm',
-  tableCell: 'px-4 py-2 border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
-  tableCellHeader: 'px-4 py-2 border border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-700 font-semibold text-gray-900 dark:text-zinc-50',
-  tableRow: 'hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors duration-200',
+  tableCell:
+    'px-4 py-2 border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800',
+  tableCellHeader:
+    'px-4 py-2 border border-gray-200 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-700 font-semibold text-gray-900 dark:text-zinc-50',
+  tableRow:
+    'hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors duration-200',
   tableSelected: 'outline outline-2 outline-blue-400 outline-offset-[-2px]',
   tableCellSelected: 'bg-blue-50 dark:bg-blue-900/20',
-  tableCellActionButton: 'w-5 h-5 bg-white dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 rounded hover:bg-gray-100 dark:hover:bg-zinc-600 cursor-pointer',
+  tableCellActionButton:
+    'w-5 h-5 bg-white dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 rounded hover:bg-gray-100 dark:hover:bg-zinc-600 cursor-pointer',
   tableCellActionButtonContainer: 'absolute right-1 top-1 z-10',
   tableCellEditing: 'shadow-inner outline outline-2 outline-blue-400',
   tableCellPrimarySelected: 'bg-blue-100 dark:bg-blue-900/30',
-  tableCellResizer: 'absolute right-0 top-0 bottom-0 w-1 cursor-col-resize bg-blue-400 opacity-0 hover:opacity-100 transition-opacity',
+  tableCellResizer:
+    'absolute right-0 top-0 bottom-0 w-1 cursor-col-resize bg-blue-400 opacity-0 hover:opacity-100 transition-opacity',
   tableColumnSortedIndicator: 'ml-1 inline-block',
-  tableAddColumns: 'absolute -right-4 top-0 bottom-0 w-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700',
-  tableAddRows: 'absolute -bottom-4 left-0 right-0 h-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700',
+  tableAddColumns:
+    'absolute -right-4 top-0 bottom-0 w-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700',
+  tableAddRows:
+    'absolute -bottom-4 left-0 right-0 h-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-700',
   code: 'rounded-lg font-mono text-sm overflow-x-auto',
   codeHighlight: {
     atrule: 'text-purple-600 dark:text-purple-400',
@@ -69,8 +77,7 @@ export const LexicalTheme: EditorThemeClasses  = {
     url: 'text-cyan-600 dark:text-cyan-400',
     variable: 'text-red-600 dark:text-red-400',
   },
-  paragraph:
-            'my-3 leading-relaxed text-gray-700 dark:text-zinc-300',
+  paragraph: 'my-3 leading-relaxed text-gray-700 dark:text-zinc-300',
   heading: {
     h1: 'text-3xl font-bold my-6 text-gray-900 dark:text-zinc-50',
     h2: 'text-2xl font-bold my-5 text-gray-900 dark:text-zinc-50',
@@ -79,7 +86,8 @@ export const LexicalTheme: EditorThemeClasses  = {
     h5: 'text-base font-semibold my-2 text-gray-900 dark:text-zinc-50',
     h6: 'text-sm font-semibold my-2 text-gray-900 dark:text-zinc-50',
   },
-  hashtag: 'bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full text-sm font-medium',
+  hashtag:
+    'bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full text-sm font-medium',
   hr: 'my-6 border-0 h-px bg-gray-200 dark:bg-zinc-700',
   hrSelected: 'outline outline-2 outline-blue-400 outline-offset-2',
   image: 'max-w-full h-auto rounded-lg my-4',
@@ -89,7 +97,8 @@ export const LexicalTheme: EditorThemeClasses  = {
   indent: 'ml-8',
   ltr: 'text-left',
   rtl: 'text-right',
-  autocomplete: 'absolute z-50 mt-1 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg shadow-lg max-h-60 overflow-y-auto',
+  autocomplete:
+    'absolute z-50 mt-1 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg shadow-lg max-h-60 overflow-y-auto',
   blockCursor: 'absolute bg-black dark:bg-white opacity-50 animate-pulse',
   characterLimit: 'text-red-600 dark:text-red-400',
   embedBlock: {

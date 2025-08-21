@@ -1,6 +1,6 @@
-import React from 'react'
-import { useTranslation } from '@/i18n'
 import { WebhookIcon } from 'lucide-react'
+import type React from 'react'
+import { useTranslation } from '@/i18n'
 
 async function WebhooksLayout({ children }: { children: React.ReactNode }) {
   const { t } = await useTranslation()
@@ -12,17 +12,20 @@ async function WebhooksLayout({ children }: { children: React.ReactNode }) {
           <div className='p-3 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-4'>
             <WebhookIcon className='w-8 h-8 text-blue-600 dark:text-blue-400' />
           </div>
-          
+
           <h2 className='text-gray-900 dark:text-gray-100 text-2xl font-bold mb-3'>
             {t('app.settings.webhooks.title', 'Webhooks')}
           </h2>
-          
+
           <p className='text-gray-600 dark:text-gray-400 max-w-lg'>
-            {t('app.settings.webhooks.description', 'Connect your clippings to external services. Webhooks allow you to receive notifications when new clippings are added to your account.')}
+            {t(
+              'app.settings.webhooks.description',
+              'Connect your clippings to external services. Webhooks allow you to receive notifications when new clippings are added to your account.'
+            )}
           </p>
         </div>
       </div>
-      
+
       {/* Bottom content section */}
       <div className='bg-white dark:bg-gray-800/80 rounded-xl p-6 backdrop-blur-sm border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col justify-center'>
         {children}

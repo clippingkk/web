@@ -11,14 +11,14 @@ const config: NextConfig = {
   generateBuildId: () => {
     return process.env.GIT_COMMIT ?? ''
   },
-  
+
   // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
   // cacheMaxMemorySize: 0,
+  typedRoutes: true,
   experimental: {
     // ppr: true,
     // useLightningcss: true,
     // typedEnv: true,
-    // typedRoutes: true,
   },
   images: {
     domains: [
@@ -26,14 +26,16 @@ const config: NextConfig = {
       'img1.doubanio.com',
       'avatars.githubusercontent.com',
       'metadata.ens.domains',
-      'gateway.moralisipfs.com'
+      'gateway.moralisipfs.com',
     ],
   },
   env: {
     DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
     GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT || ''),
-    NEXT_PUBLIC_PP_TOKEN: JSON.stringify(process.env.NEXT_PUBLIC_PP_TOKEN || ''),
-    infuraKey: JSON.stringify(process.env.infuraKey || '')
+    NEXT_PUBLIC_PP_TOKEN: JSON.stringify(
+      process.env.NEXT_PUBLIC_PP_TOKEN || ''
+    ),
+    infuraKey: JSON.stringify(process.env.infuraKey || ''),
   },
   // webpack: (config, { webpack, isServer }) => {
   //   if (isServer) {

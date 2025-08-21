@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { WENQU_SIMPLE_TOKEN, WENQU_API_HOST } from '../constants/config'
+import { WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
+
 // import * as Sentry from '@sentry/react'
 
 type WenquErrorResponse = {
@@ -9,15 +10,18 @@ type WenquErrorResponse = {
 
 const cache = new Map<string, any>()
 
-export async function wenquRequest<T = any>(url: string, options: RequestInit = {}): Promise<T> {
+export async function wenquRequest<T = any>(
+  url: string,
+  options: RequestInit = {}
+): Promise<T> {
   options.headers = {
     ...(options.headers || {}),
-    'X-Simple-Check': WENQU_SIMPLE_TOKEN
+    'X-Simple-Check': WENQU_SIMPLE_TOKEN,
   }
   options.credentials = 'include'
   options.mode = 'cors'
   options.next = {
-    revalidate: 60 * 60 // 1 hour
+    revalidate: 60 * 60, // 1 hour
   }
 
   if (cache.has(url)) {
@@ -25,7 +29,10 @@ export async function wenquRequest<T = any>(url: string, options: RequestInit = 
   }
 
   try {
-    const response: (T & { error: any }) | WenquErrorResponse = await fetch(WENQU_API_HOST + url, options).then(res => res.json())
+    const response: (T & { error: any }) | WenquErrorResponse = await fetch(
+      WENQU_API_HOST + url,
+      options
+    ).then((res) => res.json())
     if ('error' in response) {
       throw new Error(response.error)
     }
@@ -38,16 +45,16 @@ export async function wenquRequest<T = any>(url: string, options: RequestInit = 
 }
 
 export interface WenquBookCoverImageInfo {
-  id: number;
-  blurHashValue: string;
-  height: number;
-  width: number;
-  ratio: number;
-  edges?: any;
+  id: number
+  blurHashValue: string
+  height: number
+  width: number
+  ratio: number
+  edges?: any
 }
 
 export interface WenquBookEdge {
-  imageInfo?: WenquBookCoverImageInfo;
+  imageInfo?: WenquBookCoverImageInfo
 }
 
 export interface WenquBook {

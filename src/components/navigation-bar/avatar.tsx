@@ -26,8 +26,8 @@ function AvatarOnNavigationBar(props: AvatarOnNavigationBarProps) {
         src={avatar}
         width={size}
         height={size}
-        alt="avatar"
-        className="rounded-full"
+        alt='avatar'
+        className='rounded-full'
       />
     </div>
   )

@@ -1,10 +1,7 @@
-import React from 'react'
 import HomePageSkeleton from './skeleton'
 
 function Loading() {
-  return (
-    <HomePageSkeleton />
-  )
+  return <HomePageSkeleton />
 }
 
 export default Loading

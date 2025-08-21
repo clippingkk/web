@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react'
 import { useApolloClient } from '@apollo/client'
-import { useSyncHomelessBookMutation } from '@/schema/generated'
-import { toast } from 'react-hot-toast'
-import { toastPromiseDefaultOption } from '@/services/misc'
-import { useTranslation } from '@/i18n/client'
 import { LinkIcon } from 'lucide-react'
+import { useCallback, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import { useSyncHomelessBookMutation } from '@/schema/generated'
+import { toastPromiseDefaultOption } from '@/services/misc'
 
 type HomelessBookSyncInputProps = {
   bookName: string
@@ -15,23 +15,28 @@ function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
   const [doubanId, setDoubanId] = useState('')
   const [doSyncHomelessBook] = useSyncHomelessBookMutation()
   const { t } = useTranslation()
-  
+
   const onConfirm = useCallback(() => {
     if (!doubanId.trim()) {
       toast.error(t('Please enter a valid Douban ID'))
       return
     }
-    
-    toast.promise(doSyncHomelessBook({
-      variables: {
-        title: props.bookName,
-        doubanID: doubanId
-      }
-    }), toastPromiseDefaultOption).then(() => {
-      client.resetStore()
-      setDoubanId('')
-    })
-  }, [doubanId, client, props.bookName, t])
+
+    toast
+      .promise(
+        doSyncHomelessBook({
+          variables: {
+            title: props.bookName,
+            doubanID: doubanId,
+          },
+        }),
+        toastPromiseDefaultOption
+      )
+      .then(() => {
+        client.resetStore()
+        setDoubanId('')
+      })
+  }, [doubanId, client, props.bookName, t, doSyncHomelessBook])
 
   return (
     <div className='flex items-center space-x-2'>

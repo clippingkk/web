@@ -2,8 +2,8 @@
 
 query fetchMyWebHooks($id: Int) {
   me(id: $id) {
-	  webhooks {
-		  ...webhookItemData
-	  }
+    webhooks {
+      ...webhookItemData
+    }
   }
 }

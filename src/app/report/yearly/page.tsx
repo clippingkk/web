@@ -1,15 +1,19 @@
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import type { Metadata } from 'next'
 import { generateMetadata as generateReportMetadata } from '@/components/og/og-with-report'
 import { duration3Days } from '@/hooks/book'
 import {
   FetchYearlyReportDocument,
-  FetchYearlyReportQuery,
-  FetchYearlyReportQueryVariables,
+  type FetchYearlyReportQuery,
+  type FetchYearlyReportQueryVariables,
 } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
-import { WenquBook, wenquRequest, WenquSearchResponse } from '@/services/wenqu'
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import { Metadata } from 'next'
+import {
+  type WenquBook,
+  type WenquSearchResponse,
+  wenquRequest,
+} from '@/services/wenqu'
 import ReportYearly from './content'
 
 type YearlyLegacyPageProps = {

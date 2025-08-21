@@ -1,10 +1,16 @@
 'use client'
-import React, { useMemo } from 'react'
-import { useReactTable, Row, getCoreRowModel, ColumnDef, flexRender } from '@tanstack/react-table'
-import HomelessBookSyncInput from './sync-input'
-import { UncheckBooksQueryQuery } from '@/schema/generated'
+import {
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  type Row,
+  useReactTable,
+} from '@tanstack/react-table'
 import { BookOpen } from 'lucide-react'
+import { useMemo } from 'react'
 import { useTranslation } from '@/i18n/client'
+import type { UncheckBooksQueryQuery } from '@/schema/generated'
+import HomelessBookSyncInput from './sync-input'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const homelessBookColumn: ColumnDef<homelessBookTableItem, any>[] = [
@@ -13,8 +19,8 @@ const homelessBookColumn: ColumnDef<homelessBookTableItem, any>[] = [
     accessorKey: 'name',
   },
   {
-    header: 'Action'
-  }
+    header: 'Action',
+  },
 ]
 
 type homelessBookTableItem = {
@@ -23,8 +29,11 @@ type homelessBookTableItem = {
 
 function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
   return (
-    <tr key={row.id} className='border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'>
-      {row.getVisibleCells().map(cell => {
+    <tr
+      key={row.id}
+      className='border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
+    >
+      {row.getVisibleCells().map((cell) => {
         if (cell.column.columnDef.header === 'Action') {
           return (
             <td key={cell.id} className='px-6 py-4'>
@@ -52,19 +61,22 @@ type Props = {
 function HomelessBooksTable(props: Props) {
   const { data } = props
   const { t } = useTranslation()
-  
+
   const tableData = useMemo(() => {
     const bs = data
     if (!bs) {
       return []
     }
-    return bs.map(x => ({ name: x.title } as homelessBookTableItem)) || ([] as homelessBookTableItem[])
+    return (
+      bs.map((x) => ({ name: x.title }) as homelessBookTableItem) ||
+      ([] as homelessBookTableItem[])
+    )
   }, [data])
-  
+
   const table = useReactTable({
     data: tableData,
     getCoreRowModel: getCoreRowModel(),
-    columns: homelessBookColumn
+    columns: homelessBookColumn,
   })
 
   return (
@@ -72,11 +84,17 @@ function HomelessBooksTable(props: Props) {
       <div className='overflow-x-auto'>
         <table className='w-full border-collapse'>
           <thead className='bg-gray-50 dark:bg-gray-800'>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map(column => (
-                  <th key={column.id} className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300'>
-                    {flexRender(column.column.columnDef.header, column.getContext())}
+                {headerGroup.headers.map((column) => (
+                  <th
+                    key={column.id}
+                    className='px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300'
+                  >
+                    {flexRender(
+                      column.column.columnDef.header,
+                      column.getContext()
+                    )}
                   </th>
                 ))}
               </tr>
@@ -84,12 +102,17 @@ function HomelessBooksTable(props: Props) {
           </thead>
           <tbody className='divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900'>
             {table.getRowModel().rows.length > 0 ? (
-              table.getRowModel().rows.map((row) => (
-                <HomelessBookTableRow row={row} key={row.id} />
-              ))
+              table
+                .getRowModel()
+                .rows.map((row) => (
+                  <HomelessBookTableRow row={row} key={row.id} />
+                ))
             ) : (
               <tr>
-                <td colSpan={homelessBookColumn.length} className='px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400'>
+                <td
+                  colSpan={homelessBookColumn.length}
+                  className='px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400'
+                >
                   {t('No homeless books found')}
                 </td>
               </tr>

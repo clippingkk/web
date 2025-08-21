@@ -1,6 +1,6 @@
 'use client'
-import { useEffect, useCallback } from 'react'
 import mixpanel from 'mixpanel-browser'
+import { useCallback, useEffect } from 'react'
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
@@ -11,7 +11,7 @@ export function usePageTrack(page: string, params?: any) {
       return
     }
     mixpanel.track(`pv:in:${page}`, {
-      ...(params || {})
+      ...(params || {}),
     })
     return () => {
       mixpanel.track(`pv:out:${page}`)
@@ -25,7 +25,7 @@ export function useActionTrack(action: string, params?: any) {
     if (__DEV__) {
       return
     }
-    mixpanel.track('action:' + action, params)
+    mixpanel.track(`action:${action}`, params)
   }, [action, params])
 }
 export function useTitle(title?: string) {
@@ -34,10 +34,9 @@ export function useTitle(title?: string) {
       return
     }
     const t = document.title
-    document.title = title + ' - clippingkk'
+    document.title = `${title} - clippingkk`
     return () => {
       document.title = t
     }
   }, [title])
 }
-

@@ -1,5 +1,6 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import type React from 'react'
+import { useEffect, useState } from 'react'
 
 type HideUntilLoadedProps = {
   imageToLoad: string
@@ -7,14 +8,14 @@ type HideUntilLoadedProps = {
 }
 
 function HideUntilLoaded(props: HideUntilLoadedProps) {
-  const [loaded,setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false)
   const [errored, setErrored] = useState(false)
 
   useEffect(() => {
     const img = document.createElement('img')
     setLoaded(false)
     setErrored(false)
-    img.onload=() => {
+    img.onload = () => {
       setLoaded(true)
     }
     img.onerror = () => {
@@ -23,9 +24,7 @@ function HideUntilLoaded(props: HideUntilLoadedProps) {
     img.src = props.imageToLoad
   }, [props.imageToLoad])
   if (errored) {
-    return (
-      props.children
-    )
+    return props.children
   }
 
   if (!loaded && process.browser) {

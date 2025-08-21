@@ -1,9 +1,8 @@
-import React from 'react'
-import AuthByGithub from '@/components/auth.github'
-import MetamaskButtonView from '@/components/auth/metamask'
-import AppleLoginButtonView from '@/components/auth/apple'
-import { AuthEvents, AuthMachine } from './auth.state'
 import toast from 'react-hot-toast'
+import AppleLoginButtonView from '@/components/auth/apple'
+import MetamaskButtonView from '@/components/auth/metamask'
+import AuthByGithub from '@/components/auth.github'
+import type { AuthEvents, AuthMachine } from './auth.state'
 
 type ThirdPartEntryProps = {
   machine: AuthMachine
@@ -22,7 +21,8 @@ function ThirdPartEntry(props: ThirdPartEntryProps) {
       <div
         onClickCapture={() => {
           onEvent({ type: 'APPLE_LOGIN' })
-        }}>
+        }}
+      >
         <AppleLoginButtonView
           version='v4'
           loading={machine.matches('appleAuthing')}
@@ -30,12 +30,12 @@ function ThirdPartEntry(props: ThirdPartEntryProps) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onError={(error: any) => {
             onEvent({ type: 'REVERT_TO_IDLE' })
-            toast.error('Auth by Apple: ' + error.error)
+            toast.error(`Auth by Apple: ${error.error}`)
           }}
           onSuccess={(resp) => {
             onEvent({
               type: 'APPLE_DATA_SUCCESS',
-              data: resp.authorization
+              data: resp.authorization,
             })
           }}
         />

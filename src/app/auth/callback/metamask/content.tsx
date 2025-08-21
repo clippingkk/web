@@ -1,8 +1,8 @@
 'use client'
-import React, { useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
+import AuthCallbackPageContainer from '@/components/auth/fake-layout'
 import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
 import { useBindWeb3AddressMutation } from '@/schema/generated'
-import AuthCallbackPageContainer from '@/components/auth/fake-layout'
 
 type AuthCallbackMetamaskProps = {
   address: string
@@ -16,21 +16,24 @@ function AuthCallbackMetamask(props: AuthCallbackMetamaskProps) {
     return {
       address,
       signature,
-      text: decodeURIComponent(text)
+      text: decodeURIComponent(text),
     }
   }, [address, signature, text])
 
   const [doBind, doBindResult] = useBindWeb3AddressMutation()
 
-  const onAuthCallback = useCallback((pn: string, code: string) => {
-    return doBind({
-      variables: {
-        phone: pn,
-        code,
-        payload: requestPayload
-      }
-    })
-  }, [doBind, requestPayload])
+  const onAuthCallback = useCallback(
+    (pn: string, code: string) => {
+      return doBind({
+        variables: {
+          phone: pn,
+          code,
+          payload: requestPayload,
+        },
+      })
+    },
+    [doBind, requestPayload]
+  )
 
   useAuthBy3rdPartSuccessed(
     doBindResult.called,
@@ -44,8 +47,8 @@ function AuthCallbackMetamask(props: AuthCallbackMetamaskProps) {
       doBind={() => {
         return doBind({
           variables: {
-            payload: requestPayload
-          }
+            payload: requestPayload,
+          },
         })
       }}
       loading={doBindResult.loading}

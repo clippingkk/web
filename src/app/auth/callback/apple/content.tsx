@@ -1,8 +1,11 @@
 'use client'
-import React, { useCallback, useMemo } from 'react'
-import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
-import { AppleLoginPlatforms, useBindAppleUniqueMutation } from '@/schema/generated'
+import { useCallback, useMemo } from 'react'
 import AuthCallbackPageContainer from '@/components/auth/fake-layout'
+import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
+import {
+  AppleLoginPlatforms,
+  useBindAppleUniqueMutation,
+} from '@/schema/generated'
 
 type AuthCallbackAppleProps = {
   idToken: string
@@ -16,21 +19,24 @@ function AuthCallbackApple(props: AuthCallbackAppleProps) {
       code: '',
       idToken,
       state: '',
-      platform: AppleLoginPlatforms.Web
+      platform: AppleLoginPlatforms.Web,
     }
   }, [idToken])
 
   const [doBind, doBindResult] = useBindAppleUniqueMutation()
 
-  const onAuthCallback = useCallback((pn: string, code: string) => {
-    return doBind({
-      variables: {
-        phone: pn,
-        code,
-        payload: requestPayload
-      }
-    })
-  }, [doBind, requestPayload])
+  const onAuthCallback = useCallback(
+    (pn: string, code: string) => {
+      return doBind({
+        variables: {
+          phone: pn,
+          code,
+          payload: requestPayload,
+        },
+      })
+    },
+    [doBind, requestPayload]
+  )
 
   useAuthBy3rdPartSuccessed(
     doBindResult.called,
@@ -45,8 +51,8 @@ function AuthCallbackApple(props: AuthCallbackAppleProps) {
       doBind={() => {
         return doBind({
           variables: {
-            payload: requestPayload
-          }
+            payload: requestPayload,
+          },
         })
       }}
       loading={doBindResult.loading}

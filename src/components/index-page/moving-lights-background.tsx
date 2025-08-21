@@ -126,7 +126,7 @@ function MovingLightsBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none absolute top-0 left-0 z-0 h-full w-full"
+      className='pointer-events-none absolute top-0 left-0 z-0 h-full w-full'
     />
   )
 }

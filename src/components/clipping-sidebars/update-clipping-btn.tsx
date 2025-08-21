@@ -1,9 +1,9 @@
 'use client'
-import BookInfoChanger from '@/components/book-info-changer/bookInfoChanger'
-import { useTranslation } from '@/i18n/client'
-import { Clipping, User } from '@/schema/generated'
 import { BookCopy } from 'lucide-react'
 import { useState } from 'react'
+import BookInfoChanger from '@/components/book-info-changer/bookInfoChanger'
+import { useTranslation } from '@/i18n/client'
+import type { Clipping, User } from '@/schema/generated'
 import {
   SidebarButton,
   SidebarContainer,
@@ -35,7 +35,7 @@ function UpdateClippingBtn({ clipping, me }: Props) {
         }}
       >
         <SidebarIcon>
-          <BookCopy className="h-full w-full" />
+          <BookCopy className='h-full w-full' />
         </SidebarIcon>
         <SidebarText>{t('app.clipping.update')}</SidebarText>
       </SidebarButton>

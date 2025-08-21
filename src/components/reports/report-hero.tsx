@@ -1,6 +1,5 @@
-import React from 'react'
-import { FetchYearlyReportQuery } from '../../schema/generated'
-import { WenquBook } from '../../services/wenqu'
+import type { FetchYearlyReportQuery } from '../../schema/generated'
+import type { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
 import styles from './report-hero.module.css'
 
@@ -19,7 +18,7 @@ function ReportHero(props: ReportHeroProps) {
           key={b.id}
           className={styles.cell}
           style={{
-            animationDelay: `${100 * (i + 1)}ms`
+            animationDelay: `${100 * (i + 1)}ms`,
           }}
         >
           <PublicBookItem book={b} />

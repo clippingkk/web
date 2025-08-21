@@ -18,7 +18,8 @@
       calc(var(--pointer-x, 0) * 1px) calc(var(--pointer-y, 0) * 1px),
     hsl(
       var(--hue, 210) calc(var(--saturation, 100) * 1%)
-        calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.1)
+        calc(var(--lightness, 70) * 1%) /
+      var(--bg-spot-opacity, 0.1)
     ),
     transparent
   );
@@ -35,7 +36,7 @@
 [data-glow]::before,
 [data-glow]::after {
   pointer-events: none;
-  content: '';
+  content: "";
   position: absolute;
   inset: calc(var(--border-size) * -1);
   border: var(--border-size) solid transparent;
@@ -45,7 +46,8 @@
     calc(100% + (2 * var(--border-size)));
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask:
+    linear-gradient(transparent, transparent), linear-gradient(white, white);
   mask-clip: padding-box, border-box;
   mask-composite: intersect;
 }
@@ -57,7 +59,8 @@
       calc(var(--pointer-x, 0) * 1px) calc(var(--pointer-y, 0) * 1px),
     hsl(
       var(--hue, 210) calc(var(--saturation, 100) * 1%)
-        calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)
+        calc(var(--lightness, 50) * 1%) /
+      var(--border-spot-opacity, 1)
     ),
     transparent 100%
   );

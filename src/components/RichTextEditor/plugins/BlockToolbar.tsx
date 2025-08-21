@@ -5,12 +5,13 @@ import { NodeEventPlugin } from '@lexical/react/LexicalNodeEventPlugin'
 import { useMutation } from '@tanstack/react-query'
 import {
   $getNearestNodeFromDOMNode,
-  LexicalNode,
+  type LexicalNode,
   ParagraphNode,
   RootNode,
 } from 'lexical'
 import { useCallback, useState } from 'react'
 import BlockToolbarView from '../BlockToolbarView'
+
 // import BlockToolbarView from '../BlockToolBarView'
 // import BlockToolbarView from '../../components/editor/block-toolbar'
 // import {
@@ -26,7 +27,7 @@ function BlockToolBar() {
   const [offsetY, setOffsetY] = useState(-1)
 
   const { mutate: doImproveParagraph } = useMutation({
-    mutationFn: (args: any) => {
+    mutationFn: (_args: any) => {
       return Promise.resolve(1)
       // return improveParagraph(args)
     },
@@ -43,7 +44,7 @@ function BlockToolBar() {
       //   },
       // )
     },
-    onSuccess: (data) => {
+    onSuccess: (_data) => {
       // if (!activeNode || !$isAIPenParagraphNode(activeNode)) {
       //   return
       // }
@@ -57,7 +58,7 @@ function BlockToolBar() {
       //   { tag: 'skip-scroll-into-view' },
       // )
     },
-    onError: (error) => {
+    onError: (_error) => {
       // if (!activeNode || !$isAIPenParagraphNode(activeNode)) {
       //   return
       // }
@@ -84,7 +85,7 @@ function BlockToolBar() {
     setActiveNode(node)
     setOffsetY(
       target.getBoundingClientRect().y -
-      (relatedTarget?.getBoundingClientRect().y ?? 0),
+        (relatedTarget?.getBoundingClientRect().y ?? 0)
     )
   }, [])
 
@@ -114,19 +115,19 @@ function BlockToolBar() {
         })
       })
     },
-    [activeNode],
+    [activeNode, doImproveParagraph, editor.getEditorState]
   )
 
   return (
     <>
       <NodeEventPlugin
         nodeType={ParagraphNode}
-        eventType="mouseenter"
+        eventType='mouseenter'
         eventListener={onMouseEnter}
       />
       <NodeEventPlugin
         nodeType={RootNode}
-        eventType="mouseleave"
+        eventType='mouseleave'
         eventListener={onMouseLeave}
       />
       <BlockToolbarView offsetY={offsetY} onLLMImprove={onLLMImprove} />

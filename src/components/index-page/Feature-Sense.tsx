@@ -1,15 +1,18 @@
-import React from 'react'
-import { useTranslation } from '@/i18n'
 import Image from 'next/image'
-import LockIcon from '../../assets/lock-security-protection-secure-safety-password-svgrepo-com.svg'
+import { useTranslation } from '@/i18n'
 import iOSWidgetImage from '../../assets/ios_widget.png'
+import LockIcon from '../../assets/lock-security-protection-secure-safety-password-svgrepo-com.svg'
 import DeviceIPhoneX from '../device/iPhoneX'
 
 async function FeatureSense() {
   const { t } = await useTranslation()
   return (
     <div className='flex items-center w-full justify-around py-16 flex-col'>
-      <h3 className={'lg:text-7xl text-4xl font-extrabold text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-indigo-300 to-blue-500 bg-clip-text text-transparent bg-linear-to-br'}>
+      <h3
+        className={
+          'lg:text-7xl text-4xl font-extrabold text-center max-w-xs mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-indigo-300 to-blue-500 bg-clip-text text-transparent bg-linear-to-br'
+        }
+      >
         {t('app.index.features.sense.title')}
       </h3>
 
@@ -24,7 +27,11 @@ async function FeatureSense() {
             />
           </DeviceIPhoneX>
           <div className='flex justify-center flex-col items-center lg:items-start'>
-            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br'}>
+            <h3
+              className={
+                'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br'
+              }
+            >
               {t('app.index.features.sense.f1')}
             </h3>
             <span className='text-center block dark:text-gray-100'>
@@ -35,7 +42,11 @@ async function FeatureSense() {
 
         <div className=' flex items-center justify-around my-24 lg:my-72 flex-col lg:flex-row'>
           <div className='flex justify-center flex-col items-center lg:items-start'>
-            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br'}>
+            <h3
+              className={
+                'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-blue-300 to-orange-400 bg-clip-text text-transparent bg-linear-to-br'
+              }
+            >
               {t('app.index.features.sense.f2')}
             </h3>
             <span className='text-center block dark:text-gray-100'>
@@ -55,7 +66,11 @@ async function FeatureSense() {
             <span className=' text-9xl select-none'>👍</span>
           </div>
           <div className='flex justify-center flex-col items-center lg:items-start'>
-            <h3 className={'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-indigo-300 to-purple-400 bg-clip-text text-transparent bg-linear-to-br mt-12 lg:mt-0'}>
+            <h3
+              className={
+                'lg:text-7xl font-lxgw font-bold text-4xl text-center mb-8 lg:mb-0 pb-4 flex overflow-x-visible from-indigo-300 to-purple-400 bg-clip-text text-transparent bg-linear-to-br mt-12 lg:mt-0'
+              }
+            >
               {t('app.index.features.sense.f3')}
             </h3>
             <span className='text-center block dark:text-gray-100'>

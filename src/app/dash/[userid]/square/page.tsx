@@ -1,19 +1,19 @@
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import type { Metadata } from 'next'
 import { generateMetadata as squareGenerateMetadata } from '@/components/og/og-with-square-page'
 import { APP_API_STEP_LIMIT } from '@/constants/config'
 import { duration3Days } from '@/hooks/book'
 import {
   FetchSquareDataDocument,
-  FetchSquareDataQuery,
-  FetchSquareDataQueryVariables,
+  type FetchSquareDataQuery,
+  type FetchSquareDataQueryVariables,
 } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import {
   doApolloServerQuery,
   getApolloServerClient,
 } from '@/services/apollo.server'
-import { wenquRequest, WenquSearchResponse } from '@/services/wenqu'
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import { Metadata } from 'next'
+import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
 import SquarePageContent from './content'
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -1,7 +1,7 @@
-import { useRef, useEffect } from 'react'
-import CKLexicalBaseEditor from './index'
-import { LexicalEditor } from 'lexical'
 import { $convertFromMarkdownString, TRANSFORMERS } from '@lexical/markdown'
+import type { LexicalEditor } from 'lexical'
+import { useEffect, useRef } from 'react'
+import CKLexicalBaseEditor from './index'
 
 type MarkdownPreviewProps = {
   md: string

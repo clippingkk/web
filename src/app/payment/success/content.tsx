@@ -1,9 +1,9 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
-import toast from 'react-hot-toast'
 import party from 'party-js'
+import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 import { getPaymentOrderInfo } from '@/services/payment'
 
 type PaymentSuccessContentProps = {
@@ -30,9 +30,8 @@ function PaymentSuccessContent(props: PaymentSuccessContentProps) {
     }
   }, [data])
 
-
   useEffect(() => {
-    if (!data || data.paymentStatus != 'paid') {
+    if (!data || data.paymentStatus !== 'paid') {
       return
     }
     party.confetti(document.querySelector('body')!)
@@ -40,18 +39,9 @@ function PaymentSuccessContent(props: PaymentSuccessContentProps) {
 
   return (
     <div className=' w-full h-full flex flex-col items-center justify-center dark:text-gray-100 pt-20'>
-      <span
-        className=' text-6xl'
-      >Congratulation! </span>
-      <span
-        className=' text-2xl mt-20'
-      >
-        Welcome to join Premium
-      </span>
-      <Link
-        href={homeLink}
-        className='mt-8'
-      >
+      <span className=' text-6xl'>Congratulation! </span>
+      <span className=' text-2xl mt-20'>Welcome to join Premium</span>
+      <Link href={homeLink as any} className='mt-8'>
         go to my profile
       </Link>
     </div>

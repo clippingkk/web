@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react'
-import MetamaskLogo from '../icons/metamask.logo.svg'
-import IconAppleLogo from '../icons/apple.logo.svg'
-import GithubLogo from '../icons/github.logo.svg'
-import MetamaskBindButton from './metamask.bind'
-import AppleLoginBind from './apple.bind'
-import GithubBindButton from './github.bind'
+import { useMemo } from 'react'
 import { useTranslation } from '@/i18n/client'
 import { useFetchExternalAccountQuery } from '@/schema/generated'
+import IconAppleLogo from '../icons/apple.logo.svg'
+import GithubLogo from '../icons/github.logo.svg'
+import MetamaskLogo from '../icons/metamask.logo.svg'
 import AccountCard from './account-card'
+import AppleLoginBind from './apple.bind'
+import GithubBindButton from './github.bind'
+import MetamaskBindButton from './metamask.bind'
 
 type ExternalAccountListProps = {
   uid: number
@@ -16,8 +16,8 @@ type ExternalAccountListProps = {
 function ExternalAccountList(props: ExternalAccountListProps) {
   const { data } = useFetchExternalAccountQuery({
     variables: {
-      id: props.uid
-    }
+      id: props.uid,
+    },
   })
 
   const address = useMemo(() => {
@@ -31,15 +31,15 @@ function ExternalAccountList(props: ExternalAccountListProps) {
   const { t } = useTranslation()
 
   return (
-    <div className="w-full">
-      <h3 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
+    <div className='w-full'>
+      <h3 className='mb-4 text-xl font-bold text-gray-800 dark:text-gray-200'>
         {t('app.profile.externalAccountList')}
       </h3>
-      
-      <div className="flex flex-col gap-4">
+
+      <div className='flex flex-col gap-4'>
         <AccountCard
           icon={<MetamaskLogo size={24} />}
-          title="Metamask"
+          title='Metamask'
           isBound={address.length > 0}
           accountInfo={address}
           bindComponent={<MetamaskBindButton />}
@@ -47,15 +47,15 @@ function ExternalAccountList(props: ExternalAccountListProps) {
 
         <AccountCard
           icon={<IconAppleLogo size={24} />}
-          title="Apple"
+          title='Apple'
           isBound={!!appleUnique}
           accountInfo={t('app.common.bound')}
           bindComponent={<AppleLoginBind />}
         />
-        
+
         <AccountCard
           icon={<GithubLogo size={24} />}
-          title="GitHub"
+          title='GitHub'
           isBound={!!data?.me.externalInfo.githubBound}
           accountInfo={t('app.common.bound')}
           bindComponent={<GithubBindButton />}

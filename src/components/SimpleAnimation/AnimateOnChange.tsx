@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef, useState } from 'react'
+import type React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { animations } from './theme'
 
 type AnimateOnChangeProps = {
@@ -33,7 +34,7 @@ function AnimateOnChange(props: AnimateOnChangeProps) {
       return
     }
     setAnimation('out')
-  }, [children])
+  }, [])
 
   const showDisplayContent = () => {
     if (animation === 'out') {
@@ -46,8 +47,8 @@ function AnimateOnChange(props: AnimateOnChangeProps) {
     display: 'inline-block',
     transition: !className && `opacity ${durationOut}ms ease-out`,
     opacity: !className && animation === 'out' ? 0 : 1,
-    animationDuration: durationOut + 'ms',
-    ...style
+    animationDuration: `${durationOut}ms`,
+    ...style,
   }
 
   switch (animation) {

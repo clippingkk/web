@@ -1,5 +1,5 @@
-import { Clipping } from '../../schema/generated'
-import { WenquBook } from '../../services/wenqu'
+import type { Clipping } from '../../schema/generated'
+import type { WenquBook } from '../../services/wenqu'
 
 export type BasicUserInfo = {
   id: number
@@ -15,7 +15,7 @@ export type PostShareConfig = {
     avatarUrl: string
     username: string
   }
-  padding: number,
+  padding: number
   baseTextSize: number
   textFont: string[]
   clipping: Clipping
@@ -35,5 +35,3 @@ export interface IPostShareRender {
   renderQRCode(): Promise<void>
   resizePosterHeight(): Promise<void>
 }
-
-

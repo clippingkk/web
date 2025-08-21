@@ -1,7 +1,7 @@
 .hero {
   /* background-image: url('../../assets/coffee-blur.jpg'); */
   /* background-image: url('https://wx1.sinaimg.cn/large/b8861941gy1gjuy0vzev3j22c0340e82.jpg'); */
-  background-image: url('../../assets/clippingkk-hero-bg.jpg');
+  background-image: url("../../assets/clippingkk-hero-bg.jpg");
   background-size: cover;
   width: 100%;
   height: 100vh;

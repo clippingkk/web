@@ -1,4 +1,3 @@
-import React from 'react'
 import Loading2Icon from '@/components/icons/loading2.svg'
 
 function DashboardLoadingPage() {

@@ -76,7 +76,7 @@ function FloatingMenuPlugin({
     const unregisterCommand = editor.registerCommand(
       ON_SELECTION_CHANGE,
       $handleSelectionChange,
-      NORMAL_PRIORITY,
+      NORMAL_PRIORITY
     )
     return unregisterCommand
   }, [editor, $handleSelectionChange])
@@ -90,7 +90,7 @@ function FloatingMenuPlugin({
     // Adding show to the dependency array causes an issue if
     // a range selection is dismissed by navigating via arrow keys.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPointerReleased, $handleSelectionChange, editor])
+  }, [isPointerReleased, $handleSelectionChange, editor, show])
 
   if (!MenuComponent) return null
 
@@ -98,7 +98,7 @@ function FloatingMenuPlugin({
     <div
       ref={ref}
       aria-hidden={!show}
-      className="absolute z-50 duration-100 transition-all top-0 left-0"
+      className='absolute z-50 duration-100 transition-all top-0 left-0'
       style={{
         transform: `translate(${coords?.x}px, ${coords?.y}px)`,
         // top: coords?.y,
@@ -111,7 +111,7 @@ function FloatingMenuPlugin({
     >
       <MenuComponent editor={editor} shouldShow={show} />
     </div>,
-    element ?? DEFAULT_DOM_ELEMENT,
+    element ?? DEFAULT_DOM_ELEMENT
   )
 }
 

@@ -1,31 +1,33 @@
-import { ForwardedRef, forwardRef, useCallback } from 'react'
-
-import { EditorState, LexicalEditor } from 'lexical'
-
 import { CodeHighlightNode, CodeNode } from '@lexical/code'
+import { HashtagNode } from '@lexical/hashtag'
 import { LinkNode } from '@lexical/link'
 import { ListItemNode, ListNode } from '@lexical/list'
 import { MarkNode } from '@lexical/mark'
-import { $convertFromMarkdownString, $convertToMarkdownString, TRANSFORMERS } from '@lexical/markdown'
+import {
+  $convertFromMarkdownString,
+  $convertToMarkdownString,
+  TRANSFORMERS,
+} from '@lexical/markdown'
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 // import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import { EditorRefPlugin } from '@lexical/react/LexicalEditorRefPlugin'
-import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
-import { HashtagNode } from '@lexical/hashtag'
-import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
+import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
-import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
+import type { EditorState, LexicalEditor } from 'lexical'
+import { type ForwardedRef, forwardRef, useCallback } from 'react'
 import toast from 'react-hot-toast'
+import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
 import { LexicalTheme } from './theme'
 
 // define your extension array
@@ -39,21 +41,21 @@ type LexicalEditorProps = {
   onContentChange?: (content: string) => void
 }
 
-function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<LexicalEditor>) {
-  const {
-    className,
-    editable,
-    markdown,
-    onContentChange,
-    style
-  } = props
+function CKLexicalBaseEditor(
+  props: LexicalEditorProps,
+  editor: ForwardedRef<LexicalEditor>
+) {
+  const { className, editable, markdown, onContentChange, style } = props
 
-  const onChange = useCallback((es: EditorState) => {
-    es.read(() => {
-      const md = $convertToMarkdownString(TRANSFORMERS)
-      onContentChange?.(md)
-    })
-  }, [onContentChange])
+  const onChange = useCallback(
+    (es: EditorState) => {
+      es.read(() => {
+        const md = $convertToMarkdownString(TRANSFORMERS)
+        onContentChange?.(md)
+      })
+    },
+    [onContentChange]
+  )
 
   return (
     <LexicalComposer
@@ -88,7 +90,7 @@ function CKLexicalBaseEditor(props: LexicalEditorProps, editor: ForwardedRef<Lex
           $convertFromMarkdownString(markdown ?? '', TRANSFORMERS),
       }}
     >
-      <div className="flex w-full relative">
+      <div className='flex w-full relative'>
         <RichTextPlugin
           contentEditable={
             <ContentEditable className={className} style={style} />

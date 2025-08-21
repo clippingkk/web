@@ -1,7 +1,4 @@
 'use client'
-import BrandFlomoLogo from '@/assets/brand-flomo.png'
-import { useTranslation } from '@/i18n/client'
-import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,6 +7,9 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
+import BrandFlomoLogo from '@/assets/brand-flomo.png'
+import { useTranslation } from '@/i18n/client'
+import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)
@@ -61,16 +61,16 @@ function ExportToFlomo() {
     <>
       <button
         onClick={() => setVisible(true)}
-        className="flex h-full w-full flex-col items-center justify-center rounded-lg bg-white p-4 transition-colors duration-200 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none dark:bg-gray-800 dark:hover:bg-gray-700/80 dark:focus:ring-indigo-400 dark:focus:ring-offset-gray-900"
+        className='flex h-full w-full flex-col items-center justify-center rounded-lg bg-white p-4 transition-colors duration-200 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none dark:bg-gray-800 dark:hover:bg-gray-700/80 dark:focus:ring-indigo-400 dark:focus:ring-offset-gray-900'
       >
         <Image
-          className="mb-3"
+          className='mb-3'
           src={BrandFlomoLogo}
           width={BrandFlomoLogo.width / 2.5}
           height={BrandFlomoLogo.height / 2.5}
-          alt="flomo"
+          alt='flomo'
         />
-        <span className="font-medium text-gray-800 dark:text-gray-200">
+        <span className='font-medium text-gray-800 dark:text-gray-200'>
           {t('app.settings.export.flomo.title', 'Flomo')}
         </span>
       </button>
@@ -79,25 +79,25 @@ function ExportToFlomo() {
         onClose={() => setVisible(false)}
         title={t('app.settings.export.flomo.title')}
       >
-        <div className="w-full p-4">
-          <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+        <div className='w-full p-4'>
+          <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
             <Controller
-              name="endpoint"
+              name='endpoint'
               control={control}
               render={({ field }) => (
                 <InputField
                   {...field}
-                  className="flex w-full items-center"
-                  placeholder="Flomo Endpoint"
+                  className='flex w-full items-center'
+                  placeholder='Flomo Endpoint'
                   error={errors.endpoint?.message}
                 />
               )}
             />
-            <div className="mt-4 w-full text-right">
+            <div className='mt-4 w-full text-right'>
               <button
-                type="submit"
+                type='submit'
                 disabled={isSubmitting}
-                className="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none active:scale-95 active:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-gray-900"
+                className='rounded-lg bg-blue-600 px-5 py-2 font-medium text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none active:scale-95 active:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-gray-900'
               >
                 {isSubmitting
                   ? t('app.common.loading', 'Loading...')

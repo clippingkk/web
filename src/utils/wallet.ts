@@ -1,4 +1,4 @@
-import { MetaMaskSDK } from '@metamask/sdk-react'
+import type { MetaMaskSDK } from '@metamask/sdk-react'
 
 const LoginWelcomeText = 'Welcome to the ClippingKK~ \n It`s your nonce: '
 
@@ -25,10 +25,8 @@ async function signDataByWeb3(m: MetaMaskSDK) {
   return {
     address,
     signature,
-    text
+    text,
   }
 }
 
-export {
-  signDataByWeb3
-}
+export { signDataByWeb3 }

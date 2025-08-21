@@ -1,6 +1,6 @@
-import { IN_APP_CHANNEL } from '@/services/channel'
-import ClippingSidebar from './clipping-sidebar'
+import type { IN_APP_CHANNEL } from '@/services/channel'
 import { getClippingData } from '../data'
+import ClippingSidebar from './clipping-sidebar'
 
 type PageProps = {
   params: Promise<{ clippingid: string; userid: string }>
@@ -11,7 +11,7 @@ async function SidebarContent(props: PageProps) {
   const { clippingid } = await props.params
   const iac = (await props.searchParams).iac
   const cid = ~~clippingid
-  
+
   const { clipping, me, bookData } = await getClippingData(cid)
 
   return (
@@ -19,7 +19,7 @@ async function SidebarContent(props: PageProps) {
       clipping={clipping}
       book={bookData}
       me={me}
-      inAppChannel={parseInt(iac) as IN_APP_CHANNEL}
+      inAppChannel={parseInt(iac, 10) as IN_APP_CHANNEL}
     />
   )
 }

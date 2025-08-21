@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useHover } from '@/hooks/dom'
 
@@ -15,7 +14,9 @@ type AvatarProps = {
 
 function Avatar(props: AvatarProps) {
   const { isPremium } = props
-  const avatar = props.img.startsWith('http') ? props.img : `${CDN_DEFAULT_DOMAIN}/${props.img}`
+  const avatar = props.img.startsWith('http')
+    ? props.img
+    : `${CDN_DEFAULT_DOMAIN}/${props.img}`
 
   let cls = props.className || ''
 
@@ -24,18 +25,22 @@ function Avatar(props: AvatarProps) {
   }
 
   if (isPremium) {
-    cls += ' px-1 py-1 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 rounded-full'
+    cls +=
+      ' px-1 py-1 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 rounded-full'
   }
 
   const { ref, isHovering } = useHover<HTMLDivElement>()
 
   if (props.img === '') {
     return (
-      <div className={'rounded-full bg-gray-500 animate-pulse ' + cls} onClick={props.onClick} />
+      <div
+        className={`rounded-full bg-gray-500 animate-pulse ${cls}`}
+        onClick={props.onClick}
+      />
     )
   }
   return (
-    <div className={'relative ' + cls} ref={ref}>
+    <div className={`relative ${cls}`} ref={ref}>
       <img
         src={avatar}
         alt={props.name}
@@ -47,7 +52,9 @@ function Avatar(props: AvatarProps) {
           onClick={props.onClick}
         >
           {isHovering && (
-            <span className=' text-white with-fade-in select-none text-lg'>Edit</span>
+            <span className=' text-white with-fade-in select-none text-lg'>
+              Edit
+            </span>
           )}
         </div>
       )}

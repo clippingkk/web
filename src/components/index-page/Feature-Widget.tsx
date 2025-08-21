@@ -1,7 +1,8 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
 import type { ClippingData } from '@annatarhe/clippingkk-widget'
-import React, { useCallback, useRef, useState } from 'react'
+import type React from 'react'
+import { useCallback, useRef, useState } from 'react'
+import { useTranslation } from '@/i18n/client'
 
 if (typeof window !== 'undefined') {
   import('@annatarhe/clippingkk-widget').then(({ register }) => {
@@ -17,7 +18,7 @@ function FeatureWidget({ widgetClippingData }: Props) {
   const { t } = useTranslation()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [perspective, setPerspective] = useState(900)
+  const [perspective, _setPerspective] = useState(900)
 
   const containerDOM = useRef<HTMLDivElement | null>(null)
   const contentDOM = useRef<HTMLDivElement | null>(null)
@@ -52,7 +53,7 @@ function FeatureWidget({ widgetClippingData }: Props) {
 
   return (
     <div
-      className="flex w-full flex-col items-center justify-around py-16 lg:flex-row lg:py-64"
+      className='flex w-full flex-col items-center justify-around py-16 lg:flex-row lg:py-64'
       onMouseMove={onMouseMove}
     >
       <div
@@ -82,15 +83,15 @@ function FeatureWidget({ widgetClippingData }: Props) {
           </blockquote> */}
           <clippingkk-web-widget
             clippingid={~~widgetClippingData.id}
-            theme="dark"
+            theme='dark'
             clippingdata={JSON.stringify(widgetClippingData)}
-            className="font-lxgw p-4"
+            className='font-lxgw p-4'
           />
           {/* widget end */}
         </div>
       </div>
 
-      <div className="flex flex-col items-center lg:items-start">
+      <div className='flex flex-col items-center lg:items-start'>
         <h3
           className={
             'font-lxgw mb-8 flex overflow-x-visible bg-linear-to-br from-orange-300 to-blue-300 bg-clip-text pb-4 text-center text-4xl font-bold text-transparent lg:mb-0 lg:text-7xl'
@@ -98,7 +99,7 @@ function FeatureWidget({ widgetClippingData }: Props) {
         >
           {t('app.index.features.open.f4')}
         </h3>
-        <span className="block text-center dark:text-gray-100">
+        <span className='block text-center dark:text-gray-100'>
           {t('app.index.features.open.f4Desc')}
         </span>
       </div>

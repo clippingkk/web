@@ -1,12 +1,6 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
 import {
-  FetchMyWebHooksQuery,
-  useDeleteAWebHookMutation,
-  WebHookStep,
-} from '@/schema/generated'
-import {
-  ColumnDef,
+  type ColumnDef,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
@@ -15,6 +9,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import {
+  type FetchMyWebHooksQuery,
+  useDeleteAWebHookMutation,
+  WebHookStep,
+} from '@/schema/generated'
 import WebhookTable from '../components/webhook-table'
 
 type Props = {
@@ -63,22 +63,22 @@ function WebHooksContent(props: Props) {
           header: 'action',
           cell: ({ row }) => {
             return (
-              <div className="flex items-center gap-3">
+              <div className='flex items-center gap-3'>
                 <Link
                   href={`/dash/${userId}/settings/webhooks/${row.getValue('id')}`}
-                  className="group flex items-center gap-2 rounded-lg bg-indigo-500/90 px-4 py-2 font-medium text-white shadow-md backdrop-blur-sm transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg dark:bg-indigo-600/90 dark:hover:bg-indigo-700"
+                  className='group flex items-center gap-2 rounded-lg bg-indigo-500/90 px-4 py-2 font-medium text-white shadow-md backdrop-blur-sm transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg dark:bg-indigo-600/90 dark:hover:bg-indigo-700'
                 >
-                  <span className="transition-transform group-hover:translate-x-0.5">
+                  <span className='transition-transform group-hover:translate-x-0.5'>
                     {t('View Detail')}
                   </span>
                 </Link>
                 <button
-                  className="group flex items-center gap-2 rounded-lg bg-red-500/90 px-4 py-2 font-medium text-white shadow-md backdrop-blur-sm transition-all duration-300 hover:bg-red-600 hover:shadow-lg dark:bg-red-600/90 dark:hover:bg-red-700"
+                  className='group flex items-center gap-2 rounded-lg bg-red-500/90 px-4 py-2 font-medium text-white shadow-md backdrop-blur-sm transition-all duration-300 hover:bg-red-600 hover:shadow-lg dark:bg-red-600/90 dark:hover:bg-red-700'
                   onClick={() =>
                     deleteMutation({ variables: { id: row.getValue('id') } })
                   }
                 >
-                  <Trash2 className="h-4 w-4 transition-transform group-hover:scale-110" />
+                  <Trash2 className='h-4 w-4 transition-transform group-hover:scale-110' />
                   <span>{t('app.common.delete')}</span>
                 </button>
               </div>
@@ -86,7 +86,7 @@ function WebHooksContent(props: Props) {
           },
         },
       ],
-      [t]
+      [t, deleteMutation, userId]
     )
 
   const table = useReactTable({

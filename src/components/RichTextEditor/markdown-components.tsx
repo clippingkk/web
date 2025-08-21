@@ -1,6 +1,6 @@
+import type React from 'react'
+import type { Components } from 'react-markdown'
 import { cn } from '@/lib/utils'
-import React from 'react'
-import { Components } from 'react-markdown'
 
 type HeadingProps = {
   level: 1 | 2 | 3 | 4 | 5 | 6
@@ -33,87 +33,87 @@ export const MarkdownComponents: Components = {
   h5: ({ children }) => <Heading level={5}>{children}</Heading>,
   h6: ({ children }) => <Heading level={6}>{children}</Heading>,
   p: ({ children }) => (
-    <p className="mb-6 leading-7 text-gray-700 not-first:mt-6 dark:text-gray-300">
+    <p className='mb-6 leading-7 text-gray-700 not-first:mt-6 dark:text-gray-300'>
       {children}
     </p>
   ),
   a: ({ href, children }) => (
     <a
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="bg-linear-to-r from-blue-600 to-blue-400 bg-[length:0%_2px] bg-left-bottom bg-no-repeat px-1 text-blue-600 transition-all hover:bg-[length:100%_2px] hover:text-blue-500 dark:from-blue-400 dark:to-blue-300 dark:text-blue-400 dark:hover:text-blue-300"
+      target='_blank'
+      rel='noopener noreferrer'
+      className='bg-linear-to-r from-blue-600 to-blue-400 bg-[length:0%_2px] bg-left-bottom bg-no-repeat px-1 text-blue-600 transition-all hover:bg-[length:100%_2px] hover:text-blue-500 dark:from-blue-400 dark:to-blue-300 dark:text-blue-400 dark:hover:text-blue-300'
     >
       {children}
     </a>
   ),
   strong: ({ children }) => (
-    <strong className="font-bold text-gray-900 dark:text-white">
+    <strong className='font-bold text-gray-900 dark:text-white'>
       {children}
     </strong>
   ),
   em: ({ children }) => (
-    <em className="text-gray-800 italic dark:text-gray-200">{children}</em>
+    <em className='text-gray-800 italic dark:text-gray-200'>{children}</em>
   ),
   code: ({ children }) => (
-    <code className="rounded-md bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-900 dark:bg-gray-800 dark:text-gray-100">
+    <code className='rounded-md bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-900 dark:bg-gray-800 dark:text-gray-100'>
       {children}
     </code>
   ),
   pre: ({ children }) => (
-    <pre className="mt-6 mb-4 overflow-x-auto rounded-lg bg-gray-100 p-4 dark:bg-gray-800/50">
+    <pre className='mt-6 mb-4 overflow-x-auto rounded-lg bg-gray-100 p-4 dark:bg-gray-800/50'>
       {children}
     </pre>
   ),
   blockquote: ({ children }) => (
-    <blockquote className="mt-6 border-l-4 border-gray-300 bg-linear-to-r from-gray-100 to-transparent pl-6 text-gray-700 italic dark:border-gray-700 dark:from-gray-800 dark:to-transparent dark:text-gray-400">
+    <blockquote className='mt-6 border-l-4 border-gray-300 bg-linear-to-r from-gray-100 to-transparent pl-6 text-gray-700 italic dark:border-gray-700 dark:from-gray-800 dark:to-transparent dark:text-gray-400'>
       {children}
     </blockquote>
   ),
   ul: ({ children }) => (
-    <ul className="my-6 ml-6 list-disc space-y-2 text-gray-700 dark:text-gray-300 [&>li]:mt-2">
+    <ul className='my-6 ml-6 list-disc space-y-2 text-gray-700 dark:text-gray-300 [&>li]:mt-2'>
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="my-6 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300 [&>li]:mt-2">
+    <ol className='my-6 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300 [&>li]:mt-2'>
       {children}
     </ol>
   ),
   li: ({ children }) => <li>{children}</li>,
   hr: () => (
-    <hr className="my-8 h-1 w-full rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-80 shadow-sm backdrop-blur-sm dark:from-indigo-600 dark:via-violet-600 dark:to-purple-700" />
+    <hr className='my-8 h-1 w-full rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-80 shadow-sm backdrop-blur-sm dark:from-indigo-600 dark:via-violet-600 dark:to-purple-700' />
   ),
   img: ({ src, alt }) => (
     <img
       src={src}
       alt={alt}
-      className="my-8 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-gray-800 dark:bg-gray-900/50"
+      className='my-8 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-gray-800 dark:bg-gray-900/50'
     />
   ),
   table: ({ children }) => (
-    <div className="my-6 w-full overflow-y-auto">
-      <table className="w-full border-collapse text-sm">{children}</table>
+    <div className='my-6 w-full overflow-y-auto'>
+      <table className='w-full border-collapse text-sm'>{children}</table>
     </div>
   ),
   thead: ({ children }) => (
-    <thead className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50">
+    <thead className='border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50'>
       {children}
     </thead>
   ),
   tbody: ({ children }) => <tbody>{children}</tbody>,
   tr: ({ children }) => (
-    <tr className="border-b border-gray-100 last:border-0 dark:border-gray-800">
+    <tr className='border-b border-gray-100 last:border-0 dark:border-gray-800'>
       {children}
     </tr>
   ),
   th: ({ children }) => (
-    <th className="border-r border-gray-100 p-4 text-left font-medium text-gray-900 last:border-0 dark:border-gray-800 dark:text-gray-100">
+    <th className='border-r border-gray-100 p-4 text-left font-medium text-gray-900 last:border-0 dark:border-gray-800 dark:text-gray-100'>
       {children}
     </th>
   ),
   td: ({ children }) => (
-    <td className="border-r border-gray-100 p-4 text-gray-700 last:border-0 dark:border-gray-800 dark:text-gray-300">
+    <td className='border-r border-gray-100 p-4 text-gray-700 last:border-0 dark:border-gray-800 dark:text-gray-300'>
       {children}
     </td>
   ),

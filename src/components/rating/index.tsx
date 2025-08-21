@@ -1,5 +1,5 @@
-import { cn } from '@/utils/cn'
 import { Star } from 'lucide-react'
+import { cn } from '@/utils/cn'
 
 interface Props {
   /** rating from 0 to 10 */

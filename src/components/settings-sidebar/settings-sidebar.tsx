@@ -1,9 +1,14 @@
 'use client'
-import { useTranslation } from '@/i18n/client'
+import {
+  Cog8ToothIcon,
+  DocumentArrowDownIcon,
+  GlobeAltIcon,
+  QueueListIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
-import { Cog8ToothIcon, DocumentArrowDownIcon, GlobeAltIcon, QueueListIcon, UserIcon } from '@heroicons/react/24/outline'
+import { useTranslation } from '@/i18n/client'
 import LinkIndicator from '../link-indicator'
 
 type SettingsSidebarProps = {
@@ -20,11 +25,32 @@ function SettingsSidebar({ title }: SettingsSidebarProps) {
   const activeKey = match ? match[2] : ''
 
   const tabs = [
-    { id: 'web', label: t('app.settings.title'), icon: <Cog8ToothIcon className='w-4 h-4' /> },
-    { id: 'orders', label: t('app.settings.orders.title'), icon: <QueueListIcon className='w-4 h-4' /> },
-    { id: 'webhooks', label: t('app.settings.webhook.title'), icon: <GlobeAltIcon className='w-4 h-4' /> },
-    { id: 'exports', label: t('app.settings.export.title'), icon: <DocumentArrowDownIcon className='w-4 h-4' /> },
-    { id: 'account', label: t('app.settings.account'), icon: <UserIcon className='w-4 h-4' />, className: 'ml-auto' }
+    {
+      id: 'web',
+      label: t('app.settings.title'),
+      icon: <Cog8ToothIcon className='w-4 h-4' />,
+    },
+    {
+      id: 'orders',
+      label: t('app.settings.orders.title'),
+      icon: <QueueListIcon className='w-4 h-4' />,
+    },
+    {
+      id: 'webhooks',
+      label: t('app.settings.webhook.title'),
+      icon: <GlobeAltIcon className='w-4 h-4' />,
+    },
+    {
+      id: 'exports',
+      label: t('app.settings.export.title'),
+      icon: <DocumentArrowDownIcon className='w-4 h-4' />,
+    },
+    {
+      id: 'account',
+      label: t('app.settings.account'),
+      icon: <UserIcon className='w-4 h-4' />,
+      className: 'ml-auto',
+    },
   ]
 
   return (
@@ -37,25 +63,33 @@ function SettingsSidebar({ title }: SettingsSidebarProps) {
           {tabs.map((tab) => (
             <Link
               key={tab.id}
-              href={`${basePath}/${tab.id}`}
+              href={`${basePath}/${tab.id}` as any}
               className={`
                 group flex items-center gap-3 w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ease-in-out
                 ${tab.className || ''}
-                ${activeKey === tab.id
-              ? 'bg-gradient-to-r from-blue-600/20 to-blue-500/10 dark:from-blue-500/20 dark:to-blue-400/10 text-blue-700 dark:text-blue-400 shadow-sm'
-              : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-slate-700/30 hover:translate-x-1'}
+                ${
+                  activeKey === tab.id
+                    ? 'bg-gradient-to-r from-blue-600/20 to-blue-500/10 dark:from-blue-500/20 dark:to-blue-400/10 text-blue-700 dark:text-blue-400 shadow-sm'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-slate-700/30 hover:translate-x-1'
+                }
               `}
             >
               <LinkIndicator>
-                <span className={`
-                ${activeKey === tab.id 
-              ? 'text-blue-600 dark:text-blue-400'
-              : 'text-slate-500 dark:text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400'}
-              `}>
+                <span
+                  className={`
+                ${
+                  activeKey === tab.id
+                    ? 'text-blue-600 dark:text-blue-400'
+                    : 'text-slate-500 dark:text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400'
+                }
+              `}
+                >
                   {tab.icon}
                 </span>
               </LinkIndicator>
-              <span className={`transition-all duration-200 ${activeKey === tab.id ? 'font-semibold' : ''}`}>
+              <span
+                className={`transition-all duration-200 ${activeKey === tab.id ? 'font-semibold' : ''}`}
+              >
                 {tab.label}
               </span>
               {activeKey === tab.id && (

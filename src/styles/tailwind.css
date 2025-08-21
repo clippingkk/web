@@ -1,6 +1,6 @@
 @plugin '@tailwindcss/forms';
 
-@import 'tw-animate-css';
+@import "tw-animate-css";
 
 @source '../../node_modules/@annatarhe/lake-ui/dist/**/*.js';
 
@@ -92,7 +92,7 @@
  * https://github.com/orgs/mantinedev/discussions/1672
  */
 @layer tailwind {
-  @import 'tailwindcss';
+  @import "tailwindcss";
 }
 
 @layer base {
@@ -100,22 +100,22 @@
     font-family: LxgwWenKai;
     font-weight: 400;
     font-display: swap;
-    src: url('https://ck-cdn.annatarhe.cn/bhgPRXaEBMlsd2UvkcGNXD5zLCTAUCE0/LXGWWenKai-Regular.woff2')
-      format('woff2');
+    src: url("https://ck-cdn.annatarhe.cn/bhgPRXaEBMlsd2UvkcGNXD5zLCTAUCE0/LXGWWenKai-Regular.woff2")
+      format("woff2");
   }
   @font-face {
     font-family: LxgwWenKai;
     font-weight: 200;
     font-display: swap;
-    src: url('https://ck-cdn.annatarhe.cn/xyL5MwkKJC94mPLwKMPaqE8vJ0qncqUV/LXGWWenKai-Light.woff2')
-      format('woff2');
+    src: url("https://ck-cdn.annatarhe.cn/xyL5MwkKJC94mPLwKMPaqE8vJ0qncqUV/LXGWWenKai-Light.woff2")
+      format("woff2");
   }
   @font-face {
     font-family: LxgwWenKai;
     font-weight: 700;
     font-display: swap;
-    src: url('https://ck-cdn.annatarhe.cn/0vXoq9sQ3zl8Ber7Pev0uwaMJfSrf0px/LXGWWenKai-Bold.woff2')
-      format('woff2');
+    src: url("https://ck-cdn.annatarhe.cn/0vXoq9sQ3zl8Ber7Pev0uwaMJfSrf0px/LXGWWenKai-Bold.woff2")
+      format("woff2");
   }
 }
 

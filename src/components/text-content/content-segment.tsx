@@ -1,6 +1,5 @@
-import React from 'react'
-import { FetchClippingQuery } from '../../schema/generated'
 import { AppFeatures } from '../../constants/features'
+import type { FetchClippingQuery } from '../../schema/generated'
 
 type ContentSegmentProps = {
   noun?: FetchClippingQuery['clipping']['richContent']['nouns'][0]
@@ -17,9 +16,7 @@ type ContentSegmentProps = {
 // ])
 
 function ContentSegment(props: ContentSegmentProps) {
-  const {
-    segment,
-  } = props
+  const { segment } = props
   // const { t } = useTranslation()
 
   if (!AppFeatures.enableNounExplainer) {
@@ -31,7 +28,6 @@ function ContentSegment(props: ContentSegmentProps) {
   // if (symbolList.has(segment)) {
   //   return <span>{segment}</span>
   // }
-
 
   // if (creatable && !noun) {
   //   return (

@@ -1,7 +1,6 @@
-import React from 'react'
-import AuthCallbackApple from './content'
+import type { Metadata } from 'next'
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
-import { Metadata } from 'next'
+import AuthCallbackApple from './content'
 
 type AppleCallbackPageProps = {
   params: Promise<object>
@@ -14,9 +13,7 @@ export function generateMetadata(): Metadata {
 
 async function AppleCallbackPage(props: AppleCallbackPageProps) {
   const idToken = (await props.searchParams).i
-  return (
-    <AuthCallbackApple idToken={idToken} />
-  )
+  return <AuthCallbackApple idToken={idToken} />
 }
 
 export default AppleCallbackPage

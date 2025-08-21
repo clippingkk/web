@@ -31,19 +31,25 @@ export function init() {
         },
         ko: {
           translation: ko,
-        }
+        },
       },
       react: {
-        useSuspense: false
+        useSuspense: false,
       },
       fallbackLng: 'zh',
       interpolation: {
-        escapeValue: false
+        escapeValue: false,
       },
       detection: {
-        order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator'],
+        order: [
+          'querystring',
+          'cookie',
+          'localStorage',
+          'sessionStorage',
+          'navigator',
+        ],
         caches: ['localStorage', 'cookie'],
-      }
+      },
     })
   return instance
 }

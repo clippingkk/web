@@ -1,8 +1,8 @@
-import Comment from './comment'
 import { MessageSquare } from 'lucide-react'
-import { getClippingData } from '../data'
-import CommentBox from './commentBox'
 import { useTranslation } from '@/i18n'
+import { getClippingData } from '../data'
+import Comment from './comment'
+import CommentBox from './commentBox'
 
 type PageProps = {
   params: Promise<{ clippingid: string; userid: string }>
@@ -13,7 +13,7 @@ async function CommentsContent(props: PageProps) {
   const cid = ~~clippingid
 
   const { t } = await useTranslation()
-  
+
   const { clipping, me, bookData } = await getClippingData(cid)
 
   if (clipping && me) {
@@ -22,8 +22,11 @@ async function CommentsContent(props: PageProps) {
         <CommentBox me={me} book={bookData} clipping={clipping} />
         {
           <div className='py-4'>
-            {clipping.comments.map(m => (
-              <div key={m.id} className='transition-all duration-200 hover:translate-x-1'>
+            {clipping.comments.map((m) => (
+              <div
+                key={m.id}
+                className='transition-all duration-200 hover:translate-x-1'
+              >
                 <Comment comment={m} currentUser={me} />
               </div>
             ))}

@@ -1,4 +1,3 @@
-import { useTranslation } from '@/i18n/client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import SelectField from '@annatarhe/lake-ui/form-select-field'
 import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
@@ -8,6 +7,7 @@ import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
+import { useTranslation } from '@/i18n/client'
 import {
   NounScope,
   useCreateNounMutationMutation,
@@ -124,23 +124,23 @@ function NounEditContent(props: NounEditContentProps) {
 
   if (id > 0 && loading) {
     return (
-      <div className="flex min-h-60 items-center justify-center">
-        <Loader className="h-8 w-8 animate-spin text-[#045fab]" />
+      <div className='flex min-h-60 items-center justify-center'>
+        <Loader className='h-8 w-8 animate-spin text-[#045fab]' />
       </div>
     )
   }
 
   return (
-    <div className="w-full">
+    <div className='w-full'>
       <form onSubmit={onSubmit}>
         <Controller
-          name="id"
+          name='id'
           control={control}
           disabled
           render={({ field }) => (
             <InputField
               {...field}
-              type="number"
+              type='number'
               label={t('app.nouns.form.id.label')}
               disabled
             />
@@ -148,7 +148,7 @@ function NounEditContent(props: NounEditContentProps) {
         />
 
         <Controller
-          name="scope"
+          name='scope'
           control={control}
           render={({ field }) => (
             <SelectField
@@ -171,7 +171,7 @@ function NounEditContent(props: NounEditContentProps) {
         />
 
         <Controller
-          name="noun"
+          name='noun'
           control={control}
           render={({ field }) => (
             <InputField
@@ -183,7 +183,7 @@ function NounEditContent(props: NounEditContentProps) {
         />
 
         <Controller
-          name="content"
+          name='content'
           control={control}
           render={({ field }) => (
             <TextareaField
@@ -195,12 +195,12 @@ function NounEditContent(props: NounEditContentProps) {
           )}
         />
 
-        <div className="my-8 border-t border-gray-300/20 dark:border-gray-700/30" />
+        <div className='my-8 border-t border-gray-300/20 dark:border-gray-700/30' />
 
-        <div className="flex justify-end gap-4">
+        <div className='flex justify-end gap-4'>
           <button
-            type="button"
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+            type='button'
+            className='rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
             onClick={() => {
               onClose()
               reset()
@@ -210,13 +210,13 @@ function NounEditContent(props: NounEditContentProps) {
           </button>
 
           <button
-            type="submit"
+            type='submit'
             disabled={createLoading || updateLoading}
-            className="rounded-md bg-[#045fab] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:opacity-70"
+            className='rounded-md bg-[#045fab] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:opacity-70'
           >
             {createLoading || updateLoading ? (
-              <span className="flex items-center gap-2">
-                <Loader className="h-4 w-4 animate-spin" />
+              <span className='flex items-center gap-2'>
+                <Loader className='h-4 w-4 animate-spin' />
                 {t('app.nouns.form.submitting')}
               </span>
             ) : (

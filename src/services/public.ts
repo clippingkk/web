@@ -1,10 +1,10 @@
-import { User } from '@/schema/generated'
+import type { User } from '@/schema/generated'
 import { request } from './ajax'
-import { IHttpBook, covertHttpBook2Book } from './books'
+import { covertHttpBook2Book, type IHttpBook } from './books'
 
 export type TopHttpResponse = {
   users: Pick<User, 'id' | 'name' | 'avatar'>[]
-  books: IHttpBook[],
+  books: IHttpBook[]
 }
 
 export async function getTop() {
@@ -12,6 +12,6 @@ export async function getTop() {
 
   return {
     books: response.books.map(covertHttpBook2Book),
-    users: response.users
+    users: response.users,
   }
 }

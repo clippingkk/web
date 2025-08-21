@@ -3,7 +3,7 @@ let support: boolean
 
 export enum ImageTheme {
   dark,
-  light
+  light,
 }
 
 export function supportsWebp(): Promise<boolean> {
@@ -11,11 +11,12 @@ export function supportsWebp(): Promise<boolean> {
     return Promise.resolve(support)
   }
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const webp = new Image()
 
-    webp.src = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA='
-     
+    webp.src =
+      'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA='
+
     webp.onload = webp.onerror = () => {
       support = webp.height === 1
       return resolve(support)
@@ -47,20 +48,21 @@ export function supportsWebp(): Promise<boolean> {
 // https://awik.io/determine-color-bright-dark-using-javascript/
 // http://alienryderflex.com/hsp.html
 export function getTheme(r: number, g: number, b: number): ImageTheme {
-  const hsp = Math.sqrt(
-    0.299 * (r * r) +
-    0.587 * (g * g) +
-    0.114 * (b * b)
-  )
+  const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
 
   return hsp > 127.5 ? ImageTheme.light : ImageTheme.dark
 }
 
 export function rgbToHex(r: number, g: number, b: number) {
-  return '#' + [r, g, b].map(x => {
-    const hex = x.toString(16)
-    return hex.length === 1 ? '0' + hex : hex
-  }).join('')
+  return (
+    '#' +
+    [r, g, b]
+      .map((x) => {
+        const hex = x.toString(16)
+        return hex.length === 1 ? `0${hex}` : hex
+      })
+      .join('')
+  )
 }
 
 /**
@@ -75,17 +77,17 @@ export function shadeColor(color: string, percent: number) {
   let G = parseInt(color.substring(3, 5), 16)
   let B = parseInt(color.substring(5, 7), 16)
 
-  R = ~~(R * (100 + percent) / 100)
-  G = ~~(G * (100 + percent) / 100)
-  B = ~~(B * (100 + percent) / 100)
-  R = (R < 255) ? R : 255
-  G = (G < 255) ? G : 255
-  B = (B < 255) ? B : 255
+  R = ~~((R * (100 + percent)) / 100)
+  G = ~~((G * (100 + percent)) / 100)
+  B = ~~((B * (100 + percent)) / 100)
+  R = R < 255 ? R : 255
+  G = G < 255 ? G : 255
+  B = B < 255 ? B : 255
 
-  const RR = ((R.toString(16).length == 1) ? '0' + R.toString(16) : R.toString(16))
-  const GG = ((G.toString(16).length == 1) ? '0' + G.toString(16) : G.toString(16))
-  const BB = ((B.toString(16).length == 1) ? '0' + B.toString(16) : B.toString(16))
-  return '#' + RR + GG + BB
+  const RR = R.toString(16).length === 1 ? `0${R.toString(16)}` : R.toString(16)
+  const GG = G.toString(16).length === 1 ? `0${G.toString(16)}` : G.toString(16)
+  const BB = B.toString(16).length === 1 ? `0${B.toString(16)}` : B.toString(16)
+  return `#${RR}${GG}${BB}`
 }
 
 export function invertColor(hex: string) {
@@ -104,7 +106,7 @@ export function invertColor(hex: string) {
     g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
     b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16)
   // pad each with zeros and return
-  return '#' + padZero(r) + padZero(g) + padZero(b)
+  return `#${padZero(r)}${padZero(g)}${padZero(b)}`
 }
 
 export function hexToRGB(hex: string): number[] {
@@ -116,7 +118,7 @@ export function hexToRGB(hex: string): number[] {
   return [
     parseInt(result[1], 16),
     parseInt(result[2], 16),
-    parseInt(result[3], 16)
+    parseInt(result[3], 16),
   ]
 }
 

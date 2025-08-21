@@ -1,10 +1,10 @@
-import { useTranslation } from '@/i18n/client'
-import { useBindWeb3AddressMutation } from '@/schema/generated'
-import { signDataByWeb3 } from '@/utils/wallet'
 import { useApolloClient } from '@apollo/client'
 import { useSDK } from '@metamask/sdk-react'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
+import { useTranslation } from '@/i18n/client'
+import { useBindWeb3AddressMutation } from '@/schema/generated'
+import { signDataByWeb3 } from '@/utils/wallet'
 import WithLoading from '../with-loading'
 
 type MetamaskBindButtonProps = {
@@ -46,12 +46,12 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
           toast.error(err.message)
         })
     )
-  }, [])
+  }, [client.resetStore, doBind, metamaskSDK, props.onBound, t])
 
   return (
     <WithLoading loading={doBindResult.loading}>
       <button
-        className="flex w-full items-center justify-center rounded-sm bg-purple-400 px-4 py-2 duration-150 hover:scale-105 hover:shadow-lg disabled:bg-gray-400 disabled:hover:scale-100 disabled:hover:shadow-none"
+        className='flex w-full items-center justify-center rounded-sm bg-purple-400 px-4 py-2 duration-150 hover:scale-105 hover:shadow-lg disabled:bg-gray-400 disabled:hover:scale-100 disabled:hover:shadow-none'
         onClick={onMetamaskLogin}
       >
         {t('app.common.bind')}
