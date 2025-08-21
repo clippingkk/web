@@ -12,7 +12,11 @@ This is the **ClippingKK web application** - a Next.js 15 application for managi
 - `pnpm dev` - Start development server on port 3101
 - `pnpm build` - Build for production (runs GraphQL codegen first)
 - `pnpm test` - Run Jest tests
-- `pnpm lint` - Run ESLint
+- `pnpm test -- [path/to/test]` - Run a specific test file
+- `pnpm test -- --watch` - Run tests in watch mode
+- `pnpm lint` - Run Biome linter
+- `pnpm lint:fix` - Auto-fix linting issues with Biome
+- `pnpm format` - Format code with Biome
 - `pnpm codegen` - Generate GraphQL types from schema
 
 **Additional commands:**
@@ -76,46 +80,42 @@ const dehydratedState = dehydrate(rq)
 - `codegen.yml` - GraphQL code generation
 - `next.config.ts` - Next.js config with image domains
 - `tailwind.config.js` - UI styling configuration
+- `biome.json` - Linting and formatting rules
 
 **Core Services:**
-- `src/services/gql.ts` - Apollo Client setup
+- `src/services/apollo.server.ts` - Server-side Apollo Client setup
+- `src/services/apollo.shard.ts` - Shared Apollo configuration
 - `src/services/wenqu.ts` - External book service API
 - `src/services/urls.ts` - URL constants and routing
 
 **Generated Code:**
 - `src/gql/generated.tsx` - GraphQL types and hooks (auto-generated)
+- `src/schema/generated.tsx` - GraphQL schema types (auto-generated)
 - `src/schema/` - GraphQL schema definitions
 
 ## Testing
 
-- **Framework**: Jest with TypeScript support
+- **Framework**: Jest with TypeScript support via ts-jest preset
 - **Main test**: `/test/main.test.ts`
 - **Coverage**: Uses v8 provider with text/lcov output
 - **Setup**: `/test/setup.ts` for global test configuration
+- **Environment**: jest-environment-jsdom for React component testing
 
-## Special Considerations
-
-### GraphQL Schema Updates
+## GraphQL Schema Updates
 When schema changes occur:
 1. Download new schema from GraphQL endpoint
 2. Place in `src/schema/` directory  
 3. Run `pnpm codegen` to regenerate TypeScript types
 
-### Environment Variables
+## Environment Variables
 - `CACHE_REDIS_URI` - Redis connection for caching
 - `RSC_LOGGED_INFO_SECRET` - Server component logging
 - `NEXT_PUBLIC_PP_TOKEN` - PromptPal integration token
 
-### State Management Guidelines
+## State Management Guidelines
 - Use XState for complex UI flows with multiple states/transitions
 - Use React Query for server state management and caching
 - Combine both for auth flows and data-heavy operations
-
-### Component Development
-- Follow existing naming conventions (kebab-case dirs, PascalCase files)
-- Use generated GraphQL types for all data operations
-- Implement proper loading states and error boundaries
-- Consider server/client component boundaries for optimal performance
 
 ## UI Style Guidelines
 
