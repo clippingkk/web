@@ -28,16 +28,14 @@ function UncheckedPageContent({ profile }: Props) {
     <div>
       <Divider title={t('app.home.unchecked')} />
       <MasonryContainer>
-        <>
-          {clippingsData?.book.clippings.map((clipping) => (
-            <ClippingItem
-              item={clipping}
-              domain={domain}
-              key={clipping.id}
-              inAppChannel={IN_APP_CHANNEL.clippingFromUser}
-            />
-          ))}
-        </>
+        {clippingsData?.book.clippings.map((clipping) => (
+          <ClippingItem
+            item={clipping}
+            domain={domain}
+            key={clipping.id}
+            inAppChannel={IN_APP_CHANNEL.clippingFromUser}
+          />
+        ))}
       </MasonryContainer>
     </div>
   )
