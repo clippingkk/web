@@ -52,7 +52,7 @@ class CKBaseJSBrdige {
     setupWebViewJavascriptBridge((bridge: any) => {
       if (isAndroid) {
         // 初始化
-        bridge.init((message: any, responseCallback: any) => {
+        bridge.init((_message: any, responseCallback: any) => {
           var data = {
             'Javascript Responds': 'Wee!',
           }

@@ -25,7 +25,7 @@ export function useActionTrack(action: string, params?: any) {
     if (__DEV__) {
       return
     }
-    mixpanel.track('action:' + action, params)
+    mixpanel.track(`action:${action}`, params)
   }, [action, params])
 }
 export function useTitle(title?: string) {
@@ -34,7 +34,7 @@ export function useTitle(title?: string) {
       return
     }
     const t = document.title
-    document.title = title + ' - clippingkk'
+    document.title = `${title} - clippingkk`
     return () => {
       document.title = t
     }

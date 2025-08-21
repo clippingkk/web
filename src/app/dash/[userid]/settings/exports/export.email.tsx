@@ -57,16 +57,16 @@ function ExportToEmail() {
   return (
     <React.Fragment>
       <button
-        type="button"
-        className="rounded-md bg-gradient-to-br from-indigo-400 to-cyan-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
+        type='button'
+        className='rounded-md bg-gradient-to-br from-indigo-400 to-cyan-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none'
         onClick={() => setVisible(true)}
       >
         <Image
           src={BrandNotionLogo}
           width={BrandNotionLogo.width}
           height={BrandNotionLogo.height}
-          className="px-4 py-4"
-          alt="notion"
+          className='px-4 py-4'
+          alt='notion'
         />
       </button>
       <Modal
@@ -74,37 +74,37 @@ function ExportToEmail() {
         onClose={() => setVisible(false)}
         title={t('app.settings.export.notion.title')}
       >
-        <div className="w-full">
+        <div className='w-full'>
           <iframe
-            src="//player.bilibili.com/player.html?aid=503430935&bvid=BV1Tg411G7gG&cid=349347987&page=1"
-            scrolling="no"
-            allow="fullscreen"
-            className="m-auto hidden max-h-96 w-144 border-0 lg:block"
-            height="768px"
-            width="1024px"
+            src='//player.bilibili.com/player.html?aid=503430935&bvid=BV1Tg411G7gG&cid=349347987&page=1'
+            scrolling='no'
+            allow='fullscreen'
+            className='m-auto hidden max-h-96 w-144 border-0 lg:block'
+            height='768px'
+            width='1024px'
           />
           <form
-            className="flex w-full flex-col items-center justify-center"
+            className='flex w-full flex-col items-center justify-center'
             onSubmit={handleSubmit(onSubmit)}
           >
             <Controller
-              name="notionToken"
+              name='notionToken'
               control={control}
               render={({ field }) => (
-                <InputField {...field} name="notionToken" />
+                <InputField {...field} name='notionToken' />
               )}
             />
             <Controller
-              name="notionPageId"
+              name='notionPageId'
               control={control}
               render={({ field }) => (
-                <InputField {...field} name="notionPageId" />
+                <InputField {...field} name='notionPageId' />
               )}
             />
-            <div className="w-full text-right">
+            <div className='w-full text-right'>
               <button
-                type="submit"
-                className="rounded-md bg-gradient-to-br from-indigo-400 to-cyan-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
+                type='submit'
+                className='rounded-md bg-gradient-to-br from-indigo-400 to-cyan-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none'
               >
                 {t('app.settings.export.notion.submit')}
               </button>

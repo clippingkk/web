@@ -83,7 +83,7 @@ class ClippingTextParser {
 
     // 如果是 location 类型的则前面加 #
     if (pageAt.includes('-') && !pageAt.startsWith('#')) {
-      pageAt = '#' + pageAt.trim()
+      pageAt = `#${pageAt.trim()}`
     }
 
     this.processingItem.pageAt = pageAt
@@ -99,10 +99,10 @@ class ClippingTextParser {
         .replace(/日/, '/')
         .replace(/星期[\u4e00-\u9fa5]/, '')
       if (dateStr.includes('上午')) {
-        dateStr = dateStr.replace(/上午/g, '') + ' AM'
+        dateStr = `${dateStr.replace(/上午/g, '')} AM`
       }
       if (dateStr.includes('下午')) {
-        dateStr = dateStr.replace(/下午/g, '') + ' PM'
+        dateStr = `${dateStr.replace(/下午/g, '')} PM`
       }
     }
 

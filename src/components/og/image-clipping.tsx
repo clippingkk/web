@@ -1,4 +1,3 @@
-import React from 'react'
 import type { WenquBook } from '../../services/wenqu'
 
 type ClippingOpenGraphImageProps = {
@@ -10,7 +9,7 @@ type ClippingOpenGraphImageProps = {
 const logoSize = 80
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const maxLines = 7
+const _maxLines = 7
 
 function OGImageClipping(props: ClippingOpenGraphImageProps) {
   const { content, b, logoSrc } = props
@@ -33,7 +32,7 @@ function OGImageClipping(props: ClippingOpenGraphImageProps) {
   }
 
   if (content.length > 23 * 17) {
-    renderContent = content.slice(0, 23 * 15) + '...'
+    renderContent = `${content.slice(0, 23 * 15)}...`
   }
 
   return (

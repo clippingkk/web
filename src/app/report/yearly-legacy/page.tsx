@@ -1,6 +1,5 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
-import React from 'react'
 import { generateMetadata as generateReportMetadata } from '@/components/og/og-with-report'
 import { duration3Days } from '@/hooks/book'
 import {

@@ -90,13 +90,13 @@ function CKLexicalBaseEditor(
           $convertFromMarkdownString(markdown ?? '', TRANSFORMERS),
       }}
     >
-      <div className="flex w-full relative">
+      <div className='flex w-full relative'>
         <RichTextPlugin
           contentEditable={
             <ContentEditable className={className} style={style} />
           }
           placeholder={
-            <div className="absolute top-7 left-5 text-gray-400 dark:text-zinc-500 pointer-events-none select-none">
+            <div className='absolute top-7 left-5 text-gray-400 dark:text-zinc-500 pointer-events-none select-none'>
               Enter some text...
             </div>
           }

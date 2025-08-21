@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { SignInWithAppleOptions } from '../../constants/config'
 
 const scriptURL =
@@ -9,7 +9,7 @@ function SignInWithApple() {
   const [_, setLoading] = useState(true)
 
   useEffect(() => {
-    const has = document.querySelector('#' + scriptDomId)
+    const has = document.querySelector(`#${scriptDomId}`)
     if (has) {
       setLoading(false)
       return

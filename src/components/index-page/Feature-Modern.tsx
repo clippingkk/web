@@ -45,7 +45,7 @@ fn parse_en_file() {
 async function FeatureModern() {
   const { t } = await useTranslation()
   return (
-    <div className="flex w-full flex-col items-center justify-around py-16">
+    <div className='flex w-full flex-col items-center justify-around py-16'>
       <h3
         className={
           'mb-8 flex max-w-xs overflow-x-visible bg-linear-to-br from-red-400 to-pink-500 bg-clip-text pb-4 text-center text-4xl font-extrabold text-transparent lg:mb-0 lg:text-7xl'
@@ -55,17 +55,17 @@ async function FeatureModern() {
       </h3>
 
       <div>
-        <div className="flex flex-col items-center">
+        <div className='flex flex-col items-center'>
           <Image
             src={WebArchImage}
-            alt="Web arch"
+            alt='Web arch'
             width={WebArchImage.width}
             height={WebArchImage.height}
             style={{
               maxWidth: '100vw',
             }}
           />
-          <div className="flex flex-col items-center justify-center lg:items-start">
+          <div className='flex flex-col items-center justify-center lg:items-start'>
             <h3
               className={
                 'font-lxgw mb-8 flex overflow-x-visible bg-linear-to-br from-blue-300 to-orange-400 bg-clip-text pb-4 text-center text-4xl font-bold text-transparent lg:mb-0 lg:text-7xl'
@@ -73,23 +73,23 @@ async function FeatureModern() {
             >
               {t('app.index.features.modern.f1')}
             </h3>
-            <span className="block text-center dark:text-gray-100">
+            <span className='block text-center dark:text-gray-100'>
               {t('app.index.features.modern.f1Desc')}
             </span>
           </div>
           <div></div>
         </div>
 
-        <div className="mt-40 flex flex-col justify-around lg:flex-row">
+        <div className='mt-40 flex flex-col justify-around lg:flex-row'>
           <div
-            className="px-4 lg:px-0"
+            className='px-4 lg:px-0'
             style={{
               maxWidth: '100vw',
             }}
           >
-            <CodeHighlight lang="c" code={exampleCode} />
+            <CodeHighlight lang='c' code={exampleCode} />
           </div>
-          <div className="flex flex-col items-center justify-center lg:items-start">
+          <div className='flex flex-col items-center justify-center lg:items-start'>
             <h3
               className={
                 'font-lxgw mt-12 mb-8 flex overflow-x-visible bg-linear-to-br from-blue-300 to-orange-400 bg-clip-text pb-4 text-center text-4xl font-bold text-transparent lg:mt-0 lg:mb-0 lg:text-7xl'
@@ -97,7 +97,7 @@ async function FeatureModern() {
             >
               {t('app.index.features.modern.f2')}
             </h3>
-            <span className="block text-center dark:text-gray-100">
+            <span className='block text-center dark:text-gray-100'>
               {t('app.index.features.modern.f2Desc')}
             </span>
           </div>

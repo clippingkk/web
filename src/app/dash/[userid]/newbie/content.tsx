@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import ButtonSimple from '@/components/button/button-simple'
 import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
@@ -59,36 +59,36 @@ function NewbiePageContent({ uid }: { uid: number }) {
   const [avatar, setAvatar] = useState<File | null>(null)
 
   return (
-    <div className="w-full h-full pt-10">
-      <h2 className="text-3xl text-center dark:text-white">
+    <div className='w-full h-full pt-10'>
+      <h2 className='text-3xl text-center dark:text-white'>
         Update my profile
       </h2>
-      <div className="mt-4">
+      <div className='mt-4'>
         <ProgressBlock value={phase + 1} max={6}>
           <div>
-            <h3 className="w-full text-center mt-2 block dark:text-white">
+            <h3 className='w-full text-center mt-2 block dark:text-white'>
               Progress: {phase + 1} / 6
             </h3>
-            <hr className=" mt-8 mb-20 w-full" />
+            <hr className=' mt-8 mb-20 w-full' />
           </div>
         </ProgressBlock>
       </div>
 
-      <div className="w-96 mt-28 flex justify-center items-center mx-auto">
+      <div className='w-96 mt-28 flex justify-center items-center mx-auto'>
         {phase === 0 && (
-          <div className="w-full with-fade-in">
-            <h5 className="text-center text-lg mb-2 dark:text-white">
+          <div className='w-full with-fade-in'>
+            <h5 className='text-center text-lg mb-2 dark:text-white'>
               Choose my name
             </h5>
-            <span className=" w-full text-center mb-2 block dark:text-white">
-              <kbd className="px-1 py-2 bg-pink-400 rounded-sm mr-1">&lt;</kbd>
-              <kbd className="px-1 py-2 bg-pink-400 rounded-sm mr-1">&gt;</kbd>
-              <kbd className="px-1 py-2 bg-pink-400 rounded-sm mr-1">\</kbd>
-              <kbd className="px-1 py-2 bg-pink-400 rounded-sm mr-1">+</kbd>
+            <span className=' w-full text-center mb-2 block dark:text-white'>
+              <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>&lt;</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>&gt;</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>\</kbd>
+              <kbd className='px-1 py-2 bg-pink-400 rounded-sm mr-1'>+</kbd>
               not allowed
             </span>
             <input
-              type="text"
+              type='text'
               maxLength={32}
               minLength={3}
               value={newName}
@@ -97,8 +97,8 @@ function NewbiePageContent({ uid }: { uid: number }) {
                 // cannot startsWith number or something
                 setNewName(val)
               }}
-              placeholder="name"
-              className="w-full px-2 py-4 rounded-sm"
+              placeholder='name'
+              className='w-full px-2 py-4 rounded-sm'
             />
             <ButtonSimple
               loading={doUpdateResponse.loading}
@@ -118,28 +118,28 @@ function NewbiePageContent({ uid }: { uid: number }) {
                   })
               }}
               disabled={newNameSubmitDisabled}
-              text="Confirm"
+              text='Confirm'
             />
           </div>
         )}
 
         {phase === 1 && (
-          <div className="w-full with-fade-in">
-            <div className="w-full mb-4">
-              <h5 className="text-center text-lg mb-2 dark:text-white">
+          <div className='w-full with-fade-in'>
+            <div className='w-full mb-4'>
+              <h5 className='text-center text-lg mb-2 dark:text-white'>
                 choose my domain
               </h5>
-              <span className=" w-full text-center block dark:text-white">
+              <span className=' w-full text-center block dark:text-white'>
                 TODO: rules here
               </span>
             </div>
             <input
-              type="text"
+              type='text'
               maxLength={32}
               minLength={3}
               value={newDomain}
-              className="w-full px-2 py-4 rounded-sm"
-              placeholder="my.name.domain"
+              className='w-full px-2 py-4 rounded-sm'
+              placeholder='my.name.domain'
               onChange={(e) => {
                 const val = e.target.value
                 // cannot startsWith number or something
@@ -163,7 +163,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
                     setPhase(2)
                   })
               }}
-              text="Confirm my domain"
+              text='Confirm my domain'
             />
           </div>
         )}
@@ -180,8 +180,8 @@ function NewbiePageContent({ uid }: { uid: number }) {
         {phase === 5 && (
           <div>
             <FieldInput
-              type="file"
-              name="avatar"
+              type='file'
+              name='avatar'
               onChange={(e) => {
                 if (!e.target.files) {
                   return
@@ -216,7 +216,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
                   toast.error(e.toString(), { id: tl })
                 }
               }}
-              text="Confirm my avatar"
+              text='Confirm my avatar'
             />
           </div>
         )}

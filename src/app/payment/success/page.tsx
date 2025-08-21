@@ -24,7 +24,7 @@ async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
 
   return (
     <HydrationBoundary state={d}>
-      <div className="flex h-full w-full flex-col items-center justify-center pt-20 dark:text-gray-100">
+      <div className='flex h-full w-full flex-col items-center justify-center pt-20 dark:text-gray-100'>
         <PaymentSuccessContent sessionId={sessionId} homeLink={homeLink} />
       </div>
     </HydrationBoundary>

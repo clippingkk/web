@@ -98,23 +98,21 @@ async function Layout(props: LayoutProps) {
     >
       <Script
         defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
+        src='https://static.cloudflareinsights.com/beacon.min.js'
         data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
       />
       <body>
         <ClientOnlyProviders>
-          <>
-            {props.children}
-            <div id="dialog"></div>
-            <div id="toast"></div>
-            <div id="searchbar" className="raycast"></div>
-            <GlobalUpload uid={uid ? ~~uid : undefined} />
-            <Toaster position="top-center" />
-            <ReactQueryDevtools initialIsOpen={false} />
-            <div data-id="modal" />
-            <div data-st-role="modal" />
-            <div data-st-role="tooltip" />
-          </>
+          {props.children}
+          <div id='dialog'></div>
+          <div id='toast'></div>
+          <div id='searchbar' className='raycast'></div>
+          <GlobalUpload uid={uid ? ~~uid : undefined} />
+          <Toaster position='top-center' />
+          <ReactQueryDevtools initialIsOpen={false} />
+          <div data-id='modal' />
+          <div data-st-role='modal' />
+          <div data-st-role='tooltip' />
         </ClientOnlyProviders>
       </body>
     </html>

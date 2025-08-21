@@ -1,6 +1,5 @@
 import BlurhashView from '@annatarhe/blurhash-react'
 import Link from 'next/link'
-import React from 'react'
 import type { WenquBook } from '../../services/wenqu'
 import styles from './book-cover.module.css'
 
@@ -31,11 +30,11 @@ function BookCover({ book, domain }: TBookCoverProps) {
         }
         alt={book.title}
       />
-      <div className="flex-col flex content-center items-center mt-4">
-        <h3 className="m-0 dark:text-slate-200 text-slate-800 text-center">
+      <div className='flex-col flex content-center items-center mt-4'>
+        <h3 className='m-0 dark:text-slate-200 text-slate-800 text-center'>
           {book.title}
         </h3>
-        <h5 className="my-4 mx-0 dark:text-slate-300 text-slate-600">
+        <h5 className='my-4 mx-0 dark:text-slate-300 text-slate-600'>
           {book.author}
         </h5>
       </div>

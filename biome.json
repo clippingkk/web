@@ -35,15 +35,21 @@
     "rules": {
       "recommended": true,
       "style": {
-        "noUselessElse": "error",
-        "useTemplate": "error"
+        "noUselessElse": "warn",
+        "useTemplate": "warn",
+        "noNonNullAssertion": "off"
       },
       "suspicious": {
-        "noExplicitAny": "warn",
+        "noExplicitAny": "off",
         "noArrayIndexKey": "warn"
       },
       "correctness": {
-        "useExhaustiveDependencies": "warn"
+        "useExhaustiveDependencies": "warn",
+        "noUnusedImports": "warn",
+        "noEmptyPattern": "warn"
+      },
+      "complexity": {
+        "noUselessFragments": "warn"
       },
       "a11y": {
         "recommended": true

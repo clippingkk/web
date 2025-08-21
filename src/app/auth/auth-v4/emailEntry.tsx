@@ -54,19 +54,19 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
     if (email !== undefined) {
       sendEvent({ type: 'EMAIL_TYPING', email })
     }
-  }, [email])
+  }, [email, sendEvent])
 
   useEffect(() => {
     if (password !== undefined) {
       sendEvent({ type: 'PWD_TYPING', pwd: password })
     }
-  }, [password])
+  }, [password, sendEvent])
 
   useEffect(() => {
     if (otp !== undefined) {
       sendEvent({ type: 'OTP_TYPING', otp })
     }
-  }, [otp])
+  }, [otp, sendEvent])
 
   const machineCtxErrors = machine.context.errorMessages
 
@@ -76,7 +76,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
       sendEvent({ type: 'CF_VERIFIED', turnstileToken: 'temp' })
       return
     }
-    toast.error('Turnstile: ' + err.toString())
+    toast.error(`Turnstile: ${err.toString()}`)
   }
 
   const onSubmit = (_: LoginFormData) => {
@@ -86,25 +86,25 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="h-full w-[300px]"
+      className='h-full w-[300px]'
       ref={animationParent}
     >
-      <div className="mb-4 w-full items-center justify-center">
-        <h2 className="font-lato m-0 w-full bg-linear-to-br from-slate-600 to-sky-400 bg-clip-text pb-2 text-center text-4xl font-extrabold text-transparent dark:from-orange-300">
+      <div className='mb-4 w-full items-center justify-center'>
+        <h2 className='font-lato m-0 w-full bg-linear-to-br from-slate-600 to-sky-400 bg-clip-text pb-2 text-center text-4xl font-extrabold text-transparent dark:from-orange-300'>
           ClippingKK
         </h2>
-        <span className="font-lato mt-4 block w-full bg-linear-to-br from-green-800 to-indigo-400 bg-clip-text text-center text-base text-transparent dark:from-green-300">
+        <span className='font-lato mt-4 block w-full bg-linear-to-br from-green-800 to-indigo-400 bg-clip-text text-center text-base text-transparent dark:from-green-300'>
           {t('app.slogan')}
         </span>
       </div>
       <Controller
-        name="email"
+        name='email'
         control={control}
         render={({ field }) => (
           <InputField
             label={t('app.auth.email')}
             placeholder={t('app.auth.email')}
-            type="email"
+            type='email'
             onKeyDown={(e: React.KeyboardEvent) => {
               if (e.key === 'Enter') {
                 e.preventDefault()
@@ -115,24 +115,24 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
         )}
       />
       {machine.matches({ Passcode: 'Password' }) && (
-        <div className="mt-4">
-          <div className="mb-1 flex w-full items-center justify-between">
+        <div className='mt-4'>
+          <div className='mb-1 flex w-full items-center justify-between'>
             <span>{t('app.auth.pwd')}</span>
             <Button
-              size="sm"
-              variant="ghost"
-              rightIcon={<ChevronRightIcon className="h-4 w-4" />}
+              size='sm'
+              variant='ghost'
+              rightIcon={<ChevronRightIcon className='h-4 w-4' />}
               onClick={() => sendEvent({ type: 'CHANGE_TO_OTP' })}
             >
               {t('app.auth.otpTitle')}
             </Button>
           </div>
           <Controller
-            name="password"
+            name='password'
             control={control}
             render={({ field }) => (
               <InputField
-                type="password"
+                type='password'
                 placeholder={t('app.auth.pwd')}
                 onKeyDown={(e: React.KeyboardEvent) => {
                   if (e.key === 'Enter') {
@@ -147,13 +147,13 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
       )}
 
       {machine.matches({ Passcode: 'OTP' }) && (
-        <div className="my-4">
-          <div className="mb-2 flex w-full items-center justify-between">
+        <div className='my-4'>
+          <div className='mb-2 flex w-full items-center justify-between'>
             <span>{t('app.auth.pwd')}</span>
             <Button
-              size="sm"
-              variant="ghost"
-              rightIcon={<ChevronRightIcon className="h-4 w-4" />}
+              size='sm'
+              variant='ghost'
+              rightIcon={<ChevronRightIcon className='h-4 w-4' />}
               onClick={() => sendEvent({ type: 'CHANGE_TO_PASSWORD' })}
             >
               {machine.can({ type: 'CHANGE_TO_PASSWORD' }) &&
@@ -161,33 +161,33 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
               {machine.can({ type: 'CHANGE_TO_OTP' }) && t('app.auth.pwd')}
             </Button>
           </div>
-          <div className="flex items-center">
+          <div className='flex items-center'>
             <OTPInput
               onChange={(val: string) => {
                 sendEvent({ type: 'OTP_TYPING', otp: val })
               }}
-              allowedCharacters="numeric"
+              allowedCharacters='numeric'
               inputClassName={
                 'w-full h-16 border-0 text-center text-2xl bg-gray-100 bg-opacity-90 dark:bg-gray-800' +
                 (machineCtxErrors
                   ? ' border-red-500 bg-red-300 dark:bg-red-900'
                   : '')
               }
-              placeholder="-"
-              containerClassName="grid grid-cols-6 gap-4 w-full"
+              placeholder='-'
+              containerClassName='grid grid-cols-6 gap-4 w-full'
             />
-            <div className="ml-4">
+            <div className='ml-4'>
               {machine.can({ type: 'RESEND' }) ? (
                 <Button
                   isLoading={machine.matches({ Passcode: { OTP: 'sending' } })}
-                  variant="secondary"
-                  size="sm"
+                  variant='secondary'
+                  size='sm'
                   onClick={() => sendEvent({ type: 'RESEND' })}
                 >
                   {t('app.auth.resend')}
                 </Button>
               ) : (
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className='text-sm text-gray-500 dark:text-gray-400'>
                   {t('app.auth.resendIn', {
                     seconds: machine.context.resendOTPReminds,
                   })}
@@ -197,21 +197,21 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
           </div>
         </div>
       )}
-      <div className="my-4 w-full">
+      <div className='my-4 w-full'>
         <Turnstile
           siteKey={CF_TURNSTILE_SITE_KEY}
           onSuccess={(t) =>
             sendEvent({ type: 'CF_VERIFIED', turnstileToken: t })
           }
           onError={onTurnstileError}
-          className="mx-auto w-full"
+          className='mx-auto w-full'
         />
       </div>
       <Button
         fullWidth
-        size="lg"
-        className="mt-4 bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700"
-        variant="primary"
+        size='lg'
+        className='mt-4 bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700'
+        variant='primary'
         disabled={!machine.can({ type: 'MANUAL_LOGIN' })}
         onClick={() => sendEvent({ type: 'MANUAL_LOGIN' })}
       >

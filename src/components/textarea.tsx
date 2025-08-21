@@ -13,8 +13,8 @@ type FieldTextareaProps = {
 function FieldTextarea(props: FieldTextareaProps) {
   const { t } = useTranslation()
   return (
-    <div className="relative mx-0 my-4 flex items-center">
-      <label htmlFor={props.name} className="mr-4 w-32 text-right text-2xl">
+    <div className='relative mx-0 my-4 flex items-center'>
+      <label htmlFor={props.name} className='mr-4 w-32 text-right text-2xl'>
         {t(`app.auth.${props.name}`)}:{' '}
       </label>
       <textarea
@@ -29,7 +29,7 @@ function FieldTextarea(props: FieldTextareaProps) {
         onChange={props.onChange}
       />
       {props.error && (
-        <span className="absolute right-0 bottom-0 translate-y-4 transform text-right text-sm text-red-400">
+        <span className='absolute right-0 bottom-0 translate-y-4 transform text-right text-sm text-red-400'>
           {props.error}
         </span>
       )}

@@ -7,8 +7,8 @@ function LoginByQRCode() {
   const theToken = getLocalToken()
   const { t } = useTranslation(undefined, 'navigation')
   return (
-    <div className="flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center p-8">
+    <div className='flex items-center justify-center'>
+      <div className='flex flex-col items-center justify-center p-8'>
         <QRCodeCanvas
           value={theToken}
           size={250}
@@ -19,11 +19,11 @@ function LoginByQRCode() {
             excavate: true,
           }}
         />
-        <div className="mt-4 flex flex-col gap-1 text-center">
-          <span className="text-sm dark:text-white">
+        <div className='mt-4 flex flex-col gap-1 text-center'>
+          <span className='text-sm dark:text-white'>
             {t('app.loginByQRCode.scanInstruction')}
           </span>
-          <span className="text-sm dark:text-white">
+          <span className='text-sm dark:text-white'>
             {t('app.loginByQRCode.downloadInstruction')}
           </span>
         </div>

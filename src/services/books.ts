@@ -31,7 +31,7 @@ export function covertHttpBook2Book(book: IHttpBook): IBook {
     image:
       process.env.NODE_ENV === 'production'
         ? image
-        : 'https://picsum.photos/400/500?random=' + Math.random(),
+        : `https://picsum.photos/400/500?random=${Math.random()}`,
     pubdate: new Date(book.pubdate),
   } as IBook
 }

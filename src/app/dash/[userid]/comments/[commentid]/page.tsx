@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { commentid } = await params
   const id = parseInt(commentid, 10)
 
-  if (isNaN(id)) {
+  if (Number.isNaN(id)) {
     return { title: 'Comment Not Found' }
   }
 
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const comment = data.getComment
   const truncatedContent =
     comment.content.length > 160
-      ? comment.content.substring(0, 160) + '...'
+      ? `${comment.content.substring(0, 160)}...`
       : comment.content
 
   return {
@@ -66,7 +66,7 @@ async function CommentPage({ params }: Props) {
   const uid = parseInt(ck.get(USER_ID_KEY)?.value || '0', 10)
   const id = parseInt(commentid, 10)
 
-  if (isNaN(uid) || uid <= 0 || isNaN(id)) {
+  if (Number.isNaN(uid) || uid <= 0 || Number.isNaN(id)) {
     notFound()
   }
 

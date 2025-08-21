@@ -1,7 +1,7 @@
 'use client'
 
 import { BookOpen, MessageCircle } from 'lucide-react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ClippingList from '@/app/dash/[userid]/profile/clipping-list'
 import RecentComments from '@/components/recent-comments/recent-comments'
 import { useTranslation } from '@/i18n/client'
@@ -35,18 +35,18 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
   ]
 
   return (
-    <div className="w-full space-y-8">
+    <div className='w-full space-y-8'>
       {/* Enhanced Tab Navigation */}
-      <div className="flex items-center justify-center gap-6">
-        <div className="h-px flex-grow bg-gradient-to-r from-transparent via-blue-200/50 to-transparent dark:via-blue-400/20"></div>
+      <div className='flex items-center justify-center gap-6'>
+        <div className='h-px flex-grow bg-gradient-to-r from-transparent via-blue-200/50 to-transparent dark:via-blue-400/20'></div>
 
         {/* Main tab container */}
-        <div className="relative group">
+        <div className='relative group'>
           {/* Background glow */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+          <div className='absolute -inset-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-500'></div>
 
           {/* Tab buttons container */}
-          <div className="relative flex rounded-2xl bg-white/70 backdrop-blur-xl p-1.5 shadow-xl border border-white/40 dark:bg-gray-900/70 dark:border-gray-700/40">
+          <div className='relative flex rounded-2xl bg-white/70 backdrop-blur-xl p-1.5 shadow-xl border border-white/40 dark:bg-gray-900/70 dark:border-gray-700/40'>
             {/* Active tab indicator */}
             <div
               className={`absolute top-1.5 h-11 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl shadow-lg transition-all duration-300 ease-out ${
@@ -73,7 +73,7 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
                   <Icon
                     className={`h-5 w-5 transition-all duration-300 ${isActive ? 'animate-pulse' : ''}`}
                   />
-                  <span className="font-medium">{tab.label}</span>
+                  <span className='font-medium'>{tab.label}</span>
                   {tab.count > 0 && (
                     <span
                       className={`rounded-full px-2.5 py-1 text-xs font-bold transition-all duration-300 ${
@@ -91,25 +91,25 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
           </div>
         </div>
 
-        <div className="h-px flex-grow bg-gradient-to-r from-transparent via-blue-200/50 to-transparent dark:via-blue-400/20"></div>
+        <div className='h-px flex-grow bg-gradient-to-r from-transparent via-blue-200/50 to-transparent dark:via-blue-400/20'></div>
       </div>
 
       {/* Enhanced Tab Content */}
-      <div className="relative">
+      <div className='relative'>
         {/* Content background with animated glow */}
-        <div className="absolute -inset-2 bg-gradient-to-r rounded-3xl blur-xl"></div>
+        <div className='absolute -inset-2 bg-gradient-to-r rounded-3xl blur-xl'></div>
 
-        <div className="relative rounded-3xl backdrop-blur-xl shadow-2xl overflow-hidden">
+        <div className='relative rounded-3xl backdrop-blur-xl shadow-2xl overflow-hidden'>
           {/* Animated content transition */}
-          <div className="transition-all duration-500 ease-out">
+          <div className='transition-all duration-500 ease-out'>
             {activeTab === 'clippings' && (
-              <div className="animate-fade-in">
+              <div className='animate-fade-in'>
                 <ClippingList uid={uid} userDomain={userDomain || ''} />
               </div>
             )}
 
             {activeTab === 'comments' && (
-              <div className="animate-fade-in">
+              <div className='animate-fade-in'>
                 <RecentComments
                   commentList={profile.commentList}
                   userId={profile.id}

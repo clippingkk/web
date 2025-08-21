@@ -66,12 +66,12 @@ const ProfileAnalytics: React.FC<ProfileAnalyticsProps> = ({
   ]
 
   return (
-    <div className="mt-6">
-      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+    <div className='mt-6'>
+      <h3 className='text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4'>
         {t('app.profile.analytics.title')}
       </h3>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
         {stats.map((stat, index) => {
           const Icon = stat.icon
           return (
@@ -85,7 +85,7 @@ const ProfileAnalytics: React.FC<ProfileAnalyticsProps> = ({
                 group
               `}
             >
-              <div className="relative z-10">
+              <div className='relative z-10'>
                 <div
                   className={`
                   inline-flex p-2 rounded-lg mb-3
@@ -93,14 +93,14 @@ const ProfileAnalytics: React.FC<ProfileAnalyticsProps> = ({
                   shadow-sm group-hover:shadow-md transition-shadow
                 `}
                 >
-                  <Icon className="w-5 h-5 text-white" />
+                  <Icon className='w-5 h-5 text-white' />
                 </div>
 
-                <div className="space-y-1">
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                <div className='space-y-1'>
+                  <p className='text-2xl font-bold text-gray-900 dark:text-gray-100'>
                     {stat.value}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {stat.label}
                   </p>
                 </div>
@@ -118,15 +118,15 @@ const ProfileAnalytics: React.FC<ProfileAnalyticsProps> = ({
         })}
       </div>
 
-      <div className="mt-6 p-4 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-700/50 border border-gray-200/50 dark:border-gray-700/50">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-            <span className="text-sm text-gray-600 dark:text-gray-400">
+      <div className='mt-6 p-4 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-700/50 border border-gray-200/50 dark:border-gray-700/50'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center space-x-2'>
+            <div className='w-2 h-2 rounded-full bg-blue-400 animate-pulse' />
+            <span className='text-sm text-gray-600 dark:text-gray-400'>
               {t('app.profile.analytics.readingStreak')}
             </span>
           </div>
-          <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className='text-sm font-medium text-gray-700 dark:text-gray-300'>
             {clippingsCount > 0
               ? t('app.profile.analytics.active')
               : t('app.profile.analytics.getStarted')}

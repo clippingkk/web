@@ -52,10 +52,10 @@ async function Page(props: PageProps) {
 
   return (
     <HydrationBoundary state={d}>
-      <div className="w-full h-full bg-slate-100 dark:bg-slate-900 relative">
+      <div className='w-full h-full bg-slate-100 dark:bg-slate-900 relative'>
         <GalleryBackgroundView publicData={data.data} />
         <div
-          className="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in"
+          className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
           style={
             {
               '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
@@ -65,12 +65,12 @@ async function Page(props: PageProps) {
             } as React.CSSProperties
           }
         >
-          <div className="w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-xs flex justify-center items-center">
+          <div className='w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-xs flex justify-center items-center'>
             {(await props.searchParams).code && (
               <GithubOAuthContent code={(await props.searchParams).code} />
             )}
             {!(await props.searchParams).code && (
-              <div className="text-7xl">No code provided</div>
+              <div className='text-7xl'>No code provided</div>
             )}
           </div>
         </div>

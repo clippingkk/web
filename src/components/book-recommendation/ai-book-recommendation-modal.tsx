@@ -1,6 +1,6 @@
 import Modal from '@annatarhe/lake-ui/modal'
 import { useQuery } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useMultipleBook } from '@/hooks/book'
 import { useTranslation } from '@/i18n/client'
 import { getLanguage } from '@/utils/locales'
@@ -79,7 +79,7 @@ function AIBookRecommendationModal({
       onClose={onClose}
       title={t('app.home.aiRecommendations') || 'AI Book Recommendations'}
     >
-      <div className="relative min-h-[300px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden p-8 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50">
+      <div className='relative min-h-[300px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden p-8 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50'>
         {error ? (
           <ErrorState error={error} />
         ) : recommendationData.length > 0 ? (

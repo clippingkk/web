@@ -2,7 +2,6 @@
 import { useSDK } from '@metamask/sdk-react'
 import { useMachine } from '@xstate/react'
 import { useRouter } from 'next/navigation'
-import React from 'react'
 import toast from 'react-hot-toast'
 import { fromPromise } from 'xstate'
 import { GithubClientID } from '@/constants/config'
@@ -232,11 +231,11 @@ function AuthV4Content() {
   )
 
   return (
-    <div className="px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg">
+    <div className='px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg'>
       <EmailLoginEntry machine={state} sendEvent={send} />
-      <hr className="w-full mx-8" />
-      <div className="mt-6 lg:mt-0">
-        <h3 className="text-lg mb-8 font-bold">
+      <hr className='w-full mx-8' />
+      <div className='mt-6 lg:mt-0'>
+        <h3 className='text-lg mb-8 font-bold'>
           {t('app.auth.thirdPart.title')}
         </h3>
         <ThirdPartEntry machine={state} onEvent={send} />

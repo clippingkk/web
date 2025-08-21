@@ -28,7 +28,7 @@ export class PostShareRender extends BaseCanvasRender {
       let realSrc = src
 
       if (!src.includes('annatarhe.com')) {
-        realSrc = CDN_DEFAULT_DOMAIN + '/' + realSrc
+        realSrc = `${CDN_DEFAULT_DOMAIN}/${realSrc}`
         // img.crossOrigin = "anonymous"
       }
       img.onload = () => {
@@ -77,7 +77,7 @@ export class PostShareRender extends BaseCanvasRender {
   }
   renderTitle(): Promise<void> {
     this.ctx.save()
-    this.ctx.font = this.config.baseTextSize * 0.7 + 'px ' + this.renderFont
+    this.ctx.font = `${this.config.baseTextSize * 0.7}px ${this.renderFont}`
     this.ctx.fillStyle = '#4F4F4F'
     this.ctx.textAlign = 'right'
     this.ctx.textBaseline = 'middle'
@@ -94,7 +94,7 @@ export class PostShareRender extends BaseCanvasRender {
   }
   renderAuthor(): Promise<void> {
     this.ctx.save()
-    this.ctx.font = this.config.baseTextSize * 0.7 + 'px ' + this.renderFont
+    this.ctx.font = `${this.config.baseTextSize * 0.7}px ${this.renderFont}`
     this.ctx.fillStyle = '#4F4F4F'
     this.ctx.textAlign = 'right'
     this.ctx.textBaseline = 'middle'
@@ -195,7 +195,7 @@ export class PostShareRender extends BaseCanvasRender {
     this.ctx.restore()
 
     this.ctx.save()
-    this.ctx.font = this.config.baseTextSize * 0.6 + 'px Roboto'
+    this.ctx.font = `${this.config.baseTextSize * 0.6}px Roboto`
     this.ctx.fillStyle = '#ffffff'
     this.ctx.textAlign = 'center'
     this.ctx.textBaseline = 'middle'

@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 
 type BindPhoneProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,5 +1,4 @@
 import Switch from '@annatarhe/lake-ui/form-switch-field'
-import React from 'react'
 
 type SimpleSwitcherProps = {
   checked: boolean

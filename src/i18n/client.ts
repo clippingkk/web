@@ -55,6 +55,6 @@ export function useTranslation(_lng?: string, ns?: string, options?: any) {
     return () => {
       i18n.off('languageChanged')
     }
-  }, [])
+  }, [i18n.off, i18n.on])
   return ret
 }

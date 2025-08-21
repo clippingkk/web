@@ -1,4 +1,3 @@
-import React from 'react'
 import { duration3Days } from '../hooks/book'
 import type { PublicDataQuery } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
@@ -42,30 +41,30 @@ async function GalleryBackgroundView(props: AuthBackgroundViewProps) {
   })
 
   return (
-    <div className="w-full h-full min-h-screen with-fade-in">
-      <div className="w-full py-10 flex flex-col gap-10">
+    <div className='w-full h-full min-h-screen with-fade-in'>
+      <div className='w-full py-10 flex flex-col gap-10'>
         {cs.length === 2 && cs[0].length > 0 && (
-          <InfiniteLooper speed={40} direction="right" key={0}>
+          <InfiniteLooper speed={40} direction='right' key={0}>
             {cs[0].map((c) => (
-              <div className="w-96 mx-2" key={c.id}>
+              <div className='w-96 mx-2' key={c.id}>
                 <ClippingLite clipping={c} />
               </div>
             ))}
           </InfiniteLooper>
         )}
         {bs.books.length > 0 && (
-          <InfiniteLooper speed={80} direction="left" key={1}>
+          <InfiniteLooper speed={80} direction='left' key={1}>
             {bs.books.map((b) => (
-              <div className="w-96 mx-2" key={b.id}>
-                <BookCover book={b} domain="" />
+              <div className='w-96 mx-2' key={b.id}>
+                <BookCover book={b} domain='' />
               </div>
             ))}
           </InfiniteLooper>
         )}
         {cs.length === 2 && cs[1].length > 0 && (
-          <InfiniteLooper speed={40} direction="right" key={2}>
+          <InfiniteLooper speed={40} direction='right' key={2}>
             {cs[1].map((c) => (
-              <div className="w-96 mx-2" key={c.id}>
+              <div className='w-96 mx-2' key={c.id}>
                 <ClippingLite clipping={c} />
               </div>
             ))}

@@ -1,6 +1,6 @@
 import Modal from '@annatarhe/lake-ui/modal'
 import { useQuery } from '@tanstack/react-query'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Markdown from 'react-markdown'
 import { useTranslation } from '@/i18n/client'
 import client from '../../services/pp'
@@ -84,14 +84,14 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
 
   return (
     <Modal isOpen={open} onClose={onClose} title={t('app.clipping.aiSummary')}>
-      <div className="relative min-h-[200px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden p-8 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50">
+      <div className='relative min-h-[200px] max-h-[calc(90vh-8rem)] overflow-y-auto overflow-x-hidden p-8 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300/50 dark:[&::-webkit-scrollbar-track]:bg-gray-800/20 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600/50'>
         {isLoading && <PulseLoader />}
         {errMsg ? (
-          <div className="rounded-lg border border-red-200 bg-red-50/50 p-4 dark:border-red-800/50 dark:bg-red-900/20">
-            <p className="font-lxgw text-lg text-red-800 dark:text-red-200">
+          <div className='rounded-lg border border-red-200 bg-red-50/50 p-4 dark:border-red-800/50 dark:bg-red-900/20'>
+            <p className='font-lxgw text-lg text-red-800 dark:text-red-200'>
               {errMsg}
             </p>
-            <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+            <p className='mt-2 text-sm text-red-600 dark:text-red-400'>
               - ChatGPT
             </p>
           </div>

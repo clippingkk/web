@@ -13,7 +13,7 @@ function BlockToolbarView(props: BlockToolbarViewProps) {
   const { offsetY, onLLMImprove } = props
   return (
     <div
-      className="absolute top-5 flex gap-1 rounded-lg transition-all duration-75"
+      className='absolute top-5 flex gap-1 rounded-lg transition-all duration-75'
       style={{
         left: -96,
         visibility: offsetY > 0 ? 'visible' : 'hidden',
@@ -21,9 +21,9 @@ function BlockToolbarView(props: BlockToolbarViewProps) {
       }}
     >
       <Button
-        size="sm"
-        variant="ghost"
-        className="hover:bg-opacity-90 p-2 hover:bg-slate-700"
+        size='sm'
+        variant='ghost'
+        className='hover:bg-opacity-90 p-2 hover:bg-slate-700'
         onClick={() => onLLMImprove()}
       >
         <span>LLM</span>

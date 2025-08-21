@@ -27,14 +27,14 @@ function NFTGallary(props: NFTGallaryProps) {
 
   if (!loading && nftList.length === 0) {
     return (
-      <h6 className="text-center">
+      <h6 className='text-center'>
         Sorry, You have no NFT for now. maybe try it later
       </h6>
     )
   }
 
   return (
-    <div className="grid w-144 grid-cols-2">
+    <div className='grid w-144 grid-cols-2'>
       {nftList.map((x) => (
         <NFTGallaryItem data={x} key={x.tokenID} onClick={props.onPick} />
       ))}

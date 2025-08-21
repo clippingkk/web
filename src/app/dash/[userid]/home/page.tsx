@@ -34,7 +34,7 @@ type PageProps = {
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const [ck, params] = await Promise.all([cookies(), props.params])
   const pathUid: string = params.userid
-  const uid = parseInt(pathUid)
+  const uid = parseInt(pathUid, 10)
   const tk = ck.get(COOKIE_TOKEN_KEY)?.value
 
   if (!tk) {
@@ -54,7 +54,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       },
       context: {
         headers: {
-          Authorization: 'Bearer ' + tk,
+          Authorization: `Bearer ${tk}`,
         },
       },
     })
@@ -82,7 +82,7 @@ async function Page(props: PageProps) {
     return redirect(`/dash/${userid}/profile`)
   }
 
-  const myUidInt = myUid ? parseInt(myUid) : undefined
+  const myUidInt = myUid ? parseInt(myUid, 10) : undefined
 
   const reqs: [
     Promise<ApolloQueryResult<ProfileQuery>>,
@@ -97,7 +97,7 @@ async function Page(props: PageProps) {
       },
       context: {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       },
     }),
@@ -106,7 +106,7 @@ async function Page(props: PageProps) {
       fetchPolicy: 'network-only',
       context: {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         },
       },
       variables: {
@@ -130,7 +130,7 @@ async function Page(props: PageProps) {
         },
         context: {
           headers: {
-            Authorization: 'Bearer ' + token,
+            Authorization: `Bearer ${token}`,
           },
         },
       })
@@ -164,10 +164,10 @@ async function Page(props: PageProps) {
   const recents = profileResponse.data.me.recents
 
   return (
-    <section className="page h-full">
+    <section className='page h-full'>
       {firstBook && (
-        <div className="with-slide-in mt-8">
-          <h2 className="relative z-10 mb-8 flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent">
+        <div className='with-slide-in mt-8'>
+          <h2 className='relative z-10 mb-8 flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent'>
             {t('app.home.reading')}
           </h2>
           <ReadingBook
@@ -177,17 +177,17 @@ async function Page(props: PageProps) {
           />
         </div>
       )}
-      <header className="my-12 flex flex-col items-center justify-center gap-4 md:flex-row">
-        <h2 className="relative z-10 bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent">
+      <header className='my-12 flex flex-col items-center justify-center gap-4 md:flex-row'>
+        <h2 className='relative z-10 bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent'>
           {t('app.home.title')}
         </h2>
-        <div className="mt-4 flex items-center gap-3 md:mt-0">
+        <div className='mt-4 flex items-center gap-3 md:mt-0'>
           <Link
             href={`/dash/${myUidInt}/unchecked`}
-            className="group relative overflow-hidden rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-medium text-white shadow-md transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg"
+            className='group relative overflow-hidden rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-medium text-white shadow-md transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg'
           >
-            <span className="relative z-10">{t('app.home.unchecked')}</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <span className='relative z-10'>{t('app.home.unchecked')}</span>
+            <div className='absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
           </Link>
           <AIBookRecommendationButton
             uid={myUidInt!}
@@ -196,7 +196,7 @@ async function Page(props: PageProps) {
         </div>
       </header>
       {!firstBook && booksResponse.data.books.length === 0 && (
-        <div className="flex flex-wrap items-center justify-center">
+        <div className='flex flex-wrap items-center justify-center'>
           <NoContentAlert domain={userid} />
         </div>
       )}

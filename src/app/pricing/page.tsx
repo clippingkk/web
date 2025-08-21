@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
-import React from 'react'
 import { StripePremiumPriceId } from '@/constants/config'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
@@ -29,7 +28,7 @@ async function PricingPage() {
       StripePremiumPriceId,
       {
         headers: {
-          Authorization: 'Bearer ' + tk,
+          Authorization: `Bearer ${tk}`,
         },
       }
     )
@@ -45,7 +44,7 @@ async function PricingPage() {
       },
       context: {
         headers: {
-          Authorization: 'Bearer ' + tk,
+          Authorization: `Bearer ${tk}`,
         },
       },
     })

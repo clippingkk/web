@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import {
@@ -57,7 +57,7 @@ function AuthByAppleButton(props: AuthAppleProps) {
       onError={
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (error: any) => {
-          toast.error('Auth by Apple: ' + error.error)
+          toast.error(`Auth by Apple: ${error.error}`)
         }
       }
     />

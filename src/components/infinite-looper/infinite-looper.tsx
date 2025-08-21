@@ -45,7 +45,7 @@ function InfiniteLooper({ speed, direction, children }: InfiniteLooperProps) {
     }
 
     resetAnimation()
-  }, [looperInstances])
+  }, [looperInstances, resetAnimation])
 
   /*
     6 instances, 200 each = 1200
@@ -60,15 +60,15 @@ function InfiniteLooper({ speed, direction, children }: InfiniteLooperProps) {
     return () => {
       window.removeEventListener('resize', setupInstances)
     }
-  }, [looperInstances, setupInstances])
+  }, [setupInstances])
 
   return (
-    <div className="looper" ref={outerRef}>
-      <div className="looper__innerList" ref={innerRef} data-animate="true">
+    <div className='looper' ref={outerRef}>
+      <div className='looper__innerList' ref={innerRef} data-animate='true'>
         {[...Array(looperInstances)].map((_, ind) => (
           <div
             key={ind}
-            className="looper__listInstance"
+            className='looper__listInstance'
             style={{
               animationDuration: `${speed}s`,
               animationDirection: direction === 'right' ? 'reverse' : 'normal',

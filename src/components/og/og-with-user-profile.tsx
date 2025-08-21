@@ -15,7 +15,7 @@ export function generateMetadata(props: OGWithUserProfileProps): Metadata {
 
   const plainAvatar = props.profile?.avatar ?? ''
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const avatar =
+  const _avatar =
     plainAvatar.length > 4
       ? plainAvatar.startsWith('http')
         ? plainAvatar

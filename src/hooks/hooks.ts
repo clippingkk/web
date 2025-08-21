@@ -162,7 +162,7 @@ export function useAuthByPhoneSuccessed(
         navigate(`/dash/${domain}/home?from_auth=1`)
       }, 100)
     })
-  }, [called, loading, error, authResponse])
+  }, [called, loading, error, authResponse, navigate])
 }
 
 export function useAuthSuccessed(
@@ -181,7 +181,7 @@ export function useAuthSuccessed(
         navigate(`/dash/${me.id}/home`)
       }, 100)
     }
-  }, [called, loading, error, authResponse])
+  }, [called, loading, error, authResponse, navigate])
 }
 
 export function useSignupSuccess(result: MutationResult<SignupMutation>) {
@@ -205,5 +205,5 @@ export function useSignupSuccess(result: MutationResult<SignupMutation>) {
       )
       navigate('/auth/auth-v4')
     }
-  }, [result])
+  }, [result, navigate])
 }

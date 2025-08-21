@@ -22,7 +22,7 @@ const Layout = async (props: LayoutProps) => {
     <DashboardContainer
       uidOrDomain={myUid}
       header={
-        <NavigateGuide uid={myUid ? ~~myUid : undefined} title="Canceled" />
+        <NavigateGuide uid={myUid ? ~~myUid : undefined} title='Canceled' />
       }
     >
       {props.children}

@@ -59,7 +59,7 @@ export function rgbToHex(r: number, g: number, b: number) {
     [r, g, b]
       .map((x) => {
         const hex = x.toString(16)
-        return hex.length === 1 ? '0' + hex : hex
+        return hex.length === 1 ? `0${hex}` : hex
       })
       .join('')
   )
@@ -84,10 +84,10 @@ export function shadeColor(color: string, percent: number) {
   G = G < 255 ? G : 255
   B = B < 255 ? B : 255
 
-  const RR = R.toString(16).length == 1 ? '0' + R.toString(16) : R.toString(16)
-  const GG = G.toString(16).length == 1 ? '0' + G.toString(16) : G.toString(16)
-  const BB = B.toString(16).length == 1 ? '0' + B.toString(16) : B.toString(16)
-  return '#' + RR + GG + BB
+  const RR = R.toString(16).length === 1 ? `0${R.toString(16)}` : R.toString(16)
+  const GG = G.toString(16).length === 1 ? `0${G.toString(16)}` : G.toString(16)
+  const BB = B.toString(16).length === 1 ? `0${B.toString(16)}` : B.toString(16)
+  return `#${RR}${GG}${BB}`
 }
 
 export function invertColor(hex: string) {
@@ -106,7 +106,7 @@ export function invertColor(hex: string) {
     g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
     b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16)
   // pad each with zeros and return
-  return '#' + padZero(r) + padZero(g) + padZero(b)
+  return `#${padZero(r)}${padZero(g)}${padZero(b)}`
 }
 
 export function hexToRGB(hex: string): number[] {

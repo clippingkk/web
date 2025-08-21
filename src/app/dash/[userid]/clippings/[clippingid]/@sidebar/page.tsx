@@ -19,7 +19,7 @@ async function SidebarContent(props: PageProps) {
       clipping={clipping}
       book={bookData}
       me={me}
-      inAppChannel={parseInt(iac) as IN_APP_CHANNEL}
+      inAppChannel={parseInt(iac, 10) as IN_APP_CHANNEL}
     />
   )
 }

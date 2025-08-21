@@ -25,28 +25,28 @@ function AuthPage(props: AuthPageProps) {
     if (uid && uid > 0) {
       navigate(`/dash/${uid}/home`)
     }
-  }, [])
+  }, [navigate])
 
   const { t } = useTranslation()
 
   const onGithubClick = useActionTrack('login:github')
 
   return (
-    <section className="anna-page-container flex h-screen items-center justify-center">
-      <Card className="with-slide-in">
+    <section className='anna-page-container flex h-screen items-center justify-center'>
+      <Card className='with-slide-in'>
         <>
-          <div className="mb-4 flex flex-col items-center justify-center">
+          <div className='mb-4 flex flex-col items-center justify-center'>
             <Image
               src={logo}
-              alt="clippingkk logo"
+              alt='clippingkk logo'
               // className='w-24 h-24 lg:w-48 lg:h-48 shadow-sm rounded-sm'
               width={96}
               height={96}
             />
           </div>
-          <div className="flex w-full items-center justify-center rounded-sm">
+          <div className='flex w-full items-center justify-center rounded-sm'>
             <Link
-              href="/auth/phone"
+              href='/auth/phone'
               className={
                 'flex bg-indigo-400 px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400'
               }
@@ -55,7 +55,7 @@ function AuthPage(props: AuthPageProps) {
             </Link>
 
             <Link
-              href="/auth/signin"
+              href='/auth/signin'
               className={
                 'flex px-8 py-4 text-lg transition-colors duration-200 hover:bg-indigo-400'
               }
@@ -63,14 +63,14 @@ function AuthPage(props: AuthPageProps) {
               {t('app.auth.signin')}
             </Link>
           </div>
-          <hr className="my-2" />
+          <hr className='my-2' />
           {children}
-          <hr className="my-2" />
-          <div className="flex items-center justify-center">
+          <hr className='my-2' />
+          <div className='flex items-center justify-center'>
             <a
               href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
               onClick={onGithubClick}
-              title="github login"
+              title='github login'
             >
               <GithubLogo />
             </a>

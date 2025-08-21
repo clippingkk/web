@@ -1,4 +1,3 @@
-import React from 'react'
 import { AppFeatures } from '../../constants/features'
 import type { FetchClippingQuery } from '../../schema/generated'
 

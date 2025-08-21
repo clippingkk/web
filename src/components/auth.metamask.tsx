@@ -2,7 +2,7 @@
 import { useSDK } from '@metamask/sdk-react'
 // import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/navigation'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import { useAuthByWeb3LazyQuery } from '../schema/generated'
@@ -39,7 +39,7 @@ function AuthByMetamask() {
     } catch (err: any) {
       toast.error(err.message)
     }
-  }, [doAuth, router])
+  }, [doAuth, router, metamaskSDK])
 
   // useEffect(() => {
   //   // if (!err) {

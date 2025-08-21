@@ -44,37 +44,37 @@ function ReportBookSection(props: ReportBookSectionProps) {
   const currentClipping = props.reportDataBook?.clippings[currentClippingIdx]
 
   return (
-    <div className="container mx-auto flex flex-col py-8">
-      <div className="flex flex-col justify-center lg:flex-row">
-        <div className="mx-auto w-72 lg:mr-8 lg:ml-0">
+    <div className='container mx-auto flex flex-col py-8'>
+      <div className='flex flex-col justify-center lg:flex-row'>
+        <div className='mx-auto w-72 lg:mr-8 lg:ml-0'>
           <PublicBookItem book={props.book} />
         </div>
-        <div className="w-full px-10 text-gray-900 lg:w-1/2 lg:px-0 dark:text-white">
-          <h2 className="text-2xl font-bold text-gray-900 lg:text-4xl dark:text-white">
+        <div className='w-full px-10 text-gray-900 lg:w-1/2 lg:px-0 dark:text-white'>
+          <h2 className='text-2xl font-bold text-gray-900 lg:text-4xl dark:text-white'>
             {props.book.title}
           </h2>
-          <Rating rating={props.book.rating / 2} className="my-4" />
+          <Rating rating={props.book.rating / 2} className='my-4' />
           <span>{props.book.author}</span>
-          <h4 className="mt-1 text-sm font-normal text-gray-700 lg:mt-4 lg:text-base dark:text-gray-300">
+          <h4 className='mt-1 text-sm font-normal text-gray-700 lg:mt-4 lg:text-base dark:text-gray-300'>
             {t('app.report.clippingCountOnBook', {
               count: props.reportDataBook?.clippingsCount,
             })}
           </h4>
-          <hr className="my-4 lg:my-10" />
+          <hr className='my-4 lg:my-10' />
           <Tooltip content={props.book.summary}>
-            <p className="line-clamp-6 text-sm lg:text-base">
+            <p className='line-clamp-6 text-sm lg:text-base'>
               {props.book.summary}
             </p>
           </Tooltip>
         </div>
       </div>
 
-      <div className="lg:px-auto container mt-6 px-10 pb-4" ref={cksDOM}>
+      <div className='lg:px-auto container mt-6 px-10 pb-4' ref={cksDOM}>
         {currentClipping && (
           <div
             key={currentClipping.id}
             // springConfig={presets.default}
-            className="font-lxgw text-lg leading-loose! md:text-3xl 2xl:text-5xl dark:text-white"
+            className='font-lxgw text-lg leading-loose! md:text-3xl 2xl:text-5xl dark:text-white'
           >
             {currentClipping.content}
           </div>

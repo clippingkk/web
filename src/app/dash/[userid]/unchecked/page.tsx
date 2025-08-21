@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import React from 'react'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   ProfileDocument,
@@ -23,7 +22,7 @@ async function UncheckedPage(props: Props) {
     return redirect(`/dash/${userid}/profile`)
   }
 
-  const myUidInt = myUid ? parseInt(myUid) : undefined
+  const myUidInt = myUid ? parseInt(myUid, 10) : undefined
 
   const apolloClient = getApolloServerClient()
   const { data: profileResponse } = await apolloClient.query<
@@ -37,7 +36,7 @@ async function UncheckedPage(props: Props) {
     },
     context: {
       headers: {
-        Authorization: 'Bearer ' + ck.get(COOKIE_TOKEN_KEY)?.value,
+        Authorization: `Bearer ${ck.get(COOKIE_TOKEN_KEY)?.value}`,
       },
     },
   })

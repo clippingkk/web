@@ -1,4 +1,3 @@
-import React from 'react'
 import { KonzertThemeMap } from '../../services/utp'
 
 type ThemePickerProps = {
@@ -17,7 +16,7 @@ function ThemePicker(props: ThemePickerProps) {
         return (
           <button
             key={theme.id}
-            type="button"
+            type='button'
             onClick={() => props.onChange(theme.id)}
             className={`
               px-4 py-2 rounded-md text-sm font-medium transition-all duration-200

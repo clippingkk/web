@@ -27,46 +27,45 @@ function BookCandidate(props: BookCandidateProps) {
         'transform hover:-translate-y-0.5 hover:shadow-xl'
       )}
       onClick={() => props.onSelecte(book)}
-      role="option"
       aria-selected={selected}
     >
-      <div className="flex-shrink-0">
+      <div className='flex-shrink-0'>
         <BlurhashImage
           width={80} // Adjusted size for a more compact list item
           height={112} // Maintain aspect ratio
           src={book.image}
           alt={book.title}
-          className="rounded-md object-cover shadow-sm"
+          className='rounded-md object-cover shadow-sm'
           blurhashValue={
             book.edges?.imageInfo?.blurHashValue ??
             'LEHV6nWB2yk8pyo0adR*.7kCMdnj'
           }
         />
       </div>
-      <div className="flex-grow overflow-hidden">
-        <h3 className="truncate text-base font-semibold text-gray-800 sm:text-lg dark:text-gray-100">
+      <div className='flex-grow overflow-hidden'>
+        <h3 className='truncate text-base font-semibold text-gray-800 sm:text-lg dark:text-gray-100'>
           {book.title}
         </h3>
         {book.originTitle && (
-          <h4 className="truncate text-sm text-gray-600 dark:text-gray-400">
+          <h4 className='truncate text-sm text-gray-600 dark:text-gray-400'>
             {book.originTitle}
           </h4>
         )}
         {book.author && (
-          <p className="mt-0.5 truncate text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+          <p className='mt-0.5 truncate text-xs text-gray-500 sm:text-sm dark:text-gray-400'>
             {book.author}
           </p>
         )}
-        <div className="mt-1 flex items-center">
+        <div className='mt-1 flex items-center'>
           {book.rating !== undefined && book.rating !== null && (
             <Tooltip
               content={t('app.book.bookCandidate.ratingTooltip', {
                 rating: book.rating.toFixed(1),
               })}
             >
-              <div className="flex items-center">
+              <div className='flex items-center'>
                 <Rating rating={book.rating} />
-                <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">
+                <span className='ml-1 text-xs text-gray-500 dark:text-gray-400'>
                   ({book.rating.toFixed(1)})
                 </span>
               </div>
@@ -74,12 +73,12 @@ function BookCandidate(props: BookCandidateProps) {
           )}
         </div>
         {book.press && (
-          <p className="mt-1 truncate text-xs text-gray-400 dark:text-gray-500">
+          <p className='mt-1 truncate text-xs text-gray-400 dark:text-gray-500'>
             {book.press}
           </p>
         )}
         {book.summary && (
-          <p className="mt-2 line-clamp-2 text-xs text-gray-600 sm:text-sm dark:text-gray-300">
+          <p className='mt-2 line-clamp-2 text-xs text-gray-600 sm:text-sm dark:text-gray-300'>
             {book.summary}
           </p>
         )}

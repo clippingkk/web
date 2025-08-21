@@ -1,4 +1,3 @@
-import React from 'react'
 import type { ProfileQuery } from '@/schema/generated'
 import CommentsList from './comments-list'
 import EmptyCommentsState from './empty-comments-state'
@@ -25,14 +24,14 @@ const RecentComments = ({
 
   if (count === 0) {
     return (
-      <div className="rounded-3xl border border-white/40 dark:border-gray-700/40 bg-gradient-to-br from-white/80 via-white/70 to-white/60 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/60 p-8 shadow-lg backdrop-blur-xl">
+      <div className='rounded-3xl border border-white/40 dark:border-gray-700/40 bg-gradient-to-br from-white/80 via-white/70 to-white/60 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/60 p-8 shadow-lg backdrop-blur-xl'>
         <EmptyCommentsState showHeader={showHeader} />
       </div>
     )
   }
 
   return (
-    <div className="rounded-3xl border border-white/40 dark:border-gray-700/40 bg-gradient-to-br from-white/80 via-white/70 to-white/60 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/60 p-8 shadow-lg backdrop-blur-xl">
+    <div className='rounded-3xl border border-white/40 dark:border-gray-700/40 bg-gradient-to-br from-white/80 via-white/70 to-white/60 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/60 p-8 shadow-lg backdrop-blur-xl'>
       {showHeader && (
         <RecentCommentsHeader
           count={count}

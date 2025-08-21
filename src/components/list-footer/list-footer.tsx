@@ -21,9 +21,9 @@ function ListFooter(props: TListFooterProp) {
     },
   })
   return (
-    <footer className="flex justify-center items-center my-4 mx-0 w-full">
+    <footer className='flex justify-center items-center my-4 mx-0 w-full'>
       <div
-        className="text-gray-600 dark:text-gray-400 block w-full text-center"
+        className='text-gray-600 dark:text-gray-400 block w-full text-center'
         ref={observe}
       >
         {hasMore ? (loadingBlock ?? 'Loading') : 'You reach the end'}

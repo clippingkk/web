@@ -1,4 +1,3 @@
-import React from 'react'
 import Footer from '../components/footer/Footer'
 import IndexPage from '../components/index-page/index.page'
 import { duration3Days } from '../hooks/book'

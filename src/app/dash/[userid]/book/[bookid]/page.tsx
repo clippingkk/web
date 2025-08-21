@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
-import React from 'react'
 import BookInfo from '@/components/book-info/book-info'
 import Divider from '@/components/divider/divider'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
@@ -53,7 +52,7 @@ async function Page(props: PageProps) {
   const { bookid, userid } = await props.params
   const ck = await cookies()
   const uidStr = ck.get(USER_ID_KEY)?.value
-  const uid = uidStr ? parseInt(uidStr) : undefined
+  const uid = uidStr ? parseInt(uidStr, 10) : undefined
   const dbId = bookid ?? ''
 
   const token = ck.get(COOKIE_TOKEN_KEY)?.value
@@ -77,7 +76,7 @@ async function Page(props: PageProps) {
       context: {
         headers: token
           ? {
-              Authorization: 'Bearer ' + token,
+              Authorization: `Bearer ${token}`,
             }
           : {},
       },

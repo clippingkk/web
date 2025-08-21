@@ -74,7 +74,7 @@ function CopyEmbedHTMLBtn({ clipping, book }: Props) {
     <SidebarContainer>
       <SidebarButton onClick={onCopyEmbedHtml} disabled={!clipping}>
         <SidebarIcon>
-          <Code2 className="h-full w-full" />
+          <Code2 className='h-full w-full' />
         </SidebarIcon>
         <SidebarText>{t('app.clipping.embed.title')}</SidebarText>
       </SidebarButton>

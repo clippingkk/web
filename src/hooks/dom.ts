@@ -16,7 +16,7 @@ export function useHover<T extends Element>() {
       node.removeEventListener('mouseover', handleMouseOver)
       node.removeEventListener('mouseout', handleMouseOut)
     }
-  }, [])
+  }, [handleMouseOut, handleMouseOver])
   return {
     ref,
     isHovering: value,

@@ -1,4 +1,3 @@
-import React from 'react'
 import toast from 'react-hot-toast'
 import AppleLoginButtonView from '@/components/auth/apple'
 import MetamaskButtonView from '@/components/auth/metamask'
@@ -13,7 +12,7 @@ type ThirdPartEntryProps = {
 function ThirdPartEntry(props: ThirdPartEntryProps) {
   const { machine, onEvent } = props
   return (
-    <div className="flex flex-col w-full">
+    <div className='flex flex-col w-full'>
       <MetamaskButtonView
         loading={machine.matches('metaMaskLogging')}
         disabled={false}
@@ -25,13 +24,13 @@ function ThirdPartEntry(props: ThirdPartEntryProps) {
         }}
       >
         <AppleLoginButtonView
-          version="v4"
+          version='v4'
           loading={machine.matches('appleAuthing')}
           disabled={false}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onError={(error: any) => {
             onEvent({ type: 'REVERT_TO_IDLE' })
-            toast.error('Auth by Apple: ' + error.error)
+            toast.error(`Auth by Apple: ${error.error}`)
           }}
           onSuccess={(resp) => {
             onEvent({

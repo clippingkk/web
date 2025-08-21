@@ -31,7 +31,7 @@ function UpdateClippingBtn({ clipping, book }: Props) {
     <SidebarContainer>
       <SidebarButton onClick={() => setVisible(!visible)}>
         <SidebarIcon>
-          <BookCopy className="w-full h-full" />
+          <BookCopy className='w-full h-full' />
         </SidebarIcon>
         <SidebarText>{t('app.clipping.shares')}</SidebarText>
       </SidebarButton>

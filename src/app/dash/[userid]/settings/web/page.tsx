@@ -24,12 +24,12 @@ function SettingsWebPage() {
   const { i18n } = useTranslation()
   const r = useRouter()
   return (
-    <div className="w-full">
-      <div className="mb-4 flex w-full items-center justify-around">
+    <div className='w-full'>
+      <div className='mb-4 flex w-full items-center justify-around'>
         <Select
-          label="Language"
+          label='Language'
           options={langOptions}
-          className="flex w-full items-center justify-between"
+          className='flex w-full items-center justify-between'
           value={langOptions.find((x) => x.value === i18n.language)?.value}
           onChange={(e) => {
             const v = e.target.value

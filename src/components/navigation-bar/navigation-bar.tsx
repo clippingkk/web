@@ -23,19 +23,19 @@ import styles from './navigation-bar.module.css'
 
 const leftMenu = [
   {
-    emoji: () => <BookOpenIcon className="h-6 w-6 dark:text-white" />,
+    emoji: () => <BookOpenIcon className='h-6 w-6 dark:text-white' />,
     alt: 'read',
     dest: (id: number | string) => `/dash/${id}/home`,
     targetSegment: 'home',
   },
   {
-    emoji: () => <Squares2X2Icon className="h-6 w-6 dark:text-white" />,
+    emoji: () => <Squares2X2Icon className='h-6 w-6 dark:text-white' />,
     alt: 'square',
     dest: (id: number | string) => `/dash/${id}/square`,
     targetSegment: 'square',
   },
   {
-    emoji: () => <ArrowUpTrayIcon className="h-6 w-6 dark:text-white" />,
+    emoji: () => <ArrowUpTrayIcon className='h-6 w-6 dark:text-white' />,
     alt: 'upload',
     dest: (id: number | string) => `/dash/${id}/upload`,
     targetSegment: 'upload',
@@ -57,7 +57,7 @@ function NavigationBar(props: NavigationBarProps) {
   const { visible, setVisible } = useCtrlP()
   const onSearchbarClose = useCallback(() => {
     setVisible(false)
-  }, [])
+  }, [setVisible])
 
   const [loginByQRCodeModalVisible, setLoginByQRCodeModalVisible] =
     useState(false)
@@ -73,16 +73,16 @@ function NavigationBar(props: NavigationBarProps) {
         ' bg-opacity-50 dark:bg-opacity-80 with-slide-in sticky top-0 z-30 flex w-full items-center justify-around bg-gray-800 py-4 shadow-lg backdrop-blur-xl backdrop-filter'
       }
     >
-      <div className="flex items-center justify-around">
+      <div className='flex items-center justify-around'>
         <Image
           src={logo}
-          alt="clippingkk logo"
-          className="mr-2 h-10 w-10 rounded-sm lg:mr-12 lg:h-20 lg:w-20"
+          alt='clippingkk logo'
+          className='mr-2 h-10 w-10 rounded-sm lg:mr-12 lg:h-20 lg:w-20'
           width={40}
           height={40}
         />
         {profile ? (
-          <ul className="with-slide-in ml-2 flex lg:ml-6">
+          <ul className='with-slide-in ml-2 flex lg:ml-6'>
             {leftMenu.map((item, index) => (
               <li
                 className={clsx(
@@ -96,17 +96,17 @@ function NavigationBar(props: NavigationBarProps) {
                 key={index}
               >
                 <Link
-                  className="flex items-center"
-                  href={item.dest(
-                    profile.domain.length > 2 ? profile.domain : profile.id
-                  )}
+                  className='flex items-center'
+                  href={
+                    item.dest(
+                      profile.domain.length > 2 ? profile.domain : profile.id
+                    ) as any
+                  }
                 >
-                  <>
-                    <LinkIndicator>{item.emoji()}</LinkIndicator>
-                    <span className="ml-2 lg:text-lg">
-                      {t(`app.menu.${item.alt}`) ?? ''}
-                    </span>
-                  </>
+                  <LinkIndicator>{item.emoji()}</LinkIndicator>
+                  <span className='ml-2 lg:text-lg'>
+                    {t(`app.menu.${item.alt}`) ?? ''}
+                  </span>
                 </Link>
               </li>
             ))}
@@ -121,8 +121,8 @@ function NavigationBar(props: NavigationBarProps) {
           profile={profile}
         />
       ) : (
-        <Link href="/auth/auth-v4" legacyBehavior>
-          <h2 className="font-bold text-white">{t('app.slogan')}</h2>
+        <Link href='/auth/auth-v4' legacyBehavior>
+          <h2 className='font-bold text-white'>{t('app.slogan')}</h2>
         </Link>
       )}
       <SearchBar
@@ -135,7 +135,7 @@ function NavigationBar(props: NavigationBarProps) {
         onClose={() => {
           setLoginByQRCodeModalVisible(false)
         }}
-        title="Login by QR Code"
+        title='Login by QR Code'
       >
         <LoginByQRCode />
       </Modal>

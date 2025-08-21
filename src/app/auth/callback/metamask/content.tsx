@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import AuthCallbackPageContainer from '@/components/auth/fake-layout'
 import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
 import { useBindWeb3AddressMutation } from '@/schema/generated'

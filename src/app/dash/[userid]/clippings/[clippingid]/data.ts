@@ -37,7 +37,7 @@ export const getClippingData = cache(async (clippingId: number) => {
       headers: token
         ? {
             headers: {
-              Authorization: 'Bearer ' + token,
+              Authorization: `Bearer ${token}`,
             },
           }
         : undefined,
@@ -54,7 +54,7 @@ export const getClippingData = cache(async (clippingId: number) => {
       context: {
         headers: token
           ? {
-              Authorization: 'Bearer ' + token,
+              Authorization: `Bearer ${token}`,
             }
           : undefined,
       },

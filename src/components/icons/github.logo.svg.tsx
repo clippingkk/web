@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import React from 'react'
 
 type GithubLogoProps = {
   size?: number
@@ -9,11 +8,11 @@ type GithubLogoProps = {
 function GithubLogoV2(props: GithubLogoProps) {
   return (
     <Image
-      src="/github.logo.svg"
+      src='/github.logo.svg'
       width={props.size ?? 28}
       height={props.size ?? 28}
       className={props.className}
-      alt="github"
+      alt='github'
     />
   )
 }

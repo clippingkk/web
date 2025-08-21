@@ -25,7 +25,7 @@ function ProgressBlock(props: ProgressBlockProps) {
 
   return (
     <div className={`w-full h-4 ${props.className}`}>
-      <div className="w-full h-full bg-gray-400 rounded-sm flex">
+      <div className='w-full h-full bg-gray-400 rounded-sm flex'>
         <div
           className={
             ' transition-all duration-200 border-r h-full border-gray-500 last:border-r-0 bg-blue-500 rounded-sm'

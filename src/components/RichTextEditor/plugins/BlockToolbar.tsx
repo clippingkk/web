@@ -27,7 +27,7 @@ function BlockToolBar() {
   const [offsetY, setOffsetY] = useState(-1)
 
   const { mutate: doImproveParagraph } = useMutation({
-    mutationFn: (args: any) => {
+    mutationFn: (_args: any) => {
       return Promise.resolve(1)
       // return improveParagraph(args)
     },
@@ -44,7 +44,7 @@ function BlockToolBar() {
       //   },
       // )
     },
-    onSuccess: (data) => {
+    onSuccess: (_data) => {
       // if (!activeNode || !$isAIPenParagraphNode(activeNode)) {
       //   return
       // }
@@ -58,7 +58,7 @@ function BlockToolBar() {
       //   { tag: 'skip-scroll-into-view' },
       // )
     },
-    onError: (error) => {
+    onError: (_error) => {
       // if (!activeNode || !$isAIPenParagraphNode(activeNode)) {
       //   return
       // }
@@ -115,19 +115,19 @@ function BlockToolBar() {
         })
       })
     },
-    [activeNode]
+    [activeNode, doImproveParagraph, editor.getEditorState]
   )
 
   return (
     <>
       <NodeEventPlugin
         nodeType={ParagraphNode}
-        eventType="mouseenter"
+        eventType='mouseenter'
         eventListener={onMouseEnter}
       />
       <NodeEventPlugin
         nodeType={RootNode}
-        eventType="mouseleave"
+        eventType='mouseleave'
         eventListener={onMouseLeave}
       />
       <BlockToolbarView offsetY={offsetY} onLLMImprove={onLLMImprove} />

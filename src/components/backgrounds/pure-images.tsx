@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 type PureImagesProps = {
   width?: number | string
@@ -42,24 +42,24 @@ function PureImages(props: PureImagesProps) {
   }, [isDarkMode, lightingColor])
   return (
     <svg width={width} height={height}>
-      <filter id="surface">
+      <filter id='surface'>
         <feTurbulence
-          type="fractalNoise"
-          baseFrequency=".95 .95"
-          numOctaves="80"
-          result="noise"
+          type='fractalNoise'
+          baseFrequency='.95 .95'
+          numOctaves='80'
+          result='noise'
         />
         <feDiffuseLighting
-          in="noise"
+          in='noise'
           lightingColor={lightingColorValue}
-          surfaceScale=".8"
-          result="grind"
+          surfaceScale='.8'
+          result='grind'
         >
-          <feDistantLight azimuth="500" elevation="50" />
+          <feDistantLight azimuth='500' elevation='50' />
         </feDiffuseLighting>
-        <feGaussianBlur in="grind" stdDeviation=".5" />
+        <feGaussianBlur in='grind' stdDeviation='.5' />
       </filter>
-      <rect width={width} height={height} filter="url(#surface)" />
+      <rect width={width} height={height} filter='url(#surface)' />
     </svg>
   )
 }

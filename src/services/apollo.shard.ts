@@ -22,7 +22,7 @@ export type GraphQLResponseError = {
 }
 
 export const httpLink = new HttpLink({
-  uri: API_HOST + '/api/v2/graphql',
+  uri: `${API_HOST}/api/v2/graphql`,
   fetch: apolloFetcher,
 })
 

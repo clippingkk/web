@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import React from 'react'
 import logo from '@/assets/logo.png'
 
 type CKLogoProps = {
@@ -8,14 +7,14 @@ type CKLogoProps = {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const logoBlurhash = 'LOA_3?K-0;:~x[n-NNkRAenO,-TJ'
+const _logoBlurhash = 'LOA_3?K-0;:~x[n-NNkRAenO,-TJ'
 
 function CKLogo(props: CKLogoProps) {
   const { size = 96, className = '' } = props
   return (
     <Image
       src={logo}
-      alt="clippingkk logo"
+      alt='clippingkk logo'
       width={size}
       height={size}
       className={` rounded-sm shadow-2xl ${className}`}

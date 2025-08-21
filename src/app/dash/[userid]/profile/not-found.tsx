@@ -9,7 +9,7 @@ function Profile404Page() {
       {/* <Head>
         <title>profile not found</title>
       </Head> */}
-      <div className=" flex justify-center items-center dark:text-white text-lg mt-10">
+      <div className=' flex justify-center items-center dark:text-white text-lg mt-10'>
         user not found
       </div>
     </section>

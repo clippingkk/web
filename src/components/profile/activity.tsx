@@ -1,6 +1,5 @@
 import ContributionWall from '@annatarhe/lake-ui/contribution-wall'
 import dayjs from 'dayjs'
-import React from 'react'
 import type { ProfileQuery } from '@/schema/generated'
 
 type PersonalActivityProps = {

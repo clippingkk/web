@@ -35,10 +35,10 @@ async function AuthCallbackLayout(props: AuthCallbackLayoutProps) {
     gcTime: duration3Days,
   })
   return (
-    <div className="relative">
+    <div className='relative'>
       <GalleryBackgroundView publicData={data.data} />
       <div
-        className="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in"
+        className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
         style={
           {
             '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
@@ -48,7 +48,7 @@ async function AuthCallbackLayout(props: AuthCallbackLayoutProps) {
           } as React.CSSProperties
         }
       >
-        <div className="w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-xs flex justify-center items-center">
+        <div className='w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-xs flex justify-center items-center'>
           {children}
         </div>
       </div>

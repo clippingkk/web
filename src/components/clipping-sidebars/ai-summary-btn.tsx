@@ -28,8 +28,8 @@ function AISummaryBtn({ clipping, me, book }: Props) {
     <>
       <SidebarContainer>
         <SidebarButton onClick={() => setAISummaryVisible(true)}>
-          <SidebarIcon className="text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300">
-            <Sparkles className="w-full h-full" />
+          <SidebarIcon className='text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300'>
+            <Sparkles className='w-full h-full' />
           </SidebarIcon>
           <SidebarText>{t('app.clipping.aiSummary')}</SidebarText>
         </SidebarButton>

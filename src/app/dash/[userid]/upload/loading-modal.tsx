@@ -22,15 +22,15 @@ function LoadingModal(props: LoadingModalProps) {
   }, [props.at, props.count])
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getStepIcon = (step: UploadStep) => {
+  const _getStepIcon = (step: UploadStep) => {
     switch (step) {
       case UploadStep.Done:
-        return <CheckCircle className="text-green-500" size={28} />
+        return <CheckCircle className='text-green-500' size={28} />
       case UploadStep.Error:
-        return <AlertCircle className="text-red-500" size={28} />
+        return <AlertCircle className='text-red-500' size={28} />
       default:
         return (
-          <div className="h-7 w-7 rounded-full border-2 border-gray-300 dark:border-gray-600"></div>
+          <div className='h-7 w-7 rounded-full border-2 border-gray-300 dark:border-gray-600'></div>
         )
     }
   }
@@ -49,28 +49,28 @@ function LoadingModal(props: LoadingModalProps) {
       isOpen={visible}
       onClose={() => {}}
     >
-      <div className="p-6">
-        <div className="mb-8 w-full">
-          <h2 className="mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-center text-2xl font-bold text-transparent md:text-3xl">
+      <div className='p-6'>
+        <div className='mb-8 w-full'>
+          <h2 className='mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-center text-2xl font-bold text-transparent md:text-3xl'>
             {t('app.upload.tips.extracting')}
           </h2>
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+          <p className='text-center text-sm text-gray-500 dark:text-gray-400'>
             {t('app.upload.tips.wait') ??
               'Please wait while we process your clippings'}
           </p>
         </div>
 
-        <div className="mb-8 w-full px-4">
-          <div className="relative">
-            <div className="absolute top-4 left-0 z-0 h-0.5 w-full bg-gray-200 dark:bg-gray-700"></div>
+        <div className='mb-8 w-full px-4'>
+          <div className='relative'>
+            <div className='absolute top-4 left-0 z-0 h-0.5 w-full bg-gray-200 dark:bg-gray-700'></div>
             <div
-              className="absolute top-4 left-0 z-10 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-in-out"
+              className='absolute top-4 left-0 z-10 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-in-out'
               style={{
                 width: `${props.stepAt === UploadStep.Done ? 100 : progress}%`,
               }}
             ></div>
 
-            <div className="relative z-20 flex justify-between">
+            <div className='relative z-20 flex justify-between'>
               {Object.values(UploadStep)
                 .filter((step) => typeof step === 'number')
                 .map((step, index) => {
@@ -81,7 +81,7 @@ function LoadingModal(props: LoadingModalProps) {
                   const shortLabel = stepLabel.split(' ')[0]
 
                   return (
-                    <div key={step} className="flex flex-col items-center">
+                    <div key={step} className='flex flex-col items-center'>
                       <div
                         className={cn(
                           'flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300',
@@ -98,14 +98,14 @@ function LoadingModal(props: LoadingModalProps) {
                         )}
                       >
                         {isCurrentStep(step as UploadStep) && (
-                          <Loader2 size={18} className="animate-spin" />
+                          <Loader2 size={18} className='animate-spin' />
                         )}
                         {isPastStep(step as UploadStep) && (
                           <CheckCircle size={18} />
                         )}
                         {!isCurrentStep(step as UploadStep) &&
                           !isPastStep(step as UploadStep) && (
-                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                            <span className='text-xs text-gray-500 dark:text-gray-400'>
                               {index + 1}
                             </span>
                           )}
@@ -134,8 +134,8 @@ function LoadingModal(props: LoadingModalProps) {
           </div>
         </div>
 
-        <div className="mb-6 w-full rounded-lg bg-gray-50 p-4 dark:bg-gray-800/50">
-          <div className="mb-2 flex items-center">
+        <div className='mb-6 w-full rounded-lg bg-gray-50 p-4 dark:bg-gray-800/50'>
+          <div className='mb-2 flex items-center'>
             <div
               className={cn(
                 'mr-4 flex h-12 w-12 items-center justify-center rounded-full',
@@ -152,10 +152,10 @@ function LoadingModal(props: LoadingModalProps) {
               )}
             >
               <AnimateOnChange>
-                <span className="text-3xl">
+                <span className='text-3xl'>
                   {props.stepAt !== UploadStep.Done &&
                     props.stepAt !== UploadStep.Error && (
-                      <Loader2 size={28} className="animate-spin" />
+                      <Loader2 size={28} className='animate-spin' />
                     )}
                   {props.stepAt === UploadStep.Done && (
                     <CheckCircle size={28} />
@@ -182,20 +182,20 @@ function LoadingModal(props: LoadingModalProps) {
               >
                 {t(`app.upload.progress.${props.stepAt}`)}
               </h3>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className='text-sm text-gray-500 dark:text-gray-400'>
                 {progress}% complete
               </div>
             </div>
           </div>
 
-          <div className="mb-2 h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700">
+          <div className='mb-2 h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700'>
             <div
-              className="h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-out"
+              className='h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-out'
               style={{ width: `${progress}%` }}
             ></div>
           </div>
 
-          <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+          <div className='flex justify-between text-sm text-gray-500 dark:text-gray-400'>
             <span>
               {props.at} of {props.count}
             </span>

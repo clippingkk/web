@@ -28,10 +28,10 @@ function FieldInput(props: FieldInputProps) {
   const { t } = useTranslation()
   const size = props.size ?? FieldInputSize.large
   return (
-    <div className="my-4 mx-0 flex items-center relative">
+    <div className='my-4 mx-0 flex items-center relative'>
       <label
         htmlFor={props.name}
-        className="mr-4 text-2xl w-32 text-right dark:text-white"
+        className='mr-4 text-2xl w-32 text-right dark:text-white'
       >
         {t(`app.auth.${props.name}`)}:{' '}
       </label>
@@ -50,7 +50,7 @@ function FieldInput(props: FieldInputProps) {
       />
       {props.tail}
       {props.error && (
-        <span className="absolute bottom-0 right-0 text-right transform translate-y-4 text-red-500 dark:text-red-900 text-base">
+        <span className='absolute bottom-0 right-0 text-right transform translate-y-4 text-red-500 dark:text-red-900 text-base'>
           {props.error}
         </span>
       )}

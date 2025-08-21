@@ -1,4 +1,3 @@
-import React from 'react'
 import CommentItem from '@/components/comment-item/comment-item'
 import type { ProfileQuery } from '@/schema/generated'
 
@@ -14,11 +13,11 @@ export default function CommentsList({
   const displayItems = items.slice(0, maxItems)
 
   return (
-    <div className="space-y-6">
+    <div className='space-y-6'>
       {displayItems.map((comment, index) => (
         <div
           key={comment.id}
-          className="animate-fade-in"
+          className='animate-fade-in'
           style={{ animationDelay: `${index * 100}ms` }}
         >
           <CommentItem comment={comment} showAvatar={true} />

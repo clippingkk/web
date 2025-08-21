@@ -149,15 +149,15 @@ export function Button({
       {...props}
     >
       {/* Create a container for content to position it above the pseudo-elements */}
-      <span className="relative z-10 flex items-center justify-center gap-2">
+      <span className='relative z-10 flex items-center justify-center gap-2'>
         {isLoading ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader2 className='h-4 w-4 animate-spin' />
         ) : (
-          leftIcon && <span className="flex items-center">{leftIcon}</span>
+          leftIcon && <span className='flex items-center'>{leftIcon}</span>
         )}
         {children}
         {rightIcon && !isLoading && (
-          <span className="flex items-center">{rightIcon}</span>
+          <span className='flex items-center'>{rightIcon}</span>
         )}
       </span>
     </button>

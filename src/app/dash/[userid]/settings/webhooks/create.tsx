@@ -72,23 +72,23 @@ function WebHookCreate({ onClose, isPremium }: Props) {
   }
 
   return (
-    <form className="w-full p-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className='w-full p-4' onSubmit={handleSubmit(onSubmit)}>
       <Controller
-        name="hookUrl"
+        name='hookUrl'
         control={control}
         render={({ field }) => (
           <InputField
             {...field}
-            type="url"
-            label="Hook URL"
-            className="flex w-full items-center"
-            placeholder="https://example.com"
+            type='url'
+            label='Hook URL'
+            className='flex w-full items-center'
+            placeholder='https://example.com'
           />
         )}
       />
 
-      <div className="mt-6 flex justify-end gap-4">
-        <Button type="button" onClick={onClose}>
+      <div className='mt-6 flex justify-end gap-4'>
+        <Button type='button' onClick={onClose}>
           {t('app.common.cancel')}
         </Button>
 
@@ -103,7 +103,7 @@ function WebHookCreate({ onClose, isPremium }: Props) {
           <Button
             disabled={!isFormValid || !isPremium}
             loading={isSubmitting}
-            type="submit"
+            type='submit'
           >
             {t('app.settings.webhook.submit')}
           </Button>

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import React from 'react'
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
 import AuthCallbackMetamask from './content'
 

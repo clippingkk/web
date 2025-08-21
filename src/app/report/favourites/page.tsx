@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import React from 'react'
 import { metadata as indexPageMetadata } from '../../../components/og/og-with-index'
 import ReportFavouritesPage from './content'
 

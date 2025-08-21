@@ -1,6 +1,6 @@
 'use client'
 import { type LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import { APP_API_STEP_LIMIT } from '@/constants/config'
 import { useMultipleBook } from '@/hooks/book'
@@ -84,7 +84,7 @@ function SquarePageContent(props: SquarePageContentProps) {
     <Masonry
       items={sqData}
       columnCount={masonaryColumnCount}
-      className="with-slide-in"
+      className='with-slide-in'
       columnGutter={30}
       onRender={maybeLoadMore}
       render={(row) => {
@@ -100,7 +100,7 @@ function SquarePageContent(props: SquarePageContentProps) {
                 : clipping.creator.id.toString()
             }
             book={books.books.find(
-              (x) => x.doubanId.toString() == clipping.bookID
+              (x) => x.doubanId.toString() === clipping.bookID
             )}
             creator={clipping.creator}
             inAppChannel={IN_APP_CHANNEL.clippingFromUser}

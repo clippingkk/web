@@ -18,7 +18,7 @@ export function generateMetadata(props: OGWithClippingProps): Metadata {
   const metaTitle = `${bookTitle} - ${props.clipping?.creator.name} 的书摘录 - clippingkk`
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const logoLink = props.book?.image ?? APP_URL_ORIGIN + logo.src
+  const _logoLink = props.book?.image ?? APP_URL_ORIGIN + logo.src
 
   return {
     metadataBase: new URL(APP_URL_ORIGIN),

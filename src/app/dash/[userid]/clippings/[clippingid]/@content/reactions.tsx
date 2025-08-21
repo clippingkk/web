@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import ReactionCell, {
   type SymbolGroupedData,
 } from '@/components/reaction/reaction-cell'
@@ -42,8 +42,8 @@ function Reactions(props: ReactionsProps) {
   }, [reactions?.symbolCounts, uid])
 
   return (
-    <div className="w-full">
-      <div className="flex flex-wrap gap-3">
+    <div className='w-full'>
+      <div className='flex flex-wrap gap-3'>
         {Object.keys(symbolCounts).map((k) => (
           <ReactionCell
             key={k}

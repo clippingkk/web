@@ -53,9 +53,9 @@ function UserActions(props: Props) {
       }}
     >
       {profile.isFan ? (
-        <UserMinus className="h-4 w-4" />
+        <UserMinus className='h-4 w-4' />
       ) : (
-        <UserPlus className="h-4 w-4" />
+        <UserPlus className='h-4 w-4' />
       )}
       <span>{t(`app.profile.fans.${profile.isFan ? 'un' : ''}follow`)}</span>
     </button>

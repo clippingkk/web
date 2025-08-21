@@ -40,14 +40,14 @@ function VisibleToggle({ clipping, me }: Props) {
 
   return (
     <SidebarContainer>
-      <SidebarButton className="justify-between">
-        <div className="flex items-center gap-2">
+      <SidebarButton className='justify-between'>
+        <div className='flex items-center gap-2'>
           {isVisible ? (
-            <Eye className="h-4 w-4 text-purple-500" />
+            <Eye className='h-4 w-4 text-purple-500' />
           ) : (
-            <EyeOff className="h-4 w-4 text-teal-500" />
+            <EyeOff className='h-4 w-4 text-teal-500' />
           )}
-          <label className="font-medium text-gray-700 dark:text-gray-300">
+          <label className='font-medium text-gray-700 dark:text-gray-300'>
             {t('app.clipping.visible')}
           </label>
         </div>

@@ -1,5 +1,3 @@
-import React from 'react'
-
 type ElegantDividerProps = {
   color?: 'blue' | 'purple' | 'green' | 'pink' | 'gray'
   intensity?: 'light' | 'medium' | 'strong'
@@ -46,7 +44,7 @@ function ElegantDivider({
   return (
     <div className={`relative h-px my-8 overflow-hidden ${className}`}>
       {/* Base gradient line */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent" />
+      <div className='absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent' />
 
       {/* Enhanced color overlay */}
       <div

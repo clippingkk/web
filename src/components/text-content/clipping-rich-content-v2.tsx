@@ -81,7 +81,7 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
       },
     })
     setSelectingText(newText)
-  }, [selectingText])
+  }, [selectingText, refs.setPositionReference])
 
   const coRef = useClickOutside<HTMLDivElement>(() => {
     setSelectingText(undefined)
@@ -93,7 +93,11 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
     } else {
       refs.floating.current?.hidePopover()
     }
-  }, [selectingText])
+  }, [
+    selectingText,
+    refs.floating.current?.hidePopover,
+    refs.floating.current?.showPopover,
+  ])
 
   return (
     <>
@@ -104,7 +108,7 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
           style={{
             ...floatingStyles,
           }}
-          popover="manual"
+          popover='manual'
           className={
             'with-fade-in relative isolate z-50 m-0 overflow-visible rounded-xl bg-linear-to-b from-slate-50 to-slate-200 p-4 shadow-lg dark:from-slate-900 dark:to-slate-950'
           }
@@ -113,7 +117,7 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
             ref={arrowRef}
             context={context}
             tipRadius={2}
-            className="fill-slate-50 dark:fill-slate-900"
+            className='fill-slate-50 dark:fill-slate-900'
           />
           <NounTooltipCard
             noun={nouns.get(selectingText ?? '')}

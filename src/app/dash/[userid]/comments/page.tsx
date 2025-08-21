@@ -29,7 +29,7 @@ export default async function CommentsPage({ params }: Props) {
   const { userid } = await params
   const uid = parseInt(userid, 10)
 
-  if (isNaN(uid)) {
+  if (Number.isNaN(uid)) {
     notFound()
   }
 
@@ -59,14 +59,14 @@ export default async function CommentsPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+    <div className='min-h-screen p-4 md:p-8'>
+      <div className='max-w-6xl mx-auto'>
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-2">
+        <div className='mb-8'>
+          <h1 className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-2'>
             My Comments
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className='text-gray-600 dark:text-gray-400'>
             View and manage all your comments and discussions
           </p>
         </div>

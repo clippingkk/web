@@ -23,7 +23,7 @@ async function DashboardContainer(props: DashboardContainerProps) {
   const ck = await cookies()
   const token = ck.get(COOKIE_TOKEN_KEY)
 
-  const isUidType = !Number.isNaN(parseInt(props.uidOrDomain as string))
+  const isUidType = !Number.isNaN(parseInt(props.uidOrDomain as string, 10))
 
   let myProfile: ProfileQuery | null = null
 
@@ -41,7 +41,7 @@ async function DashboardContainer(props: DashboardContainerProps) {
         context: {
           headers: token
             ? {
-                Authorization: 'Bearer ' + token.value,
+                Authorization: `Bearer ${token.value}`,
               }
             : null,
         },
@@ -81,9 +81,9 @@ async function DashboardContainer(props: DashboardContainerProps) {
         'min-h-screen w-full flex flex-col anna-page-container bg-no-repeat bg-cover'
       }
     >
-      <div className=" min-h-screen w-full flex flex-col  backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60">
+      <div className=' min-h-screen w-full flex flex-col  backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
         {header ?? <NavigationBar myProfile={myProfile?.me} />}
-        <div className=" container flex-col flex m-auto">{children}</div>
+        <div className=' container flex-col flex m-auto'>{children}</div>
         <Footer />
       </div>
     </section>

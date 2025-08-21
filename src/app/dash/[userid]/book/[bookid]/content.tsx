@@ -1,7 +1,7 @@
 'use client'
 import { useQuery } from '@apollo/client'
 import { Masonry, useInfiniteLoader } from 'masonic'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import { usePageTrack } from '@/hooks/tracke'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'

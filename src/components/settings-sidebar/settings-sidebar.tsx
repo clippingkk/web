@@ -8,7 +8,6 @@ import {
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
 import { useTranslation } from '@/i18n/client'
 import LinkIndicator from '../link-indicator'
 
@@ -29,42 +28,42 @@ function SettingsSidebar({ title }: SettingsSidebarProps) {
     {
       id: 'web',
       label: t('app.settings.title'),
-      icon: <Cog8ToothIcon className="w-4 h-4" />,
+      icon: <Cog8ToothIcon className='w-4 h-4' />,
     },
     {
       id: 'orders',
       label: t('app.settings.orders.title'),
-      icon: <QueueListIcon className="w-4 h-4" />,
+      icon: <QueueListIcon className='w-4 h-4' />,
     },
     {
       id: 'webhooks',
       label: t('app.settings.webhook.title'),
-      icon: <GlobeAltIcon className="w-4 h-4" />,
+      icon: <GlobeAltIcon className='w-4 h-4' />,
     },
     {
       id: 'exports',
       label: t('app.settings.export.title'),
-      icon: <DocumentArrowDownIcon className="w-4 h-4" />,
+      icon: <DocumentArrowDownIcon className='w-4 h-4' />,
     },
     {
       id: 'account',
       label: t('app.settings.account'),
-      icon: <UserIcon className="w-4 h-4" />,
+      icon: <UserIcon className='w-4 h-4' />,
       className: 'ml-auto',
     },
   ]
 
   return (
-    <div className="w-1/4 min-w-[200px] border-r border-slate-300/50 dark:border-slate-700/50 bg-gradient-to-b from-slate-100/50 to-slate-200/50 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-md">
-      <div className="py-10 px-3">
-        <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-400 dark:to-purple-500 mb-6 px-4">
+    <div className='w-1/4 min-w-[200px] border-r border-slate-300/50 dark:border-slate-700/50 bg-gradient-to-b from-slate-100/50 to-slate-200/50 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-md'>
+      <div className='py-10 px-3'>
+        <h2 className='text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-400 dark:to-purple-500 mb-6 px-4'>
           {title}
         </h2>
-        <div className="space-y-1">
+        <div className='space-y-1'>
           {tabs.map((tab) => (
             <Link
               key={tab.id}
-              href={`${basePath}/${tab.id}`}
+              href={`${basePath}/${tab.id}` as any}
               className={`
                 group flex items-center gap-3 w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ease-in-out
                 ${tab.className || ''}
@@ -94,7 +93,7 @@ function SettingsSidebar({ title }: SettingsSidebarProps) {
                 {tab.label}
               </span>
               {activeKey === tab.id && (
-                <span className="ml-auto h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                <span className='ml-auto h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400'></span>
               )}
             </Link>
           ))}

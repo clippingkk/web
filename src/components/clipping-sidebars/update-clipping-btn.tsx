@@ -35,7 +35,7 @@ function UpdateClippingBtn({ clipping, me }: Props) {
         }}
       >
         <SidebarIcon>
-          <BookCopy className="h-full w-full" />
+          <BookCopy className='h-full w-full' />
         </SidebarIcon>
         <SidebarText>{t('app.clipping.update')}</SidebarText>
       </SidebarButton>

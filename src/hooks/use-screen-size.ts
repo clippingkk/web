@@ -47,7 +47,7 @@ export default function useScreenSize() {
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [getSize, isClient])
 
   return size
 }

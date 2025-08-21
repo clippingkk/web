@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useHover } from '@/hooks/dom'
 
@@ -35,13 +34,13 @@ function Avatar(props: AvatarProps) {
   if (props.img === '') {
     return (
       <div
-        className={'rounded-full bg-gray-500 animate-pulse ' + cls}
+        className={`rounded-full bg-gray-500 animate-pulse ${cls}`}
         onClick={props.onClick}
       />
     )
   }
   return (
-    <div className={'relative ' + cls} ref={ref}>
+    <div className={`relative ${cls}`} ref={ref}>
       <img
         src={avatar}
         alt={props.name}
@@ -49,11 +48,11 @@ function Avatar(props: AvatarProps) {
       />
       {props.editable && (
         <div
-          className=" rounded-full flex justify-center items-center absolute inset-0 hover:bg-gray-900 hover:bg-opacity-40 hover:backdrop-blur-sm transition-all duration-300"
+          className=' rounded-full flex justify-center items-center absolute inset-0 hover:bg-gray-900 hover:bg-opacity-40 hover:backdrop-blur-sm transition-all duration-300'
           onClick={props.onClick}
         >
           {isHovering && (
-            <span className=" text-white with-fade-in select-none text-lg">
+            <span className=' text-white with-fade-in select-none text-lg'>
               Edit
             </span>
           )}

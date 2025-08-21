@@ -28,7 +28,7 @@ function AuthAppleButton(props: Props) {
   const { onClick, children } = props
   return (
     <button
-      className="flex justify-center items-center bg-black text-white w-full mt-4 rounded-sm hover:scale-105 duration-150 py-0.5"
+      className='flex justify-center items-center bg-black text-white w-full mt-4 rounded-sm hover:scale-105 duration-150 py-0.5'
       onClick={onClick}
     >
       {children}
@@ -53,10 +53,10 @@ function AppleLoginButtonView(props: AppleLoginButtonViewProps) {
       {/* @ts-ignore */}
       <AppleSignin
         authOptions={appleAuthOptions}
-        uiType="dark"
-        className="apple-auth-btn"
+        uiType='dark'
+        className='apple-auth-btn'
         noDefaultStyle={false}
-        buttonExtraChildren="Continue with Apple"
+        buttonExtraChildren='Continue with Apple'
         onSuccess={onSuccess}
         onError={onError}
         skipScript={false}

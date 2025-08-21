@@ -9,7 +9,7 @@
 export function debounce(func: Function, wait: number, immediate?: boolean) {
   let timeout: NodeJS.Timeout | null
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return function (...args: any) {
+  return function (this: any, ...args: any) {
     const later = () => {
       timeout = null
       if (!immediate) func.apply(this, args)

@@ -1,8 +1,8 @@
 .marvel-device {
   display: inline-block;
   position: relative;
-  -webkit-box-sizing: content-box !important;
-  box-sizing: content-box !important;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
 }
 .marvel-device .screen {
   width: 100%;

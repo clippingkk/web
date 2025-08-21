@@ -45,8 +45,8 @@ export async function request<T>(
   options: RequestInit = {}
 ): Promise<T> {
   // set token if not exist
-  if (!(options.headers as Record<string, string>)['Authorization'] && token) {
-    ;(options.headers as Record<string, string>)['Authorization'] =
+  if (!(options.headers as Record<string, string>).Authorization && token) {
+    ;(options.headers as Record<string, string>).Authorization =
       `Bearer ${token}`
   }
 
@@ -91,7 +91,7 @@ export const authLink = new ApolloLink((operation, forward) => {
       !('Authorization' in headers) &&
       token
     ) {
-      headers['Authorization'] = `Bearer ${token}`
+      headers.Authorization = `Bearer ${token}`
     }
 
     return {
@@ -141,7 +141,7 @@ const errorLink = onError((errData) => {
 })
 
 const httpLink = new HttpLink({
-  uri: API_HOST + '/api/v2/graphql',
+  uri: `${API_HOST}/api/v2/graphql`,
   fetch: apolloFetcher,
 })
 

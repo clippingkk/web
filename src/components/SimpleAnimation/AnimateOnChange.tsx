@@ -34,7 +34,7 @@ function AnimateOnChange(props: AnimateOnChangeProps) {
       return
     }
     setAnimation('out')
-  }, [children])
+  }, [])
 
   const showDisplayContent = () => {
     if (animation === 'out') {
@@ -47,7 +47,7 @@ function AnimateOnChange(props: AnimateOnChangeProps) {
     display: 'inline-block',
     transition: !className && `opacity ${durationOut}ms ease-out`,
     opacity: !className && animation === 'out' ? 0 : 1,
-    animationDuration: durationOut + 'ms',
+    animationDuration: `${durationOut}ms`,
     ...style,
   }
 

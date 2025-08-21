@@ -61,7 +61,7 @@ export function useMultipleBook(
         }
         return acc
       }, [])
-  }, [doubanIds.join('&')])
+  }, [doubanIds.filter])
   const chunkedDbIds = useMemo(() => {
     const result: string[][] = []
     const chunkSize = 10
@@ -85,10 +85,7 @@ export function useMultipleBook(
     })),
   })
 
-  const isLoading = useMemo(
-    () => bbs.every((bs) => bs.isLoading),
-    [JSON.stringify(bbs)]
-  )
+  const isLoading = useMemo(() => bbs.every((bs) => bs.isLoading), [bbs.every])
   // reorder
   const books = useMemo<WenquBook[]>(() => {
     const bsList = bbs
@@ -101,7 +98,7 @@ export function useMultipleBook(
       }
       return acc
     }, [])
-  }, [JSON.stringify(bbs.map((x) => x.data?.books)), validDoubanIdList])
+  }, [validDoubanIdList, bbs.filter])
 
   return {
     books,

@@ -64,42 +64,42 @@ function Preview(props: PreviewProps) {
       isOpen={props.visible}
       title={t('app.clipping.preview')}
     >
-      <section className="mt-2 flex p-4">
+      <section className='mt-2 flex p-4'>
         <Preview4Clipping
           clipping={props.clipping}
           book={props.book}
           theme={currentTheme}
           ref={previewDOM}
         />
-        <aside className="mt-2 ml-4 flex flex-col">
-          <div className="w-96 rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+        <aside className='mt-2 ml-4 flex flex-col'>
+          <div className='w-96 rounded-lg bg-white p-6 shadow dark:bg-gray-800'>
             <blockquote
-              className="font-lxgw border-l-4 border-teal-500 py-2 pl-4 text-gray-700 italic dark:text-gray-200"
+              className='font-lxgw border-l-4 border-teal-500 py-2 pl-4 text-gray-700 italic dark:text-gray-200'
               cite={props.book?.author}
             >
               {props.clipping.content}
             </blockquote>
           </div>
-          <hr className="my-10 border-t border-gray-200 dark:border-gray-700" />
+          <hr className='my-10 border-t border-gray-200 dark:border-gray-700' />
 
-          <div className="w-full">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+          <div className='w-full'>
+            <h3 className='mb-4 text-lg font-semibold text-gray-900 dark:text-white'>
               Theme
             </h3>
             <ThemePicker
-              className="w-full"
+              className='w-full'
               current={currentTheme}
               onChange={(t) => {
                 setCurrentTheme(t)
               }}
             />
           </div>
-          <div className="w-full flex-1" />
+          <div className='w-full flex-1' />
           <Button
             onClick={() => onSave()}
             isLoading={isPending}
-            variant="secondary"
-            className="from-teal-500/80 to-teal-600/80 after:from-teal-500/40 after:to-teal-500/40 hover:shadow-teal-500/20"
+            variant='secondary'
+            className='from-teal-500/80 to-teal-600/80 after:from-teal-500/40 after:to-teal-500/40 hover:shadow-teal-500/20'
           >
             {t('app.clipping.save')}
           </Button>

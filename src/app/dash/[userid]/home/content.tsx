@@ -1,7 +1,7 @@
 'use client'
 import { useQuery, useSuspenseQuery } from '@apollo/client'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import BookCover from '@/components/book-cover/book-cover'
 import ListFooter from '@/components/list-footer/list-footer'
 import { useMultipleBook } from '@/hooks/book'
@@ -41,7 +41,10 @@ function useUserNewbie(userProfile: UserProfile | null, onNewbie: () => void) {
       onNewbie()
     }
     // 正常用户，redirect to home page
-  }, [userProfile])
+  }, [
+    userProfile, // is newbie
+    onNewbie,
+  ])
 }
 
 type HomePageContentProps = {
@@ -93,7 +96,7 @@ function HomePageContent(props: HomePageContentProps) {
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-center mt-16">
+      <div className='flex flex-wrap items-center justify-center mt-16'>
         {books.books.length > 0 &&
           books.books.map((item, index) => (
             <BookCover book={item} key={index} domain={userDomain} />
@@ -102,7 +105,7 @@ function HomePageContent(props: HomePageContentProps) {
 
       <ListFooter
         loadingBlock={
-          <div className="w-full">
+          <div className='w-full'>
             <BooksSkeleton />
           </div>
         }

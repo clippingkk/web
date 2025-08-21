@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { NftItem } from '../../schema/generated'
 import type { NFTMetadata } from '../../services/nft'
 
@@ -54,29 +54,29 @@ function NFTGallaryItem(props: NFTGallaryItemProps) {
   }
 
   if (!isImageLoaded || !realImageUrl) {
-    return <div className=" w-28 h-28 animate-pulse bg-gray-500" />
+    return <div className=' w-28 h-28 animate-pulse bg-gray-500' />
   }
   return (
     <div
-      className=" w-32 mx-auto flex justify-center items-center mt-4"
+      className=' w-32 mx-auto flex justify-center items-center mt-4'
       onClick={() => {
         if (props.onClick) {
           props.onClick(props.data, realImageUrl)
         }
       }}
     >
-      <div className="bg-gray-400 bg-opacity-0 hover:bg-opacity-30 duration-300">
+      <div className='bg-gray-400 bg-opacity-0 hover:bg-opacity-30 duration-300'>
         <img
           src={realImageUrl}
           // width={80}
           //  height={80}
           // className='w-28 h-28'
-          className="w-full h-full rounded-t-lg"
+          className='w-full h-full rounded-t-lg'
           alt={props.data.name}
         />
-        <div className="p-2 rounded-b-lg">
-          <h6 className=" text-white text-sm">{props.data.name}</h6>
-          <span className=" text-white text-xs">{metadata?.name ?? ''}</span>
+        <div className='p-2 rounded-b-lg'>
+          <h6 className=' text-white text-sm'>{props.data.name}</h6>
+          <span className=' text-white text-xs'>{metadata?.name ?? ''}</span>
         </div>
       </div>
     </div>

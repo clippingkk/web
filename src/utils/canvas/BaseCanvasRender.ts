@@ -37,7 +37,7 @@ export class BaseCanvasRender {
   }
 
   private setupContentFontStyle() {
-    this.ctx.font = this.config.baseTextSize + 'px ' + this.renderFont
+    this.ctx.font = `${this.config.baseTextSize}px ${this.renderFont}`
     this.ctx.textAlign = 'left'
     this.ctx.textBaseline = 'middle'
   }

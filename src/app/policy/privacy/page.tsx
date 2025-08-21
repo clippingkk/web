@@ -1,13 +1,11 @@
 'use client'
-/* eslint-disable react/no-unescaped-entities */
-import React from 'react'
 // import ReactMarkdown from 'react-markdown'
 import { usePageTrack } from '../../../hooks/tracke'
 
 function PrivacyPolicy() {
   usePageTrack('privacy')
   return (
-    <section className="page p-20">
+    <section className='page p-20'>
       <h1>Privacy Policy</h1>
       <p>Effective date: October 07, 2018</p>
 
@@ -21,7 +19,7 @@ function PrivacyPolicy() {
         disclosure of personal data when you use our Service and the choices you
         have associated with that data. Our Privacy Policy for ClippingKK is
         managed through{' '}
-        <a href="https://www.freeprivacypolicy.com/free-privacy-policy-generator.php">
+        <a href='https://www.freeprivacypolicy.com/free-privacy-policy-generator.php'>
           Free Privacy Policy
         </a>
         .

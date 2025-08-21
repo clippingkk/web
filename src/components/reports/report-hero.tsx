@@ -1,4 +1,3 @@
-import React from 'react'
 import type { FetchYearlyReportQuery } from '../../schema/generated'
 import type { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'

@@ -159,7 +159,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         )
         send({ type: 'Next' })
         toast(t('app.upload.tips.parsedInfoTitle'), {
-          icon: <CheckCircleIcon className="h-4 w-4" />,
+          icon: <CheckCircleIcon className='h-4 w-4' />,
           // message: t('app.upload.tips.parsedInfoContent'),
         })
         return
@@ -207,7 +207,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         client.resetStore()
       }
     },
-    [client, exec, t, willSyncServer]
+    [client, exec, t, willSyncServer, onSyncEnd, send]
   )
 
   useEffect(() => {
@@ -217,7 +217,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         setMessages([])
       }, 3000)
     }
-  }, [step])
+  }, [step, send])
 
   return {
     onUpload,
@@ -273,5 +273,5 @@ export function useSyncClippingsToServer(id: number) {
       .finally(() => {
         client.resetStore()
       })
-  }, [id])
+  }, [id, client.resetStore, exec, t])
 }

@@ -14,26 +14,26 @@ const AnimatedBackground = ({
   return (
     <div className={`relative w-full h-52 md:h-60 lg:h-72 ${className}`}>
       {/* Multi-layered Animated Background */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden rounded-t-3xl">
+      <div className='absolute inset-0 w-full h-full overflow-hidden rounded-t-3xl'>
         {/* Custom background image or default gradient */}
         {backgroundImage ? (
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className='absolute inset-0 bg-cover bg-center bg-no-repeat'
             style={{ backgroundImage: `url(${backgroundImage})` }}
           />
         ) : (
           <>
             {/* Primary gradient layer */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 animate-gradient-xy"></div>
+            <div className='absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 animate-gradient-xy'></div>
 
             {/* Secondary shimmer layer */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+            <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer'></div>
 
             {/* Organic shapes overlay */}
-            <div className="absolute inset-0 opacity-30">
-              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/20 rounded-full blur-xl animate-float"></div>
-              <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-white/15 rounded-full blur-lg animate-float-delayed"></div>
-              <div className="absolute bottom-1/4 left-1/3 w-20 h-20 bg-white/25 rounded-full blur-md animate-float-slow"></div>
+            <div className='absolute inset-0 opacity-30'>
+              <div className='absolute top-1/4 left-1/4 w-32 h-32 bg-white/20 rounded-full blur-xl animate-float'></div>
+              <div className='absolute top-1/2 right-1/4 w-24 h-24 bg-white/15 rounded-full blur-lg animate-float-delayed'></div>
+              <div className='absolute bottom-1/4 left-1/3 w-20 h-20 bg-white/25 rounded-full blur-md animate-float-slow'></div>
             </div>
 
             {/* Subtle noise texture */}
@@ -42,7 +42,7 @@ const AnimatedBackground = ({
         )}
 
         {/* Gradient overlay for better contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+        <div className='absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent'></div>
       </div>
 
       {/* Content overlay */}
