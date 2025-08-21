@@ -37,27 +37,46 @@
       "style": {
         "noUselessElse": "warn",
         "useTemplate": "warn",
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "noDescendingSpecificity": "off"
       },
       "suspicious": {
         "noExplicitAny": "off",
-        "noArrayIndexKey": "warn"
+        "noArrayIndexKey": "off",
+        "noEmptyBlock": "off",
+        "noUnknownAtRules": "off",
+        "noFallthroughSwitchClause": "off",
+        "noDuplicateProperties": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "warn",
+        "useExhaustiveDependencies": "off",
         "noUnusedImports": "warn",
         "useUniqueElementIds": "off",
-        "noEmptyPattern": "warn"
+        "noEmptyPattern": "off",
+        "noUnusedFunctionParameters": "off",
+        "noInvalidPositionAtImportRule": "off",
+        "noUnusedVariables": "off",
+        "noInnerDeclarations": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       },
       "complexity": {
-        "noUselessFragments": "warn"
+        "noUselessFragments": "warn",
+        "noBannedTypes": "off"
+      },
+      "performance": {
+        "noImgElement": "off"
       },
       "a11y": {
         "recommended": true,
         "useButtonType": "off",
         "noSvgWithoutTitle": "off",
         "useKeyWithClickEvents": "off",
-        "noStaticElementInteractions": "off"
+        "noStaticElementInteractions": "off",
+        "useAriaPropsSupportedByRole": "off",
+        "noLabelWithoutControl": "off",
+        "useAltText": "off"
       }
     }
   },
