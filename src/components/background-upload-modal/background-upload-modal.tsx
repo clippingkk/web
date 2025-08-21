@@ -155,14 +155,17 @@ const BackgroundUploadModal = ({
   }, [previewUrl, croppedUrl, onClose])
 
   // Mock API call function
-  const mockUploadBackground = useCallback(async (imageUrl: string): Promise<void> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log('Mock API: Background image uploaded:', imageUrl)
-        resolve()
-      }, 1000)
-    })
-  }, [])
+  const mockUploadBackground = useCallback(
+    async (imageUrl: string): Promise<void> => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log('Mock API: Background image uploaded:', imageUrl)
+          resolve()
+        }, 1000)
+      })
+    },
+    []
+  )
 
   const handleSave = useCallback(async () => {
     if (!croppedUrl) return

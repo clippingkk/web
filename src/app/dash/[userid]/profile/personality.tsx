@@ -2,7 +2,7 @@
 import Modal from '@annatarhe/lake-ui/modal'
 import { ExternalLink, Loader2 } from 'lucide-react'
 import { useState } from 'react'
-import Markdown from 'react-markdown'
+import { Streamdown } from 'streamdown'
 import { MarkdownComponents } from '@/components/RichTextEditor/markdown-components'
 import { useTranslation } from '@/i18n/client'
 import { useFetchUserPersonalityQuery } from '@/schema/generated'
@@ -52,9 +52,9 @@ function PersonalityView(props: PersonalityViewProps) {
             </div>
           )}
           {personalityData && (
-            <Markdown components={MarkdownComponents}>
+            <Streamdown components={MarkdownComponents}>
               {personalityData}
-            </Markdown>
+            </Streamdown>
           )}
           {error && (
             <div className='mt-4 w-full rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-600 dark:text-red-400'>

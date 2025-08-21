@@ -17,7 +17,7 @@ pre-commit:
   commands:
     eslint:
       glob: "*.{js,ts,jsx,tsx}"
-      run: npm run lint -- --fix --file {staged_files}
+      run: npm run lint -- --fix {staged_files}
 #     rubocop:
 #       tags: backend style
 #       glob: "*.rb"
