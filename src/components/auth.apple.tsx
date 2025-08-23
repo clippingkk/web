@@ -5,12 +5,14 @@ import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 import {
   AppleLoginPlatforms,
+  AuthLoginResponseFragment,
   LoginByAppleDocument,
   type LoginByAppleQuery,
 } from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import type { AppleAuthResponse } from '../services/apple'
 import AppleLoginButtonView from './auth/apple'
+import { Unmasked } from '@apollo/client'
 
 type AuthAppleProps = {
   disabled?: boolean
@@ -34,7 +36,10 @@ function AuthByAppleButton(props: AuthAppleProps) {
           },
         },
       })
-      if (r.data?.loginByApple.noAccountFrom3rdPart) {
+      if (
+        (r.data?.loginByApple as Unmasked<AuthLoginResponseFragment>)
+          .noAccountFrom3rdPart
+      ) {
         router.push(`/auth/callback/apple?i=${id_token}`)
         return
       }
@@ -47,7 +52,9 @@ function AuthByAppleButton(props: AuthAppleProps) {
     appleAuthResponse.called,
     appleAuthResponse.loading,
     appleAuthResponse.error,
-    appleAuthResponse.data?.loginByApple
+    appleAuthResponse.data?.loginByApple as
+      | Unmasked<AuthLoginResponseFragment>
+      | undefined
   )
 
   const loading = appleAuthResponse.loading

@@ -8,9 +8,7 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import type {
   AuthByPhoneMutation,
-  AuthByWeb3Query,
-  AuthQuery,
-  DoLoginV3Mutation,
+  AuthLoginResponseFragment,
   SignupMutation,
   User,
 } from '@/gql/graphql'
@@ -18,6 +16,7 @@ import { syncLoginStateToServer } from '../actions/login'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 import { updateToken } from '../services/ajax'
 import profile from '../utils/profile'
+import { Unmasked } from '@apollo/client'
 
 type UserContent = Pick<User, 'id' | 'name' | 'email' | 'avatar' | 'createdAt'>
 
@@ -59,7 +58,7 @@ export function useAuthBy3rdPartSuccessed(
   loading: boolean,
   error?: CombinedGraphQLErrors | Error,
   // authResponse?: authByWeb3_loginByWeb3 | loginByApple_loginByApple | bindAppleUnique_bindAppleUnique | bindWeb3Address_bindWeb3Address
-  authResponse?: Pick<AuthByWeb3Query['loginByWeb3'], 'user' | 'token'>
+  authResponse?: Pick<Unmasked<AuthLoginResponseFragment>, 'user' | 'token'>
 ) {
   // const navigate = useNavigate()
   const { push: navigate } = useRouter()
@@ -97,7 +96,7 @@ export function useLoginV3Successed(
   called: boolean,
   loading: boolean,
   error?: CombinedGraphQLErrors | Error,
-  authResponse?: DoLoginV3Mutation['loginV3']
+  authResponse?: AuthLoginResponseFragment
 ) {
   const { push: navigate } = useRouter()
   useEffect(() => {
@@ -170,7 +169,7 @@ export function useAuthSuccessed(
   called: boolean,
   loading: boolean,
   error?: CombinedGraphQLErrors | Error,
-  authResponse?: AuthQuery['auth']
+  authResponse?: AuthLoginResponseFragment
 ) {
   const { push: navigate } = useRouter()
   useEffect(() => {

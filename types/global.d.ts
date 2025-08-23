@@ -1,3 +1,4 @@
+/// <reference path="../../types/global.d.ts" />
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare let __DEV__: boolean
 declare let __VERSION__: string

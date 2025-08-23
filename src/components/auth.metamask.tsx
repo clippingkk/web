@@ -5,10 +5,15 @@ import { useSDK } from '@metamask/sdk-react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
-import { AuthByWeb3Document, type AuthByWeb3Query } from '@/gql/graphql'
+import {
+  AuthByWeb3Document,
+  AuthLoginResponseFragment,
+  type AuthByWeb3Query,
+} from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import { signDataByWeb3 } from '../utils/wallet'
 import MetamaskButtonView from './auth/metamask'
+import { Unmasked } from '@apollo/client'
 
 function AuthByMetamask() {
   const router = useRouter()
@@ -30,7 +35,10 @@ function AuthByMetamask() {
           },
         },
       })
-      if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
+      if (
+        (r.data?.loginByWeb3 as Unmasked<AuthLoginResponseFragment>)
+          .noAccountFrom3rdPart
+      ) {
         router.push(
           `/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`
         )
@@ -57,7 +65,9 @@ function AuthByMetamask() {
     doAuthData.called,
     doAuthData.loading,
     doAuthData.error,
-    doAuthData.data?.loginByWeb3
+    doAuthData.data?.loginByWeb3 as
+      | Unmasked<AuthLoginResponseFragment>
+      | undefined
   )
 
   const disabled = doAuthData.loading
