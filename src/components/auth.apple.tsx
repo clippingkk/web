@@ -1,18 +1,18 @@
 'use client'
+import type { Unmasked } from '@apollo/client'
 import { useLazyQuery } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 import {
   AppleLoginPlatforms,
-  AuthLoginResponseFragment,
+  type AuthLoginResponseFragment,
   LoginByAppleDocument,
   type LoginByAppleQuery,
 } from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import type { AppleAuthResponse } from '../services/apple'
 import AppleLoginButtonView from './auth/apple'
-import { Unmasked } from '@apollo/client'
 
 type AuthAppleProps = {
   disabled?: boolean

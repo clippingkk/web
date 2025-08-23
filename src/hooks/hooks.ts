@@ -1,4 +1,5 @@
 'use client'
+import type { Unmasked } from '@apollo/client'
 import type { CombinedGraphQLErrors } from '@apollo/client/errors'
 import type { useMutation } from '@apollo/client/react'
 import * as sentry from '@sentry/react'
@@ -16,7 +17,6 @@ import { syncLoginStateToServer } from '../actions/login'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 import { updateToken } from '../services/ajax'
 import profile from '../utils/profile'
-import { Unmasked } from '@apollo/client'
 
 type UserContent = Pick<User, 'id' | 'name' | 'email' | 'avatar' | 'createdAt'>
 

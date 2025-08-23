@@ -1,4 +1,5 @@
 'use client'
+import type { Unmasked } from '@apollo/client'
 import { useLazyQuery } from '@apollo/client/react'
 import { useSDK } from '@metamask/sdk-react'
 // import MetamaskLogo from './icons/metamask.logo.svg'
@@ -7,13 +8,12 @@ import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 import {
   AuthByWeb3Document,
-  AuthLoginResponseFragment,
   type AuthByWeb3Query,
+  type AuthLoginResponseFragment,
 } from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import { signDataByWeb3 } from '../utils/wallet'
 import MetamaskButtonView from './auth/metamask'
-import { Unmasked } from '@apollo/client'
 
 function AuthByMetamask() {
   const router = useRouter()
