@@ -2,8 +2,8 @@
 import { Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import ClippingAISummaryModal from '@/components/clipping-item/aiSummary'
+import type { Clipping, User } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { Clipping, User } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
 import {
   SidebarButton,

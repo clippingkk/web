@@ -3,7 +3,6 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { checkIsPremium } from '@/compute/user'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
 import {
   FetchMyWebHooksDocument,
   type FetchMyWebHooksQuery,
@@ -11,7 +10,8 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import WebHooksContent from './content'
 import WebhookCreateButton from './create-button'
@@ -66,7 +66,7 @@ async function WebhooksPage(props: Props) {
     },
   })
 
-  const isPremium = checkIsPremium(profileResponse.me.premiumEndAt)
+  const isPremium = checkIsPremium(profileResponse?.me?.premiumEndAt ?? null)
 
   return (
     <>
@@ -97,7 +97,7 @@ async function WebhooksPage(props: Props) {
         <div className='space-y-6'>
           <WebHooksContent
             isPremium={isPremium}
-            webhooks={webhooksResp.me.webhooks}
+            webhooks={webhooksResp?.me?.webhooks ?? []}
             userId={userid}
           />
         </div>

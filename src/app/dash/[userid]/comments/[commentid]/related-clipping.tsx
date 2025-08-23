@@ -1,6 +1,6 @@
 import * as motion from 'motion/react-client'
 import Link from 'next/link'
-import type { GetCommentQuery } from '@/schema/generated'
+import type { GetCommentQuery } from '@/gql/graphql'
 
 type Props = {
   clipping: GetCommentQuery['getComment']['belongsTo']

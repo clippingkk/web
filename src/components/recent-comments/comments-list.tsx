@@ -1,5 +1,5 @@
 import CommentItem from '@/components/comment-item/comment-item'
-import type { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/gql/graphql'
 
 type CommentsListProps = {
   items: ProfileQuery['me']['commentList']['items']

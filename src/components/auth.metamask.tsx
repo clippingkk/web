@@ -1,17 +1,23 @@
 'use client'
+import type { Unmasked } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client/react'
 import { useSDK } from '@metamask/sdk-react'
 // import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
+import {
+  AuthByWeb3Document,
+  type AuthByWeb3Query,
+  type AuthLoginResponseFragment,
+} from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
-import { useAuthByWeb3LazyQuery } from '../schema/generated'
 import { signDataByWeb3 } from '../utils/wallet'
 import MetamaskButtonView from './auth/metamask'
 
 function AuthByMetamask() {
   const router = useRouter()
-  const [doAuth, doAuthData] = useAuthByWeb3LazyQuery()
+  const [doAuth, doAuthData] = useLazyQuery<AuthByWeb3Query>(AuthByWeb3Document)
   const { sdk: metamaskSDK } = useSDK()
   // const err = hooks.useError()
   const onMetamaskLogin = useCallback(async () => {
@@ -29,7 +35,10 @@ function AuthByMetamask() {
           },
         },
       })
-      if (r.data?.loginByWeb3.noAccountFrom3rdPart) {
+      if (
+        (r.data?.loginByWeb3 as Unmasked<AuthLoginResponseFragment>)
+          .noAccountFrom3rdPart
+      ) {
         router.push(
           `/auth/callback/metamask?a=${res.address}&s=${res.signature}&t=${encodeURIComponent(res.text)}`
         )
@@ -56,7 +65,9 @@ function AuthByMetamask() {
     doAuthData.called,
     doAuthData.loading,
     doAuthData.error,
-    doAuthData.data?.loginByWeb3
+    doAuthData.data?.loginByWeb3 as
+      | Unmasked<AuthLoginResponseFragment>
+      | undefined
   )
 
   const disabled = doAuthData.loading

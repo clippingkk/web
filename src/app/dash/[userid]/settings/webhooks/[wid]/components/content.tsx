@@ -1,6 +1,6 @@
 import { Webhook } from 'lucide-react'
+import { type FetchWebhookQuery, WebHookStep } from '@/gql/graphql'
 import { useTranslation } from '@/i18n'
-import { type FetchWebhookQuery, WebHookStep } from '@/schema/generated'
 import WebhookDetailHeader from './header'
 import RecordsList from './records-list'
 

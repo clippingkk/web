@@ -1,21 +1,20 @@
 import type { ApolloClient } from '@apollo/client'
 import * as sentry from '@sentry/react'
 import Cookies from 'js-cookie'
-import mixpanel from 'mixpanel-browser'
+import {
+  ProfileDocument,
+  type ProfileQuery,
+  type ProfileQueryVariables,
+} from '@/gql/graphql'
 import {
   COOKIE_TOKEN_KEY,
   type IUserToken,
   USER_ID_KEY,
 } from '../constants/storage'
-import {
-  ProfileDocument,
-  type ProfileQuery,
-  type ProfileQueryVariables,
-} from '../schema/generated'
 import { updateToken } from '../services/ajax'
 import profile from './profile'
 
-export async function initParseFromLS(ac: ApolloClient<object>) {
+export async function initParseFromLS(ac: ApolloClient) {
   if (typeof localStorage === 'undefined') {
     return
   }
@@ -37,7 +36,7 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
         },
       })
       const payload = {
-        profile: ps.data.me,
+        profile: ps.data?.me ?? null,
         token: cookieToken,
         createdAt: Date.now(),
       }
@@ -65,14 +64,6 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
     id: auth.profile.id.toString(),
     username: auth.profile.name,
   })
-  mixpanel.identify(auth.profile.id.toString())
-  if (mixpanel.people) {
-    mixpanel.people.set({
-      $email: auth.profile.email,
-      'Sign up date': auth.createdAt,
-      USER_ID: auth.profile.name,
-    })
-  }
 
   // 存量数据里没这个字段，这里加一下 patch
   if (typeof auth.profile.domain !== 'string') {

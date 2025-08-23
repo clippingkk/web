@@ -1,4 +1,4 @@
-import type { User } from '@/schema/generated'
+import type { User } from '@/gql/graphql'
 import { request } from './ajax'
 import { covertHttpBook2Book, type IHttpBook } from './books'
 

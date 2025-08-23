@@ -1,9 +1,9 @@
 import {
-  ApolloError,
   ApolloLink,
   type OperationVariables,
   type QueryOptions,
 } from '@apollo/client'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import {
   ApolloClient,
   InMemoryCache,
@@ -32,7 +32,7 @@ export function doApolloServerQuery<
       .query<TData, TVariables>(options)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((e: any) => {
-        if (e instanceof ApolloError) {
+        if (e instanceof CombinedGraphQLErrors) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const statusCode = (e.cause as any)?.info?.code as number
           if (statusCode === 401) {

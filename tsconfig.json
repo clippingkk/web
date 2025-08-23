@@ -50,10 +50,16 @@
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "src/**/*.ts",
+    "types/**/*.d.ts",
+    "node_modules/mixpanel-browser/src/index.d.ts",
+    "node_modules/@types/**/*.d.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
+    "coverage",
+    "build",
+    "public"
   ]
 }

@@ -1,13 +1,15 @@
 'use client'
 
+import { useMutation } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import ConfirmDialog from '@/components/confirm-dialog/confirm-dialog'
 import {
+  DeleteCommentDocument,
+  type DeleteCommentMutation,
   type GetCommentQuery,
-  useDeleteCommentMutation,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import dayjs from '@/utils/dayjs'
 
 type Props = {
@@ -17,7 +19,9 @@ type Props = {
 function CommentHeader({ comment }: Props) {
   const router = useRouter()
   const [isDeleting, setIsDeleting] = useState(false)
-  const [deleteComment] = useDeleteCommentMutation()
+  const [deleteComment] = useMutation<DeleteCommentMutation>(
+    DeleteCommentDocument
+  )
 
   const handleDelete = async () => {
     setIsDeleting(true)

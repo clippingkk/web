@@ -6,7 +6,7 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { getPaymentSubscription } from '@/services/payment'
 import { metadata as pricingMetadata } from '../../components/og/og-with-pricing'
@@ -48,7 +48,7 @@ async function PricingPage() {
         },
       },
     })
-    profile = profileResponse.data.me
+    profile = profileResponse.data?.me ?? null
   }
 
   return <PricingContent profile={profile} checkoutUrl={checkoutUrl} />

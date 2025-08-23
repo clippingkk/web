@@ -1,4 +1,4 @@
-import type { FetchYearlyReportQuery } from '../../schema/generated'
+import type { FetchYearlyReportQuery } from '@/gql/graphql'
 import type { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
 import styles from './report-hero.module.css'

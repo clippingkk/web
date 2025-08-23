@@ -1,6 +1,6 @@
 import { BookOpen, MessageCircle, Quote } from 'lucide-react'
 import Link from 'next/link'
-import type { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/gql/graphql'
 
 type CommentItemProps = {
   comment: NonNullable<ProfileQuery['me']['commentList']['items'][0]>

@@ -5,7 +5,7 @@ import {
   FetchWebhookDocument,
   type FetchWebhookQuery,
   type FetchWebhookQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import WebhookDetailContent from './components/content'
 

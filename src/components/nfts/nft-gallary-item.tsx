@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import type { NftItem } from '../../schema/generated'
+import type { NftItem } from '@/gql/graphql'
 import type { NFTMetadata } from '../../services/nft'
 
 type NFTGallaryItemProps = {

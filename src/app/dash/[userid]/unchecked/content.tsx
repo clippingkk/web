@@ -1,9 +1,10 @@
 'use client'
+import { useQuery } from '@apollo/client/react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import Divider from '@/components/divider/divider'
 import MasonryContainer from '@/components/masonry-container'
+import { BookDocument, type BookQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useBookQuery } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
 function UncheckedPageContent({ profile }: Props) {
   const domain =
     profile.domain.length > 2 ? profile.domain : profile.id.toString()
-  const { data: clippingsData } = useBookQuery({
+  const { data: clippingsData } = useQuery<BookQuery>(BookDocument, {
     variables: {
       id: 0,
       pagination: {
@@ -28,14 +29,16 @@ function UncheckedPageContent({ profile }: Props) {
     <div>
       <Divider title={t('app.home.unchecked')} />
       <MasonryContainer>
-        {clippingsData?.book.clippings.map((clipping) => (
-          <ClippingItem
-            item={clipping}
-            domain={domain}
-            key={clipping.id}
-            inAppChannel={IN_APP_CHANNEL.clippingFromUser}
-          />
-        ))}
+        <>
+          {clippingsData?.book.clippings.map((clipping) => (
+            <ClippingItem
+              item={clipping}
+              domain={domain}
+              key={clipping.id}
+              inAppChannel={IN_APP_CHANNEL.clippingFromUser}
+            />
+          ))}
+        </>
       </MasonryContainer>
     </div>
   )

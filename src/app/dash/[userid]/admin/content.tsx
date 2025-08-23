@@ -8,8 +8,8 @@ import {
 } from '@tanstack/react-table'
 import { BookOpen } from 'lucide-react'
 import { useMemo } from 'react'
+import type { UncheckBooksQueryQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { UncheckBooksQueryQuery } from '@/schema/generated'
 import HomelessBookSyncInput from './sync-input'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

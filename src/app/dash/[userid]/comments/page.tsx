@@ -6,7 +6,7 @@ import {
   GetCommentListDocument,
   type GetCommentListQuery,
   type GetCommentListQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import CommentsList from './comments-list'
 

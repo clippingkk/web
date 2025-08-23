@@ -1,7 +1,7 @@
 'use client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import { useSuspenseQuery } from '@apollo/client'
+import { useMutation, useSuspenseQuery } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail } from 'lucide-react'
 import { useParams } from 'next/navigation'
@@ -9,14 +9,16 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
-import { useTranslation } from '@/i18n/client'
 import {
+  ExportDataToDocument,
+  type ExportDataToMutation,
+  type ExportDataToMutationVariables,
   ExportDestination,
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-  useExportDataToMutation,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n/client'
 
 function ExportToMail() {
   const [visible, setVisible] = useState(false)
@@ -59,7 +61,10 @@ function ExportToMail() {
     },
   })
 
-  const [mutate] = useExportDataToMutation({
+  const [mutate] = useMutation<
+    ExportDataToMutation,
+    ExportDataToMutationVariables
+  >(ExportDataToDocument, {
     onCompleted() {
       toast.success(t('app.settings.export.success'))
       reset()
@@ -79,8 +84,8 @@ function ExportToMail() {
         },
       })
 
-      if (result.errors?.length) {
-        throw new Error(result.errors[0].message)
+      if (result.error) {
+        throw new Error(result.error.message)
       }
     } catch (err) {
       // Error is already handled by the mutation's onError callback

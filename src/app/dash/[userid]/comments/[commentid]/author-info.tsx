@@ -1,6 +1,6 @@
 import * as motion from 'motion/react-client'
 import Image from 'next/image'
-import type { GetCommentQuery } from '@/schema/generated'
+import type { GetCommentQuery } from '@/gql/graphql'
 
 type Props = {
   creator: GetCommentQuery['getComment']['creator']

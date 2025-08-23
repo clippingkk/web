@@ -1,5 +1,5 @@
 import PageTrack from '@/components/track/page-track'
-import type { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/gql/graphql'
 import ProfileDetails from './profile-details' // New import
 import ProfileHeader from './profile-header' // New import
 

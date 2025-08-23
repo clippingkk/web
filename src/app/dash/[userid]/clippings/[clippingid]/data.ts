@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers'
 import { cache } from 'react'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { duration3Days } from '@/hooks/book'
 import {
   FetchClippingDocument,
   type FetchClippingQuery,
@@ -9,7 +8,8 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { duration3Days } from '@/hooks/book'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import {
@@ -59,11 +59,11 @@ export const getClippingData = cache(async (clippingId: number) => {
           : undefined,
       },
     })
-    myProfile = p.data.me
+    myProfile = p.data?.me ?? undefined
   }
 
   let bookData: WenquBook | null = null
-  const bookID = clippingsResponse.data.clipping.bookID
+  const bookID = clippingsResponse.data?.clipping?.bookID
   const rq = getReactQueryClient()
   if (bookID && bookID.length > 3) {
     const bs = await rq.fetchQuery({
@@ -77,7 +77,7 @@ export const getClippingData = cache(async (clippingId: number) => {
   }
 
   return {
-    clipping: clippingsResponse.data.clipping,
+    clipping: clippingsResponse.data?.clipping ?? null,
     me: myProfile,
     bookData,
     uid: uid ? ~~uid : undefined,

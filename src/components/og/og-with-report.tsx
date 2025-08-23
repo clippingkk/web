@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
+import type { FetchYearlyReportQuery } from '@/gql/graphql'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import type { FetchYearlyReportQuery } from '../../schema/generated'
 import type { WenquBook } from '../../services/wenqu'
 
 const url = APP_URL_ORIGIN
 export function generateMetadata(
   year: number,
-  data: FetchYearlyReportQuery,
+  data: FetchYearlyReportQuery | undefined,
   bs: WenquBook[]
 ): Metadata {
-  const metaTitle = `${data.reportYearly.user.name} 在 ${year} 年共读了 ${data?.reportYearly.books.length} 本书 - Clippingkk - kindle 书摘管理`
+  const metaTitle = `${data?.reportYearly.user.name} 在 ${year} 年共读了 ${data?.reportYearly.books.length} 本书 - Clippingkk - kindle 书摘管理`
   const plainAvatar = data?.reportYearly.user.avatar
   const avatar = plainAvatar?.startsWith('http')
     ? plainAvatar

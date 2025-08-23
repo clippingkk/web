@@ -1,5 +1,5 @@
+import type { PublicDataQuery } from '@/gql/graphql'
 import { duration3Days } from '../hooks/book'
-import type { PublicDataQuery } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
 import { type WenquSearchResponse, wenquRequest } from '../services/wenqu'
 import BookCover from './book-cover/book-cover'

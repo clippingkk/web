@@ -1,19 +1,23 @@
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import SelectField from '@annatarhe/lake-ui/form-select-field'
 import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
+import { useMutation, useQuery } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
-import { useTranslation } from '@/i18n/client'
 import {
+  CreateNounMutationDocument,
+  type CreateNounMutationMutation,
+  FetchNounDocument,
+  type FetchNounQuery,
   NounScope,
-  useCreateNounMutationMutation,
-  useFetchNounQuery,
-  useUpdateNounMutationMutation,
-} from '../../schema/generated'
+  UpdateNounMutationDocument,
+  type UpdateNounMutationMutation,
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n/client'
 import { toastPromiseDefaultOption } from '../../services/misc'
 
 type NounEditContentProps = {
@@ -43,13 +47,13 @@ function NounEditContent(props: NounEditContentProps) {
   const { t } = useTranslation()
 
   const [createNoun, { loading: createLoading }] =
-    useCreateNounMutationMutation({
+    useMutation<CreateNounMutationMutation>(CreateNounMutationDocument, {
       onCompleted: () => {
         onClose()
       },
     })
   const [updateNoun, { loading: updateLoading }] =
-    useUpdateNounMutationMutation({
+    useMutation<UpdateNounMutationMutation>(UpdateNounMutationDocument, {
       onCompleted: () => {
         onClose()
       },
@@ -64,12 +68,15 @@ function NounEditContent(props: NounEditContentProps) {
     },
   })
 
-  const { data: fetchedNoun, loading } = useFetchNounQuery({
-    variables: {
-      id,
-    },
-    skip: id < 0,
-  })
+  const { data: fetchedNoun, loading } = useQuery<FetchNounQuery>(
+    FetchNounDocument,
+    {
+      variables: {
+        id,
+      },
+      skip: id < 0,
+    }
+  )
 
   useEffect(() => {
     if (!fetchedNoun) {

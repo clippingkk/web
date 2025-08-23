@@ -1,11 +1,15 @@
-import { useApolloClient, useMutation } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { useMachine } from '@xstate/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from '@/i18n/client'
-import { graphql } from '../gql'
-import { useCreateClippingsMutation } from '../schema/generated'
+import {
+  CreateClippingsDocument,
+  type CreateClippingsMutation,
+  type CreateClippingsMutationVariables,
+} from '../gql/graphql'
 import { getReactQueryClient } from '../services/ajax'
 import { UploadStep } from '../services/uploader'
 import { type WenquSearchResponse, wenquRequest } from '../services/wenqu'
@@ -21,11 +25,11 @@ type digestedClippingItem = TClippingItem & { _digest?: string }
 
 const localClippingsStashKey = 'app.stash.clippings'
 
-const onSyncEndMutation = graphql(`
+const onSyncEndMutation = gql`
   mutation onSyncEnd($startedAt: Int!) {
     onCreateClippingEnd(startedAt: $startedAt)
   }
-`)
+`
 
 export function useUploadData(_: boolean, willSyncServer: boolean) {
   const { t } = useTranslation()
@@ -39,7 +43,10 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
   const wenquSearchResult = useRef(new Map<string, number>())
   const client = useApolloClient()
 
-  const [exec] = useCreateClippingsMutation()
+  const [exec] = useMutation<
+    CreateClippingsMutation,
+    CreateClippingsMutationVariables
+  >(CreateClippingsDocument)
   const [onSyncEnd] = useMutation(onSyncEndMutation)
 
   const onUpload = useCallback(
@@ -230,7 +237,10 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
 
 export function useSyncClippingsToServer(id: number) {
   const { t } = useTranslation()
-  const [exec, { client }] = useCreateClippingsMutation()
+  const [exec, { client }] = useMutation<
+    CreateClippingsMutation,
+    CreateClippingsMutationVariables
+  >(CreateClippingsDocument)
   useEffect(() => {
     if (!id) {
       return

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import AnimatedBackground from '@/components/animated-background/animated-background'
 import BackgroundUploadModal from '@/components/background-upload-modal/background-upload-modal'
 import Button from '@/components/button/button'
-import type { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/gql/graphql'
 import AvatarSection from './avatar-section'
 
 type ProfileHeaderProps = {

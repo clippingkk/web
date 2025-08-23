@@ -1,12 +1,16 @@
 'use client'
+import type { Unmasked } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
-import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import {
   AppleLoginPlatforms,
-  useLoginByAppleLazyQuery,
-} from '../schema/generated'
+  type AuthLoginResponseFragment,
+  LoginByAppleDocument,
+  type LoginByAppleQuery,
+} from '@/gql/graphql'
+import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import type { AppleAuthResponse } from '../services/apple'
 import AppleLoginButtonView from './auth/apple'
 
@@ -16,7 +20,8 @@ type AuthAppleProps = {
 
 function AuthByAppleButton(props: AuthAppleProps) {
   const router = useRouter()
-  const [doAppleAuth, appleAuthResponse] = useLoginByAppleLazyQuery()
+  const [doAppleAuth, appleAuthResponse] =
+    useLazyQuery<LoginByAppleQuery>(LoginByAppleDocument)
 
   const onSuccess = useCallback(
     async (resp: AppleAuthResponse) => {
@@ -31,7 +36,10 @@ function AuthByAppleButton(props: AuthAppleProps) {
           },
         },
       })
-      if (r.data?.loginByApple.noAccountFrom3rdPart) {
+      if (
+        (r.data?.loginByApple as Unmasked<AuthLoginResponseFragment>)
+          .noAccountFrom3rdPart
+      ) {
         router.push(`/auth/callback/apple?i=${id_token}`)
         return
       }
@@ -44,7 +52,9 @@ function AuthByAppleButton(props: AuthAppleProps) {
     appleAuthResponse.called,
     appleAuthResponse.loading,
     appleAuthResponse.error,
-    appleAuthResponse.data?.loginByApple
+    appleAuthResponse.data?.loginByApple as
+      | Unmasked<AuthLoginResponseFragment>
+      | undefined
   )
 
   const loading = appleAuthResponse.loading

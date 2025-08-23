@@ -1,20 +1,19 @@
 'use client'
-import type { ApolloError, MutationResult } from '@apollo/client'
+import type { Unmasked } from '@apollo/client'
+import type { CombinedGraphQLErrors } from '@apollo/client/errors'
+import type { useMutation } from '@apollo/client/react'
 import * as sentry from '@sentry/react'
-import mixpanel from 'mixpanel-browser'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
-import type { User } from '@/gql/graphql'
-import { syncLoginStateToServer } from '../actions/login'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 import type {
   AuthByPhoneMutation,
-  AuthByWeb3Query,
-  AuthQuery,
-  DoLoginV3Mutation,
+  AuthLoginResponseFragment,
   SignupMutation,
-} from '../schema/generated'
+  User,
+} from '@/gql/graphql'
+import { syncLoginStateToServer } from '../actions/login'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 import { updateToken } from '../services/ajax'
 import profile from '../utils/profile'
 
@@ -42,12 +41,6 @@ async function onAuthEnd(data: { user: UserContent; token: string }) {
     id: me.id.toString(),
     username: me.name,
   })
-  mixpanel.identify(me.id.toString())
-  mixpanel.people.set({
-    $email: me.email,
-    'Sign up date': me.createdAt,
-    USER_ID: me.id.toString(),
-  })
   updateToken(profile.token)
   // Cookies.set('token', profile.token, { expires: 365 })
   // Cookies.set('uid', profile.uid.toString(), { expires: 365 })
@@ -56,9 +49,9 @@ async function onAuthEnd(data: { user: UserContent; token: string }) {
 export function useAuthBy3rdPartSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: CombinedGraphQLErrors | Error,
   // authResponse?: authByWeb3_loginByWeb3 | loginByApple_loginByApple | bindAppleUnique_bindAppleUnique | bindWeb3Address_bindWeb3Address
-  authResponse?: Pick<AuthByWeb3Query['loginByWeb3'], 'user' | 'token'>
+  authResponse?: Pick<Unmasked<AuthLoginResponseFragment>, 'user' | 'token'>
 ) {
   // const navigate = useNavigate()
   const { push: navigate } = useRouter()
@@ -81,7 +74,6 @@ export function useAuthBy3rdPartSuccessed(
     }
 
     onAuthEnd(authResponse).then(() => {
-      mixpanel.track('login')
       // redirect
       setTimeout(() => {
         const me = authResponse.user
@@ -95,8 +87,8 @@ export function useAuthBy3rdPartSuccessed(
 export function useLoginV3Successed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
-  authResponse?: DoLoginV3Mutation['loginV3']
+  error?: CombinedGraphQLErrors | Error,
+  authResponse?: AuthLoginResponseFragment
 ) {
   const { push: navigate } = useRouter()
   useEffect(() => {
@@ -118,7 +110,6 @@ export function useLoginV3Successed(
     }
 
     onAuthEnd(authResponse).then(() => {
-      mixpanel.track('loginV3')
       // redirect
       setTimeout(() => {
         const me = authResponse.user
@@ -134,7 +125,7 @@ export function useLoginV3Successed(
 export function useAuthByPhoneSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: CombinedGraphQLErrors | Error,
   authResponse?: AuthByPhoneMutation['authByPhone']
 ) {
   // const navigate = useNavigate()
@@ -154,7 +145,6 @@ export function useAuthByPhoneSuccessed(
     }
 
     onAuthEnd(authResponse).then(() => {
-      mixpanel.track('login')
       // redirect
       setTimeout(() => {
         const me = authResponse.user
@@ -168,8 +158,8 @@ export function useAuthByPhoneSuccessed(
 export function useAuthSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
-  authResponse?: AuthQuery['auth']
+  error?: CombinedGraphQLErrors | Error,
+  authResponse?: AuthLoginResponseFragment
 ) {
   const { push: navigate } = useRouter()
   useEffect(() => {
@@ -184,18 +174,13 @@ export function useAuthSuccessed(
   }, [called, loading, error, authResponse, navigate])
 }
 
-export function useSignupSuccess(result: MutationResult<SignupMutation>) {
+export function useSignupSuccess(result: useMutation.Result<SignupMutation>) {
   const { push: navigate } = useRouter()
   useEffect(() => {
     const { called, error, data, loading } = result
     if (called && !error && data && !loading) {
       onAuthEnd(data.signup)
       const me = data.signup.user
-      mixpanel.track('signup', {
-        email: me.email,
-        name: me.name,
-        avatarUrl: me.avatar,
-      })
       // redirect
       toast.success(
         `欢迎你哦~ ${me.name}，现在需要去邮箱点一下刚刚发你的确认邮件。\n 如果有问题可以发邮件： iamhele1994@gmail.com`,

@@ -1,5 +1,6 @@
 import { ApolloLink, HttpLink } from '@apollo/client'
-import { onError } from '@apollo/client/link/error'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
+import { ErrorLink } from '@apollo/client/link/error'
 import {
   ApolloClient,
   InMemoryCache,
@@ -114,28 +115,21 @@ type GraphQLResponseError = {
   message: string
 }
 
-const errorLink = onError((errData) => {
-  const { graphQLErrors, networkError } = errData
-  if (graphQLErrors) {
-    // swal({
-    //   icon: 'error',
-    //   title: graphQLErrors[0].message,
-    //   text: graphQLErrors[0].message,
-    // })
-    if (typeof window !== 'undefined') {
-      toast.error(graphQLErrors[0].message)
-    }
-  }
-  const ne = networkError as GraphQLResponseError
-
-  if (ne) {
-    console.log(`[Network error]: ${ne}`)
-    if (typeof window !== 'undefined') {
-      if (ne.statusCode && ne.statusCode === 401) {
-        updateToken('')
-        profile.onLogout()
+const errorLink = new ErrorLink(({ error }) => {
+  // Check if it's a GraphQL error using the new API
+  if (CombinedGraphQLErrors.is(error)) {
+    error.errors.forEach(({ message }) => {
+      if (typeof window !== 'undefined') {
+        toast.error(message)
       }
-      // toast.error(`${ne.statusCode}: ${ne.name}`)
+    })
+  } else {
+    // Handle network errors
+    const ne = error as unknown as GraphQLResponseError
+    console.log(`[Network error]: ${ne}`)
+    if (typeof window !== 'undefined' && ne.statusCode === 401) {
+      updateToken('')
+      profile.onLogout()
     }
   }
 })
@@ -155,7 +149,6 @@ export function makeApolloClient() {
   return new ApolloClient({
     cache: new InMemoryCache(apolloCacheConfig),
     link: ApolloLink.from(links),
-    connectToDevTools: process.env.DEV === 'true',
   })
   // return new ApolloClient({
   //   ssrMode: typeof window === 'undefined',
@@ -178,7 +171,6 @@ export function makeApolloClientWithCredentials() {
     return new ApolloClient({
       cache: new InMemoryCache(apolloCacheConfig),
       link: ApolloLink.from(links),
-      connectToDevTools: process.env.DEV === 'true',
     })
   }
 }

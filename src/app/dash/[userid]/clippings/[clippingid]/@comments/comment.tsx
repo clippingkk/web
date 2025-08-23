@@ -1,5 +1,6 @@
 'use client'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useMutation } from '@apollo/client/react'
 import type { LexicalEditor } from 'lexical'
 import { Trash2, User as UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -10,9 +11,10 @@ import ConfirmDialog from '@/components/confirm-dialog/confirm-dialog'
 import CKLexicalBaseEditor from '@/components/RichTextEditor/index'
 import {
   type Comment as CommentData,
+  DeleteCommentDocument,
+  type DeleteCommentMutation,
   type User,
-  useDeleteCommentMutation,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 
 type CommentProps = {
   comment: Pick<CommentData, 'id' | 'content'> & {
@@ -26,16 +28,17 @@ function Comment(props: CommentProps) {
   const creator = comment.creator
   const ed = useRef<LexicalEditor>(null)
   const router = useRouter()
-  const [deleteComment, { loading: isDeleting }] = useDeleteCommentMutation({
-    onCompleted: () => {
-      toast.success('Comment deleted successfully')
-      router.refresh()
-    },
-    onError: (error) => {
-      console.error('Failed to delete comment:', error)
-      toast.error('Failed to delete comment')
-    },
-  })
+  const [deleteComment, { loading: isDeleting }] =
+    useMutation<DeleteCommentMutation>(DeleteCommentDocument, {
+      onCompleted: () => {
+        toast.success('Comment deleted successfully')
+        router.refresh()
+      },
+      onError: (error) => {
+        console.error('Failed to delete comment:', error)
+        toast.error('Failed to delete comment')
+      },
+    })
 
   const canDelete = currentUser && currentUser.id === creator.id
 

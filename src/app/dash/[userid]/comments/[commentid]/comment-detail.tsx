@@ -1,7 +1,7 @@
 import * as motion from 'motion/react-client'
 import Link from 'next/link'
 import LinkIndicator from '@/components/link-indicator'
-import type { GetCommentQuery } from '@/schema/generated'
+import type { GetCommentQuery } from '@/gql/graphql'
 import AuthorInfo from './author-info'
 import CommentContent from './comment-content'
 import CommentHeader from './comment-header'

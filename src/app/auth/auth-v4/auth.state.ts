@@ -6,7 +6,7 @@ import {
   type SnapshotFrom,
   setup,
 } from 'xstate'
-import type { AuthLoginResponseFragment } from '@/schema/generated'
+import type { AuthLoginResponseFragment } from '@/gql/graphql'
 import type { AppleAuthResponse } from '@/services/apple'
 import { AuthV4ManualAuthSchema } from './schema'
 

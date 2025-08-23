@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { USER_ID_KEY } from '@/constants/storage'
-import type { PublicDataQuery } from '@/schema/generated'
+import type { PublicDataQuery } from '@/gql/graphql'
 import type { WenquBook } from '../../services/wenqu'
 import PureImages from '../backgrounds/pure-images'
 import PageTrack from '../track/page-track'
