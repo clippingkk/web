@@ -35,22 +35,20 @@ async function AuthCallbackLayout(props: AuthCallbackLayoutProps) {
     gcTime: duration3Days,
   })
   return (
-    <div className='relative'>
+    <div className='relative min-h-screen overflow-hidden'>
       <GalleryBackgroundView publicData={data.data} />
-      <div
-        className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
-        style={
-          {
-            '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
-            '--end-color': 'oklch(45.08% 0.133 252.21 / 77.28%)',
+      <div className='absolute inset-0'>
+        <div
+          className='absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-indigo-500/10 dark:from-blue-400/20 dark:to-indigo-400/20'
+          style={{
             backgroundImage:
-              'radial-gradient(var(--start-color) 0%, var(--end-color) 100%)',
-          } as React.CSSProperties
-        }
-      >
-        <div className='w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-xs flex justify-center items-center'>
-          {children}
-        </div>
+              'radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%)',
+          }}
+        />
+        <div className='absolute inset-0 backdrop-blur-sm bg-white/30 dark:bg-zinc-900/40' />
+      </div>
+      <div className='absolute top-0 left-0 min-h-screen flex items-center justify-center p-4 with-fade-in w-full'>
+        <div className='container'>{children}</div>
       </div>
     </div>
   )
