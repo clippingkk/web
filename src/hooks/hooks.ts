@@ -1,7 +1,6 @@
 'use client'
 import type { ApolloError, MutationResult } from '@apollo/client'
 import * as sentry from '@sentry/react'
-import mixpanel from 'mixpanel-browser'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
@@ -42,12 +41,6 @@ async function onAuthEnd(data: { user: UserContent; token: string }) {
     id: me.id.toString(),
     username: me.name,
   })
-  mixpanel.identify(me.id.toString())
-  mixpanel.people.set({
-    $email: me.email,
-    'Sign up date': me.createdAt,
-    USER_ID: me.id.toString(),
-  })
   updateToken(profile.token)
   // Cookies.set('token', profile.token, { expires: 365 })
   // Cookies.set('uid', profile.uid.toString(), { expires: 365 })
@@ -81,7 +74,6 @@ export function useAuthBy3rdPartSuccessed(
     }
 
     onAuthEnd(authResponse).then(() => {
-      mixpanel.track('login')
       // redirect
       setTimeout(() => {
         const me = authResponse.user
@@ -118,7 +110,6 @@ export function useLoginV3Successed(
     }
 
     onAuthEnd(authResponse).then(() => {
-      mixpanel.track('loginV3')
       // redirect
       setTimeout(() => {
         const me = authResponse.user
@@ -154,7 +145,6 @@ export function useAuthByPhoneSuccessed(
     }
 
     onAuthEnd(authResponse).then(() => {
-      mixpanel.track('login')
       // redirect
       setTimeout(() => {
         const me = authResponse.user
@@ -191,11 +181,6 @@ export function useSignupSuccess(result: MutationResult<SignupMutation>) {
     if (called && !error && data && !loading) {
       onAuthEnd(data.signup)
       const me = data.signup.user
-      mixpanel.track('signup', {
-        email: me.email,
-        name: me.name,
-        avatarUrl: me.avatar,
-      })
       // redirect
       toast.success(
         `欢迎你哦~ ${me.name}，现在需要去邮箱点一下刚刚发你的确认邮件。\n 如果有问题可以发邮件： iamhele1994@gmail.com`,

@@ -2,7 +2,6 @@
 
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { LogOut, Search, Settings, Smartphone, User } from 'lucide-react'
-import mixpanel from 'mixpanel-browser'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -101,7 +100,6 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
     await onCleanServerCookie()
     profile.onLogout()
     toast.success(t('app.menu.logout.success') || 'Bye bye')
-    mixpanel.track('logout')
     router.push('/')
   }, [router, t])
 
