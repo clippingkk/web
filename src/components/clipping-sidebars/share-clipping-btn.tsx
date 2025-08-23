@@ -1,8 +1,8 @@
 'use client'
 import { BookCopy } from 'lucide-react'
 import { useState } from 'react'
+import type { Clipping, User } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { Clipping, User } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
 import Preview from '../preview/preview3'
 import {

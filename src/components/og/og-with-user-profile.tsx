@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
+import type { ProfileQuery } from '@/gql/graphql'
 import logo from '../../assets/logo.png'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
-import type { ProfileQuery } from '../../schema/generated'
 
 type OGWithUserProfileProps = {
   profile?: ProfileQuery['me']

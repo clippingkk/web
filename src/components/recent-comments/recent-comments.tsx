@@ -1,4 +1,4 @@
-import type { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/gql/graphql'
 import CommentsList from './comments-list'
 import EmptyCommentsState from './empty-comments-state'
 import RecentCommentsHeader from './recent-comments-header'

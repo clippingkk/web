@@ -8,8 +8,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
 import BrandNotionLogo from '@/assets/brand-notion.svg'
+import { useMutation } from '@apollo/client/react'
+import { ExportDestination, ExportDataToDocument, type ExportDataToMutation } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 
 function ExportToNotion() {
   const [visible, setVisible] = useState(false)
@@ -57,7 +58,7 @@ function ExportToNotion() {
     },
   })
 
-  const [mutate] = useExportDataToMutation({
+  const [mutate] = useMutation<ExportDataToMutation>(ExportDataToDocument, {
     onCompleted() {
       toast.success(t('app.settings.export.success'))
       reset()

@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import BookInfo from '@/components/book-info/book-info'
 import ClippingContent from '@/components/clipping-content'
-import type { Clipping } from '@/schema/generated'
+import type { Clipping } from '@/gql/graphql'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import type { WenquBook } from '@/services/wenqu'
 

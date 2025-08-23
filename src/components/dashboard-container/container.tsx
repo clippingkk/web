@@ -1,4 +1,4 @@
-import { ApolloError } from '@apollo/client'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import type React from 'react'
@@ -6,7 +6,7 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { COOKIE_TOKEN_KEY } from '../../constants/storage'
 import { doApolloServerQuery } from '../../services/apollo.server'
 import Footer from '../footer/Footer'

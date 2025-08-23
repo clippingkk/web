@@ -1,11 +1,9 @@
 'use client'
-import { useQuery, useSuspenseQuery } from '@apollo/client'
+import { useQuery, useSuspenseQuery } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import BookCover from '@/components/book-cover/book-cover'
 import ListFooter from '@/components/list-footer/list-footer'
-import { useMultipleBook } from '@/hooks/book'
-import { useSyncClippingsToServer } from '@/hooks/my-file'
 import {
   BooksDocument,
   type BooksQuery,
@@ -14,7 +12,9 @@ import {
   type ProfileQuery,
   type ProfileQueryVariables,
   type User,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useMultipleBook } from '@/hooks/book'
+import { useSyncClippingsToServer } from '@/hooks/my-file'
 import { BooksSkeleton } from './skeleton'
 
 const STEP = 10
@@ -119,7 +119,7 @@ function HomePageContent(props: HomePageContentProps) {
               },
             },
           }).then((res) => {
-            if (res.data.books.length < STEP) {
+            if ((res.data?.books?.length ?? 0) < STEP) {
               setReachEnd(true)
             }
           })

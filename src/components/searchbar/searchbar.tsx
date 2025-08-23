@@ -1,9 +1,10 @@
+import { useLazyQuery } from '@apollo/client/react'
 import { Command, Search, XCircle } from 'lucide-react'
 import type React from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { SearchQueryDocument, type SearchQueryQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useSearchQueryLazyQuery } from '../../schema/generated'
 import SearchClippingItem from './clipping-item'
 import Empty from './empty'
 import Loading from './loading'
@@ -17,7 +18,7 @@ type SearchBarProps = {
 function SearchBar(props: SearchBarProps) {
   const { visible, onClose, profile } = props
   const { t } = useTranslation()
-  const [doQuery, { data, loading, called }] = useSearchQueryLazyQuery()
+  const [doQuery, { data, loading, called }] = useLazyQuery<SearchQueryQuery>(SearchQueryDocument)
   const inputRef = useRef<HTMLInputElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
   const [searchText, setSearchText] = useState('')

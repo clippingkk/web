@@ -6,17 +6,21 @@ schema: src/schema/schema.json
         # Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE3NjE4NDU0MzIsImlhdCI6MTc0NjI5MzQzMiwiaXNzIjoiY2stc2VydmVyQCJ9.AtsFRJuiHVr88uY02ZVo4ThgmjOBsUK2by-KwOk89sU"
 documents:
   - "src/schema/**/*.graphql"
-  - "src/**/*.tsx"
 generates:
   src/gql/:
-    preset: 'client'
-  src/schema/generated.tsx:
-    plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
-    config:
-      withHooks: true
+    preset: client
+    presetConfig:
+      gqlTagName: 'gql'
+      persistedDocuments: true
+  # src/schema/generated.tsx:
+    # plugins:
+      # - "typescript"
+      # - "typescript-operations"
+      # - "typescript-react-apollo"
+    # config:
+    #   withHooks: true
+      # apolloReactHooksImportFrom: '@apollo/client/react'
+      # apolloReactCommonImportFrom: '@apollo/client/react'
   ./src/schema/schema.json:
     plugins:
       - "introspection"

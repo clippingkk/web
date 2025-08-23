@@ -3,19 +3,19 @@ import * as sentry from '@sentry/react'
 import Cookies from 'js-cookie'
 import mixpanel from 'mixpanel-browser'
 import {
+  ProfileDocument,
+  type ProfileQuery,
+  type ProfileQueryVariables,
+} from '@/gql/graphql'
+import {
   COOKIE_TOKEN_KEY,
   type IUserToken,
   USER_ID_KEY,
 } from '../constants/storage'
-import {
-  ProfileDocument,
-  type ProfileQuery,
-  type ProfileQueryVariables,
-} from '../schema/generated'
 import { updateToken } from '../services/ajax'
 import profile from './profile'
 
-export async function initParseFromLS(ac: ApolloClient<object>) {
+export async function initParseFromLS(ac: ApolloClient) {
   if (typeof localStorage === 'undefined') {
     return
   }
@@ -37,7 +37,7 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
         },
       })
       const payload = {
-        profile: ps.data.me,
+        profile: ps.data?.me ?? null,
         token: cookieToken,
         createdAt: Date.now(),
       }

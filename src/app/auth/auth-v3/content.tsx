@@ -1,4 +1,5 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import {
   ArrowUturnLeftIcon,
   ArrowUturnRightIcon,
@@ -11,14 +12,16 @@ import { toast } from 'react-hot-toast'
 import logo from '@/assets/logo.png'
 import EmailBox from '@/components/auth/email-box'
 import OTPBox from '@/components/auth/otp-box'
+import {
+  DoLoginV3Document,
+  type DoLoginV3Mutation,
+  OtpChannel,
+  SendOtpDocument,
+  type SendOtpMutation,
+} from '@/gql/graphql'
 import { useLoginV3Successed } from '@/hooks/hooks'
 import { useBackgroundImage } from '@/hooks/theme'
 import { useTranslation } from '@/i18n/client'
-import {
-  OtpChannel,
-  useDoLoginV3Mutation,
-  useSendOtpMutation,
-} from '@/schema/generated'
 import { toastPromiseDefaultOption } from '@/services/misc'
 
 function AuthV3Content() {
@@ -29,7 +32,7 @@ function AuthV3Content() {
   const [validEmail, setValidEmail] = useState('')
   const [phase, setPhase] = useState(0)
 
-  const [doSendOtp, { loading: isSendingOtp }] = useSendOtpMutation()
+  const [doSendOtp, { loading: isSendingOtp }] = useMutation<SendOtpMutation>(SendOtpDocument)
 
   const onEmailSubmit = useCallback(
     (email: string, turnstileToken: string) => {
@@ -52,7 +55,7 @@ function AuthV3Content() {
     [doSendOtp]
   )
 
-  const [loginV3, loginV3Response] = useDoLoginV3Mutation()
+  const [loginV3, loginV3Response] = useMutation<DoLoginV3Mutation>(DoLoginV3Document)
 
   const onOTPConfirmed = useCallback(
     (otp: string) => {

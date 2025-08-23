@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
 import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n'
 import { getApolloServerClient } from '@/services/apollo.server'
 import UploaderPageContent from './content'
 import ClippingsUploadHelp from './help'
@@ -63,7 +63,13 @@ async function Page(props: Props) {
               'Drag and drop your Kindle clippings file to share your favorite passages'}
           </p>
         </div>
-        <UploaderPageContent profile={profileResponse.me} />
+        {profileResponse?.me ? (
+          <UploaderPageContent profile={profileResponse.me} />
+        ) : (
+          <div className='text-center py-10'>
+            <p>Profile not found</p>
+          </div>
+        )}
         <ClippingsUploadHelp />
       </div>
     </section>

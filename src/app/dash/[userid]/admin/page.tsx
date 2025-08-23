@@ -2,12 +2,12 @@ import { ArrowLeftCircle, ArrowRightCircle, BookOpenCheck } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { COOKIE_TOKEN_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
 import {
   UncheckBooksQueryDocument,
   type UncheckBooksQueryQuery,
   type UncheckBooksQueryQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n'
 import { getApolloServerClient } from '@/services/apollo.server'
 import HomelessBooksTable from './content'
 
@@ -63,7 +63,7 @@ async function AdminPanel(props: PageProps) {
           <div className='flex justify-between items-center mb-8 flex-wrap gap-4'>
             <div className='text-sm text-gray-500 dark:text-gray-400'>
               {t('Showing books')} {offset + 1} -{' '}
-              {offset + (data.adminDashboard.uncheckedBooks?.length || 0)}
+              {offset + (data?.adminDashboard?.uncheckedBooks?.length || 0)}
             </div>
             <div className='flex gap-4'>
               <Link
@@ -84,7 +84,7 @@ async function AdminPanel(props: PageProps) {
             </div>
           </div>
 
-          <HomelessBooksTable data={data.adminDashboard.uncheckedBooks ?? []} />
+          <HomelessBooksTable data={data?.adminDashboard?.uncheckedBooks ?? []} />
 
           <div className='mt-8 flex justify-center'>
             <Link

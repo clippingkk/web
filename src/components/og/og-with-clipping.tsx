@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
+import type { Clipping, User } from '@/gql/graphql'
 import logo from '../../assets/logo.png'
 import { APP_URL_ORIGIN } from '../../constants/config'
-import type { Clipping, User } from '../../schema/generated'
 import type { WenquBook } from '../../services/wenqu'
 
 type OGWithClippingProps = {

@@ -5,7 +5,7 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { getApolloServerClient } from '@/services/apollo.server'
 import UncheckedPageContent from './content'
 
@@ -40,6 +40,11 @@ async function UncheckedPage(props: Props) {
       },
     },
   })
+  
+  if (!profileResponse?.me) {
+    return <div>Profile not found</div>
+  }
+  
   return <UncheckedPageContent profile={profileResponse.me} />
 }
 

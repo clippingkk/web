@@ -6,8 +6,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { Calendar, CreditCard, Receipt } from 'lucide-react'
+import type { Order } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { Order } from '@/schema/generated'
 
 type SubscriptionOrderListProps = {
   orders: Order[]

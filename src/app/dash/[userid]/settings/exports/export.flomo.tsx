@@ -8,13 +8,14 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
 import BrandFlomoLogo from '@/assets/brand-flomo.png'
+import { useMutation } from '@apollo/client/react'
+import { ExportDestination, ExportDataToDocument, type ExportDataToMutation } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
-  const [mutate] = useExportDataToMutation()
+  const [mutate] = useMutation<ExportDataToMutation>(ExportDataToDocument)
 
   const formSchema = z.object({
     endpoint: z

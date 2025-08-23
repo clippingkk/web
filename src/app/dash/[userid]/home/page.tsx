@@ -1,4 +1,4 @@
-import type { ApolloQueryResult } from '@apollo/client'
+import type { ApolloQueryResult } from '@apollo/client/core'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
@@ -6,8 +6,6 @@ import { redirect } from 'next/navigation'
 import AIBookRecommendationButton from '@/components/book-recommendation/ai-book-recommendation-button'
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { duration3Days } from '@/hooks/book'
-import { useTranslation } from '@/i18n'
 import {
   BooksDocument,
   type BooksQuery,
@@ -15,7 +13,9 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { duration3Days } from '@/hooks/book'
+import { useTranslation } from '@/i18n'
 import { getReactQueryClient } from '@/services/ajax'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import {
@@ -59,7 +59,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       },
     })
     return profileGenerateMetadata({
-      profile: profileResponse.data.me,
+      profile: profileResponse.data?.me ?? undefined,
     })
   } catch (e) {
     console.error(e)
@@ -142,7 +142,7 @@ async function Page(props: PageProps) {
 
   let firstBook: WenquBook | null = null
 
-  if (profileResponse.data.me.recents.length > 0) {
+  if (profileResponse.data?.me?.recents && profileResponse.data.me.recents.length > 0) {
     let firstBookId = profileResponse.data.me.recents[0].bookID ?? ''
     if (firstBookId.length <= 3) {
       firstBookId = ''
@@ -161,7 +161,7 @@ async function Page(props: PageProps) {
     }
   }
 
-  const recents = profileResponse.data.me.recents
+  const recents = profileResponse.data?.me?.recents ?? []
 
   return (
     <section className='page h-full'>
@@ -191,22 +191,24 @@ async function Page(props: PageProps) {
           </Link>
           <AIBookRecommendationButton
             uid={myUidInt!}
-            books={booksResponse.data.books}
+            books={booksResponse.data?.books ?? []}
           />
         </div>
       </header>
-      {!firstBook && booksResponse.data.books.length === 0 && (
+      {!firstBook && (booksResponse.data?.books?.length ?? 0) === 0 && (
         <div className='flex flex-wrap items-center justify-center'>
           <NoContentAlert domain={userid} />
         </div>
       )}
-      <HomePageContent
-        userid={userid}
-        myUid={myUidInt}
-        targetProfile={
-          accessingProfileResponse?.data?.me ?? profileResponse.data.me
-        }
-      />
+      {(accessingProfileResponse?.data?.me || profileResponse.data?.me) && (
+        <HomePageContent
+          userid={userid}
+          myUid={myUidInt}
+          targetProfile={
+            (accessingProfileResponse?.data?.me ?? profileResponse.data?.me)!
+          }
+        />
+      )}
     </section>
   )
 }

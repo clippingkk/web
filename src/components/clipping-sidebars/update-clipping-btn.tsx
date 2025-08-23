@@ -2,8 +2,8 @@
 import { BookCopy } from 'lucide-react'
 import { useState } from 'react'
 import BookInfoChanger from '@/components/book-info-changer/bookInfoChanger'
+import type { Clipping, User } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { Clipping, User } from '@/schema/generated'
 import {
   SidebarButton,
   SidebarContainer,

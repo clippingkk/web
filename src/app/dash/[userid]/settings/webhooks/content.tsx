@@ -9,12 +9,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 import { toast } from 'react-hot-toast'
-import { useTranslation } from '@/i18n/client'
+import { useMutation } from '@apollo/client/react'
 import {
+  DeleteAWebHookDocument,
+  type DeleteAWebHookMutation,
   type FetchMyWebHooksQuery,
-  useDeleteAWebHookMutation,
   WebHookStep,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n/client'
 import WebhookTable from '../components/webhook-table'
 
 type Props = {
@@ -30,7 +32,7 @@ function WebHooksContent(props: Props) {
 
   const { t } = useTranslation()
 
-  const [deleteMutation] = useDeleteAWebHookMutation({
+  const [deleteMutation] = useMutation<DeleteAWebHookMutation>(DeleteAWebHookDocument, {
     onCompleted: () => {
       router.refresh()
       toast.success(t('app.common.done'))

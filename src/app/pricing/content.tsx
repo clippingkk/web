@@ -4,8 +4,8 @@ import FreePlanFeatures from '@/components/pricing/free-plan-features'
 import PlanCard from '@/components/pricing/plan-card'
 import PremiumPlanFeatures from '@/components/pricing/premium-plan-features'
 import { checkIsPremium } from '@/compute/user'
+import type { ProfileQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n'
-import type { ProfileQuery } from '@/schema/generated'
 
 type PricingContentProps = {
   profile?: ProfileQuery['me'] | null

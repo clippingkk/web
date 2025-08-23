@@ -2,12 +2,12 @@ import { ImageResponse } from 'next/og'
 import Logo from '@/assets/bootsplash_logo@3x.png'
 import OGImageClipping from '@/components/og/image-clipping'
 import { APP_URL_ORIGIN } from '@/constants/config'
-import { duration3Days } from '@/hooks/book'
 import {
   FetchClippingDocument,
   type FetchClippingQuery,
   type FetchClippingQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { duration3Days } from '@/hooks/book'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import {

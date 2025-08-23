@@ -1,5 +1,5 @@
+import type { Clipping, User } from '@/gql/graphql'
 import { useTranslation } from '@/i18n'
-import type { Clipping, User } from '@/schema/generated'
 import ClippingLite from '../clipping-item/clipping-lite'
 
 type TopClippingsProps = {

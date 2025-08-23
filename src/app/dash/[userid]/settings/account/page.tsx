@@ -5,14 +5,15 @@ import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { onCleanServerCookie } from '@/components/navigation-bar/logout'
+import { useMutation } from '@apollo/client/react'
+import { DeleteMyAccountDocument, type DeleteMyAccountMutation } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useDeleteMyAccountMutation } from '@/schema/generated'
 import profile from '@/utils/profile'
 
 function AccountRemoveButton() {
   const { t } = useTranslation()
   const [confirming, setConfirming] = useState(false)
-  const [doDelete] = useDeleteMyAccountMutation()
+  const [doDelete] = useMutation<DeleteMyAccountMutation>(DeleteMyAccountDocument)
   const { replace } = useRouter()
 
   const doDeleteMyAccount = useCallback(async () => {

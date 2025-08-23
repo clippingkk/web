@@ -4,8 +4,9 @@ import { ExternalLink, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { Streamdown } from 'streamdown'
 import { MarkdownComponents } from '@/components/RichTextEditor/markdown-components'
+import { useQuery } from '@apollo/client/react'
+import { FetchUserPersonalityDocument, type FetchUserPersonalityQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useFetchUserPersonalityQuery } from '@/schema/generated'
 
 type PersonalityViewProps = {
   uid?: number
@@ -19,7 +20,7 @@ function PersonalityView(props: PersonalityViewProps) {
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
 
-  const { data, loading, error } = useFetchUserPersonalityQuery({
+  const { data, loading, error } = useQuery<FetchUserPersonalityQuery>(FetchUserPersonalityDocument, {
     variables: {
       id: uid,
       domain,

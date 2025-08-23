@@ -2,8 +2,8 @@
 
 import { History } from 'lucide-react'
 import { useState } from 'react'
+import type { FetchWebhookQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { FetchWebhookQuery } from '@/schema/generated'
 import RecordCard from './record-card'
 
 interface RecordsListProps {

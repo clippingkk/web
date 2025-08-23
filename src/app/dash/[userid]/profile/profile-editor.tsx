@@ -12,8 +12,9 @@ import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 import Button from '@/components/button/button'
 import ExternalAccountList from '@/components/externalAccount/list'
+import { useMutation } from '@apollo/client/react'
+import { UpdateProfileDocument, type UpdateProfileMutation } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useUpdateProfileMutation } from '@/schema/generated'
 import { uploadImage } from '@/services/misc'
 
 type ProfileEditorProps = {
@@ -49,7 +50,7 @@ function ProfileEditor(props: ProfileEditorProps) {
     }
   }, [withProfileEditor])
 
-  const [doUpdate, { client }] = useUpdateProfileMutation()
+  const [doUpdate, { client }] = useMutation<UpdateProfileMutation>(UpdateProfileDocument)
   const { t } = useTranslation()
 
   const {

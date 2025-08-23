@@ -2,11 +2,12 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useState } from 'react'
+import { useQuery } from '@apollo/client/react'
 import {
   type Comment,
+  GetCommentListDocument,
   type GetCommentListQuery,
-  useGetCommentListQuery,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 // import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
 import CommentCard from './comment-card'
 
@@ -19,7 +20,7 @@ export default function CommentsList({ initialData, userId }: Props) {
   const [hasMore, setHasMore] = useState(initialData.items.length >= 20)
   const [lastId, setLastId] = useState<number | undefined>()
 
-  const { data, loading, fetchMore } = useGetCommentListQuery({
+  const { data, loading, fetchMore } = useQuery<GetCommentListQuery>(GetCommentListDocument, {
     variables: {
       uid: userId,
       pagination: {

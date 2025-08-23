@@ -1,4 +1,4 @@
-import type { Clipping } from '../../schema/generated'
+import type { Clipping } from '@/gql/graphql'
 import type { WenquBook } from '../../services/wenqu'
 
 export type BasicUserInfo = {

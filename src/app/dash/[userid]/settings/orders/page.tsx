@@ -3,13 +3,13 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
 import {
   FetchOrdersDocument,
   type FetchOrdersQuery,
   type FetchOrdersQueryVariables,
   SubscriptionStatus,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n'
 import { getApolloServerClient } from '@/services/apollo.server'
 import CancelButton from './cancel-button'
 import SubscriptionContent from './content'

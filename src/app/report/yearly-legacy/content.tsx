@@ -5,9 +5,9 @@ import { useMemo } from 'react'
 import logo from '@/assets/logo.png'
 import Avatar from '@/components/avatar/avatar'
 import PublicBookItem from '@/components/public-book-item/public-book-item'
+import type { FetchYearlyReportQuery } from '@/gql/graphql'
 import { useMultipleBook } from '@/hooks/book'
 import { useTranslation } from '@/i18n/client'
-import type { FetchYearlyReportQuery } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
 
 type ReportBookItemTypes = {

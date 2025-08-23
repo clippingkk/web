@@ -3,13 +3,14 @@ import { type LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
 import { useRef, useState } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import { APP_API_STEP_LIMIT } from '@/constants/config'
+import { useQuery } from '@apollo/client/react'
+import {
+  FetchSquareDataDocument,
+  type FetchSquareDataQuery,
+} from '@/gql/graphql'
 import { useMultipleBook } from '@/hooks/book'
 import { usePageTrack } from '@/hooks/tracke'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
-import {
-  type FetchSquareDataQuery,
-  useFetchSquareDataQuery,
-} from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 
 type SquarePageContentProps = {
@@ -25,7 +26,7 @@ function SquarePageContent(props: SquarePageContentProps) {
   const [sqData, setSqData] = useState<
     FetchSquareDataQuery['featuredClippings']
   >(props.squareData.featuredClippings)
-  const { data: localData, fetchMore } = useFetchSquareDataQuery({
+  const { data: localData, fetchMore } = useQuery<FetchSquareDataQuery>(FetchSquareDataDocument, {
     variables: {
       pagination: {
         limit: APP_API_STEP_LIMIT,
@@ -60,11 +61,11 @@ function SquarePageContent(props: SquarePageContentProps) {
           },
         },
       }).then((data) => {
-        if (data.data.featuredClippings.length === 0) {
+        if (data.data?.featuredClippings?.length === 0) {
           reachEnd.current = true
         }
         setSqData((prev) =>
-          [...prev, ...data.data.featuredClippings].reduce<
+          [...prev, ...(data.data?.featuredClippings ?? [])].reduce<
             FetchSquareDataQuery['featuredClippings']
           >((acc, x) => {
             if (!acc.find((y) => y.id === x.id)) {

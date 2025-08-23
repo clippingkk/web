@@ -1,17 +1,18 @@
 'use client'
+import { useLazyQuery } from '@apollo/client/react'
 import { useSDK } from '@metamask/sdk-react'
 // import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
+import { AuthByWeb3Document, type AuthByWeb3Query } from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
-import { useAuthByWeb3LazyQuery } from '../schema/generated'
 import { signDataByWeb3 } from '../utils/wallet'
 import MetamaskButtonView from './auth/metamask'
 
 function AuthByMetamask() {
   const router = useRouter()
-  const [doAuth, doAuthData] = useAuthByWeb3LazyQuery()
+  const [doAuth, doAuthData] = useLazyQuery<AuthByWeb3Query>(AuthByWeb3Document)
   const { sdk: metamaskSDK } = useSDK()
   // const err = hooks.useError()
   const onMetamaskLogin = useCallback(async () => {

@@ -7,13 +7,14 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 import BrandNotionLogo from '@/assets/brand-notion.svg'
+import { useMutation } from '@apollo/client/react'
+import { ExportDestination, ExportDataToDocument, type ExportDataToMutation } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
 
 function ExportToEmail() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
-  const [mutate] = useExportDataToMutation({})
+  const [mutate] = useMutation<ExportDataToMutation>(ExportDataToDocument)
 
   // Define validation schema with Zod
   const validationSchema = z.object({

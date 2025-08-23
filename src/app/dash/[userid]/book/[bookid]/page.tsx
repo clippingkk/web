@@ -5,13 +5,13 @@ import BookInfo from '@/components/book-info/book-info'
 import Divider from '@/components/divider/divider'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { duration3Days } from '@/hooks/book'
-import { useTranslation } from '@/i18n'
 import {
   BookDocument,
   type BookQuery,
   type BookQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { duration3Days } from '@/hooks/book'
+import { useTranslation } from '@/i18n'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import {

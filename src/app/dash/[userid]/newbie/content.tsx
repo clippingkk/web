@@ -6,8 +6,9 @@ import ButtonSimple from '@/components/button/button-simple'
 import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
 import FieldInput from '@/components/input'
 import ProgressBlock from '@/components/progress/progress-block'
+import { useMutation } from '@apollo/client/react'
+import { UpdateProfileDocument, type UpdateProfileMutation } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useUpdateProfileMutation } from '@/schema/generated'
 import { toastPromiseDefaultOption, uploadImage } from '@/services/misc'
 
 // redirected from a new signup by loginV3
@@ -23,7 +24,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
 
   const { t } = useTranslation()
 
-  const [doUpdateUserProfile, doUpdateResponse] = useUpdateProfileMutation()
+  const [doUpdateUserProfile, doUpdateResponse] = useMutation<UpdateProfileMutation>(UpdateProfileDocument)
 
   const [phase, setPhase] = useState(0)
   const [newName, setNewName] = useState('')

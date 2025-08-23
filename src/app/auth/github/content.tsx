@@ -1,8 +1,9 @@
 'use client'
 import { useEffect } from 'react'
 import LoadingIcon from '@/components/icons/loading.svg'
+import { useLazyQuery } from '@apollo/client/react'
+import { GithubLoginDocument, type GithubLoginQuery } from '@/gql/graphql'
 import { useAuthSuccessed } from '@/hooks/hooks'
-import { useGithubLoginLazyQuery } from '@/schema/generated'
 
 type GithubOAuthContentProps = {
   code: string
@@ -10,7 +11,7 @@ type GithubOAuthContentProps = {
 
 function GithubOAuthContent(props: GithubOAuthContentProps) {
   const { code } = props
-  const [exec, resp] = useGithubLoginLazyQuery()
+  const [exec, resp] = useLazyQuery<GithubLoginQuery>(GithubLoginDocument)
 
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.githubAuth)
   useEffect(() => {

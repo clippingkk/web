@@ -8,11 +8,13 @@ import { toast } from 'react-hot-toast'
 import Avatar from '@/components/avatar/avatar'
 import ConfirmDialog from '@/components/confirm-dialog/confirm-dialog'
 import CKLexicalBaseEditor from '@/components/RichTextEditor/index'
+import { useMutation } from '@apollo/client/react'
 import {
   type Comment as CommentData,
   type User,
-  useDeleteCommentMutation,
-} from '@/schema/generated'
+  DeleteCommentDocument,
+  type DeleteCommentMutation,
+} from '@/gql/graphql'
 
 type CommentProps = {
   comment: Pick<CommentData, 'id' | 'content'> & {
@@ -26,7 +28,7 @@ function Comment(props: CommentProps) {
   const creator = comment.creator
   const ed = useRef<LexicalEditor>(null)
   const router = useRouter()
-  const [deleteComment, { loading: isDeleting }] = useDeleteCommentMutation({
+  const [deleteComment, { loading: isDeleting }] = useMutation<DeleteCommentMutation>(DeleteCommentDocument, {
     onCompleted: () => {
       toast.success('Comment deleted successfully')
       router.refresh()

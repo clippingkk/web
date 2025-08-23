@@ -5,7 +5,7 @@ import ClippingShareButton from '@/components/clipping-sidebars/share-clipping-b
 import SiblingNav from '@/components/clipping-sidebars/sibling-nav'
 import UpdateClippingBtn from '@/components/clipping-sidebars/update-clipping-btn'
 import VisibleToggle from '@/components/clipping-sidebars/visible-toggle'
-import type { Clipping, User } from '@/schema/generated'
+import type { Clipping, User } from '@/gql/graphql'
 import type { IN_APP_CHANNEL } from '@/services/channel'
 import type { WenquBook } from '@/services/wenqu'
 

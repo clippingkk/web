@@ -1,5 +1,5 @@
+import type { FetchClippingQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { FetchClippingQuery } from '@/schema/generated'
 import Button from '../button/button'
 import NounContentRender from '../noun/content-render'
 

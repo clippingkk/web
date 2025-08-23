@@ -1,12 +1,12 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
 import { generateMetadata as generateReportMetadata } from '@/components/og/og-with-report'
-import { duration3Days } from '@/hooks/book'
 import {
   FetchYearlyReportDocument,
   type FetchYearlyReportQuery,
   type FetchYearlyReportQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { duration3Days } from '@/hooks/book'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
@@ -37,14 +37,14 @@ export async function generateMetadata(
     },
   })
   const dbIds =
-    reportInfoResponse.data.reportYearly.books
-      .map((x) => x.doubanId)
+    reportInfoResponse.data?.reportYearly?.books
+      ?.map((x) => x.doubanId)
       .filter((x) => x.length > 3) ?? []
 
   const bs = await wenquRequest<WenquSearchResponse>(
     `/books/search?dbIds=${dbIds.join('&dbIds=')}`
   )
-  return generateReportMetadata(year, reportInfoResponse.data, bs.books)
+  return generateReportMetadata(year, reportInfoResponse.data ?? undefined, bs.books)
 }
 
 async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
@@ -66,8 +66,8 @@ async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
     },
   })
   const dbIds =
-    reportInfoResponse.data.reportYearly.books
-      .map((x) => x.doubanId)
+    reportInfoResponse.data?.reportYearly?.books
+      ?.map((x) => x.doubanId)
       .filter((x) => x.length > 3) ?? []
 
   const rq = getReactQueryClient()

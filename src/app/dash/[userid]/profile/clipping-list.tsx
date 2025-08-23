@@ -1,13 +1,14 @@
 'use client'
 import { Masonry, useInfiniteLoader } from 'masonic'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
+import { useQuery } from '@apollo/client/react'
+import {
+  FetchClippingsByUidDocument,
+  type FetchClippingsByUidQuery,
+} from '@/gql/graphql'
 import { useMultipleBook } from '@/hooks/book'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
-import {
-  type FetchClippingsByUidQuery,
-  useFetchClippingsByUidQuery,
-} from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 
 type ClippingListProps = {
@@ -20,17 +21,20 @@ function ClippingList(props: ClippingListProps) {
   const [renderList, setRenderList] = React.useState<
     FetchClippingsByUidQuery['clippingList']['items']
   >([])
-  const { data, loading, fetchMore } = useFetchClippingsByUidQuery({
+  const { data, loading, fetchMore } = useQuery<FetchClippingsByUidQuery>(FetchClippingsByUidDocument, {
     variables: {
       uid,
       pagination: {
         limit: 20,
       },
     },
-    onCompleted(data) {
-      setRenderList(data.clippingList.items)
-    },
   })
+
+  useEffect(() => {
+    if (data?.clippingList?.items) {
+      setRenderList(data.clippingList.items)
+    }
+  }, [data])
   const masonaryColumnCount = useMasonaryColumnCount()
   const maybeLoadMore = useInfiniteLoader(
     (
@@ -41,7 +45,7 @@ function ClippingList(props: ClippingListProps) {
       if (renderList.length === 0 || !data) {
         return
       }
-      if (currentItems.length >= data.clippingList.count) {
+      if (currentItems.length >= (data?.clippingList?.count ?? 0)) {
         return Promise.reject(1)
       }
       return fetchMore({
@@ -54,7 +58,7 @@ function ClippingList(props: ClippingListProps) {
         },
       }).then((resp) => {
         setRenderList((prev) =>
-          [...prev, ...resp.data.clippingList.items].reduce(
+          [...prev, ...(resp.data?.clippingList?.items ?? [])].reduce(
             (acc, cur) => {
               if (!acc.find((x) => x.id === cur.id)) {
                 acc.push(cur)
@@ -69,12 +73,12 @@ function ClippingList(props: ClippingListProps) {
     {
       isItemLoaded: (index, items) => !!items[index],
       threshold: 3,
-      totalItems: data?.clippingList.count ?? 0,
+      totalItems: data?.clippingList?.count ?? 0,
     }
   )
 
   const books = useMultipleBook(
-    data?.clippingList.items.map((x) => x.bookID) ?? []
+    data?.clippingList?.items?.map((x) => x?.bookID).filter((id): id is string => id !== undefined) ?? []
   )
 
   if (loading && !data) {

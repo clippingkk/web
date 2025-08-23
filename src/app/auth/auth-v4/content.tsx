@@ -1,23 +1,29 @@
 'use client'
+import { useLazyQuery, useMutation } from '@apollo/client/react'
 import { useSDK } from '@metamask/sdk-react'
 import { useMachine } from '@xstate/react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { fromPromise } from 'xstate'
 import { GithubClientID } from '@/constants/config'
-import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '@/hooks/hooks'
-import { useActionTrack } from '@/hooks/tracke'
-import { useTranslation } from '@/i18n/client'
 import {
   AppleAuthVersion,
   AppleLoginPlatforms,
+  AuthByWeb3Document,
+  type AuthByWeb3Query,
+  AuthDocument,
+  type AuthQuery,
+  DoLoginV3Document,
+  type DoLoginV3Mutation,
+  LoginByAppleDocument,
+  type LoginByAppleQuery,
   OtpChannel,
-  useAuthByWeb3LazyQuery,
-  useAuthLazyQuery,
-  useDoLoginV3Mutation,
-  useLoginByAppleLazyQuery,
-  useSendOtpMutation,
-} from '@/schema/generated'
+  SendOtpDocument,
+  type SendOtpMutation,
+} from '@/gql/graphql'
+import { useAuthBy3rdPartSuccessed, useLoginV3Successed } from '@/hooks/hooks'
+import { useActionTrack } from '@/hooks/tracke'
+import { useTranslation } from '@/i18n/client'
 import { signDataByWeb3 } from '@/utils/wallet'
 import authMachine from './auth.state'
 import EmailLoginEntry from './emailEntry'
@@ -29,8 +35,8 @@ import ThirdPartEntry from './thirdPartEntry'
 function AuthV4Content() {
   const router = useRouter()
   const { t } = useTranslation()
-  const [doSendOtp] = useSendOtpMutation()
-  const [doAppleAuth, appleAuthResponse] = useLoginByAppleLazyQuery()
+  const [doSendOtp] = useMutation<SendOtpMutation>(SendOtpDocument)
+  const [doAppleAuth, appleAuthResponse] = useLazyQuery<LoginByAppleQuery>(LoginByAppleDocument)
   useAuthBy3rdPartSuccessed(
     appleAuthResponse.called,
     appleAuthResponse.loading,
@@ -40,7 +46,7 @@ function AuthV4Content() {
 
   const { sdk: metamaskSDK } = useSDK()
 
-  const [doAuth, doAuthData] = useAuthLazyQuery()
+  const [doAuth, doAuthData] = useLazyQuery<AuthQuery>(AuthDocument)
   useLoginV3Successed(
     doAuthData.called,
     doAuthData.loading,
@@ -48,14 +54,14 @@ function AuthV4Content() {
     doAuthData.data?.auth
   )
 
-  const [doWeb3Auth, doWeb3AuthData] = useAuthByWeb3LazyQuery()
+  const [doWeb3Auth, doWeb3AuthData] = useLazyQuery<AuthByWeb3Query>(AuthByWeb3Document)
   useAuthBy3rdPartSuccessed(
     doWeb3AuthData.called,
     doWeb3AuthData.loading,
     doWeb3AuthData.error,
     doWeb3AuthData.data?.loginByWeb3
   )
-  const [loginV3, loginV3Response] = useDoLoginV3Mutation()
+  const [loginV3, loginV3Response] = useMutation<DoLoginV3Mutation>(DoLoginV3Document)
 
   useLoginV3Successed(
     loginV3Response.called,

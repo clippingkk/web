@@ -4,12 +4,12 @@ import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-
 import PersonalActivity from '@/components/profile/activity'
 import ProfileTabs from '@/components/profile-tabs/profile-tabs'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
 import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import ProfilePageContent from './content'
 
@@ -35,7 +35,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     },
   })
   return profileGenerateMetadata({
-    profile: profileResponse.data.me,
+    profile: profileResponse.data?.me ?? undefined,
   })
 }
 
@@ -74,6 +74,17 @@ async function Page(props: PageProps) {
   })
 
   console.log('withProfileEditor', withProfileEditor)
+  
+  if (!profile?.me) {
+    return (
+      <section className='w-full'>
+        <div className='text-center py-10'>
+          <p>Profile not found</p>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className='w-full'>
       {/* Main profile section */}

@@ -6,13 +6,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Button from '@/components/button/button'
 import CodeHighlight from '@/components/highlighter/client'
+import { useMutation } from '@apollo/client/react'
+import { ClaimCliApiTokenDocument, type ClaimCliApiTokenMutation } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useClaimCliApiTokenMutation } from '@/schema/generated'
 import { getLocalToken } from '@/services/ajax'
 
 function CliApiToken() {
   const { t } = useTranslation()
-  const [doClaim, { data, loading }] = useClaimCliApiTokenMutation()
+  const [doClaim, { data, loading }] = useMutation<ClaimCliApiTokenMutation>(ClaimCliApiTokenDocument)
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {

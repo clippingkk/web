@@ -1,20 +1,21 @@
 'use client'
-import type { ApolloError, MutationResult } from '@apollo/client'
+import type { CombinedGraphQLErrors } from '@apollo/client/errors'
+import type { useMutation } from '@apollo/client/react'
 import * as sentry from '@sentry/react'
 import mixpanel from 'mixpanel-browser'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
-import type { User } from '@/gql/graphql'
+import {
+  type AuthByPhoneMutation,
+  type AuthByWeb3Query,
+  type AuthQuery,
+  type DoLoginV3Mutation,
+  type SignupMutation,
+  type User,
+} from '@/gql/graphql'
 import { syncLoginStateToServer } from '../actions/login'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
-import type {
-  AuthByPhoneMutation,
-  AuthByWeb3Query,
-  AuthQuery,
-  DoLoginV3Mutation,
-  SignupMutation,
-} from '../schema/generated'
 import { updateToken } from '../services/ajax'
 import profile from '../utils/profile'
 
@@ -56,7 +57,7 @@ async function onAuthEnd(data: { user: UserContent; token: string }) {
 export function useAuthBy3rdPartSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: CombinedGraphQLErrors | Error,
   // authResponse?: authByWeb3_loginByWeb3 | loginByApple_loginByApple | bindAppleUnique_bindAppleUnique | bindWeb3Address_bindWeb3Address
   authResponse?: Pick<AuthByWeb3Query['loginByWeb3'], 'user' | 'token'>
 ) {
@@ -95,7 +96,7 @@ export function useAuthBy3rdPartSuccessed(
 export function useLoginV3Successed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: CombinedGraphQLErrors | Error,
   authResponse?: DoLoginV3Mutation['loginV3']
 ) {
   const { push: navigate } = useRouter()
@@ -134,7 +135,7 @@ export function useLoginV3Successed(
 export function useAuthByPhoneSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: CombinedGraphQLErrors | Error,
   authResponse?: AuthByPhoneMutation['authByPhone']
 ) {
   // const navigate = useNavigate()
@@ -168,7 +169,7 @@ export function useAuthByPhoneSuccessed(
 export function useAuthSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: CombinedGraphQLErrors | Error,
   authResponse?: AuthQuery['auth']
 ) {
   const { push: navigate } = useRouter()
@@ -184,7 +185,7 @@ export function useAuthSuccessed(
   }, [called, loading, error, authResponse, navigate])
 }
 
-export function useSignupSuccess(result: MutationResult<SignupMutation>) {
+export function useSignupSuccess(result: useMutation.Result<SignupMutation>) {
   const { push: navigate } = useRouter()
   useEffect(() => {
     const { called, error, data, loading } = result

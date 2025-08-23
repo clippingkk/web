@@ -7,13 +7,17 @@ import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
-import { useTranslation } from '@/i18n/client'
+import { useQuery, useMutation } from '@apollo/client/react'
 import {
   NounScope,
-  useCreateNounMutationMutation,
-  useFetchNounQuery,
-  useUpdateNounMutationMutation,
-} from '../../schema/generated'
+  CreateNounMutationDocument,
+  type CreateNounMutationMutation,
+  FetchNounDocument,
+  type FetchNounQuery,
+  UpdateNounMutationDocument,
+  type UpdateNounMutationMutation,
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n/client'
 import { toastPromiseDefaultOption } from '../../services/misc'
 
 type NounEditContentProps = {
@@ -43,13 +47,13 @@ function NounEditContent(props: NounEditContentProps) {
   const { t } = useTranslation()
 
   const [createNoun, { loading: createLoading }] =
-    useCreateNounMutationMutation({
+    useMutation<CreateNounMutationMutation>(CreateNounMutationDocument, {
       onCompleted: () => {
         onClose()
       },
     })
   const [updateNoun, { loading: updateLoading }] =
-    useUpdateNounMutationMutation({
+    useMutation<UpdateNounMutationMutation>(UpdateNounMutationDocument, {
       onCompleted: () => {
         onClose()
       },
@@ -64,7 +68,7 @@ function NounEditContent(props: NounEditContentProps) {
     },
   })
 
-  const { data: fetchedNoun, loading } = useFetchNounQuery({
+  const { data: fetchedNoun, loading } = useQuery<FetchNounQuery>(FetchNounDocument, {
     variables: {
       id,
     },

@@ -2,8 +2,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
+import { SubscriptionStatus } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { SubscriptionStatus } from '@/schema/generated'
 import { toastPromiseDefaultOption } from '@/services/misc'
 import { cancelPaymentSubscription } from '@/services/payment'
 

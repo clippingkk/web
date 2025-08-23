@@ -7,8 +7,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 import Button from '@/components/button'
+import { useMutation } from '@apollo/client/react'
+import { CreateNewWebHookDocument, type CreateNewWebHookMutation, WebHookStep } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useCreateNewWebHookMutation, WebHookStep } from '@/schema/generated'
 
 type Props = {
   onClose: () => void
@@ -43,7 +44,7 @@ function WebHookCreate({ onClose, isPremium }: Props) {
       hookUrl: '',
     },
   })
-  const [createMutation] = useCreateNewWebHookMutation({
+  const [createMutation] = useMutation<CreateNewWebHookMutation>(CreateNewWebHookDocument, {
     onCompleted() {
       toast.success(t('app.common.done'))
       reset()

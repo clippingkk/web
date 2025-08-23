@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import type React from 'react'
 import GalleryBackgroundView from '@/components/galleryBackgroundView'
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
+import { PublicDataDocument, type PublicDataQuery } from '@/gql/graphql'
 import { duration3Days } from '@/hooks/book'
-import { PublicDataDocument, type PublicDataQuery } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
@@ -26,7 +26,7 @@ async function Page() {
   })
 
   const dbIds =
-    data.data.public.books.map((x) => x.doubanId).filter((x) => x.length > 3) ??
+    data.data?.public?.books?.map((x) => x.doubanId).filter((x) => x.length > 3) ??
     []
 
   const rq = getReactQueryClient()

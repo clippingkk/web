@@ -2,8 +2,8 @@
 
 import { CheckCircle2, ChevronDown, XCircle } from 'lucide-react'
 import { useState } from 'react'
+import type { WebHookRecord } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { WebHookRecord } from '@/schema/generated'
 import dayjs from '@/utils/dayjs'
 
 interface RecordCardProps {

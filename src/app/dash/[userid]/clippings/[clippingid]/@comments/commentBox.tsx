@@ -1,6 +1,6 @@
 'use client'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient } from '@apollo/client/react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { $getRoot, type LexicalEditor } from 'lexical'
 import { Info, Send, User as UserIcon } from 'lucide-react'
@@ -11,12 +11,14 @@ import AICommentEnhancer from '@/components/ai/enhance-comment'
 import Avatar from '@/components/avatar/avatar'
 import Button from '@/components/button/button'
 import CKLexicalBaseEditor from '@/components/RichTextEditor'
-import { useTranslation } from '@/i18n/client'
+import { useMutation } from '@apollo/client/react'
 import {
   type Clipping,
+  CreateCommentDocument,
+  type CreateCommentMutation,
   type User,
-  useCreateCommentMutation,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n/client'
 import { toastPromiseDefaultOption } from '@/services/misc'
 import type { WenquBook } from '@/services/wenqu'
 
@@ -34,7 +36,7 @@ function CommentBox(props: CommentBoxProps) {
 
   const r = useRouter()
 
-  const [createCommentAction, { loading }] = useCreateCommentMutation({
+  const [createCommentAction, { loading }] = useMutation<CreateCommentMutation>(CreateCommentDocument, {
     refetchQueries: ['fetchClipping'],
     onCompleted: () => {
       r.refresh()

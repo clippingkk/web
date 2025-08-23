@@ -1,14 +1,18 @@
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import {
+  ReactionCreateDocument,
+  type ReactionCreateMutation,
+  type ReactionCreateMutationVariables,
+  ReactionRemoveDocument,
+  type ReactionRemoveMutation,
+  type ReactionRemoveMutationVariables,
   ReactionTarget,
-  useReactionCreateMutation,
-  useReactionRemoveMutation,
-} from '../../schema/generated'
+} from '../../gql/graphql'
 import Loading2Icon from '../icons/loading2.svg'
 
 export type SymbolGroupedData = {
@@ -31,30 +35,32 @@ function ReactionCell(props: ReactionCellProps) {
   const client = useApolloClient()
   const navigate = useRouter()
 
-  const [doReactionCreate, { loading: isCreating }] = useReactionCreateMutation(
-    {
-      onCompleted() {
-        toast.success(t('app.clipping.reactions.addSuccess'))
-        navigate.refresh()
-        client.resetStore()
-      },
-      onError() {
-        toast.error(t('app.clipping.reactions.actionRejected'))
-      },
-    }
-  )
-  const [doReactionRemove, { loading: isRemoving }] = useReactionRemoveMutation(
-    {
-      onCompleted() {
-        toast.success(t('app.clipping.reactions.removeSuccess'))
-        navigate.refresh()
-        client.resetStore()
-      },
-      onError() {
-        toast.error(t('app.clipping.reactions.actionRejected'))
-      },
-    }
-  )
+  const [doReactionCreate, { loading: isCreating }] = useMutation<
+    ReactionCreateMutation,
+    ReactionCreateMutationVariables
+  >(ReactionCreateDocument, {
+    onCompleted() {
+      toast.success(t('app.clipping.reactions.addSuccess'))
+      navigate.refresh()
+      client.resetStore()
+    },
+    onError() {
+      toast.error(t('app.clipping.reactions.actionRejected'))
+    },
+  })
+  const [doReactionRemove, { loading: isRemoving }] = useMutation<
+    ReactionRemoveMutation,
+    ReactionRemoveMutationVariables
+  >(ReactionRemoveDocument, {
+    onCompleted() {
+      toast.success(t('app.clipping.reactions.removeSuccess'))
+      navigate.refresh()
+      client.resetStore()
+    },
+    onError() {
+      toast.error(t('app.clipping.reactions.actionRejected'))
+    },
+  })
 
   const onCellClick = useCallback(() => {
     if (!myUid || myUid <= 0) {

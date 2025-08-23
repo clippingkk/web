@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
+import { useQuery } from '@apollo/client/react'
+import { FetchExternalAccountDocument, type FetchExternalAccountQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useFetchExternalAccountQuery } from '@/schema/generated'
 import IconAppleLogo from '../icons/apple.logo.svg'
 import GithubLogo from '../icons/github.logo.svg'
 import MetamaskLogo from '../icons/metamask.logo.svg'
@@ -14,7 +15,7 @@ type ExternalAccountListProps = {
 }
 
 function ExternalAccountList(props: ExternalAccountListProps) {
-  const { data } = useFetchExternalAccountQuery({
+  const { data } = useQuery<FetchExternalAccountQuery>(FetchExternalAccountDocument, {
     variables: {
       id: props.uid,
     },

@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import Link from 'next/link'
+import type { Clipping } from '@/gql/graphql'
 import { useTranslation } from '@/i18n'
-import type { Clipping } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 
 function getSiblingLink(
