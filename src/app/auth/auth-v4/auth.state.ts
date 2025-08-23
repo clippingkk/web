@@ -7,7 +7,6 @@ import {
   setup,
 } from 'xstate'
 import type { AuthLoginResponseFragment } from '@/schema/generated'
-import type { AppleAuthResponse } from '@/services/apple'
 import { AuthV4ManualAuthSchema } from './schema'
 
 type Context = {
@@ -16,12 +15,6 @@ type Context = {
   password?: string
   turnstileToken?: string
   resendOTPReminds: number
-  appleData?: AppleAuthResponse['authorization']
-  metamaskData?: {
-    address: string
-    signature: string
-    text: string
-  }
   errorMessages?: string
   authData?: AuthLoginResponseFragment
 }
@@ -29,24 +22,15 @@ type Context = {
 type Event =
   | { type: 'EMAIL_TYPING'; email: string }
   | { type: 'CF_VERIFIED'; turnstileToken: string }
-  | { type: 'APPLE_DATA_SUCCESS'; data: Required<Context>['appleData'] }
   | { type: 'OTP_TYPING'; otp: string }
   | { type: 'PWD_TYPING'; pwd: string }
-  | { type: 'METAMASK_LOGIN_AUTH' }
-  | { type: 'GITHUB_LOGIN' }
   | { type: 'RESEND' }
   | { type: 'CHANGE_TO_OTP' }
   | { type: 'SEND' }
   | { type: 'CHANGE_TO_PASSWORD' }
   | { type: 'SENT' }
   | { type: 'MANUAL_LOGIN' }
-  | { type: 'WALLET_CONNECTED' }
-  | { type: 'SIGNED' }
-  | { type: 'SIGN' }
-  | { type: 'APPLE_LOGIN' }
-  | { type: 'LOGGED' }
   | { type: 'TICK' }
-  | { type: 'REVERT_TO_IDLE' }
 
 const authMachine = setup({
   types: {
@@ -55,21 +39,10 @@ const authMachine = setup({
   },
   actors: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    doGithubLogin: fromPromise(async (_: { input: unknown }): Promise<any> => {
-      throw new Error('not implemented')
-    }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     doSendOTP: fromPromise(
       async (_: {
         input: { email?: string; turnstileToken?: string }
       }): Promise<any> => {
-        throw new Error('not implemented')
-      }
-    ),
-    doMetamaskLogin: fromPromise(
-      async (_: {
-        input: { data: Context['metamaskData'] }
-      }): Promise<AuthLoginResponseFragment | undefined> => {
         throw new Error('not implemented')
       }
     ),
@@ -82,20 +55,6 @@ const authMachine = setup({
           turnstileToken?: string
         }
       }): Promise<AuthLoginResponseFragment | undefined> => {
-        throw new Error('not implemented')
-      }
-    ),
-    doAppleLogin: fromPromise(
-      async (_: {
-        input: { data: Context['appleData'] }
-      }): Promise<AuthLoginResponseFragment | undefined> => {
-        throw new Error('not implemented')
-      }
-    ),
-    connectWeb3Wallet: fromPromise(
-      async (_: {
-        input: unknown
-      }): Promise<Required<Context>['metamaskData']> => {
         throw new Error('not implemented')
       }
     ),
@@ -113,7 +72,6 @@ const authMachine = setup({
       /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(ctx.context.email ?? ''),
     onlyOnOTPTimeReset: (ctx) => ctx.context.resendOTPReminds === 0,
     onlyTimeReset: (ctx) => ctx.context.resendOTPReminds <= 0,
-    // TODO: implement it
     manualLoginDataValid: (ctx) => {
       const { email, password, otp, turnstileToken } = ctx.context
       const parsed = AuthV4ManualAuthSchema.safeParse({
@@ -122,10 +80,8 @@ const authMachine = setup({
         otp,
         turnstileToken,
       })
-      // console.log(parsed.error?.errors, parsed.success)
       return parsed.success
     },
-    validatedOnly: () => true,
   },
   actions: {
     onAuthSuccess: (_, params: { data?: AuthLoginResponseFragment }) =>
@@ -142,18 +98,6 @@ const authMachine = setup({
   states: {
     idle: {
       on: {
-        GITHUB_LOGIN: {
-          target: 'githubLoggingIn',
-          reenter: true,
-        },
-
-        METAMASK_LOGIN_AUTH: 'metaMaskLogging',
-
-        APPLE_LOGIN: {
-          target: 'appleAuthing',
-          reenter: true,
-        },
-
         EMAIL_TYPING: {
           target: 'idle',
           actions: assign({
@@ -291,59 +235,6 @@ const authMachine = setup({
       },
     },
 
-    metaMaskLogging: {
-      invoke: {
-        src: 'connectWeb3Wallet',
-        onDone: {
-          target: 'metamaskLoggingIn',
-          actions: assign({ metamaskData: ({ event }) => event.output }),
-          reenter: true,
-        },
-        onError: {
-          target: 'idle',
-        },
-      },
-    },
-
-    metamaskLoggingIn: {
-      invoke: {
-        src: 'doMetamaskLogin',
-        input: (ctx) => {
-          return { data: ctx.context.metamaskData }
-        },
-        onDone: {
-          target: 'LoggedIn',
-          actions: {
-            type: 'onAuthSuccess',
-            params({ event }) {
-              return { data: event.output }
-            },
-          },
-        },
-        onError: {
-          target: 'idle',
-        },
-      },
-    },
-
-    githubLoggingIn: {
-      invoke: {
-        src: 'doGithubLogin',
-        onDone: {
-          target: 'LoggedIn',
-          // actions: {
-          //   type: 'onAuthSuccess',
-          //   params({ context, event }) {
-          //     return { data: event.output }
-          //   },
-          // },
-        },
-        onError: {
-          target: 'idle',
-        },
-      },
-    },
-
     manualLoggingIn: {
       invoke: {
         src: 'doManualLogin',
@@ -367,44 +258,6 @@ const authMachine = setup({
         },
         onError: {
           target: 'Passcode',
-        },
-      },
-    },
-
-    appleLoggingIn: {
-      invoke: {
-        src: 'doAppleLogin',
-        input: (ctx) => {
-          return {
-            data: ctx.context.appleData,
-          }
-        },
-        onDone: {
-          target: 'LoggedIn',
-          actions: {
-            type: 'onAuthSuccess',
-            params({ event }) {
-              return { data: event.output }
-            },
-          },
-        },
-        onError: {
-          target: 'idle',
-        },
-      },
-    },
-
-    appleAuthing: {
-      on: {
-        APPLE_DATA_SUCCESS: {
-          target: 'appleLoggingIn',
-          actions: assign({ appleData: (ctx) => ctx.event.data }),
-          reenter: true,
-        },
-
-        REVERT_TO_IDLE: {
-          target: 'idle',
-          reenter: true,
         },
       },
     },

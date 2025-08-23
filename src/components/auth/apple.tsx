@@ -28,10 +28,12 @@ function AuthAppleButton(props: Props) {
   const { onClick, children } = props
   return (
     <button
-      className='flex justify-center items-center bg-black text-white w-full mt-4 rounded-sm hover:scale-105 duration-150 py-0.5'
+      className='relative w-full h-16 px-6 bg-white dark:bg-black border border-gray-200 dark:border-zinc-700 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 group'
       onClick={onClick}
     >
-      {children}
+      <div className='flex items-center justify-center gap-3 text-black dark:text-white'>
+        {children}
+      </div>
     </button>
   )
 }
@@ -49,20 +51,22 @@ function AppleLoginButtonView(props: AppleLoginButtonViewProps) {
 
   return (
     <WithLoading loading={loading} disabled={disabled}>
-      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-      {/* @ts-ignore */}
-      <AppleSignin
-        authOptions={appleAuthOptions}
-        uiType='dark'
-        className='apple-auth-btn'
-        noDefaultStyle={false}
-        buttonExtraChildren='Continue with Apple'
-        onSuccess={onSuccess}
-        onError={onError}
-        skipScript={false}
-        // iconProp={{ style: { marginTop: '10px' } }}
-        render={AuthAppleButton}
-      />
+      <div className='apple-button-wrapper'>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
+        <AppleSignin
+          authOptions={appleAuthOptions}
+          uiType='light'
+          className='apple-auth-btn'
+          noDefaultStyle={false}
+          buttonExtraChildren='Continue with Apple'
+          onSuccess={onSuccess}
+          onError={onError}
+          skipScript={false}
+          // iconProp={{ style: { marginTop: '10px' } }}
+          render={AuthAppleButton}
+        />
+      </div>
     </WithLoading>
   )
 }

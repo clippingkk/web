@@ -1,5 +1,4 @@
 'use client'
-import '../utils/mixpanel'
 
 import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
 import { MetaMaskProvider } from '@metamask/sdk-react'
