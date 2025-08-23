@@ -5,12 +5,6 @@ declare let WebViewJavascriptBridge: any
 declare let WVJBCallbacks: any
 
 // graphql.d.ts file
-declare module '*.graphql' {
-  import { DocumentNode } from 'graphql'
-
-  const value: DocumentNode
-  export default value
-}
 declare module '*.yml' {
   const v: object
   export default v
@@ -34,7 +28,7 @@ interface Window {
         state: string;
         usePopup: boolean;
       }) => void
-      signIn(): Promise
+      signIn(): Promise<any>
     }
   }
   __APOLLO_STATE__?: Record<string, any>
