@@ -4,6 +4,16 @@
   interpolate-size: allow-keywords;
 }
 
+/* Apple Sign-In button dark mode styles */
+.dark .apple-button-wrapper svg {
+  filter: invert(1);
+}
+
+.dark .apple-button-wrapper .apple-auth-btn {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
 html {
   font-size: 12px;
   font-display: swap;

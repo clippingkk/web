@@ -1,46 +1,30 @@
-import toast from 'react-hot-toast'
-import AppleLoginButtonView from '@/components/auth/apple'
-import MetamaskButtonView from '@/components/auth/metamask'
-import AuthByGithub from '@/components/auth.github'
-import type { AuthEvents, AuthMachine } from './auth.state'
+import AppleStandaloneLoginButton from '@/components/auth/apple-standalone'
+import GithubStandaloneLoginButton from '@/components/auth/github-standalone'
+import MetaMaskStandaloneLoginButton from '@/components/auth/metamask-standalone'
 
-type ThirdPartEntryProps = {
-  machine: AuthMachine
-  onEvent: (event: AuthEvents) => void
-}
-
-function ThirdPartEntry(props: ThirdPartEntryProps) {
-  const { machine, onEvent } = props
+function ThirdPartEntry() {
   return (
-    <div className='flex flex-col w-full'>
-      <MetamaskButtonView
-        loading={machine.matches('metaMaskLogging')}
-        disabled={false}
-        onClick={() => onEvent({ type: 'METAMASK_LOGIN_AUTH' })}
-      />
-      <div
-        onClickCapture={() => {
-          onEvent({ type: 'APPLE_LOGIN' })
-        }}
-      >
-        <AppleLoginButtonView
-          version='v4'
-          loading={machine.matches('appleAuthing')}
-          disabled={false}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          onError={(error: any) => {
-            onEvent({ type: 'REVERT_TO_IDLE' })
-            toast.error(`Auth by Apple: ${error.error}`)
-          }}
-          onSuccess={(resp) => {
-            onEvent({
-              type: 'APPLE_DATA_SUCCESS',
-              data: resp.authorization,
-            })
-          }}
-        />
+    <div className='flex flex-col w-full space-y-3'>
+      <div className='relative mb-2'>
+        <div className='absolute inset-0 flex items-center'>
+          <div className='w-full border-t border-gray-300 dark:border-zinc-600' />
+        </div>
+        <div className='relative flex justify-center text-sm'>
+          <span className='px-4 bg-slate-200 dark:bg-slate-900 text-gray-500 dark:text-zinc-400 font-medium'>
+            Or continue with
+          </span>
+        </div>
       </div>
-      <AuthByGithub />
+
+      <MetaMaskStandaloneLoginButton />
+      <AppleStandaloneLoginButton />
+      <GithubStandaloneLoginButton />
+
+      <div className='pt-2 text-center'>
+        <p className='text-xs text-gray-500 dark:text-zinc-500'>
+          Secure authentication powered by blockchain and OAuth
+        </p>
+      </div>
     </div>
   )
 }

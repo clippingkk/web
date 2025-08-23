@@ -23,9 +23,6 @@ import authMachine from './auth.state'
 import EmailLoginEntry from './emailEntry'
 import ThirdPartEntry from './thirdPartEntry'
 
-// import { createBrowserInspector } from '@statelyai/inspect'
-// const { inspect } = createBrowserInspector();
-
 function AuthV4Content() {
   const router = useRouter()
   const { t } = useTranslation()
@@ -231,14 +228,13 @@ function AuthV4Content() {
   )
 
   return (
-    <div className='px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg'>
+    <div className='px-8 py-4 flex flex-col lg:flex-row rounded-sm bg-slate-200 dark:bg-slate-900 bg-opacity-70 dark:bg-opacity-90 backdrop-blur-sm shadow-lg gap-4'>
       <EmailLoginEntry machine={state} sendEvent={send} />
-      <hr className='w-full mx-8' />
       <div className='mt-6 lg:mt-0'>
         <h3 className='text-lg mb-8 font-bold'>
           {t('app.auth.thirdPart.title')}
         </h3>
-        <ThirdPartEntry machine={state} onEvent={send} />
+        <ThirdPartEntry />
       </div>
     </div>
   )
