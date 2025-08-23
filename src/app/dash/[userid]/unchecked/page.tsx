@@ -40,11 +40,11 @@ async function UncheckedPage(props: Props) {
       },
     },
   })
-  
+
   if (!profileResponse?.me) {
     return <div>Profile not found</div>
   }
-  
+
   return <UncheckedPageContent profile={profileResponse.me} />
 }
 

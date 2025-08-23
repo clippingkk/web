@@ -1,19 +1,24 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useMutation } from '@apollo/client/react'
 import { Clipboard, ExternalLink, RefreshCw, Terminal } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Button from '@/components/button/button'
 import CodeHighlight from '@/components/highlighter/client'
-import { useMutation } from '@apollo/client/react'
-import { ClaimCliApiTokenDocument, type ClaimCliApiTokenMutation } from '@/gql/graphql'
+import {
+  ClaimCliApiTokenDocument,
+  type ClaimCliApiTokenMutation,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { getLocalToken } from '@/services/ajax'
 
 function CliApiToken() {
   const { t } = useTranslation()
-  const [doClaim, { data, loading }] = useMutation<ClaimCliApiTokenMutation>(ClaimCliApiTokenDocument)
+  const [doClaim, { data, loading }] = useMutation<ClaimCliApiTokenMutation>(
+    ClaimCliApiTokenDocument
+  )
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {

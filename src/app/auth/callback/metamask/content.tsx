@@ -1,8 +1,11 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import { useCallback, useMemo } from 'react'
 import AuthCallbackPageContainer from '@/components/auth/fake-layout'
-import { useMutation } from '@apollo/client/react'
-import { BindWeb3AddressDocument, type BindWeb3AddressMutation } from '@/gql/graphql'
+import {
+  BindWeb3AddressDocument,
+  type BindWeb3AddressMutation,
+} from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
 
 type AuthCallbackMetamaskProps = {
@@ -21,7 +24,9 @@ function AuthCallbackMetamask(props: AuthCallbackMetamaskProps) {
     }
   }, [address, signature, text])
 
-  const [doBind, doBindResult] = useMutation<BindWeb3AddressMutation>(BindWeb3AddressDocument)
+  const [doBind, doBindResult] = useMutation<BindWeb3AddressMutation>(
+    BindWeb3AddressDocument
+  )
 
   const onAuthCallback = useCallback(
     (pn: string, code: string) => {

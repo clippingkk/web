@@ -18,7 +18,8 @@ type SearchBarProps = {
 function SearchBar(props: SearchBarProps) {
   const { visible, onClose, profile } = props
   const { t } = useTranslation()
-  const [doQuery, { data, loading, called }] = useLazyQuery<SearchQueryQuery>(SearchQueryDocument)
+  const [doQuery, { data, loading, called }] =
+    useLazyQuery<SearchQueryQuery>(SearchQueryDocument)
   const inputRef = useRef<HTMLInputElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
   const [searchText, setSearchText] = useState('')

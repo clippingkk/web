@@ -1,12 +1,14 @@
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import { useApolloClient } from '@apollo/client/react'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Button from '@/components/button/button'
 import LoadingIcon from '@/components/icons/loading.svg'
-import { useMutation } from '@apollo/client/react'
-import { UpdateClippingBookIdDocument, type UpdateClippingBookIdMutation } from '@/gql/graphql'
+import {
+  UpdateClippingBookIdDocument,
+  type UpdateClippingBookIdMutation,
+} from '@/gql/graphql'
 import { useBookSearch } from '@/hooks/book'
 import { useTranslation } from '@/i18n/client'
 import type { WenquBook } from '@/services/wenqu'
@@ -27,7 +29,8 @@ function BookInfoChanger(props: BookInfoChangerProps) {
   const [selectedBook, setSelectedBook] = useState<WenquBook | null>(null)
   const candidates = useBookSearch(bookNameInput, 0, props.visible)
   const client = useApolloClient()
-  const [doUpdate, { loading: isUpdating }] = useMutation<UpdateClippingBookIdMutation>(UpdateClippingBookIdDocument)
+  const [doUpdate, { loading: isUpdating }] =
+    useMutation<UpdateClippingBookIdMutation>(UpdateClippingBookIdDocument)
 
   useEffect(() => {
     if (props.visible && props.bookName) {

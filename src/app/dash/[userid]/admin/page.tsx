@@ -84,7 +84,9 @@ async function AdminPanel(props: PageProps) {
             </div>
           </div>
 
-          <HomelessBooksTable data={data?.adminDashboard?.uncheckedBooks ?? []} />
+          <HomelessBooksTable
+            data={data?.adminDashboard?.uncheckedBooks ?? []}
+          />
 
           <div className='mt-8 flex justify-center'>
             <Link

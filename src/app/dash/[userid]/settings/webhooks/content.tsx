@@ -1,4 +1,5 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -9,7 +10,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 import { toast } from 'react-hot-toast'
-import { useMutation } from '@apollo/client/react'
 import {
   DeleteAWebHookDocument,
   type DeleteAWebHookMutation,
@@ -32,12 +32,15 @@ function WebHooksContent(props: Props) {
 
   const { t } = useTranslation()
 
-  const [deleteMutation] = useMutation<DeleteAWebHookMutation>(DeleteAWebHookDocument, {
-    onCompleted: () => {
-      router.refresh()
-      toast.success(t('app.common.done'))
-    },
-  })
+  const [deleteMutation] = useMutation<DeleteAWebHookMutation>(
+    DeleteAWebHookDocument,
+    {
+      onCompleted: () => {
+        router.refresh()
+        toast.success(t('app.common.done'))
+      },
+    }
+  )
 
   const webhookColumns: ColumnDef<FetchMyWebHooksQuery['me']['webhooks'][0]>[] =
     useMemo(

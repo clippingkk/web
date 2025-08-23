@@ -32,7 +32,8 @@ function AuthV3Content() {
   const [validEmail, setValidEmail] = useState('')
   const [phase, setPhase] = useState(0)
 
-  const [doSendOtp, { loading: isSendingOtp }] = useMutation<SendOtpMutation>(SendOtpDocument)
+  const [doSendOtp, { loading: isSendingOtp }] =
+    useMutation<SendOtpMutation>(SendOtpDocument)
 
   const onEmailSubmit = useCallback(
     (email: string, turnstileToken: string) => {
@@ -55,7 +56,8 @@ function AuthV3Content() {
     [doSendOtp]
   )
 
-  const [loginV3, loginV3Response] = useMutation<DoLoginV3Mutation>(DoLoginV3Document)
+  const [loginV3, loginV3Response] =
+    useMutation<DoLoginV3Mutation>(DoLoginV3Document)
 
   const onOTPConfirmed = useCallback(
     (otp: string) => {

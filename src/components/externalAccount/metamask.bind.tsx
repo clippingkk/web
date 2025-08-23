@@ -1,9 +1,11 @@
-import { useApolloClient } from '@apollo/client/react'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { useSDK } from '@metamask/sdk-react'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
-import { useMutation } from '@apollo/client/react'
-import { BindWeb3AddressDocument, type BindWeb3AddressMutation } from '@/gql/graphql'
+import {
+  BindWeb3AddressDocument,
+  type BindWeb3AddressMutation,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { signDataByWeb3 } from '@/utils/wallet'
 import WithLoading from '../with-loading'
@@ -14,7 +16,9 @@ type MetamaskBindButtonProps = {
 
 function MetamaskBindButton(props: MetamaskBindButtonProps) {
   const { t } = useTranslation()
-  const [doBind, doBindResult] = useMutation<BindWeb3AddressMutation>(BindWeb3AddressDocument)
+  const [doBind, doBindResult] = useMutation<BindWeb3AddressMutation>(
+    BindWeb3AddressDocument
+  )
   const client = useApolloClient()
   const { sdk: metamaskSDK } = useSDK()
   const onMetamaskLogin = useCallback(() => {

@@ -1,11 +1,14 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
+import { useQuery } from '@apollo/client/react'
 import { ExternalLink, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { Streamdown } from 'streamdown'
 import { MarkdownComponents } from '@/components/RichTextEditor/markdown-components'
-import { useQuery } from '@apollo/client/react'
-import { FetchUserPersonalityDocument, type FetchUserPersonalityQuery } from '@/gql/graphql'
+import {
+  FetchUserPersonalityDocument,
+  type FetchUserPersonalityQuery,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
 type PersonalityViewProps = {
@@ -20,13 +23,16 @@ function PersonalityView(props: PersonalityViewProps) {
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
 
-  const { data, loading, error } = useQuery<FetchUserPersonalityQuery>(FetchUserPersonalityDocument, {
-    variables: {
-      id: uid,
-      domain,
-    },
-    skip: !isOpen,
-  })
+  const { data, loading, error } = useQuery<FetchUserPersonalityQuery>(
+    FetchUserPersonalityDocument,
+    {
+      variables: {
+        id: uid,
+        domain,
+      },
+      skip: !isOpen,
+    }
+  )
 
   const personalityData = data?.me.personalityByAI
 

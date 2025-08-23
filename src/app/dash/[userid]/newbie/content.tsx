@@ -1,4 +1,5 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -6,8 +7,10 @@ import ButtonSimple from '@/components/button/button-simple'
 import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
 import FieldInput from '@/components/input'
 import ProgressBlock from '@/components/progress/progress-block'
-import { useMutation } from '@apollo/client/react'
-import { UpdateProfileDocument, type UpdateProfileMutation } from '@/gql/graphql'
+import {
+  UpdateProfileDocument,
+  type UpdateProfileMutation,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { toastPromiseDefaultOption, uploadImage } from '@/services/misc'
 
@@ -24,7 +27,8 @@ function NewbiePageContent({ uid }: { uid: number }) {
 
   const { t } = useTranslation()
 
-  const [doUpdateUserProfile, doUpdateResponse] = useMutation<UpdateProfileMutation>(UpdateProfileDocument)
+  const [doUpdateUserProfile, doUpdateResponse] =
+    useMutation<UpdateProfileMutation>(UpdateProfileDocument)
 
   const [phase, setPhase] = useState(0)
   const [newName, setNewName] = useState('')

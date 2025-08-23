@@ -1,7 +1,7 @@
 'use client'
+import { useLazyQuery } from '@apollo/client/react'
 import { useEffect } from 'react'
 import LoadingIcon from '@/components/icons/loading.svg'
-import { useLazyQuery } from '@apollo/client/react'
 import { GithubLoginDocument, type GithubLoginQuery } from '@/gql/graphql'
 import { useAuthSuccessed } from '@/hooks/hooks'
 

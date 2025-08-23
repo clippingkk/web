@@ -1,19 +1,24 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
+import { useMutation } from '@apollo/client/react'
 import { AlertOctagon, AlertTriangle, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { onCleanServerCookie } from '@/components/navigation-bar/logout'
-import { useMutation } from '@apollo/client/react'
-import { DeleteMyAccountDocument, type DeleteMyAccountMutation } from '@/gql/graphql'
+import {
+  DeleteMyAccountDocument,
+  type DeleteMyAccountMutation,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import profile from '@/utils/profile'
 
 function AccountRemoveButton() {
   const { t } = useTranslation()
   const [confirming, setConfirming] = useState(false)
-  const [doDelete] = useMutation<DeleteMyAccountMutation>(DeleteMyAccountDocument)
+  const [doDelete] = useMutation<DeleteMyAccountMutation>(
+    DeleteMyAccountDocument
+  )
   const { replace } = useRouter()
 
   const doDeleteMyAccount = useCallback(async () => {

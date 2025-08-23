@@ -1,8 +1,8 @@
 'use client'
 
+import { useQuery } from '@apollo/client/react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useState } from 'react'
-import { useQuery } from '@apollo/client/react'
 import {
   type Comment,
   GetCommentListDocument,
@@ -20,16 +20,19 @@ export default function CommentsList({ initialData, userId }: Props) {
   const [hasMore, setHasMore] = useState(initialData.items.length >= 20)
   const [lastId, setLastId] = useState<number | undefined>()
 
-  const { data, loading, fetchMore } = useQuery<GetCommentListQuery>(GetCommentListDocument, {
-    variables: {
-      uid: userId,
-      pagination: {
-        limit: 20,
-        lastId,
+  const { data, loading, fetchMore } = useQuery<GetCommentListQuery>(
+    GetCommentListDocument,
+    {
+      variables: {
+        uid: userId,
+        pagination: {
+          limit: 20,
+          lastId,
+        },
       },
-    },
-    skip: !lastId, // Skip initial query since we have server data
-  })
+      skip: !lastId, // Skip initial query since we have server data
+    }
+  )
 
   const comments = lastId ? data?.getCommentList.items : initialData.items
   const totalCount = data?.getCommentList.count || initialData.count

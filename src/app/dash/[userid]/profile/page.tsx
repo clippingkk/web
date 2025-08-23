@@ -74,7 +74,7 @@ async function Page(props: PageProps) {
   })
 
   console.log('withProfileEditor', withProfileEditor)
-  
+
   if (!profile?.me) {
     return (
       <section className='w-full'>

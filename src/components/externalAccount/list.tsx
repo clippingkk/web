@@ -1,6 +1,9 @@
-import { useMemo } from 'react'
 import { useQuery } from '@apollo/client/react'
-import { FetchExternalAccountDocument, type FetchExternalAccountQuery } from '@/gql/graphql'
+import { useMemo } from 'react'
+import {
+  FetchExternalAccountDocument,
+  type FetchExternalAccountQuery,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import IconAppleLogo from '../icons/apple.logo.svg'
 import GithubLogo from '../icons/github.logo.svg'
@@ -15,11 +18,14 @@ type ExternalAccountListProps = {
 }
 
 function ExternalAccountList(props: ExternalAccountListProps) {
-  const { data } = useQuery<FetchExternalAccountQuery>(FetchExternalAccountDocument, {
-    variables: {
-      id: props.uid,
-    },
-  })
+  const { data } = useQuery<FetchExternalAccountQuery>(
+    FetchExternalAccountDocument,
+    {
+      variables: {
+        id: props.uid,
+      },
+    }
+  )
 
   const address = useMemo(() => {
     return data?.me.externalInfo.address ?? []

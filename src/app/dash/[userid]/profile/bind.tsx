@@ -1,10 +1,14 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
+import { useQuery } from '@apollo/client/react'
 import { MessageCircle } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 import { useState } from 'react'
-import { useQuery } from '@apollo/client/react'
-import { type ProfileQuery, WechatBindDocument, type WechatBindQuery } from '@/gql/graphql'
+import {
+  type ProfileQuery,
+  WechatBindDocument,
+  type WechatBindQuery,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
 function BindQRCode() {

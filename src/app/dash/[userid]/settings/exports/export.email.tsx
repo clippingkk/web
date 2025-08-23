@@ -1,5 +1,6 @@
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
+import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -7,8 +8,11 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 import BrandNotionLogo from '@/assets/brand-notion.svg'
-import { useMutation } from '@apollo/client/react'
-import { ExportDestination, ExportDataToDocument, type ExportDataToMutation } from '@/gql/graphql'
+import {
+  ExportDataToDocument,
+  type ExportDataToMutation,
+  ExportDestination,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
 function ExportToEmail() {

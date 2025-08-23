@@ -1,8 +1,8 @@
 'use client'
+import { useQuery } from '@apollo/client/react'
 import { Masonry, useInfiniteLoader } from 'masonic'
 import React, { useEffect } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
-import { useQuery } from '@apollo/client/react'
 import {
   FetchClippingsByUidDocument,
   type FetchClippingsByUidQuery,
@@ -21,14 +21,17 @@ function ClippingList(props: ClippingListProps) {
   const [renderList, setRenderList] = React.useState<
     FetchClippingsByUidQuery['clippingList']['items']
   >([])
-  const { data, loading, fetchMore } = useQuery<FetchClippingsByUidQuery>(FetchClippingsByUidDocument, {
-    variables: {
-      uid,
-      pagination: {
-        limit: 20,
+  const { data, loading, fetchMore } = useQuery<FetchClippingsByUidQuery>(
+    FetchClippingsByUidDocument,
+    {
+      variables: {
+        uid,
+        pagination: {
+          limit: 20,
+        },
       },
-    },
-  })
+    }
+  )
 
   useEffect(() => {
     if (data?.clippingList?.items) {
@@ -78,7 +81,9 @@ function ClippingList(props: ClippingListProps) {
   )
 
   const books = useMultipleBook(
-    data?.clippingList?.items?.map((x) => x?.bookID).filter((id): id is string => id !== undefined) ?? []
+    data?.clippingList?.items
+      ?.map((x) => x?.bookID)
+      .filter((id): id is string => id !== undefined) ?? []
   )
 
   if (loading && !data) {

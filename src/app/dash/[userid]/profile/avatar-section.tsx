@@ -1,9 +1,13 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import { useState } from 'react'
 import Avatar from '@/components/avatar/avatar'
 import AvatarPicker from '@/components/profile/avatar-picker'
-import { useMutation } from '@apollo/client/react'
-import { type ProfileQuery, UpdateProfileDocument, type UpdateProfileMutation } from '@/gql/graphql'
+import {
+  type ProfileQuery,
+  UpdateProfileDocument,
+  type UpdateProfileMutation,
+} from '@/gql/graphql'
 
 type Props = {
   profile: Pick<ProfileQuery['me'], 'avatar' | 'name'>

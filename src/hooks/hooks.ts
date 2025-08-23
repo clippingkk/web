@@ -6,13 +6,13 @@ import mixpanel from 'mixpanel-browser'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
-import {
-  type AuthByPhoneMutation,
-  type AuthByWeb3Query,
-  type AuthQuery,
-  type DoLoginV3Mutation,
-  type SignupMutation,
-  type User,
+import type {
+  AuthByPhoneMutation,
+  AuthByWeb3Query,
+  AuthQuery,
+  DoLoginV3Mutation,
+  SignupMutation,
+  User,
 } from '@/gql/graphql'
 import { syncLoginStateToServer } from '../actions/login'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'

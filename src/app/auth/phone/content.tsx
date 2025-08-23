@@ -1,12 +1,13 @@
 'use client'
-import React from 'react'
 import { useMutation } from '@apollo/client/react'
+import React from 'react'
 import { AuthByPhoneDocument, type AuthByPhoneMutation } from '@/gql/graphql'
 import BindPhone from '../../../components/bind-phone'
 import { useAuthByPhoneSuccessed } from '../../../hooks/hooks'
 
 function AuthPhoneContent() {
-  const [doAuth, doAuthResponse] = useMutation<AuthByPhoneMutation>(AuthByPhoneDocument)
+  const [doAuth, doAuthResponse] =
+    useMutation<AuthByPhoneMutation>(AuthByPhoneDocument)
 
   useAuthByPhoneSuccessed(
     doAuthResponse.called,

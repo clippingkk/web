@@ -142,7 +142,10 @@ async function Page(props: PageProps) {
 
   let firstBook: WenquBook | null = null
 
-  if (profileResponse.data?.me?.recents && profileResponse.data.me.recents.length > 0) {
+  if (
+    profileResponse.data?.me?.recents &&
+    profileResponse.data.me.recents.length > 0
+  ) {
     let firstBookId = profileResponse.data.me.recents[0].bookID ?? ''
     if (firstBookId.length <= 3) {
       firstBookId = ''

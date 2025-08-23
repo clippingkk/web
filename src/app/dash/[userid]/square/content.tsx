@@ -1,9 +1,9 @@
 'use client'
+import { useQuery } from '@apollo/client/react'
 import { type LoadMoreItemsCallback, Masonry, useInfiniteLoader } from 'masonic'
 import { useRef, useState } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import { APP_API_STEP_LIMIT } from '@/constants/config'
-import { useQuery } from '@apollo/client/react'
 import {
   FetchSquareDataDocument,
   type FetchSquareDataQuery,
@@ -26,14 +26,17 @@ function SquarePageContent(props: SquarePageContentProps) {
   const [sqData, setSqData] = useState<
     FetchSquareDataQuery['featuredClippings']
   >(props.squareData.featuredClippings)
-  const { data: localData, fetchMore } = useQuery<FetchSquareDataQuery>(FetchSquareDataDocument, {
-    variables: {
-      pagination: {
-        limit: APP_API_STEP_LIMIT,
+  const { data: localData, fetchMore } = useQuery<FetchSquareDataQuery>(
+    FetchSquareDataDocument,
+    {
+      variables: {
+        pagination: {
+          limit: APP_API_STEP_LIMIT,
+        },
       },
-    },
-    skip: true,
-  })
+      skip: true,
+    }
+  )
 
   const data = localData ?? props.squareData
   // 这里会翻页，所以还是用客户端的书列表

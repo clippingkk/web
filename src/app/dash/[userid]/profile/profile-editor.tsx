@@ -3,6 +3,7 @@ import InputField from '@annatarhe/lake-ui/form-input-field'
 import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useMutation } from '@apollo/client/react'
 import { CogIcon } from '@heroicons/react/24/solid'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Globe2Icon, PenIcon, User2Icon } from 'lucide-react'
@@ -12,8 +13,10 @@ import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 import Button from '@/components/button/button'
 import ExternalAccountList from '@/components/externalAccount/list'
-import { useMutation } from '@apollo/client/react'
-import { UpdateProfileDocument, type UpdateProfileMutation } from '@/gql/graphql'
+import {
+  UpdateProfileDocument,
+  type UpdateProfileMutation,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { uploadImage } from '@/services/misc'
 
@@ -50,7 +53,9 @@ function ProfileEditor(props: ProfileEditorProps) {
     }
   }, [withProfileEditor])
 
-  const [doUpdate, { client }] = useMutation<UpdateProfileMutation>(UpdateProfileDocument)
+  const [doUpdate, { client }] = useMutation<UpdateProfileMutation>(
+    UpdateProfileDocument
+  )
   const { t } = useTranslation()
 
   const {

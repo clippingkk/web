@@ -36,7 +36,8 @@ function AuthV4Content() {
   const router = useRouter()
   const { t } = useTranslation()
   const [doSendOtp] = useMutation<SendOtpMutation>(SendOtpDocument)
-  const [doAppleAuth, appleAuthResponse] = useLazyQuery<LoginByAppleQuery>(LoginByAppleDocument)
+  const [doAppleAuth, appleAuthResponse] =
+    useLazyQuery<LoginByAppleQuery>(LoginByAppleDocument)
   useAuthBy3rdPartSuccessed(
     appleAuthResponse.called,
     appleAuthResponse.loading,
@@ -54,14 +55,16 @@ function AuthV4Content() {
     doAuthData.data?.auth
   )
 
-  const [doWeb3Auth, doWeb3AuthData] = useLazyQuery<AuthByWeb3Query>(AuthByWeb3Document)
+  const [doWeb3Auth, doWeb3AuthData] =
+    useLazyQuery<AuthByWeb3Query>(AuthByWeb3Document)
   useAuthBy3rdPartSuccessed(
     doWeb3AuthData.called,
     doWeb3AuthData.loading,
     doWeb3AuthData.error,
     doWeb3AuthData.data?.loginByWeb3
   )
-  const [loginV3, loginV3Response] = useMutation<DoLoginV3Mutation>(DoLoginV3Document)
+  const [loginV3, loginV3Response] =
+    useMutation<DoLoginV3Mutation>(DoLoginV3Document)
 
   useLoginV3Successed(
     loginV3Response.called,

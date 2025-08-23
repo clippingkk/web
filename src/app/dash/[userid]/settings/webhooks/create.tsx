@@ -1,14 +1,18 @@
 'use client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 import Button from '@/components/button'
-import { useMutation } from '@apollo/client/react'
-import { CreateNewWebHookDocument, type CreateNewWebHookMutation, WebHookStep } from '@/gql/graphql'
+import {
+  CreateNewWebHookDocument,
+  type CreateNewWebHookMutation,
+  WebHookStep,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
 type Props = {
@@ -44,17 +48,20 @@ function WebHookCreate({ onClose, isPremium }: Props) {
       hookUrl: '',
     },
   })
-  const [createMutation] = useMutation<CreateNewWebHookMutation>(CreateNewWebHookDocument, {
-    onCompleted() {
-      toast.success(t('app.common.done'))
-      reset()
-      router.refresh()
-      onClose()
-    },
-    onError(err) {
-      toast.error(err.message)
-    },
-  })
+  const [createMutation] = useMutation<CreateNewWebHookMutation>(
+    CreateNewWebHookDocument,
+    {
+      onCompleted() {
+        toast.success(t('app.common.done'))
+        reset()
+        router.refresh()
+        onClose()
+      },
+      onError(err) {
+        toast.error(err.message)
+      },
+    }
+  )
 
   const hookUrl = watch('hookUrl')
   const isFormValid = isValid && hookUrl.length > 3

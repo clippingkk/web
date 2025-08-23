@@ -1,10 +1,9 @@
 'use client'
 import Switch from '@annatarhe/lake-ui/form-switch-field'
-import { useApolloClient } from '@apollo/client/react'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { Eye, EyeOff } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import { useMutation } from '@apollo/client/react'
 import {
   type Clipping,
   ToggleClippingVisibleDocument,
@@ -25,14 +24,13 @@ function VisibleToggle({ clipping, me }: Props) {
   const client = useApolloClient()
   const r = useRouter()
 
-  const [toggleClippingVisible, { loading }] = useMutation<ToggleClippingVisibleMutation>(ToggleClippingVisibleDocument,
-    {
+  const [toggleClippingVisible, { loading }] =
+    useMutation<ToggleClippingVisibleMutation>(ToggleClippingVisibleDocument, {
       onCompleted() {
         client.resetStore()
         r.refresh()
       },
-    }
-  )
+    })
 
   if (clipping?.creator.id !== me?.id) {
     return null

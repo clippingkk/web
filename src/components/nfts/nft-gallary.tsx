@@ -1,12 +1,12 @@
+import { useQuery } from '@apollo/client/react'
 import { useMemo } from 'react'
 import {
   FetchMyNfTsDocument,
-  FetchMyNfTsQuery,
-  FetchMyNfTsQueryVariables,
+  type FetchMyNfTsQuery,
+  type FetchMyNfTsQueryVariables,
   type NftItem,
 } from '@/gql/graphql'
 import NFTGallaryItem from './nft-gallary-item'
-import { useQuery } from '@apollo/client/react'
 
 type NFTGallaryProps = {
   uid: number

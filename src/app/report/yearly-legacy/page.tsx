@@ -44,7 +44,11 @@ export async function generateMetadata(
   const bs = await wenquRequest<WenquSearchResponse>(
     `/books/search?dbIds=${dbIds.join('&dbIds=')}`
   )
-  return generateReportMetadata(year, reportInfoResponse.data ?? undefined, bs.books)
+  return generateReportMetadata(
+    year,
+    reportInfoResponse.data ?? undefined,
+    bs.books
+  )
 }
 
 async function YearlyLegacyPage(props: YearlyLegacyPageProps) {

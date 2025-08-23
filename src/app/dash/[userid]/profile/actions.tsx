@@ -1,11 +1,11 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import { UserMinus, UserPlus } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { useMutation } from '@apollo/client/react'
 import {
-  type ProfileQuery,
   FollowUserDocument,
   type FollowUserMutation,
+  type ProfileQuery,
   UnfollowUserDocument,
   type UnfollowUserMutation,
 } from '@/gql/graphql'
@@ -19,8 +19,10 @@ type Props = {
 
 function UserActions(props: Props) {
   const { isInMyPage, profile } = props
-  const [doFollow, { loading: followLoading }] = useMutation<FollowUserMutation>(FollowUserDocument)
-  const [doUnfollow, { loading: unfollowLoading }] = useMutation<UnfollowUserMutation>(UnfollowUserDocument)
+  const [doFollow, { loading: followLoading }] =
+    useMutation<FollowUserMutation>(FollowUserDocument)
+  const [doUnfollow, { loading: unfollowLoading }] =
+    useMutation<UnfollowUserMutation>(UnfollowUserDocument)
   const { t } = useTranslation()
 
   if (isInMyPage) {

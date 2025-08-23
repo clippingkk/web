@@ -3,7 +3,11 @@ import { useLazyQuery } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
-import { AppleLoginPlatforms, LoginByAppleDocument, type LoginByAppleQuery } from '@/gql/graphql'
+import {
+  AppleLoginPlatforms,
+  LoginByAppleDocument,
+  type LoginByAppleQuery,
+} from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import type { AppleAuthResponse } from '../services/apple'
 import AppleLoginButtonView from './auth/apple'
@@ -14,7 +18,8 @@ type AuthAppleProps = {
 
 function AuthByAppleButton(props: AuthAppleProps) {
   const router = useRouter()
-  const [doAppleAuth, appleAuthResponse] = useLazyQuery<LoginByAppleQuery>(LoginByAppleDocument)
+  const [doAppleAuth, appleAuthResponse] =
+    useLazyQuery<LoginByAppleQuery>(LoginByAppleDocument)
 
   const onSuccess = useCallback(
     async (resp: AppleAuthResponse) => {

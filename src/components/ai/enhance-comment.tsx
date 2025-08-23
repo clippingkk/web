@@ -1,9 +1,12 @@
 import Modal from '@annatarhe/lake-ui/modal'
+import { useMutation } from '@apollo/client/react'
 import { Loader2 } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useMutation } from '@apollo/client/react'
-import { AiEnhanceCommentDocument, type AiEnhanceCommentMutation } from '@/gql/graphql'
+import {
+  AiEnhanceCommentDocument,
+  type AiEnhanceCommentMutation,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import MarkdownPreview from '../markdown-editor/md-preview'
 
@@ -23,18 +26,21 @@ enum Prompts {
 function AICommentEnhancer(props: AICommentEnhancerProps) {
   const [opened, setOpened] = useState(false)
   const { t } = useTranslation()
-  const [doEnhance, { loading, data }] = useMutation<AiEnhanceCommentMutation>(AiEnhanceCommentDocument, {
-    variables: {
-      promptId: -1,
-      bookName: props.bookName,
-      clippingId: props.clippingId,
-      content: props.comment,
-    },
-    onCompleted() {
-      toast.success('Got an AI improved comment!')
-      setOpened(true)
-    },
-  })
+  const [doEnhance, { loading, data }] = useMutation<AiEnhanceCommentMutation>(
+    AiEnhanceCommentDocument,
+    {
+      variables: {
+        promptId: -1,
+        bookName: props.bookName,
+        clippingId: props.clippingId,
+        content: props.comment,
+      },
+      onCompleted() {
+        toast.success('Got an AI improved comment!')
+        setOpened(true)
+      },
+    }
+  )
 
   const onEnhance = useCallback(
     (promptId: Prompts) => {
