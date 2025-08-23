@@ -1,32 +1,16 @@
 'use client'
-import mixpanel from 'mixpanel-browser'
 import { useCallback, useEffect } from 'react'
 
-const __DEV__ = process.env.NODE_ENV !== 'production'
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function usePageTrack(page: string, params?: any) {
-  useEffect(() => {
-    if (__DEV__) {
-      return
-    }
-    mixpanel.track(`pv:in:${page}`, {
-      ...(params || {}),
-    })
-    return () => {
-      mixpanel.track(`pv:out:${page}`)
-    }
-  }, [page, params])
+export function usePageTrack(_page: string, _params?: any) {
+  // Tracking removed - no longer using mixpanel
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function useActionTrack(action: string, params?: any) {
+export function useActionTrack(_action: string, _params?: any) {
   return useCallback(() => {
-    if (__DEV__) {
-      return
-    }
-    mixpanel.track(`action:${action}`, params)
-  }, [action, params])
+    // Tracking removed - no longer using mixpanel
+  }, [])
 }
 export function useTitle(title?: string) {
   useEffect(() => {

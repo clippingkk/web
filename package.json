@@ -159,7 +159,6 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.541.0",
     "masonic": "^4.1.0",
-    "mixpanel-browser": "^2.69.0",
     "motion": "^12.23.12",
     "next": "15.5.0",
     "opentelemetry-node-metrics": "^3.0.0",
