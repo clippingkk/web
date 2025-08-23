@@ -51,6 +51,7 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "src/**/*.ts",
+    "types/**/*.d.ts",
     "node_modules/@types/**/*.d.ts"
   ],
   "exclude": [
