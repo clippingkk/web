@@ -116,7 +116,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
       />
       {machine.matches({ Passcode: 'Password' }) && (
         <div className='mt-4'>
-          <div className='mb-1 flex w-full items-center justify-between'>
+          <div className='mb-1 flex w-full items-center justify-between text-gray-300'>
             <span>{t('app.auth.pwd')}</span>
             <Button
               size='sm'
