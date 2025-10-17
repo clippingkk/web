@@ -2,7 +2,7 @@
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { useApolloClient } from '@apollo/client'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { $getRoot, type LexicalEditor } from 'lexical'
+// Removed Lexical imports for Tiptap migration
 import { Info, Send, User as UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useRef, useState } from 'react'
@@ -30,7 +30,10 @@ const COMMENT_MIN_LEN = 40
 
 function CommentBox(props: CommentBoxProps) {
   const [content, setContent] = useState('')
-  const ed = useRef<LexicalEditor>(null)
+  const ed = useRef<{
+    update: (callback: () => void) => void
+    clear: () => void
+  }>(null)
 
   const r = useRouter()
 
@@ -61,9 +64,8 @@ function CommentBox(props: CommentBoxProps) {
         toastPromiseDefaultOption
       )
       .then(() => {
-        ed.current?.update(() => {
-          $getRoot().clear()
-        })
+        ed.current?.clear()
+        setContent('')
       })
     // text: t('app.clipping.comments.tip.success')
   }, [content, createCommentAction, props.clipping.id, t])

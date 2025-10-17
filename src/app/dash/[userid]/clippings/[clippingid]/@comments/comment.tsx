@@ -1,6 +1,6 @@
 'use client'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import type { LexicalEditor } from 'lexical'
+// Removed Lexical imports for Tiptap migration
 import { Trash2, User as UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
@@ -24,7 +24,10 @@ type CommentProps = {
 function Comment(props: CommentProps) {
   const { comment, currentUser } = props
   const creator = comment.creator
-  const ed = useRef<LexicalEditor>(null)
+  const ed = useRef<{
+    update: (callback: () => void) => void
+    clear: () => void
+  }>(null)
   const router = useRouter()
   const [deleteComment, { loading: isDeleting }] = useDeleteCommentMutation({
     onCompleted: () => {
