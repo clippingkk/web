@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.6](https://github.com/clippingkk/web/compare/v5.14.5...v5.14.6) (2025-10-19)
+
+
+### Features
+
+* **auth:** create standalone login button components ([3791ba2](https://github.com/clippingkk/web/commit/3791ba2c6abef72fc02c554ff2535f9f611383c6))
+* **auth:** implement standalone authentication button components ([aab6d89](https://github.com/clippingkk/web/commit/aab6d89d1c2a240d62781c51d9946cdcf76d9518))
+* implement proper markdown support with @tiptap/markdown extension ([7cf0b4e](https://github.com/clippingkk/web/commit/7cf0b4e78143c704444bf91abc4e59c29f4baa0f))
+* migrate from ESLint to Biome and enable typedRoutes ([d90e3bf](https://github.com/clippingkk/web/commit/d90e3bfbd04944c4725b5eb27749c9a821c25e93))
+* replace Lexical with Tiptap editor for easier maintenance ([29b3de1](https://github.com/clippingkk/web/commit/29b3de1bff59421ce70055ea14d333a1f0fabf5a))
+* replace Lexical with Tiptap editor for easier maintenance ([b30b86c](https://github.com/clippingkk/web/commit/b30b86cbd6fb9da5e594b01234de01a557009307))
+
+
+### Bug Fixes
+
+* **auth:** add text color styling to password label section ([3419c7c](https://github.com/clippingkk/web/commit/3419c7c6680316a6d746a647a8b6b5c699f11ff6))
+* change JSX quote style to single quotes in biome.json ([4cf05e0](https://github.com/clippingkk/web/commit/4cf05e0fbc8586f07c5bf7799e716fcef7e48589))
+* **config:** migrate from ESLint to Biome and fix accessibility issues ([fe263ae](https://github.com/clippingkk/web/commit/fe263aef4c64e9ebeec8d28a300c7d3600cc6586))
+* **dialog:** wrap children in React fragment for proper rendering ([4bb61ef](https://github.com/clippingkk/web/commit/4bb61ef1c9a3abd45293735801054900849796b5))
+* **lint:** auto-fix formatting issues from Biome ([c6ea1cc](https://github.com/clippingkk/web/commit/c6ea1cc1c53e8934e8870c7951ff76c8b7d3df5a))
+* resolve TypeScript and build errors for Next.js 15.5.0 upgrade ([624cab0](https://github.com/clippingkk/web/commit/624cab04e9554578bb8ade7286cd61742fc2b18a))
+
+
+### Miscellaneous Chores
+
+* release 5.14.6 ([b541943](https://github.com/clippingkk/web/commit/b541943fa0ddad049a028868c481f972bc974c19))
+
 ## [5.14.5](https://github.com/clippingkk/web/compare/v5.14.4...v5.14.5) (2025-08-10)
 
 
