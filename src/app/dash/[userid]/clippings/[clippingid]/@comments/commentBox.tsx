@@ -2,7 +2,6 @@
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { useApolloClient } from '@apollo/client'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-// Removed Lexical imports for Tiptap migration
 import { Info, Send, User as UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useRef, useState } from 'react'
@@ -10,7 +9,7 @@ import { toast } from 'react-hot-toast'
 import AICommentEnhancer from '@/components/ai/enhance-comment'
 import Avatar from '@/components/avatar/avatar'
 import Button from '@/components/button/button'
-import CKLexicalBaseEditor from '@/components/RichTextEditor'
+import CKBaseEditor from '@/components/RichTextEditor'
 import { useTranslation } from '@/i18n/client'
 import {
   type Clipping,
@@ -100,7 +99,7 @@ function CommentBox(props: CommentBoxProps) {
         </div>
 
         <div className='rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 overflow-hidden transition-all duration-200 focus-within:border-blue-400 dark:focus-within:border-blue-400 focus-within:shadow-sm focus-within:shadow-blue-400/20'>
-          <CKLexicalBaseEditor
+          <CKBaseEditor
             editable
             className='min-h-32 w-full p-4 focus:outline-none'
             markdown={content}

@@ -2,7 +2,7 @@ import { type ForwardedRef, forwardRef } from 'react'
 import TiptapEditor, { type TiptapEditorRef } from './TiptapEditor'
 
 // define your extension array
-type LexicalEditorProps = {
+type CKBaseEditorProps = {
   editable?: boolean
   withMindMap?: boolean
   style?: React.CSSProperties
@@ -10,6 +10,7 @@ type LexicalEditorProps = {
   // Table of Content
   markdown?: string
   onContentChange?: (content: string) => void
+  ref?: ForwardedRef<LegacyEditorRef>
 }
 
 // Legacy interface for compatibility with existing Lexical usage
@@ -17,11 +18,10 @@ interface LegacyEditorRef {
   update: (callback: () => void) => void
 }
 
-function CKLexicalBaseEditor(
-  props: LexicalEditorProps,
-  editor: ForwardedRef<LegacyEditorRef>
+function CKBaseEditor(
+  props: CKBaseEditorProps,
 ) {
-  const { className, editable, markdown, onContentChange, style } = props
+  const { className, editable, markdown, onContentChange, style, ref: editor } = props
 
   return (
     <div className='flex w-full relative'>
@@ -37,4 +37,4 @@ function CKLexicalBaseEditor(
   )
 }
 
-export default forwardRef(CKLexicalBaseEditor)
+export default CKBaseEditor

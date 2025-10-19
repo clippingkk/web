@@ -1,13 +1,12 @@
 'use client'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-// Removed Lexical imports for Tiptap migration
 import { Trash2, User as UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import { toast } from 'react-hot-toast'
 import Avatar from '@/components/avatar/avatar'
 import ConfirmDialog from '@/components/confirm-dialog/confirm-dialog'
-import CKLexicalBaseEditor from '@/components/RichTextEditor/index'
+import CKBaseEditor from '@/components/RichTextEditor/index'
 import {
   type Comment as CommentData,
   type User,
@@ -116,7 +115,7 @@ function Comment(props: CommentProps) {
         </div>
 
         <div className='rounded-xl bg-gray-100 dark:bg-zinc-800 p-4 border border-gray-200 dark:border-zinc-700'>
-          <CKLexicalBaseEditor
+          <CKBaseEditor
             editable={false}
             className='prose prose-sm dark:prose-invert w-full'
             markdown={comment.content}
