@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the **ClippingKK web application** - a Next.js 15 application for managing and sharing Kindle book highlights/clippings with social features, AI enhancements, and various export options.
 
+**Package Manager**: This project uses **pnpm** exclusively. Do not use npm or yarn. All commands should be run with `pnpm`.
+
 ## Development Commands
 
 **Essential commands:**
@@ -116,6 +118,85 @@ When schema changes occur:
 - Use XState for complex UI flows with multiple states/transitions
 - Use React Query for server state management and caching
 - Combine both for auth flows and data-heavy operations
+
+## Internationalization (i18n)
+
+The application supports multiple languages using **i18next** with Next.js integration.
+
+### Supported Languages
+- **English (en)** - Default/fallback language
+- **Chinese (zh/zhCN)** - Simplified Chinese
+- **Japanese (ja)**
+- **Korean (ko)**
+
+### i18n Architecture
+- **Server Components**: Use `useTranslation()` from `src/i18n/index.ts`
+- **Client Components**: Use `useTranslation()` from `react-i18next`
+- **Translation Files**: Located in `src/locales/{language}.json` and `src/locales/{language}/{namespace}.json`
+- **Language Detection**: Stored in cookies using `STORAGE_LANG_KEY`
+- **Resource Loading**: Dynamic imports via `i18next-resources-to-backend`
+
+### Usage Pattern
+```typescript
+// Server component
+import { useTranslation } from '@/i18n'
+
+async function ServerComponent() {
+  const { t } = await useTranslation('en', 'namespace')
+  return <div>{t('key')}</div>
+}
+
+// Client component
+import { useTranslation } from 'react-i18next'
+
+function ClientComponent() {
+  const { t } = useTranslation('namespace')
+  return <div>{t('key')}</div>
+}
+```
+
+### Language Mapping
+- Chinese variants (`zh`, `zh-CN`, etc.) are normalized to `zhCN` for file loading
+- Cookie value determines default language, falls back to `en`
+
+## Rich Text Editor
+
+The application uses **Tiptap** (a headless editor built on ProseMirror) for rich text editing, replacing the legacy Lexical editor.
+
+### Editor Features
+- **Markdown Support**: Bidirectional markdown conversion (read/write)
+- **Syntax Highlighting**: Code blocks with Lowlight (supports common languages)
+- **Tables**: Resizable table support
+- **Typography**: Smart typography transformations
+- **Links**: Clickable links with custom styling
+- **StarterKit**: Basic formatting (bold, italic, headings, lists, etc.)
+
+### Component Location
+- Main component: `src/components/RichTextEditor/index.tsx`
+- Tiptap implementation: `src/components/RichTextEditor/TiptapEditor.tsx`
+- Markdown components: `src/components/RichTextEditor/markdown-components.tsx`
+
+### Usage Pattern
+```typescript
+import CKBaseEditor from '@/components/RichTextEditor'
+
+<CKBaseEditor
+  editable={true}
+  markdown={initialMarkdown}
+  onContentChange={(markdown) => handleUpdate(markdown)}
+  className="custom-editor-styles"
+/>
+```
+
+### Key Configuration
+- **Content Type**: Uses markdown as primary format
+- **Code Highlighting**: Lowlight with common language support
+- **Link Behavior**: Opens on click disabled by default
+- **Placeholder**: "Enter some text..." when empty
+- **Indentation**: 2 spaces for markdown formatting
+
+### Migration Note
+This editor replaced Lexical. The component maintains a legacy interface (`LegacyEditorRef`) for backward compatibility with existing code that used the Lexical API.
 
 ## UI Style Guidelines
 
