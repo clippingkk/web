@@ -2,6 +2,7 @@
 
 import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { Link } from '@tiptap/extension-link'
+import { Markdown } from '@tiptap/markdown'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { Table } from '@tiptap/extension-table'
 import { TableCell } from '@tiptap/extension-table-cell'
@@ -66,72 +67,33 @@ function TiptapEditor(
         showOnlyWhenEditable: true,
         includeChildren: true,
       }),
+      Markdown.configure({
+        indentation: {
+          style: 'space',
+          size: 2,
+        },
+        markedOptions: {
+          breaks: false,
+        },
+      }),
     ],
     content: markdown || '',
+    contentType: 'markdown',
     editable,
     onUpdate: ({ editor }) => {
-      // Convert content to markdown-like format
-      const text = editor.getText()
-      const html = editor.getHTML()
-
-      // Simple conversion to markdown-like format
-      // This is a basic implementation - you might want to use a proper HTML to Markdown converter
-      const markdownContent = html
-        .replace(/<h1[^>]*>(.*?)<\/h1>/g, '# $1')
-        .replace(/<h2[^>]*>(.*?)<\/h2>/g, '## $1')
-        .replace(/<h3[^>]*>(.*?)<\/h3>/g, '### $1')
-        .replace(/<h4[^>]*>(.*?)<\/h4>/g, '#### $1')
-        .replace(/<h5[^>]*>(.*?)<\/h5>/g, '##### $1')
-        .replace(/<h6[^>]*>(.*?)<\/h6>/g, '###### $1')
-        .replace(/<p[^>]*>(.*?)<\/p>/g, '$1\n\n')
-        .replace(/<strong[^>]*>(.*?)<\/strong>/g, '**$1**')
-        .replace(/<em[^>]*>(.*?)<\/em>/g, '*$1*')
-        .replace(/<code[^>]*>(.*?)<\/code>/g, '`$1`')
-        .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/g, '> $1')
-        .replace(/<ul[^>]*>(.*?)<\/ul>/gs, (match, content) => {
-          return content.replace(/<li[^>]*>(.*?)<\/li>/g, '- $1\n')
-        })
-        .replace(/<ol[^>]*>(.*?)<\/ol>/gs, (match, content) => {
-          let counter = 1
-          return content.replace(
-            /<li[^>]*>(.*?)<\/li>/g,
-            () => `${counter++}. $1\n`
-          )
-        })
-        .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/g, '[$2]($1)')
-        .replace(/<br\s*\/?>/g, '\n')
-        .replace(/\n\s*\n\s*\n/g, '\n\n')
-        .trim()
-
-      onContentChange?.(markdownContent || text)
+      // Use Tiptap's built-in markdown serialization
+      const markdownContent = editor.getMarkdown()
+      onContentChange?.(markdownContent)
     },
   })
 
   // Update content when markdown prop changes
   useEffect(() => {
     if (editor && markdown !== undefined) {
-      const currentContent = editor.getHTML()
-      // Convert markdown to HTML for Tiptap
-      // This is a basic implementation - you might want to use a proper markdown parser
-      const htmlContent = markdown
-        .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-        .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-        .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-        .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
-        .replace(/^##### (.*$)/gm, '<h5>$1</h5>')
-        .replace(/^###### (.*$)/gm, '<h6>$1</h6>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/`([^`]+)`/g, '<code>$1</code>')
-        .replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>')
-        .replace(/^- (.*$)/gm, '<ul><li>$1</li></ul>')
-        .replace(/^\d+\. (.*$)/gm, '<ol><li>$1</li></ol>')
-        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-        .replace(/\n\n/g, '</p><p>')
-        .replace(/\n/g, '<br>')
-
-      if (htmlContent && htmlContent !== currentContent) {
-        editor.commands.setContent(`<p>${htmlContent}</p>`)
+      const currentMarkdown = editor.getMarkdown()
+      if (markdown !== currentMarkdown) {
+        // Use Tiptap's built-in markdown parsing
+        editor.commands.setContent(markdown, { contentType: 'markdown' })
       }
     }
   }, [editor, markdown])
