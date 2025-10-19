@@ -1,0 +1,26 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "ignorePatterns": [
+    "tailwind.config.js",
+    "src/gql/**/*.ts",
+    "src/**/*.mdx",
+    "src/types.g.ts",
+    "src/schema/generated.tsx",
+    "node_modules/**",
+    ".next/**",
+    "coverage/**",
+    "build/**",
+    "dist/**"
+  ],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "react/no-unescaped-entities": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "@next/next/no-img-element": "off",
+    "@next/next/no-html-link-for-pages": "off",
+    "prefer-template": "warn",
+    "no-useless-escape": "warn"
+  }
+}

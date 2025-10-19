@@ -7,9 +7,9 @@
     "dev": "next dev --turbo --port 3101",
     "build": "npm run codegen && next build",
     "start": "next start -p $PORT",
-    "lint": "biome check .",
-    "lint:fix": "biome check . --fix",
-    "format": "biome format . --write",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write .",
     "test": "jest",
     "test:update": "npm test -- --updateSnapshot",
     "release:base": "standard-version --commit-all",
@@ -33,7 +33,6 @@
     "node": "24"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.0",
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/client-preset": "^4.8.3",
     "@graphql-codegen/introspection": "4.0.3",
@@ -61,6 +60,8 @@
     "autoprefixer": "^10.4.21",
     "coveralls": "^3.1.1",
     "cross-fetch": "^4.1.0",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "^15.5.6",
     "graphql": "^16.11.0",
     "graphql-tag": "^2.12.6",
     "jest": "^30.2.0",
@@ -200,11 +201,12 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx,json}": [
-      "biome check --fix --no-errors-on-unmatched",
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
       "git add"
     ],
-    "*.{css,md}": [
+    "*.{css,md,json}": [
       "prettier --write",
       "git add"
     ]
