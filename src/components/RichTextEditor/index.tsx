@@ -18,10 +18,15 @@ interface LegacyEditorRef {
   update: (callback: () => void) => void
 }
 
-function CKBaseEditor(
-  props: CKBaseEditorProps,
-) {
-  const { className, editable, markdown, onContentChange, style, ref: editor } = props
+function CKBaseEditor(props: CKBaseEditorProps) {
+  const {
+    className,
+    editable,
+    markdown,
+    onContentChange,
+    style,
+    ref: editor,
+  } = props
 
   return (
     <div className='flex w-full relative'>
