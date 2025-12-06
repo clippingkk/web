@@ -11,14 +11,14 @@ const config: NextConfig = {
   generateBuildId: () => {
     return process.env.GIT_COMMIT ?? ''
   },
+  reactCompiler: true,
+  cacheComponents: true,
 
   // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
   // cacheMaxMemorySize: 0,
   typedRoutes: true,
   experimental: {
-    // ppr: true,
-    // useLightningcss: true,
-    // typedEnv: true,
+    turbopackFileSystemCacheForDev: true,
   },
   images: {
     remotePatterns: [
