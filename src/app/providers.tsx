@@ -15,16 +15,16 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const { children } = props
   const rq = getReactQueryClient()
   return (
-    <MetaMaskProvider
-      sdkOptions={{
-        dappMetadata: {
-          name: 'ClippingKK',
-          url: typeof window === 'undefined' ? '' : window.location.href,
-        },
-        infuraAPIKey: process.env.infuraKey,
-        // Other options.
-      }}
-    >
+    // <MetaMaskProvider
+    //   sdkOptions={{
+    //     dappMetadata: {
+    //       name: 'ClippingKK',
+    //       url: typeof window === 'undefined' ? '' : window.location.href,
+    //     },
+    //     infuraAPIKey: process.env.NEXT_PUBLIC_INFURA_KEY,
+    //     // Other options.
+    //   }}
+    // >
       <PersistQueryClientProvider
         client={rq}
         persistOptions={{
@@ -35,7 +35,7 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
           {children}
         </ApolloNextAppProvider>
       </PersistQueryClientProvider>
-    </MetaMaskProvider>
+    // </MetaMaskProvider>
   )
 }
 

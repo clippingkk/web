@@ -21,21 +21,28 @@ const config: NextConfig = {
     // typedEnv: true,
   },
   images: {
-    domains: [
-      'ck-cdn.annatarhe.cn',
-      'img1.doubanio.com',
-      'avatars.githubusercontent.com',
-      'metadata.ens.domains',
-      'gateway.moralisipfs.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ck-cdn.annatarhe.cn',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img1.doubanio.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'metadata.ens.domains',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gateway.moralisipfs.com',
+      },
     ],
-  },
-  env: {
-    DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
-    GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT || ''),
-    NEXT_PUBLIC_PP_TOKEN: JSON.stringify(
-      process.env.NEXT_PUBLIC_PP_TOKEN || ''
-    ),
-    infuraKey: JSON.stringify(process.env.infuraKey || ''),
   },
   // webpack: (config, { webpack, isServer }) => {
   //   if (isServer) {

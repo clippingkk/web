@@ -155,13 +155,13 @@ export function makeApolloClient() {
   return new ApolloClient({
     cache: new InMemoryCache(apolloCacheConfig),
     link: ApolloLink.from(links),
-    connectToDevTools: process.env.DEV === 'true',
+    connectToDevTools: process.env.NODE_ENV !== 'production',
   })
   // return new ApolloClient({
   //   ssrMode: typeof window === 'undefined',
   //   cache: new NextSSRInMemoryCache(),
   //   link: ApolloLink.from(links),
-  //   connectToDevTools: process.env.DEV === 'true',
+  //   connectToDevTools: process.env.NODE_ENV !== 'production',
   // })
 }
 
@@ -178,7 +178,7 @@ export function makeApolloClientWithCredentials() {
     return new ApolloClient({
       cache: new InMemoryCache(apolloCacheConfig),
       link: ApolloLink.from(links),
-      connectToDevTools: process.env.DEV === 'true',
+      connectToDevTools: process.env.NODE_ENV !== 'production',
     })
   }
 }

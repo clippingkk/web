@@ -2,7 +2,7 @@ import { Code, Coffee, ExternalLink, Github, Heart, Server } from 'lucide-react'
 import Link from 'next/link'
 import { useTranslation } from '@/i18n'
 
-const version = JSON.parse(process.env.GIT_COMMIT ?? '{}')
+const version = process.env.GIT_COMMIT ?? ''
 
 function ICPInfo() {
   return (
