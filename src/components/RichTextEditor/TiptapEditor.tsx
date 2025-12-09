@@ -42,6 +42,7 @@ function TiptapEditor(
   const { className, editable = true, markdown, onContentChange, style } = props
 
   const editor = useEditor({
+    immediatelyRender: typeof window !== 'undefined',
     extensions: [
       StarterKit.configure({
         codeBlock: false, // We'll use CodeBlockLowlight instead
