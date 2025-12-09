@@ -11,7 +11,7 @@ const config: NextConfig = {
   generateBuildId: () => {
     return process.env.GIT_COMMIT ?? ''
   },
-  reactCompiler: true,
+  // reactCompiler: true,
   cacheComponents: true,
 
   // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,

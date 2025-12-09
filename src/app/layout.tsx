@@ -80,16 +80,11 @@ export const metadata: Metadata = {
 }
 
 async function Layout(props: LayoutProps) {
-  const cs = await cookies()
-  const uid = cs.get(USER_ID_KEY)?.value
-  const defaultLng = cs.get(STORAGE_LANG_KEY)?.value ?? 'en'
-
   // const loggedInfo = (uid && token) ? await cloakSSROnlySecret(JSON.stringify({ uid: ~~uid, token }), RSC_LOGGED_INFO_KEY) : '{}'
 
   return (
     <html
       className={`${lato.variable} dark`}
-      lang={defaultLng}
       style={
         {
           '--font-lxgw': 'LxgwWenKai',
@@ -107,7 +102,7 @@ async function Layout(props: LayoutProps) {
           <div id='dialog'></div>
           <div id='toast'></div>
           <div id='searchbar' className='raycast'></div>
-          <GlobalUpload uid={uid ? ~~uid : undefined} />
+          <GlobalUpload />
           <Toaster position='top-center' />
           <ReactQueryDevtools initialIsOpen={false} />
           <div data-id='modal' />

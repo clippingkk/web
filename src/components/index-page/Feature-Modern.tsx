@@ -2,6 +2,7 @@ import Image from 'next/image'
 import CodeHighlight from '@/components/highlighter/client'
 import { useTranslation } from '@/i18n'
 import WebArchImage from '../../assets/web_arch.png'
+import { Suspense } from 'react'
 
 const exampleCode = `
 extern crate ck_cli;
@@ -87,7 +88,9 @@ async function FeatureModern() {
               maxWidth: '100vw',
             }}
           >
-            <CodeHighlight lang='c' code={exampleCode} />
+            <Suspense fallback={<div>Loading code snippet...</div>}>
+              <CodeHighlight lang='c' code={exampleCode} />
+            </Suspense>
           </div>
           <div className='flex flex-col items-center justify-center lg:items-start'>
             <h3

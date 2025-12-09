@@ -5,19 +5,19 @@ import { useUploadData } from '@/hooks/my-file'
 import { useActionTrack } from '@/hooks/tracke'
 import FloatingProgress from '../progress/floating'
 import DropOverlay from './drop-overlay'
+import Cookies from 'js-cookie'
+import { USER_ID_KEY } from '@/constants/storage'
 
-type Props = {
-  uid?: number
-}
+const uid = Cookies.get(USER_ID_KEY)
 
-function GlobalUpload({ uid }: Props) {
+function GlobalUpload() {
   const onUploadTrack = useActionTrack('upload')
 
   const pathname = usePathname()
 
   const isUploadPage = /dash\/\d+\/upload/.test(pathname)
 
-  const id = uid ?? 0
+  const id = parseInt(uid ?? '0', 10)
   const { onUpload, step, at, count } = useUploadData(true, id > 0)
   const [isDraging, setIsDraging] = useState(false)
   const onDropEnd = useCallback(
