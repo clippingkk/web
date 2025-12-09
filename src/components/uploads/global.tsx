@@ -24,7 +24,7 @@ function GlobalUpload() {
     (e: DragEvent) => {
       setIsDraging(false)
       onUploadTrack()
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       onUpload(e as any, true)
     },
     [onUpload, onUploadTrack]

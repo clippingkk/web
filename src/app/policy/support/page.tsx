@@ -1,9 +1,9 @@
 import { Mail } from 'lucide-react'
 import PageTrack from '@/components/track/page-track'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 async function PolicySupportPage() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <>

@@ -2,7 +2,7 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import { AppFeatures } from '@/constants/features'
-import { useTranslation } from '@/i18n/index'
+import { getTranslation } from '@/i18n/index'
 import PureImages from '../backgrounds/pure-images'
 import LinkIndicator from '../link-indicator'
 import MovingLightsBackground from './moving-lights-background'
@@ -13,7 +13,7 @@ type HeroProps = {
 
 async function Hero(props: HeroProps) {
   const { myUid } = props
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <div

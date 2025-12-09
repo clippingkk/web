@@ -19,12 +19,12 @@ const Heading = ({ level, children }: HeadingProps) => {
     level === 6 && 'mb-4 text-base text-gray-800 dark:text-gray-200'
   )
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const Tag = `h${level}` as any
   return <Tag className={className}>{children}</Tag>
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 export const MarkdownComponents: any = {
   h1: ({
     children,

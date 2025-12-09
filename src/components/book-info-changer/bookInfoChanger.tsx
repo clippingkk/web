@@ -1,7 +1,7 @@
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useApolloClient } from '@apollo/client'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Button from '@/components/button/button'
 import LoadingIcon from '@/components/icons/loading.svg'
@@ -20,22 +20,15 @@ type BookInfoChangerProps = {
   onConfirm: (bookDoubanId: string) => Promise<void>
 }
 
-function BookInfoChanger(props: BookInfoChangerProps) {
+// Inner component that handles the actual form logic
+function BookInfoChangerContent(props: BookInfoChangerProps) {
   const { t } = useTranslation(undefined, 'book')
-  const [bookNameInput, setBookNameInput] = useState('')
+  // Initialize state from props
+  const [bookNameInput, setBookNameInput] = useState(props.bookName ?? '')
   const [selectedBook, setSelectedBook] = useState<WenquBook | null>(null)
   const candidates = useBookSearch(bookNameInput, 0, props.visible)
   const client = useApolloClient()
   const [doUpdate, { loading: isUpdating }] = useUpdateClippingBookIdMutation()
-
-  useEffect(() => {
-    if (props.visible && props.bookName) {
-      setBookNameInput(props.bookName)
-    } else if (!props.visible) {
-      setBookNameInput('')
-      setSelectedBook(null)
-    }
-  }, [props.bookName, props.visible])
 
   const handleSubmit = useCallback(async () => {
     if (!selectedBook) {
@@ -144,6 +137,13 @@ function BookInfoChanger(props: BookInfoChangerProps) {
       </div>
     </Modal>
   )
+}
+
+// Wrapper component that resets state via key when modal becomes visible
+function BookInfoChanger(props: BookInfoChangerProps) {
+  // Use a key that changes when modal opens to reset internal state
+  const key = props.visible ? `open-${props.clippingID}` : 'closed'
+  return <BookInfoChangerContent key={key} {...props} />
 }
 
 export default BookInfoChanger

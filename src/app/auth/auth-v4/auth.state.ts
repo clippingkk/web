@@ -38,7 +38,7 @@ const authMachine = setup({
     events: {} as Event,
   },
   actors: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     doSendOTP: fromPromise(
       async (_: {
         input: { email?: string; turnstileToken?: string }
@@ -58,7 +58,7 @@ const authMachine = setup({
         throw new Error('not implemented')
       }
     ),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     setLocalState: fromPromise(async (_: { input: unknown }): Promise<any> => {
       throw new Error('not implemented')
     }),

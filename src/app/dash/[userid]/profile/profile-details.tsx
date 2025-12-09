@@ -4,7 +4,7 @@ import React from 'react'
 import ProfileAnalytics from '@/components/profile/profile-analytics'
 import UserName from '@/components/profile/user-name'
 import { API_HOST } from '@/constants/config'
-import { useTranslation } from '@/i18n' // Assuming server-side translation
+import { getTranslation } from '@/i18n'
 import type { ProfileQuery } from '@/schema/generated'
 import UserActions from './actions'
 import WechatBindButton from './bind'
@@ -27,7 +27,7 @@ const ProfileDetails = async ({
   isInMyPage,
   year,
 }: ProfileDetailsProps) => {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <div className='px-4 sm:px-6 md:px-8 pt-20 pb-8'>

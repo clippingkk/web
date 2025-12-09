@@ -7,7 +7,7 @@ import AIBookRecommendationButton from '@/components/book-recommendation/ai-book
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { duration3Days } from '@/hooks/book'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import {
   BooksDocument,
   type BooksQuery,
@@ -72,7 +72,7 @@ async function Page(props: PageProps) {
   const [params, ck, { t }] = await Promise.all([
     props.params,
     cookies(),
-    useTranslation(undefined, 'home'),
+    getTranslation(undefined, 'home'),
   ])
   const { userid } = params
   const myUid = ck.get(USER_ID_KEY)?.value

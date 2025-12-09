@@ -13,8 +13,8 @@ function BookCover({ book, domain }: TBookCoverProps) {
     <Link
       href={`/dash/${domain}/book/${book.doubanId}`}
       className={
-        styles.cover +
-        ' bg-transparent flex flex-col items-center content-center rounded-sm active:scale-95 w-128 overflow-visible font-lxgw with-slide-in'
+        `${styles.cover 
+        } bg-transparent flex flex-col items-center content-center rounded-sm active:scale-95 w-128 overflow-visible font-lxgw with-slide-in`
       }
     >
       <BlurhashView
@@ -25,8 +25,8 @@ function BookCover({ book, domain }: TBookCoverProps) {
         height={384}
         width={320}
         className={
-          styles.image +
-          ' rounded-xs shadow-2xl duration-300 transition-transform w-72 h-96'
+          `${styles.image 
+          } rounded-xs shadow-2xl duration-300 transition-transform w-72 h-96`
         }
         alt={book.title}
       />

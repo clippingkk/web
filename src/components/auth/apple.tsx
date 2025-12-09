@@ -7,7 +7,7 @@ type AppleLoginButtonViewProps = {
   loading: boolean
   disabled?: boolean
   onSuccess: (resp: AppleAuthResponse) => void
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   onError: (error: any) => void
   version?: 'v2' | 'v4'
 }

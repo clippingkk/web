@@ -15,12 +15,15 @@ type PureImagesProps = {
 
 function PureImages(props: PureImagesProps) {
   const { lightingColor, width = '100vw', height = '100vh' } = props
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  // Initialize with actual dark mode status (only runs on client due to 'use client')
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof document !== 'undefined') {
+      return document.body.classList.contains('dark')
+    }
+    return false
+  })
 
   useEffect(() => {
-    // Initial check
-    setIsDarkMode(document.body.classList.contains('dark'))
-
     // Set up an observer to detect changes to the body class
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {

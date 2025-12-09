@@ -24,10 +24,9 @@ function ReportBookItem(props: ReportBookItemTypes) {
     (v) => ~~v.doubanId === b.doubanId
   )?.clippings
 
+  // Use first clipping for consistent rendering (avoid random during render)
   const sampleClipping =
-    bookClippings && bookClippings.length > 0
-      ? bookClippings[Math.floor(Math.random() * bookClippings.length)].content
-      : ''
+    bookClippings && bookClippings.length > 0 ? bookClippings[0].content : ''
 
   return (
     <div className='flex w-full flex-col items-center justify-center xl:w-1/2'>

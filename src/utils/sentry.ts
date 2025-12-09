@@ -11,7 +11,7 @@ const IS_PROD = process.env.NODE_ENV === 'production'
 //  })
 //}
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 export function log(err: Error | string, ext: any) {
   if (!IS_PROD) {
     console.log(err, ext)

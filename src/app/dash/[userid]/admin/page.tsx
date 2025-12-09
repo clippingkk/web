@@ -2,7 +2,7 @@ import { ArrowLeftCircle, ArrowRightCircle, BookOpenCheck } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { COOKIE_TOKEN_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import {
   UncheckBooksQueryDocument,
   type UncheckBooksQueryQuery,
@@ -21,7 +21,7 @@ async function AdminPanel(props: PageProps) {
     cookies(),
     props.params,
     props.searchParams,
-    useTranslation(),
+    getTranslation(),
   ])
   const uid = ~~params.userid
 

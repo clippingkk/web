@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { animations } from './theme'

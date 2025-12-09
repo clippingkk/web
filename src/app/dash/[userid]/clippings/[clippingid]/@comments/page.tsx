@@ -1,5 +1,5 @@
 import { MessageSquare } from 'lucide-react'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import { getClippingData } from '../data'
 import Comment from './comment'
 import CommentBox from './commentBox'
@@ -12,7 +12,7 @@ async function CommentsContent(props: PageProps) {
   const { clippingid } = await props.params
   const cid = ~~clippingid
 
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   const { clipping, me, bookData } = await getClippingData(cid)
 

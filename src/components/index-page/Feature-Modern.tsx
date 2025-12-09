@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import CodeHighlight from '@/components/highlighter/client'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import WebArchImage from '../../assets/web_arch.png'
 import { Suspense } from 'react'
 
@@ -44,7 +44,7 @@ fn parse_en_file() {
 `
 
 async function FeatureModern() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <div className='flex w-full flex-col items-center justify-around py-16'>
       <h3

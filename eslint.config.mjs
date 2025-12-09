@@ -31,5 +31,9 @@ export default defineConfig([globalIgnores([
         "@next/next/no-html-link-for-pages": "off",
         "prefer-template": "warn",
         "no-useless-escape": "warn",
+        // Disable React Compiler rules that conflict with Floating UI and manual memoization patterns
+        "react-hooks/preserve-manual-memoization": "off",
+        "react-hooks/purity": "off",
+        "react-hooks/refs": "off",
     },
 }]);

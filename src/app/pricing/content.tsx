@@ -4,7 +4,7 @@ import FreePlanFeatures from '@/components/pricing/free-plan-features'
 import PlanCard from '@/components/pricing/plan-card'
 import PremiumPlanFeatures from '@/components/pricing/premium-plan-features'
 import { checkIsPremium } from '@/compute/user'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import type { ProfileQuery } from '@/schema/generated'
 
 type PricingContentProps = {
@@ -14,7 +14,7 @@ type PricingContentProps = {
 
 async function PricingContent(props: PricingContentProps) {
   const { profile, checkoutUrl } = props
-  const { t } = await useTranslation(undefined, 'pricing')
+  const { t } = await getTranslation(undefined, 'pricing')
 
   const isPremium = checkIsPremium(profile?.premiumEndAt)
 

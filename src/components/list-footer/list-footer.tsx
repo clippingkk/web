@@ -3,7 +3,7 @@ import { useInView } from 'react-cool-inview'
 
 type TListFooterProp = {
   loadingBlock?: React.ReactElement
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   loadMoreFn: () => any
   hasMore: boolean
 }

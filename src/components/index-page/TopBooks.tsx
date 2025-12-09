@@ -1,5 +1,5 @@
 import { BookOpenText } from 'lucide-react'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import type { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
 
@@ -8,7 +8,7 @@ type TopBooksProps = {
 }
 
 async function TopBooks(props: TopBooksProps) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <div className='relative overflow-hidden px-4 py-20 sm:px-6'>
       {/* Background decoration */}

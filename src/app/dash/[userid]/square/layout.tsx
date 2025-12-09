@@ -1,7 +1,7 @@
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 async function Layout(props: { children: React.ReactNode }) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <section className='container px-4 sm:px-6 lg:px-8'>
       <div className='relative'>

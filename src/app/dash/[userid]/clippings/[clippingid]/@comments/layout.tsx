@@ -1,6 +1,6 @@
 import { MessageSquare } from 'lucide-react'
 import type React from 'react'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 type Props = {
   children: React.ReactNode
@@ -8,7 +8,7 @@ type Props = {
 
 async function Layout(props: Props) {
   const { children } = props
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <div className='w-full mb-8'>
       <div className='relative w-full rounded-2xl overflow-hidden'>

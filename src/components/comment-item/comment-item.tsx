@@ -70,7 +70,7 @@ const CommentItem = ({ comment, showAvatar = true }: CommentItemProps) => {
                     {showAvatar && creator.avatar && (
                       <div className='relative'>
                         <div className='absolute -inset-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur opacity-50'></div>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        { }
                         <img
                           src={creator.avatar}
                           alt={creator.name}

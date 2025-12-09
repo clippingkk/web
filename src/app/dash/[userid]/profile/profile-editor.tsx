@@ -6,7 +6,7 @@ import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { CogIcon } from '@heroicons/react/24/solid'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Globe2Icon, PenIcon, User2Icon } from 'lucide-react'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
@@ -41,13 +41,8 @@ const profileFormSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 function ProfileEditor(props: ProfileEditorProps) {
-  const [visible, setVisible] = useState(false)
-  const withProfileEditor = props.withProfileEditor
-  useEffect(() => {
-    if (withProfileEditor) {
-      setVisible(true)
-    }
-  }, [withProfileEditor])
+  // Initialize state from prop
+  const [visible, setVisible] = useState(() => !!props.withProfileEditor)
 
   const [doUpdate, { client }] = useUpdateProfileMutation()
   const { t } = useTranslation()
@@ -57,12 +52,11 @@ function ProfileEditor(props: ProfileEditorProps) {
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
     reset,
-    setValue,
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
       name: '',
-      bio: '',
+      bio: props.bio,
       domain: props.domain,
       avatar: null,
     },
@@ -84,7 +78,7 @@ function ProfileEditor(props: ProfileEditorProps) {
       try {
         const resp = await uploadImage(values.avatar)
         avatarUrl = resp.filePath
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
       } catch (e: any) {
         toast.error(e)
         throw e
@@ -107,16 +101,12 @@ function ProfileEditor(props: ProfileEditorProps) {
       setVisible(false)
       client.resetStore()
       toast.success(t('app.profile.editor.updated'))
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
     } catch (err: any) {
       console.error(err)
       toast.error(err)
     }
   }
-
-  useEffect(() => {
-    setValue('bio', props.bio)
-  }, [props.bio, setValue])
 
   const onEditCancel = useCallback(() => {
     reset()

@@ -11,7 +11,7 @@ import NFTGallary from '../nfts/nft-gallary'
 type AvatarPickerProps = {
   uid: number
   onCancel: () => void
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   onSubmit: (nextAvatar: string) => Promise<any>
   opened: boolean
 }

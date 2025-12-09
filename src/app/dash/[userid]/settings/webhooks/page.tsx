@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { checkIsPremium } from '@/compute/user'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import {
   FetchMyWebHooksDocument,
   type FetchMyWebHooksQuery,
@@ -23,7 +23,7 @@ async function WebhooksPage(props: Props) {
   const [params, ck, { t }] = await Promise.all([
     props.params,
     cookies(),
-    useTranslation(),
+    getTranslation(),
   ])
   const { userid } = params
   const myUid = ck.get(USER_ID_KEY)?.value

@@ -12,7 +12,7 @@ import { useTranslation } from '@/i18n/client'
 import type { UncheckBooksQueryQuery } from '@/schema/generated'
 import HomelessBookSyncInput from './sync-input'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 const homelessBookColumn: ColumnDef<homelessBookTableItem, any>[] = [
   {
     header: 'Name',

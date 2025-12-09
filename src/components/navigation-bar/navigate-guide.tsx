@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import type { ProfileQuery, ProfileQueryVariables } from '@/gql/graphql'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import logo from '../../assets/logo.png'
 import { ProfileDocument } from '../../schema/generated'
@@ -18,7 +18,7 @@ type NavigateGuideProps = {
 }
 
 async function NavigateGuide(props: NavigateGuideProps) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   const ck = await cookies()
   const uid = ck.get(USER_ID_KEY)?.value
   const tk = ck.get(COOKIE_TOKEN_KEY)?.value

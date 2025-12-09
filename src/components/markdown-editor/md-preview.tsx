@@ -61,7 +61,7 @@ function MarkdownPreview(props: MarkdownPreviewProps) {
             const match = /language-(\w+)/.exec(className || '')
             const lang = match ? match[1] : 'tsx'
             return (
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+               
               <CodeBlock code={String(children)} lang={lang as any} />
             )
           },

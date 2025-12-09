@@ -1,6 +1,6 @@
 import { Check, HardDrive, LifeBuoy, Phone, Sparkles } from 'lucide-react'
 import type React from 'react'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import CommonFeatures from './common-features'
 
 type FreePlanFeaturesProps = {
@@ -18,7 +18,7 @@ function _FeatureItem({ children }: { children: React.ReactNode }) {
 }
 
 async function FreePlanFeatures(props: FreePlanFeaturesProps) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <div className='space-y-6'>
       <ul className='text-lg space-y-4'>

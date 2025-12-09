@@ -3,7 +3,7 @@ import { usePageTrack } from '@/hooks/tracke'
 
 type Props = {
   page: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   params?: any
 }
 

@@ -11,7 +11,8 @@ const config: NextConfig = {
   generateBuildId: () => {
     return process.env.GIT_COMMIT ?? ''
   },
-  // reactCompiler: true,
+  // Disable React Compiler to avoid false positives with Floating UI and manual memoization
+  reactCompiler: false,
   cacheComponents: true,
 
   // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,

@@ -20,8 +20,8 @@ function FieldTextarea(props: FieldTextareaProps) {
       <textarea
         {...props.inputProps}
         className={
-          'w-96 border-2 bg-gray-400 p-4 text-2xl focus:outline-hidden lg:w-144 ' +
-          (props.error ? 'border-red-400' : 'border-transparent')
+          `w-96 border-2 bg-gray-400 p-4 text-2xl focus:outline-hidden lg:w-144 ${ 
+          props.error ? 'border-red-400' : 'border-transparent'}`
         }
         value={props.value}
         placeholder={t(`app.auth.${props.name}`) ?? ''}

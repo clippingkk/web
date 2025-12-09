@@ -1,13 +1,13 @@
 import { AlertTriangle } from 'lucide-react'
 import type React from 'react'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 async function SettingsAccountPage({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <div className='w-full max-w-4xl mx-auto'>
       {/* Top section with icon, title and description */}

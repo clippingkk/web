@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { SignInWithAppleOptions } from '../../constants/config'
 
 const scriptURL =
@@ -6,12 +6,9 @@ const scriptURL =
 
 const scriptDomId = 'sign-in-with-app-script'
 function SignInWithApple() {
-  const [_, setLoading] = useState(true)
-
   useEffect(() => {
     const has = document.querySelector(`#${scriptDomId}`)
     if (has) {
-      setLoading(false)
       return
     }
     const dom = document.createElement('script')
@@ -24,11 +21,11 @@ function SignInWithApple() {
       }
       window.AppleID.auth.init(SignInWithAppleOptions)
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     function onAppleSignInSuccess(data: any) {
       console.log(data)
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     function onAppleSignInFail(err: any) {
       console.log(err)
     }

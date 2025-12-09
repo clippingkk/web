@@ -1,10 +1,10 @@
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import ExportToFlomo from './export.flomo'
 import ExportToMail from './export.mail'
 import ExportToNotion from './export.notion'
 
 async function Exports() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <div className='w-full py-4'>

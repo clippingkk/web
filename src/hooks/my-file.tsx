@@ -54,7 +54,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
       try {
         send({ type: 'Next' })
         str = await extraFile(file)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
       } catch (e: any) {
         console.error(e, e.toString())
         send({ type: 'Error' })
@@ -130,7 +130,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
           if (resp.count > 0) {
             i.bookId = resp.books[0].doubanId.toString()
           }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
         } catch (e: any) {
           setMessages((m) => m.concat(e.toString()))
         } finally {
@@ -199,7 +199,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         setAt(chunkedData.length)
         toast.success(t('app.upload.tips.done'))
         send({ type: 'Next' })
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
       } catch (e: any) {
         send({ type: 'Error' })
         setMessages((m) => m.concat(e.toString()))

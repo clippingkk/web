@@ -4,7 +4,7 @@ import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-
 import PersonalActivity from '@/components/profile/activity'
 import ProfileTabs from '@/components/profile-tabs/profile-tabs'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import {
   ProfileDocument,
   type ProfileQuery,
@@ -44,7 +44,7 @@ async function Page(props: PageProps) {
     props.params,
     props.searchParams,
     cookies(),
-    useTranslation(),
+    getTranslation(),
   ])
   const withProfileEditor = searchParams.with_profile_editor
   const pathUid: string = params.userid
