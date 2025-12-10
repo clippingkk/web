@@ -1,7 +1,7 @@
 import Modal from '@annatarhe/lake-ui/modal'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { Streamdown } from 'streamdown'
+// import { Streamdown } from 'streamdown'
 import { useTranslation } from '@/i18n/client'
 import client from '../../services/pp'
 import type { WenquBook } from '../../services/wenqu'
@@ -41,7 +41,6 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
   const [data, setData] = useState<string[]>([])
 
   const { isLoading, error } = useQuery({
-    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: ['book', book?.id, cid, 'aiSummary'],
     queryFn: async () => {
       return client
@@ -97,9 +96,9 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
           </div>
         ) : (
           <div>
-            <Streamdown components={MarkdownComponents}>
+            {/* <Streamdown components={MarkdownComponents}> */}
               {data.join('')}
-            </Streamdown>
+            {/* </Streamdown> */}
           </div>
         )}
       </div>

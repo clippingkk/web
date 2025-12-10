@@ -7,7 +7,7 @@ type AvatarProps = {
   name?: string
   className?: string
   editable?: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   onClick?: () => any
   isPremium?: boolean
 }

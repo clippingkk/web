@@ -1,13 +1,13 @@
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import BrandFlomoLogo from '../../assets/brand-flomo.png'
 import BrandNotionLogo from '../../assets/brand-notion.svg'
 import BrandServerLogo from '../../assets/brand-server.svg'
 import logo from '../../assets/logo.png'
 
 async function FeaturesOpen() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <div className='flex items-center w-full justify-around py-16 lg:flex-row flex-col'>
       <h3

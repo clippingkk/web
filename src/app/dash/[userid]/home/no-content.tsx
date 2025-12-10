@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 type TNoContentProps = {
   domain: string
 }
 
 async function NoContentAlert({ domain }: TNoContentProps) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <Link
       href={`/dash/${domain}/upload`}

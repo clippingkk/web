@@ -4,7 +4,7 @@ import logo from '@/assets/logo.png'
 import Avatar from '@/components/avatar/avatar'
 import ReportBookSection from '@/components/reports/report-book-section'
 import ReportHero from '@/components/reports/report-hero'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import type { FetchYearlyReportQuery } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
 import PageContainer from './page-container'
@@ -19,7 +19,7 @@ type ReportYearlyProps = {
 
 async function ReportYearly(props: ReportYearlyProps) {
   const { year, reportInfoServerData: data, books } = props
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <div className='anna-page-container h-min-screen flex w-full items-center justify-center bg-cover bg-center bg-no-repeat'>

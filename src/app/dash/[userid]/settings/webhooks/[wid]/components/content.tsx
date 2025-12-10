@@ -1,5 +1,5 @@
 import { Webhook } from 'lucide-react'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import { type FetchWebhookQuery, WebHookStep } from '@/schema/generated'
 import WebhookDetailHeader from './header'
 import RecordsList from './records-list'
@@ -13,7 +13,7 @@ async function WebhookDetailContent({
   data,
   userId,
 }: WebhookDetailContentProps) {
-  const { t } = await useTranslation(undefined, 'webhook')
+  const { t } = await getTranslation(undefined, 'webhook')
 
   return (
     <div className='min-h-screen space-y-6 pb-10'>

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type React from 'react'
 import { USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import AndroidIcon from '../../assets/android-icon.svg'
 import AppleIcon from '../../assets/apple-icon.svg'
 import CKMPQRCode from '../../assets/ck_mp_qrcode.jpg'
@@ -99,7 +99,7 @@ const DownloadChannel: React.FC<DownloadChannelProps> = ({
 }
 
 async function FeatureReborn() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   const ck = await cookies()
   const uid = ck.get(USER_ID_KEY)?.value

@@ -1,8 +1,8 @@
 import { Code, Coffee, ExternalLink, Github, Heart, Server } from 'lucide-react'
 import Link from 'next/link'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
-const version = JSON.parse(process.env.GIT_COMMIT ?? '{}')
+const version = process.env.GIT_COMMIT ?? ''
 
 function ICPInfo() {
   return (
@@ -43,7 +43,7 @@ function FooterLink({ href, children, icon: Icon }: FooterLinkProps) {
 }
 
 async function Footer() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   const currentYear = new Date().getFullYear()
 
   return (

@@ -1,4 +1,4 @@
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import type { Clipping, User } from '@/schema/generated'
 import ClippingLite from '../clipping-item/clipping-lite'
 
@@ -9,7 +9,7 @@ type TopClippingsProps = {
 }
 
 async function TopClippings(props: TopClippingsProps) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <div className='relative overflow-hidden px-4 py-20 sm:px-6'>

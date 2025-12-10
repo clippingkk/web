@@ -38,7 +38,7 @@ function UserActions(props: Props) {
           return
         }
         const params = { targetUserID: profile.id }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         let mutationJob: Promise<any>
         if (profile.isFan) {
           mutationJob = doUnfollow({

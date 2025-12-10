@@ -6,7 +6,7 @@ import Divider from '@/components/divider/divider'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { duration3Days } from '@/hooks/book'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import {
   BookDocument,
   type BookQuery,
@@ -48,7 +48,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 // </Head>
 
 async function Page(props: PageProps) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   const { bookid, userid } = await props.params
   const ck = await cookies()
   const uidStr = ck.get(USER_ID_KEY)?.value

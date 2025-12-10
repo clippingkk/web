@@ -1,5 +1,5 @@
 import { ExternalLink } from 'lucide-react'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import { cn } from '@/lib/utils'
 import type { WenquBook } from '@/services/wenqu'
 import { SidebarContainer, SidebarIcon, SidebarText } from './base/container'
@@ -10,7 +10,7 @@ type Props = {
 
 async function DoubanLinkBtn(props: Props) {
   const { book } = props
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <SidebarContainer className={cn(!book && 'opacity-50')}>
       <a

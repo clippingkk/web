@@ -8,34 +8,44 @@ import type { NextConfig } from 'next'
 // const isProd = process.env.NODE_ENV === 'production'
 
 const config: NextConfig = {
+  // enablePrerenderSourceMaps: false,
+  // productionBrowserSourceMaps: false,
   generateBuildId: () => {
     return process.env.GIT_COMMIT ?? ''
   },
+  // Disable React Compiler to avoid false positives with Floating UI and manual memoization
+  reactCompiler: false,
+  cacheComponents: true,
 
   // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
   // cacheMaxMemorySize: 0,
   typedRoutes: true,
   experimental: {
-    // ppr: true,
-    // useLightningcss: true,
-    // typedEnv: true,
+    turbopackFileSystemCacheForDev: true,
   },
   images: {
-    domains: [
-      'ck-cdn.annatarhe.cn',
-      'img1.doubanio.com',
-      'avatars.githubusercontent.com',
-      'metadata.ens.domains',
-      'gateway.moralisipfs.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ck-cdn.annatarhe.cn',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img1.doubanio.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'metadata.ens.domains',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gateway.moralisipfs.com',
+      },
     ],
-  },
-  env: {
-    DEV: JSON.stringify(process.env.NODE_ENV !== 'production'),
-    GIT_COMMIT: JSON.stringify(process.env.GIT_COMMIT || ''),
-    NEXT_PUBLIC_PP_TOKEN: JSON.stringify(
-      process.env.NEXT_PUBLIC_PP_TOKEN || ''
-    ),
-    infuraKey: JSON.stringify(process.env.infuraKey || ''),
   },
   // webpack: (config, { webpack, isServer }) => {
   //   if (isServer) {

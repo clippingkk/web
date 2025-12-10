@@ -1,6 +1,6 @@
 import { Users } from 'lucide-react'
 import Image from 'next/image'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import type { User } from '../../schema/generated'
 import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
@@ -11,7 +11,7 @@ type TopUsersProps = {
 }
 
 async function TopUsers(props: TopUsersProps) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   if (!props.users) {
     return null
   }

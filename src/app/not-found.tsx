@@ -1,7 +1,7 @@
 import { ArrowLeft, BookX } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 export const metadata: Metadata = {
   title: 'Page Not Found - ClippingKK',
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 async function NotFound() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <div className='min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8'>

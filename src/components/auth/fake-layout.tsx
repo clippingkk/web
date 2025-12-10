@@ -7,9 +7,9 @@ import { useTranslation } from '@/i18n/client'
 import Button from '../button/button'
 
 type AuthCallbackPageContainerProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   doBind: () => Promise<any>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   onAuthCallback: (pn: string, code: string) => Promise<any>
   loading: boolean
   children?: React.ReactElement

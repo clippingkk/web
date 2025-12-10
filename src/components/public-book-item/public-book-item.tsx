@@ -26,8 +26,8 @@ function PublicBookItem(props: PublicBookItemProps) {
       />
       <div
         className={
-          'absolute bottom-0 left-0 w-full rounded-b px-4 py-8 text-white ' +
-          styles['book-info']
+          `absolute bottom-0 left-0 w-full rounded-b px-4 py-8 text-white ${ 
+          styles['book-info']}`
         }
       >
         <h2 className='text-right text-2xl'>{book.title}</h2>

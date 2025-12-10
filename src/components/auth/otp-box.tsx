@@ -6,7 +6,7 @@ import ButtonSimple from '../button/button-simple'
 type OTPBoxProps = {
   autoValidate?: boolean
   loading: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   onSubmit(val: string): Promise<any>
 }
 
@@ -23,16 +23,11 @@ function OTPBox(props: OTPBoxProps) {
     }
     try {
       await props.onSubmit(otp)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
     } catch (e: any) {
       setHasErrorMsg(e.message)
     }
   }, [otp, props])
-
-  // reset error status
-  useEffect(() => {
-    setHasErrorMsg(null)
-  }, [])
 
   const { t } = useTranslation()
 
@@ -48,8 +43,8 @@ function OTPBox(props: OTPBoxProps) {
         }}
         allowedCharacters='numeric'
         inputClassName={
-          'w-full h-24 text-center text-2xl bg-gray-100 bg-opacity-90' +
-          (hasErrorMsg ? ' border-red-500 bg-red-300' : '')
+          `w-full h-24 text-center text-2xl bg-gray-100 bg-opacity-90${ 
+          hasErrorMsg ? ' border-red-500 bg-red-300' : ''}`
         }
         containerClassName='grid grid-cols-6 gap-4 w-full'
       />

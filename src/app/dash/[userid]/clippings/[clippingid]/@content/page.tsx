@@ -3,7 +3,7 @@ import Link from 'next/link'
 import ElegantDivider from '@/components/divider/elegant-divider'
 import ClippingRichContent from '@/components/text-content/clipping-rich-content'
 import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import { isGrandAdmin } from '@/services/admin'
 import { getClippingData } from '../data'
 import Reactions from './reactions'
@@ -19,11 +19,14 @@ async function ClippingContent(props: PageProps) {
   const { clipping, me, bookData, uid } = await getClippingData(cid)
 
   const creator = clipping.creator
+  // Server component: safe to compute during render (only executes once on server)
+   
+  const now = Date.now()
   const isPremium = me?.premiumEndAt
-    ? new Date(me.premiumEndAt).getTime() > Date.now()
+    ? new Date(me.premiumEndAt).getTime() > now
     : false
   const clippingAt = clipping?.createdAt
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <div className='space-y-8'>

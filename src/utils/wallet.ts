@@ -2,7 +2,7 @@ import type { MetaMaskSDK } from '@metamask/sdk-react'
 
 const LoginWelcomeText = 'Welcome to the ClippingKK~ \n It`s your nonce: '
 
-console.log(process.env.infuraKey)
+console.log(process.env.NEXT_PUBLIC_INFURA_KEY)
 
 async function signDataByWeb3(m: MetaMaskSDK) {
   const accounts = await m.connect()

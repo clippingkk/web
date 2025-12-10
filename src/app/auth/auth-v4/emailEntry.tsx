@@ -70,7 +70,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
 
   const machineCtxErrors = machine.context.errorMessages
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const onTurnstileError = (err: any) => {
     if (process.env.NODE_ENV !== 'production') {
       sendEvent({ type: 'CF_VERIFIED', turnstileToken: 'temp' })
@@ -168,10 +168,10 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
               }}
               allowedCharacters='numeric'
               inputClassName={
-                'w-full h-16 border-0 text-center text-2xl bg-gray-100 bg-opacity-90 dark:bg-gray-800' +
-                (machineCtxErrors
+                `w-full h-16 border-0 text-center text-2xl bg-gray-100 bg-opacity-90 dark:bg-gray-800${ 
+                machineCtxErrors
                   ? ' border-red-500 bg-red-300 dark:bg-red-900'
-                  : '')
+                  : ''}`
               }
               placeholder='-'
               containerClassName='grid grid-cols-6 gap-4 w-full'

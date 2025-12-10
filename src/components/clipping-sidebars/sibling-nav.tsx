@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import Link from 'next/link'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import type { Clipping } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 
@@ -52,7 +52,7 @@ type Props = {
 }
 
 async function SiblingNav(props: Props) {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   const { clipping, iac, domain } = props
   const { prev, next } = getSiblingLink(iac, domain, clipping)
 

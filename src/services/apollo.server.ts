@@ -30,10 +30,10 @@ export function doApolloServerQuery<
   return (
     getApolloServerClient()
       .query<TData, TVariables>(options)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       .catch((e: any) => {
         if (e instanceof ApolloError) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           const statusCode = (e.cause as any)?.info?.code as number
           if (statusCode === 401) {
             return redirect('/auth/auth-v4?clean=true')

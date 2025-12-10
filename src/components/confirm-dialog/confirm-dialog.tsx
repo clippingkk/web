@@ -134,8 +134,7 @@ function ConfirmDialog({
             lockScroll
           />
           <FloatingFocusManager context={context}>
-            <div
-              ref={refs.setFloating}
+            <div ref={refs.setFloating}
               style={{ ...floatingStyles }}
               className='z-50'
             >

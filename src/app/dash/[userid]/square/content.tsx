@@ -92,7 +92,7 @@ function SquarePageContent(props: SquarePageContentProps) {
         return (
           <ClippingItem
             key={clipping.id}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+             
             item={clipping as any}
             domain={
               clipping.creator.domain.length > 2

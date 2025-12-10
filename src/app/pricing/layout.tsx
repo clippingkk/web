@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import type React from 'react'
 import { USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import DashboardContainer from '../../components/dashboard-container/container'
 import NavigateGuide from '../../components/navigation-bar/navigate-guide'
 
@@ -15,7 +15,7 @@ type LayoutProps = {
 async function Layout(props: LayoutProps) {
   const cs = await cookies()
   const myUid = cs.get(USER_ID_KEY)?.value
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <DashboardContainer
       uidOrDomain={myUid}

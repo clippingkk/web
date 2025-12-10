@@ -79,8 +79,8 @@ function _FeatureSection(props: FeatureSectionType) {
     <div className='flex w-full flex-col items-center justify-around py-16 lg:flex-row'>
       <h3
         className={
-          'mb-8 flex max-w-xs overflow-x-visible pb-4 text-center text-4xl lg:mb-0 lg:text-7xl ' +
-          props.colorPattern.title.join(' ')
+          `mb-8 flex max-w-xs overflow-x-visible pb-4 text-center text-4xl lg:mb-0 lg:text-7xl ${ 
+          props.colorPattern.title.join(' ')}`
         }
       >
         {props.title}

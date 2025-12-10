@@ -69,8 +69,8 @@ function NavigationBar(props: NavigationBarProps) {
   return (
     <nav
       className={
-        styles.navbar +
-        ' bg-opacity-50 dark:bg-opacity-80 with-slide-in sticky top-0 z-30 flex w-full items-center justify-around bg-gray-800 py-4 shadow-lg backdrop-blur-xl backdrop-filter'
+        `${styles.navbar 
+        } bg-opacity-50 dark:bg-opacity-80 with-slide-in sticky top-0 z-30 flex w-full items-center justify-around bg-gray-800 py-4 shadow-lg backdrop-blur-xl backdrop-filter`
       }
     >
       <div className='flex items-center justify-around'>

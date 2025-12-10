@@ -1,11 +1,11 @@
 import Image from 'next/image'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import iOSWidgetImage from '../../assets/ios_widget.png'
 import LockIcon from '../../assets/lock-security-protection-secure-safety-password-svgrepo-com.svg'
 import DeviceIPhoneX from '../device/iPhoneX'
 
 async function FeatureSense() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <div className='flex items-center w-full justify-around py-16 flex-col'>
       <h3

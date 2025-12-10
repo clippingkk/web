@@ -7,31 +7,41 @@ type HideUntilLoadedProps = {
   children: React.ReactElement
 }
 
-function HideUntilLoaded(props: HideUntilLoadedProps) {
-  const [loaded, setLoaded] = useState(false)
-  const [errored, setErrored] = useState(false)
+// Inner component that resets via key prop when imageToLoad changes
+function HideUntilLoadedInner({
+  imageToLoad,
+  children,
+}: HideUntilLoadedProps) {
+  const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>(
+    'loading'
+  )
 
   useEffect(() => {
     const img = document.createElement('img')
-    setLoaded(false)
-    setErrored(false)
-    img.onload = () => {
-      setLoaded(true)
+    img.onload = () => setStatus('loaded')
+    img.onerror = () => setStatus('error')
+    img.src = imageToLoad
+
+    return () => {
+      img.onload = null
+      img.onerror = null
     }
-    img.onerror = () => {
-      setErrored(true)
-    }
-    img.src = props.imageToLoad
-  }, [props.imageToLoad])
-  if (errored) {
-    return props.children
+  }, [imageToLoad])
+
+  if (status === 'error') {
+    return children
   }
 
-  if (!loaded && process.browser) {
+  if (status === 'loading') {
     return null
   }
 
-  return props.children
+  return children
+}
+
+function HideUntilLoaded(props: HideUntilLoadedProps) {
+  // Use key prop to reset component state when imageToLoad changes
+  return <HideUntilLoadedInner key={props.imageToLoad} {...props} />
 }
 
 export default HideUntilLoaded

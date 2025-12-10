@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import {
   FetchOrdersDocument,
   type FetchOrdersQuery,
@@ -22,7 +22,7 @@ async function OrdersTable(props: Props) {
   const [params, ck, { t }] = await Promise.all([
     props.params,
     cookies(),
-    useTranslation(),
+    getTranslation(),
   ])
   const { userid } = params
   const myUid = ck.get(USER_ID_KEY)?.value

@@ -13,12 +13,11 @@ import '../styles/tailwind.css'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { Metadata } from 'next'
 import { Lato } from 'next/font/google'
-import { cookies } from 'next/headers'
 import Script from 'next/script'
 import type React from 'react'
+import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import GlobalUpload from '@/components/uploads/global'
-import { STORAGE_LANG_KEY, USER_ID_KEY } from '@/constants/storage'
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 import '../prefers-dark'
@@ -80,16 +79,11 @@ export const metadata: Metadata = {
 }
 
 async function Layout(props: LayoutProps) {
-  const cs = await cookies()
-  const uid = cs.get(USER_ID_KEY)?.value
-  const defaultLng = cs.get(STORAGE_LANG_KEY)?.value ?? 'en'
-
   // const loggedInfo = (uid && token) ? await cloakSSROnlySecret(JSON.stringify({ uid: ~~uid, token }), RSC_LOGGED_INFO_KEY) : '{}'
 
   return (
     <html
       className={`${lato.variable} dark`}
-      lang={defaultLng}
       style={
         {
           '--font-lxgw': 'LxgwWenKai',
@@ -102,18 +96,20 @@ async function Layout(props: LayoutProps) {
         data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
       />
       <body>
-        <ClientOnlyProviders>
-          {props.children}
-          <div id='dialog'></div>
-          <div id='toast'></div>
-          <div id='searchbar' className='raycast'></div>
-          <GlobalUpload uid={uid ? ~~uid : undefined} />
-          <Toaster position='top-center' />
-          <ReactQueryDevtools initialIsOpen={false} />
-          <div data-id='modal' />
-          <div data-st-role='modal' />
-          <div data-st-role='tooltip' />
-        </ClientOnlyProviders>
+        <Suspense>
+          <ClientOnlyProviders>
+            {props.children}
+            <div id='dialog'></div>
+            <div id='toast'></div>
+            <div id='searchbar' className='raycast'></div>
+            <GlobalUpload />
+            <Toaster position='top-center' />
+            <ReactQueryDevtools initialIsOpen={false} />
+            <div data-id='modal' />
+            <div data-st-role='modal' />
+            <div data-st-role='tooltip' />
+          </ClientOnlyProviders>
+        </Suspense>
       </body>
     </html>
   )

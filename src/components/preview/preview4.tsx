@@ -51,7 +51,7 @@ function Preview(props: PreviewProps) {
     onSuccess: () => {
       toast.success(t('app.clipping.preview.success'))
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     onError: (err: any) => {
       console.log(err)
       toast.error(err.toString())

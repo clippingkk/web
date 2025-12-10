@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from './constants/storage'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const url = new URL(request.url)
 
   if (!url.pathname.startsWith('/auth')) {

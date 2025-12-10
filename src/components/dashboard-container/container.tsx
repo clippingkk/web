@@ -49,7 +49,7 @@ async function DashboardContainer(props: DashboardContainerProps) {
       myProfile = data
     } catch (e) {
       if (e instanceof ApolloError) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         const statusCode = (e.networkError as any)?.statusCode as number
         if (statusCode === 401) {
           return redirect('/auth/auth-v4?clean=true')

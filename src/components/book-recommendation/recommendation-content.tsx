@@ -1,7 +1,7 @@
 import { Sparkles } from 'lucide-react'
-import { Streamdown } from 'streamdown'
+// import { Streamdown } from 'streamdown'
 import { useTranslation } from '@/i18n/client'
-import { MarkdownComponents } from '../RichTextEditor/markdown-components'
+// import { MarkdownComponents } from '../RichTextEditor/markdown-components'
 import { PulseLoader } from './pulse-loader'
 
 interface RecommendationContentProps {
@@ -31,9 +31,9 @@ export function RecommendationContent({
         </div>
         <div className='p-6'>
           <div className='prose dark:prose-invert prose-sm max-w-none text-gray-900 dark:text-zinc-50'>
-            <Streamdown components={MarkdownComponents}>
+            {/* <Streamdown components={MarkdownComponents}> */}
               {recommendationData.join('')}
-            </Streamdown>
+            {/* </Streamdown> */}
           </div>
         </div>
       </div>

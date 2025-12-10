@@ -1,9 +1,9 @@
 import { ArrowLeft, UserX } from 'lucide-react'
 import Link from 'next/link'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 async function UserNotFound() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
 
   return (
     <div className='min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-8'>

@@ -1,7 +1,7 @@
 'use client'
 
 type BindPhoneProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   onFinalCheck(phone: string, code: string): Promise<any>
 }
 

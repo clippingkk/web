@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import {
   ProfileDocument,
   type ProfileQuery,
@@ -24,7 +24,7 @@ async function Page(props: Props) {
   const [params, ck, { t }] = await Promise.all([
     props.params,
     cookies(),
-    useTranslation(undefined, 'upload'),
+    getTranslation(undefined, 'upload'),
   ])
   const { userid } = params
   const myUid = ck.get(USER_ID_KEY)?.value

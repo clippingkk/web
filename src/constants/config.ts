@@ -42,4 +42,4 @@ export const StripePremiumPriceId = __DEV__
   : 'price_1MkRHVBkj5y79CYsWxE2X4LH'
 
 export const PP_API = 'https://pp.shelltime.xyz'
-export const PP_TOKEN = JSON.parse(process.env.NEXT_PUBLIC_PP_TOKEN as string)
+export const PP_TOKEN = process.env.NEXT_PUBLIC_PP_TOKEN ?? ''

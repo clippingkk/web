@@ -15,7 +15,11 @@ function CodeBlock({ code, lang }: Props): React.ReactNode {
     void highlight(code, lang).then(setNodes)
   }, [code, lang])
 
-  return nodes ?? <p>Loading...</p>
+  if (!nodes) {
+    return <p>Loading...</p>
+  }
+
+  return nodes
 }
 
 export default CodeBlock

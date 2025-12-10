@@ -1,6 +1,6 @@
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { ExternalLink, Terminal, Webhook } from 'lucide-react'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 import CodeBlock from '../highlighter/server'
 
 const cliExample = `
@@ -12,7 +12,7 @@ ck-cli
 `
 
 async function DeveloperFeatures() {
-  const { t } = await useTranslation()
+  const { t } = await getTranslation()
   return (
     <>
       <li className='flex items-start'>

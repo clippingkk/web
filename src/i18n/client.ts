@@ -44,7 +44,7 @@ i18next
     preload: runsOnServerSide ? languages : [],
   })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 export function useTranslation(_lng?: string, ns?: string, options?: any) {
   const ret = useTranslationOrg(ns, options)
   const { i18n } = ret

@@ -211,7 +211,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
                   })
                   setPhase((p) => p + 1)
                   toast.success(t('app.profile.editor.updated'), { id: tl })
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                   
                 } catch (e: any) {
                   toast.error(e.toString(), { id: tl })
                 }

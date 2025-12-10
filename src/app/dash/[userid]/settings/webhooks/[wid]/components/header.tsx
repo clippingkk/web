@@ -1,6 +1,6 @@
 import { ArrowLeft, ExternalLink, Webhook } from 'lucide-react'
 import Link from 'next/link'
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 interface HeaderProps {
   webhookId: string
@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 
 async function WebhookDetailHeader({ webhookId, userId, url }: HeaderProps) {
-  const { t } = await useTranslation(undefined, 'webhook')
+  const { t } = await getTranslation(undefined, 'webhook')
 
   return (
     <div className='mb-8'>
