@@ -6,14 +6,14 @@ import AuthByGithub from '@/components/auth.github'
 import AuthByMetamask from '@/components/auth.metamask'
 import CKLogo from '@/components/logo/CKLogo'
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
-import { useBackgroundImageServer } from '@/hooks/theme.server'
+import { getBackgroundImageServer } from '@/hooks/theme.server'
 
 export async function generateMetadata(): Promise<Metadata> {
   return authGenerateMetadata('auth/auth-v2')
 }
 
-function AuthV2Page() {
-  const bg = useBackgroundImageServer()
+async function AuthV2Page() {
+  const bg = await getBackgroundImageServer()
   return (
     <section
       className='anna-page-container h-screen object-cover bg-center bg-cover'
