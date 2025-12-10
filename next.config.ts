@@ -8,6 +8,8 @@ import type { NextConfig } from 'next'
 // const isProd = process.env.NODE_ENV === 'production'
 
 const config: NextConfig = {
+  // enablePrerenderSourceMaps: false,
+  // productionBrowserSourceMaps: false,
   generateBuildId: () => {
     return process.env.GIT_COMMIT ?? ''
   },
