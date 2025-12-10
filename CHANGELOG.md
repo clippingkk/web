@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.6](https://github.com/clippingkk/web/compare/v5.14.5...v5.14.6) (2025-12-10)
+
+
+### Features
+
+* **auth:** add MetaMaskProvider wrapper for auth-v2 page ([01c057c](https://github.com/clippingkk/web/commit/01c057cd9b88c0b838eecb3882931af50b2a191a))
+* **auth:** create standalone login button components ([3791ba2](https://github.com/clippingkk/web/commit/3791ba2c6abef72fc02c554ff2535f9f611383c6))
+* **auth:** implement standalone authentication button components ([aab6d89](https://github.com/clippingkk/web/commit/aab6d89d1c2a240d62781c51d9946cdcf76d9518))
+* **config:** enable Next.js 16 performance features ([34c31d5](https://github.com/clippingkk/web/commit/34c31d5f3d110ac324c3766f5dece0beefb684b2))
+* implement proper markdown support with @tiptap/markdown extension ([7cf0b4e](https://github.com/clippingkk/web/commit/7cf0b4e78143c704444bf91abc4e59c29f4baa0f))
+* migrate from ESLint to Biome and enable typedRoutes ([d90e3bf](https://github.com/clippingkk/web/commit/d90e3bfbd04944c4725b5eb27749c9a821c25e93))
+* replace Lexical with Tiptap editor for easier maintenance ([29b3de1](https://github.com/clippingkk/web/commit/29b3de1bff59421ce70055ea14d333a1f0fabf5a))
+* replace Lexical with Tiptap editor for easier maintenance ([b30b86c](https://github.com/clippingkk/web/commit/b30b86cbd6fb9da5e594b01234de01a557009307))
+
+
+### Bug Fixes
+
+* **auth:** add text color styling to password label section ([3419c7c](https://github.com/clippingkk/web/commit/3419c7c6680316a6d746a647a8b6b5c699f11ff6))
+* **build:** resolve Next.js 16 prerendering compatibility issues ([3325027](https://github.com/clippingkk/web/commit/3325027e67fd17a27ba1f876678a4781b800f92c))
+* change JSX quote style to single quotes in biome.json ([4cf05e0](https://github.com/clippingkk/web/commit/4cf05e0fbc8586f07c5bf7799e716fcef7e48589))
+* **components:** resolve SSR hydration and streaming issues ([7cf91d8](https://github.com/clippingkk/web/commit/7cf91d82ce03b8ad9fa6b0e065ecf8c0a7973eae))
+* **config:** migrate from ESLint to Biome and fix accessibility issues ([fe263ae](https://github.com/clippingkk/web/commit/fe263aef4c64e9ebeec8d28a300c7d3600cc6586))
+* **deps:** update to React 19.2 and Next.js 16.0.8 with compatibility fixes ([d1ee859](https://github.com/clippingkk/web/commit/d1ee859beee28ce7c1e3c5e86b5769a2c8e85fcf))
+* **dialog:** wrap children in React fragment for proper rendering ([4bb61ef](https://github.com/clippingkk/web/commit/4bb61ef1c9a3abd45293735801054900849796b5))
+* **lint:** auto-fix formatting issues from Biome ([c6ea1cc](https://github.com/clippingkk/web/commit/c6ea1cc1c53e8934e8870c7951ff76c8b7d3df5a))
+* **lint:** resolve ESLint errors following React best practices ([173640d](https://github.com/clippingkk/web/commit/173640d099c7927f9c0b749f9f9b89252bfdcf69))
+* **markdown:** temporarily disable Streamdown in markdown preview ([f6a6b92](https://github.com/clippingkk/web/commit/f6a6b9239ed83ada307396eed3b221a5908c9000))
+* resolve TypeScript and build errors for Next.js 15.5.0 upgrade ([624cab0](https://github.com/clippingkk/web/commit/624cab04e9554578bb8ade7286cd61742fc2b18a))
+
+
+### Miscellaneous Chores
+
+* release 5.14.6 ([b541943](https://github.com/clippingkk/web/commit/b541943fa0ddad049a028868c481f972bc974c19))
+
 ## [5.14.5](https://github.com/clippingkk/web/compare/v5.14.4...v5.14.5) (2025-08-10)
 
 
