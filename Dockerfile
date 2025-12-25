@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./src/types.g.ts ./
-RUN npm install -g corepack@latest
+RUN unlink /usr/local/bin/yarn && unlink /usr/local/bin/yarnpkg && npm install -g corepack@latest
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
 RUN pnpm add @opentelemetry/sdk-node @opentelemetry/exporter-trace-otlp-http @opentelemetry/sdk-trace-base @opentelemetry/resources @opentelemetry/id-generator-aws-xray
 
@@ -28,7 +28,7 @@ ENV NEXT_PUBLIC_PP_TOKEN=$NEXT_PUBLIC_PP_TOKEN
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm install -g corepack@latest
+RUN unlink /usr/local/bin/yarn && unlink /usr/local/bin/yarnpkg && npm install -g corepack@latest
 RUN corepack enable pnpm && pnpm run codegen && pnpm run build
 
 # Production image, copy all the files and run next
