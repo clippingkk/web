@@ -3,7 +3,9 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import ButtonSimple from '@/components/button/button-simple'
+/* METAMASK DISABLED
 import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
+*/
 import FieldInput from '@/components/input'
 import ProgressBlock from '@/components/progress/progress-block'
 import { useTranslation } from '@/i18n/client'
@@ -15,7 +17,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
   // TODO:
   // 1. update name
   // 2. update domain
-  // 3. bind metamask
+  // 3. bind metamask (DISABLED)
   // 4. bind apple
   // 5. bind github
   // 6. update avatar / select nft ?
@@ -160,7 +162,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
                     toastPromiseDefaultOption
                   )
                   .then(() => {
-                    setPhase(2)
+                    setPhase(5) // Skip phase 2-4 (MetaMask/Apple/GitHub disabled) - go directly to avatar
                   })
               }}
               text='Confirm my domain'
@@ -168,6 +170,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
           </div>
         )}
 
+        {/* METAMASK DISABLED - Phase 2 is now skipped automatically
         {phase === 2 && (
           <MetamaskBindButton
             onBound={() => {
@@ -175,6 +178,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
             }}
           />
         )}
+        */}
         {phase === 3 && <div>TODO: bind apple</div>}
         {phase === 4 && <div>TODO: bind github</div>}
         {phase === 5 && (
@@ -211,7 +215,7 @@ function NewbiePageContent({ uid }: { uid: number }) {
                   })
                   setPhase((p) => p + 1)
                   toast.success(t('app.profile.editor.updated'), { id: tl })
-                   
+
                 } catch (e: any) {
                   toast.error(e.toString(), { id: tl })
                 }

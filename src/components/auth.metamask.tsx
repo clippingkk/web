@@ -1,4 +1,6 @@
 'use client'
+
+/* METAMASK DISABLED - Package removed to prevent hydration errors
 import { useSDK } from '@metamask/sdk-react'
 // import MetamaskLogo from './icons/metamask.logo.svg'
 import { useRouter } from 'next/navigation'
@@ -35,22 +37,11 @@ function AuthByMetamask() {
         )
         return
       }
-       
+
     } catch (err: any) {
       toast.error(err.message)
     }
   }, [doAuth, router, metamaskSDK])
-
-  // useEffect(() => {
-  //   // if (!err) {
-  //   //   return
-  //   // }
-  //   // toast.error('metamask: ' + err.message)
-  //   void metaMask.connectEagerly().catch((err) => {
-  //     console.debug('Failed to connect eagerly to metamask')
-  //     toast.error('metamask: ' + err.message)
-  //   })
-  // }, [])
 
   useAuthBy3rdPartSuccessed(
     doAuthData.called,
@@ -68,6 +59,14 @@ function AuthByMetamask() {
       disabled={disabled}
     />
   )
+}
+
+export default AuthByMetamask
+*/
+
+// Disabled MetaMask component - returns null
+function AuthByMetamask() {
+  return null
 }
 
 export default AuthByMetamask

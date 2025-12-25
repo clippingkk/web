@@ -1,4 +1,6 @@
 'use client'
+
+/* METAMASK DISABLED - Package removed to prevent hydration errors
 import { useCallback, useMemo } from 'react'
 import AuthCallbackPageContainer from '@/components/auth/fake-layout'
 import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
@@ -54,6 +56,21 @@ function AuthCallbackMetamask(props: AuthCallbackMetamaskProps) {
       loading={doBindResult.loading}
     />
   )
+}
+
+export default AuthCallbackMetamask
+*/
+
+type AuthCallbackMetamaskProps = {
+  address: string
+  signature: string
+  text: string
+}
+
+// Disabled MetaMask callback - returns null
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function AuthCallbackMetamask(props: AuthCallbackMetamaskProps) {
+  return null
 }
 
 export default AuthCallbackMetamask

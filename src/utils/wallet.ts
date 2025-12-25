@@ -1,3 +1,4 @@
+/* METAMASK DISABLED - Package removed to prevent hydration errors
 import type { MetaMaskSDK } from '@metamask/sdk-react'
 
 const LoginWelcomeText = 'Welcome to the ClippingKK~ \n It`s your nonce: '
@@ -30,3 +31,14 @@ async function signDataByWeb3(m: MetaMaskSDK) {
 }
 
 export { signDataByWeb3 }
+*/
+
+// Stub export to prevent import errors
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function signDataByWeb3(m: unknown): Promise<{
+  address: string
+  signature: string
+  text: string
+}> {
+  throw new Error('MetaMask functionality is currently disabled')
+}
