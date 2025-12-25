@@ -30,7 +30,7 @@
   },
   "homepage": "https://git.annatarhe.com/annatarhe/kindle.annatarhe.com#readme",
   "engines": {
-    "node": "24"
+    "node": "25"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.7",
