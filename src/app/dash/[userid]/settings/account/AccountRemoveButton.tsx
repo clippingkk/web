@@ -4,7 +4,6 @@ import { AlertOctagon, AlertTriangle, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { onCleanServerCookie } from '@/components/navigation-bar/logout'
 import { useTranslation } from '@/i18n/client'
 import { useDeleteMyAccountMutation } from '@/schema/generated'
 import profile from '@/utils/profile'
@@ -91,7 +90,6 @@ function AccountRemoveButton() {
           <button
             className='relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-6 py-4 shadow-lg transition-all duration-300 hover:from-red-700 hover:to-orange-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none active:scale-95 dark:focus:ring-offset-gray-900'
             onClick={async () => {
-              await onCleanServerCookie()
               await doDeleteMyAccount()
               setConfirming(false)
             }}
