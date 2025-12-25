@@ -96,7 +96,7 @@ async function Layout(props: LayoutProps) {
         data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
       />
       <body>
-        <Suspense>
+        <Suspense fallback={<div className='min-h-screen' />}>
           <ClientOnlyProviders>
             {props.children}
             <div id='dialog'></div>

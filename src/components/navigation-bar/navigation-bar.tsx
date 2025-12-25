@@ -121,7 +121,7 @@ function NavigationBar(props: NavigationBarProps) {
           profile={profile}
         />
       ) : (
-        <Link href='/auth/auth-v4' legacyBehavior>
+        <Link href='/auth/auth-v4'>
           <h2 className='font-bold text-white'>{t('app.slogan')}</h2>
         </Link>
       )}
@@ -140,7 +140,7 @@ function NavigationBar(props: NavigationBarProps) {
         <LoginByQRCode />
       </Modal>
     </nav>
-  )
+  );
 }
 
 export default NavigationBar

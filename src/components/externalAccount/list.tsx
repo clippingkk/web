@@ -7,7 +7,9 @@ import MetamaskLogo from '../icons/metamask.logo.svg'
 import AccountCard from './account-card'
 import AppleLoginBind from './apple.bind'
 import GithubBindButton from './github.bind'
-import MetamaskBindButton from './metamask.bind'
+import dynamic from 'next/dynamic'
+
+const MetamaskBindButton = dynamic(() => import('./metamask.bind'), { ssr: false })
 
 type ExternalAccountListProps = {
   uid: number
