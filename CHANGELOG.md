@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.8](https://github.com/clippingkk/web/compare/v5.14.7...v5.14.8) (2025-12-25)
+
+
+### Bug Fixes
+
+* **docker:** unlink yarn symlinks before corepack install for Node 25 ([c93d55e](https://github.com/clippingkk/web/commit/c93d55ec3e1c07f1f32ec615b7ce3743be1c1945))
+
 ## [5.14.7](https://github.com/clippingkk/web/compare/v5.14.6...v5.14.7) (2025-12-25)
 
 
