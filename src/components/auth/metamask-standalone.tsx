@@ -1,4 +1,6 @@
 'use client'
+
+/* METAMASK DISABLED - Package removed to prevent hydration errors
 import { useSDK } from '@metamask/sdk-react'
 import * as sentry from '@sentry/react'
 import { useRouter } from 'next/navigation'
@@ -123,4 +125,16 @@ export default function MetaMaskStandaloneLoginButton({
       />
     </div>
   )
+}
+*/
+
+interface MetaMaskStandaloneLoginButtonProps {
+  className?: string
+  onSuccess?: () => void
+}
+
+// Disabled MetaMask component - returns null
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function MetaMaskStandaloneLoginButton(props: MetaMaskStandaloneLoginButtonProps) {
+  return null
 }

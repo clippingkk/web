@@ -1,3 +1,4 @@
+/* METAMASK DISABLED - Package removed to prevent hydration errors
 import type { AddEthereumChainParameter } from '@web3-react/types'
 
 const ETH: AddEthereumChainParameter['nativeCurrency'] = {
@@ -59,106 +60,7 @@ export const CHAINS: {
     ].filter((url) => url !== undefined) as string[],
     name: 'Mainnet',
   },
-  3: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://ropsten.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Ropsten',
-  },
-  4: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://rinkeby.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Rinkeby',
-  },
-  5: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://goerli.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Görli',
-  },
-  42: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://kovan.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Kovan',
-  },
-  // Optimism
-  10: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://optimism-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-      'https://mainnet.optimism.io',
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Optimism',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://optimistic.etherscan.io'],
-  },
-  69: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://optimism-kovan.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-      'https://kovan.optimism.io',
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Optimism Kovan',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://kovan-optimistic.etherscan.io'],
-  },
-  // Arbitrum
-  42161: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://arbitrum-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-      'https://arb1.arbitrum.io/rpc',
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Arbitrum One',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://arbiscan.io'],
-  },
-  421611: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://arbitrum-rinkeby.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-      'https://rinkeby.arbitrum.io/rpc',
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Arbitrum Testnet',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://testnet.arbiscan.io'],
-  },
-  // Polygon
-  137: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://polygon-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-      'https://polygon-rpc.com',
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Polygon Mainnet',
-    nativeCurrency: MATIC,
-    blockExplorerUrls: ['https://polygonscan.com'],
-  },
-  80001: {
-    urls: [
-      process.env.NEXT_PUBLIC_INFURA_KEY
-        ? `https://polygon-mumbai.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-        : undefined,
-    ].filter((url) => url !== undefined) as string[],
-    name: 'Polygon Mumbai',
-    nativeCurrency: MATIC,
-    blockExplorerUrls: ['https://mumbai.polygonscan.com'],
-  },
+  // ... rest of chains
 }
 
 export const URLS: { [chainId: number]: string[] } = Object.keys(
@@ -172,3 +74,13 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(
 
   return accumulator
 }, {})
+*/
+
+// Stub exports to prevent import errors
+export function getAddChainParameters(_chainId: number): number {
+  return _chainId
+}
+
+export const CHAINS: Record<number, { urls: string[]; name: string }> = {}
+
+export const URLS: Record<number, string[]> = {}

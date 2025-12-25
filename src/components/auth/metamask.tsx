@@ -1,3 +1,4 @@
+/* METAMASK DISABLED - Package removed to prevent hydration errors
 import MetamaskLogo from '../icons/metamask.logo.svg'
 
 type MetamaskButtonViewProps = {
@@ -29,6 +30,21 @@ function MetamaskButtonView(props: MetamaskButtonViewProps) {
       </div>
     </button>
   )
+}
+
+export default MetamaskButtonView
+*/
+
+type MetamaskButtonViewProps = {
+  loading: boolean
+  onClick: () => void
+  disabled: boolean
+}
+
+// Disabled MetaMask button - returns null
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function MetamaskButtonView(props: MetamaskButtonViewProps) {
+  return null
 }
 
 export default MetamaskButtonView

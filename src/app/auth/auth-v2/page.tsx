@@ -3,8 +3,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import AuthByAppleButton from '@/components/auth.apple'
 import AuthByGithub from '@/components/auth.github'
+/* METAMASK DISABLED
 import AuthByMetamask from '@/components/auth.metamask'
 import MetaMaskProviderWrapper from '@/components/auth/metamask-provider-wrapper'
+*/
 import CKLogo from '@/components/logo/CKLogo'
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
 import { getBackgroundImageServer } from '@/hooks/theme.server'
@@ -41,9 +43,11 @@ async function AuthV2Page() {
               Phone Number
             </Link>
             <hr className='my-4' />
+            {/* METAMASK DISABLED
             <MetaMaskProviderWrapper>
               <AuthByMetamask />
             </MetaMaskProviderWrapper>
+            */}
             <AuthByAppleButton />
             <AuthByGithub />
 

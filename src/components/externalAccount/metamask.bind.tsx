@@ -1,3 +1,6 @@
+'use client'
+
+/* METAMASK DISABLED - Package removed to prevent hydration errors
 import { useApolloClient } from '@apollo/client'
 import { useSDK } from '@metamask/sdk-react'
 import { useCallback } from 'react'
@@ -41,7 +44,7 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
             }
           })
         })
-         
+
         .catch((err: any) => {
           toast.error(err.message)
         })
@@ -58,6 +61,19 @@ function MetamaskBindButton(props: MetamaskBindButtonProps) {
       </button>
     </WithLoading>
   )
+}
+
+export default MetamaskBindButton
+*/
+
+type MetamaskBindButtonProps = {
+  onBound?: (address: string) => void
+}
+
+// Disabled MetaMask bind button - returns null
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function MetamaskBindButton(props: MetamaskBindButtonProps) {
+  return null
 }
 
 export default MetamaskBindButton

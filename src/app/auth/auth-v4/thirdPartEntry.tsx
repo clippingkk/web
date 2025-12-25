@@ -1,6 +1,8 @@
 import AppleStandaloneLoginButton from '@/components/auth/apple-standalone'
 import GithubStandaloneLoginButton from '@/components/auth/github-standalone'
+/* METAMASK DISABLED
 import MetaMaskStandaloneLoginButton from '@/components/auth/metamask-standalone'
+*/
 
 function ThirdPartEntry() {
   return (
@@ -16,13 +18,15 @@ function ThirdPartEntry() {
         </div>
       </div>
 
+      {/* METAMASK DISABLED
       <MetaMaskStandaloneLoginButton />
+      */}
       <AppleStandaloneLoginButton />
       <GithubStandaloneLoginButton />
 
       <div className='pt-2 text-center'>
         <p className='text-xs text-gray-500 dark:text-zinc-500'>
-          Secure authentication powered by blockchain and OAuth
+          Secure authentication powered by OAuth
         </p>
       </div>
     </div>

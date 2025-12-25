@@ -1,6 +1,8 @@
 'use client'
 
+/* METAMASK DISABLED - Package removed to prevent hydration errors
 import { MetaMaskProvider } from '@metamask/sdk-react'
+*/
 import type React from 'react'
 
 interface MetaMaskProviderWrapperProps {
@@ -10,6 +12,7 @@ interface MetaMaskProviderWrapperProps {
 export default function MetaMaskProviderWrapper({
   children,
 }: MetaMaskProviderWrapperProps) {
+  /* METAMASK DISABLED
   return (
     <MetaMaskProvider
       sdkOptions={{
@@ -23,4 +26,7 @@ export default function MetaMaskProviderWrapper({
       {children}
     </MetaMaskProvider>
   )
+  */
+  // Return children directly without MetaMask provider
+  return <>{children}</>
 }
