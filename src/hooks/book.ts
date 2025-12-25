@@ -61,7 +61,7 @@ export function useMultipleBook(
         }
         return acc
       }, [])
-  }, [doubanIds.filter])
+  }, [doubanIds])
   const chunkedDbIds = useMemo(() => {
     const result: string[][] = []
     const chunkSize = 10
@@ -87,18 +87,16 @@ export function useMultipleBook(
 
   const isLoading = useMemo(() => bbs.every((bs) => bs.isLoading), [bbs.every])
   // reorder
-  const books = useMemo<WenquBook[]>(() => {
-    const bsList = bbs
-      .filter((x) => x.data?.books)
-      .flatMap((x) => x.data?.books) as WenquBook[]
-    return validDoubanIdList.reduce<WenquBook[]>((acc, dbId) => {
-      const tb = bsList.find((x) => x.doubanId.toString() === dbId)
-      if (tb) {
-        acc.push(tb)
-      }
-      return acc
-    }, [])
-  }, [validDoubanIdList, bbs.filter])
+  const bsList = bbs
+    .filter((x) => x.data?.books)
+    .flatMap((x) => x.data?.books) as WenquBook[]
+  const books = validDoubanIdList.reduce<WenquBook[]>((acc, dbId) => {
+    const tb = bsList.find((x) => x.doubanId.toString() === dbId)
+    if (tb) {
+      acc.push(tb)
+    }
+    return acc
+  }, [])
 
   return {
     books,

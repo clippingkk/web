@@ -27,6 +27,10 @@ const config: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'avatars3.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'ck-cdn.annatarhe.cn',
       },
       {
