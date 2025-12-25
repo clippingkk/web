@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.14.7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/compare/v5.14.6...v5.14.7) (2025-12-25)
+
+
+### Bug Fixes
+
+* **auth:** disable SSR for MetaMask component to prevent hydration errors ([6ac9a5c](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/6ac9a5cd99214d03a1f5fb39fca6e2ce31018c9e))
+* **hooks:** fix dependency array bugs in useMultipleBook hook ([69e42f8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/69e42f83b37274cc34eaafec1f52d0f63e601063))
+* **settings:** fix account deletion authentication bug ([89995b7](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/89995b7de01f87c7b6d2bc53bfc3c0bfcafe47f1))
+* **utils:** add window undefined check in MyProfile constructor ([343faf8](https://git.annatarhe.com/annatarhe/kindle.annatarhe.com/commit/343faf8b68629ba645549476ff750bae64f43d8f))
+
 ## [5.14.6](https://github.com/clippingkk/web/compare/v5.14.5...v5.14.6) (2025-12-10)
 
 
