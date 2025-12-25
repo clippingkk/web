@@ -9,7 +9,7 @@ class MyProfile {
   static readonly UID_KEY = 'clippingkk-uid'
 
   constructor() {
-    if (typeof localStorage === 'undefined') {
+    if (typeof localStorage === 'undefined' || typeof window === 'undefined') {
       return
     }
     let t = localStorage.getItem(MyProfile.TOKEN_KEY)
