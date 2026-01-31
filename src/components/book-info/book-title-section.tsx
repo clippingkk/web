@@ -19,7 +19,7 @@ function BookTitleSection({ book, duration }: Props) {
         <div className='flex items-center gap-2 bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm px-3 py-1.5 rounded-full'>
           <Star className='w-4 h-4 text-yellow-500' />
           <span className='font-medium text-gray-800 dark:text-gray-200'>
-            {book.rating.toFixed(1)}/10
+            {book.rating?.toFixed(1)}/10
           </span>
         </div>
       </div>
