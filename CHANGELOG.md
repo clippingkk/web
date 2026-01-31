@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.9](https://github.com/clippingkk/web/compare/v5.14.8...v5.14.9) (2026-01-31)
+
+
+### Bug Fixes
+
+* **book-info:** add optional chaining to book rating to prevent runtime error ([c8c03ff](https://github.com/clippingkk/web/commit/c8c03ff1376203b7004bff64ed72bc45904a8706))
+
 ## [5.14.8](https://github.com/clippingkk/web/compare/v5.14.7...v5.14.8) (2025-12-25)
 
 
