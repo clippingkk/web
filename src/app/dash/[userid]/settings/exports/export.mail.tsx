@@ -1,7 +1,7 @@
 'use client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import { useSuspenseQuery } from '@apollo/client'
+import { useSuspenseQuery } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail } from 'lucide-react'
 import { useParams } from 'next/navigation'
@@ -79,8 +79,8 @@ function ExportToMail() {
         },
       })
 
-      if (result.errors?.length) {
-        throw new Error(result.errors[0].message)
+      if (result.error) {
+        throw new Error(result.error.message)
       }
     } catch (err) {
       // Error is already handled by the mutation's onError callback

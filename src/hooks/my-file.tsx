@@ -1,4 +1,4 @@
-import { useApolloClient, useMutation } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { useMachine } from '@xstate/react'
 import { useCallback, useEffect, useRef, useState } from 'react'

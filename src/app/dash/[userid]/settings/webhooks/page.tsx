@@ -66,7 +66,7 @@ async function WebhooksPage(props: Props) {
     },
   })
 
-  const isPremium = checkIsPremium(profileResponse.me.premiumEndAt)
+  const isPremium = checkIsPremium(profileResponse!.me.premiumEndAt)
 
   return (
     <>
@@ -97,7 +97,7 @@ async function WebhooksPage(props: Props) {
         <div className='space-y-6'>
           <WebHooksContent
             isPremium={isPremium}
-            webhooks={webhooksResp.me.webhooks}
+            webhooks={webhooksResp!.me.webhooks}
             userId={userid}
           />
         </div>

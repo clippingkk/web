@@ -1,5 +1,5 @@
 'use client'
-import { useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client/react'
 import { Masonry, useInfiniteLoader } from 'masonic'
 import { useRef } from 'react'
 import ClippingItem from '@/components/clipping-item/clipping-item'

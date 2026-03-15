@@ -14,7 +14,7 @@ import {
 import { updateToken } from '../services/ajax'
 import profile from './profile'
 
-export async function initParseFromLS(ac: ApolloClient<object>) {
+export async function initParseFromLS(ac: ApolloClient) {
   if (typeof localStorage === 'undefined') {
     return
   }
@@ -36,7 +36,7 @@ export async function initParseFromLS(ac: ApolloClient<object>) {
         },
       })
       const payload = {
-        profile: ps.data.me,
+        profile: ps.data!.me,
         token: cookieToken,
         createdAt: Date.now(),
       }

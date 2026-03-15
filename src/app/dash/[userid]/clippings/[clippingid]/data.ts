@@ -59,11 +59,11 @@ export const getClippingData = cache(async (clippingId: number) => {
           : undefined,
       },
     })
-    myProfile = p.data.me
+    myProfile = p.data!.me
   }
 
   let bookData: WenquBook | null = null
-  const bookID = clippingsResponse.data.clipping.bookID
+  const bookID = clippingsResponse.data!.clipping.bookID
   const rq = getReactQueryClient()
   if (bookID && bookID.length > 3) {
     const bs = await rq.fetchQuery({
@@ -77,7 +77,7 @@ export const getClippingData = cache(async (clippingId: number) => {
   }
 
   return {
-    clipping: clippingsResponse.data.clipping,
+    clipping: clippingsResponse.data!.clipping,
     me: myProfile,
     bookData,
     uid: uid ? ~~uid : undefined,

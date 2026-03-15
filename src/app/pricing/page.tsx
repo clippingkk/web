@@ -48,7 +48,7 @@ async function PricingPage() {
         },
       },
     })
-    profile = profileResponse.data.me
+    profile = profileResponse.data!.me
   }
 
   return <PricingContent profile={profile} checkoutUrl={checkoutUrl} />

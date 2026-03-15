@@ -37,14 +37,14 @@ export async function generateMetadata(
     },
   })
   const dbIds =
-    reportInfoResponse.data.reportYearly.books
+    reportInfoResponse.data!.reportYearly.books
       .map((x) => x.doubanId)
       .filter((x) => x.length > 3) ?? []
 
   const bs = await wenquRequest<WenquSearchResponse>(
     `/books/search?dbIds=${dbIds.join('&dbIds=')}`
   )
-  return generateReportMetadata(year, reportInfoResponse.data, bs.books)
+  return generateReportMetadata(year, reportInfoResponse.data!, bs.books)
 }
 
 async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
@@ -66,7 +66,7 @@ async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
     },
   })
   const dbIds =
-    reportInfoResponse.data.reportYearly.books
+    reportInfoResponse.data!.reportYearly.books
       .map((x) => x.doubanId)
       .filter((x) => x.length > 3) ?? []
 
@@ -89,7 +89,7 @@ async function YearlyLegacyPage(props: YearlyLegacyPageProps) {
       <ReportYearly
         uid={uid}
         year={year}
-        reportInfoServerData={reportInfoResponse.data}
+        reportInfoServerData={reportInfoResponse.data!}
         dbIds={dbIds}
       />
     </HydrationBoundary>

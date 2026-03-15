@@ -1,4 +1,4 @@
-import { ApolloError } from '@apollo/client'
+import { ServerError } from '@apollo/client'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import type React from 'react'
@@ -48,9 +48,8 @@ async function DashboardContainer(props: DashboardContainerProps) {
       })
       myProfile = data
     } catch (e) {
-      if (e instanceof ApolloError) {
-         
-        const statusCode = (e.networkError as any)?.statusCode as number
+      if (e instanceof ServerError) {
+        const statusCode = e.statusCode
         if (statusCode === 401) {
           return redirect('/auth/auth-v4?clean=true')
         }

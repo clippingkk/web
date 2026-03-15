@@ -1,5 +1,5 @@
 'use client'
-import type { ApolloError, MutationResult } from '@apollo/client'
+import type { MutationResult } from '@apollo/client/react'
 import * as sentry from '@sentry/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -49,7 +49,7 @@ async function onAuthEnd(data: { user: UserContent; token: string }) {
 export function useAuthBy3rdPartSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: Error,
   // authResponse?: authByWeb3_loginByWeb3 | loginByApple_loginByApple | bindAppleUnique_bindAppleUnique | bindWeb3Address_bindWeb3Address
   authResponse?: Pick<AuthByWeb3Query['loginByWeb3'], 'user' | 'token'>
 ) {
@@ -87,7 +87,7 @@ export function useAuthBy3rdPartSuccessed(
 export function useLoginV3Successed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: Error,
   authResponse?: DoLoginV3Mutation['loginV3']
 ) {
   const { push: navigate } = useRouter()
@@ -125,7 +125,7 @@ export function useLoginV3Successed(
 export function useAuthByPhoneSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: Error,
   authResponse?: AuthByPhoneMutation['authByPhone']
 ) {
   // const navigate = useNavigate()
@@ -158,7 +158,7 @@ export function useAuthByPhoneSuccessed(
 export function useAuthSuccessed(
   called: boolean,
   loading: boolean,
-  error?: ApolloError,
+  error?: Error,
   authResponse?: AuthQuery['auth']
 ) {
   const { push: navigate } = useRouter()

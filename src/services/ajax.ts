@@ -1,4 +1,9 @@
-import { ApolloLink, HttpLink } from '@apollo/client'
+import {
+  ApolloLink,
+  CombinedGraphQLErrors,
+  HttpLink,
+  ServerError,
+} from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import {
   ApolloClient,
@@ -106,36 +111,18 @@ export const authLink = new ApolloLink((operation, forward) => {
   return forward(operation)
 })
 
-type GraphQLResponseError = {
-  name: string
-  response: Response
-  result: { code: number; error: string }
-  statusCode: number
-  message: string
-}
-
-const errorLink = onError((errData) => {
-  const { graphQLErrors, networkError } = errData
-  if (graphQLErrors) {
-    // swal({
-    //   icon: 'error',
-    //   title: graphQLErrors[0].message,
-    //   text: graphQLErrors[0].message,
-    // })
+const errorLink = onError(({ error }) => {
+  if (CombinedGraphQLErrors.is(error)) {
     if (typeof window !== 'undefined') {
-      toast.error(graphQLErrors[0].message)
+      toast.error(error.errors[0].message)
     }
-  }
-  const ne = networkError as GraphQLResponseError
-
-  if (ne) {
-    console.log(`[Network error]: ${ne}`)
+  } else if (error instanceof ServerError) {
+    console.log(`[Network error]: ${error}`)
     if (typeof window !== 'undefined') {
-      if (ne.statusCode && ne.statusCode === 401) {
+      if (error.statusCode === 401) {
         updateToken('')
         profile.onLogout()
       }
-      // toast.error(`${ne.statusCode}: ${ne.name}`)
     }
   }
 })
@@ -155,13 +142,13 @@ export function makeApolloClient() {
   return new ApolloClient({
     cache: new InMemoryCache(apolloCacheConfig),
     link: ApolloLink.from(links),
-    connectToDevTools: process.env.NODE_ENV !== 'production',
+    devtools: { enabled: process.env.NODE_ENV !== 'production' },
   })
   // return new ApolloClient({
   //   ssrMode: typeof window === 'undefined',
   //   cache: new NextSSRInMemoryCache(),
   //   link: ApolloLink.from(links),
-  //   connectToDevTools: process.env.NODE_ENV !== 'production',
+  //   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   // })
 }
 
@@ -178,7 +165,7 @@ export function makeApolloClientWithCredentials() {
     return new ApolloClient({
       cache: new InMemoryCache(apolloCacheConfig),
       link: ApolloLink.from(links),
-      connectToDevTools: process.env.NODE_ENV !== 'production',
+      devtools: { enabled: process.env.NODE_ENV !== 'production' },
     })
   }
 }

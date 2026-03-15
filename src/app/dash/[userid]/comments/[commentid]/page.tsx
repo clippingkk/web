@@ -72,7 +72,7 @@ async function CommentPage({ params }: Props) {
 
   const token = ck.get(COOKIE_TOKEN_KEY)?.value
 
-  const { data, error } = await doApolloServerQuery<GetCommentQuery>({
+  const { data } = await doApolloServerQuery<GetCommentQuery>({
     query: GetCommentDocument,
     variables: { id },
     context: {
@@ -82,7 +82,7 @@ async function CommentPage({ params }: Props) {
     },
   })
 
-  if (error || !data?.getComment) {
+  if (!data?.getComment) {
     notFound()
   }
 

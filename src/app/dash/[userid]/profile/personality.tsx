@@ -60,9 +60,7 @@ function PersonalityView(props: PersonalityViewProps) {
             <div className='mt-4 w-full rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-600 dark:text-red-400'>
               <h3 className='mb-2 font-semibold'>Error</h3>
               <p>
-                {error.clientErrors.map((e) => e.message).join(', ')}
-                {error.networkError?.message}
-                {error.graphQLErrors.map((e) => e.message).join(', ')}
+                {error.message}
               </p>
             </div>
           )}

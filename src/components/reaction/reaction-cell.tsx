@@ -1,5 +1,5 @@
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'

@@ -40,7 +40,7 @@ async function NavigateGuide(props: NavigateGuideProps) {
         },
       },
     })
-    p = data.me
+    p = data!.me
   }
 
   return (

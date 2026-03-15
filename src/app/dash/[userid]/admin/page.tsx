@@ -72,7 +72,7 @@ async function AdminPanel(props: PageProps) {
               <div className='h-2 w-2 rounded-full bg-blue-400'></div>
               <span className='text-sm font-medium text-gray-600 dark:text-gray-300'>
                 {t('Showing books')} {offset + 1} -{' '}
-                {offset + (data.adminDashboard.uncheckedBooks?.length || 0)}
+                {offset + (data!.adminDashboard.uncheckedBooks?.length || 0)}
               </span>
             </div>
             <div className='flex gap-3'>
@@ -98,7 +98,7 @@ async function AdminPanel(props: PageProps) {
             </div>
           </div>
 
-          <HomelessBooksTable data={data.adminDashboard.uncheckedBooks ?? []} />
+          <HomelessBooksTable data={data!.adminDashboard.uncheckedBooks ?? []} />
 
           <div className='mt-8 flex justify-center'>
             <Link

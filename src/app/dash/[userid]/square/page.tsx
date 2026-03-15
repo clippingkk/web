@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 
   const dbIds =
-    squareResponse.data.featuredClippings
+    squareResponse.data!.featuredClippings
       .map((x) => x.bookID)
       .filter((x) => x.length > 3) ?? []
 
@@ -64,7 +64,7 @@ async function Page() {
   })
 
   const dbIds =
-    squareResponse.data.featuredClippings
+    squareResponse.data!.featuredClippings
       .map((x) => x.bookID)
       .filter((x) => x.length > 3) ?? []
 
@@ -86,7 +86,8 @@ async function Page() {
 
   return (
     <HydrationBoundary state={d}>
-      <SquarePageContent squareData={squareResponse.data} />
+      <SquarePageContent squareData={squareResponse.data!} />
+
     </HydrationBoundary>
   )
 }

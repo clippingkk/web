@@ -63,7 +63,7 @@ async function Page(props: Props) {
               'Drag and drop your Kindle clippings file to share your favorite passages'}
           </p>
         </div>
-        <UploaderPageContent profile={profileResponse.me} />
+        <UploaderPageContent profile={profileResponse!.me} />
         <ClippingsUploadHelp />
       </div>
     </section>
