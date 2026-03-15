@@ -12,11 +12,15 @@ generates:
     preset: 'client'
   src/schema/generated.tsx:
     plugins:
+      - add:
+          content: '// @ts-nocheck'
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"
     config:
       withHooks: true
+      apolloReactCommonImportFrom: '@/services/apollo-compat'
+      apolloReactHooksImportFrom: '@/services/apollo-compat'
   ./src/schema/schema.json:
     plugins:
       - "introspection"

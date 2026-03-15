@@ -1,6 +1,6 @@
 'use client'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient } from '@apollo/client/react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Info, Send, User as UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'

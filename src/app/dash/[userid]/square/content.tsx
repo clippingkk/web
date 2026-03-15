@@ -60,11 +60,11 @@ function SquarePageContent(props: SquarePageContentProps) {
           },
         },
       }).then((data) => {
-        if (data.data.featuredClippings.length === 0) {
+        if (data.data!.featuredClippings.length === 0) {
           reachEnd.current = true
         }
         setSqData((prev) =>
-          [...prev, ...data.data.featuredClippings].reduce<
+          [...prev, ...data.data!.featuredClippings].reduce<
             FetchSquareDataQuery['featuredClippings']
           >((acc, x) => {
             if (!acc.find((y) => y.id === x.id)) {

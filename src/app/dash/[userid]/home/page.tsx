@@ -1,4 +1,3 @@
-import type { ApolloQueryResult } from '@apollo/client'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
@@ -59,7 +58,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       },
     })
     return profileGenerateMetadata({
-      profile: profileResponse.data.me,
+      profile: profileResponse.data!.me,
     })
   } catch (e) {
     console.error(e)
@@ -85,9 +84,9 @@ async function Page(props: PageProps) {
   const myUidInt = myUid ? parseInt(myUid, 10) : undefined
 
   const reqs: [
-    Promise<ApolloQueryResult<ProfileQuery>>,
-    Promise<ApolloQueryResult<BooksQuery>>,
-    Promise<ApolloQueryResult<ProfileQuery>>?,
+    ReturnType<typeof doApolloServerQuery<ProfileQuery, ProfileQueryVariables>>,
+    ReturnType<typeof doApolloServerQuery<BooksQuery, BooksQueryVariables>>,
+    ReturnType<typeof doApolloServerQuery<ProfileQuery, ProfileQueryVariables>>?,
   ] = [
     doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
       query: ProfileDocument,
@@ -142,8 +141,8 @@ async function Page(props: PageProps) {
 
   let firstBook: WenquBook | null = null
 
-  if (profileResponse.data.me.recents.length > 0) {
-    let firstBookId = profileResponse.data.me.recents[0].bookID ?? ''
+  if (profileResponse.data!.me.recents.length > 0) {
+    let firstBookId = profileResponse.data!.me.recents[0].bookID ?? ''
     if (firstBookId.length <= 3) {
       firstBookId = ''
     }
@@ -161,7 +160,7 @@ async function Page(props: PageProps) {
     }
   }
 
-  const recents = profileResponse.data.me.recents
+  const recents = profileResponse.data!.me.recents
 
   return (
     <section className='page h-full'>
@@ -191,11 +190,11 @@ async function Page(props: PageProps) {
           </Link>
           <AIBookRecommendationButton
             uid={myUidInt!}
-            books={booksResponse.data.books}
+            books={booksResponse.data!.books}
           />
         </div>
       </header>
-      {!firstBook && booksResponse.data.books.length === 0 && (
+      {!firstBook && booksResponse.data!.books.length === 0 && (
         <div className='flex flex-wrap items-center justify-center'>
           <NoContentAlert domain={userid} />
         </div>
@@ -204,7 +203,7 @@ async function Page(props: PageProps) {
         userid={userid}
         myUid={myUidInt}
         targetProfile={
-          accessingProfileResponse?.data?.me ?? profileResponse.data.me
+          accessingProfileResponse?.data?.me ?? profileResponse.data!.me
         }
       />
     </section>

@@ -1,6 +1,6 @@
 'use client'
 import Switch from '@annatarhe/lake-ui/form-switch-field'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient } from '@apollo/client/react'
 import { Eye, EyeOff } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'

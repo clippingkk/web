@@ -45,7 +45,7 @@ export default async function Image(req: {
   })
 
   const rq = getReactQueryClient()
-  const bookID = clippingsResponse.data.clipping.bookID
+  const bookID = clippingsResponse.data!.clipping.bookID
   let b: WenquBook | null = null
   if (bookID && bookID.length > 3) {
     const bs = await rq.fetchQuery({
@@ -70,7 +70,7 @@ export default async function Image(req: {
 
   const LXGWWenKai = fetch(u).then((res) => res.arrayBuffer())
 
-  const content = clippingsResponse.data.clipping.content
+  const content = clippingsResponse.data!.clipping.content
 
   if (!b) {
     return new Response(

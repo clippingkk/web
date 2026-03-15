@@ -1,6 +1,6 @@
 import {
-  ApolloError,
   ApolloLink,
+  ServerError,
   type OperationVariables,
   type QueryOptions,
 } from '@apollo/client'
@@ -26,15 +26,14 @@ export const getApolloServerClient = getClient
 export function doApolloServerQuery<
   TData,
   TVariables extends OperationVariables = OperationVariables,
->(options: QueryOptions<TVariables, TData>) {
+>(options: QueryOptions<TVariables, TData>): Promise<{ data: TData }> {
   return (
     getApolloServerClient()
       .query<TData, TVariables>(options)
-       
+      .then((result) => ({ data: result.data as TData }))
       .catch((e: any) => {
-        if (e instanceof ApolloError) {
-           
-          const statusCode = (e.cause as any)?.info?.code as number
+        if (e instanceof ServerError) {
+          const statusCode = e.statusCode
           if (statusCode === 401) {
             return redirect('/auth/auth-v4?clean=true')
           }

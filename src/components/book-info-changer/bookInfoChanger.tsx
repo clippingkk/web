@@ -1,6 +1,6 @@
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient } from '@apollo/client/react'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Button from '@/components/button/button'

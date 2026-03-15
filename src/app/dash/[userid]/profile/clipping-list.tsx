@@ -17,7 +17,7 @@ type ClippingListProps = {
 
 function ClippingList(props: ClippingListProps) {
   const { uid, userDomain } = props
-  const [renderList, setRenderList] = React.useState<
+  const [extraItems, setExtraItems] = React.useState<
     FetchClippingsByUidQuery['clippingList']['items']
   >([])
   const { data, loading, fetchMore } = useFetchClippingsByUidQuery({
@@ -27,10 +27,19 @@ function ClippingList(props: ClippingListProps) {
         limit: 20,
       },
     },
-    onCompleted(data) {
-      setRenderList(data.clippingList.items)
-    },
   })
+  const renderList = React.useMemo(() => {
+    const initial = data?.clippingList.items ?? []
+    return [...initial, ...extraItems].reduce(
+      (acc, cur) => {
+        if (!acc.find((x) => x.id === cur.id)) {
+          acc.push(cur)
+        }
+        return acc
+      },
+      [] as FetchClippingsByUidQuery['clippingList']['items']
+    )
+  }, [data, extraItems])
   const masonaryColumnCount = useMasonaryColumnCount()
   const maybeLoadMore = useInfiniteLoader(
     (
@@ -53,17 +62,7 @@ function ClippingList(props: ClippingListProps) {
           },
         },
       }).then((resp) => {
-        setRenderList((prev) =>
-          [...prev, ...resp.data.clippingList.items].reduce(
-            (acc, cur) => {
-              if (!acc.find((x) => x.id === cur.id)) {
-                acc.push(cur)
-              }
-              return acc
-            },
-            [] as FetchClippingsByUidQuery['clippingList']['items']
-          )
-        )
+        setExtraItems((prev) => [...prev, ...resp.data!.clippingList.items])
       })
     },
     {

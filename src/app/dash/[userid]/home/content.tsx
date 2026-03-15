@@ -1,5 +1,5 @@
 'use client'
-import { useQuery, useSuspenseQuery } from '@apollo/client'
+import { useQuery, useSuspenseQuery } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import BookCover from '@/components/book-cover/book-cover'
@@ -119,7 +119,7 @@ function HomePageContent(props: HomePageContentProps) {
               },
             },
           }).then((res) => {
-            if (res.data.books.length < STEP) {
+            if (res.data!.books.length < STEP) {
               setReachEnd(true)
             }
           })

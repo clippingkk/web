@@ -40,7 +40,7 @@ async function UncheckedPage(props: Props) {
       },
     },
   })
-  return <UncheckedPageContent profile={profileResponse.me} />
+  return <UncheckedPageContent profile={profileResponse!.me} />
 }
 
 export default UncheckedPage

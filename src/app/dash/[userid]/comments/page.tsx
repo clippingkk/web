@@ -36,7 +36,7 @@ export default async function CommentsPage({ params }: Props) {
   const ck = await cookies()
   const token = ck.get(COOKIE_TOKEN_KEY)?.value
 
-  const { data, error } = await doApolloServerQuery<
+  const { data } = await doApolloServerQuery<
     GetCommentListQuery,
     GetCommentListQueryVariables
   >({
@@ -54,7 +54,7 @@ export default async function CommentsPage({ params }: Props) {
     },
   })
 
-  if (error || !data?.getCommentList) {
+  if (!data?.getCommentList) {
     notFound()
   }
 
