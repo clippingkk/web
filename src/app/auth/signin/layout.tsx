@@ -2,7 +2,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type React from 'react'
-import logo from '@/assets/logo.png'
+import logoDark from '@/assets/logo-dark.svg'
+import logoLight from '@/assets/logo-light.svg'
 import Card from '@/components/card/card'
 import GithubLogo from '@/components/icons/github.logo.svg'
 import { GithubClientID } from '@/constants/config'
@@ -34,9 +35,16 @@ function AuthPage(props: AuthPageProps) {
         <>
           <div className='mb-4 flex flex-col items-center justify-center'>
             <Image
-              src={logo}
+              src={logoLight}
               alt='clippingkk logo'
-              // className='w-24 h-24 lg:w-48 lg:h-48 shadow-sm rounded-sm'
+              className='dark:hidden'
+              width={96}
+              height={96}
+            />
+            <Image
+              src={logoDark}
+              alt='clippingkk logo'
+              className='hidden dark:block'
               width={96}
               height={96}
             />

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import React from 'react'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo-light.svg'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import MetaTwitterCard, { TwitterCardType } from './meta-twitter-card'
 

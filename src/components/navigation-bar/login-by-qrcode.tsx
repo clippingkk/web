@@ -1,7 +1,7 @@
 import { QRCodeCanvas } from 'qrcode.react'
 import { useTranslation } from '@/i18n/client'
 import { getLocalToken } from '@/services/ajax'
-import logo from '../../assets/logo.png'
+import logoLight from '../../assets/logo-light.svg'
 
 function LoginByQRCode() {
   const theToken = getLocalToken()
@@ -13,7 +13,7 @@ function LoginByQRCode() {
           value={theToken}
           size={250}
           imageSettings={{
-            src: logo.src,
+            src: logoLight.src,
             height: 50,
             width: 50,
             excavate: true,

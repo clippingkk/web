@@ -4,7 +4,8 @@ import { getTranslation } from '@/i18n'
 import BrandFlomoLogo from '../../assets/brand-flomo.png'
 import BrandNotionLogo from '../../assets/brand-notion.svg'
 import BrandServerLogo from '../../assets/brand-server.svg'
-import logo from '../../assets/logo.png'
+import logoDark from '../../assets/logo-dark.svg'
+import logoLight from '../../assets/logo-light.svg'
 
 async function FeaturesOpen() {
   const { t } = await getTranslation()
@@ -20,9 +21,16 @@ async function FeaturesOpen() {
       <div className='flex items-center'>
         <div className='flex items-center'>
           <Image
-            src={logo}
+            src={logoLight}
             alt='clippingkk logo'
-            className='w-10 h-10 lg:w-20 lg:h-20 rounded-sm shadow-lg'
+            className='w-10 h-10 lg:w-20 lg:h-20 rounded-sm shadow-lg dark:hidden'
+            width={40}
+            height={40}
+          />
+          <Image
+            src={logoDark}
+            alt='clippingkk logo'
+            className='hidden w-10 h-10 lg:w-20 lg:h-20 rounded-sm shadow-lg dark:block'
             width={40}
             height={40}
           />

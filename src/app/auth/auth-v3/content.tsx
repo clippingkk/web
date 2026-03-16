@@ -8,7 +8,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import logo from '@/assets/logo.png'
+import logoDark from '@/assets/logo-dark.svg'
+import logoLight from '@/assets/logo-light.svg'
 import EmailBox from '@/components/auth/email-box'
 import OTPBox from '@/components/auth/otp-box'
 import { useLoginV3Successed } from '@/hooks/hooks'
@@ -109,9 +110,16 @@ function AuthV3Content() {
           </div>
           <div className='flex justify-center items-center flex-col mb-4'>
             <Image
-              src={logo}
+              src={logoLight}
               alt='clippingkk logo'
-              // className='w-24 h-24 lg:w-48 lg:h-48 shadow-sm rounded-sm'
+              className='dark:hidden'
+              width={96}
+              height={96}
+            />
+            <Image
+              src={logoDark}
+              alt='clippingkk logo'
+              className='hidden dark:block'
               width={96}
               height={96}
             />

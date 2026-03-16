@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo-light.svg'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import type { Clipping, User } from '../../schema/generated'
 import type { WenquBook } from '../../services/wenqu'

@@ -2,7 +2,8 @@
 import Image from 'next/image'
 import type React from 'react'
 import { useMemo } from 'react'
-import logo from '@/assets/logo.png'
+import logoDark from '@/assets/logo-dark.svg'
+import logoLight from '@/assets/logo-light.svg'
 import Avatar from '@/components/avatar/avatar'
 import PublicBookItem from '@/components/public-book-item/public-book-item'
 import { useMultipleBook } from '@/hooks/book'
@@ -78,7 +79,8 @@ function ReportYearly(props: ReportYearlyProps) {
           className='bg-opacity-80 dark:bg-opacity-80 sticky top-0 left-0 z-50 flex w-full items-center justify-around bg-gray-200 p-4 backdrop-blur-lg dark:bg-gray-800'
           href='https://clippingkk.annatarhe.com'
         >
-          <Image src={logo} alt='clippingkk logo' height={64} width={64} />
+          <Image src={logoLight} alt='clippingkk logo' height={64} width={64} className='dark:hidden' />
+          <Image src={logoDark} alt='clippingkk logo' height={64} width={64} className='hidden dark:block' />
           <span className='ml-8 text-gray-700 dark:text-gray-200'>
             {t('app.slogan')}
           </span>

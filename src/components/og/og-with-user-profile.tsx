@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo-light.svg'
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import type { ProfileQuery } from '../../schema/generated'
 

@@ -1,6 +1,7 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
-import logo from '@/assets/logo.png'
+import logoDark from '@/assets/logo-dark.svg'
+import logoLight from '@/assets/logo-light.svg'
 import Avatar from '@/components/avatar/avatar'
 import ReportBookSection from '@/components/reports/report-book-section'
 import ReportHero from '@/components/reports/report-hero'
@@ -51,7 +52,8 @@ async function ReportYearly(props: ReportYearlyProps) {
               className='flex w-full items-center justify-around px-8 pb-4 lg:px-0'
               href='https://clippingkk.annatarhe.com'
             >
-              <Image src={logo} alt='clippingkk logo' height={64} width={64} />
+              <Image src={logoLight} alt='clippingkk logo' height={64} width={64} className='dark:hidden' />
+              <Image src={logoDark} alt='clippingkk logo' height={64} width={64} className='hidden dark:block' />
               <span className='ml-8 text-gray-700 dark:text-gray-200'>
                 {t('app.slogan')}
               </span>

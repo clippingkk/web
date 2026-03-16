@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg-grad" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e3a6e"/>
+      <stop offset="50%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="k-grad" x1="130" y1="90" x2="380" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="35%" stop-color="#fdba74"/>
+      <stop offset="65%" stop-color="#f9a8d4"/>
+      <stop offset="100%" stop-color="#c4b5fd"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#fdba74" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#fdba74" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect width="512" height="512" fill="url(#bg-grad)"/>
+
+  <!-- Warm glow behind the K -->
+  <circle cx="256" cy="256" r="180" fill="url(#glow)"/>
+
+  <!-- Stylized K letter with graceful curves -->
+  <g stroke="url(#k-grad)" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Vertical bar -->
+    <path d="M168 108 L168 404" stroke-width="48"/>
+    <!-- Upper arm - graceful curve -->
+    <path d="M192 260 C235 238, 285 178, 344 108" stroke-width="44"/>
+    <!-- Lower arm - graceful curve -->
+    <path d="M192 260 C235 282, 285 342, 344 404" stroke-width="44"/>
+  </g>
+
+  <!-- Small sparkle accent at the tip of upper arm -->
+  <circle cx="352" cy="100" r="10" fill="#fde68a" opacity="0.9"/>
+  <circle cx="352" cy="100" r="4" fill="#ffffff" opacity="0.7"/>
+</svg>

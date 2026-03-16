@@ -6,7 +6,8 @@ import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import type { ProfileQuery, ProfileQueryVariables } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
-import logo from '../../assets/logo.png'
+import logoDark from '../../assets/logo-dark.svg'
+import logoLight from '../../assets/logo-light.svg'
 import { ProfileDocument } from '../../schema/generated'
 import { getMyHomeLink } from '../../utils/profile.utils'
 import LinkIndicator from '../link-indicator'
@@ -87,9 +88,17 @@ async function NavigateGuide(props: NavigateGuideProps) {
                 <Link href='/' className='flex items-center gap-2'>
                   <div className='relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white/10'>
                     <Image
-                      src={logo}
+                      src={logoLight}
                       alt='ClippingKK logo'
-                      className='h-8 w-8 object-contain'
+                      className='h-8 w-8 object-contain dark:hidden'
+                      width={32}
+                      height={32}
+                      priority
+                    />
+                    <Image
+                      src={logoDark}
+                      alt='ClippingKK logo'
+                      className='hidden h-8 w-8 object-contain dark:block'
                       width={32}
                       height={32}
                       priority

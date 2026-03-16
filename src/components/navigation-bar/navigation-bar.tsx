@@ -11,7 +11,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { useCallback, useState } from 'react'
-import logo from '@/assets/logo.png'
+import logoDark from '@/assets/logo-dark.svg'
+import logoLight from '@/assets/logo-light.svg'
 import { useTranslation } from '@/i18n/client'
 import type { ProfileQuery } from '@/schema/generated'
 import LinkIndicator from '../link-indicator'
@@ -69,15 +70,22 @@ function NavigationBar(props: NavigationBarProps) {
   return (
     <nav
       className={
-        `${styles.navbar 
+        `${styles.navbar
         } bg-opacity-50 dark:bg-opacity-80 with-slide-in sticky top-0 z-30 flex w-full items-center justify-around bg-gray-800 py-4 shadow-lg backdrop-blur-xl backdrop-filter`
       }
     >
       <div className='flex items-center justify-around'>
         <Image
-          src={logo}
+          src={logoLight}
           alt='clippingkk logo'
-          className='mr-2 h-10 w-10 rounded-sm lg:mr-12 lg:h-20 lg:w-20'
+          className='mr-2 h-10 w-10 rounded-sm dark:hidden lg:mr-12 lg:h-20 lg:w-20'
+          width={40}
+          height={40}
+        />
+        <Image
+          src={logoDark}
+          alt='clippingkk logo'
+          className='mr-2 hidden h-10 w-10 rounded-sm dark:block lg:mr-12 lg:h-20 lg:w-20'
           width={40}
           height={40}
         />
