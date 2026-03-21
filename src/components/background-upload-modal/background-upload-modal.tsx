@@ -30,7 +30,7 @@ const BackgroundUploadModal = ({
   onClose,
   onSave,
 }: BackgroundUploadModalProps) => {
-  const [_selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string>('')
   const [croppedUrl, setCroppedUrl] = useState<string>('')
   const [isProcessing, setIsProcessing] = useState(false)
@@ -156,12 +156,10 @@ const BackgroundUploadModal = ({
     onClose()
   }, [previewUrl, croppedUrl, onClose])
 
-  // Mock API call function
   const mockUploadBackground = useCallback(
-    async (imageUrl: string): Promise<void> => {
+    async (_imageUrl: string): Promise<void> => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          console.log('Mock API: Background image uploaded:', imageUrl)
           resolve()
         }, 1000)
       })
@@ -181,9 +179,8 @@ const BackgroundUploadModal = ({
       onSave(croppedUrl)
       toast.success('Background updated successfully!')
       handleClose()
-    } catch (error) {
+    } catch {
       toast.error('Failed to update background')
-      console.error('Background upload error:', error)
     } finally {
       setIsProcessing(false)
     }

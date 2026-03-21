@@ -9,7 +9,7 @@ type OTPBoxProps = {
   autoValidate?: boolean
   loading: boolean
 
-  onSubmit(val: string): Promise<any>
+  onSubmit(val: string): Promise<unknown>
 }
 
 // TODO: resend case
@@ -25,8 +25,8 @@ function OTPBox(props: OTPBoxProps) {
     }
     try {
       await props.onSubmit(otp)
-    } catch (e: any) {
-      setHasErrorMsg(e.message)
+    } catch (e: unknown) {
+      setHasErrorMsg(e instanceof Error ? e.message : 'Unknown error')
     }
   }, [otp, props])
 

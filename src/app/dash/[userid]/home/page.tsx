@@ -62,8 +62,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     return profileGenerateMetadata({
       profile: profileResponse.data!.me,
     })
-  } catch (e) {
-    console.error(e)
+  } catch {
     return profileGenerateMetadata({})
   }
 }

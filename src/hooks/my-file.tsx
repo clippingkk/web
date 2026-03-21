@@ -56,10 +56,9 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
       try {
         send({ type: 'Next' })
         str = await extraFile(file)
-      } catch (e: any) {
-        console.error(e, e.toString())
+      } catch (e: unknown) {
         send({ type: 'Error' })
-        setMessages((m) => m.concat(e.toString()))
+        setMessages((m) => m.concat(e instanceof Error ? e.message : String(e)))
         return
       }
 
@@ -83,8 +82,8 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         try {
           const v = JSON.parse(uploadedClippingValue) as string[]
           uploadedClippings = new Set(v)
-        } catch (e) {
-          console.error(e)
+        } catch {
+          // ignore invalid cached data
         }
       }
       const allDigests = await Promise.all(
@@ -131,8 +130,8 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
           if (resp.count > 0) {
             i.bookId = resp.books[0].doubanId.toString()
           }
-        } catch (e: any) {
-          setMessages((m) => m.concat(e.toString()))
+        } catch (e: unknown) {
+          setMessages((m) => m.concat(e instanceof Error ? e.message : String(e)))
         } finally {
           wenquSearchResult.current.set(i.title, i.bookId ? ~~i.bookId : 0)
         }
@@ -199,9 +198,9 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         setAt(chunkedData.length)
         toast.success(t('app.upload.tips.done'))
         send({ type: 'Next' })
-      } catch (e: any) {
+      } catch (e: unknown) {
         send({ type: 'Error' })
-        setMessages((m) => m.concat(e.toString()))
+        setMessages((m) => m.concat(e instanceof Error ? e.message : String(e)))
       } finally {
         client.resetStore()
       }

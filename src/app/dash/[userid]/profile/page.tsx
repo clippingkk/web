@@ -42,13 +42,12 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 }
 
 async function Page(props: PageProps) {
-  const [params, searchParams, ck, { t }] = await Promise.all([
+  const [params, , ck, { t }] = await Promise.all([
     props.params,
     props.searchParams,
     cookies(),
     getTranslation(),
   ])
-  const withProfileEditor = searchParams.with_profile_editor
   const pathUid: string = params.userid
   const myUidStr = ck.get(USER_ID_KEY)?.value
   const myUid = myUidStr ? parseInt(myUidStr, 10) : undefined
@@ -75,7 +74,6 @@ async function Page(props: PageProps) {
     },
   })
 
-  console.log('withProfileEditor', withProfileEditor)
   return (
     <section className="w-full">
       {/* Main profile section */}

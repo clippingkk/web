@@ -10,7 +10,7 @@ type AppleLoginButtonViewProps = {
   disabled?: boolean
   onSuccess: (resp: AppleAuthResponse) => void
 
-  onError: (error: any) => void
+  onError: (error: unknown) => void
   version?: 'v2' | 'v4'
 }
 const authOptions = {

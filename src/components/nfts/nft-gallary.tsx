@@ -23,7 +23,19 @@ function NFTGallary(props: NFTGallaryProps) {
   }, [data?.me.nfts.edges])
 
   if (loading) {
-    return <span>loading NFTs...</span>
+    return (
+      <div className="grid w-144 grid-cols-2 gap-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="mx-auto mt-4 flex w-32 flex-col items-center">
+            <div className="h-32 w-32 animate-pulse rounded-t-lg bg-gray-300 dark:bg-gray-700" />
+            <div className="w-32 rounded-b-lg bg-gray-200 p-2 dark:bg-gray-800">
+              <div className="h-3 w-20 animate-pulse rounded bg-gray-300 dark:bg-gray-700" />
+              <div className="mt-1 h-2 w-14 animate-pulse rounded bg-gray-300 dark:bg-gray-700" />
+            </div>
+          </div>
+        ))}
+      </div>
+    )
   }
 
   if (!loading && nftList.length === 0) {

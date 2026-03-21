@@ -20,11 +20,11 @@ const Heading = ({ level, children }: HeadingProps) => {
     level === 6 && 'mb-4 text-base text-gray-800 dark:text-gray-200'
   )
 
-  const Tag = `h${level}` as any
+  const Tag = `h${level}` as React.ElementType
   return <Tag className={className}>{children}</Tag>
 }
 
-export const MarkdownComponents: any = {
+export const MarkdownComponents: Record<string, React.FC<React.PropsWithChildren<Record<string, unknown>>>> = {
   h1: ({
     children,
     ...props

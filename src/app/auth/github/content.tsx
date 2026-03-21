@@ -16,8 +16,6 @@ function GithubOAuthContent(props: GithubOAuthContentProps) {
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.githubAuth)
   useEffect(() => {
     if (!code) {
-      console.log('no code')
-      // TODO: redirect
       return
     }
 

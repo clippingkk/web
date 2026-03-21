@@ -64,18 +64,6 @@ async function DashboardContainer(props: DashboardContainerProps) {
     }
   }
 
-  // const containerStyle = useMemo<React.CSSProperties | undefined>(() => {
-  //   if (!bg) {
-  //     return undefined
-  //   }
-  //   return {
-  //     // backgroundImage: `url(https://picsum.photos/${width}/${height}/?blur=10)`
-  //     backgroundImage: `url(${bg})`,
-  //   }
-  // }, [])
-  // TODO: 预处理
-  // https://lokeshdhakar.com/projects/color-thief/#getting-started
-  // + dark theme or light theme
   return (
     <section
       className={

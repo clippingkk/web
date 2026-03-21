@@ -12,8 +12,7 @@ function NFTGallaryItem(props: NFTGallaryItemProps) {
   const metadata = useMemo<NFTMetadata | null>(() => {
     try {
       return JSON.parse(props.data.metadata)
-    } catch (e) {
-      console.error(e)
+    } catch {
       return null
     }
   }, [props.data.metadata])
@@ -58,8 +57,9 @@ function NFTGallaryItem(props: NFTGallaryItemProps) {
     return <div className="h-28 w-28 animate-pulse bg-gray-500" />
   }
   return (
-    <div
-      className="mx-auto mt-4 flex w-32 items-center justify-center"
+    <button
+      type="button"
+      className="mx-auto mt-4 flex w-32 cursor-pointer items-center justify-center border-none bg-transparent p-0"
       onClick={() => {
         if (props.onClick) {
           props.onClick(props.data, realImageUrl)
@@ -69,9 +69,6 @@ function NFTGallaryItem(props: NFTGallaryItemProps) {
       <div className="bg-opacity-0 hover:bg-opacity-30 bg-gray-400 duration-300">
         <img
           src={realImageUrl}
-          // width={80}
-          //  height={80}
-          // className='w-28 h-28'
           className="h-full w-full rounded-t-lg"
           alt={props.data.name}
         />
@@ -80,7 +77,7 @@ function NFTGallaryItem(props: NFTGallaryItemProps) {
           <span className="text-xs text-white">{metadata?.name ?? ''}</span>
         </div>
       </div>
-    </div>
+    </button>
   )
 }
 
