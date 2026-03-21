@@ -110,6 +110,8 @@ async function Page(props: PageProps) {
     duration = result || 0
   }
 
+  const clippingsCount = clippingsData.book.clippingsCount ?? 0
+
   return (
     <>
       <BookInfo
@@ -117,8 +119,17 @@ async function Page(props: PageProps) {
         uid={uid}
         duration={duration}
         isLastReadingBook={clippingsData.book.isLastReadingBook}
+        clippingsCount={clippingsCount}
+        startReadingAt={clippingsData.book.startReadingAt}
+        lastReadingAt={clippingsData.book.lastReadingAt}
       />
-      <Divider title={t('app.book.title')} />
+      <Divider
+        title={
+          clippingsCount > 0
+            ? `${clippingsCount} ${t('app.book.title')}`
+            : t('app.book.title')
+        }
+      />
       <BookPageContent book={bookData} userid={userid} />
     </>
   )

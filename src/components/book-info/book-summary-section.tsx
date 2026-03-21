@@ -10,7 +10,7 @@ function BookSummarySection({ book }: Props) {
   const { t } = useTranslation(undefined, 'book')
   const [summaryExpanded, setSummaryExpanded] = useState(false)
   return (
-    <div className='mt-8 rounded-xl border border-gray-100 bg-white/20 p-6 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/20'>
+    <div className='mt-8 rounded-xl border border-gray-100 bg-white/40 p-6 backdrop-blur-sm dark:border-gray-700 dark:bg-zinc-800/40'>
       <div className='mb-4 flex items-center justify-between'>
         <h3 className='text-xl font-semibold text-gray-800 dark:text-gray-200'>
           {t('app.book.summary.title')}

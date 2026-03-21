@@ -6,6 +6,7 @@ import type { WenquBook } from '../../services/wenqu'
 import BookSharePreview from '../preview/preview-book'
 import BookCoverColumn from './book-cover-column'
 import BookMetaSection from './book-meta-section'
+import BookStatsBar from './book-stats-bar'
 import BookSummarySection from './book-summary-section'
 import BookTitleSection from './book-title-section'
 
@@ -14,52 +15,67 @@ type TBookInfoProp = {
   book: WenquBook
   duration?: number
   isLastReadingBook?: boolean
+  clippingsCount?: number
+  startReadingAt?: string
+  lastReadingAt?: string
 }
 
-function BookInfo({ book, uid, duration }: TBookInfoProp) {
+function BookInfo({
+  book,
+  uid,
+  duration,
+  clippingsCount,
+  startReadingAt,
+  lastReadingAt,
+}: TBookInfoProp) {
   const { t } = useTranslation()
   const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
 
   const togglePreviewVisible = useCallback(() => {
     setSharePreviewVisible((v) => !v)
   }, [])
-  return (
-    <div className='relative mt-16 w-full md:mt-24'>
-      {/* Background decoration */}
-      <div className='absolute inset-0 -z-10 bg-gradient-to-br from-white/30 via-white/20 to-white/5 backdrop-blur-lg dark:from-gray-800/30 dark:via-gray-800/20 dark:to-gray-900/5'></div>
 
-      {/* Main content container */}
-      <div className='mx-auto w-full max-w-7xl rounded-2xl border border-gray-200 bg-gradient-to-br from-white/70 via-white/60 to-white/40 shadow-xl backdrop-blur-lg dark:border-gray-700 dark:from-gray-900/70 dark:via-gray-800/60 dark:to-gray-900/40'>
-        {/* Book content grid */}
-        <div className='grid grid-cols-1 gap-8 p-8 md:grid-cols-3 lg:grid-cols-4'>
-          {/* Book cover column */}
-          <BookCoverColumn
-            book={book}
-            togglePreviewVisible={togglePreviewVisible}
+  return (
+    <div className='relative w-full'>
+      {/* Subtle background wash */}
+      <div className='absolute inset-0 -z-10 rounded-2xl bg-gradient-to-b from-blue-50/40 via-white/20 to-transparent dark:from-blue-950/30 dark:via-zinc-900/20 dark:to-transparent' />
+
+      <div className='grid grid-cols-1 gap-6 py-6 md:grid-cols-[280px,1fr] lg:grid-cols-[320px,1fr] lg:gap-10 lg:py-8'>
+        {/* Book cover column */}
+        <BookCoverColumn
+          book={book}
+          togglePreviewVisible={togglePreviewVisible}
+        />
+
+        {/* Book details column */}
+        <div className='font-lxgw space-y-6'>
+          {/* Title and rating */}
+          <BookTitleSection book={book} duration={duration} />
+
+          {/* Reading stats bar */}
+          <BookStatsBar
+            clippingsCount={clippingsCount}
+            duration={duration}
+            startReadingAt={startReadingAt}
+            lastReadingAt={lastReadingAt}
           />
 
-          {/* Book details column */}
-          <div className='font-lxgw md:col-span-2 lg:col-span-3'>
-            {/* Title and rating */}
-            <BookTitleSection book={book} duration={duration} />
-
-            {/* Action buttons (desktop) */}
-            <div className='mt-6 hidden gap-4 md:flex'>
-              <button
-                onClick={() => togglePreviewVisible()}
-                className='flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 px-5 py-2.5 text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg'
-              >
-                <Share2 className='h-4 w-4' />
-                <span>{t('app.book.share')}</span>
-              </button>
-            </div>
-
-            {/* Book metadata */}
-            <BookMetaSection book={book} />
-
-            {/* Book summary */}
-            <BookSummarySection book={book} />
+          {/* Action buttons (desktop) */}
+          <div className='hidden gap-4 md:flex'>
+            <button
+              onClick={() => togglePreviewVisible()}
+              className='flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 px-5 py-2.5 text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg'
+            >
+              <Share2 className='h-4 w-4' />
+              <span>{t('app.book.share')}</span>
+            </button>
           </div>
+
+          {/* Book metadata */}
+          <BookMetaSection book={book} />
+
+          {/* Book summary */}
+          <BookSummarySection book={book} />
         </div>
       </div>
 
