@@ -76,7 +76,10 @@
       "title": "书摘",
       "share": "分享这本书",
       "readingDuration": "这本书看了 {{ count }} 天",
-      "readingDuration_plural": "这本书看了 {{ count }} 天"
+      "readingDuration_plural": "这本书看了 {{ count }} 天",
+      "highlights": "高亮",
+      "readingDays": "阅读天数",
+      "readingPeriod": "阅读时间"
     },
     "auth": {
       "signin": "登陆",

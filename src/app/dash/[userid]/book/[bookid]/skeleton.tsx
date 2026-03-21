@@ -1,63 +1,87 @@
 function BookPageSkeleton() {
   return (
     <div className='w-full space-y-8 animate-pulse'>
-      {/* Book info section skeleton */}
-      <div className='grid grid-cols-1 lg:grid-cols-[300px,1fr] gap-8'>
-        {/* Book cover and details */}
-        <div className='space-y-4'>
-          {/* Book cover skeleton */}
-          <div className='w-full h-96 bg-gradient-to-br from-gray-200 via-gray-300 to-gray-200 dark:from-zinc-700 dark:via-zinc-600 dark:to-zinc-700 rounded-2xl shadow-sm'></div>
-
-          {/* Action buttons skeleton */}
-          <div className='space-y-3'>
-            <div className='h-12 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-xl'></div>
-            <div className='h-10 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg'></div>
+      {/* Book info hero section skeleton */}
+      <div className='grid grid-cols-1 md:grid-cols-[280px,1fr] lg:grid-cols-[320px,1fr] gap-6 lg:gap-10 py-6 lg:py-8'>
+        {/* Book cover skeleton */}
+        <div className='mx-auto w-full max-w-[320px]'>
+          <div className='w-full aspect-[4/5] bg-gradient-to-br from-gray-200 via-gray-300 to-gray-200 dark:from-zinc-700 dark:via-zinc-600 dark:to-zinc-700 rounded-xl shadow-sm' />
+          {/* Mobile share button skeleton */}
+          <div className='mt-6 md:hidden'>
+            <div className='h-12 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-xl' />
           </div>
         </div>
 
-        {/* Book info content */}
+        {/* Book details skeleton */}
         <div className='space-y-6'>
-          {/* Title and author */}
+          {/* Title */}
           <div className='space-y-3'>
-            <div className='h-8 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg w-3/4'></div>
-            <div className='h-6 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg w-1/2'></div>
-          </div>
-
-          {/* Rating and badges */}
-          <div className='flex items-center gap-4'>
-            <div className='flex gap-1'>
-              {[...Array(5)].map((_, i) => (
+            <div className='h-10 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg w-3/4' />
+            <div className='flex items-center gap-2'>
+              <div className='h-6 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg w-1/3' />
+              <div className='h-6 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-full w-16' />
+            </div>
+            {/* Tags skeleton */}
+            <div className='flex gap-2'>
+              {[...Array(3)].map((_, i) => (
                 <div
                   key={i}
-                  className='w-4 h-4 bg-gray-300 dark:bg-zinc-600 rounded-full'
-                ></div>
+                  className='h-6 bg-gray-200 dark:bg-zinc-700 rounded-full w-16'
+                />
               ))}
             </div>
-            <div className='h-6 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-full w-16'></div>
           </div>
 
-          {/* Description */}
-          <div className='space-y-2'>
-            <div className='h-4 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-full'></div>
-            <div className='h-4 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-5/6'></div>
-            <div className='h-4 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-4/5'></div>
-          </div>
-
-          {/* Stats section */}
-          <div className='bg-white/40 dark:bg-zinc-800/40 backdrop-blur-sm rounded-xl p-4 border border-gray-200/40 dark:border-zinc-700/40'>
-            <div className='grid grid-cols-3 gap-4'>
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className='text-center space-y-2'>
-                  <div className='h-6 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-12 mx-auto'></div>
-                  <div className='h-4 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-16 mx-auto'></div>
+          {/* Stats bar skeleton */}
+          <div className='flex flex-wrap gap-3'>
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className='flex items-center gap-3 rounded-xl border border-gray-200/40 dark:border-zinc-700/40 bg-white/40 dark:bg-zinc-800/40 px-4 py-3'
+              >
+                <div className='h-8 w-8 bg-gray-200 dark:bg-zinc-700 rounded-lg' />
+                <div className='space-y-1'>
+                  <div className='h-5 bg-gray-200 dark:bg-zinc-700 rounded w-12' />
+                  <div className='h-3 bg-gray-200 dark:bg-zinc-700 rounded w-16' />
                 </div>
-              ))}
+              </div>
+            ))}
+          </div>
+
+          {/* Share button skeleton (desktop) */}
+          <div className='hidden md:block'>
+            <div className='h-10 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-xl w-32' />
+          </div>
+
+          {/* Meta section skeleton */}
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+            {[...Array(2)].map((_, i) => (
+              <div
+                key={i}
+                className='flex items-center gap-3 rounded-xl border border-gray-200/40 dark:border-zinc-700/40 bg-white/40 dark:bg-zinc-800/40 p-3'
+              >
+                <div className='h-9 w-9 bg-gray-200 dark:bg-zinc-700 rounded-lg' />
+                <div className='space-y-1'>
+                  <div className='h-3 bg-gray-200 dark:bg-zinc-700 rounded w-16' />
+                  <div className='h-4 bg-gray-200 dark:bg-zinc-700 rounded w-24' />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Summary skeleton */}
+          <div className='rounded-xl border border-gray-200/40 dark:border-zinc-700/40 bg-white/40 dark:bg-zinc-800/40 p-6 space-y-3'>
+            <div className='h-6 bg-gray-200 dark:bg-zinc-700 rounded w-24' />
+            <div className='space-y-2'>
+              <div className='h-4 bg-gray-200 dark:bg-zinc-700 rounded w-full' />
+              <div className='h-4 bg-gray-200 dark:bg-zinc-700 rounded w-5/6' />
+              <div className='h-4 bg-gray-200 dark:bg-zinc-700 rounded w-4/5' />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Elegant divider */}
+      {/* Divider skeleton */}
       <div className='relative h-px my-8 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent overflow-hidden'>
         <div
           className='absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/25 to-transparent animate-pulse'
@@ -65,33 +89,23 @@ function BookPageSkeleton() {
         />
       </div>
 
-      {/* Clippings section skeleton */}
-      <div className='space-y-6'>
-        <div className='flex items-center justify-between'>
-          <div className='h-7 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg w-32'></div>
-          <div className='h-8 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded-lg w-24'></div>
-        </div>
-
-        {/* Clippings grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {new Array(6).fill(1).map((_, i) => (
-            <div
-              key={i}
-              className='bg-white/30 dark:bg-zinc-800/30 backdrop-blur-sm rounded-2xl p-4 border border-gray-200/30 dark:border-zinc-700/30 space-y-3'
-            >
-              <div className='h-4 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-3/4'></div>
-              <div className='space-y-2'>
-                <div className='h-3 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-full'></div>
-                <div className='h-3 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-5/6'></div>
-                <div className='h-3 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-4/5'></div>
-              </div>
-              <div className='flex justify-between items-center'>
-                <div className='h-3 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-16'></div>
-                <div className='h-6 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-zinc-700 dark:to-zinc-600 rounded w-6'></div>
-              </div>
+      {/* Clippings grid skeleton */}
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        {new Array(6).fill(1).map((_, i) => (
+          <div
+            key={i}
+            className='bg-slate-50/80 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-100/50 dark:border-slate-700/50 space-y-4'
+          >
+            <div className='h-6 bg-gray-200 dark:bg-zinc-700 rounded w-3/4' />
+            <div className='h-px w-full bg-gradient-to-r from-transparent via-gray-200 dark:via-zinc-700 to-transparent' />
+            <div className='space-y-2'>
+              <div className='h-4 bg-gray-200 dark:bg-zinc-700 rounded w-full' />
+              <div className='h-4 bg-gray-200 dark:bg-zinc-700 rounded w-5/6' />
+              <div className='h-4 bg-gray-200 dark:bg-zinc-700 rounded w-4/5' />
+              <div className='h-4 bg-gray-200 dark:bg-zinc-700 rounded w-3/4' />
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   )

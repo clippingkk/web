@@ -14,7 +14,7 @@ function BookMetaSection({ book }: Props) {
   return (
     <div className='mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3'>
       {book.pubdate && (
-        <div className='flex items-center gap-3 rounded-xl border border-gray-100 bg-white/20 p-3 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/20'>
+        <div className='flex items-center gap-3 rounded-xl border border-gray-100 bg-white/40 p-3 backdrop-blur-sm dark:border-gray-700 dark:bg-zinc-800/40'>
           <div className='rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30'>
             <Calendar className='h-5 w-5 text-blue-600 dark:text-blue-400' />
           </div>
@@ -30,7 +30,7 @@ function BookMetaSection({ book }: Props) {
       )}
 
       {book.totalPages > 0 && (
-        <div className='flex items-center gap-3 rounded-xl border border-gray-100 bg-white/20 p-3 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/20'>
+        <div className='flex items-center gap-3 rounded-xl border border-gray-100 bg-white/40 p-3 backdrop-blur-sm dark:border-gray-700 dark:bg-zinc-800/40'>
           <div className='rounded-lg bg-green-100 p-2 dark:bg-green-900/30'>
             <BookOpen className='h-5 w-5 text-green-600 dark:text-green-400' />
           </div>

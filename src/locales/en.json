@@ -76,7 +76,10 @@
       "title": "Clippings",
       "share": "Share the book",
       "readingDuration": "Read for {{ count }} day",
-      "readingDuration_plural": "Read for {{ count }} days"
+      "readingDuration_plural": "Read for {{ count }} days",
+      "highlights": "Highlights",
+      "readingDays": "Reading Days",
+      "readingPeriod": "Reading Period"
     },
     "auth": {
       "signin": "Sign in",

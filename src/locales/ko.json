@@ -76,7 +76,10 @@
       "title": "책 다이제스트",
       "share": "이 책 공유",
       "readingDuration": "이 책을 {{ count }} 일 동안 읽으십시오",
-      "readingDuration_plural": "이 책을 {{ count }} 일 동안 읽으십시오"
+      "readingDuration_plural": "이 책을 {{ count }} 일 동안 읽으십시오",
+      "highlights": "하이라이트",
+      "readingDays": "독서 일수",
+      "readingPeriod": "독서 기간"
     },
     "auth": {
       "signin": "로그인",

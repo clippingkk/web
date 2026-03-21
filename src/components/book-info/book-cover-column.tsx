@@ -11,9 +11,10 @@ type Props = {
 function BookCoverColumn({ book, togglePreviewVisible }: Props) {
   const { t } = useTranslation()
   return (
-    <div className='md:col-span-1'>
-      <div className='relative -mt-12 md:-mt-20 mx-auto w-64 md:w-full max-w-xs transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1'>
-        <div className='absolute inset-0 -z-10 blur-md opacity-30 scale-95 translate-y-4'></div>
+    <div>
+      <div className='relative mx-auto w-full max-w-[320px] transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1'>
+        {/* Colored shadow behind cover */}
+        <div className='absolute inset-4 -z-10 rounded-2xl bg-blue-400/30 opacity-40 blur-2xl translate-y-4 scale-95 dark:bg-blue-500/20' />
         <BlurhashView
           blurhashValue={
             book.edges?.imageInfo?.blurHashValue ??
@@ -22,7 +23,7 @@ function BookCoverColumn({ book, togglePreviewVisible }: Props) {
           src={book.image}
           height={384}
           width={320}
-          className='w-full aspect-[4/5] object-cover rounded-xl shadow-xl transition-all duration-300'
+          className='w-full aspect-[4/5] object-cover rounded-xl shadow-2xl transition-all duration-300'
           alt={book.title}
         />
       </div>
