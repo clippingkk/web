@@ -59,7 +59,12 @@ function OGImageClipping(props: ClippingOpenGraphImageProps) {
           marginTop: '1rem',
         }}
       >
-        <img src={logoSrc} width={logoSize} height={logoSize} />
+        <img
+          src={logoSrc}
+          width={logoSize}
+          height={logoSize}
+          alt="ClippingKK"
+        />
       </div>
       <div
         style={{

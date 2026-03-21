@@ -135,6 +135,8 @@ interface MetaMaskStandaloneLoginButtonProps {
 
 // Disabled MetaMask component - returns null
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function MetaMaskStandaloneLoginButton(props: MetaMaskStandaloneLoginButtonProps) {
+export default function MetaMaskStandaloneLoginButton(
+  _props: MetaMaskStandaloneLoginButtonProps
+) {
   return null
 }

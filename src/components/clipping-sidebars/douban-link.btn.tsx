@@ -1,7 +1,9 @@
 import { ExternalLink } from 'lucide-react'
+
 import { getTranslation } from '@/i18n'
 import { cn } from '@/lib/utils'
 import type { WenquBook } from '@/services/wenqu'
+
 import { SidebarContainer, SidebarIcon, SidebarText } from './base/container'
 
 type Props = {
@@ -14,19 +16,19 @@ async function DoubanLinkBtn(props: Props) {
   return (
     <SidebarContainer className={cn(!book && 'opacity-50')}>
       <a
-        className='flex items-center gap-2 p-4 w-full'
+        className="flex w-full items-center gap-2 p-4"
         href={
           book
             ? `https://book.douban.com/subject/${book?.doubanId}`
             : 'javascript:void(0)'
         }
-        target='_blank'
-        rel='noreferrer'
+        target="_blank"
+        rel="noreferrer"
       >
-        <SidebarIcon className='text-teal-500 group-hover:text-teal-600'>
-          <ExternalLink className='w-full h-full' />
+        <SidebarIcon className="text-teal-500 group-hover:text-teal-600">
+          <ExternalLink className="h-full w-full" />
         </SidebarIcon>
-        <SidebarText className='text-center'>
+        <SidebarText className="text-center">
           {t('app.clipping.link')}
         </SidebarText>
       </a>

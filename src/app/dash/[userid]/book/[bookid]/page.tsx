@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
+
 import BookInfo from '@/components/book-info/book-info'
 import Divider from '@/components/divider/divider'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
@@ -19,6 +20,7 @@ import {
   type WenquSearchResponse,
   wenquRequest,
 } from '@/services/wenqu'
+
 import BookPageContent from './content'
 
 type PageProps = {

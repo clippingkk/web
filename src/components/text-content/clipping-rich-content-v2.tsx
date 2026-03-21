@@ -1,7 +1,9 @@
 import Modal from '@annatarhe/lake-ui/modal'
 import { arrow, FloatingArrow, offset, useFloating } from '@floating-ui/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+
 import { useTranslation } from '@/i18n/client'
+
 import { useClickOutside } from '../../hooks/dom'
 import type { FetchClippingQuery } from '../../schema/generated'
 import NounEditContent from '../noun/noun-edit'
@@ -108,7 +110,7 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
           style={{
             ...floatingStyles,
           }}
-          popover='manual'
+          popover="manual"
           className={
             'with-fade-in relative isolate z-50 m-0 overflow-visible rounded-xl bg-linear-to-b from-slate-50 to-slate-200 p-4 shadow-lg dark:from-slate-900 dark:to-slate-950'
           }
@@ -117,7 +119,7 @@ function ClippingRichContentV2(props: ClippingRichContentProps) {
             ref={arrowRef}
             context={context}
             tipRadius={2}
-            className='fill-slate-50 dark:fill-slate-900'
+            className="fill-slate-50 dark:fill-slate-900"
           />
           <NounTooltipCard
             noun={nouns.get(selectingText ?? '')}

@@ -1,5 +1,6 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
+
 import './style.css'
 
 type InfiniteLooperProps = {
@@ -63,12 +64,12 @@ function InfiniteLooper({ speed, direction, children }: InfiniteLooperProps) {
   }, [setupInstances])
 
   return (
-    <div className='looper' ref={outerRef}>
-      <div className='looper__innerList' ref={innerRef} data-animate='true'>
+    <div className="looper" ref={outerRef}>
+      <div className="looper__innerList" ref={innerRef} data-animate="true">
         {[...Array(looperInstances)].map((_, ind) => (
           <div
             key={ind}
-            className='looper__listInstance'
+            className="looper__listInstance"
             style={{
               animationDuration: `${speed}s`,
               animationDirection: direction === 'right' ? 'reverse' : 'normal',

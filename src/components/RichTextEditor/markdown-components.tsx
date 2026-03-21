@@ -1,4 +1,5 @@
 import type React from 'react'
+
 import { cn } from '@/lib/utils'
 
 type HeadingProps = {
@@ -19,12 +20,10 @@ const Heading = ({ level, children }: HeadingProps) => {
     level === 6 && 'mb-4 text-base text-gray-800 dark:text-gray-200'
   )
 
-   
   const Tag = `h${level}` as any
   return <Tag className={className}>{children}</Tag>
 }
 
- 
 export const MarkdownComponents: any = {
   h1: ({
     children,
@@ -69,12 +68,11 @@ export const MarkdownComponents: any = {
   >) => <Heading level={6}>{children}</Heading>,
   p: ({
     children,
-    ...props
   }: React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLParagraphElement>,
     HTMLParagraphElement
   >) => (
-    <p className='mb-6 leading-7 text-gray-700 not-first:mt-6 dark:text-gray-300'>
+    <p className="mb-6 leading-7 text-gray-700 not-first:mt-6 dark:text-gray-300">
       {children}
     </p>
   ),
@@ -88,9 +86,9 @@ export const MarkdownComponents: any = {
   >) => (
     <a
       href={href}
-      target='_blank'
-      rel='noopener noreferrer'
-      className='bg-linear-to-r from-blue-600 to-blue-400 bg-[length:0%_2px] bg-left-bottom bg-no-repeat px-1 text-blue-600 transition-all hover:bg-[length:100%_2px] hover:text-blue-500 dark:from-blue-400 dark:to-blue-300 dark:text-blue-400 dark:hover:text-blue-300'
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-linear-to-r from-blue-600 to-blue-400 bg-[length:0%_2px] bg-left-bottom bg-no-repeat px-1 text-blue-600 transition-all hover:bg-[length:100%_2px] hover:text-blue-500 dark:from-blue-400 dark:to-blue-300 dark:text-blue-400 dark:hover:text-blue-300"
       {...props}
     >
       {children}
@@ -103,7 +101,7 @@ export const MarkdownComponents: any = {
     React.HTMLAttributes<HTMLElement>,
     HTMLElement
   >) => (
-    <strong className='font-bold text-gray-900 dark:text-white' {...props}>
+    <strong className="font-bold text-gray-900 dark:text-white" {...props}>
       {children}
     </strong>
   ),
@@ -114,7 +112,7 @@ export const MarkdownComponents: any = {
     React.HTMLAttributes<HTMLElement>,
     HTMLElement
   >) => (
-    <em className='text-gray-800 italic dark:text-gray-200' {...props}>
+    <em className="text-gray-800 italic dark:text-gray-200" {...props}>
       {children}
     </em>
   ),
@@ -126,7 +124,7 @@ export const MarkdownComponents: any = {
     HTMLElement
   >) => (
     <code
-      className='rounded-md bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-900 dark:bg-gray-800 dark:text-gray-100'
+      className="rounded-md bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-900 dark:bg-gray-800 dark:text-gray-100"
       {...props}
     >
       {children}
@@ -140,7 +138,7 @@ export const MarkdownComponents: any = {
     HTMLPreElement
   >) => (
     <pre
-      className='mt-6 mb-4 overflow-x-auto rounded-lg bg-gray-100 p-4 dark:bg-gray-800/50'
+      className="mt-6 mb-4 overflow-x-auto rounded-lg bg-gray-100 p-4 dark:bg-gray-800/50"
       {...props}
     >
       {children}
@@ -154,7 +152,7 @@ export const MarkdownComponents: any = {
     HTMLQuoteElement
   >) => (
     <blockquote
-      className='mt-6 border-l-4 border-gray-300 bg-linear-to-r from-gray-100 to-transparent pl-6 text-gray-700 italic dark:border-gray-700 dark:from-gray-800 dark:to-transparent dark:text-gray-400'
+      className="mt-6 border-l-4 border-gray-300 bg-linear-to-r from-gray-100 to-transparent pl-6 text-gray-700 italic dark:border-gray-700 dark:from-gray-800 dark:to-transparent dark:text-gray-400"
       {...props}
     >
       {children}
@@ -168,7 +166,7 @@ export const MarkdownComponents: any = {
     HTMLUListElement
   >) => (
     <ul
-      className='my-6 ml-6 list-disc space-y-2 text-gray-700 dark:text-gray-300 [&>li]:mt-2'
+      className="my-6 ml-6 list-disc space-y-2 text-gray-700 dark:text-gray-300 [&>li]:mt-2"
       {...props}
     >
       {children}
@@ -182,7 +180,7 @@ export const MarkdownComponents: any = {
     HTMLOListElement
   >) => (
     <ol
-      className='my-6 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300 [&>li]:mt-2'
+      className="my-6 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300 [&>li]:mt-2"
       {...props}
     >
       {children}
@@ -202,7 +200,7 @@ export const MarkdownComponents: any = {
     >
   ) => (
     <hr
-      className='my-8 h-1 w-full rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-80 shadow-sm backdrop-blur-sm dark:from-indigo-600 dark:via-violet-600 dark:to-purple-700'
+      className="my-8 h-1 w-full rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 opacity-80 shadow-sm backdrop-blur-sm dark:from-indigo-600 dark:via-violet-600 dark:to-purple-700"
       {...props}
     />
   ),
@@ -217,7 +215,7 @@ export const MarkdownComponents: any = {
     <img
       src={src}
       alt={alt}
-      className='my-8 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-gray-800 dark:bg-gray-900/50'
+      className="my-8 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-gray-800 dark:bg-gray-900/50"
       {...props}
     />
   ),
@@ -228,8 +226,8 @@ export const MarkdownComponents: any = {
     React.TableHTMLAttributes<HTMLTableElement>,
     HTMLTableElement
   >) => (
-    <div className='my-6 w-full overflow-y-auto'>
-      <table className='w-full border-collapse text-sm' {...props}>
+    <div className="my-6 w-full overflow-y-auto">
+      <table className="w-full border-collapse text-sm" {...props}>
         {children}
       </table>
     </div>
@@ -242,7 +240,7 @@ export const MarkdownComponents: any = {
     HTMLTableSectionElement
   >) => (
     <thead
-      className='border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50'
+      className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50"
       {...props}
     >
       {children}
@@ -263,7 +261,7 @@ export const MarkdownComponents: any = {
     HTMLTableRowElement
   >) => (
     <tr
-      className='border-b border-gray-100 last:border-0 dark:border-gray-800'
+      className="border-b border-gray-100 last:border-0 dark:border-gray-800"
       {...props}
     >
       {children}
@@ -271,12 +269,11 @@ export const MarkdownComponents: any = {
   ),
   th: ({
     children,
-    ...props
   }: React.DetailedHTMLProps<
     React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
     HTMLTableHeaderCellElement
   >) => (
-    <th className='border-r border-gray-100 p-4 text-left font-medium text-gray-900 last:border-0 dark:border-gray-800 dark:text-gray-100'>
+    <th className="border-r border-gray-100 p-4 text-left font-medium text-gray-900 last:border-0 dark:border-gray-800 dark:text-gray-100">
       {children}
     </th>
   ),
@@ -288,7 +285,7 @@ export const MarkdownComponents: any = {
     HTMLTableDataCellElement
   >) => (
     <td
-      className='border-r border-gray-100 p-4 text-gray-700 last:border-0 dark:border-gray-800 dark:text-gray-300'
+      className="border-r border-gray-100 p-4 text-gray-700 last:border-0 dark:border-gray-800 dark:text-gray-300"
       {...props}
     >
       {children}

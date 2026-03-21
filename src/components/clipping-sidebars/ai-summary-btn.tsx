@@ -1,10 +1,12 @@
 'use client'
 import { Sparkles } from 'lucide-react'
 import { useState } from 'react'
+
 import ClippingAISummaryModal from '@/components/clipping-item/aiSummary'
 import { useTranslation } from '@/i18n/client'
 import type { Clipping, User } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
+
 import {
   SidebarButton,
   SidebarContainer,
@@ -28,8 +30,8 @@ function AISummaryBtn({ clipping, me, book }: Props) {
     <>
       <SidebarContainer>
         <SidebarButton onClick={() => setAISummaryVisible(true)}>
-          <SidebarIcon className='text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300'>
-            <Sparkles className='w-full h-full' />
+          <SidebarIcon className="text-amber-600 group-hover:text-amber-700 dark:text-amber-400 dark:group-hover:text-amber-300">
+            <Sparkles className="h-full w-full" />
           </SidebarIcon>
           <SidebarText>{t('app.clipping.aiSummary')}</SidebarText>
         </SidebarButton>

@@ -1,6 +1,7 @@
 import { HttpLink, type InMemoryCacheConfig } from '@apollo/client'
 import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev'
 import { uniqBy } from 'lodash'
+
 import { API_HOST } from '../constants/config'
 
 if (process.env.NODE_ENV !== 'production') {

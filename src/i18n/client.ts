@@ -9,7 +9,9 @@ import {
   initReactI18next,
   useTranslation as useTranslationOrg,
 } from 'react-i18next'
+
 import { STORAGE_LANG_KEY } from '@/constants/storage'
+
 import { getOptions, languages } from './settings'
 
 const runsOnServerSide = typeof window === 'undefined'
@@ -44,7 +46,6 @@ i18next
     preload: runsOnServerSide ? languages : [],
   })
 
- 
 export function useTranslation(_lng?: string, ns?: string, options?: any) {
   const ret = useTranslationOrg(ns, options)
   const { i18n } = ret

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
+
 import { StripePremiumPriceId } from '@/constants/config'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
@@ -9,6 +10,7 @@ import {
 } from '@/schema/generated'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { getPaymentSubscription } from '@/services/payment'
+
 import { metadata as pricingMetadata } from '../../components/og/og-with-pricing'
 import PricingContent from './content'
 

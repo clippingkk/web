@@ -1,23 +1,24 @@
 import { Globe } from 'lucide-react'
 import type React from 'react'
+
 import { getTranslation } from '@/i18n'
 
 async function SettingsWebLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getTranslation()
   return (
-    <div className='w-full max-w-4xl mx-auto'>
+    <div className="mx-auto w-full max-w-4xl">
       {/* Top section with icon, title and description */}
-      <div className='mb-8 p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl backdrop-blur-sm border border-gray-100 dark:border-gray-700 shadow-sm'>
-        <div className='flex flex-col items-center text-center'>
-          <div className='p-3 bg-purple-100 dark:bg-purple-900/30 rounded-full mb-4'>
-            <Globe className='w-8 h-8 text-purple-600 dark:text-purple-400' />
+      <div className="mb-8 rounded-xl border border-gray-100 bg-gray-50 p-6 shadow-sm backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/50">
+        <div className="flex flex-col items-center text-center">
+          <div className="mb-4 rounded-full bg-purple-100 p-3 dark:bg-purple-900/30">
+            <Globe className="h-8 w-8 text-purple-600 dark:text-purple-400" />
           </div>
 
-          <h2 className='text-gray-900 dark:text-gray-100 text-2xl font-bold mb-3'>
+          <h2 className="mb-3 text-2xl font-bold text-gray-900 dark:text-gray-100">
             {t('app.settings.web.title', 'Web Settings')}
           </h2>
 
-          <p className='text-gray-600 dark:text-gray-400 max-w-lg'>
+          <p className="max-w-lg text-gray-600 dark:text-gray-400">
             {t(
               'app.settings.web.description',
               'Configure your website integration settings. Customize how your clippings appear on the web and control sharing options.'
@@ -27,7 +28,7 @@ async function SettingsWebLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Bottom content section */}
-      <div className='bg-white dark:bg-gray-800/80 rounded-xl p-6 backdrop-blur-sm border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col justify-center'>
+      <div className="flex flex-col justify-center rounded-xl border border-gray-100 bg-white p-6 shadow-sm backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/80">
         {children}
       </div>
     </div>

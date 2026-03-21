@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import NewbiePageContent from './content'
 
 export const metadata: Metadata = {

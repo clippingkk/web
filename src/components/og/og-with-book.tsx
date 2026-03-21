@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import React from 'react'
+
 import logo from '../../assets/logo-light.svg'
 import { APP_URL_ORIGIN } from '../../constants/config'
 import type { WenquBook } from '../../services/wenqu'
@@ -49,22 +50,22 @@ function OGWithBook(props: OGWithBookProps) {
 
   return (
     <React.Fragment>
-      <meta property='og:url' content={url} />
-      <meta property='og:type' content='website' />
-      <meta property='og:title' content={metaTitle} />
-      <meta property='og:image' content={logoLink} />
-      <meta property='og:description' content={props.book?.title} />
-      <meta property='og:site_name' content='clippingkk' />
-      <meta property='article:author' content={props.book?.author} />
+      <meta property="og:url" content={url} />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={metaTitle} />
+      <meta property="og:image" content={logoLink} />
+      <meta property="og:description" content={props.book?.title} />
+      <meta property="og:site_name" content="clippingkk" />
+      <meta property="article:author" content={props.book?.author} />
 
-      <meta name='description' content={props.book?.title} />
+      <meta name="description" content={props.book?.title} />
       <meta
-        name='keyword'
+        name="keyword"
         content={`${props.book?.title}, ${props.book?.author}, clippingkk, 书摘`}
       />
       <MetaTwitterCard
         card={TwitterCardType.summary}
-        site='AnnatarHe'
+        site="AnnatarHe"
         creator={props.book?.author ?? ''}
         url={url}
         title={metaTitle}

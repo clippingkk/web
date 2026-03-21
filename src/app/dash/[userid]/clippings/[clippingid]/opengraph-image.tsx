@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+
 import Logo from '@/assets/bootsplash_logo@3x.png'
 import OGImageClipping from '@/components/og/image-clipping'
 import { APP_URL_ORIGIN } from '@/constants/config'

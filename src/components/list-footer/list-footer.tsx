@@ -3,7 +3,7 @@ import { useInView } from 'react-cool-inview'
 
 type TListFooterProp = {
   loadingBlock?: React.ReactElement
-   
+
   loadMoreFn: () => any
   hasMore: boolean
 }
@@ -21,9 +21,9 @@ function ListFooter(props: TListFooterProp) {
     },
   })
   return (
-    <footer className='flex justify-center items-center my-4 mx-0 w-full'>
+    <footer className="mx-0 my-4 flex w-full items-center justify-center">
       <div
-        className='text-gray-600 dark:text-gray-400 block w-full text-center'
+        className="block w-full text-center text-gray-600 dark:text-gray-400"
         ref={observe}
       >
         {hasMore ? (loadingBlock ?? 'Loading') : 'You reach the end'}

@@ -1,9 +1,7 @@
-import AccountRemoveButton from "./AccountRemoveButton"
+import AccountRemoveButton from './AccountRemoveButton'
 
 function Page() {
-  return (
-    <AccountRemoveButton />
-  )
+  return <AccountRemoveButton />
 }
 
 export default Page

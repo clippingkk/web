@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import type React from 'react'
+
 import DashboardContainer from '@/components/dashboard-container/container'
 import { USER_ID_KEY } from '@/constants/storage'
 
@@ -9,7 +10,7 @@ function Profile404Page() {
       {/* <Head>
         <title>profile not found</title>
       </Head> */}
-      <div className=' flex justify-center items-center dark:text-white text-lg mt-10'>
+      <div className="mt-10 flex items-center justify-center text-lg dark:text-white">
         user not found
       </div>
     </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
+
 import { COOKIE_TOKEN_KEY } from '@/constants/storage'
 import {
   GetCommentListDocument,
@@ -8,6 +9,7 @@ import {
   type GetCommentListQueryVariables,
 } from '@/schema/generated'
 import { doApolloServerQuery } from '@/services/apollo.server'
+
 import CommentsList from './comments-list'
 
 type Props = {
@@ -59,14 +61,14 @@ export default async function CommentsPage({ params }: Props) {
   }
 
   return (
-    <div className='min-h-screen p-4 md:p-8'>
-      <div className='max-w-6xl mx-auto'>
+    <div className="min-h-screen p-4 md:p-8">
+      <div className="mx-auto max-w-6xl">
         {/* Header */}
-        <div className='mb-8'>
-          <h1 className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-2'>
+        <div className="mb-8">
+          <h1 className="mb-2 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
             My Comments
           </h1>
-          <p className='text-gray-600 dark:text-gray-400'>
+          <p className="text-gray-600 dark:text-gray-400">
             View and manage all your comments and discussions
           </p>
         </div>

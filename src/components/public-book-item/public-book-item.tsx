@@ -1,5 +1,7 @@
 import BlurhashView from '@annatarhe/blurhash-react'
+
 import type { WenquBook } from '../../services/wenqu'
+
 import styles from './style.module.css'
 
 type PublicBookItemProps = {
@@ -21,17 +23,16 @@ function PublicBookItem(props: PublicBookItemProps) {
         src={book.image}
         height={384}
         width={288}
-        className='h-96 w-72 rounded-sm object-cover'
+        className="h-96 w-72 rounded-sm object-cover"
         alt={book.title}
       />
       <div
-        className={
-          `absolute bottom-0 left-0 w-full rounded-b px-4 py-8 text-white ${ 
-          styles['book-info']}`
-        }
+        className={`absolute bottom-0 left-0 w-full rounded-b px-4 py-8 text-white ${
+          styles['book-info']
+        }`}
       >
-        <h2 className='text-right text-2xl'>{book.title}</h2>
-        <h3 className='line-clamp-2 text-right text-sm italic'>
+        <h2 className="text-right text-2xl">{book.title}</h2>
+        <h3 className="line-clamp-2 text-right text-sm italic">
           {book.author}
         </h3>
       </div>

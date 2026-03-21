@@ -114,26 +114,31 @@ html {
   font-display: swap;
 }
 
-html[lang="zh"] {
+html[lang='zh'] {
   font-family: var(--font-lxgw);
 }
 
-html[lang="ja"] {
+html[lang='ja'] {
   font-family: var(--font-lxgw);
 }
 
-html[lang="ko"] {
+html[lang='ko'] {
   font-family: var(--font-lxgw);
 }
 
-html[lang="en"] {
+html[lang='en'] {
   font-family: var(--font-lato);
 }
 
 body {
   font-family:
-    Roboto, -apple-system, BlinkMacSystemFont, "Microsoft Jhenghei",
-    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    Roboto,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Microsoft Jhenghei',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    sans-serif;
   scroll-behavior: smooth;
 }
 

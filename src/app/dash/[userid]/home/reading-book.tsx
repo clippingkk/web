@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+
 import BookInfo from '@/components/book-info/book-info'
 import ClippingContent from '@/components/clipping-content'
 import type { Clipping } from '@/schema/generated'
@@ -18,37 +19,37 @@ function ReadingBook({ clipping, book, uid }: ReadingBookProps) {
   }
 
   return (
-    <div className='mb-12 mt-24 w-full max-w-7xl mx-auto'>
+    <div className="mx-auto mt-24 mb-12 w-full max-w-7xl">
       <BookInfo book={book} uid={uid} />
 
       {clipping && (
-        <div className='mt-4'>
+        <div className="mt-4">
           <Link
             href={`/dash/${uid}/clippings/${clipping.id}?iac=${IN_APP_CHANNEL.clippingFromBook}`}
-            className='group relative overflow-hidden block rounded-2xl backdrop-blur-md'
+            className="group relative block overflow-hidden rounded-2xl backdrop-blur-md"
           >
             {/* Decorative background elements */}
-            <div className='absolute inset-0 bg-gradient-to-br from-amber-50/80 via-amber-100/70 to-amber-200/60 dark:from-purple-900/80 dark:via-purple-800/70 dark:to-purple-700/60 -z-10 transform transition-all duration-500 group-hover:scale-105'></div>
-            <div className='absolute -bottom-8 -right-8 w-64 h-64 bg-gradient-to-br from-amber-200/40 to-amber-300/30 dark:from-purple-600/40 dark:to-purple-700/30 rounded-full blur-2xl -z-10 transform transition-all duration-500 group-hover:scale-110'></div>
+            <div className="absolute inset-0 -z-10 transform bg-gradient-to-br from-amber-50/80 via-amber-100/70 to-amber-200/60 transition-all duration-500 group-hover:scale-105 dark:from-purple-900/80 dark:via-purple-800/70 dark:to-purple-700/60"></div>
+            <div className="absolute -right-8 -bottom-8 -z-10 h-64 w-64 transform rounded-full bg-gradient-to-br from-amber-200/40 to-amber-300/30 blur-2xl transition-all duration-500 group-hover:scale-110 dark:from-purple-600/40 dark:to-purple-700/30"></div>
 
-            <div className='p-8 sm:p-10 relative'>
+            <div className="relative p-8 sm:p-10">
               {/* Featured clipping content */}
               <ClippingContent
                 content={clipping.content}
-                className='text-slate-800 dark:text-slate-100 text-xl sm:text-2xl md:text-3xl font-lxgw'
+                className="font-lxgw text-xl text-slate-800 sm:text-2xl md:text-3xl dark:text-slate-100"
                 showQuoteIcon={true}
                 maxLines={3}
               />
 
               {/* Read more indicator */}
-              <div className='mt-6 flex justify-end items-center text-amber-700 dark:text-purple-300 font-medium transform transition-all duration-300 group-hover:translate-x-2'>
-                <span className='mr-2'>Read more</span>
+              <div className="mt-6 flex transform items-center justify-end font-medium text-amber-700 transition-all duration-300 group-hover:translate-x-2 dark:text-purple-300">
+                <span className="mr-2">Read more</span>
                 <ArrowRight size={18} />
               </div>
             </div>
 
             {/* Bottom gradient overlay */}
-            <div className='absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-amber-100/80 to-transparent dark:from-purple-800/80 -z-5'></div>
+            <div className="absolute right-0 bottom-0 left-0 -z-5 h-16 bg-gradient-to-t from-amber-100/80 to-transparent dark:from-purple-800/80"></div>
           </Link>
         </div>
       )}

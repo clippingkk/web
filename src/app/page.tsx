@@ -14,8 +14,9 @@ async function Page() {
   })
 
   const dbIds =
-    data.data?.public.books.map((x) => x.doubanId).filter((x) => x.length > 3) ??
-    []
+    data.data?.public.books
+      .map((x) => x.doubanId)
+      .filter((x) => x.length > 3) ?? []
 
   const rq = getReactQueryClient()
   const bs = await rq.fetchQuery({

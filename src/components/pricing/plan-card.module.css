@@ -32,7 +32,7 @@
 }
 
 .card-bg-free:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -67,7 +67,7 @@
 }
 
 .card-bg-premium:before {
-  content: "";
+  content: '';
   background: linear-gradient(
     45deg,
     rgba(79, 70, 229, 0.35) 0%,
@@ -88,7 +88,7 @@
 }
 
 .card-bg-premium:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

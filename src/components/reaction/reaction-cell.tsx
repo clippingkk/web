@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+
 import {
   ReactionTarget,
   useReactionCreateMutation,
@@ -87,7 +88,7 @@ function ReactionCell(props: ReactionCellProps) {
 
   return (
     <Tooltip
-      className='inline-block'
+      className="inline-block"
       content={data.creators.map((x) => x.name).join(', ')}
       disabled={data.creators.length === 0}
     >
@@ -100,7 +101,7 @@ function ReactionCell(props: ReactionCellProps) {
             : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800/50 dark:text-gray-300 dark:hover:bg-gray-700/50'
         } text-sm hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50`}
       >
-        <span className='text-base leading-none'>{symbol}</span>
+        <span className="text-base leading-none">{symbol}</span>
         <span
           className={`min-w-[1.25rem] rounded-full px-1.5 py-0.5 text-xs leading-none ${
             data.done
@@ -111,7 +112,7 @@ function ReactionCell(props: ReactionCellProps) {
           {data.count}
         </span>
         {(isCreating || isRemoving) && (
-          <Loading2Icon className='mr-0.5 -ml-0.5 h-3 w-3' />
+          <Loading2Icon className="mr-0.5 -ml-0.5 h-3 w-3" />
         )}
       </button>
     </Tooltip>

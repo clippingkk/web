@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import type { FetchYearlyReportQuery } from '../../schema/generated'
 import type { WenquBook } from '../../services/wenqu'

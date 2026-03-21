@@ -9,11 +9,11 @@ function AuthByGithub() {
     <a
       href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
       onClick={onGithubClick}
-      title='github login'
-      className='px-16 py-3 rounded-sm hover:shadow-lg bg-white flex justify-center items-center hover:scale-105 duration-150 mt-4'
+      title="github login"
+      className="mt-4 flex items-center justify-center rounded-sm bg-white px-16 py-3 duration-150 hover:scale-105 hover:shadow-lg"
     >
       <GithubLogo />
-      <span className=' inline-block ml-4 text-slate-950'>Github</span>
+      <span className="ml-4 inline-block text-slate-950">Github</span>
     </a>
   )
 }

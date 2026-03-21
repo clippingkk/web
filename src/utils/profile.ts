@@ -1,5 +1,6 @@
 'use client'
 import Cookies from 'js-cookie'
+
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 
 class MyProfile {

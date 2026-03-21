@@ -16,9 +16,10 @@ This is the **ClippingKK web application** - a Next.js 15 application for managi
 - `pnpm test` - Run Jest tests
 - `pnpm test -- [path/to/test]` - Run a specific test file
 - `pnpm test -- --watch` - Run tests in watch mode
-- `pnpm lint` - Run ESLint linter
-- `pnpm lint:fix` - Auto-fix linting issues with ESLint
-- `pnpm format` - Format code with Prettier
+- `pnpm lint` - Run oxlint linter
+- `pnpm lint:fix` - Auto-fix linting issues with oxlint
+- `pnpm format` - Format code with oxfmt
+- `pnpm format:check` - Check formatting without writing
 - `pnpm codegen` - Generate GraphQL types from schema
 
 **Additional commands:**
@@ -82,7 +83,8 @@ const dehydratedState = dehydrate(rq)
 - `codegen.yml` - GraphQL code generation
 - `next.config.ts` - Next.js config with image domains
 - `tailwind.config.js` - UI styling configuration
-- `.eslintrc.json` - ESLint linting rules
+- `.oxlintrc.json` - oxlint linting rules
+- `.oxfmtrc.json` - oxfmt formatting rules
 
 **Core Services:**
 - `src/services/apollo.server.ts` - Server-side Apollo Client setup

@@ -1,4 +1,5 @@
 import { checkIsPremium } from '@/compute/user'
+
 import PremiumBadge from '../premium/badge'
 
 type UserNameProps = {
@@ -16,8 +17,8 @@ function UserName(props: UserNameProps) {
   }
 
   return (
-    <div className='flex items-center'>
-      <h3 className='text-2xl font-lxgw font-bold dark:text-gray-100'>
+    <div className="flex items-center">
+      <h3 className="font-lxgw text-2xl font-bold dark:text-gray-100">
         {name}
       </h3>
       {isPremium && <PremiumBadge />}

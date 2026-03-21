@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import type React from 'react'
+
 import DashboardContainer from '@/components/dashboard-container/container'
 import { USER_ID_KEY } from '@/constants/storage'
 

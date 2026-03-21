@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   FetchWebhookDocument,
@@ -7,6 +8,7 @@ import {
   type FetchWebhookQueryVariables,
 } from '@/schema/generated'
 import { doApolloServerQuery } from '@/services/apollo.server'
+
 import WebhookDetailContent from './components/content'
 
 type Props = {
@@ -41,8 +43,8 @@ async function WebhookDetailPage(props: Props) {
 
   if (!data || !data.webHook) {
     return (
-      <div className='flex h-96 items-center justify-center rounded-xl border border-white/20 bg-white/50 shadow-lg backdrop-blur-lg dark:border-slate-700/20 dark:bg-slate-800/50'>
-        <p className='text-center text-lg text-gray-500 dark:text-gray-400'>
+      <div className="flex h-96 items-center justify-center rounded-xl border border-white/20 bg-white/50 shadow-lg backdrop-blur-lg dark:border-slate-700/20 dark:bg-slate-800/50">
+        <p className="text-center text-lg text-gray-500 dark:text-gray-400">
           Webhook not found or you don&apos;t have permission to view it.
         </p>
       </div>
@@ -53,7 +55,7 @@ async function WebhookDetailPage(props: Props) {
   const webhookData = data.webHook
 
   return (
-    <div className='container mx-auto px-4'>
+    <div className="container mx-auto px-4">
       <WebhookDetailContent data={webhookData} userId={userid} />
     </div>
   )

@@ -3,7 +3,9 @@ import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { useMachine } from '@xstate/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
+
 import { useTranslation } from '@/i18n/client'
+
 import { graphql } from '../gql'
 import { useCreateClippingsMutation } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
@@ -54,7 +56,6 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
       try {
         send({ type: 'Next' })
         str = await extraFile(file)
-         
       } catch (e: any) {
         console.error(e, e.toString())
         send({ type: 'Error' })
@@ -130,7 +131,6 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
           if (resp.count > 0) {
             i.bookId = resp.books[0].doubanId.toString()
           }
-           
         } catch (e: any) {
           setMessages((m) => m.concat(e.toString()))
         } finally {
@@ -159,7 +159,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         )
         send({ type: 'Next' })
         toast(t('app.upload.tips.parsedInfoTitle'), {
-          icon: <CheckCircleIcon className='h-4 w-4' />,
+          icon: <CheckCircleIcon className="h-4 w-4" />,
           // message: t('app.upload.tips.parsedInfoContent'),
         })
         return
@@ -199,7 +199,6 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         setAt(chunkedData.length)
         toast.success(t('app.upload.tips.done'))
         send({ type: 'Next' })
-         
       } catch (e: any) {
         send({ type: 'Error' })
         setMessages((m) => m.concat(e.toString()))

@@ -2,6 +2,7 @@
 import { useQuery, useSuspenseQuery } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+
 import BookCover from '@/components/book-cover/book-cover'
 import ListFooter from '@/components/list-footer/list-footer'
 import { useMultipleBook } from '@/hooks/book'
@@ -15,6 +16,7 @@ import {
   type ProfileQueryVariables,
   type User,
 } from '@/schema/generated'
+
 import { BooksSkeleton } from './skeleton'
 
 const STEP = 10
@@ -96,7 +98,7 @@ function HomePageContent(props: HomePageContentProps) {
 
   return (
     <>
-      <div className='flex flex-wrap items-center justify-center mt-16'>
+      <div className="mt-16 flex flex-wrap items-center justify-center">
         {books.books.length > 0 &&
           books.books.map((item, index) => (
             <BookCover book={item} key={index} domain={userDomain} />
@@ -105,7 +107,7 @@ function HomePageContent(props: HomePageContentProps) {
 
       <ListFooter
         loadingBlock={
-          <div className='w-full'>
+          <div className="w-full">
             <BooksSkeleton />
           </div>
         }

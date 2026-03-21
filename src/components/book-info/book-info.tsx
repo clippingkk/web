@@ -1,7 +1,9 @@
 'use client'
 import { Share2 } from 'lucide-react'
 import { useCallback, useState } from 'react'
+
 import { useTranslation } from '@/i18n/client'
+
 import type { WenquBook } from '../../services/wenqu'
 import BookSharePreview from '../preview/preview-book'
 import BookCoverColumn from './book-cover-column'
@@ -36,11 +38,11 @@ function BookInfo({
   }, [])
 
   return (
-    <div className='relative w-full'>
+    <div className="relative w-full">
       {/* Subtle background wash */}
-      <div className='absolute inset-0 -z-10 rounded-2xl bg-gradient-to-b from-blue-50/40 via-white/20 to-transparent dark:from-blue-950/30 dark:via-zinc-900/20 dark:to-transparent' />
+      <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-b from-blue-50/40 via-white/20 to-transparent dark:from-blue-950/30 dark:via-zinc-900/20 dark:to-transparent" />
 
-      <div className='grid grid-cols-1 gap-6 py-6 md:grid-cols-[280px,1fr] lg:grid-cols-[320px,1fr] lg:gap-10 lg:py-8'>
+      <div className="grid grid-cols-1 gap-6 py-6 md:grid-cols-[280px,1fr] lg:grid-cols-[320px,1fr] lg:gap-10 lg:py-8">
         {/* Book cover column */}
         <BookCoverColumn
           book={book}
@@ -48,7 +50,7 @@ function BookInfo({
         />
 
         {/* Book details column */}
-        <div className='font-lxgw space-y-6'>
+        <div className="font-lxgw space-y-6">
           {/* Title and rating */}
           <BookTitleSection book={book} duration={duration} />
 
@@ -61,12 +63,12 @@ function BookInfo({
           />
 
           {/* Action buttons (desktop) */}
-          <div className='hidden gap-4 md:flex'>
+          <div className="hidden gap-4 md:flex">
             <button
               onClick={() => togglePreviewVisible()}
-              className='flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 px-5 py-2.5 text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg'
+              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 px-5 py-2.5 text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg"
             >
-              <Share2 className='h-4 w-4' />
+              <Share2 className="h-4 w-4" />
               <span>{t('app.book.share')}</span>
             </button>
           </div>

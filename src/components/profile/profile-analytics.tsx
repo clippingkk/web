@@ -2,6 +2,7 @@
 
 import { Award, BookOpen, Library, TrendingUp } from 'lucide-react'
 import React from 'react'
+
 import { useTranslation } from '@/i18n/client'
 
 type ProfileAnalyticsProps = {
@@ -66,67 +67,53 @@ const ProfileAnalytics: React.FC<ProfileAnalyticsProps> = ({
   ]
 
   return (
-    <div className='mt-6'>
-      <h3 className='text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4'>
+    <div className="mt-6">
+      <h3 className="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
         {t('app.profile.analytics.title')}
       </h3>
 
-      <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon
           return (
             <div
               key={index}
-              className={`
-                relative overflow-hidden rounded-xl p-4
-                bg-gradient-to-br ${stat.bgGradient}
-                border border-gray-200/50 dark:border-gray-700/50
-                transition-all duration-300 hover:scale-105 hover:shadow-lg
-                group
-              `}
+              className={`relative overflow-hidden rounded-xl bg-gradient-to-br p-4 ${stat.bgGradient} group border border-gray-200/50 transition-all duration-300 hover:scale-105 hover:shadow-lg dark:border-gray-700/50`}
             >
-              <div className='relative z-10'>
+              <div className="relative z-10">
                 <div
-                  className={`
-                  inline-flex p-2 rounded-lg mb-3
-                  bg-gradient-to-br ${stat.gradient}
-                  shadow-sm group-hover:shadow-md transition-shadow
-                `}
+                  className={`mb-3 inline-flex rounded-lg bg-gradient-to-br p-2 ${stat.gradient} shadow-sm transition-shadow group-hover:shadow-md`}
                 >
-                  <Icon className='w-5 h-5 text-white' />
+                  <Icon className="h-5 w-5 text-white" />
                 </div>
 
-                <div className='space-y-1'>
-                  <p className='text-2xl font-bold text-gray-900 dark:text-gray-100'>
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                     {stat.value}
                   </p>
-                  <p className='text-sm text-gray-600 dark:text-gray-400'>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     {stat.label}
                   </p>
                 </div>
               </div>
 
               <div
-                className={`
-                absolute -right-8 -bottom-8 w-24 h-24 rounded-full
-                bg-gradient-to-br ${stat.gradient} opacity-10
-                group-hover:scale-150 transition-transform duration-500
-              `}
+                className={`absolute -right-8 -bottom-8 h-24 w-24 rounded-full bg-gradient-to-br ${stat.gradient} opacity-10 transition-transform duration-500 group-hover:scale-150`}
               />
             </div>
           )
         })}
       </div>
 
-      <div className='mt-6 p-4 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-700/50 border border-gray-200/50 dark:border-gray-700/50'>
-        <div className='flex items-center justify-between'>
-          <div className='flex items-center space-x-2'>
-            <div className='w-2 h-2 rounded-full bg-blue-400 animate-pulse' />
-            <span className='text-sm text-gray-600 dark:text-gray-400'>
+      <div className="mt-6 rounded-xl border border-gray-200/50 bg-gradient-to-br from-gray-50 to-gray-100 p-4 dark:border-gray-700/50 dark:from-gray-800/50 dark:to-gray-700/50">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {t('app.profile.analytics.readingStreak')}
             </span>
           </div>
-          <div className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+          <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {clippingsCount > 0
               ? t('app.profile.analytics.active')
               : t('app.profile.analytics.getStarted')}

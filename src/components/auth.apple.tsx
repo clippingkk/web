@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
+
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import {
   AppleLoginPlatforms,
@@ -54,12 +55,9 @@ function AuthByAppleButton(props: AuthAppleProps) {
       loading={loading}
       disabled={props.disabled}
       onSuccess={onSuccess}
-      onError={
-         
-        (error: any) => {
-          toast.error(`Auth by Apple: ${error.error}`)
-        }
-      }
+      onError={(error: any) => {
+        toast.error(`Auth by Apple: ${error.error}`)
+      }}
     />
   )
 }

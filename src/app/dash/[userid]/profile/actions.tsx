@@ -1,6 +1,7 @@
 'use client'
 import { UserMinus, UserPlus } from 'lucide-react'
 import toast from 'react-hot-toast'
+
 import { useTranslation } from '@/i18n/client'
 import {
   type ProfileQuery,
@@ -38,7 +39,7 @@ function UserActions(props: Props) {
           return
         }
         const params = { targetUserID: profile.id }
-         
+
         let mutationJob: Promise<any>
         if (profile.isFan) {
           mutationJob = doUnfollow({
@@ -53,9 +54,9 @@ function UserActions(props: Props) {
       }}
     >
       {profile.isFan ? (
-        <UserMinus className='h-4 w-4' />
+        <UserMinus className="h-4 w-4" />
       ) : (
-        <UserPlus className='h-4 w-4' />
+        <UserPlus className="h-4 w-4" />
       )}
       <span>{t(`app.profile.fans.${profile.isFan ? 'un' : ''}follow`)}</span>
     </button>

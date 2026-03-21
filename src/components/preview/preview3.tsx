@@ -2,7 +2,9 @@ import LakeModal from '@annatarhe/lake-ui/modal'
 import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+
 import type { WenquBook } from '@/services/wenqu'
+
 import type { Clipping, User } from '../../schema/generated'
 import { getUTPLink, KonzertThemeMap, UTPService } from '../../services/utp'
 import LoadingIcon from '../icons/loading.svg'
@@ -56,48 +58,48 @@ function Preview(props: PreviewProps) {
       isOpen={visible}
       title={t('app.clipping.preview')}
     >
-      <section className='flex flex-col md:flex-row gap-2 mt-4 p-2'>
-        <div className='relative flex-shrink-0 mx-auto md:mx-0'>
+      <section className="mt-4 flex flex-col gap-2 p-2 md:flex-row">
+        <div className="relative mx-auto flex-shrink-0 md:mx-0">
           <img
             src={shareURL}
             onLoad={onImageLoad}
             onLoadStart={() => setLoading(true)}
             onError={onImageError}
             className={
-              'h-[812px] w-[375px] rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 object-cover'
+              'h-[812px] w-[375px] rounded-lg border border-gray-200 object-cover shadow-xl dark:border-gray-700'
             }
             alt={t('app.common.loading') ?? 'loading'}
           />
           {loading && (
-            <div className='absolute inset-0 flex justify-center items-center bg-slate-800 bg-opacity-80 backdrop-blur-sm rounded-lg'>
-              <LoadingIcon className='w-10 h-10 animate-spin text-indigo-400' />
-              <span className='ml-3 text-white font-medium'>
+            <div className="bg-opacity-80 absolute inset-0 flex items-center justify-center rounded-lg bg-slate-800 backdrop-blur-sm">
+              <LoadingIcon className="h-10 w-10 animate-spin text-indigo-400" />
+              <span className="ml-3 font-medium text-white">
                 {t('app.common.loading')}
               </span>
             </div>
           )}
         </div>
 
-        <aside className='mt-2 flex flex-col flex-1'>
-          <div className='w-full bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700'>
-            <blockquote className='font-lxgw text-lg italic text-gray-700 dark:text-gray-300 border-l-4 border-indigo-500 pl-4 py-2'>
+        <aside className="mt-2 flex flex-1 flex-col">
+          <div className="w-full rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-slate-800">
+            <blockquote className="font-lxgw border-l-4 border-indigo-500 py-2 pl-4 text-lg text-gray-700 italic dark:text-gray-300">
               <p>{props.clipping.content}</p>
               {props.book?.author && (
-                <footer className='text-sm text-gray-500 dark:text-gray-400 mt-2'>
+                <footer className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                   — {props.book.author}
                 </footer>
               )}
             </blockquote>
           </div>
 
-          <div className='w-full h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-8' />
+          <div className="my-8 h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600" />
 
-          <div className='w-full'>
-            <h6 className='text-sm font-semibold uppercase tracking-wider mb-4 text-gray-700 dark:text-gray-300'>
+          <div className="w-full">
+            <h6 className="mb-4 text-sm font-semibold tracking-wider text-gray-700 uppercase dark:text-gray-300">
               Theme
             </h6>
             <ThemePicker
-              className='w-full'
+              className="w-full"
               current={currentTheme}
               onChange={(t) => {
                 setCurrentTheme(t)
@@ -107,9 +109,9 @@ function Preview(props: PreviewProps) {
           <a
             href={shareURL}
             download={`clippingkk-${props.book?.title ?? ''}-${props.book?.author ?? ''}-${props.clipping.id}.png`}
-            className='text-white text-lg w-full bg-gradient-to-br from-indigo-500 to-teal-500 block text-center py-4 mt-6 rounded-md shadow-md hover:shadow-xl hover:from-indigo-600 hover:to-teal-600 transition-all duration-300 font-medium'
-            target='_blank'
-            rel='noreferrer'
+            className="mt-6 block w-full rounded-md bg-gradient-to-br from-indigo-500 to-teal-500 py-4 text-center text-lg font-medium text-white shadow-md transition-all duration-300 hover:from-indigo-600 hover:to-teal-600 hover:shadow-xl"
+            target="_blank"
+            rel="noreferrer"
           >
             {t('app.clipping.save')}
           </a>

@@ -1,12 +1,14 @@
 'use client'
+import Cookies from 'js-cookie'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+
+import { USER_ID_KEY } from '@/constants/storage'
 import { useUploadData } from '@/hooks/my-file'
 import { useActionTrack } from '@/hooks/tracke'
+
 import FloatingProgress from '../progress/floating'
 import DropOverlay from './drop-overlay'
-import Cookies from 'js-cookie'
-import { USER_ID_KEY } from '@/constants/storage'
 
 const uid = Cookies.get(USER_ID_KEY)
 
@@ -24,7 +26,7 @@ function GlobalUpload() {
     (e: DragEvent) => {
       setIsDraging(false)
       onUploadTrack()
-       
+
       onUpload(e as any, true)
     },
     [onUpload, onUploadTrack]

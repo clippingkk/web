@@ -8,11 +8,11 @@ type IconAppleLogoProps = {
 function IconAppleLogo(props: IconAppleLogoProps) {
   return (
     <Image
-      src='/apple.logo.svg'
+      src="/apple.logo.svg"
       width={props.size}
       height={props.size}
       className={props.className}
-      alt='apple'
+      alt="apple"
     />
   )
 }

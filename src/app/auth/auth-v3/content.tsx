@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
+
 import logoDark from '@/assets/logo-dark.svg'
 import logoLight from '@/assets/logo-light.svg'
 import EmailBox from '@/components/auth/email-box'
@@ -81,49 +82,49 @@ function AuthV3Content() {
 
   return (
     <section
-      className='anna-page-container h-screen object-cover bg-center bg-cover'
+      className="anna-page-container h-screen bg-cover bg-center object-cover"
       style={{
         backgroundImage: `url(${bg.src})`,
       }}
     >
-      <div className='flex w-full h-full backdrop-blur-xl bg-black bg-opacity-30 justify-center items-center'>
-        <div className='p-12 rounded-sm backdrop-blur-xl shadow-sm bg-opacity-10 bg-blue-400 w-128 container'>
-          <div className='flex justify-between items-center mb-4'>
+      <div className="bg-opacity-30 flex h-full w-full items-center justify-center bg-black backdrop-blur-xl">
+        <div className="bg-opacity-10 container w-128 rounded-sm bg-blue-400 p-12 shadow-sm backdrop-blur-xl">
+          <div className="mb-4 flex items-center justify-between">
             <button
-              className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded-sm transition-colors duration-300'
+              className="hover:bg-opacity-20 flex rounded-sm px-8 py-2 transition-colors duration-300 hover:bg-gray-100 dark:text-white"
               onClick={() => {
                 back()
               }}
             >
-              <ArrowUturnLeftIcon className=' w-6 h-6' />
-              <span className='ml-2 inline-block'>Back</span>
+              <ArrowUturnLeftIcon className="h-6 w-6" />
+              <span className="ml-2 inline-block">Back</span>
             </button>
             <Link
-              href='/auth/signin'
-              className='flex dark:text-white hover:bg-gray-100 hover:bg-opacity-20 px-8 py-2 rounded-sm transition-colors duration-300'
+              href="/auth/signin"
+              className="hover:bg-opacity-20 flex rounded-sm px-8 py-2 transition-colors duration-300 hover:bg-gray-100 dark:text-white"
             >
-              <ArrowUturnRightIcon className='w-6 h-6' />
-              <span className='ml-2 inline-block'>
+              <ArrowUturnRightIcon className="h-6 w-6" />
+              <span className="ml-2 inline-block">
                 {t('app.auth.loginWithPassword')}
               </span>
             </Link>
           </div>
-          <div className='flex justify-center items-center flex-col mb-4'>
+          <div className="mb-4 flex flex-col items-center justify-center">
             <Image
               src={logoLight}
-              alt='clippingkk logo'
-              className='dark:hidden'
+              alt="clippingkk logo"
+              className="dark:hidden"
               width={96}
               height={96}
             />
             <Image
               src={logoDark}
-              alt='clippingkk logo'
-              className='hidden dark:block'
+              alt="clippingkk logo"
+              className="hidden dark:block"
               width={96}
               height={96}
             />
-            <h1 className='text-center font-bold text-3xl mt-4 font-lxgw bg-clip-text from-orange-300 to-indigo-400 text-transparent bg-linear-to-br'>
+            <h1 className="font-lxgw mt-4 bg-linear-to-br from-orange-300 to-indigo-400 bg-clip-text text-center text-3xl font-bold text-transparent">
               ClippingKK
             </h1>
           </div>
@@ -138,18 +139,18 @@ function AuthV3Content() {
               loading={loginV3Response.loading}
             />
           )}
-          <div className='w-full'>
-            <hr className='my-8' />
-            <p className='text-white mb-2'>{t('app.auth.legacyTip')}</p>
+          <div className="w-full">
+            <hr className="my-8" />
+            <p className="mb-2 text-white">{t('app.auth.legacyTip')}</p>
             <Link
-              href='/auth/auth-v2'
-              className='text-white block text-center w-full rounded-sm bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300'
+              href="/auth/auth-v2"
+              className="block w-full rounded-sm bg-blue-400 py-4 text-center text-white transition-all duration-300 hover:bg-blue-500 disabled:bg-gray-300 disabled:hover:bg-gray-300"
             >
               {t('app.auth.legacyLogin')}
             </Link>
 
-            <hr className='my-4' />
-            <p className='text-white'>{t('app.auth.accountTip')}</p>
+            <hr className="my-4" />
+            <p className="text-white">{t('app.auth.accountTip')}</p>
           </div>
         </div>
       </div>

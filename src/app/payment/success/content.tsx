@@ -4,6 +4,7 @@ import Link from 'next/link'
 import party from 'party-js'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
+
 import { getPaymentOrderInfo } from '@/services/payment'
 
 type PaymentSuccessContentProps = {
@@ -38,10 +39,10 @@ function PaymentSuccessContent(props: PaymentSuccessContentProps) {
   }, [data])
 
   return (
-    <div className=' w-full h-full flex flex-col items-center justify-center dark:text-gray-100 pt-20'>
-      <span className=' text-6xl'>Congratulation! </span>
-      <span className=' text-2xl mt-20'>Welcome to join Premium</span>
-      <Link href={homeLink as any} className='mt-8'>
+    <div className="flex h-full w-full flex-col items-center justify-center pt-20 dark:text-gray-100">
+      <span className="text-6xl">Congratulation! </span>
+      <span className="mt-20 text-2xl">Welcome to join Premium</span>
+      <Link href={homeLink as any} className="mt-8">
         go to my profile
       </Link>
     </div>

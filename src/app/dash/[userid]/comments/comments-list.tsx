@@ -2,11 +2,13 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useState } from 'react'
+
 import {
   type Comment,
   type GetCommentListQuery,
   useGetCommentListQuery,
 } from '@/schema/generated'
+
 // import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
 import CommentCard from './comment-card'
 
@@ -86,12 +88,12 @@ export default function CommentsList({ initialData, userId }: Props) {
 
   if (!comments?.length) {
     return (
-      <div className='flex flex-col items-center justify-center py-20'>
-        <div className='text-6xl mb-4'>💬</div>
-        <h3 className='text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2'>
+      <div className="flex flex-col items-center justify-center py-20">
+        <div className="mb-4 text-6xl">💬</div>
+        <h3 className="mb-2 text-xl font-semibold text-gray-700 dark:text-gray-300">
           No comments yet
         </h3>
-        <p className='text-gray-500 dark:text-gray-400'>
+        <p className="text-gray-500 dark:text-gray-400">
           Start engaging with clippings to see your comments here
         </p>
       </div>
@@ -99,27 +101,27 @@ export default function CommentsList({ initialData, userId }: Props) {
   }
 
   return (
-    <div className='space-y-6'>
+    <div className="space-y-6">
       {/* Stats */}
-      <div className='bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl p-6 border border-white/40 dark:border-gray-700/40'>
-        <div className='flex items-center justify-between'>
+      <div className="rounded-2xl border border-white/40 bg-white/80 p-6 backdrop-blur-xl dark:border-gray-700/40 dark:bg-gray-900/80">
+        <div className="flex items-center justify-between">
           <div>
-            <p className='text-sm text-gray-600 dark:text-gray-400'>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Total Comments
             </p>
-            <p className='text-2xl font-bold text-gray-900 dark:text-white'>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {totalCount}
             </p>
           </div>
-          <div className='w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center'>
-            <span className='text-white text-xl'>💬</span>
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-500">
+            <span className="text-xl text-white">💬</span>
           </div>
         </div>
       </div>
 
       {/* Comments Grid */}
-      <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-        <AnimatePresence mode='popLayout'>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <AnimatePresence mode="popLayout">
           {comments.map((comment, index) => (
             <motion.div
               key={comment.id}
@@ -136,18 +138,18 @@ export default function CommentsList({ initialData, userId }: Props) {
 
       {/* Loading indicator */}
       {loading && hasMore && (
-        <div className='flex justify-center py-8'>
-          <div className='flex space-x-2'>
+        <div className="flex justify-center py-8">
+          <div className="flex space-x-2">
             <div
-              className='w-2 h-2 bg-blue-500 rounded-full animate-bounce'
+              className="h-2 w-2 animate-bounce rounded-full bg-blue-500"
               style={{ animationDelay: '0ms' }}
             ></div>
             <div
-              className='w-2 h-2 bg-purple-500 rounded-full animate-bounce'
+              className="h-2 w-2 animate-bounce rounded-full bg-purple-500"
               style={{ animationDelay: '150ms' }}
             ></div>
             <div
-              className='w-2 h-2 bg-pink-500 rounded-full animate-bounce'
+              className="h-2 w-2 animate-bounce rounded-full bg-pink-500"
               style={{ animationDelay: '300ms' }}
             ></div>
           </div>

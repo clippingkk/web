@@ -25,7 +25,7 @@ export type PostShareConfig = {
 export interface IPostShareRender {
   setup(): void
   renderBackground(): Promise<void>
-   
+
   saveToLocal(): Promise<any>
   renderText(): Promise<void>
   renderTitle(): Promise<void>

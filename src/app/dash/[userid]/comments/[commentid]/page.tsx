@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
+
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { GetCommentDocument, type GetCommentQuery } from '@/schema/generated'
 import { doApolloServerQuery } from '@/services/apollo.server'
+
 import CommentDetail from './comment-detail'
 
 type Props = {

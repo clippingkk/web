@@ -1,6 +1,8 @@
 import { cookies } from 'next/headers'
 import type React from 'react'
+
 import { USER_ID_KEY } from '@/constants/storage'
+
 import DashboardContainer from '../../../components/dashboard-container/container'
 import NavigateGuide from '../../../components/navigation-bar/navigate-guide'
 
@@ -22,7 +24,7 @@ const Layout = async (props: LayoutProps) => {
     <DashboardContainer
       uidOrDomain={myUid}
       header={
-        <NavigateGuide uid={myUid ? ~~myUid : undefined} title='Canceled' />
+        <NavigateGuide uid={myUid ? ~~myUid : undefined} title="Canceled" />
       }
     >
       {props.children}

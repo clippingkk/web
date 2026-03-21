@@ -3,6 +3,7 @@ import * as sentry from '@sentry/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+
 import { syncLoginStateToServer } from '@/actions/login'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
@@ -13,6 +14,7 @@ import {
 import { updateToken } from '@/services/ajax'
 import type { AppleAuthResponse } from '@/services/apple'
 import profile from '@/utils/profile'
+
 import AppleLoginButtonView from './apple'
 
 interface AppleStandaloneLoginButtonProps {
@@ -122,7 +124,7 @@ export default function AppleStandaloneLoginButton({
   return (
     <div className={className} onClickCapture={handleAppleClick}>
       <AppleLoginButtonView
-        version='v4'
+        version="v4"
         loading={isLoading || isAuthenticating}
         disabled={isLoading || isAuthenticating}
         onSuccess={handleAppleSuccess}

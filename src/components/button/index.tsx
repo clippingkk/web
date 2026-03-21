@@ -1,8 +1,8 @@
 import { Loader2 } from 'lucide-react'
+
 import { cn } from '@/utils/cn'
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
 }
 
@@ -35,8 +35,8 @@ function Button({
       aria-disabled={disabled || loading}
       {...props}
     >
-      <span className='relative z-10 flex items-center justify-center'>
-        {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+      <span className="relative z-10 flex items-center justify-center">
+        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {children}
       </span>
     </button>

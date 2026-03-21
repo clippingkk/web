@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { getTranslation } from '@/i18n'
 import {
@@ -9,6 +10,7 @@ import {
   type ProfileQueryVariables,
 } from '@/schema/generated'
 import { getApolloServerClient } from '@/services/apollo.server'
+
 import UploaderPageContent from './content'
 import ClippingsUploadHelp from './help'
 
@@ -52,13 +54,13 @@ async function Page(props: Props) {
     },
   })
   return (
-    <section className='flex min-h-screen flex-col items-center justify-center px-4 py-12'>
-      <div className='mx-auto w-full max-w-3xl'>
-        <div className='mb-8 text-center'>
-          <h1 className='mb-4 bg-gradient-to-r from-sky-400 via-violet-500 to-fuchsia-500 bg-clip-text text-3xl font-bold text-transparent md:text-4xl'>
+    <section className="flex min-h-screen flex-col items-center justify-center px-4 py-12">
+      <div className="mx-auto w-full max-w-3xl">
+        <div className="mb-8 text-center">
+          <h1 className="mb-4 bg-gradient-to-r from-sky-400 via-violet-500 to-fuchsia-500 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
             {t('app.upload.tip')}
           </h1>
-          <p className='bg-gradient-to-r from-sky-400 via-violet-500 to-fuchsia-500 bg-clip-text text-base text-transparent md:text-lg'>
+          <p className="bg-gradient-to-r from-sky-400 via-violet-500 to-fuchsia-500 bg-clip-text text-base text-transparent md:text-lg">
             {t('app.upload.private.description') ??
               'Drag and drop your Kindle clippings file to share your favorite passages'}
           </p>

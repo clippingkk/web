@@ -3,7 +3,7 @@ import { usePageTrack } from '@/hooks/tracke'
 
 type Props = {
   page: string
-   
+
   params?: any
 }
 

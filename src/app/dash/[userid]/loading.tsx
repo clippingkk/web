@@ -2,9 +2,9 @@ import Loading2Icon from '@/components/icons/loading2.svg'
 
 function DashboardLoadingPage() {
   return (
-    <div className='w-full h-full flex flex-col justify-center items-center min-h-screen'>
+    <div className="flex h-full min-h-screen w-full flex-col items-center justify-center">
       <Loading2Icon />
-      <span className='dark:text-gray-100 mt-4'>Loading...</span>
+      <span className="mt-4 dark:text-gray-100">Loading...</span>
     </div>
   )
 }

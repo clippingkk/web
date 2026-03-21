@@ -42,9 +42,9 @@ function ElegantDivider({
   const colorClass = colorClasses[color][intensity]
 
   return (
-    <div className={`relative h-px my-8 overflow-hidden ${className}`}>
+    <div className={`relative my-8 h-px overflow-hidden ${className}`}>
       {/* Base gradient line */}
-      <div className='absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent' />
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-zinc-700" />
 
       {/* Enhanced color overlay */}
       <div

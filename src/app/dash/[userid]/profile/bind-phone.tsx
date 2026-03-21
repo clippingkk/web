@@ -4,6 +4,7 @@ import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 import React, { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
+
 import BindPhone from '@/components/bind-phone'
 import Button from '@/components/button/button'
 import { useTranslation } from '@/i18n/client'
@@ -34,8 +35,8 @@ function ProfileBindPhone() {
   return (
     <React.Fragment>
       <Tooltip content={t('app.profile.phoneBind')}>
-        <Button variant='ghost' onClick={() => setVisible(true)}>
-          <DevicePhoneMobileIcon className='h-6 w-6' />
+        <Button variant="ghost" onClick={() => setVisible(true)}>
+          <DevicePhoneMobileIcon className="h-6 w-6" />
         </Button>
       </Tooltip>
       <Modal
@@ -43,7 +44,7 @@ function ProfileBindPhone() {
         title={t('app.profile.editor.title')}
         onClose={() => setVisible(false)}
       >
-        <div className='flex h-48 w-full flex-col justify-center md:h-96 md:w-144'>
+        <div className="flex h-48 w-full flex-col justify-center md:h-96 md:w-144">
           <BindPhone onFinalCheck={handlePhoneBind} />
         </div>
       </Modal>

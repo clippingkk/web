@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react'
+
 import { SignInWithAppleOptions } from '../../constants/config'
 
 const scriptURL =
@@ -21,11 +22,11 @@ function SignInWithApple() {
       }
       window.AppleID.auth.init(SignInWithAppleOptions)
     }
-     
+
     function onAppleSignInSuccess(data: any) {
       console.log(data)
     }
-     
+
     function onAppleSignInFail(err: any) {
       console.log(err)
     }

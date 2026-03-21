@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   ProfileDocument,
@@ -7,6 +8,7 @@ import {
   type ProfileQueryVariables,
 } from '@/schema/generated'
 import { getApolloServerClient } from '@/services/apollo.server'
+
 import UncheckedPageContent from './content'
 
 type Props = {
