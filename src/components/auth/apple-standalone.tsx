@@ -101,7 +101,6 @@ export default function AppleStandaloneLoginButton({
 
       onSuccess?.()
     } catch (error) {
-      console.error('Apple login error:', error)
       const errorMessage =
         error instanceof Error ? error.message : 'Login failed'
       toast.error(`Apple login failed: ${errorMessage}`, { id: authToast })
@@ -111,9 +110,9 @@ export default function AppleStandaloneLoginButton({
     }
   }
 
-  const handleAppleError = (error: any) => {
-    console.error('Apple Sign-In error:', error)
-    toast.error(`Apple Sign-In failed: ${error?.error || 'Unknown error'}`)
+  const handleAppleError = (error: unknown) => {
+    const errorObj = error as Record<string, string> | null
+    toast.error(`Apple Sign-In failed: ${errorObj?.error || 'Unknown error'}`)
     setIsLoading(false)
   }
 

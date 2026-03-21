@@ -38,7 +38,7 @@ function FieldInput(props: FieldInputProps) {
       <input
         {...props.inputProps}
         type={props.type ?? 'text'}
-        className={`border-2 p-4 text-2xl ${(sizeWidth as any)[size]} bg-gray-400 focus:outline-hidden disabled:text-gray-500 ${
+        className={`border-2 p-4 text-2xl ${sizeWidth[size]} bg-gray-400 focus:outline-hidden disabled:text-gray-500 ${
           props.error ? 'border-red-400' : 'border-transparent'
         }`}
         value={props.value}

@@ -32,10 +32,15 @@ function Avatar(props: AvatarProps) {
   const { ref, isHovering } = useHover<HTMLDivElement>()
 
   if (props.img === '') {
-    return (
+    return props.onClick ? (
+      <button
+        type="button"
+        className={`animate-pulse rounded-full border-none bg-gray-500 p-0 ${cls}`}
+        onClick={props.onClick}
+      />
+    ) : (
       <div
         className={`animate-pulse rounded-full bg-gray-500 ${cls}`}
-        onClick={props.onClick}
       />
     )
   }

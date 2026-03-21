@@ -120,13 +120,14 @@ function ConfirmDialog({
 
   return (
     <>
-      <div
+      <button
         ref={refs.setReference}
+        type="button"
         onClick={() => setIsOpen(true)}
         className="cursor-pointer"
       >
         {children}
-      </div>
+      </button>
       {isOpen && (
         <FloatingPortal>
           <FloatingOverlay

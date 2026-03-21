@@ -54,8 +54,7 @@ function Preview(props: PreviewProps) {
       toast.success(t('app.clipping.preview.success'))
     },
 
-    onError: (err: any) => {
-      console.log(err)
+    onError: (err: Error) => {
       toast.error(err.toString())
     },
   })
