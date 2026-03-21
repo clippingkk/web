@@ -1,6 +1,7 @@
 'use server'
 
 import { cookies } from 'next/headers'
+
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 
 // remove cookies on server

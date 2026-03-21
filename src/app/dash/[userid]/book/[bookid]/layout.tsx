@@ -4,8 +4,8 @@ type Props = {
 
 function Layout({ children }: Props) {
   return (
-    <section className='page anna-fade-in'>
-      <div className='w-full mt-4 lg:mt-8 mb-8'>{children}</div>
+    <section className="page anna-fade-in">
+      <div className="mt-4 mb-8 w-full lg:mt-8">{children}</div>
     </section>
   )
 }

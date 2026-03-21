@@ -1,16 +1,18 @@
 'use client'
+import Modal from '@annatarhe/lake-ui/modal'
+import { Save, Upload } from 'lucide-react'
 import type React from 'react'
+
+import 'react-image-crop/dist/ReactCrop.css'
 import { useCallback, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
 import ReactCrop, {
   type Crop,
   centerCrop,
   makeAspectCrop,
   type PixelCrop,
 } from 'react-image-crop'
-import 'react-image-crop/dist/ReactCrop.css'
-import Modal from '@annatarhe/lake-ui/modal'
-import { Save, Upload } from 'lucide-react'
-import toast from 'react-hot-toast'
+
 import Button from '@/components/button/button'
 
 interface BackgroundUploadModalProps {
@@ -191,49 +193,49 @@ const BackgroundUploadModal = ({
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      title='Change Background Image'
+      title="Change Background Image"
     >
       {/* Content */}
-      <div className='p-6 space-y-6'>
+      <div className="space-y-6 p-6">
         {/* File Upload */}
-        <div className='space-y-4'>
-          <div className='text-sm text-gray-600 dark:text-gray-400'>
+        <div className="space-y-4">
+          <div className="text-sm text-gray-600 dark:text-gray-400">
             Upload an image for your profile background. Image will be resized
             to {REQUIRED_WIDTH}x{REQUIRED_HEIGHT}px.
           </div>
 
-          <div className='flex flex-col space-y-2'>
+          <div className="flex flex-col space-y-2">
             <input
               ref={fileInputRef}
-              type='file'
-              accept='image/*'
+              type="file"
+              accept="image/*"
               onChange={handleFileSelect}
-              className='hidden'
+              className="hidden"
             />
 
             <Button
               onClick={() => fileInputRef.current?.click()}
-              variant='outline'
-              className='w-full'
+              variant="outline"
+              className="w-full"
               disabled={isProcessing}
             >
-              <Upload className='w-4 h-4 mr-2' />
+              <Upload className="mr-2 h-4 w-4" />
               Select Image
             </Button>
 
             {imageError && (
-              <div className='text-red-500 text-sm'>{imageError}</div>
+              <div className="text-sm text-red-500">{imageError}</div>
             )}
           </div>
         </div>
 
         {/* Image Crop */}
         {previewUrl && (
-          <div className='space-y-4'>
-            <div className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+          <div className="space-y-4">
+            <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Crop Image to {REQUIRED_WIDTH}x{REQUIRED_HEIGHT}px:
             </div>
-            <div className='relative max-h-96 overflow-auto rounded-lg border border-gray-200 dark:border-gray-700'>
+            <div className="relative max-h-96 overflow-auto rounded-lg border border-gray-200 dark:border-gray-700">
               <ReactCrop
                 crop={crop}
                 onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -247,9 +249,9 @@ const BackgroundUploadModal = ({
                 <img
                   ref={imgRef}
                   src={previewUrl}
-                  alt='Crop preview'
+                  alt="Crop preview"
                   onLoad={onImageLoad}
-                  className='max-h-96 object-contain'
+                  className="max-h-96 object-contain"
                   style={{ width: 1200 }}
                 />
               </ReactCrop>
@@ -258,7 +260,7 @@ const BackgroundUploadModal = ({
             <Button
               onClick={generateCroppedImage}
               disabled={!completedCrop || isProcessing}
-              className='w-full'
+              className="w-full"
             >
               {isProcessing ? 'Processing...' : 'Generate Preview'}
             </Button>
@@ -267,31 +269,31 @@ const BackgroundUploadModal = ({
 
         {/* Cropped Preview */}
         {croppedUrl && (
-          <div className='space-y-4'>
-            <div className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+          <div className="space-y-4">
+            <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Cropped Preview ({REQUIRED_WIDTH}x{REQUIRED_HEIGHT}px):
             </div>
-            <div className='relative'>
+            <div className="relative">
               <img
                 src={croppedUrl}
-                alt='Cropped preview'
-                className='w-full h-32 object-cover rounded-lg border border-gray-200 dark:border-gray-700'
+                alt="Cropped preview"
+                className="h-32 w-full rounded-lg border border-gray-200 object-cover dark:border-gray-700"
               />
             </div>
           </div>
         )}
 
         {/* Hidden canvas for image processing */}
-        <canvas ref={canvasRef} className='hidden' />
+        <canvas ref={canvasRef} className="hidden" />
       </div>
 
       {/* Footer */}
-      <div className='flex justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700'>
-        <Button variant='outline' onClick={handleClose} disabled={isProcessing}>
+      <div className="flex justify-end space-x-3 border-t border-gray-200 p-6 dark:border-gray-700">
+        <Button variant="outline" onClick={handleClose} disabled={isProcessing}>
           Cancel
         </Button>
         <Button onClick={handleSave} disabled={!croppedUrl || isProcessing}>
-          <Save className='w-4 h-4 mr-2' />
+          <Save className="mr-2 h-4 w-4" />
           {isProcessing ? 'Saving...' : 'Save Background'}
         </Button>
       </div>

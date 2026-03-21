@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import logo from '../../assets/logo-light.svg'
 import { APP_URL_ORIGIN } from '../../constants/config'
 

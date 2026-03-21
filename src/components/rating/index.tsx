@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react'
+
 import { cn } from '@/utils/cn'
 
 interface Props {

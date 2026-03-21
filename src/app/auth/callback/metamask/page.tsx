@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
 /* METAMASK DISABLED
 import AuthCallbackMetamask from './content'
@@ -22,17 +23,18 @@ async function MetamaskPage(props: AppleCallbackPageProps) {
   )
   */
   return (
-    <div className='flex items-center justify-center min-h-screen'>
-      <div className='text-center p-8'>
-        <h1 className='text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4'>
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="p-8 text-center">
+        <h1 className="mb-4 text-2xl font-bold text-gray-800 dark:text-gray-200">
           MetaMask Login Disabled
         </h1>
-        <p className='text-gray-600 dark:text-gray-400'>
-          MetaMask authentication is currently unavailable. Please use another login method.
+        <p className="text-gray-600 dark:text-gray-400">
+          MetaMask authentication is currently unavailable. Please use another
+          login method.
         </p>
         <a
-          href='/auth/auth-v4'
-          className='mt-4 inline-block px-6 py-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors'
+          href="/auth/auth-v4"
+          className="mt-4 inline-block rounded-lg bg-blue-400 px-6 py-2 text-white transition-colors hover:bg-blue-500"
         >
           Back to Login
         </a>

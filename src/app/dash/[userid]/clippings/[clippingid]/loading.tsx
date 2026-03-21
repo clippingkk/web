@@ -1,12 +1,12 @@
 function Loading() {
   return (
-    <div className='container w-full mt-4 lg:mt-20'>
-      <div className='flex flex-col lg:flex-row w-full h-156 gap-6 px-4'>
-        <div className='h-32 lg:h-full flex-1 animate-pulse bg-slate-400 rounded-xs' />
-        <div className='h-24 lg:w-96 animate-pulse lg:h-full bg-slate-400 rounded-xs' />
+    <div className="container mt-4 w-full lg:mt-20">
+      <div className="flex h-156 w-full flex-col gap-6 px-4 lg:flex-row">
+        <div className="h-32 flex-1 animate-pulse rounded-xs bg-slate-400 lg:h-full" />
+        <div className="h-24 animate-pulse rounded-xs bg-slate-400 lg:h-full lg:w-96" />
       </div>
-      <div className='w-full px-4'>
-        <div className='w-full h-64 mt-12 mb-8 animate-pulse bg-slate-400 rounded-xs' />
+      <div className="w-full px-4">
+        <div className="mt-12 mb-8 h-64 w-full animate-pulse rounded-xs bg-slate-400" />
       </div>
     </div>
   )

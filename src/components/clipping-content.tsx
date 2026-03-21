@@ -28,9 +28,9 @@ function ClippingContent({
   }
 
   return (
-    <div className='relative'>
+    <div className="relative">
       {showQuoteIcon && (
-        <div className='absolute -left-4 -top-3 opacity-15 text-gray-500 dark:text-gray-300'>
+        <div className="absolute -top-3 -left-4 text-gray-500 opacity-15 dark:text-gray-300">
           <Quote size={32} />
         </div>
       )}

@@ -2,12 +2,14 @@
 import { useQuery } from '@apollo/client/react'
 import { Masonry, useInfiniteLoader } from 'masonic'
 import { useRef } from 'react'
+
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import { usePageTrack } from '@/hooks/tracke'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
 import { BookDocument, type BookQuery, type Clipping } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import type { WenquBook } from '@/services/wenqu'
+
 import BookPageSkeleton from './skeleton'
 
 type BookPageContentProps = {

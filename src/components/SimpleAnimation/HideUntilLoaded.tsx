@@ -8,10 +8,7 @@ type HideUntilLoadedProps = {
 }
 
 // Inner component that resets via key prop when imageToLoad changes
-function HideUntilLoadedInner({
-  imageToLoad,
-  children,
-}: HideUntilLoadedProps) {
+function HideUntilLoadedInner({ imageToLoad, children }: HideUntilLoadedProps) {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>(
     'loading'
   )

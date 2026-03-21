@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import CanceledPageContent from './content'
 
 export const metadata: Metadata = {
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
 
 function CanceledPage() {
   return (
-    <div className=' w-full h-full flex flex-col items-center justify-center dark:text-gray-100 pt-20'>
+    <div className="flex h-full w-full flex-col items-center justify-center pt-20 dark:text-gray-100">
       <CanceledPageContent />
     </div>
   )

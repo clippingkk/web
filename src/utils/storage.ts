@@ -1,6 +1,7 @@
 import type { ApolloClient } from '@apollo/client'
 import * as sentry from '@sentry/react'
 import Cookies from 'js-cookie'
+
 import {
   COOKIE_TOKEN_KEY,
   type IUserToken,

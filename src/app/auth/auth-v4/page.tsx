@@ -1,6 +1,7 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
 import type React from 'react'
+
 import GalleryBackgroundView from '@/components/galleryBackgroundView'
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
 import { duration3Days } from '@/hooks/book'
@@ -8,6 +9,7 @@ import { PublicDataDocument, type PublicDataQuery } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
+
 import ForceClean from './clean'
 import AuthV4Content from './content'
 
@@ -26,8 +28,9 @@ async function Page() {
   })
 
   const dbIds =
-    data.data?.public.books.map((x) => x.doubanId).filter((x) => x.length > 3) ??
-    []
+    data.data?.public.books
+      .map((x) => x.doubanId)
+      .filter((x) => x.length > 3) ?? []
 
   const rq = getReactQueryClient()
   await rq.prefetchQuery({
@@ -44,10 +47,10 @@ async function Page() {
   return (
     <HydrationBoundary state={d}>
       <ForceClean />
-      <div className='w-full h-full bg-slate-100 dark:bg-slate-900 relative'>
+      <div className="relative h-full w-full bg-slate-100 dark:bg-slate-900">
         <GalleryBackgroundView publicData={data.data} />
         <div
-          className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
+          className="with-fade-in absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col items-center justify-center"
           style={
             {
               '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
@@ -57,7 +60,7 @@ async function Page() {
             } as React.CSSProperties
           }
         >
-          <div className='w-full h-full bg-slate-200/5 backdrop-blur-xs flex justify-center items-center'>
+          <div className="flex h-full w-full items-center justify-center bg-slate-200/5 backdrop-blur-xs">
             <AuthV4Content />
           </div>
         </div>

@@ -1,4 +1,5 @@
-import { type ForwardedRef, forwardRef } from 'react'
+import { type ForwardedRef } from 'react'
+
 import TiptapEditor, { type TiptapEditorRef } from './TiptapEditor'
 
 // define your extension array
@@ -29,7 +30,7 @@ function CKBaseEditor(props: CKBaseEditorProps) {
   } = props
 
   return (
-    <div className='flex w-full relative'>
+    <div className="relative flex w-full">
       <TiptapEditor
         ref={editor as ForwardedRef<TiptapEditorRef>}
         className={className}

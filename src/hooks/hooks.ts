@@ -4,7 +4,9 @@ import * as sentry from '@sentry/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
+
 import type { User } from '@/gql/graphql'
+
 import { syncLoginStateToServer } from '../actions/login'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 import type {

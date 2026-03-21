@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+
 import { generateMetadata as clippingGenerateMetadata } from '@/components/og/og-with-clipping'
+
 import { getClippingData } from './data'
 
 type PageProps = {

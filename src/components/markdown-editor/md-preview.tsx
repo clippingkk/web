@@ -7,11 +7,7 @@ type MarkdownPreviewProps = {
 
 function MarkdownPreview(props: MarkdownPreviewProps) {
   const { value } = props
-  return (
-    <div className='text-lg'>
-      {value}
-    </div>
-  )
+  return <div className="text-lg">{value}</div>
   // return (
   //   <div className='text-lg'>
   //     <Streamdown components={MarkdownComponents}>

@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from './constants/storage'
 
 export function proxy(request: NextRequest) {

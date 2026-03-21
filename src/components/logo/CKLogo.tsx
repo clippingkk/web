@@ -1,4 +1,5 @@
 import Image from 'next/image'
+
 import logoDark from '@/assets/logo-dark.svg'
 import logoLight from '@/assets/logo-light.svg'
 
@@ -13,14 +14,14 @@ function CKLogo(props: CKLogoProps) {
     <>
       <Image
         src={logoLight}
-        alt='clippingkk logo'
+        alt="clippingkk logo"
         width={size}
         height={size}
         className={`rounded-sm shadow-2xl dark:hidden ${className}`}
       />
       <Image
         src={logoDark}
-        alt='clippingkk logo'
+        alt="clippingkk logo"
         width={size}
         height={size}
         className={`hidden rounded-sm shadow-2xl dark:block ${className}`}

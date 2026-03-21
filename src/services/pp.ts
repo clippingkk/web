@@ -1,4 +1,5 @@
 import PromptPal from '@prompt-pal/node-sdk'
+
 import { PP_API, PP_TOKEN } from '../constants/config'
 import { getLocalToken } from './ajax'
 

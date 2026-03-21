@@ -1,4 +1,5 @@
 import { connection } from 'next/server'
+
 import { bgs } from './theme.config'
 
 export async function getBackgroundImageServer() {

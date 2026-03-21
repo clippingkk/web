@@ -5,7 +5,7 @@
 import type { BundledLanguage } from 'shiki/bundle/web'
 // import { codeToHast } from 'shiki/bundle/web'
 
-export async function highlight(code: string, lang: BundledLanguage) {
+export async function highlight(code: string, _lang: BundledLanguage) {
   return code
   // const out = await codeToHast(code, {
   //   lang,

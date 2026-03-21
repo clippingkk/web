@@ -2,10 +2,12 @@ import { ChevronLeft, Crown, Home } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import type { ProfileQuery, ProfileQueryVariables } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
+
 import logoDark from '../../assets/logo-dark.svg'
 import logoLight from '../../assets/logo-light.svg'
 import { ProfileDocument } from '../../schema/generated'
@@ -45,66 +47,66 @@ async function NavigateGuide(props: NavigateGuideProps) {
   }
 
   return (
-    <nav className='with-slide-in sticky top-0 z-30 w-full bg-gradient-to-r from-purple-700/50 to-pink-600/50 shadow-xl backdrop-blur-xl dark:from-purple-900/70 dark:to-pink-800/70'>
-      <div className='container mx-auto px-4 py-3 md:py-4'>
-        <div className='flex items-center justify-between'>
+    <nav className="with-slide-in sticky top-0 z-30 w-full bg-gradient-to-r from-purple-700/50 to-pink-600/50 shadow-xl backdrop-blur-xl dark:from-purple-900/70 dark:to-pink-800/70">
+      <div className="container mx-auto px-4 py-3 md:py-4">
+        <div className="flex items-center justify-between">
           {/* Left side with back button and title */}
-          <div className='flex items-center gap-3 text-white'>
+          <div className="flex items-center gap-3 text-white">
             <Link
-              href='/'
-              className='flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors duration-200 hover:bg-white/20'
+              href="/"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors duration-200 hover:bg-white/20"
               aria-label={t('common.back')}
             >
               <LinkIndicator>
-                <ChevronLeft className='h-5 w-5' />
+                <ChevronLeft className="h-5 w-5" />
               </LinkIndicator>
             </Link>
-            <div className='flex items-center gap-2'>
-              <Crown className='h-5 w-5 text-yellow-300' />
-              <h1 className='text-xl font-bold tracking-tight'>
+            <div className="flex items-center gap-2">
+              <Crown className="h-5 w-5 text-yellow-300" />
+              <h1 className="text-xl font-bold tracking-tight">
                 {props.title}
               </h1>
             </div>
           </div>
 
           {/* Right side with user or logo */}
-          <div className='flex items-center'>
+          <div className="flex items-center">
             {p ? (
               <Link
                 href={getMyHomeLink(p) as any}
-                className='flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 transition-colors duration-200 hover:bg-white/20'
+                className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 transition-colors duration-200 hover:bg-white/20"
               >
                 <UserName name={p.name} premiumEndAt={p.premiumEndAt} />
               </Link>
             ) : (
-              <div className='flex gap-3'>
+              <div className="flex gap-3">
                 <Link
-                  href='/'
-                  className='flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors duration-200 hover:bg-white/20'
-                  aria-label='Home'
+                  href="/"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors duration-200 hover:bg-white/20"
+                  aria-label="Home"
                 >
-                  <Home className='h-5 w-5 text-white' />
+                  <Home className="h-5 w-5 text-white" />
                 </Link>
-                <Link href='/' className='flex items-center gap-2'>
-                  <div className='relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white/10'>
+                <Link href="/" className="flex items-center gap-2">
+                  <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white/10">
                     <Image
                       src={logoLight}
-                      alt='ClippingKK logo'
-                      className='h-8 w-8 object-contain dark:hidden'
+                      alt="ClippingKK logo"
+                      className="h-8 w-8 object-contain dark:hidden"
                       width={32}
                       height={32}
                       priority
                     />
                     <Image
                       src={logoDark}
-                      alt='ClippingKK logo'
-                      className='hidden h-8 w-8 object-contain dark:block'
+                      alt="ClippingKK logo"
+                      className="hidden h-8 w-8 object-contain dark:block"
                       width={32}
                       height={32}
                       priority
                     />
                   </div>
-                  <span className='hidden text-xl font-bold text-white sm:inline-block'>
+                  <span className="hidden text-xl font-bold text-white sm:inline-block">
                     ClippingKK
                   </span>
                 </Link>

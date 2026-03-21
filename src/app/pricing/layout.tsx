@@ -1,7 +1,9 @@
 import { cookies } from 'next/headers'
 import type React from 'react'
+
 import { USER_ID_KEY } from '@/constants/storage'
 import { getTranslation } from '@/i18n'
+
 import DashboardContainer from '../../components/dashboard-container/container'
 import NavigateGuide from '../../components/navigation-bar/navigate-guide'
 

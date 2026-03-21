@@ -1,6 +1,7 @@
 'use client'
 import { useLayoutEffect, useState } from 'react'
 import type { BundledLanguage } from 'shiki/bundle/web'
+
 import { highlight } from './shared'
 
 interface Props {

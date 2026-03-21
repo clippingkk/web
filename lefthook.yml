@@ -15,9 +15,9 @@
 pre-commit:
   parallel: true
   commands:
-    eslint:
+    oxlint:
       glob: "*.{js,ts,jsx,tsx}"
-      run: npm run lint -- --fix {staged_files}
+      run: pnpm run lint:fix {staged_files}
 #     rubocop:
 #       tags: backend style
 #       glob: "*.rb"

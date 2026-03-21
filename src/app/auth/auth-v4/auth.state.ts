@@ -6,7 +6,9 @@ import {
   type SnapshotFrom,
   setup,
 } from 'xstate'
+
 import type { AuthLoginResponseFragment } from '@/schema/generated'
+
 import { AuthV4ManualAuthSchema } from './schema'
 
 type Context = {
@@ -38,7 +40,6 @@ const authMachine = setup({
     events: {} as Event,
   },
   actors: {
-     
     doSendOTP: fromPromise(
       async (_: {
         input: { email?: string; turnstileToken?: string }
@@ -58,7 +59,7 @@ const authMachine = setup({
         throw new Error('not implemented')
       }
     ),
-     
+
     setLocalState: fromPromise(async (_: { input: unknown }): Promise<any> => {
       throw new Error('not implemented')
     }),

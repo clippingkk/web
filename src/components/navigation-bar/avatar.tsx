@@ -1,5 +1,6 @@
 import clsx from 'classnames'
 import Image from 'next/image'
+
 import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 
 type AvatarOnNavigationBarProps = {
@@ -26,8 +27,8 @@ function AvatarOnNavigationBar(props: AvatarOnNavigationBarProps) {
         src={avatar}
         width={size}
         height={size}
-        alt='avatar'
-        className='rounded-full'
+        alt="avatar"
+        className="rounded-full"
       />
     </div>
   )

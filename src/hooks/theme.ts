@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+
 import { bgs } from './theme.config'
 
 export function useBackgroundImage() {

@@ -123,7 +123,7 @@ function TiptapEditor(
   }
 
   return (
-    <div className='tiptap-editor'>
+    <div className="tiptap-editor">
       <EditorContent editor={editor} className={className} style={style} />
     </div>
   )

@@ -1,6 +1,8 @@
 import BlurhashView from '@annatarhe/blurhash-react'
 import { Share2 } from 'lucide-react'
+
 import { useTranslation } from '@/i18n/client'
+
 import type { WenquBook } from '../../services/wenqu'
 
 type Props = {
@@ -12,9 +14,9 @@ function BookCoverColumn({ book, togglePreviewVisible }: Props) {
   const { t } = useTranslation()
   return (
     <div>
-      <div className='relative mx-auto w-full max-w-[320px] transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1'>
+      <div className="relative mx-auto w-full max-w-[320px] transform transition-all duration-500 hover:scale-[1.02] hover:-rotate-1">
         {/* Colored shadow behind cover */}
-        <div className='absolute inset-4 -z-10 rounded-2xl bg-blue-400/30 opacity-40 blur-2xl translate-y-4 scale-95 dark:bg-blue-500/20' />
+        <div className="absolute inset-4 -z-10 translate-y-4 scale-95 rounded-2xl bg-blue-400/30 opacity-40 blur-2xl dark:bg-blue-500/20" />
         <BlurhashView
           blurhashValue={
             book.edges?.imageInfo?.blurHashValue ??
@@ -23,18 +25,18 @@ function BookCoverColumn({ book, togglePreviewVisible }: Props) {
           src={book.image}
           height={384}
           width={320}
-          className='w-full aspect-[4/5] object-cover rounded-xl shadow-2xl transition-all duration-300'
+          className="aspect-[4/5] w-full rounded-xl object-cover shadow-2xl transition-all duration-300"
           alt={book.title}
         />
       </div>
 
       {/* Share button (mobile only) */}
-      <div className='mt-6 flex justify-center md:hidden'>
+      <div className="mt-6 flex justify-center md:hidden">
         <button
           onClick={() => togglePreviewVisible()}
-          className='w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-300'
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3 text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg"
         >
-          <Share2 className='w-5 h-5' />
+          <Share2 className="h-5 w-5" />
           <span>{t('app.book.share')}</span>
         </button>
       </div>

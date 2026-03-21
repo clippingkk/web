@@ -1,5 +1,6 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
+
 import { generateMetadata as squareGenerateMetadata } from '@/components/og/og-with-square-page'
 import { APP_API_STEP_LIMIT } from '@/constants/config'
 import { duration3Days } from '@/hooks/book'
@@ -14,6 +15,7 @@ import {
   getApolloServerClient,
 } from '@/services/apollo.server'
 import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
+
 import SquarePageContent from './content'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -31,8 +33,8 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 
   const dbIds =
-    squareResponse.data!.featuredClippings
-      .map((x) => x.bookID)
+    squareResponse
+      .data!.featuredClippings.map((x) => x.bookID)
       .filter((x) => x.length > 3) ?? []
 
   const rq = getReactQueryClient()
@@ -64,8 +66,8 @@ async function Page() {
   })
 
   const dbIds =
-    squareResponse.data!.featuredClippings
-      .map((x) => x.bookID)
+    squareResponse
+      .data!.featuredClippings.map((x) => x.bookID)
       .filter((x) => x.length > 3) ?? []
 
   const rq = getReactQueryClient()
@@ -87,7 +89,6 @@ async function Page() {
   return (
     <HydrationBoundary state={d}>
       <SquarePageContent squareData={squareResponse.data!} />
-
     </HydrationBoundary>
   )
 }

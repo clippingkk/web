@@ -1,6 +1,7 @@
 import type { FetchYearlyReportQuery } from '../../schema/generated'
 import type { WenquBook } from '../../services/wenqu'
 import PublicBookItem from '../public-book-item/public-book-item'
+
 import styles from './report-hero.module.css'
 
 type ReportHeroProps = {
@@ -11,7 +12,7 @@ type ReportHeroProps = {
 function ReportHero(props: ReportHeroProps) {
   return (
     <div
-      className={`grid mb-8 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${props.books.length > 8 ? 'py-10 lg:py-20 ' : ''}`}
+      className={`mb-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${props.books.length > 8 ? 'py-10 lg:py-20 ' : ''}`}
     >
       {props.books.map((b, i) => (
         <div

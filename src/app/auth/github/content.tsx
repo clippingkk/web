@@ -1,5 +1,6 @@
 'use client'
 import { useEffect } from 'react'
+
 import LoadingIcon from '@/components/icons/loading.svg'
 import { useAuthSuccessed } from '@/hooks/hooks'
 import { useGithubLoginLazyQuery } from '@/schema/generated'
@@ -28,10 +29,10 @@ function GithubOAuthContent(props: GithubOAuthContentProps) {
   }, [code, exec])
 
   return (
-    <div className='p-10 bg-gray-300 bg-opacity-40 rounded-sm text-4xl backdrop-blur-lg'>
-      {resp.loading && <LoadingIcon className='animate-spin' />}
+    <div className="bg-opacity-40 rounded-sm bg-gray-300 p-10 text-4xl backdrop-blur-lg">
+      {resp.loading && <LoadingIcon className="animate-spin" />}
       {resp.error && (
-        <div className='max-w-sm h-96 overflow-y-auto'>
+        <div className="h-96 max-w-sm overflow-y-auto">
           {resp.error.message}
         </div>
       )}

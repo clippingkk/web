@@ -1,6 +1,7 @@
 import { DevicePhoneMobileIcon } from '@heroicons/react/24/solid'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+
 import AuthByAppleButton from '@/components/auth.apple'
 import AuthByGithub from '@/components/auth.github'
 /* METAMASK DISABLED
@@ -19,30 +20,30 @@ async function AuthV2Page() {
   const bg = await getBackgroundImageServer()
   return (
     <section
-      className='anna-page-container h-screen object-cover bg-center bg-cover'
+      className="anna-page-container h-screen bg-cover bg-center object-cover"
       style={{
         backgroundImage: `url(${bg.src})`,
       }}
     >
-      <div className='flex w-full h-full backdrop-blur-xl bg-black bg-opacity-30 justify-center items-center'>
-        <div className='p-12 rounded-sm backdrop-blur-xl shadow-sm bg-opacity-10 bg-blue-400'>
-          <div className='flex justify-center items-center flex-col mb-4'>
+      <div className="bg-opacity-30 flex h-full w-full items-center justify-center bg-black backdrop-blur-xl">
+        <div className="bg-opacity-10 rounded-sm bg-blue-400 p-12 shadow-sm backdrop-blur-xl">
+          <div className="mb-4 flex flex-col items-center justify-center">
             <CKLogo />
-            <h1 className='text-center font-bold text-3xl dark:text-gray-100 mt-4'>
+            <h1 className="mt-4 text-center text-3xl font-bold dark:text-gray-100">
               ClippingKK
             </h1>
           </div>
 
           <div>
-            <h2 className='text-2xl dark:text-gray-100 mb-4'>Login by ...</h2>
+            <h2 className="mb-4 text-2xl dark:text-gray-100">Login by ...</h2>
             <Link
-              href='/auth/phone'
-              className='text-white block text-center w-full rounded-sm bg-blue-400 hover:bg-blue-500 py-4 disabled:bg-gray-300 disabled:hover:bg-gray-300 transition-all duration-300 mt-4'
+              href="/auth/phone"
+              className="mt-4 block w-full rounded-sm bg-blue-400 py-4 text-center text-white transition-all duration-300 hover:bg-blue-500 disabled:bg-gray-300 disabled:hover:bg-gray-300"
             >
-              <DevicePhoneMobileIcon className='h-6 w-6 mr-2 inline-block' />
+              <DevicePhoneMobileIcon className="mr-2 inline-block h-6 w-6" />
               Phone Number
             </Link>
-            <hr className='my-4' />
+            <hr className="my-4" />
             {/* METAMASK DISABLED
             <MetaMaskProviderWrapper>
               <AuthByMetamask />
@@ -51,11 +52,11 @@ async function AuthV2Page() {
             <AuthByAppleButton />
             <AuthByGithub />
 
-            <div className='mt-4'>
-              <p className=' dark:text-white text-center'>
+            <div className="mt-4">
+              <p className="text-center dark:text-white">
                 If you have any question, please email to
                 <br />
-                <a href='email:annatar.he+ck@gmail.com' className=' underline'>
+                <a href="email:annatar.he+ck@gmail.com" className="underline">
                   annatar.he+ck@gmail.com
                 </a>
               </p>

@@ -1,4 +1,5 @@
 import type React from 'react'
+
 import SettingsSidebar from '@/components/settings-sidebar/settings-sidebar'
 import { getTranslation } from '@/i18n'
 
@@ -10,11 +11,11 @@ async function SettingsPageContent(props: SettingsPageProps) {
   const { children } = props
   const { t } = await getTranslation()
   return (
-    <div className='flex container my-8 mx-auto overflow-hidden rounded-xl shadow-2xl bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-800 dark:to-slate-900 backdrop-blur-sm bg-opacity-80 dark:bg-opacity-80'>
+    <div className="bg-opacity-80 dark:bg-opacity-80 container mx-auto my-8 flex overflow-hidden rounded-xl bg-gradient-to-br from-slate-200 to-slate-300 shadow-2xl backdrop-blur-sm dark:from-slate-800 dark:to-slate-900">
       <SettingsSidebar title={t('app.settings.title')} />
 
       {/* Main Content */}
-      <div className='w-full p-8 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm min-h-128'>
+      <div className="min-h-128 w-full bg-white/50 p-8 backdrop-blur-sm dark:bg-slate-800/50">
         {children}
       </div>
     </div>

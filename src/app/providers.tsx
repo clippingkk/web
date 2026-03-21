@@ -4,6 +4,7 @@ import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import type React from 'react'
 import { useState } from 'react'
+
 import { createReactQueryClient, makeApolloClient } from '../services/ajax'
 import { reactQueryPersister } from '../services/storage'
 
@@ -26,16 +27,16 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
     //     // Other options.
     //   }}
     // >
-      <PersistQueryClientProvider
-        client={rq}
-        persistOptions={{
-          persister: reactQueryPersister,
-        }}
-      >
-        <ApolloNextAppProvider makeClient={makeApolloClient}>
-          {children}
-        </ApolloNextAppProvider>
-      </PersistQueryClientProvider>
+    <PersistQueryClientProvider
+      client={rq}
+      persistOptions={{
+        persister: reactQueryPersister,
+      }}
+    >
+      <ApolloNextAppProvider makeClient={makeApolloClient}>
+        {children}
+      </ApolloNextAppProvider>
+    </PersistQueryClientProvider>
     // </MetaMaskProvider>
   )
 }

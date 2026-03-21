@@ -2,11 +2,13 @@ import { ServerError } from '@apollo/client'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import type React from 'react'
+
 import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
 } from '@/schema/generated'
+
 import { COOKIE_TOKEN_KEY } from '../../constants/storage'
 import { doApolloServerQuery } from '../../services/apollo.server'
 import Footer from '../footer/Footer'
@@ -77,12 +79,12 @@ async function DashboardContainer(props: DashboardContainerProps) {
   return (
     <section
       className={
-        'min-h-screen w-full flex flex-col anna-page-container bg-no-repeat bg-cover'
+        'anna-page-container flex min-h-screen w-full flex-col bg-cover bg-no-repeat'
       }
     >
-      <div className=' min-h-screen w-full flex flex-col  backdrop-blur-xl bg-gray-400 dark:bg-gray-900 dark:bg-opacity-80 bg-opacity-60'>
+      <div className="dark:bg-opacity-80 bg-opacity-60 flex min-h-screen w-full flex-col bg-gray-400 backdrop-blur-xl dark:bg-gray-900">
         {header ?? <NavigationBar myProfile={myProfile?.me} />}
-        <div className=' container flex-col flex m-auto'>{children}</div>
+        <div className="container m-auto flex flex-col">{children}</div>
         <Footer />
       </div>
     </section>

@@ -1,7 +1,9 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
 import type React from 'react'
+
 import { duration3Days } from '@/hooks/book'
+
 import GalleryBackgroundView from '../../../components/galleryBackgroundView'
 import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
 import {
@@ -35,8 +37,9 @@ async function Page(props: PageProps) {
   })
 
   const dbIds =
-    data.data?.public.books.map((x) => x.doubanId).filter((x) => x.length > 3) ??
-    []
+    data.data?.public.books
+      .map((x) => x.doubanId)
+      .filter((x) => x.length > 3) ?? []
 
   const rq = getReactQueryClient()
   await rq.prefetchQuery({
@@ -52,10 +55,10 @@ async function Page(props: PageProps) {
 
   return (
     <HydrationBoundary state={d}>
-      <div className='w-full h-full bg-slate-100 dark:bg-slate-900 relative'>
+      <div className="relative h-full w-full bg-slate-100 dark:bg-slate-900">
         <GalleryBackgroundView publicData={data.data} />
         <div
-          className='absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col justify-center items-center with-fade-in'
+          className="with-fade-in absolute top-0 right-0 bottom-0 left-0 flex h-full w-full flex-col items-center justify-center"
           style={
             {
               '--start-color': 'oklch(45.08% 0.133 252.21 / 7.28%)',
@@ -65,12 +68,12 @@ async function Page(props: PageProps) {
             } as React.CSSProperties
           }
         >
-          <div className='w-full h-full bg-slate-200 bg-opacity-5 backdrop-blur-xs flex justify-center items-center'>
+          <div className="bg-opacity-5 flex h-full w-full items-center justify-center bg-slate-200 backdrop-blur-xs">
             {(await props.searchParams).code && (
               <GithubOAuthContent code={(await props.searchParams).code} />
             )}
             {!(await props.searchParams).code && (
-              <div className='text-7xl'>No code provided</div>
+              <div className="text-7xl">No code provided</div>
             )}
           </div>
         </div>

@@ -14,7 +14,7 @@ enum FileLanuages {
 class ClippingTextParser {
   private lines: string[][] = []
   private position: number = 0
-   
+
   private processingItem: TClippingItem = {} as any
   private result: TClippingItem[] = []
   // private readonly infoRegexp: RegExp
@@ -135,7 +135,7 @@ class ClippingTextParser {
   private exactLastLine() {
     this.processingItem.bookId = '0'
     this.result.push(this.processingItem)
-     
+
     this.processingItem = {} as any
   }
 

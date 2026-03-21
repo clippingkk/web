@@ -1,7 +1,6 @@
 'use client'
 
 type BindPhoneProps = {
-   
   onFinalCheck(phone: string, code: string): Promise<any>
 }
 

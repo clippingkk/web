@@ -1,5 +1,6 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
+
 import { generateMetadata as generateReportMetadata } from '@/components/og/og-with-report'
 import { duration3Days } from '@/hooks/book'
 import {
@@ -14,6 +15,7 @@ import {
   type WenquSearchResponse,
   wenquRequest,
 } from '@/services/wenqu'
+
 import ReportYearly from './content'
 
 type YearlyLegacyPageProps = {
@@ -40,8 +42,8 @@ export async function generateMetadata(
     },
   })
   const dbIds =
-    reportInfoResponse.data!.reportYearly.books
-      .map((x) => x.doubanId)
+    reportInfoResponse
+      .data!.reportYearly.books.map((x) => x.doubanId)
       .filter((x) => x.length > 3) ?? []
 
   const bs = await wenquRequest<WenquSearchResponse>(
@@ -69,8 +71,8 @@ async function YearlyPage(props: YearlyLegacyPageProps) {
     },
   })
   const dbIds =
-    reportInfoResponse.data!.reportYearly.books
-      .map((x) => x.doubanId)
+    reportInfoResponse
+      .data!.reportYearly.books.map((x) => x.doubanId)
       .filter((x) => x.length > 3) ?? []
 
   const rq = getReactQueryClient()

@@ -1,9 +1,11 @@
 'use client'
 import { BookCopy } from 'lucide-react'
 import { useState } from 'react'
+
 import { useTranslation } from '@/i18n/client'
 import type { Clipping, User } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
+
 import Preview from '../preview/preview3'
 import {
   SidebarButton,
@@ -31,7 +33,7 @@ function UpdateClippingBtn({ clipping, book }: Props) {
     <SidebarContainer>
       <SidebarButton onClick={() => setVisible(!visible)}>
         <SidebarIcon>
-          <BookCopy className='w-full h-full' />
+          <BookCopy className="h-full w-full" />
         </SidebarIcon>
         <SidebarText>{t('app.clipping.shares')}</SidebarText>
       </SidebarButton>

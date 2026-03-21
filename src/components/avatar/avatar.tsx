@@ -7,7 +7,7 @@ type AvatarProps = {
   name?: string
   className?: string
   editable?: boolean
-   
+
   onClick?: () => any
   isPremium?: boolean
 }
@@ -34,7 +34,7 @@ function Avatar(props: AvatarProps) {
   if (props.img === '') {
     return (
       <div
-        className={`rounded-full bg-gray-500 animate-pulse ${cls}`}
+        className={`animate-pulse rounded-full bg-gray-500 ${cls}`}
         onClick={props.onClick}
       />
     )
@@ -44,15 +44,15 @@ function Avatar(props: AvatarProps) {
       <img
         src={avatar}
         alt={props.name}
-        className={'rounded-full w-full h-full'}
+        className={'h-full w-full rounded-full'}
       />
       {props.editable && (
         <div
-          className=' rounded-full flex justify-center items-center absolute inset-0 hover:bg-gray-900 hover:bg-opacity-40 hover:backdrop-blur-sm transition-all duration-300'
+          className="hover:bg-opacity-40 absolute inset-0 flex items-center justify-center rounded-full transition-all duration-300 hover:bg-gray-900 hover:backdrop-blur-sm"
           onClick={props.onClick}
         >
           {isHovering && (
-            <span className=' text-white with-fade-in select-none text-lg'>
+            <span className="with-fade-in text-lg text-white select-none">
               Edit
             </span>
           )}

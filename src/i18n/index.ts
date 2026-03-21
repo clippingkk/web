@@ -2,7 +2,9 @@ import { createInstance } from 'i18next'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import { cookies } from 'next/headers'
 import { initReactI18next } from 'react-i18next/initReactI18next'
+
 import { STORAGE_LANG_KEY } from '@/constants/storage'
+
 import { getOptions } from './settings'
 
 const initI18next = async (lng: string, ns?: string | string[]) => {

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import { APP_URL_ORIGIN } from '../../constants/config'
 import type { WenquBook } from '../../services/wenqu'
 

@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+
 import BindPhone from '../../../components/bind-phone'
 import { useAuthByPhoneSuccessed } from '../../../hooks/hooks'
 import { useAuthByPhoneMutation } from '../../../schema/generated'

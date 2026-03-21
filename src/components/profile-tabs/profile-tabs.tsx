@@ -2,6 +2,7 @@
 
 import { BookOpen, MessageCircle } from 'lucide-react'
 import { useState } from 'react'
+
 import ClippingList from '@/app/dash/[userid]/profile/clipping-list'
 import RecentComments from '@/components/recent-comments/recent-comments'
 import { useTranslation } from '@/i18n/client'
@@ -35,21 +36,21 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
   ]
 
   return (
-    <div className='w-full space-y-8'>
+    <div className="w-full space-y-8">
       {/* Enhanced Tab Navigation */}
-      <div className='flex items-center justify-center gap-6'>
-        <div className='h-px flex-grow bg-gradient-to-r from-transparent via-blue-200/50 to-transparent dark:via-blue-400/20'></div>
+      <div className="flex items-center justify-center gap-6">
+        <div className="h-px flex-grow bg-gradient-to-r from-transparent via-blue-200/50 to-transparent dark:via-blue-400/20"></div>
 
         {/* Main tab container */}
-        <div className='relative group'>
+        <div className="group relative">
           {/* Background glow */}
-          <div className='absolute -inset-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-500'></div>
+          <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 opacity-20 blur transition-opacity duration-500 group-hover:opacity-30"></div>
 
           {/* Tab buttons container */}
-          <div className='relative flex rounded-2xl bg-white/70 backdrop-blur-xl p-1.5 shadow-xl border border-white/40 dark:bg-gray-900/70 dark:border-gray-700/40'>
+          <div className="relative flex rounded-2xl border border-white/40 bg-white/70 p-1.5 shadow-xl backdrop-blur-xl dark:border-gray-700/40 dark:bg-gray-900/70">
             {/* Active tab indicator */}
             <div
-              className={`absolute top-1.5 h-11 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl shadow-lg transition-all duration-300 ease-out ${
+              className={`absolute top-1.5 h-11 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg transition-all duration-300 ease-out ${
                 activeTab === 'clippings'
                   ? 'left-1.5 w-[calc(50%-0.375rem)]'
                   : 'left-1/2 w-[calc(50%-0.375rem)]'
@@ -64,16 +65,16 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative z-10 flex items-center gap-3 px-6 py-3 text-sm font-semibold transition-all duration-300 rounded-xl min-w-[120px] justify-center ${
+                  className={`relative z-10 flex min-w-[120px] items-center justify-center gap-3 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 ${
                     isActive
-                      ? 'text-white transform scale-105'
-                      : 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:scale-102'
+                      ? 'scale-105 transform text-white'
+                      : 'text-gray-700 hover:scale-102 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100'
                   }`}
                 >
                   <Icon
                     className={`h-5 w-5 transition-all duration-300 ${isActive ? 'animate-pulse' : ''}`}
                   />
-                  <span className='font-medium'>{tab.label}</span>
+                  <span className="font-medium">{tab.label}</span>
                   {tab.count > 0 && (
                     <span
                       className={`rounded-full px-2.5 py-1 text-xs font-bold transition-all duration-300 ${
@@ -91,25 +92,25 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
           </div>
         </div>
 
-        <div className='h-px flex-grow bg-gradient-to-r from-transparent via-blue-200/50 to-transparent dark:via-blue-400/20'></div>
+        <div className="h-px flex-grow bg-gradient-to-r from-transparent via-blue-200/50 to-transparent dark:via-blue-400/20"></div>
       </div>
 
       {/* Enhanced Tab Content */}
-      <div className='relative'>
+      <div className="relative">
         {/* Content background with animated glow */}
-        <div className='absolute -inset-2 bg-gradient-to-r rounded-3xl blur-xl'></div>
+        <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r blur-xl"></div>
 
-        <div className='relative rounded-3xl backdrop-blur-xl shadow-2xl overflow-hidden'>
+        <div className="relative overflow-hidden rounded-3xl shadow-2xl backdrop-blur-xl">
           {/* Animated content transition */}
-          <div className='transition-all duration-500 ease-out'>
+          <div className="transition-all duration-500 ease-out">
             {activeTab === 'clippings' && (
-              <div className='animate-fade-in'>
+              <div className="animate-fade-in">
                 <ClippingList uid={uid} userDomain={userDomain || ''} />
               </div>
             )}
 
             {activeTab === 'comments' && (
-              <div className='animate-fade-in'>
+              <div className="animate-fade-in">
                 <RecentComments
                   commentList={profile.commentList}
                   userId={profile.id}

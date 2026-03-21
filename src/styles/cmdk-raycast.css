@@ -14,7 +14,7 @@
   border: 0;
 }
 .dark .raycast [cmdk-root]:after {
-  content: "";
+  content: '';
   background: linear-gradient(
     to right,
     var(--gray6) 20%,
@@ -35,7 +35,7 @@
   background-size: 200% auto;
 }
 .dark .raycast [cmdk-root]:before {
-  content: "";
+  content: '';
   z-index: -1;
   position: absolute;
   border-radius: 12px;
@@ -105,7 +105,7 @@
   margin-bottom: 12px;
 }
 .raycast [cmdk-raycast-loader]:after {
-  content: "";
+  content: '';
   width: 50%;
   height: 1px;
   position: absolute;
@@ -138,11 +138,11 @@
   transition: all 150ms ease;
   transition-property: none;
 }
-.raycast [cmdk-item][aria-selected="true"] {
+.raycast [cmdk-item][aria-selected='true'] {
   background: var(--gray4);
   color: var(--gray12);
 }
-.raycast [cmdk-item][aria-disabled="true"] {
+.raycast [cmdk-item][aria-disabled='true'] {
   color: var(--gray8);
   cursor: not-allowed;
 }
@@ -228,11 +228,11 @@
   border: 0;
   width: 1px;
 }
-.raycast [cmdk-raycast-subcommand-trigger][aria-expanded="true"],
+.raycast [cmdk-raycast-subcommand-trigger][aria-expanded='true'],
 .raycast [cmdk-raycast-subcommand-trigger]:hover {
   background: var(--gray4);
 }
-.raycast [cmdk-raycast-subcommand-trigger][aria-expanded="true"] kbd,
+.raycast [cmdk-raycast-subcommand-trigger][aria-expanded='true'] kbd,
 .raycast [cmdk-raycast-subcommand-trigger]:hover kbd {
   background: var(--gray7);
 }
@@ -295,7 +295,7 @@
   transform-origin: center center;
   animation: dialogIn var(--transition-fast) forwards;
 }
-.raycast [cmdk-dialog][data-state="closed"] [cmdk] {
+.raycast [cmdk-dialog][data-state='closed'] [cmdk] {
   animation: dialogOut var(--transition-fast) forwards;
 }
 .raycast [cmdk-empty] {
@@ -374,17 +374,17 @@
   transition: all 150ms ease;
   transition-property: none;
 }
-.raycast-submenu [cmdk-item][aria-selected="true"] {
+.raycast-submenu [cmdk-item][aria-selected='true'] {
   background: var(--gray5);
   color: var(--gray12);
 }
 .raycast-submenu
-  [cmdk-item][aria-selected="true"]
+  [cmdk-item][aria-selected='true']
   [cmdk-raycast-submenu-shortcuts]
   kbd {
   background: var(--gray7);
 }
-.raycast-submenu [cmdk-item][aria-disabled="true"] {
+.raycast-submenu [cmdk-item][aria-disabled='true'] {
   color: var(--gray8);
   cursor: not-allowed;
 }
@@ -437,10 +437,10 @@
   outline: 0;
   border-radius: 0;
 }
-.raycast-submenu[data-state="open"] {
+.raycast-submenu[data-state='open'] {
   animation-name: slideIn;
 }
-.raycast-submenu[data-state="closed"] {
+.raycast-submenu[data-state='closed'] {
   animation-name: slideOut;
 }
 .raycast-submenu [cmdk-empty] {

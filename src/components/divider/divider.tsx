@@ -44,22 +44,22 @@ function Divider({
 
   if (variant === 'minimal') {
     return (
-      <div className='relative flex items-center w-full my-8'>
-        <div className='flex-grow h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent'></div>
-        <span className='flex-shrink mx-6 text-sm font-medium text-gray-500 dark:text-zinc-500 uppercase tracking-wider'>
+      <div className="relative my-8 flex w-full items-center">
+        <div className="h-px flex-grow bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-zinc-700"></div>
+        <span className="mx-6 flex-shrink text-sm font-medium tracking-wider text-gray-500 uppercase dark:text-zinc-500">
           {title}
         </span>
-        <div className='flex-grow h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent'></div>
+        <div className="h-px flex-grow bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-zinc-700"></div>
       </div>
     )
   }
 
   if (variant === 'elegant') {
     return (
-      <div className='relative flex items-center w-full my-12'>
+      <div className="relative my-12 flex w-full items-center">
         {/* Main gradient line */}
-        <div className='flex-grow relative h-px'>
-          <div className='absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent'></div>
+        <div className="relative h-px flex-grow">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-zinc-700"></div>
           <div
             className={`absolute inset-0 bg-gradient-to-r ${colors.accent} animate-pulse`}
             style={{ animationDuration: '3s' }}
@@ -67,7 +67,7 @@ function Divider({
         </div>
 
         {/* Enhanced title container */}
-        <div className='relative mx-6'>
+        <div className="relative mx-6">
           {/* Subtle glow effect */}
           <div
             className={`absolute inset-0 blur-xl ${colors.bg} opacity-60`}
@@ -75,12 +75,12 @@ function Divider({
 
           {/* Main title container */}
           <div
-            className={`relative px-6 py-3 ${colors.bg} backdrop-blur-sm rounded-2xl border ${colors.border} shadow-sm ${colors.glow}`}
+            className={`relative px-6 py-3 ${colors.bg} rounded-2xl border backdrop-blur-sm ${colors.border} shadow-sm ${colors.glow}`}
           >
             {/* Decorative dots */}
-            <div className='flex items-center gap-2'>
+            <div className="flex items-center gap-2">
               <div
-                className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${colors.accent.replace('/30', '/60').replace('/40', '/80')}`}
+                className={`h-1.5 w-1.5 rounded-full bg-gradient-to-r ${colors.accent.replace('/30', '/60').replace('/40', '/80')}`}
               ></div>
               <span
                 className={`text-base font-semibold ${colors.text} tracking-wide`}
@@ -88,15 +88,15 @@ function Divider({
                 {title}
               </span>
               <div
-                className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${colors.accent.replace('/30', '/60').replace('/40', '/80')}`}
+                className={`h-1.5 w-1.5 rounded-full bg-gradient-to-r ${colors.accent.replace('/30', '/60').replace('/40', '/80')}`}
               ></div>
             </div>
           </div>
         </div>
 
         {/* Main gradient line */}
-        <div className='flex-grow relative h-px'>
-          <div className='absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 dark:via-zinc-700 to-transparent'></div>
+        <div className="relative h-px flex-grow">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-zinc-700"></div>
           <div
             className={`absolute inset-0 bg-gradient-to-r ${colors.accent} animate-pulse`}
             style={{ animationDuration: '3s', animationDelay: '1s' }}
@@ -108,14 +108,14 @@ function Divider({
 
   // Default variant
   return (
-    <div className='relative flex items-center w-full my-8'>
-      <div className='flex-grow border-t border-gray-300 dark:border-zinc-700'></div>
+    <div className="relative my-8 flex w-full items-center">
+      <div className="flex-grow border-t border-gray-300 dark:border-zinc-700"></div>
       <span
-        className={`flex-shrink mx-4 px-4 py-2 text-lg font-medium ${colors.text} ${colors.bg} rounded-xl shadow-sm border ${colors.border} backdrop-blur-sm`}
+        className={`mx-4 flex-shrink px-4 py-2 text-lg font-medium ${colors.text} ${colors.bg} rounded-xl border shadow-sm ${colors.border} backdrop-blur-sm`}
       >
         {title}
       </span>
-      <div className='flex-grow border-t border-gray-300 dark:border-zinc-700'></div>
+      <div className="flex-grow border-t border-gray-300 dark:border-zinc-700"></div>
     </div>
   )
 }

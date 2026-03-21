@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
+
 import AuthCallbackApple from './content'
 
 type AppleCallbackPageProps = {

@@ -8,7 +8,9 @@ import {
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+
 import { useTranslation } from '@/i18n/client'
+
 import LinkIndicator from '../link-indicator'
 
 type SettingsSidebarProps = {
@@ -28,61 +30,55 @@ function SettingsSidebar({ title }: SettingsSidebarProps) {
     {
       id: 'web',
       label: t('app.settings.title'),
-      icon: <Cog8ToothIcon className='w-4 h-4' />,
+      icon: <Cog8ToothIcon className="h-4 w-4" />,
     },
     {
       id: 'orders',
       label: t('app.settings.orders.title'),
-      icon: <QueueListIcon className='w-4 h-4' />,
+      icon: <QueueListIcon className="h-4 w-4" />,
     },
     {
       id: 'webhooks',
       label: t('app.settings.webhook.title'),
-      icon: <GlobeAltIcon className='w-4 h-4' />,
+      icon: <GlobeAltIcon className="h-4 w-4" />,
     },
     {
       id: 'exports',
       label: t('app.settings.export.title'),
-      icon: <DocumentArrowDownIcon className='w-4 h-4' />,
+      icon: <DocumentArrowDownIcon className="h-4 w-4" />,
     },
     {
       id: 'account',
       label: t('app.settings.account'),
-      icon: <UserIcon className='w-4 h-4' />,
+      icon: <UserIcon className="h-4 w-4" />,
       className: 'ml-auto',
     },
   ]
 
   return (
-    <div className='w-1/4 min-w-[200px] border-r border-slate-300/50 dark:border-slate-700/50 bg-gradient-to-b from-slate-100/50 to-slate-200/50 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-md'>
-      <div className='py-10 px-3'>
-        <h2 className='text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-400 dark:to-purple-500 mb-6 px-4'>
+    <div className="w-1/4 min-w-[200px] border-r border-slate-300/50 bg-gradient-to-b from-slate-100/50 to-slate-200/50 backdrop-blur-md dark:border-slate-700/50 dark:from-slate-800/50 dark:to-slate-900/50">
+      <div className="px-3 py-10">
+        <h2 className="mb-6 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text px-4 text-xl font-bold text-transparent dark:from-blue-400 dark:to-purple-500">
           {title}
         </h2>
-        <div className='space-y-1'>
+        <div className="space-y-1">
           {tabs.map((tab) => (
             <Link
               key={tab.id}
               href={`${basePath}/${tab.id}` as any}
-              className={`
-                group flex items-center gap-3 w-full px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ease-in-out
-                ${tab.className || ''}
-                ${
-                  activeKey === tab.id
-                    ? 'bg-gradient-to-r from-blue-600/20 to-blue-500/10 dark:from-blue-500/20 dark:to-blue-400/10 text-blue-700 dark:text-blue-400 shadow-sm'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 dark:hover:bg-slate-700/30 hover:translate-x-1'
-                }
-              `}
+              className={`group flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-in-out ${tab.className || ''} ${
+                activeKey === tab.id
+                  ? 'bg-gradient-to-r from-blue-600/20 to-blue-500/10 text-blue-700 shadow-sm dark:from-blue-500/20 dark:to-blue-400/10 dark:text-blue-400'
+                  : 'text-slate-700 hover:translate-x-1 hover:bg-slate-200/80 dark:text-slate-300 dark:hover:bg-slate-700/30'
+              } `}
             >
               <LinkIndicator>
                 <span
-                  className={`
-                ${
-                  activeKey === tab.id
-                    ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-slate-500 dark:text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400'
-                }
-              `}
+                  className={` ${
+                    activeKey === tab.id
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : 'text-slate-500 group-hover:text-blue-500 dark:text-slate-400 dark:group-hover:text-blue-400'
+                  } `}
                 >
                   {tab.icon}
                 </span>
@@ -93,7 +89,7 @@ function SettingsSidebar({ title }: SettingsSidebarProps) {
                 {tab.label}
               </span>
               {activeKey === tab.id && (
-                <span className='ml-auto h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400'></span>
+                <span className="ml-auto h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400"></span>
               )}
             </Link>
           ))}

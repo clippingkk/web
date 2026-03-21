@@ -1,6 +1,6 @@
- 
 import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
+
 import { animations } from './theme'
 
 type AnimateOnChangeProps = {

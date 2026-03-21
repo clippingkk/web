@@ -2,6 +2,7 @@
 import { useMachine } from '@xstate/react'
 import toast from 'react-hot-toast'
 import { fromPromise } from 'xstate'
+
 import { useLoginV3Successed } from '@/hooks/hooks'
 import {
   OtpChannel,
@@ -9,6 +10,7 @@ import {
   useDoLoginV3Mutation,
   useSendOtpMutation,
 } from '@/schema/generated'
+
 import authMachine from './auth.state'
 import EmailLoginEntry from './emailEntry'
 import ThirdPartEntry from './thirdPartEntry'
@@ -111,8 +113,8 @@ function AuthV4Content() {
   )
 
   return (
-    <div className='flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-zinc-900 dark:to-zinc-800 p-4 gap-4 rounded-2xl shadow-lg'>
-      <div className='px-8 py-6 flex flex-col rounded-xl bg-white dark:bg-zinc-900 bg-opacity-95 dark:bg-opacity-95 backdrop-blur-sm shadow-xl'>
+    <div className="flex items-center justify-center gap-4 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 p-4 shadow-lg dark:from-zinc-900 dark:to-zinc-800">
+      <div className="bg-opacity-95 dark:bg-opacity-95 flex flex-col rounded-xl bg-white px-8 py-6 shadow-xl backdrop-blur-sm dark:bg-zinc-900">
         <EmailLoginEntry machine={state} sendEvent={send} />
       </div>
       <ThirdPartEntry />

@@ -6,10 +6,8 @@ import '../styles/effect-glow.css'
 import '../styles/global.css'
 import '../styles/react-animation.css'
 import '../styles/tailwind.css'
-
 // next.js not allow to use modern css. just remove it when next.js support it
 // import '@annatarhe/lake-ui/style.css'
-
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { Metadata } from 'next'
 import { Lato } from 'next/font/google'
@@ -17,7 +15,9 @@ import Script from 'next/script'
 import type React from 'react'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
+
 import GlobalUpload from '@/components/uploads/global'
+
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 import '../prefers-dark'
@@ -83,6 +83,7 @@ async function Layout(props: LayoutProps) {
 
   return (
     <html
+      lang="en"
       className={`${lato.variable} dark`}
       style={
         {
@@ -92,22 +93,22 @@ async function Layout(props: LayoutProps) {
     >
       <Script
         defer
-        src='https://static.cloudflareinsights.com/beacon.min.js'
+        src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
       />
       <body>
-        <Suspense fallback={<div className='min-h-screen' />}>
+        <Suspense fallback={<div className="min-h-screen" />}>
           <ClientOnlyProviders>
             {props.children}
-            <div id='dialog'></div>
-            <div id='toast'></div>
-            <div id='searchbar' className='raycast'></div>
+            <div id="dialog"></div>
+            <div id="toast"></div>
+            <div id="searchbar" className="raycast"></div>
             <GlobalUpload />
-            <Toaster position='top-center' />
+            <Toaster position="top-center" />
             <ReactQueryDevtools initialIsOpen={false} />
-            <div data-id='modal' />
-            <div data-st-role='modal' />
-            <div data-st-role='tooltip' />
+            <div data-id="modal" />
+            <div data-st-role="modal" />
+            <div data-st-role="tooltip" />
           </ClientOnlyProviders>
         </Suspense>
       </body>

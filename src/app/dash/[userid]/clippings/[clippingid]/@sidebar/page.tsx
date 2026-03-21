@@ -1,4 +1,5 @@
 import type { IN_APP_CHANNEL } from '@/services/channel'
+
 import { getClippingData } from '../data'
 import ClippingSidebar from './clipping-sidebar'
 

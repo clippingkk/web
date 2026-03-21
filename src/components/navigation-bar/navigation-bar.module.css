@@ -5,7 +5,7 @@
 }
 
 .navbar::before {
-  content: "";
+  content: '';
   /* width: calc(90% + 10px); */
   height: 100%;
   position: absolute;

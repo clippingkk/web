@@ -4,16 +4,17 @@ import {
   HttpLink,
   ServerError,
 } from '@apollo/client'
-import { onError } from '@apollo/client/link/error'
 import {
   ApolloClient,
   InMemoryCache,
   SSRMultipartLink,
 } from '@apollo/client-integration-nextjs'
+import { onError } from '@apollo/client/link/error'
 import { QueryClient } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
 import { cache } from 'react'
 import toast from 'react-hot-toast'
+
 import { API_HOST } from '../constants/config'
 import { COOKIE_TOKEN_KEY } from '../constants/storage'
 import { getLanguage } from '../utils/locales'

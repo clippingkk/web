@@ -11,7 +11,6 @@ const IS_PROD = process.env.NODE_ENV === 'production'
 //  })
 //}
 
- 
 export function log(err: Error | string, ext: any) {
   if (!IS_PROD) {
     console.log(err, ext)
