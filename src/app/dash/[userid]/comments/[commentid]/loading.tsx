@@ -1,3 +1,5 @@
+import { glassCardClass } from '@/components/card/glass-card'
+
 export default function CommentDetailLoading() {
   return (
     <div className="min-h-screen p-4 md:p-8">
@@ -41,7 +43,7 @@ export default function CommentDetailLoading() {
         </div>
 
         {/* Author info skeleton */}
-        <div className="rounded-2xl border border-white/40 bg-white/80 p-6 backdrop-blur-xl dark:border-gray-700/40 dark:bg-gray-900/80">
+        <div className={glassCardClass}>
           <div className="mb-4 h-6 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
           <div className="flex items-center space-x-4">
             <div className="h-16 w-16 animate-pulse rounded-full bg-gray-200 dark:bg-gray-800" />

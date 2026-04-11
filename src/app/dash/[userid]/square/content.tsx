@@ -12,6 +12,7 @@ import {
   useFetchSquareDataQuery,
 } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
+import { uniqueById } from '@/utils/array'
 import { getUserSlug } from '@/utils/profile.utils'
 
 type SquarePageContentProps = {
@@ -66,14 +67,7 @@ function SquarePageContent(props: SquarePageContentProps) {
           reachEnd.current = true
         }
         setSqData((prev) =>
-          [...prev, ...data.data!.featuredClippings].reduce<
-            FetchSquareDataQuery['featuredClippings']
-          >((acc, x) => {
-            if (!acc.find((y) => y.id === x.id)) {
-              acc.push(x)
-            }
-            return acc
-          }, [])
+          uniqueById([...prev, ...data.data!.featuredClippings])
         )
       })
     },

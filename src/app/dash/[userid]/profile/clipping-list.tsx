@@ -10,6 +10,7 @@ import {
   useFetchClippingsByUidQuery,
 } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
+import { uniqueById } from '@/utils/array'
 
 type ClippingListProps = {
   uid: number
@@ -31,15 +32,7 @@ function ClippingList(props: ClippingListProps) {
   })
   const renderList = React.useMemo(() => {
     const initial = data?.clippingList.items ?? []
-    return [...initial, ...extraItems].reduce(
-      (acc, cur) => {
-        if (!acc.find((x) => x.id === cur.id)) {
-          acc.push(cur)
-        }
-        return acc
-      },
-      [] as FetchClippingsByUidQuery['clippingList']['items']
-    )
+    return uniqueById([...initial, ...extraItems])
   }, [data, extraItems])
   const masonaryColumnCount = useMasonaryColumnCount()
   const maybeLoadMore = useInfiniteLoader(
