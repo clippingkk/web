@@ -3,7 +3,7 @@ import OTPInput from 'react-auth-code-input'
 
 import { useTranslation } from '@/i18n/client'
 
-import ButtonSimple from '../button/button-simple'
+import { Button } from '../button/button'
 
 type OTPBoxProps = {
   autoValidate?: boolean
@@ -49,12 +49,15 @@ function OTPBox(props: OTPBoxProps) {
         containerClassName="grid grid-cols-6 gap-4 w-full"
       />
 
-      <ButtonSimple
-        loading={loading}
+      <Button
+        fullWidth
+        isLoading={loading}
         onClick={onSubmit}
         disabled={loading || otp.length !== 6}
-        text="Confirm"
-      />
+        className="mt-4"
+      >
+        Confirm
+      </Button>
     </div>
   )
 }

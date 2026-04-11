@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 
-import Button from '@/components/button'
+import { Button } from '@/components/button/button'
 import { useTranslation } from '@/i18n/client'
 import { useCreateNewWebHookMutation, WebHookStep } from '@/schema/generated'
 
@@ -103,7 +103,7 @@ function WebHookCreate({ onClose, isPremium }: Props) {
         >
           <Button
             disabled={!isFormValid || !isPremium}
-            loading={isSubmitting}
+            isLoading={isSubmitting}
             type="submit"
           >
             {t('app.settings.webhook.submit')}

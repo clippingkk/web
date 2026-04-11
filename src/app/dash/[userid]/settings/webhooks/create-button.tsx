@@ -4,7 +4,7 @@ import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 
-import Button from '@/components/button'
+import { Button } from '@/components/button/button'
 import { useTranslation } from '@/i18n/client'
 
 import WebHookCreate from './create'
