@@ -1,6 +1,6 @@
 'use client'
-import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useHover } from '@/hooks/dom'
+import { resolveMediaUrl } from '@/utils/image'
 
 type AvatarProps = {
   img: string
@@ -14,9 +14,7 @@ type AvatarProps = {
 
 function Avatar(props: AvatarProps) {
   const { isPremium } = props
-  const avatar = props.img.startsWith('http')
-    ? props.img
-    : `${CDN_DEFAULT_DOMAIN}/${props.img}`
+  const avatar = resolveMediaUrl(props.img)
 
   let cls = props.className || ''
 

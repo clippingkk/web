@@ -4,11 +4,13 @@ import type React from 'react'
 
 import GalleryBackgroundView from '@/components/galleryBackgroundView'
 import { generateMetadata as authGenerateMetadata } from '@/components/og/og-with-auth'
-import { duration3Days } from '@/hooks/book'
 import { PublicDataDocument, type PublicDataQuery } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
-import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
+import {
+  isValidDoubanId,
+  wenquBooksByIdsQueryOptions,
+} from '@/services/wenqu'
 
 import ForceClean from './clean'
 import AuthV4Content from './content'
@@ -28,20 +30,10 @@ async function Page() {
   })
 
   const dbIds =
-    data.data?.public.books
-      .map((x) => x.doubanId)
-      .filter((x) => x.length > 3) ?? []
+    data.data?.public.books.map((x) => x.doubanId).filter(isValidDoubanId) ?? []
 
   const rq = getReactQueryClient()
-  await rq.prefetchQuery({
-    queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-    queryFn: () =>
-      wenquRequest<WenquSearchResponse>(
-        `/books/search?dbIds=${dbIds.join('&dbIds=')}`
-      ),
-    staleTime: duration3Days,
-    gcTime: duration3Days,
-  })
+  await rq.prefetchQuery(wenquBooksByIdsQueryOptions(dbIds))
   const d = dehydrate(rq)
 
   return (

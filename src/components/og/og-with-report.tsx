@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 
-import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
+import { APP_URL_ORIGIN } from '../../constants/config'
 import type { FetchYearlyReportQuery } from '../../schema/generated'
 import type { WenquBook } from '../../services/wenqu'
+import { resolveMediaUrl } from '../../utils/image'
 
 const url = APP_URL_ORIGIN
 export function generateMetadata(
@@ -11,10 +12,7 @@ export function generateMetadata(
   bs: WenquBook[]
 ): Metadata {
   const metaTitle = `${data.reportYearly.user.name} 在 ${year} 年共读了 ${data?.reportYearly.books.length} 本书 - Clippingkk - kindle 书摘管理`
-  const plainAvatar = data?.reportYearly.user.avatar
-  const avatar = plainAvatar?.startsWith('http')
-    ? plainAvatar
-    : `${CDN_DEFAULT_DOMAIN}/${plainAvatar}`
+  const avatar = resolveMediaUrl(data?.reportYearly.user.avatar)
 
   const desc = `${data?.reportYearly.user.name} 读了这些书 ${bs.map((x) => x.title).join(', ')}`
 

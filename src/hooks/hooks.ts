@@ -1,6 +1,7 @@
 'use client'
 import type { MutationResult } from '@apollo/client/react'
 import * as sentry from '@sentry/react'
+import type { Route } from 'next'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
@@ -18,8 +19,12 @@ import type {
 } from '../schema/generated'
 import { updateToken } from '../services/ajax'
 import profile from '../utils/profile'
+import { getUserSlug } from '../utils/profile.utils'
 
-type UserContent = Pick<User, 'id' | 'name' | 'email' | 'avatar' | 'createdAt'>
+type UserContent = Pick<
+  User,
+  'id' | 'name' | 'email' | 'avatar' | 'createdAt' | 'domain'
+>
 
 async function onAuthEnd(data: { user: UserContent; token: string }) {
   const { user, token } = data
@@ -48,42 +53,54 @@ async function onAuthEnd(data: { user: UserContent; token: string }) {
   // Cookies.set('uid', profile.uid.toString(), { expires: 365 })
 }
 
-export function useAuthBy3rdPartSuccessed(
-  called: boolean,
-  loading: boolean,
-  error?: Error,
-  // authResponse?: authByWeb3_loginByWeb3 | loginByApple_loginByApple | bindAppleUnique_bindAppleUnique | bindWeb3Address_bindWeb3Address
-  authResponse?: Pick<AuthByWeb3Query['loginByWeb3'], 'user' | 'token'>
-) {
-  // const navigate = useNavigate()
-  const { push: navigate } = useRouter()
-  useEffect(() => {
-    if (!called) {
-      return
-    }
-    if (error) {
-      return
-    }
-    if (loading) {
-      return
-    }
-    if (!authResponse) {
-      return
-    }
+type AuthResultState<T> = {
+  called: boolean
+  loading: boolean
+  error?: Error
+  authResponse?: T
+}
 
-    if (authResponse.user.id === 0) {
+function useAuthResultEffect<T extends { user: UserContent; token: string }>(
+  state: AuthResultState<T>,
+  getRedirectPath: (response: T) => string,
+  options: { skipZeroIdGuard?: boolean } = {}
+) {
+  const { push: navigate } = useRouter()
+  const { called, loading, error, authResponse } = state
+  useEffect(() => {
+    if (!called || error || loading || !authResponse) {
+      return
+    }
+    if (!options.skipZeroIdGuard && authResponse.user.id === 0) {
       return
     }
 
     onAuthEnd(authResponse).then(() => {
-      // redirect
       setTimeout(() => {
-        const me = authResponse.user
-        const domain = me.domain.length > 2 ? me.domain : me.id
-        navigate(`/dash/${domain}/home?from_auth=1`)
+        navigate(getRedirectPath(authResponse) as Route)
       }, 100)
     })
-  }, [called, loading, error, authResponse, navigate])
+  }, [
+    called,
+    loading,
+    error,
+    authResponse,
+    navigate,
+    options.skipZeroIdGuard,
+    getRedirectPath,
+  ])
+}
+
+export function useAuthBy3rdPartSuccessed(
+  called: boolean,
+  loading: boolean,
+  error?: Error,
+  authResponse?: Pick<AuthByWeb3Query['loginByWeb3'], 'user' | 'token'>
+) {
+  useAuthResultEffect(
+    { called, loading, error, authResponse },
+    (response) => `/dash/${getUserSlug(response.user)}/home?from_auth=1`
+  )
 }
 
 export function useLoginV3Successed(
@@ -92,36 +109,13 @@ export function useLoginV3Successed(
   error?: Error,
   authResponse?: DoLoginV3Mutation['loginV3']
 ) {
-  const { push: navigate } = useRouter()
-  useEffect(() => {
-    if (!called) {
-      return
-    }
-    if (error) {
-      return
-    }
-    if (loading) {
-      return
-    }
-    if (!authResponse) {
-      return
-    }
-
-    if (authResponse.user.id === 0) {
-      return
-    }
-
-    onAuthEnd(authResponse).then(() => {
-      // redirect
-      setTimeout(() => {
-        const me = authResponse.user
-        const domain = me.domain.length > 2 ? me.domain : me.id
-        navigate(
-          `/dash/${domain}/${authResponse.isNewUser ? 'newbie' : 'home'}?from_auth=1`
-        )
-      }, 100)
-    })
-  }, [called, loading, error, authResponse, navigate])
+  useAuthResultEffect(
+    { called, loading, error, authResponse },
+    (response) =>
+      `/dash/${getUserSlug(response.user)}/${
+        response.isNewUser ? 'newbie' : 'home'
+      }?from_auth=1`
+  )
 }
 
 export function useAuthByPhoneSuccessed(
@@ -130,31 +124,11 @@ export function useAuthByPhoneSuccessed(
   error?: Error,
   authResponse?: AuthByPhoneMutation['authByPhone']
 ) {
-  // const navigate = useNavigate()
-  const { push: navigate } = useRouter()
-  useEffect(() => {
-    if (!called) {
-      return
-    }
-    if (error) {
-      return
-    }
-    if (loading) {
-      return
-    }
-    if (!authResponse) {
-      return
-    }
-
-    onAuthEnd(authResponse).then(() => {
-      // redirect
-      setTimeout(() => {
-        const me = authResponse.user
-        const domain = me.domain.length > 2 ? me.domain : me.id
-        navigate(`/dash/${domain}/home?from_auth=1`)
-      }, 100)
-    })
-  }, [called, loading, error, authResponse, navigate])
+  useAuthResultEffect(
+    { called, loading, error, authResponse },
+    (response) => `/dash/${getUserSlug(response.user)}/home?from_auth=1`,
+    { skipZeroIdGuard: true }
+  )
 }
 
 export function useAuthSuccessed(

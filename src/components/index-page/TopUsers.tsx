@@ -3,8 +3,8 @@ import Image from 'next/image'
 
 import { getTranslation } from '@/i18n'
 
-import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import type { User } from '../../schema/generated'
+import { resolveMediaUrl } from '../../utils/image'
 import HideUntilLoaded from '../SimpleAnimation/HideUntilLoaded'
 
 import styles from './tops.module.css'
@@ -22,9 +22,7 @@ async function TopUsers(props: TopUsersProps) {
     .filter((x) => x.avatar && x.avatar !== 'null')
     .map((x) => ({
       ...x,
-      avatar: x.avatar.startsWith('http')
-        ? x.avatar
-        : `${CDN_DEFAULT_DOMAIN}/${x.avatar}`,
+      avatar: resolveMediaUrl(x.avatar),
     }))
   return (
     <div className="relative overflow-hidden px-4 py-20 sm:px-6">

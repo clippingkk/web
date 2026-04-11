@@ -2,6 +2,12 @@ import { WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
 
 // import * as Sentry from '@sentry/react'
 
+export const duration3Days = 1000 * 60 * 60 * 24 * 3
+
+export function isValidDoubanId(id: string): boolean {
+  return id.length > 3
+}
+
 type WenquErrorResponse = {
   code: number
   error: string
@@ -80,4 +86,16 @@ export interface WenquBook {
 export interface WenquSearchResponse {
   count: number
   books: WenquBook[]
+}
+
+export function wenquBooksByIdsQueryOptions(dbIds: string[]) {
+  return {
+    queryKey: ['wenqu', 'books', 'dbIds', dbIds] as const,
+    queryFn: () =>
+      wenquRequest<WenquSearchResponse>(
+        `/books/search?dbIds=${dbIds.join('&dbIds=')}`
+      ),
+    staleTime: duration3Days,
+    gcTime: duration3Days,
+  }
 }

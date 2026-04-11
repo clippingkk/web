@@ -1,7 +1,9 @@
-import { duration3Days } from '../hooks/book'
 import type { PublicDataQuery } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
-import { type WenquSearchResponse, wenquRequest } from '../services/wenqu'
+import {
+  isValidDoubanId,
+  wenquBooksByIdsQueryOptions,
+} from '../services/wenqu'
 import BookCover from './book-cover/book-cover'
 import ClippingLite from './clipping-item/clipping-lite'
 import InfiniteLooper from './infinite-looper/infinite-looper'
@@ -13,7 +15,7 @@ type AuthBackgroundViewProps = {
 async function GalleryBackgroundView(props: AuthBackgroundViewProps) {
   const { publicData: data } = props
   const dbIds =
-    data?.public.books.map((x) => x.doubanId).filter((x) => x.length > 3) ?? []
+    data?.public.books.map((x) => x.doubanId).filter(isValidDoubanId) ?? []
 
   const cs = data?.public.clippings.reduce<
     PublicDataQuery['public']['clippings'][]
@@ -30,15 +32,7 @@ async function GalleryBackgroundView(props: AuthBackgroundViewProps) {
   ) ?? [[], []]
 
   const rq = getReactQueryClient()
-  const bs = await rq.fetchQuery({
-    queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-    queryFn: () =>
-      wenquRequest<WenquSearchResponse>(
-        `/books/search?dbIds=${dbIds.join('&dbIds=')}`
-      ),
-    staleTime: duration3Days,
-    gcTime: duration3Days,
-  })
+  const bs = await rq.fetchQuery(wenquBooksByIdsQueryOptions(dbIds))
 
   return (
     <div className="with-fade-in h-full min-h-screen w-full">

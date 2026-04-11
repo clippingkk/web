@@ -16,6 +16,7 @@ import logoDark from '@/assets/logo-dark.svg'
 import logoLight from '@/assets/logo-light.svg'
 import { useTranslation } from '@/i18n/client'
 import type { ProfileQuery } from '@/schema/generated'
+import { getUserSlug } from '@/utils/profile.utils'
 
 import LinkIndicator from '../link-indicator'
 import { useCtrlP } from '../searchbar/hooks'
@@ -107,11 +108,7 @@ function NavigationBar(props: NavigationBarProps) {
               >
                 <Link
                   className="flex items-center"
-                  href={
-                    item.dest(
-                      profile.domain.length > 2 ? profile.domain : profile.id
-                    ) as any
-                  }
+                  href={item.dest(getUserSlug(profile)) as any}
                 >
                   <LinkIndicator>{item.emoji()}</LinkIndicator>
                   <span className="ml-2 lg:text-lg">
@@ -126,7 +123,7 @@ function NavigationBar(props: NavigationBarProps) {
       {profile ? (
         <LoggedNavigationBar
           onSearch={() => setVisible(true)}
-          uidOrDomain={profile.domain.length > 2 ? profile.domain : profile.id}
+          uidOrDomain={getUserSlug(profile)}
           onPhoneLogin={() => setLoginByQRCodeModalVisible(true)}
           profile={profile}
         />

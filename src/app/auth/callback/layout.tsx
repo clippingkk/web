@@ -1,9 +1,11 @@
 import GalleryBackgroundView from '@/components/galleryBackgroundView'
-import { duration3Days } from '@/hooks/book'
 import { PublicDataDocument, type PublicDataQuery } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
-import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
+import {
+  isValidDoubanId,
+  wenquBooksByIdsQueryOptions,
+} from '@/services/wenqu'
 
 type AuthCallbackLayoutProps = {
   children: React.ReactNode
@@ -21,20 +23,10 @@ async function AuthCallbackLayout(props: AuthCallbackLayoutProps) {
   })
 
   const dbIds =
-    data.data?.public.books
-      .map((x) => x.doubanId)
-      .filter((x) => x.length > 3) ?? []
+    data.data?.public.books.map((x) => x.doubanId).filter(isValidDoubanId) ?? []
 
   const rq = getReactQueryClient()
-  await rq.prefetchQuery({
-    queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-    queryFn: () =>
-      wenquRequest<WenquSearchResponse>(
-        `/books/search?dbIds=${dbIds.join('&dbIds=')}`
-      ),
-    staleTime: duration3Days,
-    gcTime: duration3Days,
-  })
+  await rq.prefetchQuery(wenquBooksByIdsQueryOptions(dbIds))
   return (
     <div className="relative min-h-screen overflow-hidden">
       <GalleryBackgroundView publicData={data.data} />

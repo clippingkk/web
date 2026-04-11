@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 
 import { generateMetadata as squareGenerateMetadata } from '@/components/og/og-with-square-page'
 import { APP_API_STEP_LIMIT } from '@/constants/config'
-import { duration3Days } from '@/hooks/book'
 import {
   FetchSquareDataDocument,
   type FetchSquareDataQuery,
@@ -14,7 +13,10 @@ import {
   doApolloServerQuery,
   getApolloServerClient,
 } from '@/services/apollo.server'
-import { type WenquSearchResponse, wenquRequest } from '@/services/wenqu'
+import {
+  isValidDoubanId,
+  wenquBooksByIdsQueryOptions,
+} from '@/services/wenqu'
 
 import SquarePageContent from './content'
 
@@ -35,19 +37,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const dbIds =
     squareResponse
       .data!.featuredClippings.map((x) => x.bookID)
-      .filter((x) => x.length > 3) ?? []
+      .filter(isValidDoubanId) ?? []
 
   const rq = getReactQueryClient()
 
-  const bs = await rq.fetchQuery({
-    queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-    queryFn: () =>
-      wenquRequest<WenquSearchResponse>(
-        `/books/search?dbIds=${dbIds.join('&dbIds=')}`
-      ),
-    staleTime: duration3Days,
-    gcTime: duration3Days,
-  })
+  const bs = await rq.fetchQuery(wenquBooksByIdsQueryOptions(dbIds))
 
   return squareGenerateMetadata(bs.books)
 }
@@ -68,20 +62,12 @@ async function Page() {
   const dbIds =
     squareResponse
       .data!.featuredClippings.map((x) => x.bookID)
-      .filter((x) => x.length > 3) ?? []
+      .filter(isValidDoubanId) ?? []
 
   const rq = getReactQueryClient()
 
   if (dbIds.length >= 1) {
-    await rq.prefetchQuery({
-      queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-      queryFn: () =>
-        wenquRequest<WenquSearchResponse>(
-          `/books/search?dbIds=${dbIds.join('&dbIds=')}`
-        ),
-      staleTime: duration3Days,
-      gcTime: duration3Days,
-    })
+    await rq.prefetchQuery(wenquBooksByIdsQueryOptions(dbIds))
   }
 
   const d = dehydrate(rq)

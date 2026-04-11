@@ -5,14 +5,14 @@ import MasonryContainer from '@/components/masonry-container'
 import { useTranslation } from '@/i18n/client'
 import { useBookQuery } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
+import { getUserSlug } from '@/utils/profile.utils'
 
 type Props = {
   profile: { id: number; domain: string }
 }
 
 function UncheckedPageContent({ profile }: Props) {
-  const domain =
-    profile.domain.length > 2 ? profile.domain : profile.id.toString()
+  const domain = getUserSlug(profile).toString()
   const { data: clippingsData } = useBookQuery({
     variables: {
       id: 0,
