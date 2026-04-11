@@ -1,12 +1,11 @@
-'use client'
-import { useTranslation } from '@/i18n/client'
+import { getTranslation } from '@/i18n'
 
 interface PremiumBadgeProps {
   className?: string
 }
 
-function PremiumBadge({ className = '' }: PremiumBadgeProps) {
-  const { t } = useTranslation()
+async function PremiumBadge({ className = '' }: PremiumBadgeProps) {
+  const { t } = await getTranslation()
 
   return (
     <span

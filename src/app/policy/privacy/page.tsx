@@ -1,11 +1,9 @@
-'use client'
-// import ReactMarkdown from 'react-markdown'
-import { usePageTrack } from '../../../hooks/tracke'
+import PageTrack from '@/components/track/page-track'
 
 function PrivacyPolicy() {
-  usePageTrack('privacy')
   return (
     <section className="page p-20">
+      <PageTrack page="privacy" />
       <h1>Privacy Policy</h1>
       <p>Effective date: October 07, 2018</p>
 
