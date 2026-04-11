@@ -251,9 +251,6 @@ importers:
       react-auth-code-input:
         specifier: ^3.2.1
         version: 3.2.1(react@19.2.5)
-      react-cool-inview:
-        specifier: ^3.0.1
-        version: 3.0.1(react@19.2.5)
       react-dom:
         specifier: ^19.2.5
         version: 19.2.5(react@19.2.5)
@@ -6452,11 +6449,6 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16.0.0'
-
-  react-cool-inview@3.0.1:
-    resolution: {integrity: sha512-ly6i3Pv5p0fvm12NmJGfKS34eOhA+iU43Th+gZ6t3G6UwsxQsWoITHTHzA9pdkOc/3VmnReqvC/hJkQUDGhQFA==}
-    peerDependencies:
-      react: '>= 16.8.0'
 
   react-dom@19.2.5:
     resolution: {integrity: sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==}
@@ -14428,10 +14420,6 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
 
   react-auth-code-input@3.2.1(react@19.2.5):
-    dependencies:
-      react: 19.2.5
-
-  react-cool-inview@3.0.1(react@19.2.5):
     dependencies:
       react: 19.2.5
 
