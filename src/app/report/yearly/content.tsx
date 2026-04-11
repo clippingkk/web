@@ -1,4 +1,4 @@
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
+import { ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 
 import logoDark from '@/assets/logo-dark.svg'
@@ -99,7 +99,7 @@ async function ReportYearly(props: ReportYearlyProps) {
                 className="mx-2 text-gray-700 hover:underline dark:text-gray-200"
               >
                 https://clippingkk.annatarhe.com
-                <ArrowTopRightOnSquareIcon className="mb-4 ml-1 inline-block h-4 w-4" />
+                <ExternalLink className="mb-4 ml-1 inline-block h-4 w-4" />
               </a>
               {t('app.report.tips.dropTxtToSync')}
             </p>

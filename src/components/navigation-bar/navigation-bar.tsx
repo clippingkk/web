@@ -1,12 +1,7 @@
 'use client'
 
 import Modal from '@annatarhe/lake-ui/modal'
-import {
-  ArrowUpTrayIcon,
-  BookOpenIcon,
-  Squares2X2Icon,
-} from '@heroicons/react/24/outline'
-import clsx from 'classnames'
+import { BookOpen, LayoutGrid, Upload } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
@@ -15,6 +10,7 @@ import { useCallback, useState } from 'react'
 import logoDark from '@/assets/logo-dark.svg'
 import logoLight from '@/assets/logo-light.svg'
 import { useTranslation } from '@/i18n/client'
+import { cn } from '@/lib/utils'
 import type { ProfileQuery } from '@/schema/generated'
 import { getUserSlug } from '@/utils/profile.utils'
 
@@ -28,19 +24,19 @@ import styles from './navigation-bar.module.css'
 
 const leftMenu = [
   {
-    emoji: () => <BookOpenIcon className="h-6 w-6 dark:text-white" />,
+    emoji: () => <BookOpen className="h-6 w-6 dark:text-white" />,
     alt: 'read',
     dest: (id: number | string) => `/dash/${id}/home`,
     targetSegment: 'home',
   },
   {
-    emoji: () => <Squares2X2Icon className="h-6 w-6 dark:text-white" />,
+    emoji: () => <LayoutGrid className="h-6 w-6 dark:text-white" />,
     alt: 'square',
     dest: (id: number | string) => `/dash/${id}/square`,
     targetSegment: 'square',
   },
   {
-    emoji: () => <ArrowUpTrayIcon className="h-6 w-6 dark:text-white" />,
+    emoji: () => <Upload className="h-6 w-6 dark:text-white" />,
     alt: 'upload',
     dest: (id: number | string) => `/dash/${id}/upload`,
     targetSegment: 'upload',
@@ -96,7 +92,7 @@ function NavigationBar(props: NavigationBarProps) {
           <ul className="with-slide-in ml-2 flex lg:ml-6">
             {leftMenu.map((item, index) => (
               <li
-                className={clsx(
+                className={cn(
                   'mr-3 cursor-pointer items-center rounded-full bg-linear-to-br px-4 py-2 text-gray-200 transition-all duration-150 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 hover:shadow-lg active:scale-95 lg:mr-6 dark:text-white',
                   {
                     'from-indigo-500 via-purple-500 to-pink-500 dark:text-gray-500':

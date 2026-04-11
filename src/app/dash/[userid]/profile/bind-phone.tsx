@@ -1,7 +1,7 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
+import { Smartphone } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
@@ -36,7 +36,7 @@ function ProfileBindPhone() {
     <React.Fragment>
       <Tooltip content={t('app.profile.phoneBind')}>
         <Button variant="ghost" onClick={() => setVisible(true)}>
-          <DevicePhoneMobileIcon className="h-6 w-6" />
+          <Smartphone className="h-6 w-6" />
         </Button>
       </Tooltip>
       <Modal

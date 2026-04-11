@@ -1,4 +1,4 @@
-import { DevicePhoneMobileIcon } from '@heroicons/react/24/solid'
+import { Smartphone } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -40,7 +40,7 @@ async function AuthV2Page() {
               href="/auth/phone"
               className="mt-4 block w-full rounded-sm bg-blue-400 py-4 text-center text-white transition-all duration-300 hover:bg-blue-500 disabled:bg-gray-300 disabled:hover:bg-gray-300"
             >
-              <DevicePhoneMobileIcon className="mr-2 inline-block h-6 w-6" />
+              <Smartphone className="mr-2 inline-block h-6 w-6" />
               Phone Number
             </Link>
             <hr className="my-4" />
