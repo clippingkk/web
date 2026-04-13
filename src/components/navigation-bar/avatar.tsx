@@ -17,8 +17,10 @@ function AvatarOnNavigationBar(props: AvatarOnNavigationBarProps) {
   return (
     <div
       className={cn(
-        isPremium &&
-          'rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 px-1 py-1'
+        'relative shrink-0 rounded-full p-0.5',
+        isPremium
+          ? 'bg-linear-to-br from-amber-300 via-sky-400 to-cyan-400'
+          : 'bg-slate-200 dark:bg-slate-800'
       )}
     >
       <Image
@@ -26,7 +28,7 @@ function AvatarOnNavigationBar(props: AvatarOnNavigationBarProps) {
         width={size}
         height={size}
         alt="avatar"
-        className="rounded-full"
+        className="rounded-full object-cover ring-1 ring-black/5 dark:ring-white/10"
       />
     </div>
   )
