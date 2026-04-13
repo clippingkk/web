@@ -1,32 +1,28 @@
 'use client'
 
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { LogOut, Search, Settings, Smartphone, User } from 'lucide-react'
+import { Ellipsis, LogOut, QrCode, Search, Settings, User } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import { checkIsPremium } from '@/compute/user'
 import { useTranslation } from '@/i18n/client'
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/utils'
 import profile from '@/utils/profile'
 
-import LinkIndicator from '../link-indicator'
 import AvatarOnNavigationBar from './avatar'
 import { onCleanServerCookie } from './logout'
 
-// Custom Dropdown component
 type DropdownProps = {
-  trigger: React.ReactNode
   children: React.ReactNode
 }
 
-const Dropdown = ({ trigger, children }: DropdownProps) => {
+function Dropdown({ children }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-
-  const toggleDropdown = () => setIsOpen(!isOpen)
+  const menuId = useId()
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -38,48 +34,86 @@ const Dropdown = ({ trigger, children }: DropdownProps) => {
       }
     }
 
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleEscape)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
   }, [])
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div onClick={toggleDropdown}>{trigger}</div>
+      <button
+        type="button"
+        onClick={() => setIsOpen((current) => !current)}
+        aria-expanded={isOpen}
+        aria-controls={menuId}
+        aria-label="More options"
+        className="inline-flex h-8 w-8 items-center justify-center rounded-xl text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 dark:text-slate-300 dark:hover:bg-slate-800"
+      >
+        <Ellipsis className="h-4 w-4" />
+      </button>
 
-      {isOpen && (
+      {isOpen ? (
         <div
-          className="absolute right-0 z-50 mt-2 w-72 origin-top-right rounded-xl border border-slate-200 bg-white/90 p-4 shadow-2xl backdrop-blur-xl dark:border-slate-700 dark:bg-slate-900/90"
-          style={{
-            transformOrigin: 'top right',
-            animation: 'scaleIn 200ms ease-out forwards',
-          }}
+          id={menuId}
+          className="absolute right-0 z-50 mt-2 w-52 rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg dark:border-slate-800 dark:bg-slate-950"
         >
-          <style jsx global>{`
-            @keyframes scaleIn {
-              from {
-                opacity: 0;
-                transform: scale(0.95);
-              }
-              to {
-                opacity: 1;
-                transform: scale(1);
-              }
-            }
-          `}</style>
-          <div className="absolute -top-2 right-4 h-4 w-4 rotate-45 border-t border-l border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900"></div>
           {children}
         </div>
-      )}
+      ) : null}
     </div>
   )
 }
 
-// Custom Divider component
-const Divider = ({ className = '' }: { className?: string }) => (
-  <hr
-    className={`border-t border-slate-200 dark:border-slate-700 ${className}`}
-  />
-)
+type MenuItemProps = {
+  href?: string
+  onClick?: () => void
+  tone?: 'default' | 'danger'
+  icon: React.ReactNode
+  children: React.ReactNode
+}
+
+function MenuItem(props: MenuItemProps) {
+  const { href, onClick, tone = 'default', icon, children } = props
+  const className = cn(
+    'flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-sm transition-colors',
+    tone === 'danger'
+      ? 'text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-500/10'
+      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900'
+  )
+
+  const iconClassName = cn(
+    'shrink-0',
+    tone === 'danger'
+      ? 'text-red-500 dark:text-red-300'
+      : 'text-slate-500 dark:text-slate-400'
+  )
+
+  if (href) {
+    return (
+      <Link href={href as any} className={className}>
+        <span className={iconClassName}>{icon}</span>
+        <span>{children}</span>
+      </Link>
+    )
+  }
+
+  return (
+    <button type="button" className={className} onClick={onClick}>
+      <span className={iconClassName}>{icon}</span>
+      <span>{children}</span>
+    </button>
+  )
+}
 
 type LoggedNavigationBarProps = {
   profile: {
@@ -106,132 +140,80 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
   }, [router, t])
 
   return (
-    <nav aria-label="User navigation">
-      <ul className="with-slide-in flex items-center gap-4">
-        {/* Search Button */}
-        <li>
-          <button
-            onClick={onSearch}
-            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:from-indigo-600 hover:to-purple-700 hover:shadow-xl"
-            aria-label={t('app.menu.search.title')}
-          >
-            <Search size={18} />
-            <span>{t('app.menu.search.title')}</span>
-          </button>
-        </li>
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={onSearch}
+          className="inline-flex h-8 items-center gap-2 rounded-xl border border-slate-200 bg-white px-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+          aria-label={t('app.menu.search.title')}
+        >
+          <Search className="h-4 w-4" />
+          <span className="hidden sm:inline">{t('app.menu.search.title')}</span>
+        </button>
 
-        {/* Settings Button */}
-        <li>
-          <Tooltip content={t('app.menu.settings')}>
-            <Link
-              href={`/dash/${uidOrDomain}/settings/web`}
-              className="flex items-center justify-center rounded-full bg-slate-200 p-2 transition-colors duration-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700"
-              aria-label={t('app.menu.settings')}
+        <Tooltip content={t('app.menu.settings')}>
+          <Link
+            href={`/dash/${uidOrDomain}/settings/web`}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+            aria-label={t('app.menu.settings')}
+          >
+            <Settings className="h-4 w-4" />
+          </Link>
+        </Tooltip>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Link
+          href={`/dash/${uidOrDomain}/profile`}
+          className="flex min-w-0 items-center gap-2 rounded-lg px-1.5 py-1 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+        >
+          <AvatarOnNavigationBar
+            avatarUrl={profileData.avatar}
+            size={28}
+            isPremium={isPremium}
+          />
+          <span className="min-w-0 max-w-28 truncate text-sm font-medium text-slate-900 dark:text-white">
+            {profileData.name}
+          </span>
+        </Link>
+
+        <Dropdown>
+          <div className="flex flex-col gap-1">
+            <MenuItem
+              href={`/dash/${uidOrDomain}/profile`}
+              icon={<User className="h-4 w-4" />}
             >
-              <LinkIndicator>
-                <Settings
-                  size={20}
-                  className="text-slate-700 dark:text-slate-200"
-                />
-              </LinkIndicator>
-            </Link>
-          </Tooltip>
-        </li>
+              {t('app.menu.my')}
+            </MenuItem>
 
-        {/* User Avatar with Dropdown */}
-        <li>
-          <Dropdown
-            trigger={
-              <button className="relative rounded-full transition-transform hover:scale-105 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none">
-                <AvatarOnNavigationBar
-                  avatarUrl={profileData.avatar}
-                  isPremium={isPremium}
-                />
-              </button>
-            }
-          >
-            <div className="flex flex-col gap-2">
-              {/* User Profile */}
-              <div className="mb-2 flex items-center gap-3 p-2">
-                <AvatarOnNavigationBar
-                  avatarUrl={profileData.avatar}
-                  size={40}
-                  isPremium={isPremium}
-                />
-                <div className="flex flex-col gap-4">
-                  <Tooltip content={profileData.name} noWrap>
-                    <h3 className="max-w-48 overflow-hidden text-lg font-bold text-ellipsis dark:text-white">
-                      {profileData.name}
-                    </h3>
-                  </Tooltip>
-                  <Link
-                    href={`/dash/${uidOrDomain}/profile`}
-                    className="text-sm text-indigo-600 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300"
-                  >
-                    {t('app.menu.viewProfile')}
-                  </Link>
-                </div>
-              </div>
+            <MenuItem
+              href={`/dash/${uidOrDomain}/settings/web`}
+              icon={<Settings className="h-4 w-4" />}
+            >
+              {t('app.menu.settings')}
+            </MenuItem>
 
-              <Divider className="my-1" />
+            <MenuItem
+              onClick={onPhoneLogin}
+              icon={<QrCode className="h-4 w-4" />}
+            >
+              {t('app.menu.loginByQRCode.title')}
+            </MenuItem>
 
-              {/* Menu Items */}
-              <div className="flex flex-col">
-                <Link
-                  href={`/dash/${uidOrDomain}/profile`}
-                  className="flex items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800/50"
-                >
-                  <LinkIndicator>
-                    <User
-                      size={18}
-                      className="text-slate-700 dark:text-slate-200"
-                    />
-                  </LinkIndicator>
-                  <span>{t('app.menu.my')}</span>
-                </Link>
+            <div className="my-1 h-px bg-slate-200 dark:bg-slate-800" />
 
-                <button
-                  className="flex cursor-pointer items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800/50"
-                  onClick={onPhoneLogin}
-                >
-                  <Smartphone
-                    size={18}
-                    className="text-slate-700 dark:text-slate-200"
-                  />
-                  <span>{t('app.menu.loginByQRCode.title')}</span>
-                </button>
-
-                <Link
-                  href={`/dash/${uidOrDomain}/settings/web`}
-                  className="flex items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800/50"
-                >
-                  <LinkIndicator>
-                    <Settings
-                      size={18}
-                      className="text-slate-700 dark:text-slate-200"
-                    />
-                  </LinkIndicator>
-                  <span>{t('app.menu.settings')}</span>
-                </Link>
-
-                <Divider className="my-2" />
-
-                <button
-                  className={cn(
-                    'flex cursor-pointer items-center gap-2 rounded-lg p-3 transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50',
-                    'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20'
-                  )}
-                  onClick={handleLogout}
-                >
-                  <LogOut size={18} className="text-red-400" />
-                  <span>{t('app.menu.logout.title')}</span>
-                </button>
-              </div>
-            </div>
-          </Dropdown>
-        </li>
-      </ul>
-    </nav>
+            <MenuItem
+              onClick={handleLogout}
+              tone="danger"
+              icon={<LogOut className="h-4 w-4" />}
+            >
+              {t('app.menu.logout.title')}
+            </MenuItem>
+          </div>
+        </Dropdown>
+      </div>
+    </div>
   )
 }
 
