@@ -1,4 +1,4 @@
-import { DocumentTextIcon, PencilSquareIcon } from '@heroicons/react/24/solid'
+import { FileText, SquarePen } from 'lucide-react'
 import { useState } from 'react'
 
 import { useTranslation } from '@/i18n/client'
@@ -27,7 +27,7 @@ function MarkdownEditor(props: MarkdownEditorProps) {
               : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
           }`}
         >
-          <PencilSquareIcon className="mr-2 h-4 w-4" />
+          <SquarePen className="mr-2 h-4 w-4" />
           <span>{t('common.edit') || 'Edit'}</span>
         </button>
         <button
@@ -39,7 +39,7 @@ function MarkdownEditor(props: MarkdownEditorProps) {
               : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
           }`}
         >
-          <DocumentTextIcon className="mr-2 h-4 w-4" />
+          <FileText className="mr-2 h-4 w-4" />
           <span>{t('common.preview') || 'Preview'}</span>
         </button>
       </div>

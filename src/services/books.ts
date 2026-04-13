@@ -1,4 +1,4 @@
-import { CDN_DEFAULT_DOMAIN } from '../constants/config'
+import { resolveMediaUrl } from '../utils/image'
 import { request } from './ajax'
 import type { IClippingItem, IHttpClippingItem } from './clippings'
 
@@ -24,8 +24,7 @@ export interface IBook extends Book {
 }
 
 export function covertHttpBook2Book(book: IHttpBook): IBook {
-  const isCDNImage = book.image.indexOf('http') !== 0
-  const image = isCDNImage ? `${CDN_DEFAULT_DOMAIN}/${book.image}` : book.image
+  const image = resolveMediaUrl(book.image)
   return {
     ...book,
     image:

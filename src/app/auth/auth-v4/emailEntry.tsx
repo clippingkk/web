@@ -1,7 +1,7 @@
 'use client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { ChevronRightIcon } from '@heroicons/react/24/solid'
+import { ChevronRight } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { useEffect } from 'react'
@@ -122,7 +122,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
             <Button
               size="sm"
               variant="ghost"
-              rightIcon={<ChevronRightIcon className="h-4 w-4" />}
+              rightIcon={<ChevronRight className="h-4 w-4" />}
               onClick={() => sendEvent({ type: 'CHANGE_TO_OTP' })}
             >
               {t('app.auth.otpTitle')}
@@ -154,7 +154,7 @@ function EmailLoginEntry(props: EmailLoginEntryProps) {
             <Button
               size="sm"
               variant="ghost"
-              rightIcon={<ChevronRightIcon className="h-4 w-4" />}
+              rightIcon={<ChevronRight className="h-4 w-4" />}
               onClick={() => sendEvent({ type: 'CHANGE_TO_PASSWORD' })}
             >
               {machine.can({ type: 'CHANGE_TO_PASSWORD' }) &&

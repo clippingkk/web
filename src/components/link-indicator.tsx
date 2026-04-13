@@ -1,5 +1,3 @@
-'use client'
-
 type LinkIndicatorProps = {
   className?: string
   children?: React.ReactNode

@@ -2,7 +2,6 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
 
 import { generateMetadata as generateReportMetadata } from '@/components/og/og-with-report'
-import { duration3Days } from '@/hooks/book'
 import {
   FetchYearlyReportDocument,
   type FetchYearlyReportQuery,
@@ -11,7 +10,9 @@ import {
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import {
+  isValidDoubanId,
   type WenquBook,
+  wenquBooksByIdsQueryOptions,
   type WenquSearchResponse,
   wenquRequest,
 } from '@/services/wenqu'
@@ -44,7 +45,7 @@ export async function generateMetadata(
   const dbIds =
     reportInfoResponse
       .data!.reportYearly.books.map((x) => x.doubanId)
-      .filter((x) => x.length > 3) ?? []
+      .filter(isValidDoubanId) ?? []
 
   const bs = await wenquRequest<WenquSearchResponse>(
     `/books/search?dbIds=${dbIds.join('&dbIds=')}`
@@ -73,21 +74,15 @@ async function YearlyPage(props: YearlyLegacyPageProps) {
   const dbIds =
     reportInfoResponse
       .data!.reportYearly.books.map((x) => x.doubanId)
-      .filter((x) => x.length > 3) ?? []
+      .filter(isValidDoubanId) ?? []
 
   const rq = getReactQueryClient()
 
   let bs: WenquBook[] = []
   if (dbIds.length >= 1) {
-    const prevLoadedBooks = await rq.fetchQuery({
-      queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-      queryFn: () =>
-        wenquRequest<WenquSearchResponse>(
-          `/books/search?dbIds=${dbIds.join('&dbIds=')}`
-        ),
-      staleTime: duration3Days,
-      gcTime: duration3Days,
-    })
+    const prevLoadedBooks = await rq.fetchQuery(
+      wenquBooksByIdsQueryOptions(dbIds)
+    )
     bs = prevLoadedBooks.books
   }
   const d = dehydrate(rq)

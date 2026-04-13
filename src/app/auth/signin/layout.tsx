@@ -1,4 +1,3 @@
-'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import type React from 'react'
@@ -6,32 +5,22 @@ import type React from 'react'
 import logoDark from '@/assets/logo-dark.svg'
 import logoLight from '@/assets/logo-light.svg'
 import Card from '@/components/card/card'
-import GithubLogo from '@/components/icons/github.logo.svg'
-import { GithubClientID } from '@/constants/config'
-import { useActionTrack, usePageTrack } from '@/hooks/tracke'
-import { useTranslation } from '@/i18n/client'
+import PageTrack from '@/components/track/page-track'
+import { getTranslation } from '@/i18n'
+
+import TrackedGithubLink from './tracked-github-link'
 
 type AuthPageProps = {
   children: React.ReactNode
 }
 
-function AuthPage(props: AuthPageProps) {
-  const children = props.children
-  usePageTrack('auth')
-  // const { push: navigate } = useRouter()
-  // useEffect(() => {
-  //   const uid = profile.uid
-  //   if (uid && uid > 0) {
-  //     navigate(`/dash/${uid}/home`)
-  //   }
-  // }, [])
-
-  const { t } = useTranslation()
-
-  const onGithubClick = useActionTrack('login:github')
+async function AuthPage(props: AuthPageProps) {
+  const { children } = props
+  const { t } = await getTranslation()
 
   return (
     <section className="flex h-screen items-center justify-center bg-linear-to-br from-teal-100 to-green-300 dark:from-teal-900 dark:to-slate-900">
+      <PageTrack page="auth" />
       <Card className="with-slide-in container">
         <>
           <div className="mb-4 flex flex-col items-center justify-center">
@@ -73,13 +62,7 @@ function AuthPage(props: AuthPageProps) {
           {children}
           <hr className="my-2" />
           <div className="flex items-center justify-center">
-            <a
-              href={`https://github.com/login/oauth/authorize?client_id=${GithubClientID}&scope=user:email`}
-              onClick={onGithubClick}
-              title="github login"
-            >
-              <GithubLogo />
-            </a>
+            <TrackedGithubLink />
           </div>
         </>
       </Card>

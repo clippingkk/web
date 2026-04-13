@@ -1,5 +1,4 @@
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
-import { ChevronRightIcon } from '@heroicons/react/24/solid'
+import { ChevronRight, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
 import { AppFeatures } from '@/constants/features'
@@ -62,7 +61,7 @@ async function Hero(props: HeroProps) {
                 <span className="relative z-10 flex items-center gap-3">
                   <span>{t('app.go')}</span>
                   <LinkIndicator className="ml-2">
-                    <ChevronRightIcon className="h-7 w-7 transition-transform duration-300 group-hover:translate-x-2" />
+                    <ChevronRight className="h-7 w-7 transition-transform duration-300 group-hover:translate-x-2" />
                   </LinkIndicator>
                 </span>
                 {/* Fancy hover effects */}
@@ -85,7 +84,7 @@ async function Hero(props: HeroProps) {
                     <span className="mr-1">✨</span>
                     <span>{t('app.plan.premium.name')}</span>
                     <LinkIndicator>
-                      <ChevronRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </LinkIndicator>
                   </span>
                   <span className="absolute inset-0 z-0 h-full w-full bg-gradient-to-r from-blue-500/40 to-cyan-500/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
@@ -102,7 +101,7 @@ async function Hero(props: HeroProps) {
               rel="noopener"
             >
               {t('How to use?')}
-              <ArrowTopRightOnSquareIcon className="h-4 w-4" />
+              <ExternalLink className="h-4 w-4" />
             </a>
           </div>
         </div>

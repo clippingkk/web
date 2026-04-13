@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useState } from 'react'
 
+import { glassCardClass } from '@/components/card/glass-card'
 import {
   type Comment,
   type GetCommentListQuery,
@@ -103,7 +104,7 @@ export default function CommentsList({ initialData, userId }: Props) {
   return (
     <div className="space-y-6">
       {/* Stats */}
-      <div className="rounded-2xl border border-white/40 bg-white/80 p-6 backdrop-blur-xl dark:border-gray-700/40 dark:bg-gray-900/80">
+      <div className={glassCardClass}>
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-600 dark:text-gray-400">

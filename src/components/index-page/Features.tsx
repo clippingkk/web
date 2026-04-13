@@ -1,4 +1,4 @@
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
+import { ExternalLink } from 'lucide-react'
 import type React from 'react'
 
 import FeatureModern from './Feature-Modern'
@@ -96,7 +96,7 @@ function _FeatureSection(props: FeatureSectionType) {
                 rel="noreferrer"
               >
                 {x.feature}
-                <ArrowTopRightOnSquareIcon className="mb-2 inline-block h-4 w-4 text-blue-400 lg:mb-8 lg:h-5 lg:w-5" />
+                <ExternalLink className="mb-2 inline-block h-4 w-4 text-blue-400 lg:mb-8 lg:h-5 lg:w-5" />
               </a>
             ) : (
               <h4 className={props.colorPattern.rows[i]}>{x.feature}</h4>

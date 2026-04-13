@@ -14,6 +14,7 @@ import {
 import { updateToken } from '@/services/ajax'
 import type { AppleAuthResponse } from '@/services/apple'
 import profile from '@/utils/profile'
+import { getUserSlug } from '@/utils/profile.utils'
 
 import AppleLoginButtonView from './apple'
 
@@ -95,8 +96,7 @@ export default function AppleStandaloneLoginButton({
 
       // Step 4: Navigate to dashboard
       setTimeout(() => {
-        const domain = user.domain.length > 2 ? user.domain : user.id
-        router.push(`/dash/${domain}/home?from_auth=1`)
+        router.push(`/dash/${getUserSlug(user)}/home?from_auth=1` as any)
       }, 100)
 
       onSuccess?.()

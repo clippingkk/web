@@ -1,11 +1,5 @@
 'use client'
-import {
-  Cog8ToothIcon,
-  DocumentArrowDownIcon,
-  GlobeAltIcon,
-  QueueListIcon,
-  UserIcon,
-} from '@heroicons/react/24/outline'
+import { FileDown, Globe, List, Settings, User } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -30,27 +24,27 @@ function SettingsSidebar({ title }: SettingsSidebarProps) {
     {
       id: 'web',
       label: t('app.settings.title'),
-      icon: <Cog8ToothIcon className="h-4 w-4" />,
+      icon: <Settings className="h-4 w-4" />,
     },
     {
       id: 'orders',
       label: t('app.settings.orders.title'),
-      icon: <QueueListIcon className="h-4 w-4" />,
+      icon: <List className="h-4 w-4" />,
     },
     {
       id: 'webhooks',
       label: t('app.settings.webhook.title'),
-      icon: <GlobeAltIcon className="h-4 w-4" />,
+      icon: <Globe className="h-4 w-4" />,
     },
     {
       id: 'exports',
       label: t('app.settings.export.title'),
-      icon: <DocumentArrowDownIcon className="h-4 w-4" />,
+      icon: <FileDown className="h-4 w-4" />,
     },
     {
       id: 'account',
       label: t('app.settings.account'),
-      icon: <UserIcon className="h-4 w-4" />,
+      icon: <User className="h-4 w-4" />,
       className: 'ml-auto',
     },
   ]

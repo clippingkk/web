@@ -1,5 +1,5 @@
 import { useApolloClient, useMutation } from '@apollo/client/react'
-import { CheckCircleIcon } from '@heroicons/react/24/solid'
+import { CircleCheck } from 'lucide-react'
 import { useMachine } from '@xstate/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -158,7 +158,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
         )
         send({ type: 'Next' })
         toast(t('app.upload.tips.parsedInfoTitle'), {
-          icon: <CheckCircleIcon className="h-4 w-4" />,
+          icon: <CircleCheck className="h-4 w-4" />,
           // message: t('app.upload.tips.parsedInfoContent'),
         })
         return

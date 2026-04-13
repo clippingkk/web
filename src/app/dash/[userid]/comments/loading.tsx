@@ -1,3 +1,7 @@
+import { cn } from '@/lib/utils'
+
+import { glassCardClass } from '@/components/card/glass-card'
+
 export default function CommentsLoading() {
   return (
     <div className="min-h-screen p-4 md:p-8">
@@ -9,7 +13,7 @@ export default function CommentsLoading() {
         </div>
 
         {/* Stats skeleton */}
-        <div className="mb-6 rounded-2xl border border-white/40 bg-white/80 p-6 backdrop-blur-xl dark:border-gray-700/40 dark:bg-gray-900/80">
+        <div className={cn('mb-6', glassCardClass)}>
           <div className="flex items-center justify-between">
             <div>
               <div className="mb-2 h-4 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
@@ -22,10 +26,7 @@ export default function CommentsLoading() {
         {/* Comments grid skeleton */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-white/40 bg-white/80 p-6 backdrop-blur-xl dark:border-gray-700/40 dark:bg-gray-900/80"
-            >
+            <div key={i} className={glassCardClass}>
               <div className="space-y-3">
                 <div>
                   <div className="mb-2 h-3 w-16 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />

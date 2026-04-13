@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 
-import { useIsPremium } from '@/hooks/profile'
+import { checkIsPremium } from '@/compute/user'
 import { useTranslation } from '@/i18n/client'
 import { cn } from '@/utils/cn'
 import profile from '@/utils/profile'
@@ -96,7 +96,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
   const { uidOrDomain, onPhoneLogin, onSearch, profile: profileData } = props
   const { t } = useTranslation(undefined, 'navigation')
   const router = useRouter()
-  const isPremium = useIsPremium(profileData.premiumEndAt)
+  const isPremium = checkIsPremium(profileData.premiumEndAt)
 
   const handleLogout = useCallback(async () => {
     await onCleanServerCookie()

@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 
 import { getTranslation } from '@/i18n'
@@ -36,7 +36,7 @@ async function FeaturesOpen() {
             width={40}
             height={40}
           />
-          <ArrowRightIcon className="mx-8 h-16 w-16 font-bold text-green-400" />
+          <ArrowRight className="mx-8 h-16 w-16 font-bold text-green-400" />
         </div>
         <div className="flex flex-col rounded-sm border-4 border-dashed border-gray-600">
           <a

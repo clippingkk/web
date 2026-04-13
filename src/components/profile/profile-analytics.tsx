@@ -1,9 +1,6 @@
-'use client'
-
 import { Award, BookOpen, Library, TrendingUp } from 'lucide-react'
-import React from 'react'
 
-import { useTranslation } from '@/i18n/client'
+import { getTranslation } from '@/i18n'
 
 type ProfileAnalyticsProps = {
   clippingsCount: number
@@ -11,25 +8,20 @@ type ProfileAnalyticsProps = {
   createdAt: string
 }
 
-const ProfileAnalytics: React.FC<ProfileAnalyticsProps> = ({
+async function ProfileAnalytics({
   clippingsCount,
   booksCount,
   createdAt,
-}) => {
-  const { t } = useTranslation()
+}: ProfileAnalyticsProps) {
+  const { t } = await getTranslation()
 
-  const memberDays = React.useMemo(() => {
-    const created = new Date(createdAt)
-    const now = new Date()
-    const diffTime = Math.abs(now.getTime() - created.getTime())
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    return diffDays
-  }, [createdAt])
+  const created = new Date(createdAt)
+  const now = new Date()
+  const diffTime = Math.abs(now.getTime() - created.getTime())
+  const memberDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
-  const avgClippingsPerDay = React.useMemo(() => {
-    if (memberDays === 0) return 0
-    return (clippingsCount / memberDays).toFixed(1)
-  }, [clippingsCount, memberDays])
+  const avgClippingsPerDay =
+    memberDays === 0 ? 0 : (clippingsCount / memberDays).toFixed(1)
 
   const stats = [
     {

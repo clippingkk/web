@@ -1,4 +1,4 @@
-import { ArrowDownTrayIcon } from '@heroicons/react/24/solid'
+import { Download } from 'lucide-react'
 
 import { useTranslation } from '@/i18n/client'
 
@@ -27,9 +27,9 @@ function DropOverlay(props: Props) {
           {/* Icon with glow */}
           <div className="relative">
             <div className="absolute inset-0 -z-10 animate-pulse blur-xl">
-              <ArrowDownTrayIcon className="h-16 w-16 text-white/50" />
+              <Download className="h-16 w-16 text-white/50" />
             </div>
-            <ArrowDownTrayIcon className="h-16 w-16 text-white transition-transform duration-300 ease-in-out hover:scale-110" />
+            <Download className="h-16 w-16 text-white transition-transform duration-300 ease-in-out hover:scale-110" />
           </div>
 
           {/* Text with gradient */}

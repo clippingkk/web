@@ -3,9 +3,8 @@ import InputField from '@annatarhe/lake-ui/form-input-field'
 import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { CogIcon } from '@heroicons/react/24/solid'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Globe2Icon, PenIcon, User2Icon } from 'lucide-react'
+import { Globe2Icon, PenIcon, Settings, User2Icon } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
@@ -120,7 +119,7 @@ function ProfileEditor(props: ProfileEditorProps) {
           variant="ghost"
           title={t('app.profile.editor.title') ?? ''}
         >
-          <CogIcon className="h-6 w-6" />
+          <Settings className="h-6 w-6" />
         </Button>
       </Tooltip>
       <Modal

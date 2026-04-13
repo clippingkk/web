@@ -4,10 +4,10 @@ import { QRCodeSVG } from 'qrcode.react'
 import { type ForwardedRef, forwardRef, useMemo } from 'react'
 
 import Avatar from '@/components/avatar/avatar'
-import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { useTranslation } from '@/i18n/client'
 import type { Clipping, User } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
+import { resolveMediaUrl } from '@/utils/image'
 
 import { type Theme, themeList } from './theme.config'
 
@@ -38,12 +38,10 @@ function Preview4Clipping(props: Preview4ClippingProps) {
     return new Intl.DateTimeFormat().format(new Date(clipping.createdAt))
   }, [clipping.createdAt])
 
-  const avatar = useMemo(() => {
-    const originalAvatar = clipping.creator.avatar
-    return originalAvatar.startsWith('http')
-      ? originalAvatar
-      : `${CDN_DEFAULT_DOMAIN}/${originalAvatar}`
-  }, [clipping.creator.avatar])
+  const avatar = useMemo(
+    () => resolveMediaUrl(clipping.creator.avatar),
+    [clipping.creator.avatar]
+  )
 
   return (
     <div

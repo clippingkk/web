@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 
 import logo from '../../assets/logo-light.svg'
-import { APP_URL_ORIGIN, CDN_DEFAULT_DOMAIN } from '../../constants/config'
+import { APP_URL_ORIGIN } from '../../constants/config'
 import type { ProfileQuery } from '../../schema/generated'
+import { resolveMediaUrl } from '../../utils/image'
 
 type OGWithUserProfileProps = {
   profile?: ProfileQuery['me']
@@ -16,12 +17,7 @@ export function generateMetadata(props: OGWithUserProfileProps): Metadata {
 
   const plainAvatar = props.profile?.avatar ?? ''
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _avatar =
-    plainAvatar.length > 4
-      ? plainAvatar.startsWith('http')
-        ? plainAvatar
-        : `${CDN_DEFAULT_DOMAIN}/${plainAvatar}`
-      : logoLink
+  const _avatar = plainAvatar.length > 4 ? resolveMediaUrl(plainAvatar) : logoLink
 
   return {
     metadataBase: new URL(APP_URL_ORIGIN),

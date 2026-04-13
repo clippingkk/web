@@ -8,6 +8,7 @@ import { useUploadData } from '@/hooks/my-file'
 import { useActionTrack, usePageTrack } from '@/hooks/tracke'
 import { useTranslation } from '@/i18n/client'
 import { UploadStep } from '@/services/uploader'
+import { getUserSlug } from '@/utils/profile.utils'
 
 import LoadingModal from './loading-modal'
 
@@ -58,7 +59,7 @@ function UploaderPageContent({ profile }: Props) {
 
   const { push: navigate } = useRouter()
 
-  const domain = profile.domain.length > 2 ? profile.domain : profile.id
+  const domain = getUserSlug(profile)
 
   useEffect(() => {
     if (step === UploadStep.Done) {

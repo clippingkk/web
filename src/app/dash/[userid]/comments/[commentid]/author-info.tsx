@@ -1,6 +1,7 @@
 import * as motion from 'motion/react-client'
 import Image from 'next/image'
 
+import { glassCardClass } from '@/components/card/glass-card'
 import type { GetCommentQuery } from '@/schema/generated'
 
 type Props = {
@@ -13,7 +14,7 @@ function AuthorInfo({ creator }: Props) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className="rounded-2xl border border-white/40 bg-white/80 p-6 backdrop-blur-xl dark:border-gray-700/40 dark:bg-gray-900/80"
+      className={glassCardClass}
     >
       <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
         Author

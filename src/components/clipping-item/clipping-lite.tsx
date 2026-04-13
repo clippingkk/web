@@ -3,9 +3,10 @@ import { BookOpenText, Quote } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { CDN_DEFAULT_DOMAIN } from '../../constants/config'
 import type { Clipping, User } from '../../schema/generated'
 import { IN_APP_CHANNEL } from '../../services/channel'
+import { resolveMediaUrl } from '../../utils/image'
+import { getUserSlug } from '../../utils/profile.utils'
 import LinkIndicator from '../link-indicator'
 
 import styles from './clipping-lite.module.css'
@@ -17,9 +18,7 @@ type ClippingLiteProps = {
 }
 
 function SimpleAvatar({ avatar }: { avatar: string }) {
-  const imageUrl = avatar.startsWith('http')
-    ? avatar
-    : `${CDN_DEFAULT_DOMAIN}/${avatar}`
+  const imageUrl = resolveMediaUrl(avatar)
   return (
     <div className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-white/30 shadow-md">
       <Image
@@ -40,7 +39,7 @@ function ClippingLite(props: ClippingLiteProps) {
   return (
     <div className="flex w-full justify-center">
       <Link
-        href={`/dash/${c.creator.domain.length > 2 ? c.creator.domain : c.creator.id}/clippings/${c.id}?iac=${IN_APP_CHANNEL.clippingFromUser}`}
+        href={`/dash/${getUserSlug(c.creator)}/clippings/${c.id}?iac=${IN_APP_CHANNEL.clippingFromUser}`}
         className="group relative flex min-h-64 w-full max-w-4xl flex-col rounded-2xl border border-slate-200/20 bg-white/80 p-6 text-slate-700 shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white hover:shadow-xl lg:min-h-72 dark:border-slate-700/30 dark:bg-slate-900/80 dark:text-slate-200 dark:hover:bg-slate-800/90"
       >
         {/* Decorative elements */}

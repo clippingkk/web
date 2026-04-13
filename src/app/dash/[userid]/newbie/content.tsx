@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 
-import ButtonSimple from '@/components/button/button-simple'
+import { Button } from '@/components/button/button'
 /* METAMASK DISABLED
 import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
 */
@@ -103,8 +103,10 @@ function NewbiePageContent({ uid }: { uid: number }) {
               placeholder="name"
               className="w-full rounded-sm px-2 py-4"
             />
-            <ButtonSimple
-              loading={doUpdateResponse.loading}
+            <Button
+              fullWidth
+              className="mt-4"
+              isLoading={doUpdateResponse.loading}
               onClick={() => {
                 toast
                   .promise(
@@ -121,8 +123,9 @@ function NewbiePageContent({ uid }: { uid: number }) {
                   })
               }}
               disabled={newNameSubmitDisabled}
-              text="Confirm"
-            />
+            >
+              Confirm
+            </Button>
           </div>
         )}
 
@@ -149,9 +152,11 @@ function NewbiePageContent({ uid }: { uid: number }) {
                 setNewDomain(val)
               }}
             />
-            <ButtonSimple
+            <Button
+              fullWidth
+              className="mt-4"
               disabled={newDomainSubmitDisabled}
-              loading={doUpdateResponse.loading}
+              isLoading={doUpdateResponse.loading}
               onClick={() => {
                 toast
                   .promise(
@@ -166,8 +171,9 @@ function NewbiePageContent({ uid }: { uid: number }) {
                     setPhase(5) // Skip phase 2-4 (MetaMask/Apple/GitHub disabled) - go directly to avatar
                   })
               }}
-              text="Confirm my domain"
-            />
+            >
+              Confirm my domain
+            </Button>
           </div>
         )}
 
@@ -199,8 +205,10 @@ function NewbiePageContent({ uid }: { uid: number }) {
               }}
               value={undefined}
             />
-            <ButtonSimple
-              loading={doUpdateResponse.loading}
+            <Button
+              fullWidth
+              className="mt-4"
+              isLoading={doUpdateResponse.loading}
               disabled={avatar === null}
               onClick={async () => {
                 if (!avatar) {
@@ -220,8 +228,9 @@ function NewbiePageContent({ uid }: { uid: number }) {
                   toast.error(e.toString(), { id: tl })
                 }
               }}
-              text="Confirm my avatar"
-            />
+            >
+              Confirm my avatar
+            </Button>
           </div>
         )}
 

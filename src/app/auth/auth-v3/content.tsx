@@ -1,8 +1,5 @@
 'use client'
-import {
-  ArrowUturnLeftIcon,
-  ArrowUturnRightIcon,
-} from '@heroicons/react/24/solid'
+import { Undo2, Redo2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -96,14 +93,14 @@ function AuthV3Content() {
                 back()
               }}
             >
-              <ArrowUturnLeftIcon className="h-6 w-6" />
+              <Undo2 className="h-6 w-6" />
               <span className="ml-2 inline-block">Back</span>
             </button>
             <Link
               href="/auth/signin"
               className="hover:bg-opacity-20 flex rounded-sm px-8 py-2 transition-colors duration-300 hover:bg-gray-100 dark:text-white"
             >
-              <ArrowUturnRightIcon className="h-6 w-6" />
+              <Redo2 className="h-6 w-6" />
               <span className="ml-2 inline-block">
                 {t('app.auth.loginWithPassword')}
               </span>

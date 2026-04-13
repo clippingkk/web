@@ -12,6 +12,8 @@ import {
   useFetchSquareDataQuery,
 } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
+import { uniqueById } from '@/utils/array'
+import { getUserSlug } from '@/utils/profile.utils'
 
 type SquarePageContentProps = {
   squareData: FetchSquareDataQuery
@@ -65,14 +67,7 @@ function SquarePageContent(props: SquarePageContentProps) {
           reachEnd.current = true
         }
         setSqData((prev) =>
-          [...prev, ...data.data!.featuredClippings].reduce<
-            FetchSquareDataQuery['featuredClippings']
-          >((acc, x) => {
-            if (!acc.find((y) => y.id === x.id)) {
-              acc.push(x)
-            }
-            return acc
-          }, [])
+          uniqueById([...prev, ...data.data!.featuredClippings])
         )
       })
     },
@@ -94,11 +89,7 @@ function SquarePageContent(props: SquarePageContentProps) {
           <ClippingItem
             key={clipping.id}
             item={clipping as any}
-            domain={
-              clipping.creator.domain.length > 2
-                ? clipping.creator.domain
-                : clipping.creator.id.toString()
-            }
+            domain={getUserSlug(clipping.creator).toString()}
             book={books.books.find(
               (x) => x.doubanId.toString() === clipping.bookID
             )}

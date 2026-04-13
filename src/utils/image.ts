@@ -1,9 +1,18 @@
+import { CDN_DEFAULT_DOMAIN } from '../constants/config'
+
 // import ColorThief from 'colorthief'
 let support: boolean
 
 export enum ImageTheme {
   dark,
   light,
+}
+
+export function resolveMediaUrl(path?: string | null): string {
+  if (!path) {
+    return ''
+  }
+  return path.startsWith('http') ? path : `${CDN_DEFAULT_DOMAIN}/${path}`
 }
 
 export function supportsWebp(): Promise<boolean> {

@@ -8,6 +8,7 @@ import VisibleToggle from '@/components/clipping-sidebars/visible-toggle'
 import type { Clipping, User } from '@/schema/generated'
 import type { IN_APP_CHANNEL } from '@/services/channel'
 import type { WenquBook } from '@/services/wenqu'
+import { getUserSlug } from '@/utils/profile.utils'
 
 type ClippingSidebarProps = {
   clipping?: Pick<
@@ -30,9 +31,7 @@ function ClippingSidebar(props: ClippingSidebarProps) {
   const { clipping, me, inAppChannel, book } = props
 
   const clippingDomain = clipping
-    ? clipping.creator.domain.length > 2
-      ? clipping.creator.domain
-      : clipping.creator.id.toString()
+    ? getUserSlug(clipping.creator).toString()
     : me?.id.toString()
 
   return (

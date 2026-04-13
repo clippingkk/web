@@ -2,13 +2,15 @@ import { useQueries, useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
 import {
+  duration3Days,
+  isValidDoubanId,
   type WenquBook,
+  wenquBooksByIdsQueryOptions,
   type WenquSearchResponse,
   wenquRequest,
 } from '../services/wenqu'
 
-// 3 days
-export const duration3Days = 1000 * 60 * 60 * 24 * 3
+export { duration3Days }
 
 type bookRequestReturn = {
   books: WenquBook[]
@@ -54,14 +56,12 @@ export function useMultipleBook(
   skip?: boolean
 ): bookRequestReturn {
   const validDoubanIdList = useMemo(() => {
-    return doubanIds
-      .filter((x) => x.length > 3)
-      .reduce<string[]>((acc, x) => {
-        if (!acc.includes(x)) {
-          acc.push(x)
-        }
-        return acc
-      }, [])
+    return doubanIds.filter(isValidDoubanId).reduce<string[]>((acc, x) => {
+      if (!acc.includes(x)) {
+        acc.push(x)
+      }
+      return acc
+    }, [])
   }, [doubanIds])
   const chunkedDbIds = useMemo(() => {
     const result: string[][] = []
@@ -74,15 +74,8 @@ export function useMultipleBook(
 
   const bbs = useQueries({
     queries: chunkedDbIds.map((dbIds) => ({
-      queryKey: ['wenqu', 'books', 'dbIds', dbIds],
-      queryFn: () =>
-        wenquRequest<WenquSearchResponse>(
-          `/books/search?dbIds=${dbIds.join('&dbIds=')}`
-        ),
+      ...wenquBooksByIdsQueryOptions(dbIds),
       enabled: dbIds.length > 0 && !skip,
-      staleTime: duration3Days,
-      gcTime: duration3Days,
-      cacheTime: duration3Days,
     })),
   })
 

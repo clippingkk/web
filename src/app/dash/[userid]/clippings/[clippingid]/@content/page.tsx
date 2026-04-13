@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { checkIsPremium } from '@/compute/user'
 import ElegantDivider from '@/components/divider/elegant-divider'
 import ClippingRichContent from '@/components/text-content/clipping-rich-content'
-import { CDN_DEFAULT_DOMAIN } from '@/constants/config'
 import { getTranslation } from '@/i18n'
 import { isGrandAdmin } from '@/services/admin'
+import { resolveMediaUrl } from '@/utils/image'
 
 import { getClippingData } from '../data'
 import Reactions from './reactions'
@@ -21,12 +22,7 @@ async function ClippingContent(props: PageProps) {
   const { clipping, me, bookData, uid } = await getClippingData(cid)
 
   const creator = clipping.creator
-  // Server component: safe to compute during render (only executes once on server)
-
-  const now = Date.now()
-  const isPremium = me?.premiumEndAt
-    ? new Date(me.premiumEndAt).getTime() > now
-    : false
+  const isPremium = checkIsPremium(me?.premiumEndAt)
   const clippingAt = clipping?.createdAt
   const { t } = await getTranslation()
 
@@ -82,11 +78,7 @@ async function ClippingContent(props: PageProps) {
             <div className="relative">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-30" />
               <Image
-                src={
-                  creator?.avatar.startsWith('http')
-                    ? creator.avatar
-                    : `${CDN_DEFAULT_DOMAIN}/${creator?.avatar}`
-                }
+                src={resolveMediaUrl(creator?.avatar)}
                 className="relative h-12 w-12 rounded-full object-cover ring-2 ring-gray-200 transition-all duration-300 group-hover:ring-blue-400 dark:ring-zinc-700 dark:group-hover:ring-blue-400"
                 alt={creator.name}
                 width={48}
