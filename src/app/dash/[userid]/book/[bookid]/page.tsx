@@ -5,6 +5,7 @@ import { cookies } from 'next/headers'
 import BookInfo from '@/components/book-info/book-info'
 import Divider from '@/components/divider/divider'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
+import { BOOK_CLIPPINGS_PAGE_SIZE } from '@/constants/features'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { duration3Days } from '@/hooks/book'
 import { getTranslation } from '@/i18n'
@@ -14,14 +15,13 @@ import {
   type BookQueryVariables,
 } from '@/schema/generated'
 import { getReactQueryClient } from '@/services/ajax'
-import { getApolloServerClient } from '@/services/apollo.server'
+import { doApolloServerQuery } from '@/services/apollo.server'
 import {
   type WenquBook,
   type WenquSearchResponse,
   wenquRequest,
 } from '@/services/wenqu'
-
-import BookPageContent, { BOOK_CLIPPINGS_PAGE_SIZE } from './content'
+import BookPageContent from './content'
 
 type PageProps = {
   params: Promise<{ bookid: string; userid: string }>
@@ -63,15 +63,14 @@ async function Page(props: PageProps) {
     return null
   }
 
-  const ac = getApolloServerClient()
-
-  const { data: clippingsData } = await ac.query<BookQuery, BookQueryVariables>(
+  const { data: clippingsData } = await doApolloServerQuery<BookQuery, BookQueryVariables>(
     {
       query: BookDocument,
       variables: {
         id: ~~dbId,
         pagination: {
           limit: BOOK_CLIPPINGS_PAGE_SIZE,
+          offset: 0,
         },
       },
       context: {

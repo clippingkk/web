@@ -9,6 +9,7 @@ import BookClippingsToolbar, {
   type ClippingsSortOrder,
   type ClippingsViewMode,
 } from '@/components/clipping-item/book-clippings-toolbar'
+import { BOOK_CLIPPINGS_PAGE_SIZE } from '@/constants/features'
 import InfiniteScrollFooter from '@/components/clipping-item/infinite-scroll-footer'
 import { usePageTrack } from '@/hooks/tracke'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
@@ -17,8 +18,6 @@ import { BookDocument, type BookQuery } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import type { WenquBook } from '@/services/wenqu'
 import { uniqueById } from '@/utils/array'
-
-export const BOOK_CLIPPINGS_PAGE_SIZE = 12
 
 type BookClippingsItem = NonNullable<BookQuery['book']['clippings']>[number]
 
@@ -42,6 +41,7 @@ function BookPageContent(props: BookPageContentProps) {
       id: bookData.doubanId,
       pagination: {
         limit: BOOK_CLIPPINGS_PAGE_SIZE,
+        offset: 0,
       },
     },
     notifyOnNetworkStatusChange: true,
@@ -85,13 +85,12 @@ function BookPageContent(props: BookPageContentProps) {
     loadingRef.current = true
     setLoadingMore(true)
     try {
-      const lastId = mergedItems[mergedItems.length - 1].id as number
       const resp = await fetchMore({
         variables: {
           id: bookData.doubanId,
           pagination: {
             limit: BOOK_CLIPPINGS_PAGE_SIZE,
-            lastId,
+            offset: mergedItems.length,
           },
         },
       })
