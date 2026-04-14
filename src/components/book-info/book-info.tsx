@@ -1,20 +1,16 @@
-'use client'
-import { Share2 } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { getTranslation } from '@/i18n'
+import { getWenquBookByDbId } from '@/services/wenqu'
 
-import { useTranslation } from '@/i18n/client'
-
-import type { WenquBook } from '../../services/wenqu'
-import BookSharePreview from '../preview/preview-book'
 import BookCoverColumn from './book-cover-column'
 import BookMetaSection from './book-meta-section'
+import BookShareAction from './book-share-action'
 import BookStatsBar from './book-stats-bar'
 import BookSummarySection from './book-summary-section'
 import BookTitleSection from './book-title-section'
 
 type TBookInfoProp = {
   uid: number
-  book: WenquBook
+  bookId: string
   duration?: number
   isLastReadingBook?: boolean
   clippingsCount?: number
@@ -22,75 +18,85 @@ type TBookInfoProp = {
   lastReadingAt?: string
 }
 
-function BookInfo({
-  book,
+async function BookInfo({
+  bookId,
   uid,
   duration,
   clippingsCount,
   startReadingAt,
   lastReadingAt,
 }: TBookInfoProp) {
-  const { t } = useTranslation()
-  const [sharePreviewVisible, setSharePreviewVisible] = useState(false)
+  const [book, { t }, { t: tBook }] = await Promise.all([
+    getWenquBookByDbId(bookId),
+    getTranslation(),
+    getTranslation(undefined, 'book'),
+  ])
 
-  const togglePreviewVisible = useCallback(() => {
-    setSharePreviewVisible((v) => !v)
-  }, [])
+  if (!book) {
+    return null
+  }
+
+  const shareButtonClassName =
+    'inline-flex items-center justify-center gap-2 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500 to-sky-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_20px_40px_-24px_rgba(14,165,233,0.9)] transition-all duration-300 hover:-translate-y-0.5 hover:from-cyan-600 hover:to-sky-600 hover:shadow-[0_24px_50px_-20px_rgba(14,165,233,0.95)]'
 
   return (
-    <div className="relative w-full">
-      {/* Subtle background wash */}
-      <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-b from-blue-50/40 via-white/20 to-transparent dark:from-blue-950/30 dark:via-zinc-900/20 dark:to-transparent" />
+    <section className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(240,249,255,0.92),rgba(255,255,255,0.88))] p-6 shadow-[0_35px_90px_-48px_rgba(14,116,144,0.5)] ring-1 ring-slate-200/60 md:p-8 lg:p-10 dark:border-white/10 dark:bg-[linear-gradient(160deg,rgba(15,23,42,0.92),rgba(12,74,110,0.55),rgba(30,41,59,0.92))] dark:ring-slate-700/50">
+      <div className="absolute -top-20 right-10 h-48 w-48 rounded-full bg-cyan-200/45 blur-3xl dark:bg-cyan-400/10" />
+      <div className="absolute bottom-0 left-0 h-56 w-56 rounded-full bg-amber-100/55 blur-3xl dark:bg-amber-400/8" />
+      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-r from-white/80 via-cyan-50/70 to-white/50 dark:from-white/5 dark:via-cyan-400/5 dark:to-white/0" />
 
-      <div className="grid grid-cols-1 gap-6 py-6 md:grid-cols-[280px,1fr] lg:grid-cols-[320px,1fr] lg:gap-10 lg:py-8">
-        {/* Book cover column */}
+      <div className="relative grid grid-cols-1 gap-8 md:grid-cols-[minmax(260px,320px)_1fr] md:gap-10 lg:gap-12">
         <BookCoverColumn
           book={book}
-          togglePreviewVisible={togglePreviewVisible}
+          mobileShareAction={
+            <BookShareAction
+              book={book}
+              uid={uid}
+              label={t('app.book.share')}
+              className={`${shareButtonClassName} w-full`}
+              iconClassName="h-4 w-4"
+            />
+          }
         />
 
-        {/* Book details column */}
-        <div className="font-lxgw space-y-6">
-          {/* Title and rating */}
-          <BookTitleSection book={book} duration={duration} />
+        <div className="font-lxgw space-y-8">
+          <BookTitleSection book={book} />
 
-          {/* Reading stats bar */}
           <BookStatsBar
             clippingsCount={clippingsCount}
             duration={duration}
             startReadingAt={startReadingAt}
             lastReadingAt={lastReadingAt}
+            highlightsLabel={t('app.book.highlights')}
+            readingDaysLabel={t('app.book.readingDays')}
+            readingPeriodLabel={t('app.book.readingPeriod')}
           />
 
-          {/* Action buttons (desktop) */}
           <div className="hidden gap-4 md:flex">
-            <button
-              onClick={() => togglePreviewVisible()}
-              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 px-5 py-2.5 text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-lg"
-            >
-              <Share2 className="h-4 w-4" />
-              <span>{t('app.book.share')}</span>
-            </button>
+            <BookShareAction
+              book={book}
+              uid={uid}
+              label={t('app.book.share')}
+              className={shareButtonClassName}
+              iconClassName="h-4 w-4"
+            />
           </div>
 
-          {/* Book metadata */}
-          <BookMetaSection book={book} />
+          <BookMetaSection
+            book={book}
+            publishedLabel={tBook('app.book.meta.published')}
+            pagesLabel={tBook('app.book.meta.pages')}
+          />
 
-          {/* Book summary */}
-          <BookSummarySection book={book} />
+          <BookSummarySection
+            book={book}
+            title={tBook('app.book.summary.title')}
+            showMoreLabel={tBook('app.book.summary.showMore')}
+            showLessLabel={tBook('app.book.summary.showLess')}
+          />
         </div>
       </div>
-
-      {/* Share preview modal */}
-      <BookSharePreview
-        onCancel={togglePreviewVisible}
-        onOk={togglePreviewVisible}
-        background={book.image}
-        opened={sharePreviewVisible}
-        book={book}
-        uid={uid}
-      />
-    </div>
+    </section>
   )
 }
 

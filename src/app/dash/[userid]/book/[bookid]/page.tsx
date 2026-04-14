@@ -1,26 +1,23 @@
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
+import { Suspense } from 'react'
 
 import BookInfo from '@/components/book-info/book-info'
+import BookInfoSkeleton from '@/components/book-info/book-info-skeleton'
 import Divider from '@/components/divider/divider'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
 import { BOOK_CLIPPINGS_PAGE_SIZE } from '@/constants/features'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { duration3Days } from '@/hooks/book'
 import { getTranslation } from '@/i18n'
 import {
   BookDocument,
   type BookQuery,
   type BookQueryVariables,
 } from '@/schema/generated'
-import { getReactQueryClient } from '@/services/ajax'
 import { doApolloServerQuery } from '@/services/apollo.server'
-import {
-  type WenquBook,
-  type WenquSearchResponse,
-  wenquRequest,
-} from '@/services/wenqu'
+import { getWenquBookByDbId } from '@/services/wenqu'
+
 import BookPageContent from './content'
 
 type PageProps = {
@@ -30,16 +27,7 @@ type PageProps = {
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { bookid, userid } = await props.params
   const dbId = bookid ?? ''
-  const rq = getReactQueryClient()
-  const bs = await rq.fetchQuery({
-    queryKey: ['wenqu', 'books', 'dbId', dbId],
-    queryFn: () =>
-      wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
-    staleTime: duration3Days,
-    gcTime: duration3Days,
-  })
-
-  const b = bs.books.length === 1 ? bs.books[0] : null
+  const b = await getWenquBookByDbId(dbId)
 
   return bookGenerateMetadata(userid, b)
 }
@@ -63,39 +51,28 @@ async function Page(props: PageProps) {
     return null
   }
 
-  const { data: clippingsData } = await doApolloServerQuery<BookQuery, BookQueryVariables>(
-    {
-      query: BookDocument,
-      variables: {
-        id: ~~dbId,
-        pagination: {
-          limit: BOOK_CLIPPINGS_PAGE_SIZE,
-          offset: 0,
-        },
+  const { data: clippingsData } = await doApolloServerQuery<
+    BookQuery,
+    BookQueryVariables
+  >({
+    query: BookDocument,
+    variables: {
+      id: ~~dbId,
+      pagination: {
+        limit: BOOK_CLIPPINGS_PAGE_SIZE,
+        offset: 0,
       },
-      context: {
-        headers: token
-          ? {
-              Authorization: `Bearer ${token}`,
-            }
-          : {},
-      },
-    }
-  )
+    },
+    context: {
+      headers: token
+        ? {
+            Authorization: `Bearer ${token}`,
+          }
+        : {},
+    },
+  })
 
-  const rq = getReactQueryClient()
-
-  let bookData: WenquBook | null = null
-  if (dbId && dbId.length > 3) {
-    const bs = await rq.fetchQuery({
-      queryKey: ['wenqu', 'books', 'dbId', dbId],
-      queryFn: () =>
-        wenquRequest<WenquSearchResponse>(`/books/search?dbId=${dbId}`),
-      staleTime: duration3Days,
-      gcTime: duration3Days,
-    })
-    bookData = bs.books.length === 1 ? bs.books[0] : null
-  }
+  const bookData = await getWenquBookByDbId(dbId)
 
   if (!bookData || !clippingsData) {
     return null
@@ -114,15 +91,17 @@ async function Page(props: PageProps) {
 
   return (
     <>
-      <BookInfo
-        book={bookData}
-        uid={uid}
-        duration={duration}
-        isLastReadingBook={clippingsData.book.isLastReadingBook}
-        clippingsCount={clippingsCount}
-        startReadingAt={clippingsData.book.startReadingAt}
-        lastReadingAt={clippingsData.book.lastReadingAt}
-      />
+      <Suspense fallback={<BookInfoSkeleton />}>
+        <BookInfo
+          bookId={dbId}
+          uid={uid}
+          duration={duration}
+          isLastReadingBook={clippingsData.book.isLastReadingBook}
+          clippingsCount={clippingsCount}
+          startReadingAt={clippingsData.book.startReadingAt}
+          lastReadingAt={clippingsData.book.lastReadingAt}
+        />
+      </Suspense>
       <Divider
         title={
           clippingsCount > 0

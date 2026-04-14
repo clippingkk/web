@@ -1,26 +1,29 @@
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 import BookInfo from '@/components/book-info/book-info'
+import BookInfoSkeleton from '@/components/book-info/book-info-skeleton'
 import ClippingContent from '@/components/clipping-content'
 import type { Clipping } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
-import type { WenquBook } from '@/services/wenqu'
 
 type ReadingBookProps = {
   uid: number
-  book: WenquBook
+  bookId: string
   clipping?: Pick<Clipping, 'id' | 'bookID' | 'content'>
 }
 
-function ReadingBook({ clipping, book, uid }: ReadingBookProps) {
-  if (!book) {
+function ReadingBook({ clipping, bookId, uid }: ReadingBookProps) {
+  if (!bookId) {
     return null
   }
 
   return (
     <div className="mx-auto mt-24 mb-12 w-full max-w-7xl">
-      <BookInfo book={book} uid={uid} />
+      <Suspense fallback={<BookInfoSkeleton />}>
+        <BookInfo bookId={bookId} uid={uid} />
+      </Suspense>
 
       {clipping && (
         <div className="mt-4">

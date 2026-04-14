@@ -6,7 +6,6 @@ import { redirect } from 'next/navigation'
 import AIBookRecommendationButton from '@/components/book-recommendation/ai-book-recommendation-button'
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { duration3Days } from '@/hooks/book'
 import { getTranslation } from '@/i18n'
 import {
   BooksDocument,
@@ -16,13 +15,7 @@ import {
   type ProfileQuery,
   type ProfileQueryVariables,
 } from '@/schema/generated'
-import { getReactQueryClient } from '@/services/ajax'
 import { doApolloServerQuery } from '@/services/apollo.server'
-import {
-  type WenquBook,
-  type WenquSearchResponse,
-  wenquRequest,
-} from '@/services/wenqu'
 
 import HomePageContent from './content'
 import NoContentAlert from './no-content'
@@ -142,38 +135,21 @@ async function Page(props: PageProps) {
   const [profileResponse, booksResponse, accessingProfileResponse] =
     await Promise.all(reqs)
 
-  let firstBook: WenquBook | null = null
-
-  if (profileResponse.data!.me.recents.length > 0) {
-    let firstBookId = profileResponse.data!.me.recents[0].bookID ?? ''
-    if (firstBookId.length <= 3) {
-      firstBookId = ''
-    }
-    if (firstBookId) {
-      const b = await getReactQueryClient().fetchQuery({
-        queryKey: ['wenqu', 'books', firstBookId],
-        queryFn: () =>
-          wenquRequest<WenquSearchResponse>(
-            `/books/search?dbId=${firstBookId}`
-          ),
-        staleTime: duration3Days,
-        gcTime: duration3Days,
-      })
-      firstBook = b.books.length > 0 ? b.books[0] : null
-    }
-  }
-
   const recents = profileResponse.data!.me.recents
+  const firstBookId =
+    recents.length > 0 && (recents[0].bookID?.length ?? 0) > 3
+      ? recents[0].bookID!
+      : ''
 
   return (
     <section className="page h-full">
-      {firstBook && (
+      {firstBookId && (
         <div className="with-slide-in mt-4">
           <h2 className="relative z-10 mb-8 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-center text-3xl font-semibold tracking-tight text-transparent md:text-4xl">
             {t('app.home.reading')}
           </h2>
           <ReadingBook
-            book={firstBook}
+            bookId={firstBookId}
             clipping={recents?.[0]}
             uid={myUidInt!}
           />
@@ -196,7 +172,7 @@ async function Page(props: PageProps) {
           />
         </div>
       </header>
-      {!firstBook && booksResponse.data!.books.length === 0 && (
+      {!firstBookId && booksResponse.data!.books.length === 0 && (
         <div className="flex flex-wrap items-center justify-center">
           <NoContentAlert domain={userid} />
         </div>

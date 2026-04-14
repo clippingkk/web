@@ -88,6 +88,20 @@ export interface WenquSearchResponse {
   books: WenquBook[]
 }
 
+export async function getWenquBookByDbId(
+  dbId: string
+): Promise<WenquBook | null> {
+  if (!dbId || dbId.length <= 3) {
+    return null
+  }
+
+  const response = await wenquRequest<WenquSearchResponse>(
+    `/books/search?dbId=${dbId}`
+  )
+
+  return response.books.length === 1 ? response.books[0] : null
+}
+
 export function wenquBooksByIdsQueryOptions(dbIds: string[]) {
   return {
     queryKey: ['wenqu', 'books', 'dbIds', dbIds] as const,
