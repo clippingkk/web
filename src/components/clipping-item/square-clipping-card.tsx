@@ -1,35 +1,38 @@
-import dayjs from 'dayjs'
+import { BookOpen } from 'lucide-react'
 import Link from 'next/link'
 
 import { useTranslation } from '@/i18n/client'
-import type { Clipping } from '@/schema/generated'
+import type { Clipping, User } from '@/schema/generated'
 import type { IN_APP_CHANNEL } from '@/services/channel'
+import type { WenquBook } from '@/services/wenqu'
 
+import Avatar from '../avatar/avatar'
 import ClippingContent from '../clipping-content'
 
-type BookClippingCardProps = {
-  item: Pick<Clipping, 'id' | 'content' | 'pageAt' | 'createdAt'>
+type SquareClippingCardProps = {
+  item: Pick<Clipping, 'id' | 'content' | 'bookID' | 'title'>
+  book?: WenquBook
+  creator: Pick<User, 'id' | 'avatar' | 'name' | 'clippingsCount' | 'domain'>
   domain: string
   density?: 'default' | 'compact'
   inAppChannel: IN_APP_CHANNEL
   className?: string
 }
 
-function BookClippingCard(props: BookClippingCardProps) {
+function SquareClippingCard(props: SquareClippingCardProps) {
   const {
     item,
+    book,
+    creator,
     domain,
     density = 'default',
     inAppChannel,
     className = '',
   } = props
-  const { t } = useTranslation(undefined, 'clippings')
-
-  const pageLabel = item.pageAt ? String(item.pageAt).trim() : ''
-  const hasPage = pageLabel.length > 0
-  const date = item.createdAt ? dayjs(item.createdAt).format('YYYY-MM-DD') : ''
+  const { t } = useTranslation()
 
   const isCompact = density === 'compact'
+  const title = book?.title ?? item.title
 
   return (
     <Link
@@ -47,7 +50,7 @@ function BookClippingCard(props: BookClippingCardProps) {
           isCompact ? 'p-4 lg:p-5' : 'p-6 lg:p-7',
         ].join(' ')}
       >
-        {/* Subtle left quote accent bar */}
+        {/* Left quote accent bar */}
         {!isCompact && (
           <span
             aria-hidden
@@ -55,26 +58,19 @@ function BookClippingCard(props: BookClippingCardProps) {
           />
         )}
 
-        {/* Top row: page pill + date */}
-        {(hasPage || date) && (
+        {/* Book title head */}
+        {title && (
           <header
-            className={`flex items-center justify-between gap-2 ${isCompact ? 'mb-2' : 'mb-3'}`}
+            className={`flex min-w-0 items-center gap-2 ${isCompact ? 'mb-2' : 'mb-3'}`}
           >
-            {hasPage ? (
-              <span className="inline-flex items-center rounded-full border border-blue-200/60 bg-blue-50/70 px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wide text-blue-600 dark:border-blue-400/30 dark:bg-blue-400/10 dark:text-blue-300">
-                {t('app.clippings.meta.page', { page: pageLabel })}
-              </span>
-            ) : (
-              <span />
-            )}
-            {date && (
-              <time
-                dateTime={item.createdAt as unknown as string}
-                className="text-[11px] font-medium tracking-wide text-slate-400 tabular-nums dark:text-slate-500"
-              >
-                {date}
-              </time>
-            )}
+            <BookOpen
+              size={13}
+              className="shrink-0 text-slate-400 dark:text-slate-500"
+              aria-hidden
+            />
+            <span className="truncate text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-400">
+              {title}
+            </span>
           </header>
         )}
 
@@ -89,9 +85,28 @@ function BookClippingCard(props: BookClippingCardProps) {
               : 'text-lg leading-relaxed lg:text-xl',
           ].join(' ')}
         />
+
+        {/* Creator footer */}
+        <footer
+          className={`flex items-center justify-between gap-3 border-t border-slate-200/60 dark:border-slate-700/50 ${isCompact ? 'mt-4 pt-3' : 'mt-6 pt-4'}`}
+        >
+          <div className="flex min-w-0 items-center gap-3">
+            <Avatar
+              img={creator.avatar}
+              name={creator.name}
+              className="h-9 w-9 shrink-0 ring-1 ring-slate-200/70 dark:ring-slate-700/60"
+            />
+            <span className="truncate text-sm font-medium text-slate-700 dark:text-slate-300">
+              {creator.name}
+            </span>
+          </div>
+          <span className="shrink-0 rounded-full bg-blue-50/70 px-2 py-0.5 text-[11px] font-medium tracking-wide text-blue-600 tabular-nums dark:bg-blue-400/10 dark:text-blue-300">
+            {t('app.profile.records', { count: creator.clippingsCount })}
+          </span>
+        </footer>
       </article>
     </Link>
   )
 }
 
-export default BookClippingCard
+export default SquareClippingCard

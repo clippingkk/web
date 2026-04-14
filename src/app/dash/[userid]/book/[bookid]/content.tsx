@@ -9,8 +9,8 @@ import BookClippingsToolbar, {
   type ClippingsSortOrder,
   type ClippingsViewMode,
 } from '@/components/clipping-item/book-clippings-toolbar'
-import { BOOK_CLIPPINGS_PAGE_SIZE } from '@/constants/features'
 import InfiniteScrollFooter from '@/components/clipping-item/infinite-scroll-footer'
+import { BOOK_CLIPPINGS_PAGE_SIZE } from '@/constants/features'
 import { usePageTrack } from '@/hooks/tracke'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
 import { useTranslation } from '@/i18n/client'
@@ -28,7 +28,7 @@ type BookPageContentProps = {
 
 function BookPageContent(props: BookPageContentProps) {
   const { userid: domain, book: bookData } = props
-  const { t } = useTranslation(undefined, 'book')
+  const { t } = useTranslation(undefined, 'clippings')
   usePageTrack('book', {
     bookId: bookData.id,
   })
@@ -132,10 +132,10 @@ function BookPageContent(props: BookPageContentProps) {
           <BookOpen size={28} />
         </div>
         <h3 className="mb-1 text-lg font-semibold text-slate-800 dark:text-slate-100">
-          {t('app.book.clippings.empty.title')}
+          {t('app.clippings.empty.title')}
         </h3>
         <p className="max-w-sm text-sm text-slate-500 dark:text-slate-400">
-          {t('app.book.clippings.empty.description')}
+          {t('app.clippings.empty.description')}
         </p>
       </div>
     )

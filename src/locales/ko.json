@@ -185,7 +185,29 @@
       }
     },
     "square": {
-      "title": "광장"
+      "title": "광장",
+      "subtitle": "커뮤니티의 추천 클리핑",
+      "reachedCap": "가장 최근의 추천 클리핑 200개를 모두 보셨습니다. 나중에 다시 확인해 주세요.",
+      "empty": {
+        "title": "광장이 조용합니다",
+        "description": "커뮤니티가 더 많은 클리핑을 공유하면 추천 내용이 여기에 표시됩니다."
+      },
+      "notFound": {
+        "title": "내용이 없습니다",
+        "description": "이 광장 페이지는 존재하지 않습니다.",
+        "goHome": "홈으로"
+      },
+      "forbidden": {
+        "title": "로그인이 필요합니다",
+        "description": "광장을 보려면 로그인해야 합니다.",
+        "signIn": "로그인"
+      },
+      "error": {
+        "title": "문제가 발생했습니다",
+        "description": "지금 광장을 불러올 수 없습니다.",
+        "tryAgain": "다시 시도",
+        "goHome": "홈으로"
+      }
     },
     "upload": {
       "tip": "My Clippings.txt에서 드래그",

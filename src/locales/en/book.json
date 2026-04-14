@@ -21,30 +21,6 @@
         "title": "Summary",
         "showMore": "Show more",
         "showLess": "Show less"
-      },
-      "clippings": {
-        "toolbar": {
-          "count": "{{count}} clipping",
-          "count_plural": "{{count}} clippings",
-          "sort": {
-            "newest": "Newest",
-            "oldest": "Oldest"
-          },
-          "view": {
-            "masonry": "Masonry",
-            "list": "List"
-          }
-        },
-        "loadMore": "Load more",
-        "loading": "Loading more…",
-        "end": "You've reached the end",
-        "empty": {
-          "title": "No clippings yet",
-          "description": "Clippings from this book will appear here."
-        },
-        "meta": {
-          "page": "p. {{page}}"
-        }
       }
     }
   }

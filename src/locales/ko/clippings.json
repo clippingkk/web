@@ -1,0 +1,29 @@
+{
+  "app": {
+    "clippings": {
+      "toolbar": {
+        "count": "{{count}}개의 클리핑",
+        "count_plural": "{{count}}개의 클리핑",
+        "loaded": "{{count}}개 불러옴",
+        "sort": {
+          "newest": "최신순",
+          "oldest": "오래된순"
+        },
+        "view": {
+          "masonry": "메이슨리",
+          "list": "목록"
+        }
+      },
+      "loadMore": "더 불러오기",
+      "loading": "불러오는 중…",
+      "end": "마지막 클리핑입니다",
+      "empty": {
+        "title": "아직 클리핑이 없습니다",
+        "description": "클리핑이 여기에 표시됩니다."
+      },
+      "meta": {
+        "page": "{{page}}쪽"
+      }
+    }
+  }
+}

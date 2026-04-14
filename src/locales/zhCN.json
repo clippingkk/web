@@ -185,7 +185,29 @@
       }
     },
     "square": {
-      "title": "广场"
+      "title": "广场",
+      "subtitle": "来自社区的精选摘录",
+      "reachedCap": "你已经浏览了最近 200 条精选摘录，稍后再来看看吧。",
+      "empty": {
+        "title": "广场暂时安静",
+        "description": "当社区有更多摘录分享时，精选内容会显示在这里。"
+      },
+      "notFound": {
+        "title": "什么都没有",
+        "description": "这个广场角落不存在。",
+        "goHome": "返回首页"
+      },
+      "forbidden": {
+        "title": "登录后继续",
+        "description": "你需要登录才能查看广场。",
+        "signIn": "登录"
+      },
+      "error": {
+        "title": "出了点问题",
+        "description": "我们现在无法加载广场。",
+        "tryAgain": "重试",
+        "goHome": "返回首页"
+      }
     },
     "upload": {
       "tip": "把 My Clippings.txt 拖进来",

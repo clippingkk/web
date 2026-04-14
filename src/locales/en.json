@@ -185,7 +185,29 @@
       }
     },
     "square": {
-      "title": "Square"
+      "title": "Square",
+      "subtitle": "Highlights from the community",
+      "reachedCap": "You've browsed 200 of the freshest highlights. Come back later for more.",
+      "empty": {
+        "title": "The square is quiet",
+        "description": "Featured clippings will show up once the community shares more."
+      },
+      "notFound": {
+        "title": "Nothing here",
+        "description": "This corner of the square doesn't exist.",
+        "goHome": "Back to home"
+      },
+      "forbidden": {
+        "title": "Sign in to continue",
+        "description": "You need to be signed in to view the square.",
+        "signIn": "Sign in"
+      },
+      "error": {
+        "title": "Something went wrong",
+        "description": "We couldn't load the square right now.",
+        "tryAgain": "Try again",
+        "goHome": "Return home"
+      }
     },
     "upload": {
       "tip": "Drop My Clippings.txt to here",
