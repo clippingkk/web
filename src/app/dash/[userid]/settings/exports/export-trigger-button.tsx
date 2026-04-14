@@ -7,7 +7,11 @@ type ExportTriggerButtonProps = {
   label: string
 }
 
-function ExportTriggerButton({ onClick, icon, label }: ExportTriggerButtonProps) {
+function ExportTriggerButton({
+  onClick,
+  icon,
+  label,
+}: ExportTriggerButtonProps) {
   return (
     <button
       type="button"

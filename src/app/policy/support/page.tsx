@@ -1,6 +1,8 @@
 import { Mail } from 'lucide-react'
 
 import PageTrack from '@/components/track/page-track'
+import DecorBlobs from '@/components/ui/decor-blobs/decor-blobs'
+import Surface from '@/components/ui/surface/surface'
 import { getTranslation } from '@/i18n'
 
 async function PolicySupportPage() {
@@ -8,62 +10,48 @@ async function PolicySupportPage() {
 
   return (
     <>
-      <div className="relative min-h-screen w-full overflow-hidden bg-slate-900">
-        {/* Background with gradient orbs */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 to-slate-900"></div>
+      <div className="anna-page-container relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-10">
+        <DecorBlobs />
+        <Surface
+          variant="elevated"
+          className="with-slide-in relative z-10 w-full max-w-xl p-8 md:p-12"
+        >
+          <h1 className="font-lato mb-10 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-center text-4xl font-semibold tracking-tight text-transparent md:text-5xl">
+            ClippingKK
+          </h1>
 
-          {/* Gradient orbs using the primary color #045fab */}
-          <div className="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-br from-[#045fab]/30 to-purple-600/20 blur-3xl"></div>
-          <div className="absolute top-1/2 -right-40 h-80 w-80 rounded-full bg-gradient-to-br from-[#045fab]/20 to-blue-400/10 blur-3xl"></div>
-          <div className="absolute bottom-20 left-1/4 h-60 w-60 rounded-full bg-gradient-to-tr from-[#045fab]/10 to-cyan-400/10 blur-3xl"></div>
-        </div>
+          <h2 className="mb-6 text-center text-2xl font-semibold text-slate-900 md:text-3xl dark:text-white">
+            {t('support.title') || 'Support Information'}
+          </h2>
 
-        {/* Content */}
-        <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center px-4 py-20">
-          <div className="w-full max-w-xl overflow-hidden rounded-2xl bg-white/5 p-8 backdrop-blur-lg">
-            {/* ClippingKK logo/title */}
-            <h1 className="font-lato mb-10 bg-gradient-to-r from-blue-300 to-[#045fab] bg-clip-text text-center text-5xl font-bold tracking-tight text-transparent">
-              ClippingKK
-            </h1>
-
-            {/* Support title */}
-            <h2 className="mb-6 text-center text-3xl font-bold text-white">
-              {t('support.title') || 'Support Information'}
-            </h2>
-
-            {/* Divider with gradient */}
-            <div className="relative my-8">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-400/20"></div>
-              </div>
-              <div className="relative flex justify-center">
-                <span className="bg-opacity-50 bg-slate-900 px-4 text-sm text-gray-400 backdrop-blur-sm">
-                  {t('support.contact') || 'Contact Us'}
-                </span>
-              </div>
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200/70 dark:border-slate-800/60" />
             </div>
-
-            {/* Support message */}
-            <p className="mb-8 text-center text-lg text-gray-300">
-              {t('support.message') ||
-                'If you need any help, feel free to send your question to the email below.'}
-            </p>
-
-            {/* Email with fancy styling */}
-            <div className="mx-auto mb-4 max-w-md rounded-xl bg-gradient-to-r from-[#045fab]/20 to-blue-600/10 p-6 backdrop-blur-sm">
-              <a
-                href="mailto:annatar.he+ck.support@gmail.com"
-                className="group flex items-center justify-center gap-3 text-center text-xl font-medium text-blue-300 transition-all duration-300 hover:text-white"
-              >
-                <Mail className="h-6 w-6 text-blue-400 transition-transform duration-300 group-hover:scale-110" />
-                <span className="group-hover:underline">
-                  annatar.he+ck.support@gmail.com
-                </span>
-              </a>
+            <div className="relative flex justify-center">
+              <span className="bg-white/70 px-3 text-xs tracking-wider text-slate-500 uppercase dark:bg-slate-900/70 dark:text-slate-400">
+                {t('support.contact') || 'Contact Us'}
+              </span>
             </div>
           </div>
-        </div>
+
+          <p className="mb-8 text-center text-base text-slate-600 dark:text-slate-300">
+            {t('support.message') ||
+              'If you need any help, feel free to send your question to the email below.'}
+          </p>
+
+          <div className="mx-auto mb-2 max-w-md rounded-xl border border-blue-400/20 bg-blue-400/10 p-5 dark:bg-blue-400/15">
+            <a
+              href="mailto:annatar.he+ck.support@gmail.com"
+              className="group flex items-center justify-center gap-3 text-center text-lg font-medium text-blue-600 transition-colors duration-200 hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200"
+            >
+              <Mail className="h-5 w-5 text-blue-500 transition-transform duration-200 group-hover:scale-110 dark:text-blue-400" />
+              <span className="group-hover:underline">
+                annatar.he+ck.support@gmail.com
+              </span>
+            </a>
+          </div>
+        </Surface>
       </div>
       <PageTrack page="support" />
     </>

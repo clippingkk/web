@@ -1,5 +1,7 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 
+import DecorBlobs from '@/components/ui/decor-blobs/decor-blobs'
+import Surface from '@/components/ui/surface/surface'
 import { getReactQueryClient } from '@/services/ajax'
 import { getPaymentOrderInfo } from '@/services/payment'
 
@@ -21,13 +23,18 @@ async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
 
   const d = dehydrate(rq)
 
-  // use server response
   const homeLink = `/dash/${uid}/home`
 
   return (
     <HydrationBoundary state={d}>
-      <div className="flex h-full w-full flex-col items-center justify-center pt-20 dark:text-gray-100">
-        <PaymentSuccessContent sessionId={sessionId} homeLink={homeLink} />
+      <div className="anna-page-container relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-10">
+        <DecorBlobs tone="success" />
+        <Surface
+          variant="elevated"
+          className="with-slide-in relative z-10 w-full max-w-xl p-8 md:p-12"
+        >
+          <PaymentSuccessContent sessionId={sessionId} homeLink={homeLink} />
+        </Surface>
       </div>
     </HydrationBoundary>
   )

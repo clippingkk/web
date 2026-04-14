@@ -127,7 +127,7 @@ function NounEditContent(props: NounEditContentProps) {
   if (id > 0 && loading) {
     return (
       <div className="flex min-h-60 items-center justify-center">
-        <Loader className="h-8 w-8 animate-spin text-[#045fab]" />
+        <Loader className="h-8 w-8 animate-spin text-blue-400" />
       </div>
     )
   }
@@ -214,7 +214,7 @@ function NounEditContent(props: NounEditContentProps) {
           <button
             type="submit"
             disabled={createLoading || updateLoading}
-            className="rounded-md bg-[#045fab] px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:opacity-70"
+            className="rounded-lg bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-500 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none disabled:opacity-70 dark:text-slate-950 dark:hover:bg-blue-300"
           >
             {createLoading || updateLoading ? (
               <span className="flex items-center gap-2">

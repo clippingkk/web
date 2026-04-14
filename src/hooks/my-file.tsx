@@ -1,6 +1,6 @@
 import { useApolloClient, useMutation } from '@apollo/client/react'
-import { CircleCheck } from 'lucide-react'
 import { useMachine } from '@xstate/react'
+import { CircleCheck } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
@@ -131,7 +131,9 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
             i.bookId = resp.books[0].doubanId.toString()
           }
         } catch (e: unknown) {
-          setMessages((m) => m.concat(e instanceof Error ? e.message : String(e)))
+          setMessages((m) =>
+            m.concat(e instanceof Error ? e.message : String(e))
+          )
         } finally {
           wenquSearchResult.current.set(i.title, i.bookId ? ~~i.bookId : 0)
         }

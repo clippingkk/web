@@ -1,6 +1,7 @@
 import type React from 'react'
 
 import SettingsSidebar from '@/components/settings-sidebar/settings-sidebar'
+import Surface from '@/components/ui/surface/surface'
 import { getTranslation } from '@/i18n'
 
 type SettingsPageProps = {
@@ -11,14 +12,15 @@ async function SettingsPageContent(props: SettingsPageProps) {
   const { children } = props
   const { t } = await getTranslation()
   return (
-    <div className="bg-opacity-80 dark:bg-opacity-80 container mx-auto my-8 flex overflow-hidden rounded-xl bg-gradient-to-br from-slate-200 to-slate-300 shadow-2xl backdrop-blur-sm dark:from-slate-800 dark:to-slate-900">
+    <Surface
+      variant="default"
+      className="my-6 flex w-full flex-col overflow-hidden p-0 md:flex-row"
+    >
       <SettingsSidebar title={t('app.settings.title')} />
-
-      {/* Main Content */}
-      <div className="min-h-128 w-full bg-white/50 p-8 backdrop-blur-sm dark:bg-slate-800/50">
+      <div className="min-h-[32rem] w-full flex-1 border-t border-slate-200/60 p-6 md:border-t-0 md:border-l md:p-8 dark:border-slate-800/60">
         {children}
       </div>
-    </div>
+    </Surface>
   )
 }
 

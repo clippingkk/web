@@ -1,7 +1,9 @@
+import { MessageSquare } from 'lucide-react'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
+import PageHeader from '@/components/ui/page-header/page-header'
 import { COOKIE_TOKEN_KEY } from '@/constants/storage'
 import {
   GetCommentListDocument,
@@ -61,21 +63,13 @@ export default async function CommentsPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
-      <div className="mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="mb-2 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
-            My Comments
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            View and manage all your comments and discussions
-          </p>
-        </div>
-
-        {/* Comments List */}
-        <CommentsList initialData={data.getCommentList} userId={uid} />
-      </div>
-    </div>
+    <section className="anna-fade-in w-full">
+      <PageHeader
+        icon={<MessageSquare className="h-5 w-5" />}
+        title="My Comments"
+        description="View and manage all your comments and discussions"
+      />
+      <CommentsList initialData={data.getCommentList} userId={uid} />
+    </section>
   )
 }

@@ -80,36 +80,35 @@ export function Button({
     switch (variant) {
       case 'primary':
         return [
-          'bg-gradient-to-br from-sky-400 via-blue-500 to-cyan-600 text-white shadow-lg shadow-blue-500/20',
-          'hover:-translate-y-1 hover:shadow-[0_0_20px_3px] hover:shadow-blue-500/30',
-          'after:absolute after:inset-0 after:z-0 after:rounded-lg after:bg-gradient-to-r after:from-blue-500 after:via-sky-600 after:to-cyan-600 after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100',
-          'before:absolute before:-inset-1 before:z-0 before:scale-[1.05] before:rounded-lg before:bg-gradient-to-r before:from-sky-400 before:to-blue-500 before:opacity-0 before:blur-md before:transition-all before:duration-300 hover:before:opacity-50',
+          'bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-400/20',
+          'hover:-translate-y-0.5 hover:shadow-[0_0_20px_3px] hover:shadow-blue-400/30',
+          'after:absolute after:inset-0 after:z-0 after:rounded-lg after:bg-gradient-to-r after:from-blue-500 after:via-blue-500 after:to-indigo-500 after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100',
+          'before:absolute before:-inset-1 before:z-0 before:scale-[1.05] before:rounded-lg before:bg-gradient-to-r before:from-blue-400 before:to-indigo-500 before:opacity-0 before:blur-md before:transition-all before:duration-300 hover:before:opacity-50',
         ].join(' ')
       case 'secondary':
         return [
-          'bg-gradient-to-br from-cyan-500/80 to-blue-600/80 text-white/90 backdrop-blur-sm',
-          'hover:-translate-y-1 hover:text-white hover:shadow-lg hover:shadow-cyan-500/20',
-          'after:absolute after:inset-0 after:z-0 after:rounded-lg after:bg-gradient-to-r after:from-blue-500/40 after:to-cyan-500/40 after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100',
+          'bg-gradient-to-br from-blue-400/80 to-indigo-500/80 text-white/95 backdrop-blur-sm',
+          'hover:-translate-y-0.5 hover:text-white hover:shadow-lg hover:shadow-blue-400/20',
+          'after:absolute after:inset-0 after:z-0 after:rounded-lg after:bg-gradient-to-r after:from-blue-500/50 after:to-indigo-500/50 after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100',
         ].join(' ')
       case 'outline':
         return [
-          'border-2 border-[#045fab] bg-transparent text-[#045fab] dark:text-white',
-          'hover:-translate-y-1 hover:bg-[#045fab]/10 hover:shadow-lg hover:shadow-[#045fab]/20',
-          'dark:border-white/70 dark:hover:bg-white/10 dark:hover:shadow-white/10',
+          'border-2 border-blue-400 bg-transparent text-blue-500 dark:border-blue-400 dark:text-blue-300',
+          'hover:-translate-y-0.5 hover:bg-blue-400/10 hover:shadow-lg hover:shadow-blue-400/20',
         ].join(' ')
       case 'ghost':
         return [
           'bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800/60',
-          'hover:-translate-y-1',
+          'hover:-translate-y-0.5',
         ].join(' ')
       case 'danger':
         return [
-          'bg-gradient-to-br from-red-500 to-rose-600 text-white shadow-lg shadow-red-500/20',
-          'hover:-translate-y-1 hover:shadow-[0_0_20px_3px] hover:shadow-red-500/30',
-          'after:absolute after:inset-0 after:z-0 after:rounded-lg after:bg-gradient-to-r after:from-rose-600 after:to-red-600 after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100',
+          'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-lg shadow-rose-500/20',
+          'hover:-translate-y-0.5 hover:shadow-[0_0_20px_3px] hover:shadow-rose-500/30',
+          'after:absolute after:inset-0 after:z-0 after:rounded-lg after:bg-gradient-to-r after:from-rose-600 after:to-rose-700 after:opacity-0 after:transition-opacity after:duration-300 hover:after:opacity-100',
         ].join(' ')
       case 'link':
-        return 'bg-transparent p-0 text-[#045fab] underline-offset-4 hover:underline dark:text-blue-400'
+        return 'bg-transparent p-0 text-blue-500 underline-offset-4 hover:underline dark:text-blue-300'
       default:
         return ''
     }
