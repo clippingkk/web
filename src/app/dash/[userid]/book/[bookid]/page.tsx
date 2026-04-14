@@ -21,7 +21,7 @@ import {
   wenquRequest,
 } from '@/services/wenqu'
 
-import BookPageContent from './content'
+import BookPageContent, { BOOK_CLIPPINGS_PAGE_SIZE } from './content'
 
 type PageProps = {
   params: Promise<{ bookid: string; userid: string }>
@@ -71,8 +71,7 @@ async function Page(props: PageProps) {
       variables: {
         id: ~~dbId,
         pagination: {
-          limit: 10,
-          offset: 0,
+          limit: BOOK_CLIPPINGS_PAGE_SIZE,
         },
       },
       context: {
