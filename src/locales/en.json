@@ -186,6 +186,7 @@
     },
     "square": {
       "title": "Square",
+      "eyebrow": "Community Highlights",
       "subtitle": "Highlights from the community",
       "reachedCap": "You've browsed 200 of the freshest highlights. Come back later for more.",
       "empty": {

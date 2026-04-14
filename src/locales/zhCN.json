@@ -186,6 +186,7 @@
     },
     "square": {
       "title": "广场",
+      "eyebrow": "社区精选",
       "subtitle": "来自社区的精选摘录",
       "reachedCap": "你已经浏览了最近 200 条精选摘录，稍后再来看看吧。",
       "empty": {
