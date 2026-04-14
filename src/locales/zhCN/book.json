@@ -21,6 +21,30 @@
         "title": "摘要",
         "showMore": "展开",
         "showLess": "闭合"
+      },
+      "clippings": {
+        "toolbar": {
+          "count": "{{count}} 条摘录",
+          "count_plural": "{{count}} 条摘录",
+          "sort": {
+            "newest": "最新",
+            "oldest": "最早"
+          },
+          "view": {
+            "masonry": "瀑布流",
+            "list": "列表"
+          }
+        },
+        "loadMore": "加载更多",
+        "loading": "加载中…",
+        "end": "已经到底啦",
+        "empty": {
+          "title": "还没有摘录",
+          "description": "这本书的摘录会出现在这里。"
+        },
+        "meta": {
+          "page": "第 {{page}} 页"
+        }
       }
     }
   }
