@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.15.0](https://github.com/clippingkk/web/compare/v5.14.9...v5.15.0) (2026-04-14)
+
+
+### Features
+
+* **book:** redesign clippings section with cursor pagination ([34285e9](https://github.com/clippingkk/web/commit/34285e90c3836bd08436757d80b20ee591f65b54))
+* **logo:** replace PNG logo with theme-aware SVG logos ([3094450](https://github.com/clippingkk/web/commit/30944508914dbf0b4a4cb63c86563029b89bf47a))
+* **profile:** polish UI and add full route surface ([89eb5a5](https://github.com/clippingkk/web/commit/89eb5a58a4788b32d839865e8c62d99ae3e20d4e))
+* **square:** polish UI and add full route surface ([6ba1d2d](https://github.com/clippingkk/web/commit/6ba1d2d7cf3912a7e3d10e6e846ff0dceffcf29f))
+
+
+### Bug Fixes
+
+* **apollo:** migrate to Apollo Client v4 breaking changes ([c64679d](https://github.com/clippingkk/web/commit/c64679de381897804372dd0aa5468438ac401a7c))
+* **apollo:** migrate to Apollo Client v4 breaking changes ([65e8db8](https://github.com/clippingkk/web/commit/65e8db88a5fa57350473759d1635f5f4d04947d0))
+* **book:** correct clippings pagination ([0276ddb](https://github.com/clippingkk/web/commit/0276ddb35810d94167a3b63085816269a5a3d5cd))
+* **codegen:** update codegen config ([e37662b](https://github.com/clippingkk/web/commit/e37662bd64f0077a2b58f262a9570fc088d65367))
+
 ## [5.14.9](https://github.com/clippingkk/web/compare/v5.14.8...v5.14.9) (2026-01-31)
 
 
