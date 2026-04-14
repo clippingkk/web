@@ -70,7 +70,7 @@ async function ProfileAnalytics({
           return (
             <div
               key={index}
-              className={`relative overflow-hidden rounded-xl bg-gradient-to-br p-4 ${stat.bgGradient} group border border-gray-200/50 transition-all duration-300 hover:scale-105 hover:shadow-lg dark:border-gray-700/50`}
+              className={`relative overflow-hidden rounded-xl bg-gradient-to-br p-4 ${stat.bgGradient} group border border-white/40 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-slate-800/40`}
             >
               <div className="relative z-10">
                 <div
@@ -90,14 +90,14 @@ async function ProfileAnalytics({
               </div>
 
               <div
-                className={`absolute -right-8 -bottom-8 h-24 w-24 rounded-full bg-gradient-to-br ${stat.gradient} opacity-10 transition-transform duration-500 group-hover:scale-150`}
+                className={`pointer-events-none absolute -right-8 -bottom-8 h-24 w-24 rounded-full bg-gradient-to-br ${stat.gradient} opacity-10 transition-transform duration-500 group-hover:scale-125 motion-reduce:transform-none`}
               />
             </div>
           )
         })}
       </div>
 
-      <div className="mt-6 rounded-xl border border-gray-200/50 bg-gradient-to-br from-gray-50 to-gray-100 p-4 dark:border-gray-700/50 dark:from-gray-800/50 dark:to-gray-700/50">
+      <div className="mt-6 rounded-xl border border-white/40 bg-white/60 p-4 shadow-sm backdrop-blur-md dark:border-slate-800/40 dark:bg-slate-900/50">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />

@@ -41,7 +41,7 @@ const ProfileHeader = ({ profile, uid, isInMyPage }: ProfileHeaderProps) => {
               onClick={handleOpenModal}
               variant="outline"
               disabled
-              className="border-white/30 bg-white/80 px-3 py-1.5 text-sm backdrop-blur-sm transition-all duration-200 hover:bg-white/90 dark:border-gray-700/30 dark:bg-gray-800/80 dark:hover:bg-gray-800/90"
+              className="border-white/40 bg-white/70 px-3 py-1.5 text-sm backdrop-blur-sm transition-colors duration-200 hover:bg-white/90 dark:border-slate-800/40 dark:bg-slate-900/70 dark:hover:bg-slate-900/90"
             >
               <Edit3 className="mr-2 h-4 w-4" />
               Change
@@ -53,7 +53,7 @@ const ProfileHeader = ({ profile, uid, isInMyPage }: ProfileHeaderProps) => {
         <div className="absolute -bottom-20 left-8 z-20">
           <div className="relative">
             {/* Avatar glow effect */}
-            <div className="absolute -inset-4 animate-pulse rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-50 blur-xl"></div>
+            <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-blue-400/40 via-indigo-400/40 to-sky-400/40 opacity-60 blur-xl" />
             <AvatarSection
               profile={profile}
               uid={uid}

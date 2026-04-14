@@ -20,18 +20,18 @@ async function ProfilePageContent(props: ProfilePageContentProps) {
 
       {/* Main Profile Card */}
       <div className="group relative w-full max-w-5xl">
-        {/* Animated background glow */}
-        <div className="absolute -inset-1 animate-pulse rounded-3xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-20 blur-lg transition-opacity duration-700 group-hover:opacity-30"></div>
+        {/* Subtle background glow */}
+        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-400/20 via-indigo-400/20 to-sky-400/20 opacity-40 blur transition-opacity duration-500 group-hover:opacity-60" />
 
         {/* Main card */}
-        <div className="hover:shadow-3xl relative w-full overflow-hidden rounded-3xl border border-white/30 bg-gradient-to-br from-white/80 via-white/70 to-white/50 shadow-2xl backdrop-blur-xl transition-all duration-500 dark:border-gray-700/50 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/50">
+        <div className="relative w-full overflow-hidden rounded-3xl border border-white/40 bg-white/70 shadow-sm backdrop-blur-xl transition-shadow duration-500 hover:shadow-md dark:border-slate-800/40 dark:bg-slate-900/70">
           {/* Subtle pattern overlay */}
           <div
-            className="absolute inset-0 rounded-3xl opacity-20 dark:opacity-10"
+            className="pointer-events-none absolute inset-0 rounded-3xl opacity-20 dark:opacity-10"
             style={{
               backgroundImage:
-                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.2) 1px, transparent 0)',
-              backgroundSize: '18px 18px',
+                'radial-gradient(circle at 1px 1px, rgba(59,130,246,0.18) 1px, transparent 0)',
+              backgroundSize: '20px 20px',
             }}
           ></div>
 

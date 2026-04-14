@@ -288,7 +288,24 @@
         "active": "Active Reader",
         "getStarted": "Start Your Reading Journey"
       },
-      "noBio": "No bio yet"
+      "noBio": "No bio yet",
+      "activity": "Activity",
+      "notFound": {
+        "title": "User not found",
+        "description": "We couldn't find the reader you're looking for.",
+        "goHome": "Back to home"
+      },
+      "forbidden": {
+        "title": "Profile is private",
+        "description": "Sign in to view this reader's profile.",
+        "signIn": "Sign in"
+      },
+      "error": {
+        "title": "Couldn't load this profile",
+        "description": "Something went sideways while loading this profile.",
+        "tryAgain": "Try again",
+        "goHome": "Return home"
+      }
     },
     "settings": {
       "title": "Global Settings(for web)",

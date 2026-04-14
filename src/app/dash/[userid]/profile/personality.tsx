@@ -34,7 +34,7 @@ function PersonalityView(props: PersonalityViewProps) {
     <>
       <button
         onClick={open}
-        className="group ml-4 inline-flex items-center gap-2 rounded-lg bg-linear-to-br from-white/10 to-white/5 px-4 py-2 text-sm font-medium text-gray-900 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:from-white/20 hover:to-white/10 dark:text-white"
+        className="group ml-4 inline-flex items-center gap-2 rounded-lg border border-white/40 bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/90 hover:shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-slate-800/40 dark:bg-slate-900/70 dark:text-slate-100 dark:hover:bg-slate-900/90"
         title={t('app.profile.personality.tooltip') ?? ''}
       >
         <ExternalLink className="h-4 w-4 transition-transform group-hover:rotate-12" />
@@ -58,7 +58,7 @@ function PersonalityView(props: PersonalityViewProps) {
             </Streamdown>
           )}
           {error && (
-            <div className="mt-4 w-full rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-600 dark:text-red-400">
+            <div className="mt-4 w-full rounded-xl border border-rose-400/20 bg-rose-400/10 p-4 text-rose-600 dark:text-rose-300">
               <h3 className="mb-2 font-semibold">Error</h3>
               <p>{error.message}</p>
             </div>

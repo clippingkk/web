@@ -173,14 +173,14 @@ function ProfileEditor(props: ProfileEditorProps) {
             />
             <div className="mt-6 flex items-center justify-end gap-4">
               <button
-                className="rounded-md bg-gray-100 px-4 py-2 text-gray-700 transition-colors duration-300 hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:outline-none dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                className="rounded-xl border border-white/40 bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 transition-colors duration-200 hover:bg-white/90 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:border-slate-800/40 dark:bg-slate-900/70 dark:text-slate-200 dark:hover:bg-slate-900/90"
                 onClick={onEditCancel}
                 type="button"
               >
                 {t('app.common.cancel')}
               </button>
               <button
-                className={`rounded-md bg-blue-500 px-4 py-2 font-medium text-white transition-colors duration-300 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-blue-300 ${isSubmitting ? 'cursor-wait' : ''}`}
+                className={`inline-flex items-center justify-center gap-2 rounded-xl bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none disabled:cursor-not-allowed disabled:bg-blue-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300 ${isSubmitting ? 'cursor-wait' : ''}`}
                 type="submit"
                 disabled={!isValid || isSubmitting}
               >

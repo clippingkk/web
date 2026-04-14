@@ -70,7 +70,7 @@ const ProfileDetails = async ({
       </div>
 
       {/* Bio section */}
-      <div className="mt-6 rounded-xl border border-gray-200 bg-white/50 p-4 shadow-sm backdrop-blur-md dark:border-gray-700 dark:bg-gray-800/50">
+      <div className="mt-6 rounded-xl border border-white/40 bg-white/60 p-4 shadow-sm backdrop-blur-md dark:border-slate-800/40 dark:bg-slate-900/50">
         <h3 className="mb-2 text-lg font-semibold text-gray-800 dark:text-gray-200">
           Bio
         </h3>
@@ -95,7 +95,7 @@ const ProfileDetails = async ({
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Link
           href={`/report/yearly?uid=${profile.id}&year=${year}`}
-          className="group flex transform items-center gap-3 rounded-xl bg-gradient-to-r from-blue-500/90 to-blue-600/90 p-4 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:from-blue-600 hover:to-blue-700 hover:shadow-xl"
+          className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-blue-400 to-indigo-500 p-4 text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:from-blue-500 hover:to-indigo-600 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"
           title={t('app.profile.yearlyReportTip') ?? ''}
         >
           <div className="rounded-lg bg-white/25 p-2.5 backdrop-blur-sm">
@@ -113,7 +113,7 @@ const ProfileDetails = async ({
         <a
           href={`${API_HOST}/api/rss/user/${profile.id}/clippings`}
           target="_blank"
-          className="group flex transform items-center gap-3 rounded-xl bg-gradient-to-r from-orange-500/90 to-orange-600/90 p-4 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-orange-700 hover:shadow-xl"
+          className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-orange-400 to-amber-500 p-4 text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-500 hover:to-amber-600 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"
           rel="noreferrer"
         >
           <div className="rounded-lg bg-white/25 p-2.5 backdrop-blur-sm">
@@ -128,7 +128,7 @@ const ProfileDetails = async ({
 
       {/* Personality section (only for profile owner) */}
       {isInMyPage && (
-        <div className="mt-8 rounded-xl border border-gray-200 bg-white/50 p-4 shadow-sm backdrop-blur-md dark:border-gray-700 dark:bg-gray-800/50">
+        <div className="mt-8 rounded-xl border border-white/40 bg-white/60 p-4 shadow-sm backdrop-blur-md dark:border-slate-800/40 dark:bg-slate-900/50">
           <PersonalityView uid={profile.id} domain={profile.domain} />
         </div>
       )}

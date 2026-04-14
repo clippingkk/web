@@ -1,5 +1,7 @@
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation'
 
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import ProfileTabs from '@/components/profile-tabs/profile-tabs'
@@ -7,11 +9,16 @@ import PersonalActivity from '@/components/profile/activity'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { getTranslation } from '@/i18n'
 import {
+  FetchClippingsByUidDocument,
+  type FetchClippingsByUidQuery,
+  type FetchClippingsByUidQueryVariables,
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
 } from '@/schema/generated'
+import { getReactQueryClient } from '@/services/ajax'
 import { doApolloServerQuery } from '@/services/apollo.server'
+import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '@/services/wenqu'
 
 import ProfilePageContent from './content'
 
@@ -74,15 +81,47 @@ async function Page(props: PageProps) {
     },
   })
 
+  if (!profile?.me) {
+    notFound()
+  }
+
+  const profileMe = profile.me
+
+  const rq = getReactQueryClient()
+  let initialClippings: FetchClippingsByUidQuery['clippingList'] | undefined
+
+  if (myUid) {
+    const clippingsResponse = await doApolloServerQuery<
+      FetchClippingsByUidQuery,
+      FetchClippingsByUidQueryVariables
+    >({
+      query: FetchClippingsByUidDocument,
+      variables: {
+        uid: profileMe.id,
+        pagination: { limit: 20 },
+      },
+      context: { headers },
+    })
+    initialClippings = clippingsResponse.data.clippingList
+
+    const bookIds = initialClippings.items
+      .map((x) => x.bookID)
+      .filter(isValidDoubanId)
+
+    if (bookIds.length >= 1) {
+      await rq.prefetchQuery(wenquBooksByIdsQueryOptions(bookIds))
+    }
+  }
+
+  const dehydratedState = dehydrate(rq)
+
   return (
     <section className="w-full">
-      {/* Main profile section */}
       <div className="anna-fade-in">
-        <ProfilePageContent profile={profile.me} myUid={myUid} />
+        <ProfilePageContent profile={profileMe} myUid={myUid} />
 
         {/* Activity chart section */}
         <div className="group/activity relative mt-8 w-full">
-          {/* Subtle blue-toned glow behind the surface */}
           <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-400/20 via-indigo-400/20 to-sky-400/20 opacity-40 blur transition-opacity duration-500 group-hover/activity:opacity-60" />
 
           <div className="relative overflow-hidden rounded-3xl border border-white/40 bg-white/70 p-8 shadow-sm backdrop-blur-xl dark:border-slate-800/40 dark:bg-slate-900/70">
@@ -117,7 +156,7 @@ async function Page(props: PageProps) {
                   {t('app.profile.activity')}
                 </h2>
               </div>
-              <PersonalActivity data={profile.me.analysis.daily} />
+              <PersonalActivity data={profileMe.analysis.daily} />
             </div>
           </div>
         </div>
@@ -126,11 +165,14 @@ async function Page(props: PageProps) {
       {/* Tabbed content section */}
       <div className="pt-6">
         {myUid && (
-          <ProfileTabs
-            uid={profile.me.id}
-            userDomain={profile.me.domain}
-            profile={profile.me}
-          />
+          <HydrationBoundary state={dehydratedState}>
+            <ProfileTabs
+              uid={profileMe.id}
+              userDomain={profileMe.domain}
+              profile={profileMe}
+              initialClippings={initialClippings}
+            />
+          </HydrationBoundary>
         )}
       </div>
     </section>

@@ -6,17 +6,23 @@ import { useState } from 'react'
 import ClippingList from '@/app/dash/[userid]/profile/clipping-list'
 import RecentComments from '@/components/recent-comments/recent-comments'
 import { useTranslation } from '@/i18n/client'
-import type { ProfileQuery } from '@/schema/generated'
+import type { FetchClippingsByUidQuery, ProfileQuery } from '@/schema/generated'
 
 type ProfileTabsProps = {
   uid: number
   userDomain?: string | null
   profile: ProfileQuery['me']
+  initialClippings?: FetchClippingsByUidQuery['clippingList']
 }
 
 type TabType = 'clippings' | 'comments'
 
-const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
+const ProfileTabs = ({
+  uid,
+  userDomain,
+  profile,
+  initialClippings,
+}: ProfileTabsProps) => {
   const [activeTab, setActiveTab] = useState<TabType>('clippings')
   const { t } = useTranslation()
 
@@ -44,13 +50,13 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
         {/* Main tab container */}
         <div className="group relative">
           {/* Background glow */}
-          <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 opacity-20 blur transition-opacity duration-500 group-hover:opacity-30"></div>
+          <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-400 via-indigo-400 to-sky-400 opacity-20 blur transition-opacity duration-500 group-hover:opacity-30"></div>
 
           {/* Tab buttons container */}
-          <div className="relative flex rounded-2xl border border-white/40 bg-white/70 p-1.5 shadow-xl backdrop-blur-xl dark:border-gray-700/40 dark:bg-gray-900/70">
+          <div className="relative flex rounded-2xl border border-white/40 bg-white/70 p-1.5 shadow-sm backdrop-blur-xl dark:border-slate-800/40 dark:bg-slate-900/70">
             {/* Active tab indicator */}
             <div
-              className={`absolute top-1.5 h-11 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg transition-all duration-300 ease-out ${
+              className={`absolute top-1.5 h-11 rounded-xl bg-gradient-to-r from-blue-400 to-indigo-500 shadow-sm transition-all duration-300 ease-out ${
                 activeTab === 'clippings'
                   ? 'left-1.5 w-[calc(50%-0.375rem)]'
                   : 'left-1/2 w-[calc(50%-0.375rem)]'
@@ -105,7 +111,11 @@ const ProfileTabs = ({ uid, userDomain, profile }: ProfileTabsProps) => {
           <div className="transition-all duration-500 ease-out">
             {activeTab === 'clippings' && (
               <div className="animate-fade-in">
-                <ClippingList uid={uid} userDomain={userDomain || ''} />
+                <ClippingList
+                  uid={uid}
+                  userDomain={userDomain || ''}
+                  initialClippings={initialClippings}
+                />
               </div>
             )}
 

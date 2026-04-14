@@ -288,7 +288,24 @@
         "active": "活跃读者",
         "getStarted": "开启你的阅读之旅"
       },
-      "noBio": "暂无简介"
+      "noBio": "暂无简介",
+      "activity": "活跃度",
+      "notFound": {
+        "title": "找不到这位读者",
+        "description": "我们没找到你想找的读者。",
+        "goHome": "返回首页"
+      },
+      "forbidden": {
+        "title": "这是一份私密档案",
+        "description": "请登录后再查看该读者的资料。",
+        "signIn": "登录"
+      },
+      "error": {
+        "title": "无法加载此档案",
+        "description": "加载该读者档案时出了点问题。",
+        "tryAgain": "重试",
+        "goHome": "返回首页"
+      }
     },
     "settings": {
       "title": "全局配置(网站)",
