@@ -13,6 +13,7 @@ import { COOKIE_TOKEN_KEY } from '../../constants/storage'
 import { doApolloServerQuery } from '../../services/apollo.server'
 import Footer from '../footer/Footer'
 import NavigationBar from '../navigation-bar/navigation-bar'
+import DecorBlobs from '../ui/decor-blobs/decor-blobs'
 
 type DashboardContainerProps = {
   uidOrDomain?: number | string
@@ -65,14 +66,13 @@ async function DashboardContainer(props: DashboardContainerProps) {
   }
 
   return (
-    <section
-      className={
-        'anna-page-container flex min-h-screen w-full flex-col bg-cover bg-no-repeat'
-      }
-    >
-      <div className="dark:bg-opacity-80 bg-opacity-60 flex min-h-screen w-full flex-col bg-gray-400 backdrop-blur-xl dark:bg-gray-900">
+    <section className="anna-page-container relative flex min-h-screen w-full flex-col overflow-hidden">
+      <DecorBlobs />
+      <div className="relative z-10 flex min-h-screen w-full flex-col">
         {header ?? <NavigationBar myProfile={myProfile?.me} />}
-        <div className="container m-auto flex flex-col">{children}</div>
+        <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-8 md:px-6 md:py-10">
+          {children}
+        </main>
         <Footer />
       </div>
     </section>

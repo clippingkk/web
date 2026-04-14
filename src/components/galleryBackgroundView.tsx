@@ -1,9 +1,6 @@
 import type { PublicDataQuery } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
-import {
-  isValidDoubanId,
-  wenquBooksByIdsQueryOptions,
-} from '../services/wenqu'
+import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '../services/wenqu'
 import BookCover from './book-cover/book-cover'
 import ClippingLite from './clipping-item/clipping-lite'
 import InfiniteLooper from './infinite-looper/infinite-looper'

@@ -1,9 +1,0 @@
-.cover {
-}
-
-.image {
-}
-
-.cover:hover .image {
-  transform: translateY(-2rem) scale(1.1);
-}

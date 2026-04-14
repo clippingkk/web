@@ -16,6 +16,16 @@
   --height-128: 32rem;
   --height-144: 36rem;
   --height-156: 40rem;
+
+  /* Unified brand palette (see CLAUDE.md — blue-400 is the primary color). */
+  --color-primary: var(--color-blue-400);
+  --color-primary-soft: color-mix(
+    in oklab,
+    var(--color-blue-400) 18%,
+    transparent
+  );
+  --shadow-elevated: 0 10px 30px -12px
+    color-mix(in oklab, var(--color-blue-500) 35%, transparent);
 }
 
 /*
@@ -84,7 +94,7 @@
 }
 
 @utility default-bg-gridient {
-  @apply bg-linear-to-br from-sky-100 to-green-200 dark:from-sky-900 dark:to-gray-800;
+  @apply bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950;
 }
 
 /* 

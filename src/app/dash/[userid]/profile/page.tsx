@@ -80,44 +80,40 @@ async function Page(props: PageProps) {
       <div className="anna-fade-in">
         <ProfilePageContent profile={profile.me} myUid={myUid} />
 
-        {/* Enhanced Activity chart section */}
+        {/* Activity chart section */}
         <div className="group/activity relative mt-8 w-full">
-          {/* Activity section glow */}
-          <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-green-400/20 via-blue-400/20 to-purple-400/20 opacity-40 blur transition-opacity duration-500 group-hover/activity:opacity-60"></div>
+          {/* Subtle blue-toned glow behind the surface */}
+          <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-400/20 via-indigo-400/20 to-sky-400/20 opacity-40 blur transition-opacity duration-500 group-hover/activity:opacity-60" />
 
-          <div className="relative overflow-hidden rounded-3xl border border-white/40 bg-gradient-to-br from-white/80 via-white/70 to-white/60 p-8 shadow-2xl backdrop-blur-xl dark:border-gray-700/40 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/60">
-            {/* Subtle pattern overlay */}
+          <div className="relative overflow-hidden rounded-3xl border border-white/40 bg-white/70 p-8 shadow-sm backdrop-blur-xl dark:border-slate-800/40 dark:bg-slate-900/70">
             <div
-              className="absolute inset-0 rounded-3xl opacity-20 dark:opacity-10"
+              className="pointer-events-none absolute inset-0 rounded-3xl opacity-20 dark:opacity-10"
               style={{
                 backgroundImage:
-                  'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)',
+                  'radial-gradient(circle at 1px 1px, rgba(59,130,246,0.18) 1px, transparent 0)',
                 backgroundSize: '20px 20px',
               }}
-            ></div>
+            />
 
             <div className="relative">
               <div className="mb-6 flex items-center gap-3">
-                <div className="relative">
-                  <div className="absolute -inset-1 rounded-lg bg-blue-400/30 blur"></div>
-                  <div className="relative rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 p-2">
-                    <svg
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-400/10 text-blue-500 ring-1 ring-blue-400/20 dark:bg-blue-400/15 dark:text-blue-300">
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    />
+                  </svg>
+                </span>
+                <h2 className="bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-2xl font-semibold tracking-tight text-transparent">
                   {t('app.profile.activity')}
                 </h2>
               </div>

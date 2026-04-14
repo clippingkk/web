@@ -56,8 +56,8 @@ async function Footer() {
 
         {/* Glow effects */}
         <div className="absolute -bottom-20 left-1/2 h-60 w-full max-w-5xl -translate-x-1/2 rounded-full bg-blue-400/10 opacity-60 blur-3xl dark:bg-blue-500/5"></div>
-        <div className="absolute top-10 right-10 h-40 w-40 rounded-full bg-cyan-400/10 opacity-50 blur-3xl dark:bg-cyan-500/5"></div>
-        <div className="absolute bottom-40 left-20 h-32 w-32 rounded-full bg-blue-400/10 opacity-40 blur-3xl dark:bg-blue-500/5"></div>
+        <div className="absolute top-10 right-10 h-40 w-40 rounded-full bg-indigo-400/10 opacity-50 blur-3xl dark:bg-indigo-500/5"></div>
+        <div className="absolute bottom-40 left-20 h-32 w-32 rounded-full bg-sky-400/10 opacity-40 blur-3xl dark:bg-sky-500/5"></div>
 
         {/* Subtle gradient lines */}
         <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent dark:via-blue-500/10"></div>
@@ -69,7 +69,7 @@ async function Footer() {
           {/* Left column - About */}
           <div className="space-y-6 md:col-span-1">
             <div className="space-y-3">
-              <h3 className="font-lato bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-2xl font-bold text-transparent">
+              <h3 className="font-lato bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-2xl font-bold text-transparent">
                 ClippingKK
               </h3>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">

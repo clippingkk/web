@@ -168,8 +168,8 @@ async function Page(props: PageProps) {
   return (
     <section className="page h-full">
       {firstBook && (
-        <div className="with-slide-in mt-8">
-          <h2 className="relative z-10 mb-8 flex items-center justify-center bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent">
+        <div className="with-slide-in mt-4">
+          <h2 className="relative z-10 mb-8 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-center text-3xl font-semibold tracking-tight text-transparent md:text-4xl">
             {t('app.home.reading')}
           </h2>
           <ReadingBook
@@ -180,16 +180,15 @@ async function Page(props: PageProps) {
         </div>
       )}
       <header className="my-12 flex flex-col items-center justify-center gap-4 md:flex-row">
-        <h2 className="relative z-10 bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent">
+        <h2 className="relative z-10 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-center text-3xl font-semibold tracking-tight text-transparent md:text-4xl">
           {t('app.home.title')}
         </h2>
-        <div className="mt-4 flex items-center gap-3 md:mt-0">
+        <div className="mt-2 flex items-center gap-3 md:mt-0">
           <Link
             href={`/dash/${myUidInt}/unchecked`}
-            className="group relative overflow-hidden rounded-md bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 font-medium text-white shadow-md transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg"
+            className="inline-flex items-center rounded-xl bg-blue-400 px-5 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300"
           >
-            <span className="relative z-10">{t('app.home.unchecked')}</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            {t('app.home.unchecked')}
           </Link>
           <AIBookRecommendationButton
             uid={myUidInt!}

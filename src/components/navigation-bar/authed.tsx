@@ -57,7 +57,7 @@ function Dropdown({ children }: DropdownProps) {
         aria-expanded={isOpen}
         aria-controls={menuId}
         aria-label="More options"
-        className="inline-flex h-8 w-8 items-center justify-center rounded-xl text-slate-600 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 dark:text-slate-300 dark:hover:bg-slate-800"
+        className="inline-flex h-8 w-8 items-center justify-center rounded-xl text-slate-600 transition-colors hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none dark:text-slate-300 dark:hover:bg-slate-800"
       >
         <Ellipsis className="h-4 w-4" />
       </button>
@@ -173,7 +173,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
             size={28}
             isPremium={isPremium}
           />
-          <span className="min-w-0 max-w-28 truncate text-sm font-medium text-slate-900 dark:text-white">
+          <span className="max-w-28 min-w-0 truncate text-sm font-medium text-slate-900 dark:text-white">
             {profileData.name}
           </span>
         </Link>

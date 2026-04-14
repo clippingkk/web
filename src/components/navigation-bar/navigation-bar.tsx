@@ -93,7 +93,7 @@ function NavigationBar(props: NavigationBarProps) {
             {!profile ? (
               <Link
                 href="/auth/auth-v4"
-                className="inline-flex items-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-700 dark:bg-sky-500 dark:text-slate-950 dark:hover:bg-sky-400"
+                className="inline-flex items-center rounded-xl bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300"
               >
                 Login
               </Link>
@@ -119,7 +119,9 @@ function NavigationBar(props: NavigationBarProps) {
                         )}
                       >
                         <Icon className="h-4 w-4 shrink-0" />
-                        <span className="truncate">{t(`app.menu.${item.alt}`) ?? ''}</span>
+                        <span className="truncate">
+                          {t(`app.menu.${item.alt}`) ?? ''}
+                        </span>
                       </Link>
                     </li>
                   )

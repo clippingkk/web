@@ -4,10 +4,7 @@ import { getBackgroundImageServer } from '../hooks/theme.server'
 import { PublicDataDocument, type PublicDataQuery } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
 import { doApolloServerQuery } from '../services/apollo.server'
-import {
-  isValidDoubanId,
-  wenquBooksByIdsQueryOptions,
-} from '../services/wenqu'
+import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '../services/wenqu'
 
 async function Page() {
   const data = await doApolloServerQuery<PublicDataQuery>({

@@ -37,9 +37,7 @@ function Avatar(props: AvatarProps) {
         onClick={props.onClick}
       />
     ) : (
-      <div
-        className={`animate-pulse rounded-full bg-gray-500 ${cls}`}
-      />
+      <div className={`animate-pulse rounded-full bg-gray-500 ${cls}`} />
     )
   }
   return (

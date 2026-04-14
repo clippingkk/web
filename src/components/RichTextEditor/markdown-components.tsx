@@ -24,7 +24,10 @@ const Heading = ({ level, children }: HeadingProps) => {
   return <Tag className={className}>{children}</Tag>
 }
 
-export const MarkdownComponents: Record<string, React.FC<React.PropsWithChildren<Record<string, unknown>>>> = {
+export const MarkdownComponents: Record<
+  string,
+  React.FC<React.PropsWithChildren<Record<string, unknown>>>
+> = {
   h1: ({
     children,
     ...props

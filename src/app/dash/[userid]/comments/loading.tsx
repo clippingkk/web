@@ -1,6 +1,5 @@
-import { cn } from '@/lib/utils'
-
 import { glassCardClass } from '@/components/card/glass-card'
+import { cn } from '@/lib/utils'
 
 export default function CommentsLoading() {
   return (

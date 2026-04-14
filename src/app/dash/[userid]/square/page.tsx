@@ -13,10 +13,7 @@ import {
   doApolloServerQuery,
   getApolloServerClient,
 } from '@/services/apollo.server'
-import {
-  isValidDoubanId,
-  wenquBooksByIdsQueryOptions,
-} from '@/services/wenqu'
+import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '@/services/wenqu'
 
 import SquarePageContent from './content'
 

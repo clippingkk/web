@@ -1,10 +1,12 @@
-import Loading2Icon from '@/components/icons/loading2.svg'
+import Spinner from '@/components/loading/spinner'
 
 function DashboardLoadingPage() {
   return (
-    <div className="flex h-full min-h-screen w-full flex-col items-center justify-center">
-      <Loading2Icon />
-      <span className="mt-4 dark:text-gray-100">Loading...</span>
+    <div className="flex min-h-[60vh] w-full flex-col items-center justify-center gap-4">
+      <Spinner />
+      <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
+        Loading…
+      </span>
     </div>
   )
 }
