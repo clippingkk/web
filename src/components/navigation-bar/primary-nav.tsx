@@ -22,7 +22,12 @@ type PrimaryNavItemProps = {
   isActive: boolean
 }
 
-function PrimaryNavItem({ href, label, icon: Icon, isActive }: PrimaryNavItemProps) {
+function PrimaryNavItem({
+  href,
+  label,
+  icon: Icon,
+  isActive,
+}: PrimaryNavItemProps) {
   return (
     <Link
       href={href as any}
