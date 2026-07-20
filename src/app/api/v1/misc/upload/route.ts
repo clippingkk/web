@@ -1,5 +1,6 @@
 import { extname } from 'node:path'
 
+import type { UploadImageResponse } from '@/contracts/http'
 import { requireUserId } from '@/server/auth'
 import { ApiError } from '@/server/errors'
 import { json, options, route } from '@/server/http'
@@ -25,6 +26,6 @@ export const POST = route(async (request) => {
     new Uint8Array(await image.arrayBuffer()),
     image.type
   )
-  return json({ filePath }, 201)
+  return json<UploadImageResponse>({ filePath }, 201)
 })
 export const OPTIONS = options

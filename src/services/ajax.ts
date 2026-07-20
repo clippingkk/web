@@ -17,15 +17,10 @@ import toast from 'react-hot-toast'
 
 import { API_HOST } from '../constants/config'
 import { COOKIE_TOKEN_KEY } from '../constants/storage'
+import type { ApiResponse } from '../contracts/http'
 import { getLanguage } from '../utils/locales'
 import profile from '../utils/profile'
 import { apolloCacheConfig } from './apollo.shard'
-
-export interface IBaseResponseData<T> {
-  status: number
-  msg: string
-  data: T
-}
 
 export function getLocalToken() {
   let lToken = ''
@@ -50,36 +45,58 @@ export async function request<T>(
   url: string,
   options: RequestInit = {}
 ): Promise<T> {
+  const headers = new Headers(options.headers)
+
   // set token if not exist
-  if (!(options.headers as Record<string, string>).Authorization && token) {
-    ;(options.headers as Record<string, string>).Authorization =
-      `Bearer ${token}`
+  if (!headers.has('Authorization') && token) {
+    headers.set('Authorization', `Bearer ${token}`)
   }
 
   // set language if not exist
-  if (!(options.headers as Record<string, string>)['X-Accept-Language']) {
-    ;(options.headers as Record<string, string>)['X-Accept-Language'] =
-      getLanguage()
+  if (!headers.has('X-Accept-Language')) {
+    headers.set('X-Accept-Language', getLanguage())
   }
-
-  options.credentials = 'include'
-  options.mode = 'cors'
 
   const finalUrl = url.startsWith('http') ? url : `${API_HOST}/api${url}`
 
   try {
-    const response: IBaseResponseData<T> = await fetch(finalUrl, options).then(
-      (res) => res.json()
-    )
-    if (response.status >= 400) {
+    const fetchResponse = await fetch(finalUrl, {
+      ...options,
+      headers,
+      credentials: 'include',
+      mode: 'cors',
+    })
+    const response = (await fetchResponse.json()) as ApiResponse<T>
+    if (!fetchResponse.ok || response.status >= 400 || !('data' in response)) {
       throw new Error(response.msg)
     }
 
-    return response.data as T
+    return response.data
   } catch (e) {
     toast.error('请求挂了... 一会儿再试试')
     return Promise.reject(e)
   }
+}
+
+type JsonRequestMethod = 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+type JsonRequestOptions = Omit<RequestInit, 'body' | 'method'>
+
+export function requestJson<TResponse, TBody>(
+  url: string,
+  method: JsonRequestMethod,
+  payload: TBody,
+  options: JsonRequestOptions = {}
+): Promise<TResponse> {
+  const headers = new Headers(options.headers)
+  if (!headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json')
+  }
+  return request<TResponse>(url, {
+    ...options,
+    method,
+    headers,
+    body: JSON.stringify(payload),
+  })
 }
 
 function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {

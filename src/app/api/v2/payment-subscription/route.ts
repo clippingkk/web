@@ -1,5 +1,9 @@
 import { eq } from 'drizzle-orm'
 
+import type {
+  CreatePaymentSubscriptionRequest,
+  CreatePaymentSubscriptionResponse,
+} from '@/contracts/http'
 import { requireUserId } from '@/server/auth'
 import { getDatabase } from '@/server/db'
 import { users } from '@/server/db/schema'
@@ -10,7 +14,7 @@ import { createSubscriptionCheckout } from '@/server/payments'
 
 export const POST = route(async (request) => {
   const uid = await requireUserId(request)
-  const { priceId } = await body<{ priceId?: string }>(request)
+  const { priceId } = await body<CreatePaymentSubscriptionRequest>(request)
   if (!priceId) throw new ApiError('priceId required')
   const user = await getDatabase().db.query.users.findFirst({
     where: eq(users.id, uid),
@@ -21,6 +25,7 @@ export const POST = route(async (request) => {
     priceId,
     getServerEnv().APP_ORIGIN
   )
-  return json({ checkoutUrl: session.url })
+  if (!session.url) throw new ApiError('checkout URL not returned', 502)
+  return json<CreatePaymentSubscriptionResponse>({ checkoutUrl: session.url })
 })
 export const OPTIONS = options

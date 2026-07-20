@@ -1,10 +1,13 @@
+import type { ApiErrorResponse, ApiSuccessResponse } from '@/contracts/http'
+
 import { getServerEnv } from './env'
 import { ApiError } from './errors'
 
 type Handler = (request: Request, context?: unknown) => Promise<Response>
 
 export function json<T>(data: T, status = 200, msg = '') {
-  return Response.json({ status, msg, data }, { status })
+  const payload: ApiSuccessResponse<T> = { status, msg, data }
+  return Response.json(payload, { status })
 }
 
 export function errorJson(error: unknown) {
@@ -12,7 +15,12 @@ export function errorJson(error: unknown) {
   const message =
     error instanceof Error ? error.message : 'internal server error'
   if (status >= 500) console.error(error)
-  return Response.json({ status, msg: message, error: message }, { status })
+  const payload: ApiErrorResponse = {
+    status,
+    msg: message,
+    error: message,
+  }
+  return Response.json(payload, { status })
 }
 
 function corsHeaders(request: Request) {

@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm'
 
+import type { PaymentOrderInfoResponse } from '@/contracts/http'
 import { requireUserId } from '@/server/auth'
 import { getDatabase } from '@/server/db'
 import { users } from '@/server/db/schema'
@@ -21,7 +22,7 @@ export const GET = route(async (request) => {
   })
   if (!user || user.id !== uid)
     throw new ApiError('payment does not belong to you', 403)
-  return json({
+  return json<PaymentOrderInfoResponse>({
     uid: user.id,
     amount: session.amount_total,
     paymentStatus: session.payment_status,
