@@ -28,16 +28,19 @@ function Reactions(props: ReactionsProps) {
         symbolData[ar] = {
           count: 0,
           done: false,
+          reactionId: undefined,
           creators: [],
         }
       }
 
-      symbolData[ar].creators = reactions.symbolCounts
-        .filter((x) => x.symbol === ar)
-        .flatMap((x) => x.recently.map((x) => x.creator))
-      symbolData[ar].count = symbolData[ar].creators.length
-      symbolData[ar].done =
-        symbolData[ar].creators.findIndex((x) => x.id === uid) >= 0
+      const group = reactions.symbolCounts.find((x) => x.symbol === ar)
+      if (!group) continue
+      symbolData[ar].creators = group.recently.map((item) => item.creator)
+      symbolData[ar].count = group.count
+      symbolData[ar].done = group.done
+      symbolData[ar].reactionId = group.recently.find(
+        (item) => item.creator.id === uid
+      )?.id
     }
     return symbolData
   }, [reactions?.symbolCounts, uid])

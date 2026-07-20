@@ -61,7 +61,7 @@ export async function sendOneTimePasscode(email: string, code: string) {
 
 export async function sendVerificationEmail(email: string, code: string) {
   const resend = new Resend(requireEnv('RESEND_API_KEY'))
-  const href = `${getServerEnv().APP_ORIGIN}/auth/verify?code=${encodeURIComponent(code)}`
+  const href = `${getServerEnv().APP_ORIGIN}/api/v2/auth/verify?code=${encodeURIComponent(code)}`
   const result = await resend.emails.send({
     from: 'ClippingKK <noreply@annatarhe.com>',
     to: email,

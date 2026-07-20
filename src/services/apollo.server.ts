@@ -1,5 +1,6 @@
 import {
   ApolloLink,
+  HttpLink,
   ServerError,
   type OperationVariables,
   type QueryOptions,
@@ -11,16 +12,24 @@ import {
 } from '@apollo/client-integration-nextjs'
 import { redirect } from 'next/navigation'
 
-import { authLink } from './ajax'
-import { apolloCacheConfig, httpLink } from './apollo.shard'
+import { API_HOST } from '@/constants/config'
+import { getServerEnv } from '@/server/env'
 
-const { getClient } = registerApolloClient(
-  () =>
-    new ApolloClient({
-      cache: new InMemoryCache(apolloCacheConfig),
-      link: ApolloLink.from([authLink, httpLink]),
-    })
-)
+import { authLink } from './ajax'
+import { apolloCacheConfig } from './apollo.shard'
+
+export function getApolloServerGraphqlUrl() {
+  const origin = API_HOST || getServerEnv().APP_ORIGIN
+  return `${origin.replace(/\/$/, '')}/api/v2/graphql`
+}
+
+const { getClient } = registerApolloClient(() => {
+  const httpLink = new HttpLink({ uri: getApolloServerGraphqlUrl() })
+  return new ApolloClient({
+    cache: new InMemoryCache(apolloCacheConfig),
+    link: ApolloLink.from([authLink, httpLink]),
+  })
+})
 
 export const getApolloServerClient = getClient
 

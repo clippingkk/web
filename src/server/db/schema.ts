@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm'
 import {
   bigint,
   bigserial,
@@ -116,7 +117,12 @@ export const externalAccounts = pgTable(
       .default(''),
     appleUnique: varchar('apple_unique', { length: 255 }).notNull().default(''),
   },
-  (table) => [uniqueIndex('external_accounts_user_id_key').on(table.userId)]
+  (table) => [
+    uniqueIndex('external_accounts_user_id_key').on(table.userId),
+    uniqueIndex('external_accounts_apple_unique_key')
+      .on(table.appleUnique)
+      .where(sql`${table.appleUnique} <> ''`),
+  ]
 )
 
 export type NftItem = {

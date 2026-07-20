@@ -44,6 +44,7 @@ import {
   type Reaction,
   type User,
 } from '../db/schema'
+import { getServerEnv } from '../env'
 import { ApiError, assertFound } from '../errors'
 import {
   fetchGithubIdentity,
@@ -168,6 +169,25 @@ async function clippingById(id: number, includeDeleted = false) {
   )
 }
 
+function clippingVisibleTo(userId: number) {
+  return userId
+    ? or(eq(clippings.visible, true), eq(clippings.createdBy, userId))
+    : eq(clippings.visible, true)
+}
+
+async function visibleClippingById(id: number, userId: number) {
+  return assertFound(
+    await db().query.clippings.findFirst({
+      where: and(
+        eq(clippings.id, id),
+        activeClipping,
+        clippingVisibleTo(userId)
+      ),
+    }),
+    'clipping not found'
+  )
+}
+
 async function authResponse(
   user: User,
   options?: { thirdParty?: boolean; isNew?: boolean }
@@ -191,12 +211,11 @@ async function findOrCreatePhoneUser(phoneInput: string) {
     where: and(eq(users.phone, phone), activeUser),
   })
   if (found) return { user: found, isNew: false }
-  const masked = `${phone.slice(0, 5)}***${phone.slice(-3)}`
   const [created] = await db()
     .insert(users)
     .values({
       name: `user.${randomBytes(4).toString('hex')}`,
-      email: `phone.${masked}@annatarhe.com`,
+      email: `phone.${hashPassword(phone)}@annatarhe.com`,
       phone,
       pwd: 'phone_user',
       checked: true,
@@ -236,7 +255,8 @@ async function loadComments(filters: {
 
 async function booksForUser(
   uid: number,
-  pagination: { limit: number; offset: number }
+  pagination: { limit: number; offset: number },
+  viewerId: number
 ) {
   const rows = await db()
     .select({
@@ -250,6 +270,7 @@ async function booksForUser(
       and(
         eq(clippings.createdBy, uid),
         activeClipping,
+        clippingVisibleTo(viewerId),
         sql`${clippings.bookId} <> ''`,
         sql`${clippings.bookId} <> '0'`
       )
@@ -437,7 +458,8 @@ export const resolvers: Record<string, Record<string, any>> = {
     books: (_: unknown, args: Args, context: GraphQLContext) =>
       booksForUser(
         args.uid ?? requiredUser(context),
-        legacyPage(args.pagination)
+        legacyPage(args.pagination),
+        context.userId
       ),
     book: async (_: unknown, args: Args, context: GraphQLContext) => {
       const uid = args.uid ?? requiredUser(context)
@@ -453,7 +475,8 @@ export const resolvers: Record<string, Record<string, any>> = {
           and(
             eq(clippings.createdBy, uid),
             eq(clippings.bookId, doubanId),
-            activeClipping
+            activeClipping,
+            clippingVisibleTo(context.userId)
           )
         )
       if (!row?.clippingsCount) throw new ApiError('book not found', 404)
@@ -506,13 +529,20 @@ export const resolvers: Record<string, Record<string, any>> = {
       }
       return userById(requiredUser(context))
     },
-    clipping: (_: unknown, args: Args) => clippingById(args.id),
-    clippings: (_: unknown, args: Args) =>
+    clipping: (_: unknown, args: Args, context: GraphQLContext) =>
+      visibleClippingById(args.id, context.userId),
+    clippings: (_: unknown, args: Args, context: GraphQLContext) =>
       args.ids.length
         ? db()
             .select()
             .from(clippings)
-            .where(and(inArray(clippings.id, args.ids), activeClipping))
+            .where(
+              and(
+                inArray(clippings.id, args.ids),
+                activeClipping,
+                clippingVisibleTo(context.userId)
+              )
+            )
             .limit(100)
         : [],
     clippingList: async (_: unknown, args: Args) => {
@@ -554,7 +584,9 @@ export const resolvers: Record<string, Record<string, any>> = {
       return encodeLegacyValue(String(uid))
     },
     adminDashboard: async (_: unknown, args: Args, context: GraphQLContext) => {
-      requiredUser(context)
+      const uid = requiredUser(context)
+      if (!getServerEnv().rootUsers.has(uid))
+        throw new ApiError('Forbidden', 403, 'FORBIDDEN')
       const pagination = legacyPage(args.pagination)
       const rows = await db()
         .selectDistinct({ title: clippings.title })
@@ -724,6 +756,12 @@ export const resolvers: Record<string, Record<string, any>> = {
         args.payload.idToken,
         args.payload.platform
       )
+      const boundAccount = await db().query.externalAccounts.findFirst({
+        where: eq(externalAccounts.appleUnique, claims.unique),
+      })
+      if (boundAccount && boundAccount.userId !== context.userId) {
+        throw new ApiError('Apple account is already bound', 409)
+      }
       let user: User
       let isNew = false
       if (context.userId) user = await userById(context.userId)
@@ -950,14 +988,22 @@ export const resolvers: Record<string, Record<string, any>> = {
       args: Args,
       context: GraphQLContext
     ) => {
+      const uid = requiredUser(context)
       const clipping = await clippingById(args.clippingId)
-      if (clipping.createdBy !== requiredUser(context))
+      if (clipping.createdBy !== uid)
         throw new ApiError('not your clipping', 403)
-      await db()
+      const [updated] = await db()
         .update(clippings)
         .set({ bookId: String(args.doubanId), updatedAt: new Date() })
-        .where(eq(clippings.title, clipping.title))
-      return { ...clipping, bookId: String(args.doubanId) }
+        .where(
+          and(
+            eq(clippings.id, clipping.id),
+            eq(clippings.createdBy, uid),
+            activeClipping
+          )
+        )
+        .returning()
+      return assertFound(updated, 'clipping not found')
     },
     createComment: async (_: unknown, args: Args, context: GraphQLContext) => {
       await clippingById(args.cid)
@@ -1090,11 +1136,12 @@ export const resolvers: Record<string, Record<string, any>> = {
       return true
     },
     removeReaction: async (_: unknown, args: Args, context: GraphQLContext) => {
+      if (args.rid <= 0) throw new ApiError('reaction id required')
       const conditions = [
         eq(reactions.creator, requiredUser(context)),
+        eq(reactions.id, args.rid),
         isNull(reactions.deletedAt),
       ]
-      if (args.rid > 0) conditions.push(eq(reactions.id, args.rid))
       if (args.symbol) conditions.push(eq(reactions.symbol, args.symbol))
       await db()
         .update(reactions)
@@ -1389,11 +1436,17 @@ export const resolvers: Record<string, Record<string, any>> = {
         orders: items,
       }))
     },
-    recents: (user: User) =>
+    recents: (user: User, _args: Args, context: GraphQLContext) =>
       db()
         .select()
         .from(clippings)
-        .where(and(eq(clippings.createdBy, user.id), activeClipping))
+        .where(
+          and(
+            eq(clippings.createdBy, user.id),
+            activeClipping,
+            clippingVisibleTo(context.userId)
+          )
+        )
         .orderBy(desc(clippings.createdAt))
         .limit(20),
     comments: (user: User) => loadComments({ userId: user.id }),
@@ -1448,7 +1501,7 @@ export const resolvers: Record<string, Record<string, any>> = {
         )
       return rows.map((row) => row.bookId)
     },
-    analysis: async (user: User) => {
+    analysis: async (user: User, _args: Args, context: GraphQLContext) => {
       const daily = await db()
         .select({
           date: sql<string>`to_char(${clippings.createdAt}, 'YYYY-MM-DD')`,
@@ -1476,7 +1529,11 @@ export const resolvers: Record<string, Record<string, any>> = {
         .where(and(eq(clippings.createdBy, user.id), activeClipping))
         .groupBy(sql`to_char(${clippings.createdAt}, 'YYYY-MM')`)
         .orderBy(asc(sql`to_char(${clippings.createdAt}, 'YYYY-MM')`))
-      const timeline = await booksForUser(user.id, { limit: 100, offset: 0 })
+      const timeline = await booksForUser(
+        user.id,
+        { limit: 100, offset: 0 },
+        context.userId
+      )
       return {
         daily,
         monthly,
@@ -1584,7 +1641,7 @@ export const resolvers: Record<string, Record<string, any>> = {
     startReadingAt: (book: Book) => date(book.startReadingAt),
     lastReadingAt: (book: Book) => date(book.lastReadingAt),
     isLastReadingBook: (book: Book) => book.isLastReadingBook ?? false,
-    clippings: (book: Book) => {
+    clippings: (book: Book, _args: Args, context: GraphQLContext) => {
       const pagination = book.pagination ?? { limit: 100, offset: 0 }
       return db()
         .select()
@@ -1593,7 +1650,8 @@ export const resolvers: Record<string, Record<string, any>> = {
           and(
             eq(clippings.createdBy, book.uid),
             eq(clippings.bookId, book.doubanId),
-            activeClipping
+            activeClipping,
+            clippingVisibleTo(context.userId)
           )
         )
         .orderBy(desc(clippings.id))
@@ -1673,12 +1731,20 @@ export const resolvers: Record<string, Record<string, any>> = {
       const grouped = Map.groupBy(rows, (row) => row.symbol)
       return {
         count: rows.length,
-        symbolCounts: [...grouped.entries()].map(([symbol, items]) => ({
-          symbol,
-          count: items.length,
-          done: items.some((item) => item.creator === context.userId),
-          recently: items.slice(0, 5),
-        })),
+        symbolCounts: [...grouped.entries()].map(([symbol, items]) => {
+          const recent = items.slice(0, 5)
+          const ownReaction = items.find(
+            (item) => item.creator === context.userId
+          )
+          if (ownReaction && !recent.some((item) => item.id === ownReaction.id))
+            recent[recent.length - 1] = ownReaction
+          return {
+            symbol,
+            count: items.length,
+            done: Boolean(ownReaction),
+            recently: recent,
+          }
+        }),
       }
     },
     prevClipping: async (clipping: Clipping) => {

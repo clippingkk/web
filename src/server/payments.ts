@@ -31,7 +31,10 @@ export async function createPaymentSheet(user: User) {
       currency: 'hkd',
       customer,
       automatic_payment_methods: { enabled: true },
-      metadata: { clippingkkUserId: String(user.id) },
+      metadata: {
+        clippingkkUserId: String(user.id),
+        clippingkkPaymentKind: 'premium_payment_sheet',
+      },
     }),
   ])
   return {
@@ -57,34 +60,39 @@ export async function createSubscriptionCheckout(
   })
 }
 
-function customerId(value: Stripe.Invoice['customer']) {
+function customerId(value: string | { id: string } | null) {
   if (!value) return ''
   return typeof value === 'string' ? value : value.id
 }
 
-export async function recordPaidInvoice(invoice: Stripe.Invoice) {
-  const stripeCustomerId = customerId(invoice.customer)
+type PremiumPayment = {
+  orderId: string
+  subscriptionId: string
+  stripeCustomerId: string
+  orderCreatedAt: Date
+  amount: number
+  currency: string
+  expectedUserId?: number
+}
+
+async function recordPremiumPayment(payment: PremiumPayment) {
+  const { stripeCustomerId } = payment
   if (!stripeCustomerId)
     throw new ApiError('customer of the order not found', 500)
   const user = await getDatabase().db.query.users.findFirst({
     where: eq(users.stripeCustomerId, stripeCustomerId),
   })
   if (!user) throw new ApiError('customer of the order not found', 404)
+  if (payment.expectedUserId && payment.expectedUserId !== user.id) {
+    throw new ApiError('payment customer does not match its user', 400)
+  }
   const exists = await getDatabase().db.query.orders.findFirst({
-    where: and(eq(orders.orderId, invoice.id), eq(orders.userOrders, user.id)),
+    where: and(
+      eq(orders.orderId, payment.orderId),
+      eq(orders.userOrders, user.id)
+    ),
   })
   if (exists) return exists
-
-  const raw = invoice as unknown as {
-    subscription?: string | { id: string } | null
-    parent?: {
-      subscription_details?: { subscription?: string | { id: string } | null }
-    }
-  }
-  const subscription =
-    raw.subscription ?? raw.parent?.subscription_details?.subscription
-  const subscriptionId =
-    typeof subscription === 'string' ? subscription : (subscription?.id ?? '')
   const now = new Date()
   const baseline =
     user.premiumEndAt && user.premiumEndAt > now ? user.premiumEndAt : now
@@ -92,13 +100,13 @@ export async function recordPaidInvoice(invoice: Stripe.Invoice) {
     const [order] = await transaction
       .insert(orders)
       .values({
-        orderId: invoice.id,
+        orderId: payment.orderId,
         sku: 'premium',
-        subscriptionId,
+        subscriptionId: payment.subscriptionId,
         stripeCustomerId,
-        orderCreatedAt: new Date(invoice.created * 1000),
-        amount: invoice.amount_paid,
-        currency: invoice.currency,
+        orderCreatedAt: payment.orderCreatedAt,
+        amount: payment.amount,
+        currency: payment.currency,
         userOrders: user.id,
       })
       .returning()
@@ -110,5 +118,52 @@ export async function recordPaidInvoice(invoice: Stripe.Invoice) {
       })
       .where(eq(users.id, user.id))
     return order
+  })
+}
+
+export async function recordPaidInvoice(invoice: Stripe.Invoice) {
+  const raw = invoice as unknown as {
+    subscription?: string | { id: string } | null
+    parent?: {
+      subscription_details?: { subscription?: string | { id: string } | null }
+    }
+  }
+  const subscription =
+    raw.subscription ?? raw.parent?.subscription_details?.subscription
+  const subscriptionId =
+    typeof subscription === 'string' ? subscription : (subscription?.id ?? '')
+  return recordPremiumPayment({
+    orderId: invoice.id,
+    subscriptionId,
+    stripeCustomerId: customerId(invoice.customer),
+    orderCreatedAt: new Date(invoice.created * 1000),
+    amount: invoice.amount_paid,
+    currency: invoice.currency,
+  })
+}
+
+export async function recordSucceededPaymentIntent(
+  paymentIntent: Stripe.PaymentIntent
+) {
+  if (
+    paymentIntent.metadata.clippingkkPaymentKind !== 'premium_payment_sheet'
+  ) {
+    return
+  }
+  const expectedUserId = Number.parseInt(
+    paymentIntent.metadata.clippingkkUserId ?? '',
+    10
+  )
+  if (!Number.isInteger(expectedUserId) || expectedUserId <= 0) {
+    throw new ApiError('payment user metadata is invalid', 400)
+  }
+  return recordPremiumPayment({
+    orderId: paymentIntent.id,
+    subscriptionId: '',
+    stripeCustomerId: customerId(paymentIntent.customer),
+    orderCreatedAt: new Date(paymentIntent.created * 1000),
+    amount: paymentIntent.amount_received,
+    currency: paymentIntent.currency,
+    expectedUserId,
   })
 }

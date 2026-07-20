@@ -1,5 +1,15 @@
+import { resetServerEnvForTests } from '@/server/env'
 import { ApiError } from '@/server/errors'
-import { errorJson, json } from '@/server/http'
+import { errorJson, json, route } from '@/server/http'
+
+beforeEach(() => {
+  process.env.DATABASE_URL =
+    'postgresql://postgres:admin@localhost:5432/clippingkk_test'
+  process.env.REDIS_URL = 'redis://localhost:6379/15'
+  process.env.JWT_SECRET = 'test-jwt-secret'
+  process.env.APP_ORIGIN = 'https://clippingkk.example'
+  resetServerEnvForTests()
+})
 
 describe('HTTP response helpers', () => {
   it('builds the shared success envelope', async () => {
@@ -22,5 +32,23 @@ describe('HTTP response helpers', () => {
       msg: 'not allowed',
       error: 'not allowed',
     })
+  })
+
+  it('adds CORS headers to immutable redirect responses', async () => {
+    const handler = route(async () =>
+      Response.redirect('https://clippingkk.example/auth/signin', 307)
+    )
+
+    const response = await handler(
+      new Request('https://clippingkk.example/api/v2/auth/verify')
+    )
+
+    expect(response.status).toBe(307)
+    expect(response.headers.get('location')).toBe(
+      'https://clippingkk.example/auth/signin'
+    )
+    expect(response.headers.get('access-control-allow-origin')).toBe(
+      'https://clippingkk.example'
+    )
   })
 })

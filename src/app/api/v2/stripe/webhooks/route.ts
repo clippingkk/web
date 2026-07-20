@@ -4,7 +4,10 @@ import { requireEnv } from '@/server/env'
 import { ApiError } from '@/server/errors'
 import { json, route } from '@/server/http'
 import { getStripe } from '@/server/integrations'
-import { recordPaidInvoice } from '@/server/payments'
+import {
+  recordPaidInvoice,
+  recordSucceededPaymentIntent,
+} from '@/server/payments'
 
 export const POST = route(async (request) => {
   const signature = request.headers.get('stripe-signature')
@@ -23,5 +26,7 @@ export const POST = route(async (request) => {
     )
   }
   if (event.type === 'invoice.paid') await recordPaidInvoice(event.data.object)
+  if (event.type === 'payment_intent.succeeded')
+    await recordSucceededPaymentIntent(event.data.object)
   return json({ received: true, type: event.type })
 })
