@@ -1,27 +1,61 @@
-## Kindle Viewer website [![Build Status](https://travis-ci.org/clippingkk/web.svg?branch=master)](https://travis-ci.org/clippingkk/web) [![Coverage Status](https://coveralls.io/repos/github/clippingkk/web/badge.svg?branch=master)](https://coveralls.io/github/clippingkk/web?branch=master)
+# ClippingKK Web
 
-## package manager
+ClippingKK is a full-stack Next.js application for importing, organizing, and
+sharing Kindle highlights. The Next.js process serves the web UI, GraphQL and
+REST APIs, PostgreSQL-backed data access, Redis caching, and an optional BullMQ
+worker.
 
-we use pnpm
+## Requirements
 
-## Notes
+- Node.js 26
+- pnpm 10.25 (the version pinned in `package.json`)
+- Docker with Compose for local PostgreSQL and Redis
+- A PromptPal API token when regenerating `src/types.g.ts`
 
-```bash
-$ apollo client:download-schema --endpoint="http://localhost:19654/api/v2/graphql" --header="Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE2ODAyMzg5NTUsImlhdCI6MTY2NDY4Njk1NSwiaXNzIjoiY2stc2VydmVyQCJ9.n5DKJnhACf65Cu-yYZP700rOLgadgLTBHPIxmAo8lAo"
-$ mv schema.json src/schema/
-$ apollo codegen:generate --target=typescript --localSchemaFile="./src/schema/schema.json" --includes="./src/schema/**/*.graphql" --useReadOnlyTypes
-```
+## Local development
 
-## Deploy
-
-### Docker
-
-```bash
-podman run -d --restart=always -e PORT=3333 -e HOSTNAME=0.0.0.0 -e OTEL_EXPORTER_OTLP_ENDPOINT="https://otlp.uptrace.dev" -e OTEL_EXPORTER_OTLP_HEADERS="uptrace-dsn=https://PASSWORD@api.uptrace.dev/123456" -e OTEL_EXPORTER_OTLP_COMPRESSION=gzip -e OTEL_EXPORTER_OTLP_METRICS_DEFAULT_HISTOGRAM_AGGREGATION=BASE2_EXPONENTIAL_BUCKET_HISTOGRAM -e OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE=DELTA -e REDIS_URL=redis://:PASSWORD@localhost:6379/7 --network=host registry.cn-shanghai.aliyuncs.com/annatarhe/clippingkk-web:5.10.6
-```
-
-### Kraft
+Install dependencies and create a local configuration:
 
 ```bash
-kraft cloud deploy -p 443:3000 -M 1024 .
+pnpm install
+cp .env.example .env.local
+pnpm infra:up
+pnpm db:migrate
+pnpm codegen
+pnpm dev:worker
 ```
+
+Edit `.env.local` before starting the app. The checked-in defaults connect to
+the PostgreSQL and Redis containers from `compose.yaml`. `pnpm dev` runs only
+the web process; `pnpm dev:worker` also processes background jobs.
+
+Generated GraphQL output under `src/gql/` is intentionally ignored. If
+`src/types.g.ts` is absent, set `PROMPTPAL_API_TOKEN` and run `pp g` using
+`promptpal.yml` before building or starting the app.
+
+## Common commands
+
+| Command             | Purpose                                                     |
+| ------------------- | ----------------------------------------------------------- |
+| `pnpm dev`          | Start the development server at `http://localhost:3101`.    |
+| `pnpm build`        | Regenerate GraphQL artifacts and create a production build. |
+| `pnpm test`         | Run the Vitest suite in happy-dom.                          |
+| `pnpm typecheck`    | Type-check the application without emitting files.          |
+| `pnpm lint`         | Check `src/` with oxlint.                                   |
+| `pnpm format:check` | Verify formatting with oxfmt.                               |
+| `pnpm infra:full`   | Build and run the complete local stack in Docker.           |
+| `pnpm infra:down`   | Stop the local infrastructure containers.                   |
+
+Application routes live in `src/app`, reusable UI in `src/components`, and
+server integrations in `src/server` and `src/services`. GraphQL operations and
+generated types are under `src/schema` and `src/gql`; tests live in `test/` and
+beside focused source modules.
+
+## Deployment
+
+Production supports Docker-based self-hosting. Use a versioned container image
+with external PostgreSQL and Redis services; the repository's `compose.yaml`
+contains development credentials and is not a production deployment file.
+
+See [DEPLOY.md](./DEPLOY.md) for configuration, migrations, rollout, health
+checks, upgrades, and source builds.
