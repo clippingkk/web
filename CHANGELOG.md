@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.16.0](https://github.com/clippingkk/web/compare/v5.15.0...v5.16.0) (2026-07-20)
+
+
+### Features
+
+* **api:** migrate backend into Next.js ([d5b834b](https://github.com/clippingkk/web/commit/d5b834be39ad1d37bb0a0ae2e77a5a8ae1e685b9))
+* **api:** migrate backend into Next.js ([4a0d349](https://github.com/clippingkk/web/commit/4a0d349020c230085b3216a64c2d9973516d4204))
+
+
+### Bug Fixes
+
+* **api:** address PR review findings ([8841b13](https://github.com/clippingkk/web/commit/8841b13a9a2330cae4e574c7ba1a3dd40e7cc41e))
+
 ## [5.15.0](https://github.com/clippingkk/web/compare/v5.14.9...v5.15.0) (2026-04-14)
 
 
