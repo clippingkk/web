@@ -17,14 +17,11 @@ import {
   wenquRequest,
 } from '@/services/wenqu'
 
-export const runtime = 'edge'
-
 export const alt = 'About Acme'
 export const size = {
   width: 1200,
   height: 630,
 }
-export const dynamic = 'force-dynamic'
 export const contentType = 'image/png'
 
 // Image generation

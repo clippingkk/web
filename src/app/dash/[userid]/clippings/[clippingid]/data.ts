@@ -37,9 +37,7 @@ export const getClippingData = cache(async (clippingId: number) => {
     context: {
       headers: token
         ? {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            Authorization: `Bearer ${token}`,
           }
         : undefined,
     },

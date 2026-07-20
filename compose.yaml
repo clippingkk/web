@@ -1,0 +1,56 @@
+services:
+  app:
+    profiles: ['app']
+    build:
+      context: .
+      args:
+        GIT_COMMIT: local
+    environment:
+      APP_ORIGIN: http://localhost:3101
+      CORS_ALLOWED_ORIGINS: http://localhost:3101
+      DATABASE_URL: postgresql://postgres:admin@postgres:5432/clippingkk
+      DEBUG: 'true'
+      JWT_SECRET: local-development-secret-change-me
+      QUEUE_REDIS_URL: redis://redis:6379/2
+      REDIS_URL: redis://redis:6379/1
+      RUN_WORKER: 'true'
+    ports:
+      - '3101:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: clippingkk
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - clippingkk-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d clippingkk']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7.2-alpine
+    command: ['redis-server', '--appendonly', 'yes']
+    ports:
+      - '6379:6379'
+    volumes:
+      - clippingkk-redis:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  clippingkk-postgres:
+  clippingkk-redis:

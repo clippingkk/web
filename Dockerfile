@@ -1,4 +1,4 @@
-FROM node:25-alpine AS base
+FROM node:26-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -10,7 +10,6 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./src/types.g.ts ./
 RUN unlink /usr/local/bin/yarn && unlink /usr/local/bin/yarnpkg && npm install -g corepack@latest
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
-RUN pnpm add @opentelemetry/sdk-node @opentelemetry/exporter-trace-otlp-http @opentelemetry/sdk-trace-base @opentelemetry/resources @opentelemetry/id-generator-aws-xray
 
 FROM base AS builder
 WORKDIR /app
@@ -29,13 +28,14 @@ ENV NEXT_PUBLIC_PP_TOKEN=$NEXT_PUBLIC_PP_TOKEN
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN unlink /usr/local/bin/yarn && unlink /usr/local/bin/yarnpkg && npm install -g corepack@latest
-RUN corepack enable pnpm && pnpm run codegen && pnpm run build
+RUN corepack enable pnpm && pnpm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+ENV RUN_WORKER false
 ARG GIT_COMMIT
 ENV GIT_COMMIT=$GIT_COMMIT
 ARG NEXT_PUBLIC_PP_TOKEN
@@ -56,13 +56,6 @@ RUN chown nextjs:nodejs .next && chown nextjs:nodejs /app
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-# ------- Instrumentation patch -------
-# COPY --from=builder /app/instrumentation.js ./instrumentation.js
-# Patch server.js so it starts instrumentation
-# RUN sed -i '1i\const { register } = require("./instrumentation.js");\nregister();\n' server.js
-# ------- End of instrumentation patch -------
-
 
 USER nextjs
 EXPOSE 3000

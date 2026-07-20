@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "external_accounts_apple_unique_key" ON "external_accounts" USING btree ("apple_unique") WHERE "external_accounts"."apple_unique" <> '';

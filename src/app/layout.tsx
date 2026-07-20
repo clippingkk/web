@@ -10,7 +10,6 @@ import '../styles/tailwind.css'
 // import '@annatarhe/lake-ui/style.css'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { Metadata } from 'next'
-import { Lato } from 'next/font/google'
 import Script from 'next/script'
 import type React from 'react'
 import { Suspense } from 'react'
@@ -26,13 +25,6 @@ import '../utils/settings'
 import ClientOnlyProviders from './providers'
 
 // import localFont from 'next/font/local'
-
-const lato = Lato({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-lato',
-  weight: ['100', '300', '400', '700', '900'],
-})
 
 // const lxgw = localFont({
 //   src: [{
@@ -84,9 +76,11 @@ async function Layout(props: LayoutProps) {
   return (
     <html
       lang="en"
-      className={`${lato.variable} dark`}
+      className="dark"
       style={
         {
+          '--font-lato':
+            'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
           '--font-lxgw': 'LxgwWenKai',
         } as React.CSSProperties
       }

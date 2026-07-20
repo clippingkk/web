@@ -3,9 +3,7 @@
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
 // export const API_HOST = 'https://clippingkk-api.annatarhe.com'
-export const API_HOST = __DEV__
-  ? 'http://127.0.0.1:19654'
-  : 'https://clippingkk-api.annatarhe.com'
+export const API_HOST = process.env.NEXT_PUBLIC_API_HOST ?? ''
 
 export const WENQU_API_HOST = 'https://wenqu.annatarhe.cn/api/v1'
 export const WENQU_SIMPLE_TOKEN =
@@ -33,7 +31,7 @@ export const LEANCLOUD = {
 export const APP_API_STEP_LIMIT = 10
 
 export const APP_URL_ORIGIN = __DEV__
-  ? 'http://localhost:3000'
+  ? 'http://localhost:3101'
   : 'https://clippingkk.annatarhe.com'
 export const CF_TURNSTILE_SITE_KEY = '0x4AAAAAAAA361EJRDzUhf_b'
 

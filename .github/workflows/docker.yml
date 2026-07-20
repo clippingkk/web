@@ -5,14 +5,14 @@ name: Docker Deployment
 on:
   push:
     tags:
-      - "*"
+      - '*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [25.x]
+        node-version: [26.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -38,6 +38,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - run: pnpm run codegen
+      - run: pnpm run typecheck:server
+      - run: pnpm run test:server
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5

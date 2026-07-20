@@ -15,6 +15,7 @@ import Loading2Icon from '../icons/loading2.svg'
 export type SymbolGroupedData = {
   count: number
   done: boolean
+  reactionId?: number
   creators: { id: number; avatar: string; name: string }[]
 }
 
@@ -63,8 +64,13 @@ function ReactionCell(props: ReactionCellProps) {
       return
     }
     if (data.done) {
+      if (!data.reactionId) {
+        toast.error(t('app.clipping.reactions.actionRejected'))
+        return
+      }
       return doReactionRemove({
         variables: {
+          rid: data.reactionId,
           symbol,
         },
       })
@@ -79,6 +85,7 @@ function ReactionCell(props: ReactionCellProps) {
   }, [
     cid,
     data.done,
+    data.reactionId,
     doReactionCreate,
     doReactionRemove,
     myUid,

@@ -7,7 +7,6 @@ import { useTranslation } from '@/i18n/client'
 import { getLanguage } from '@/utils/locales'
 
 import client from '../../services/pp'
-import { type CKPromptBookRecommandsVariables, CKPrompts } from '../../types.g'
 import { EmptyState } from './empty-state'
 import { ErrorState } from './error-state'
 import { LoadingState } from './loading-state'
@@ -19,6 +18,14 @@ type AIBookRecommendationModalProps = {
   uid?: number
   books: { doubanId: string }[]
 }
+
+type BookRecommendationVariables = {
+  list: string
+  lang: string
+}
+
+const bookRecommendationPrompt =
+  process.env.NEXT_PUBLIC_PP_BOOK_RECOMMENDATION_ID ?? ''
 
 function AIBookRecommendationModal({
   open,
@@ -50,8 +57,8 @@ function AIBookRecommendationModal({
     queryFn: async () => {
       // This is a placeholder - adjust the actual API call based on your backend implementation
       return client
-        .executeStream<string, CKPromptBookRecommandsVariables>(
-          CKPrompts.BookRecommands,
+        .executeStream<string, BookRecommendationVariables>(
+          bookRecommendationPrompt,
           {
             list: booksInfo,
             lang: getLanguage(),
@@ -72,7 +79,7 @@ function AIBookRecommendationModal({
           return final
         })
     },
-    enabled: open && booksInfo.length > 0,
+    enabled: open && booksInfo.length > 0 && Boolean(bookRecommendationPrompt),
   })
 
   return (
