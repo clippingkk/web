@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "types": ["node", "vitest/globals"]
+  },
+  "include": [
+    "src/instrumentation.ts",
+    "src/app/api/**/*.ts",
+    "src/server/**/*.ts"
+  ],
+  "exclude": ["node_modules", "src/schema/generated.tsx", "src/gql"]
+}

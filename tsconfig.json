@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "incremental": true,
     /* Basic Options */
@@ -36,6 +37,7 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "types": ["node", "vitest/globals"],
     "paths": {
       "@/*": [
         "./src/*"

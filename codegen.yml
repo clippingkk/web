@@ -1,4 +1,7 @@
 overwrite: true
+hooks:
+  afterAllFileWrite:
+    - oxfmt
 schema: src/schema/schema.json
 # schema:
 #   - "http://127.0.0.1:19654/api/v2/graphql":
