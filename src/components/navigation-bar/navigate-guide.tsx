@@ -4,13 +4,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import type { ProfileQuery, ProfileQueryVariables } from '@/gql/graphql'
+import {
+  type ProfileQuery,
+  type ProfileQueryVariables,
+  ProfileDocument,
+} from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
 
 import logoDark from '../../assets/logo-dark.svg'
 import logoLight from '../../assets/logo-light.svg'
-import { ProfileDocument } from '../../schema/generated'
 import { getMyHomeLink } from '../../utils/profile.utils'
 import LinkIndicator from '../link-indicator'
 import UserName from '../profile/user-name'

@@ -13,12 +13,17 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./test/setup.ts'],
     clearMocks: true,
+    server: {
+      deps: {
+        inline: ['graphql', '@graphql-tools/schema', '@graphql-tools/utils'],
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
       reportsDirectory: './coverage',
       include: ['src/**/*.{js,jsx,ts,tsx}'],
-      exclude: ['src/schema/generated.tsx', 'src/gql/**'],
+      exclude: ['src/schema/generated.ts', 'src/gql/**'],
     },
   },
 })

@@ -1,4 +1,5 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import { Undo2, Redo2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -10,14 +11,11 @@ import logoDark from '@/assets/logo-dark.svg'
 import logoLight from '@/assets/logo-light.svg'
 import EmailBox from '@/components/auth/email-box'
 import OTPBox from '@/components/auth/otp-box'
+import { DoLoginV3Document, SendOtpDocument } from '@/gql/graphql'
 import { useLoginV3Successed } from '@/hooks/hooks'
 import { useBackgroundImage } from '@/hooks/theme'
 import { useTranslation } from '@/i18n/client'
-import {
-  OtpChannel,
-  useDoLoginV3Mutation,
-  useSendOtpMutation,
-} from '@/schema/generated'
+import { OtpChannel } from '@/schema/generated'
 import { toastPromiseDefaultOption } from '@/services/misc'
 
 function AuthV3Content() {
@@ -28,7 +26,7 @@ function AuthV3Content() {
   const [validEmail, setValidEmail] = useState('')
   const [phase, setPhase] = useState(0)
 
-  const [doSendOtp, { loading: isSendingOtp }] = useSendOtpMutation()
+  const [doSendOtp, { loading: isSendingOtp }] = useMutation(SendOtpDocument)
 
   const onEmailSubmit = useCallback(
     (email: string, turnstileToken: string) => {
@@ -51,7 +49,7 @@ function AuthV3Content() {
     [doSendOtp]
   )
 
-  const [loginV3, loginV3Response] = useDoLoginV3Mutation()
+  const [loginV3, loginV3Response] = useMutation(DoLoginV3Document)
 
   const onOTPConfirmed = useCallback(
     (otp: string) => {

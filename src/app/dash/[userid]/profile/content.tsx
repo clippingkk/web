@@ -1,8 +1,8 @@
 import PageTrack from '@/components/track/page-track'
-import type { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/gql/graphql' // New import
 
 import ProfileDetails from './profile-details' // New import
-import ProfileHeader from './profile-header' // New import
+import ProfileHeader from './profile-header'
 
 type ProfilePageContentProps = {
   myUid?: number

@@ -3,12 +3,12 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { getTranslation } from '@/i18n'
 import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
 import { getApolloServerClient } from '@/services/apollo.server'
 
 import UploaderPageContent from './content'

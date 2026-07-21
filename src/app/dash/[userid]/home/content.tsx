@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react'
 
 import BookCover from '@/components/book-cover/book-cover'
 import ListFooter from '@/components/list-footer/list-footer'
-import { useMultipleBook } from '@/hooks/book'
-import { useSyncClippingsToServer } from '@/hooks/my-file'
 import {
   BooksDocument,
   type BooksQuery,
@@ -14,8 +12,10 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-  type User,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { useMultipleBook } from '@/hooks/book'
+import { useSyncClippingsToServer } from '@/hooks/my-file'
+import { type User } from '@/schema/generated'
 
 import { BooksSkeleton } from './skeleton'
 

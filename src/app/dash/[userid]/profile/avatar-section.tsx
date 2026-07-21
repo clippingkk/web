@@ -1,9 +1,10 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import { useState } from 'react'
 
 import Avatar from '@/components/avatar/avatar'
 import AvatarPicker from '@/components/profile/avatar-picker'
-import { type ProfileQuery, useUpdateProfileMutation } from '@/schema/generated'
+import { type ProfileQuery, UpdateProfileDocument } from '@/gql/graphql'
 
 type Props = {
   profile: Pick<ProfileQuery['me'], 'avatar' | 'name'>
@@ -13,7 +14,7 @@ type Props = {
 
 function AvatarSection(props: Props) {
   const { profile, uid, isInMyPage } = props
-  const [doUpdate] = useUpdateProfileMutation()
+  const [doUpdate] = useMutation(UpdateProfileDocument)
 
   const [isPickingAvatar, setIsPickingAvatar] = useState(false)
   return (

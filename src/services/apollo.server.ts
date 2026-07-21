@@ -38,7 +38,7 @@ export function doApolloServerQuery<
   TVariables extends OperationVariables = OperationVariables,
 >(options: QueryOptions<TVariables, TData>): Promise<{ data: TData }> {
   return getApolloServerClient()
-    .query<TData, TVariables>(options)
+    .query(options)
     .then((result) => ({ data: result.data as TData }))
     .catch((e: any) => {
       if (e instanceof ServerError) {

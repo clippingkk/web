@@ -1,7 +1,7 @@
 'use client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import { useSuspenseQuery } from '@apollo/client/react'
+import { useSuspenseQuery, useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail } from 'lucide-react'
 import { useParams } from 'next/navigation'
@@ -11,14 +11,14 @@ import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
 
 import { Button } from '@/components/button/button'
-import { useTranslation } from '@/i18n/client'
 import {
-  ExportDestination,
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-  useExportDataToMutation,
-} from '@/schema/generated'
+  ExportDataToDocument,
+} from '@/gql/graphql'
+import { useTranslation } from '@/i18n/client'
+import { ExportDestination } from '@/schema/generated'
 
 import ExportTriggerButton from './export-trigger-button'
 
@@ -63,7 +63,7 @@ function ExportToMail() {
     },
   })
 
-  const [mutate] = useExportDataToMutation({
+  const [mutate] = useMutation(ExportDataToDocument, {
     onCompleted() {
       toast.success(t('app.settings.export.success'))
       reset()

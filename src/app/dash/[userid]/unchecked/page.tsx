@@ -6,7 +6,7 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { getApolloServerClient } from '@/services/apollo.server'
 
 import UncheckedPageContent from './content'

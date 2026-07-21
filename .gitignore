@@ -62,7 +62,7 @@ dist.zip
 dist-dev
 __generated__
 .next
-src/schema/generated.tsx
+src/schema/generated.ts
 .swc
 
 # Sentry

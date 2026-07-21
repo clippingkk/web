@@ -7,7 +7,7 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { getPaymentSubscription } from '@/services/payment'
 

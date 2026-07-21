@@ -1,6 +1,7 @@
 'use client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
+import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -10,8 +11,9 @@ import { z } from 'zod/v4'
 
 import BrandNotionLogo from '@/assets/brand-notion.svg'
 import { Button } from '@/components/button/button'
+import { ExportDataToDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { ExportDestination, useExportDataToMutation } from '@/schema/generated'
+import { ExportDestination } from '@/schema/generated'
 
 import ExportTriggerButton from './export-trigger-button'
 
@@ -61,7 +63,7 @@ function ExportToNotion() {
     },
   })
 
-  const [mutate] = useExportDataToMutation({
+  const [mutate] = useMutation(ExportDataToDocument, {
     onCompleted() {
       toast.success(t('app.settings.export.success'))
       reset()

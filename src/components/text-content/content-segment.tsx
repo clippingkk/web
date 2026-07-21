@@ -1,5 +1,6 @@
+import type { FetchClippingQuery } from '@/gql/graphql'
+
 import { AppFeatures } from '../../constants/features'
-import type { FetchClippingQuery } from '../../schema/generated'
 
 type ContentSegmentProps = {
   noun?: FetchClippingQuery['clipping']['richContent']['nouns'][0]

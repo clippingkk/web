@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation'
 
 import { checkIsPremium } from '@/compute/user'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { getTranslation } from '@/i18n'
 import {
   FetchMyWebHooksDocument,
   type FetchMyWebHooksQuery,
@@ -12,7 +11,8 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
 
 import WebHooksContent from './content'

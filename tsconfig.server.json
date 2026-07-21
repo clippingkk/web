@@ -9,5 +9,5 @@
     "src/app/api/**/*.ts",
     "src/server/**/*.ts"
   ],
-  "exclude": ["node_modules", "src/schema/generated.tsx", "src/gql"]
+  "exclude": ["node_modules", "src/schema/generated.ts", "src/gql"]
 }

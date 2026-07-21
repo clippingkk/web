@@ -1,9 +1,11 @@
 'use client'
+import { useQuery } from '@apollo/client/react'
+
 import ClippingItem from '@/components/clipping-item/clipping-item'
 import Divider from '@/components/divider/divider'
 import MasonryContainer from '@/components/masonry-container'
+import { BookDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useBookQuery } from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import { getUserSlug } from '@/utils/profile.utils'
 
@@ -13,7 +15,7 @@ type Props = {
 
 function UncheckedPageContent({ profile }: Props) {
   const domain = getUserSlug(profile).toString()
-  const { data: clippingsData } = useBookQuery({
+  const { data: clippingsData } = useQuery(BookDocument, {
     variables: {
       id: 0,
       pagination: {

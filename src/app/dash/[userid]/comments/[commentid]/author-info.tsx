@@ -2,7 +2,7 @@ import * as motion from 'motion/react-client'
 import Image from 'next/image'
 
 import { glassCardClass } from '@/components/card/glass-card'
-import type { GetCommentQuery } from '@/schema/generated'
+import type { GetCommentQuery } from '@/gql/graphql'
 
 type Props = {
   creator: GetCommentQuery['getComment']['creator']

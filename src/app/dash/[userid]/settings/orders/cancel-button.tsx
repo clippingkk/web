@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 
+import type { SubscriptionStatus as SubscriptionStatusValue } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { SubscriptionStatus } from '@/schema/generated'
 import { toastPromiseDefaultOption } from '@/services/misc'
@@ -10,7 +11,7 @@ import { cancelPaymentSubscription } from '@/services/payment'
 
 type Props = {
   subscriptionId: string
-  status: SubscriptionStatus
+  status: SubscriptionStatusValue
 }
 
 function CancelButton({ subscriptionId, status }: Props) {

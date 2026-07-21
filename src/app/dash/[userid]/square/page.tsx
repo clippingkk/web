@@ -7,7 +7,7 @@ import {
   FetchSquareDataDocument,
   type FetchSquareDataQuery,
   type FetchSquareDataQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { getReactQueryClient } from '@/services/ajax'
 import {
   doApolloServerQuery,

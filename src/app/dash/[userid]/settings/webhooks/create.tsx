@@ -1,6 +1,7 @@
 'use client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
@@ -8,8 +9,9 @@ import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 
 import { Button } from '@/components/button/button'
+import { CreateNewWebHookDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useCreateNewWebHookMutation, WebHookStep } from '@/schema/generated'
+import { WebHookStep } from '@/schema/generated'
 
 type Props = {
   onClose: () => void
@@ -44,7 +46,7 @@ function WebHookCreate({ onClose, isPremium }: Props) {
       hookUrl: '',
     },
   })
-  const [createMutation] = useCreateNewWebHookMutation({
+  const [createMutation] = useMutation(CreateNewWebHookDocument, {
     onCompleted() {
       toast.success(t('app.common.done'))
       reset()

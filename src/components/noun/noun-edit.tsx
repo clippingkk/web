@@ -1,6 +1,7 @@
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import SelectField from '@annatarhe/lake-ui/form-select-field'
 import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
+import { useMutation, useQuery } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
 import { useEffect } from 'react'
@@ -8,14 +9,14 @@ import { Controller, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
 
+import {
+  CreateNounMutationDocument,
+  FetchNounDocument,
+  UpdateNounMutationDocument,
+} from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
-import {
-  NounScope,
-  useCreateNounMutationMutation,
-  useFetchNounQuery,
-  useUpdateNounMutationMutation,
-} from '../../schema/generated'
+import { NounScope } from '../../schema/generated'
 import { toastPromiseDefaultOption } from '../../services/misc'
 
 type NounEditContentProps = {
@@ -44,18 +45,22 @@ function NounEditContent(props: NounEditContentProps) {
   const { id, noun, onClose } = props
   const { t } = useTranslation()
 
-  const [createNoun, { loading: createLoading }] =
-    useCreateNounMutationMutation({
+  const [createNoun, { loading: createLoading }] = useMutation(
+    CreateNounMutationDocument,
+    {
       onCompleted: () => {
         onClose()
       },
-    })
-  const [updateNoun, { loading: updateLoading }] =
-    useUpdateNounMutationMutation({
+    }
+  )
+  const [updateNoun, { loading: updateLoading }] = useMutation(
+    UpdateNounMutationDocument,
+    {
       onCompleted: () => {
         onClose()
       },
-    })
+    }
+  )
 
   const { control, handleSubmit, setValue, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -66,7 +71,7 @@ function NounEditContent(props: NounEditContentProps) {
     },
   })
 
-  const { data: fetchedNoun, loading } = useFetchNounQuery({
+  const { data: fetchedNoun, loading } = useQuery(FetchNounDocument, {
     variables: {
       id,
     },

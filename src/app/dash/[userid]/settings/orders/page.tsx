@@ -4,13 +4,13 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { getTranslation } from '@/i18n'
 import {
   FetchOrdersDocument,
   type FetchOrdersQuery,
   type FetchOrdersQueryVariables,
-  SubscriptionStatus,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
+import { SubscriptionStatus } from '@/schema/generated'
 import { getApolloServerClient } from '@/services/apollo.server'
 
 import CancelButton from './cancel-button'

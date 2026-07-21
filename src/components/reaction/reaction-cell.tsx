@@ -1,15 +1,13 @@
 import Tooltip from '@annatarhe/lake-ui/tooltip'
-import { useApolloClient } from '@apollo/client/react'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 
-import {
-  ReactionTarget,
-  useReactionCreateMutation,
-  useReactionRemoveMutation,
-} from '../../schema/generated'
+import { ReactionCreateDocument, ReactionRemoveDocument } from '@/gql/graphql'
+
+import { ReactionTarget } from '../../schema/generated'
 import Loading2Icon from '../icons/loading2.svg'
 
 export type SymbolGroupedData = {
@@ -33,7 +31,8 @@ function ReactionCell(props: ReactionCellProps) {
   const client = useApolloClient()
   const navigate = useRouter()
 
-  const [doReactionCreate, { loading: isCreating }] = useReactionCreateMutation(
+  const [doReactionCreate, { loading: isCreating }] = useMutation(
+    ReactionCreateDocument,
     {
       onCompleted() {
         toast.success(t('app.clipping.reactions.addSuccess'))
@@ -45,7 +44,8 @@ function ReactionCell(props: ReactionCellProps) {
       },
     }
   )
-  const [doReactionRemove, { loading: isRemoving }] = useReactionRemoveMutation(
+  const [doReactionRemove, { loading: isRemoving }] = useMutation(
+    ReactionRemoveDocument,
     {
       onCompleted() {
         toast.success(t('app.clipping.reactions.removeSuccess'))

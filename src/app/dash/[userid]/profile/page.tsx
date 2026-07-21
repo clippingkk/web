@@ -7,7 +7,6 @@ import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-
 import ProfileTabs from '@/components/profile-tabs/profile-tabs'
 import PersonalActivity from '@/components/profile/activity'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { getTranslation } from '@/i18n'
 import {
   FetchClippingsByUidDocument,
   type FetchClippingsByUidQuery,
@@ -15,7 +14,8 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
 import { getReactQueryClient } from '@/services/ajax'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '@/services/wenqu'

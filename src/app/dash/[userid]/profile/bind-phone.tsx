@@ -1,20 +1,21 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useMutation } from '@apollo/client/react'
 import { Smartphone } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import BindPhone from '@/components/bind-phone'
 import Button from '@/components/button/button'
+import { BindUserPhoneDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useBindUserPhoneMutation } from '@/schema/generated'
 
 function ProfileBindPhone() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
 
-  const [doAuth] = useBindUserPhoneMutation({
+  const [doAuth] = useMutation(BindUserPhoneDocument, {
     onCompleted: (_, clientOptions) => {
       clientOptions?.client?.resetStore()
       toast.success(t('app.profile.editor.phoneBinded'))

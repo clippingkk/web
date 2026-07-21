@@ -1,4 +1,5 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -9,8 +10,8 @@ import MetamaskBindButton from '@/components/externalAccount/metamask.bind'
 */
 import FieldInput from '@/components/input'
 import ProgressBlock from '@/components/progress/progress-block'
+import { UpdateProfileDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useUpdateProfileMutation } from '@/schema/generated'
 import { toastPromiseDefaultOption, uploadImage } from '@/services/misc'
 
 // redirected from a new signup by loginV3
@@ -26,7 +27,9 @@ function NewbiePageContent({ uid }: { uid: number }) {
 
   const { t } = useTranslation()
 
-  const [doUpdateUserProfile, doUpdateResponse] = useUpdateProfileMutation()
+  const [doUpdateUserProfile, doUpdateResponse] = useMutation(
+    UpdateProfileDocument
+  )
 
   const [phase, setPhase] = useState(0)
   const [newName, setNewName] = useState('')
