@@ -3,15 +3,16 @@ import * as sentry from '@sentry/react'
 import Cookies from 'js-cookie'
 
 import {
+  ProfileDocument,
+  type ProfileQuery,
+  type ProfileQueryVariables,
+} from '@/gql/graphql'
+
+import {
   COOKIE_TOKEN_KEY,
   type IUserToken,
   USER_ID_KEY,
 } from '../constants/storage'
-import {
-  ProfileDocument,
-  type ProfileQuery,
-  type ProfileQueryVariables,
-} from '../schema/generated'
 import { updateToken } from '../services/ajax'
 import profile from './profile'
 

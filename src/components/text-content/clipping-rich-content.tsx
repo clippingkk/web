@@ -2,9 +2,9 @@
 import Modal from '@annatarhe/lake-ui/modal'
 import { useCallback, useMemo, useState } from 'react'
 
+import type { FetchClippingQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
-import type { FetchClippingQuery } from '../../schema/generated'
 import NounEditContent from '../noun/noun-edit'
 import ContentSegment from './content-segment'
 

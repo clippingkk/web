@@ -3,12 +3,12 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 
 import { COOKIE_TOKEN_KEY } from '@/constants/storage'
-import { getTranslation } from '@/i18n'
 import {
   UncheckBooksQueryDocument,
   type UncheckBooksQueryQuery,
   type UncheckBooksQueryQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
 import { getApolloServerClient } from '@/services/apollo.server'
 
 import HomelessBooksTable from './content'

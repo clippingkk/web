@@ -4,10 +4,10 @@ import { CircleCheck } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
+import { CreateClippingsDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
 import { graphql } from '../gql'
-import { useCreateClippingsMutation } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
 import { UploadStep } from '../services/uploader'
 import { type WenquSearchResponse, wenquRequest } from '../services/wenqu'
@@ -41,7 +41,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
   const wenquSearchResult = useRef(new Map<string, number>())
   const client = useApolloClient()
 
-  const [exec] = useCreateClippingsMutation()
+  const [exec] = useMutation(CreateClippingsDocument)
   const [onSyncEnd] = useMutation(onSyncEndMutation)
 
   const onUpload = useCallback(
@@ -230,7 +230,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
 
 export function useSyncClippingsToServer(id: number) {
   const { t } = useTranslation()
-  const [exec, { client }] = useCreateClippingsMutation()
+  const [exec, { client }] = useMutation(CreateClippingsDocument)
   useEffect(() => {
     if (!id) {
       return

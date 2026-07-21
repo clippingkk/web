@@ -1,14 +1,15 @@
 'use client'
+import { useQuery } from '@apollo/client/react'
 import { Masonry, useInfiniteLoader } from 'masonic'
 import React from 'react'
 
 import ClippingItem from '@/components/clipping-item/clipping-item'
-import { useMultipleBook } from '@/hooks/book'
-import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
 import {
   type FetchClippingsByUidQuery,
-  useFetchClippingsByUidQuery,
-} from '@/schema/generated'
+  FetchClippingsByUidDocument,
+} from '@/gql/graphql'
+import { useMultipleBook } from '@/hooks/book'
+import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import { uniqueById } from '@/utils/array'
 
@@ -24,7 +25,7 @@ function ClippingList(props: ClippingListProps) {
   const [extraItems, setExtraItems] = React.useState<
     FetchClippingsByUidQuery['clippingList']['items']
   >(initialClippings?.items ?? [])
-  const { data, loading, fetchMore } = useFetchClippingsByUidQuery({
+  const { data, loading, fetchMore } = useQuery(FetchClippingsByUidDocument, {
     variables: {
       uid,
       pagination: {

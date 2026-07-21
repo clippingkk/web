@@ -1,11 +1,13 @@
 'use client'
 
+import { useMutation } from '@apollo/client/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
-import { type Comment, useDeleteCommentMutation } from '@/schema/generated'
+import { DeleteCommentDocument } from '@/gql/graphql'
+import { type Comment } from '@/schema/generated'
 import dayjs from '@/utils/dayjs'
 
 type Props = {
@@ -15,7 +17,7 @@ type Props = {
 export default function CommentCard({ comment }: Props) {
   const router = useRouter()
   const [isDeleting, setIsDeleting] = useState(false)
-  const [deleteComment] = useDeleteCommentMutation()
+  const [deleteComment] = useMutation(DeleteCommentDocument)
 
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault()

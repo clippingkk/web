@@ -1,10 +1,10 @@
-import { useApolloClient } from '@apollo/client/react'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { LinkIcon } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
+import { SyncHomelessBookDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useSyncHomelessBookMutation } from '@/schema/generated'
 import { toastPromiseDefaultOption } from '@/services/misc'
 
 type HomelessBookSyncInputProps = {
@@ -14,7 +14,7 @@ type HomelessBookSyncInputProps = {
 function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
   const client = useApolloClient()
   const [doubanId, setDoubanId] = useState('')
-  const [doSyncHomelessBook] = useSyncHomelessBookMutation()
+  const [doSyncHomelessBook] = useMutation(SyncHomelessBookDocument)
   const { t } = useTranslation()
 
   const onConfirm = useCallback(() => {

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 
+import type { FetchYearlyReportQuery } from '@/gql/graphql'
+
 import { APP_URL_ORIGIN } from '../../constants/config'
-import type { FetchYearlyReportQuery } from '../../schema/generated'
 import type { WenquBook } from '../../services/wenqu'
 import { resolveMediaUrl } from '../../utils/image'
 

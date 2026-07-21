@@ -12,7 +12,7 @@ export default defineConfig([globalIgnores([
     "src/gql/**/*.ts",
     "src/**/*.mdx",
     "src/types.g.ts",
-    "src/schema/generated.tsx",
+    "src/schema/generated.ts",
     "node_modules/**/*",
     ".next/**/*",
     "coverage/**/*",

@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 
+import type { FetchClippingQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
-import type { FetchClippingQuery } from '../../schema/generated'
 import Avatar from '../avatar/avatar'
 import Button from '../button/button'
 import MarkdownPreview from '../markdown-editor/md-preview'

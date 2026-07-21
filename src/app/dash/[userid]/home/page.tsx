@@ -6,7 +6,6 @@ import { redirect } from 'next/navigation'
 import AIBookRecommendationButton from '@/components/book-recommendation/ai-book-recommendation-button'
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { getTranslation } from '@/i18n'
 import {
   BooksDocument,
   type BooksQuery,
@@ -14,7 +13,8 @@ import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
 
 import HomePageContent from './content'

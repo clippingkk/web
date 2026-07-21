@@ -3,7 +3,7 @@
 import Modal from '@annatarhe/lake-ui/modal'
 import { useCallback, useState } from 'react'
 
-import type { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/gql/graphql'
 import { getUserSlug } from '@/utils/profile.utils'
 
 import SearchBar from '../searchbar/searchbar'

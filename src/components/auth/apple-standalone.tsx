@@ -1,4 +1,5 @@
 'use client'
+import { useLazyQuery } from '@apollo/client/react'
 import * as sentry from '@sentry/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -6,11 +7,8 @@ import toast from 'react-hot-toast'
 
 import { syncLoginStateToServer } from '@/actions/login'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import {
-  AppleAuthVersion,
-  AppleLoginPlatforms,
-  useLoginByAppleLazyQuery,
-} from '@/schema/generated'
+import { LoginByAppleDocument } from '@/gql/graphql'
+import { AppleAuthVersion, AppleLoginPlatforms } from '@/schema/generated'
 import { updateToken } from '@/services/ajax'
 import type { AppleAuthResponse } from '@/services/apple'
 import profile from '@/utils/profile'
@@ -30,7 +28,7 @@ export default function AppleStandaloneLoginButton({
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isAuthenticating, setIsAuthenticating] = useState(false)
-  const [doAppleAuth] = useLoginByAppleLazyQuery()
+  const [doAppleAuth] = useLazyQuery(LoginByAppleDocument)
 
   const handleAppleSuccess = async (response: AppleAuthResponse) => {
     const { code, id_token, state } = response.authorization

@@ -7,7 +7,7 @@ import {
   setup,
 } from 'xstate'
 
-import type { AuthLoginResponseFragment } from '@/schema/generated'
+import type { AuthLoginResponseFragment } from '@/gql/graphql'
 
 import { AuthV4ManualAuthSchema } from './schema'
 

@@ -6,7 +6,7 @@ import {
   FetchYearlyReportDocument,
   type FetchYearlyReportQuery,
   type FetchYearlyReportQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import {

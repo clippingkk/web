@@ -1,4 +1,5 @@
-import type { PublicDataQuery } from '../schema/generated'
+import type { PublicDataQuery } from '@/gql/graphql'
+
 import { getReactQueryClient } from '../services/ajax'
 import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '../services/wenqu'
 import BookCover from './book-cover/book-cover'

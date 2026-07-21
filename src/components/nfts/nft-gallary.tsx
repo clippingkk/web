@@ -1,6 +1,9 @@
+import { useQuery } from '@apollo/client/react'
 import { useMemo } from 'react'
 
-import { type NftItem, useFetchMyNfTsQuery } from '../../schema/generated'
+import { FetchMyNfTsDocument } from '@/gql/graphql'
+
+import { type NftItem } from '../../schema/generated'
 import NFTGallaryItem from './nft-gallary-item'
 
 type NFTGallaryProps = {
@@ -11,7 +14,7 @@ type NFTGallaryProps = {
 // FIXME:
 // 这里是有可能被改动改成其他人的 nft 的，需要后端校验 nft 的合法性
 function NFTGallary(props: NFTGallaryProps) {
-  const { data, loading } = useFetchMyNfTsQuery({
+  const { data, loading } = useQuery(FetchMyNfTsDocument, {
     variables: {
       uid: props.uid,
     },

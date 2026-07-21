@@ -9,12 +9,12 @@ import Divider from '@/components/divider/divider'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
 import { BOOK_CLIPPINGS_PAGE_SIZE } from '@/constants/features'
 import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-import { getTranslation } from '@/i18n'
 import {
   BookDocument,
   type BookQuery,
   type BookQueryVariables,
-} from '@/schema/generated'
+} from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { getWenquBookByDbId } from '@/services/wenqu'
 

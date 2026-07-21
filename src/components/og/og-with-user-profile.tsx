@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 
+import type { ProfileQuery } from '@/gql/graphql'
+
 import logo from '../../assets/logo-light.svg'
 import { APP_URL_ORIGIN } from '../../constants/config'
-import type { ProfileQuery } from '../../schema/generated'
 import { resolveMediaUrl } from '../../utils/image'
 
 type OGWithUserProfileProps = {

@@ -1,6 +1,6 @@
 import { dehydrate, type DehydratedState } from '@tanstack/react-query'
 
-import { PublicDataDocument, type PublicDataQuery } from '@/schema/generated'
+import { PublicDataDocument, type PublicDataQuery } from '@/gql/graphql'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '@/services/wenqu'

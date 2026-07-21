@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import ReactionCell, {
   type SymbolGroupedData,
 } from '@/components/reaction/reaction-cell'
-import type { FetchClippingQuery } from '@/schema/generated'
+import type { FetchClippingQuery } from '@/gql/graphql'
 
 const availableReactions = ['👍', '❤️', '⭐️', '🐶', '😱']
 

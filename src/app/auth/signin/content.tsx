@@ -1,5 +1,6 @@
 'use client'
 import InputField from '@annatarhe/lake-ui/form-input-field'
+import { useLazyQuery } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { useState } from 'react'
@@ -8,10 +9,10 @@ import { z } from 'zod'
 
 import Button from '@/components/button/button'
 import { CF_TURNSTILE_SITE_KEY } from '@/constants/config'
+import { AuthDocument } from '@/gql/graphql'
 import { useAuthSuccessed } from '@/hooks/hooks'
 import { useTitle } from '@/hooks/tracke'
 import { useTranslation } from '@/i18n/client'
-import { useAuthLazyQuery } from '@/schema/generated'
 
 const isProd = process.env.NODE_ENV === 'production'
 const signinSchema = z.object({
@@ -22,7 +23,7 @@ const signinSchema = z.object({
 type SigninFormData = z.infer<typeof signinSchema>
 
 function SigninPageContent() {
-  const [exec, resp] = useAuthLazyQuery()
+  const [exec, resp] = useLazyQuery(AuthDocument)
   useAuthSuccessed(resp.called, resp.loading, resp.error, resp.data?.auth)
   const [turnstileToken, setTurnstileToken] = useState('')
 

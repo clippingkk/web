@@ -5,8 +5,8 @@ import { useId, useRef, useState, type KeyboardEvent } from 'react'
 
 import ClippingList from '@/app/dash/[userid]/profile/clipping-list'
 import RecentComments from '@/components/recent-comments/recent-comments'
+import type { FetchClippingsByUidQuery, ProfileQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import type { FetchClippingsByUidQuery, ProfileQuery } from '@/schema/generated'
 
 type ProfileTabsProps = {
   uid: number

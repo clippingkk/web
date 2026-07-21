@@ -3,6 +3,7 @@ import InputField from '@annatarhe/lake-ui/form-input-field'
 import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
+import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Globe2Icon, PenIcon, Settings, User2Icon } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
@@ -12,8 +13,8 @@ import { z } from 'zod'
 
 import Button from '@/components/button/button'
 import ExternalAccountList from '@/components/externalAccount/list'
+import { UpdateProfileDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useUpdateProfileMutation } from '@/schema/generated'
 import { uploadImage } from '@/services/misc'
 
 type ProfileEditorProps = {
@@ -44,7 +45,7 @@ function ProfileEditor(props: ProfileEditorProps) {
   // Initialize state from prop
   const [visible, setVisible] = useState(() => !!props.withProfileEditor)
 
-  const [doUpdate, { client }] = useUpdateProfileMutation()
+  const [doUpdate, { client }] = useMutation(UpdateProfileDocument)
   const { t } = useTranslation()
 
   const {

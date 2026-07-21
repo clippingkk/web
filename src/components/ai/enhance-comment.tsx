@@ -1,10 +1,11 @@
 import Modal from '@annatarhe/lake-ui/modal'
+import { useMutation } from '@apollo/client/react'
 import { Loader2 } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
+import { AiEnhanceCommentDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { useAiEnhanceCommentMutation } from '@/schema/generated'
 
 import MarkdownPreview from '../markdown-editor/md-preview'
 
@@ -24,7 +25,7 @@ enum Prompts {
 function AICommentEnhancer(props: AICommentEnhancerProps) {
   const [opened, setOpened] = useState(false)
   const { t } = useTranslation()
-  const [doEnhance, { loading, data }] = useAiEnhanceCommentMutation({
+  const [doEnhance, { loading, data }] = useMutation(AiEnhanceCommentDocument, {
     variables: {
       promptId: -1,
       bookName: props.bookName,

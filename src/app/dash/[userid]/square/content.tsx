@@ -1,4 +1,5 @@
 'use client'
+import { useQuery } from '@apollo/client/react'
 import { BookOpen } from 'lucide-react'
 import { Masonry, useInfiniteLoader } from 'masonic'
 import { useMemo, useRef, useState } from 'react'
@@ -9,14 +10,14 @@ import BookClippingsToolbar, {
 import InfiniteScrollFooter from '@/components/clipping-item/infinite-scroll-footer'
 import SquareClippingCard from '@/components/clipping-item/square-clipping-card'
 import { APP_API_STEP_LIMIT } from '@/constants/config'
+import {
+  type FetchSquareDataQuery,
+  FetchSquareDataDocument,
+} from '@/gql/graphql'
 import { useMultipleBook } from '@/hooks/book'
 import { usePageTrack } from '@/hooks/tracke'
 import { useMasonaryColumnCount } from '@/hooks/use-screen-size'
 import { useTranslation } from '@/i18n/client'
-import {
-  type FetchSquareDataQuery,
-  useFetchSquareDataQuery,
-} from '@/schema/generated'
 import { IN_APP_CHANNEL } from '@/services/channel'
 import { uniqueById } from '@/utils/array'
 import { getUserSlug } from '@/utils/profile.utils'
@@ -44,7 +45,7 @@ function SquarePageContent(props: SquarePageContentProps) {
     props.squareData.featuredClippings
   )
 
-  const { fetchMore } = useFetchSquareDataQuery({
+  const { fetchMore } = useQuery(FetchSquareDataDocument, {
     variables: {
       pagination: { limit: APP_API_STEP_LIMIT },
     },

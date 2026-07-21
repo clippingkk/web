@@ -1,7 +1,8 @@
+import { PublicDataDocument, type PublicDataQuery } from '@/gql/graphql'
+
 import Footer from '../components/footer/Footer'
 import IndexPage from '../components/index-page/index.page'
 import { getBackgroundImageServer } from '../hooks/theme.server'
-import { PublicDataDocument, type PublicDataQuery } from '../schema/generated'
 import { getReactQueryClient } from '../services/ajax'
 import { doApolloServerQuery } from '../services/apollo.server'
 import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '../services/wenqu'

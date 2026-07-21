@@ -6,17 +6,17 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 
-import type { User } from '@/gql/graphql'
-
-import { syncLoginStateToServer } from '../actions/login'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 import type {
   AuthByPhoneMutation,
   AuthByWeb3Query,
   AuthQuery,
   DoLoginV3Mutation,
   SignupMutation,
-} from '../schema/generated'
+} from '@/gql/graphql'
+import type { User } from '@/schema/generated'
+
+import { syncLoginStateToServer } from '../actions/login'
+import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
 import { updateToken } from '../services/ajax'
 import profile from '../utils/profile'
 import { getUserSlug } from '../utils/profile.utils'

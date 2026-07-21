@@ -1,12 +1,11 @@
 'use client'
+import { useMutation } from '@apollo/client/react'
 import { useCallback, useMemo } from 'react'
 
 import AuthCallbackPageContainer from '@/components/auth/fake-layout'
+import { BindAppleUniqueDocument } from '@/gql/graphql'
 import { useAuthBy3rdPartSuccessed } from '@/hooks/hooks'
-import {
-  AppleLoginPlatforms,
-  useBindAppleUniqueMutation,
-} from '@/schema/generated'
+import { AppleLoginPlatforms } from '@/schema/generated'
 
 type AuthCallbackAppleProps = {
   idToken: string
@@ -24,7 +23,7 @@ function AuthCallbackApple(props: AuthCallbackAppleProps) {
     }
   }, [idToken])
 
-  const [doBind, doBindResult] = useBindAppleUniqueMutation()
+  const [doBind, doBindResult] = useMutation(BindAppleUniqueDocument)
 
   const onAuthCallback = useCallback(
     (pn: string, code: string) => {

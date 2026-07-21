@@ -1,24 +1,21 @@
 'use client'
+import { useLazyQuery, useMutation } from '@apollo/client/react'
 import { useMachine } from '@xstate/react'
 import toast from 'react-hot-toast'
 import { fromPromise } from 'xstate'
 
+import { AuthDocument, DoLoginV3Document, SendOtpDocument } from '@/gql/graphql'
 import { useLoginV3Successed } from '@/hooks/hooks'
-import {
-  OtpChannel,
-  useAuthLazyQuery,
-  useDoLoginV3Mutation,
-  useSendOtpMutation,
-} from '@/schema/generated'
+import { OtpChannel } from '@/schema/generated'
 
 import authMachine from './auth.state'
 import EmailLoginEntry from './emailEntry'
 import ThirdPartEntry from './thirdPartEntry'
 
 function AuthV4Content() {
-  const [doSendOtp] = useSendOtpMutation()
-  const [doAuth, doAuthData] = useAuthLazyQuery()
-  const [loginV3, loginV3Response] = useDoLoginV3Mutation()
+  const [doSendOtp] = useMutation(SendOtpDocument)
+  const [doAuth, doAuthData] = useLazyQuery(AuthDocument)
+  const [loginV3, loginV3Response] = useMutation(DoLoginV3Document)
 
   useLoginV3Successed(
     doAuthData.called,

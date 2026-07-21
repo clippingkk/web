@@ -1,14 +1,14 @@
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import { useApolloClient } from '@apollo/client/react'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import Button from '@/components/button/button'
 import LoadingIcon from '@/components/icons/loading.svg'
+import { UpdateClippingBookIdDocument } from '@/gql/graphql'
 import { useBookSearch } from '@/hooks/book'
 import { useTranslation } from '@/i18n/client'
-import { useUpdateClippingBookIdMutation } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
 
 import BookCandidate from './bookCandidate'
@@ -30,7 +30,9 @@ function BookInfoChangerContent(props: BookInfoChangerProps) {
   const [selectedBook, setSelectedBook] = useState<WenquBook | null>(null)
   const candidates = useBookSearch(bookNameInput, 0, props.visible)
   const client = useApolloClient()
-  const [doUpdate, { loading: isUpdating }] = useUpdateClippingBookIdMutation()
+  const [doUpdate, { loading: isUpdating }] = useMutation(
+    UpdateClippingBookIdDocument
+  )
 
   const handleSubmit = useCallback(async () => {
     if (!selectedBook) {

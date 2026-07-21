@@ -1,14 +1,12 @@
 'use client'
 
+import { useQuery } from '@apollo/client/react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useState } from 'react'
 
 import { glassCardClass } from '@/components/card/glass-card'
-import {
-  type Comment,
-  type GetCommentListQuery,
-  useGetCommentListQuery,
-} from '@/schema/generated'
+import { type GetCommentListQuery, GetCommentListDocument } from '@/gql/graphql'
+import { type Comment } from '@/schema/generated'
 
 // import { useInfiniteLoader } from '@/hooks/use-infinite-loader'
 import CommentCard from './comment-card'
@@ -22,7 +20,7 @@ export default function CommentsList({ initialData, userId }: Props) {
   const [hasMore, setHasMore] = useState(initialData.items.length >= 20)
   const [lastId, setLastId] = useState<number | undefined>()
 
-  const { data, loading, fetchMore } = useGetCommentListQuery({
+  const { data, loading, fetchMore } = useQuery(GetCommentListDocument, {
     variables: {
       uid: userId,
       pagination: {

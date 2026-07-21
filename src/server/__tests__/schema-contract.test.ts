@@ -1,4 +1,9 @@
+// @vitest-environment node
+
+import { graphql } from 'graphql'
+
 import schema from '@/schema/schema.json'
+import { graphQLSchema } from '@/server/graphql/schema'
 
 const queryFields = new Set(
   schema.__schema.types
@@ -24,4 +29,14 @@ test('keeps the legacy GraphQL entry points', () => {
   ]) {
     expect(mutationFields).toContain(field)
   }
+})
+
+test('builds an executable GraphQL schema', async () => {
+  const result = await graphql({
+    schema: graphQLSchema,
+    source: '{ __typename }',
+  })
+
+  expect(result.errors).toBeUndefined()
+  expect(result.data).toEqual({ __typename: 'Query' })
 })

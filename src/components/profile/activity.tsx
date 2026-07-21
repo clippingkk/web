@@ -1,7 +1,7 @@
 import ContributionWall from '@annatarhe/lake-ui/contribution-wall'
 import dayjs from 'dayjs'
 
-import type { ProfileQuery } from '@/schema/generated'
+import type { ProfileQuery } from '@/gql/graphql'
 
 type PersonalActivityProps = {
   data: ProfileQuery['me']['analysis']['daily']
