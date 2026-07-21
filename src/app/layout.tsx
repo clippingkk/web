@@ -22,6 +22,7 @@ import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 import '../prefers-dark'
 import '../utils/locales'
 import '../utils/settings'
+import Loading from './loading'
 import ClientOnlyProviders from './providers'
 
 // import localFont from 'next/font/local'
@@ -91,7 +92,7 @@ async function Layout(props: LayoutProps) {
         data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
       />
       <body>
-        <Suspense fallback={<div className="min-h-screen" />}>
+        <Suspense fallback={<Loading />}>
           <ClientOnlyProviders>
             {props.children}
             <div id="dialog"></div>

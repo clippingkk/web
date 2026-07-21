@@ -2,13 +2,13 @@ import type { NextConfig } from 'next'
 
 // const isProd = process.env.NODE_ENV === 'production'
 
+const deploymentId = process.env.GIT_COMMIT?.trim() || undefined
+
 const config: NextConfig = {
   serverExternalPackages: ['bullmq', 'pg', 'redis'],
   // enablePrerenderSourceMaps: false,
   // productionBrowserSourceMaps: false,
-  generateBuildId: () => {
-    return process.env.GIT_COMMIT ?? ''
-  },
+  deploymentId,
   // Disable React Compiler to avoid false positives with Floating UI and manual memoization
   reactCompiler: false,
   cacheComponents: true,
