@@ -1,3 +1,5 @@
+import { connection } from 'next/server'
+
 import type { ApiErrorResponse, ApiSuccessResponse } from '@/contracts/http'
 
 import { getServerEnv } from './env'
@@ -52,6 +54,7 @@ function withCors(response: Response, request: Request) {
 
 export function route(handler: Handler): Handler {
   return async (request, context) => {
+    await connection()
     try {
       return withCors(await handler(request, context), request)
     } catch (error) {

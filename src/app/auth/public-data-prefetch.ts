@@ -11,7 +11,7 @@ export type PublicDataWithBooks = {
 }
 
 export async function fetchPublicDataWithBooks(): Promise<PublicDataWithBooks> {
-  const client = getApolloServerClient()
+  const client = await getApolloServerClient()
   const data = await client.query<PublicDataQuery>({
     query: PublicDataDocument,
     variables: {

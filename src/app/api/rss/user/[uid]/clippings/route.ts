@@ -1,4 +1,5 @@
 import { and, desc, eq, isNull } from 'drizzle-orm'
+import { connection } from 'next/server'
 
 import { getDatabase } from '@/server/db'
 import { clippings, users } from '@/server/db/schema'
@@ -18,6 +19,7 @@ export async function GET(
   _request: Request,
   context: { params: Promise<{ uid: string }> }
 ) {
+  await connection()
   const uid = Number((await context.params).uid)
   if (!Number.isInteger(uid) || uid <= 0)
     throw new ApiError('user id not found')

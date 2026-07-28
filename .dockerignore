@@ -6,3 +6,6 @@ README.md
 .next
 .git
 .unikraft
+.env
+.env.*
+!.env.example

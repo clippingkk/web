@@ -23,7 +23,7 @@ export const getClippingData = cache(async (clippingId: number) => {
   const cs = await cookies()
   const token = cs.get(COOKIE_TOKEN_KEY)?.value
   const uid = cs.get(USER_ID_KEY)?.value
-  const client = getApolloServerClient()
+  const client = await getApolloServerClient()
 
   const clippingsResponse = await client.query<
     FetchClippingQuery,

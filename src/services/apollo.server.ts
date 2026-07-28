@@ -10,6 +10,7 @@ import {
   registerApolloClient,
 } from '@apollo/client-integration-nextjs'
 import { redirect } from 'next/navigation'
+import { connection } from 'next/server'
 
 import { API_HOST } from '@/constants/config'
 import { getServerEnv } from '@/server/env'
@@ -30,13 +31,17 @@ const { getClient } = registerApolloClient(() => {
   })
 })
 
-export const getApolloServerClient = getClient
+export async function getApolloServerClient() {
+  await connection()
+  return getClient()
+}
 
-export function doApolloServerQuery<
+export async function doApolloServerQuery<
   TData,
   TVariables extends OperationVariables = OperationVariables,
 >(options: QueryOptions<TVariables, TData>): Promise<{ data: TData }> {
-  return getApolloServerClient()
+  const client = await getApolloServerClient()
+  return client
     .query(options)
     .then((result) => ({ data: result.data as TData }))
     .catch((e: any) => {

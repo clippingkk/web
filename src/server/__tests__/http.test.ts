@@ -2,7 +2,14 @@ import { resetServerEnvForTests } from '@/server/env'
 import { ApiError } from '@/server/errors'
 import { errorJson, json, route } from '@/server/http'
 
+const { connection } = vi.hoisted(() => ({
+  connection: vi.fn<() => Promise<void>>(),
+}))
+
+vi.mock('next/server', () => ({ connection }))
+
 beforeEach(() => {
+  connection.mockResolvedValue()
   process.env.DATABASE_URL =
     'postgresql://postgres:admin@localhost:5432/clippingkk_test'
   process.env.REDIS_URL = 'redis://localhost:6379/15'
@@ -12,6 +19,19 @@ beforeEach(() => {
 })
 
 describe('HTTP response helpers', () => {
+  it('defers route handlers to request time before executing them', async () => {
+    const handler = route(async () => {
+      expect(connection).toHaveBeenCalledOnce()
+      return json({ ok: true })
+    })
+
+    const response = await handler(
+      new Request('https://clippingkk.example/api/v2/config')
+    )
+
+    expect(response.status).toBe(200)
+  })
+
   it('builds the shared success envelope', async () => {
     const response = json({ ok: true }, 201, 'created')
 
