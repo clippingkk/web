@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.16.0](https://github.com/clippingkk/web/compare/v5.15.0...v5.16.0) (2026-07-28)
+
+
+### Features
+
+* **api:** migrate backend into Next.js ([d5b834b](https://github.com/clippingkk/web/commit/d5b834be39ad1d37bb0a0ae2e77a5a8ae1e685b9))
+* **api:** migrate backend into Next.js ([4a0d349](https://github.com/clippingkk/web/commit/4a0d349020c230085b3216a64c2d9973516d4204))
+
+
+### Bug Fixes
+
+* **api:** address PR review findings ([8841b13](https://github.com/clippingkk/web/commit/8841b13a9a2330cae4e574c7ba1a3dd40e7cc41e))
+* **app:** prevent cached deployment white screens ([5f5d825](https://github.com/clippingkk/web/commit/5f5d825c58556abf32f9f504528a2428f85c0e1e))
+* **auth:** recover from invalid sessions ([e49066b](https://github.com/clippingkk/web/commit/e49066b0b5b20ba2df2e7726a2b1a82b2c2dbbc8))
+* **auth:** recover from invalid sessions ([0dbf37d](https://github.com/clippingkk/web/commit/0dbf37dfa3ae31610d8b330e7f71eaab38c1be63))
+* **clipping:** handle legacy null nouns ([8fbcc07](https://github.com/clippingkk/web/commit/8fbcc07530ff39a9eb8510965f72b62ea777191f))
+* **debug:** add debug code ([fe0ece5](https://github.com/clippingkk/web/commit/fe0ece5316b5f86fb8c9574e6fe0d560b12bfedf))
+* **orders:** support legacy schema ([22d9fc8](https://github.com/clippingkk/web/commit/22d9fc87921538c43562bdc3013e8f31a83f7855))
+
 ## [5.15.0](https://github.com/clippingkk/web/compare/v5.14.9...v5.15.0) (2026-04-14)
 
 
