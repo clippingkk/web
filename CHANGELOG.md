@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.16.2](https://github.com/clippingkk/web/compare/v5.16.1...v5.16.2) (2026-07-28)
+
+
+### Bug Fixes
+
+* **docker:** tolerate missing yarn shims ([4a44461](https://github.com/clippingkk/web/commit/4a444612fe223a0f8d854c5cab4b784d6a608555))
+* **docker:** tolerate missing yarn shims ([d001108](https://github.com/clippingkk/web/commit/d00110894815413881bc7636fe41d70746668c4a))
+
 ## [5.16.1](https://github.com/clippingkk/web/compare/v5.16.0...v5.16.1) (2026-07-28)
 
 
