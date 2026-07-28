@@ -98,11 +98,7 @@ export async function optionalUserId(request: Request) {
     return await verifyToken(token)
   } catch (error) {
     if (error instanceof ApiError) throw error
-    throw new ApiError(
-      error instanceof Error ? error.message : 'invalid token',
-      401,
-      'UNAUTHORIZED'
-    )
+    throw new ApiError('invalid token', 401, 'UNAUTHORIZED')
   }
 }
 

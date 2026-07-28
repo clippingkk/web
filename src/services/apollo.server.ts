@@ -1,7 +1,6 @@
 import {
   ApolloLink,
   HttpLink,
-  ServerError,
   type OperationVariables,
   type QueryOptions,
 } from '@apollo/client'
@@ -15,7 +14,7 @@ import { redirect } from 'next/navigation'
 import { API_HOST } from '@/constants/config'
 import { getServerEnv } from '@/server/env'
 
-import { authLink } from './ajax'
+import { authLink, isUnauthorizedApolloError } from './ajax'
 import { apolloCacheConfig } from './apollo.shard'
 
 export function getApolloServerGraphqlUrl() {
@@ -41,11 +40,8 @@ export function doApolloServerQuery<
     .query(options)
     .then((result) => ({ data: result.data as TData }))
     .catch((e: any) => {
-      if (e instanceof ServerError) {
-        const statusCode = e.statusCode
-        if (statusCode === 401) {
-          return redirect('/auth/auth-v4?clean=true')
-        }
+      if (isUnauthorizedApolloError(e)) {
+        return redirect('/auth/auth-v4?clean=true')
       }
       throw e
     })

@@ -129,19 +129,28 @@ export const authLink = new ApolloLink((operation, forward) => {
   return forward(operation)
 })
 
+export function isUnauthorizedApolloError(error: unknown) {
+  if (error instanceof ServerError) return error.statusCode === 401
+  return (
+    CombinedGraphQLErrors.is(error) &&
+    error.errors.some(
+      (graphQLError) => graphQLError.extensions?.code === 'UNAUTHORIZED'
+    )
+  )
+}
+
 const errorLink = onError(({ error }) => {
-  if (CombinedGraphQLErrors.is(error)) {
+  if (isUnauthorizedApolloError(error)) {
+    if (typeof window !== 'undefined') {
+      updateToken('')
+      profile.onLogout()
+    }
+  } else if (CombinedGraphQLErrors.is(error)) {
     if (typeof window !== 'undefined') {
       toast.error(error.errors[0].message)
     }
   } else if (error instanceof ServerError) {
     console.log(`[Network error]: ${error}`)
-    if (typeof window !== 'undefined') {
-      if (error.statusCode === 401) {
-        updateToken('')
-        profile.onLogout()
-      }
-    }
   }
 })
 
