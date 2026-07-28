@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.16.1](https://github.com/clippingkk/web/compare/v5.16.0...v5.16.1) (2026-07-28)
+
+
+### Bug Fixes
+
+* **deploy:** defer server env validation to runtime ([f416f41](https://github.com/clippingkk/web/commit/f416f41610f3cd9b457bebb831787653ae3cf796))
+* **deploy:** defer server env validation to runtime ([45940d1](https://github.com/clippingkk/web/commit/45940d18cc74a0c2ff8fa8fdd5932619213c20b5))
+
 ## [5.16.0](https://github.com/clippingkk/web/compare/v5.15.0...v5.16.0) (2026-07-28)
 
 
