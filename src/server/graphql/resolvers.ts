@@ -1421,7 +1421,15 @@ export const resolvers: Record<string, Record<string, any>> = {
     orderList: async (user: User, _args: Args, context: GraphQLContext) => {
       if (context.userId !== user.id) return []
       const rows = await db()
-        .select()
+        .select({
+          id: orders.id,
+          orderId: orders.orderId,
+          sku: orders.sku,
+          subscriptionId: orders.subscriptionId,
+          orderCreatedAt: orders.orderCreatedAt,
+          amount: orders.amount,
+          currency: orders.currency,
+        })
         .from(orders)
         .where(eq(orders.userOrders, user.id))
         .orderBy(desc(orders.id))
