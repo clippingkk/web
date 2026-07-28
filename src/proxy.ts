@@ -10,6 +10,15 @@ export function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
+  if (!url.pathname.includes('callback') && url.searchParams.has('clean')) {
+    request.cookies.delete(COOKIE_TOKEN_KEY)
+    request.cookies.delete(USER_ID_KEY)
+    const response = NextResponse.next()
+    response.cookies.delete(COOKIE_TOKEN_KEY)
+    response.cookies.delete(USER_ID_KEY)
+    return response
+  }
+
   if (!request.cookies.has(COOKIE_TOKEN_KEY)) {
     return NextResponse.next()
   }
@@ -17,15 +26,6 @@ export function proxy(request: NextRequest) {
   // If going to the authentication page but already having a token and UID, just redirect to my home page.
   const uid = request.cookies.get(USER_ID_KEY)?.value
   if (!uid) {
-    return NextResponse.next()
-  }
-  if (
-    uid &&
-    !url.pathname.includes('callback') &&
-    url.searchParams.has('clean')
-  ) {
-    request.cookies.delete(COOKIE_TOKEN_KEY)
-    request.cookies.delete(USER_ID_KEY)
     return NextResponse.next()
   }
   const nextUrl = new URL(`/dash/${uid}/home`, request.url)

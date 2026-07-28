@@ -1,6 +1,12 @@
+import { CombinedGraphQLErrors } from '@apollo/client'
 import toast from 'react-hot-toast'
 
-import { request, requestJson, updateToken } from '@/services/ajax'
+import {
+  isUnauthorizedApolloError,
+  request,
+  requestJson,
+  updateToken,
+} from '@/services/ajax'
 
 vi.mock('react-hot-toast', () => ({
   default: {
@@ -89,5 +95,18 @@ describe('HTTP client helpers', () => {
 
     await expect(request('/v2/example')).rejects.toThrow('not allowed')
     expect(toast.error).toHaveBeenCalledOnce()
+  })
+
+  it('recognizes unauthorized GraphQL errors', () => {
+    const error = new CombinedGraphQLErrors({
+      errors: [
+        {
+          message: 'invalid token',
+          extensions: { code: 'UNAUTHORIZED' },
+        },
+      ],
+    })
+
+    expect(isUnauthorizedApolloError(error)).toBe(true)
   })
 })
