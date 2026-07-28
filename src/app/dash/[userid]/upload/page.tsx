@@ -37,7 +37,7 @@ async function Page(props: Props) {
 
   const myUidInt = myUid ? parseInt(myUid, 10) : undefined
 
-  const apolloClient = getApolloServerClient()
+  const apolloClient = await getApolloServerClient()
   const { data: profileResponse } = await apolloClient.query<
     ProfileQuery,
     ProfileQueryVariables

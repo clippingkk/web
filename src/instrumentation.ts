@@ -1,9 +1,16 @@
 export async function register() {
-  if (
-    process.env.NEXT_RUNTIME !== 'nodejs' ||
-    process.env.RUN_WORKER !== 'true'
-  )
-    return
+  if (process.env.NEXT_RUNTIME !== 'nodejs') return
+
+  const { getServerEnv } = await import('./server/env')
+  let env
+  try {
+    env = getServerEnv()
+  } catch (error) {
+    console.error('Invalid server environment', error)
+    process.exit(1)
+  }
+  if (!env.runWorker) return
+
   const { startWorker } = await import('./server/jobs/worker')
   startWorker()
 }

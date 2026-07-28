@@ -30,7 +30,7 @@ export async function generateMetadata(
   const uid = ~~sp.uid
   const year = sp?.year ? ~~sp.year : new Date().getFullYear()
 
-  const client = getApolloServerClient()
+  const client = await getApolloServerClient()
   const reportInfoResponse = await client.query<
     FetchYearlyReportQuery,
     FetchYearlyReportQueryVariables
@@ -59,7 +59,7 @@ async function YearlyPage(props: YearlyLegacyPageProps) {
   const year = sp.year ? ~~sp.year : new Date().getFullYear()
   // const uid = ~~(context.params?.userid ?? -1) as number
 
-  const client = getApolloServerClient()
+  const client = await getApolloServerClient()
   const reportInfoResponse = await client.query<
     FetchYearlyReportQuery,
     FetchYearlyReportQueryVariables

@@ -31,7 +31,7 @@ async function AdminPanel(props: PageProps) {
 
   const offset = sp.offset ? ~~sp.offset : 0
 
-  const ac = getApolloServerClient()
+  const ac = await getApolloServerClient()
 
   const { data } = await ac.query<
     UncheckBooksQueryQuery,

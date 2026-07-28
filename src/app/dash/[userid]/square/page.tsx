@@ -18,7 +18,7 @@ import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '@/services/wenqu'
 import SquarePageContent from './content'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const client = getApolloServerClient()
+  const client = await getApolloServerClient()
   const squareResponse = await client.query<
     FetchSquareDataQuery,
     FetchSquareDataQueryVariables

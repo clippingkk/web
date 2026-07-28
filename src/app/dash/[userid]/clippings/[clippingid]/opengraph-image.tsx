@@ -30,7 +30,7 @@ export default async function Image(req: {
 }) {
   const cid = ~~req.params.clippingid
 
-  const client = getApolloServerClient()
+  const client = await getApolloServerClient()
   const clippingsResponse = await client.query<
     FetchClippingQuery,
     FetchClippingQueryVariables

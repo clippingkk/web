@@ -42,6 +42,11 @@ issued tokens. Use distinct Redis databases for cache and queue data. Configure
 optional authentication, payment, email, object-storage, and observability
 integrations from `.env.example` only when those features are enabled.
 
+The application validates its server environment before accepting requests. A
+missing or invalid `DATABASE_URL`, `REDIS_URL`, or `JWT_SECRET` causes the
+container to exit during startup. This validation does not connect to
+PostgreSQL or Redis; use `/probe` to verify service connectivity.
+
 `NEXT_PUBLIC_*` values are embedded into browser assets during the image build.
 They are not runtime secrets and changing them requires a new image. The
 published image already contains its release-time values.
@@ -120,7 +125,8 @@ docker build \
 
 Pass only public build values as build arguments. Supply database credentials,
 JWT keys, and integration secrets at runtime through `--env-file` or a secret
-manager.
+manager. Docker excludes `.env` files from the build context so server secrets
+are neither loaded by `next build` nor copied into the standalone image.
 
 ## Upgrade and rollback
 

@@ -1,7 +1,10 @@
+import { connection } from 'next/server'
+
 import { isDatabaseReady } from '@/server/db'
 import { isRedisReady } from '@/server/redis'
 
 export async function GET() {
+  await connection()
   const [database, redis] = await Promise.all([
     isDatabaseReady(),
     isRedisReady(),
