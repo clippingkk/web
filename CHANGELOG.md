@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.16.3](https://github.com/clippingkk/web/compare/v5.16.2...v5.16.3) (2026-07-28)
+
+
+### Bug Fixes
+
+* **docker:** fix docker image exe cmd ([73792ce](https://github.com/clippingkk/web/commit/73792cec0b106ee254d262930e3a2b8026f14294))
+
 ## [5.16.2](https://github.com/clippingkk/web/compare/v5.16.1...v5.16.2) (2026-07-28)
 
 
