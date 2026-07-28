@@ -1678,11 +1678,9 @@ export const resolvers: Record<string, Record<string, any>> = {
     source: (clipping: Clipping) => sourceToEnum(clipping.source),
     creator: (clipping: Clipping) => userById(clipping.createdBy),
     richContent: async (clipping: Clipping) => {
-      const nounRows = clipping.nouns.length
-        ? await db()
-            .select()
-            .from(nouns)
-            .where(inArray(nouns.id, clipping.nouns))
+      const nounIds = Array.isArray(clipping.nouns) ? clipping.nouns : []
+      const nounRows = nounIds.length
+        ? await db().select().from(nouns).where(inArray(nouns.id, nounIds))
         : []
       const activeNouns = nounRows.filter((noun) => noun.scope !== 3)
       const pattern = activeNouns
