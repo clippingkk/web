@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.17.0](https://github.com/clippingkk/web/compare/v5.16.5...v5.17.0) (2026-08-01)
+
+
+### Features
+
+* **observability:** add Superlog telemetry ([fbf3ae5](https://github.com/clippingkk/web/commit/fbf3ae5c2c14426e09985c2db3a945a32cbb3abc))
+* **observability:** add Superlog telemetry ([671ee86](https://github.com/clippingkk/web/commit/671ee868bb1730db8f10eb305d8c62c88a231258))
+
 ## [5.16.5](https://github.com/clippingkk/web/compare/v5.16.4...v5.16.5) (2026-08-01)
 
 
