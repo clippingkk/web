@@ -853,7 +853,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       const userId = requiredUser(context)
       const visible = args.visible ?? true
       const globalNouns = await db()
-        .select()
+        .select({ id: nouns.id, noun: nouns.noun })
         .from(nouns)
         .where(eq(nouns.scope, 0))
       const values = args.payload.map((item: Args) => {
