@@ -11,7 +11,7 @@ import { graphql } from '../gql'
 import { getReactQueryClient } from '../services/ajax'
 import { UploadStep } from '../services/uploader'
 import { type WenquSearchResponse, wenquRequest } from '../services/wenqu'
-import { extraFile } from '../store/clippings/creator'
+import { extraFile, toClippingInput } from '../store/clippings/creator'
 import ClippingTextParser, {
   type TClippingItem,
 } from '../store/clippings/parser'
@@ -174,7 +174,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
           }
           await exec({
             variables: {
-              payload: chunkedData[i].map((x) => ({ ...x, bookID: x.bookId })),
+              payload: chunkedData[i].map(toClippingInput),
               visible: v,
             },
           })
@@ -256,7 +256,7 @@ export function useSyncClippingsToServer(id: number) {
     const requests = stashClippings.map((s) =>
       exec({
         variables: {
-          payload: s.map((x) => ({ ...x, bookID: x.bookId })),
+          payload: s.map(toClippingInput),
           visible: true,
         },
       })
