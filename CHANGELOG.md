@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.16.4](https://github.com/clippingkk/web/compare/v5.16.3...v5.16.4) (2026-08-01)
+
+
+### Bug Fixes
+
+* **upload:** sanitize createClippings payload ([0cf09c3](https://github.com/clippingkk/web/commit/0cf09c3eda4a017a7c339e3335837e0fec849d5b))
+* **upload:** sanitize createClippings payload ([1ba62b4](https://github.com/clippingkk/web/commit/1ba62b47492740507e012d505a38cc9179b8d002))
+
 ## [5.16.3](https://github.com/clippingkk/web/compare/v5.16.2...v5.16.3) (2026-07-28)
 
 
