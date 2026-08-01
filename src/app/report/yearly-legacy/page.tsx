@@ -30,27 +30,35 @@ export async function generateMetadata(
   const uid = ~~sp.uid
   const year = sp.year ? ~~sp.year : new Date().getFullYear()
 
-  const client = await getApolloServerClient()
-  const reportInfoResponse = await client.query<
-    FetchYearlyReportQuery,
-    FetchYearlyReportQueryVariables
-  >({
-    query: FetchYearlyReportDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      uid,
-      year,
-    },
-  })
-  const dbIds =
-    reportInfoResponse
-      .data!.reportYearly.books.map((x) => x.doubanId)
-      .filter(isValidDoubanId) ?? []
+  if (!uid) {
+    return { title: `Yearly Report ${year} - Clippingkk` }
+  }
 
-  const bs = await wenquRequest<WenquSearchResponse>(
-    `/books/search?dbIds=${dbIds.join('&dbIds=')}`
-  )
-  return generateReportMetadata(year, reportInfoResponse.data!, bs.books)
+  try {
+    const client = await getApolloServerClient()
+    const reportInfoResponse = await client.query<
+      FetchYearlyReportQuery,
+      FetchYearlyReportQueryVariables
+    >({
+      query: FetchYearlyReportDocument,
+      fetchPolicy: 'network-only',
+      variables: {
+        uid,
+        year,
+      },
+    })
+    const dbIds =
+      reportInfoResponse
+        .data!.reportYearly.books.map((x) => x.doubanId)
+        .filter(isValidDoubanId) ?? []
+
+    const bs = await wenquRequest<WenquSearchResponse>(
+      `/books/search?dbIds=${dbIds.join('&dbIds=')}`
+    )
+    return generateReportMetadata(year, reportInfoResponse.data!, bs.books)
+  } catch {
+    return { title: `Yearly Report ${year} - Clippingkk` }
+  }
 }
 
 async function YearlyLegacyPage(props: YearlyLegacyPageProps) {

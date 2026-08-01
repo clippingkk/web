@@ -1,3 +1,4 @@
+import { CombinedGraphQLErrors } from '@apollo/client'
 import { ImageResponse } from 'next/og'
 
 import Logo from '@/assets/bootsplash_logo@3x.png'
@@ -31,16 +32,27 @@ export default async function Image(req: {
   const cid = ~~req.params.clippingid
 
   const client = await getApolloServerClient()
-  const clippingsResponse = await client.query<
-    FetchClippingQuery,
-    FetchClippingQueryVariables
-  >({
-    query: FetchClippingDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      id: ~~cid,
-    },
-  })
+  const clippingsResponse = await client
+    .query<FetchClippingQuery, FetchClippingQueryVariables>({
+      query: FetchClippingDocument,
+      fetchPolicy: 'network-only',
+      variables: {
+        id: ~~cid,
+      },
+    })
+    .catch((e: unknown) => {
+      if (e instanceof CombinedGraphQLErrors) {
+        return new Response(
+          JSON.stringify({ error: e.errors[0]?.message ?? 'Not found' }),
+          { status: 404, headers: { 'Content-Type': 'application/json' } }
+        )
+      }
+      throw e
+    })
+
+  if (clippingsResponse instanceof Response) {
+    return clippingsResponse
+  }
 
   const rq = getReactQueryClient()
   const bookID = clippingsResponse.data!.clipping.bookID
