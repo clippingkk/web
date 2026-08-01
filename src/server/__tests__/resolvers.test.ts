@@ -1,5 +1,8 @@
 // @vitest-environment node
 
+import type { SQL } from 'drizzle-orm'
+import { PgDialect } from 'drizzle-orm/pg-core'
+
 import {
   clippings,
   nouns,
@@ -145,4 +148,85 @@ test('selects only legacy-compatible noun fields when creating clippings', async
     }),
   ])
   expect(cacheDeleteMock).toHaveBeenCalledWith('ck:books:2')
+})
+
+test('updates all active same-title clippings owned by the current user', async () => {
+  const updatedAt = new Date('2026-08-01T12:00:00.000Z')
+  vi.useFakeTimers()
+  vi.setSystemTime(updatedAt)
+
+  const clipping = {
+    id: 11,
+    title: 'Example book',
+    bookId: '0',
+    createdBy: 2,
+  } as Clipping
+  const sibling = {
+    ...clipping,
+    id: 12,
+    bookId: '37005453',
+    updatedAt,
+  } as Clipping
+  const updatedClipping = {
+    ...clipping,
+    bookId: '37005453',
+    updatedAt,
+  } as Clipping
+
+  const findFirst = vi.fn().mockResolvedValue(clipping)
+  const returning = vi.fn().mockResolvedValue([sibling, updatedClipping])
+  const where = vi.fn((_condition: SQL) => ({ returning }))
+  const set = vi.fn(() => ({ where }))
+  const update = vi.fn(() => ({ set }))
+  getDatabaseMock.mockReturnValue({
+    db: {
+      query: { clippings: { findFirst } },
+      update,
+    },
+  })
+
+  await expect(
+    resolvers.Mutation.updateClippingBookId(
+      {},
+      { clippingId: clipping.id, doubanId: 37005453 },
+      { userId: 2 } as GraphQLContext
+    )
+  ).resolves.toEqual(updatedClipping)
+
+  expect(update).toHaveBeenCalledWith(clippings)
+  expect(set).toHaveBeenCalledWith({ bookId: '37005453', updatedAt })
+  expect(returning).toHaveBeenCalledOnce()
+
+  const condition = where.mock.calls[0]?.[0]
+  expect(condition).toBeDefined()
+  const query = new PgDialect().sqlToQuery(condition!)
+  expect(query.sql).toBe(
+    '("clippings"."created_by" = $1 and "clippings"."title" = $2 and "clippings"."deleted_at" is null)'
+  )
+  expect(query.params).toEqual([2, 'Example book'])
+})
+
+test('rejects a book update for a clipping owned by another user', async () => {
+  const findFirst = vi.fn().mockResolvedValue({
+    id: 11,
+    title: 'Example book',
+    bookId: '0',
+    createdBy: 3,
+  } as Clipping)
+  const update = vi.fn()
+  getDatabaseMock.mockReturnValue({
+    db: {
+      query: { clippings: { findFirst } },
+      update,
+    },
+  })
+
+  await expect(
+    resolvers.Mutation.updateClippingBookId(
+      {},
+      { clippingId: 11, doubanId: 37005453 },
+      { userId: 2 } as GraphQLContext
+    )
+  ).rejects.toThrow('not your clipping')
+  expect(update).not.toHaveBeenCalled()
 })

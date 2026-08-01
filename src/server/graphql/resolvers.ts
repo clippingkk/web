@@ -994,18 +994,21 @@ export const resolvers: Record<string, Record<string, any>> = {
       const clipping = await clippingById(args.clippingId)
       if (clipping.createdBy !== uid)
         throw new ApiError('not your clipping', 403)
-      const [updated] = await db()
+      const updated = await db()
         .update(clippings)
         .set({ bookId: String(args.doubanId), updatedAt: new Date() })
         .where(
           and(
-            eq(clippings.id, clipping.id),
             eq(clippings.createdBy, uid),
+            eq(clippings.title, clipping.title),
             activeClipping
           )
         )
         .returning()
-      return assertFound(updated, 'clipping not found')
+      return assertFound(
+        updated.find((item) => item.id === clipping.id),
+        'clipping not found'
+      )
     },
     createComment: async (_: unknown, args: Args, context: GraphQLContext) => {
       await clippingById(args.cid)
