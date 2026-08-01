@@ -126,6 +126,10 @@ function UploaderPageContent({ profile }: Props) {
           </div>
 
           <button
+            type="button"
+            role="switch"
+            aria-checked={isOn}
+            aria-label={t('app.upload.private.toggle') ?? 'Toggle private mode'}
             onClick={() => onSwitchChange(!isOn)}
             className={`relative inline-flex h-6 w-12 items-center rounded-full transition-colors ${isOn ? 'bg-green-500' : 'bg-gray-400'} `}
           >

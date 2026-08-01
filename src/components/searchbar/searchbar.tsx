@@ -22,7 +22,7 @@ function SearchBar(props: SearchBarProps) {
   const { t } = useTranslation()
   const [doQuery, { data, loading, called }] = useLazyQuery(SearchQueryDocument)
   const inputRef = useRef<HTMLInputElement>(null)
-  const modalRef = useRef<HTMLDivElement>(null)
+  const modalRef = useRef<HTMLDialogElement>(null)
   const [searchText, setSearchText] = useState('')
 
   const throttleTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -100,10 +100,10 @@ function SearchBar(props: SearchBarProps) {
         onClick={onClose}
         aria-hidden="true"
       />
-      <div
+      <dialog
+        open
         ref={modalRef}
-        className="with-slide-in relative w-full max-w-xl overflow-hidden rounded-lg shadow-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl"
-        role="dialog"
+        className="with-slide-in relative w-full max-w-xl overflow-hidden rounded-lg border-0 bg-transparent p-0 shadow-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl"
         aria-modal="true"
         aria-labelledby="search-modal-title"
       >
@@ -158,7 +158,7 @@ function SearchBar(props: SearchBarProps) {
             </ul>
           </div>
         </div>
-      </div>
+      </dialog>
     </div>
   )
 }

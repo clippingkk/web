@@ -50,8 +50,7 @@ function BookClippingsToolbar(props: BookClippingsToolbarProps) {
       <div className="flex flex-wrap items-center gap-2">
         {/* Sort segmented toggle */}
         {showSort && (
-          <div
-            role="group"
+          <fieldset
             aria-label="Sort"
             className="flex items-center gap-0.5 rounded-xl border border-slate-200/70 bg-white/60 p-1 backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/50"
           >
@@ -85,12 +84,11 @@ function BookClippingsToolbar(props: BookClippingsToolbarProps) {
                 {t('app.clippings.toolbar.sort.oldest')}
               </span>
             </button>
-          </div>
+          </fieldset>
         )}
 
         {/* View mode toggle */}
-        <div
-          role="group"
+        <fieldset
           aria-label="View"
           className="flex items-center gap-0.5 rounded-xl border border-slate-200/70 bg-white/60 p-1 backdrop-blur-sm dark:border-slate-700/60 dark:bg-slate-800/50"
         >
@@ -122,7 +120,7 @@ function BookClippingsToolbar(props: BookClippingsToolbarProps) {
           >
             <ListIcon size={14} />
           </button>
-        </div>
+        </fieldset>
       </div>
     </div>
   )

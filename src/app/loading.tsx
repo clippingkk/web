@@ -10,8 +10,7 @@ function Loading() {
         className="absolute -right-32 -bottom-32 h-96 w-96 rounded-full bg-indigo-400/20 blur-3xl dark:bg-indigo-400/10"
       />
 
-      <div
-        role="status"
+      <output
         aria-live="polite"
         className="relative flex w-full max-w-sm flex-col items-center rounded-3xl border border-white/70 bg-white/70 px-8 py-10 text-center shadow-xl shadow-blue-950/5 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-900/70 dark:shadow-black/20"
       >
@@ -33,7 +32,7 @@ function Loading() {
           className="mt-7 h-8 w-8 animate-spin rounded-full border-3 border-blue-400/20 border-t-blue-500"
         />
         <span className="sr-only">Loading ClippingKK</span>
-      </div>
+      </output>
     </main>
   )
 }

@@ -33,6 +33,7 @@ function Avatar(props: AvatarProps) {
     return props.onClick ? (
       <button
         type="button"
+        aria-label={props.name ? `Edit ${props.name}'s avatar` : 'Edit avatar'}
         className={`animate-pulse rounded-full border-none bg-gray-500 p-0 ${cls}`}
         onClick={props.onClick}
       />

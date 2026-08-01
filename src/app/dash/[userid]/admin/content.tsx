@@ -43,7 +43,11 @@ function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
           )
         }
         return (
-          <td key={cell.id} className="px-6 py-5">
+          <td
+            key={cell.id}
+            aria-label={cell.row.original.name}
+            className="px-6 py-5"
+          >
             <div className="flex items-center gap-3">
               <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100 transition-colors duration-200 group-hover:bg-blue-200 dark:bg-blue-900/30 dark:group-hover:bg-blue-900/50">
                 <BookOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
