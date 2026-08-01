@@ -27,5 +27,5 @@ export const GET = route(async (request) => {
     amount: session.amount_total,
     paymentStatus: session.payment_status,
   })
-})
+}, 'payment.order.read')
 export const OPTIONS = options

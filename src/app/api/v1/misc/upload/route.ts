@@ -27,5 +27,5 @@ export const POST = route(async (request) => {
     image.type
   )
   return json<UploadImageResponse>({ filePath }, 201)
-})
+}, 'avatar.upload')
 export const OPTIONS = options

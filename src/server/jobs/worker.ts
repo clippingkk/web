@@ -1,3 +1,6 @@
+import { metrics, trace } from '@opentelemetry/api'
+import { logs, SeverityNumber } from '@opentelemetry/api-logs'
+import { withSpan } from '@superlog/otel-helpers'
 import { Worker, type Job } from 'bullmq'
 import { and, asc, eq, isNull, sql } from 'drizzle-orm'
 import { Resend } from 'resend'
@@ -14,6 +17,17 @@ import {
   queueConnection,
   type ExportJob,
 } from './queues'
+
+const tracer = trace.getTracer('clippingkk.web.jobs')
+const meter = metrics.getMeter('clippingkk.web.jobs')
+const logger = logs.getLogger('clippingkk.web.jobs')
+const jobsProcessed = meter.createCounter('app.jobs.processed', {
+  description: 'Completed background jobs',
+})
+const jobDuration = meter.createHistogram('app.jobs.duration', {
+  description: 'Background job processing duration',
+  unit: 'ms',
+})
 
 async function exportRows(uid: number) {
   return getDatabase()
@@ -94,7 +108,7 @@ async function exportToMail(email: string, uid: number) {
   if (result.error) throw new Error(result.error.message)
 }
 
-async function processJob(job: Job) {
+async function handleJob(job: Job) {
   if (job.name === 'export-data') {
     const payload = job.data as ExportJob
     if (payload.destination === 'flomo')
@@ -176,6 +190,50 @@ async function processJob(job: Job) {
   throw new Error(`Unknown job: ${job.name}`)
 }
 
+async function processJob(job: Job) {
+  const operation = `job.${job.name}`
+  return withSpan(
+    operation,
+    async (span) => {
+      const startedAt = performance.now()
+      const spanAttributes = {
+        'job.name': job.name,
+        'job.id': job.id ?? 'unknown',
+      }
+      span.setAttributes(spanAttributes)
+      try {
+        const result = await handleJob(job)
+        const metricAttributes = { 'job.name': job.name, outcome: 'success' }
+        span.setAttribute('outcome', 'success')
+        jobsProcessed.add(1, metricAttributes)
+        logger.emit({
+          severityNumber: SeverityNumber.INFO,
+          severityText: 'INFO',
+          body: 'Background job completed',
+          attributes: { ...spanAttributes, outcome: 'success' },
+        })
+        return result
+      } catch (error) {
+        const metricAttributes = { 'job.name': job.name, outcome: 'error' }
+        span.setAttribute('outcome', 'error')
+        jobsProcessed.add(1, metricAttributes)
+        logger.emit({
+          severityNumber: SeverityNumber.ERROR,
+          severityText: 'ERROR',
+          body: 'Background job failed',
+          attributes: { ...spanAttributes, outcome: 'error' },
+        })
+        throw error
+      } finally {
+        jobDuration.record(performance.now() - startedAt, {
+          'job.name': job.name,
+        })
+      }
+    },
+    { tracer }
+  )
+}
+
 const globalForWorker = globalThis as typeof globalThis & {
   clippingkkWorker?: Worker
 }
@@ -186,12 +244,6 @@ export function startWorker() {
     connection: queueConnection(),
     concurrency: Number.parseInt(process.env.WORKER_CONCURRENCY ?? '1', 10),
   })
-  worker.on('completed', (job) =>
-    console.info('job completed', job.name, job.id)
-  )
-  worker.on('failed', (job, error) =>
-    console.error('job failed', job?.name, job?.id, error)
-  )
   globalForWorker.clippingkkWorker = worker
   return worker
 }

@@ -26,5 +26,5 @@ export const DELETE = route(async (request) => {
   return json<CancelPaymentSubscriptionResponse>(
     await getStripe().subscriptions.cancel(subscriptionId)
   )
-})
+}, 'payment.subscription.cancel')
 export const OPTIONS = options

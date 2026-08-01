@@ -15,7 +15,7 @@ const yoga = createYoga({
   maskedErrors: process.env.NODE_ENV === 'production',
 })
 
-const handler = route(async (request) => yoga.fetch(request))
+const handler = route(async (request) => yoga.fetch(request), 'graphql.request')
 
 export const GET = handler
 export const POST = handler

@@ -16,4 +16,4 @@ export const GET = route(async (request) => {
   })
   if (!user) throw new ApiError('user not found', 404)
   return json({ token: await issueToken(id) })
-})
+}, 'auth.debug_token.issue')

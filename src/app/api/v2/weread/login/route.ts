@@ -32,7 +32,7 @@ export const GET = route(async (request) => {
     response.json()
   )
   return Response.json({ count: 1, data })
-})
+}, 'weread.login.begin')
 
 export const POST = route(async (request) => {
   await requireUserId(request)
@@ -65,5 +65,5 @@ export const POST = route(async (request) => {
     vid: info.vid,
   })
   return Response.json({ count: 1, data: info })
-})
+}, 'weread.login.complete')
 export const OPTIONS = options
