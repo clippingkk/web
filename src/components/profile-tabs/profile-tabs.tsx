@@ -99,6 +99,7 @@ const ProfileTabs = ({
 
           <div
             role="tablist"
+            tabIndex={-1}
             aria-label="Profile sections"
             onKeyDown={onTabKeyDown}
             className="relative flex rounded-2xl border border-white/40 bg-white/70 p-1.5 shadow-sm backdrop-blur-xl dark:border-slate-800/40 dark:bg-slate-900/70"
