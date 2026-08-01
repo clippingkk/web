@@ -18,5 +18,5 @@ export const POST = route(async (request) => {
   if (!user) throw new ApiError('user not found', 404)
   const active = Boolean(user.premiumEndAt && user.premiumEndAt > new Date())
   return Response.json({ limit: 1000, remaining: active ? 1000 : 0 })
-})
+}, 'promptpal.subscription.validate')
 export const OPTIONS = options

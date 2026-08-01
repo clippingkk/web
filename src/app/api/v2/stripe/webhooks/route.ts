@@ -29,4 +29,4 @@ export const POST = route(async (request) => {
   if (event.type === 'payment_intent.succeeded')
     await recordSucceededPaymentIntent(event.data.object)
   return json({ received: true, type: event.type })
-})
+}, 'payment.webhook.process')

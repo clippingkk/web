@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "skills": {
+    "otel-expo-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-expo-style/SKILL.md",
+      "computedHash": "433f482c2e71074c9a5586d4c6d735f4332b6c17ad34756c9202a285d8a0f26c"
+    },
+    "otel-fastapi-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-fastapi-style/SKILL.md",
+      "computedHash": "1178716fbd1af6d4fa3c201798a04c294251d4430c67ec308dca336976f9b1a5"
+    },
+    "otel-flask-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-flask-style/SKILL.md",
+      "computedHash": "c56a68fa76d01cd5a7fafa9775084b031e311bd01cfb6d54051e37a88ad15394"
+    },
+    "otel-generic-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-generic-style/SKILL.md",
+      "computedHash": "db168e1f45e326e9dbb879754925791098c53556be420811d0cc155deea63fe7"
+    },
+    "otel-instrument-feature": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-instrument-feature/SKILL.md",
+      "computedHash": "6a86895b2eb8a2e61830c7e8d454b2657fe9d1082255f338e83f6f327ad608f0"
+    },
+    "otel-livekit-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-livekit-style/SKILL.md",
+      "computedHash": "1bffeb350dfdb5efac5e7208cbfcabd896c6b5a6c82168081938855bb9d1c863"
+    },
+    "otel-nextjs-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-nextjs-style/SKILL.md",
+      "computedHash": "2bb86af1c5ec3a0b53919651ea4307717bbb48a0c04bd231a5ff01e3d9206f50"
+    },
+    "otel-onboarding-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-onboarding-style/SKILL.md",
+      "computedHash": "355e28e7dd49e63cd9b7d61741dfa73fb1d042e24f59b84188ad9caf9afd7c9d"
+    },
+    "otel-python-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-python-style/SKILL.md",
+      "computedHash": "73c04a109ff70ee8ff0c812a98ff37d891364de0b8a2d0bfccad6a6d87284ef1"
+    },
+    "otel-supabase-edge-style": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "otel-supabase-edge-style/SKILL.md",
+      "computedHash": "93fc1156426bfe3815e7eeb7b3ba4921fa708f4e816847654ad13ceeb225359a"
+    },
+    "superlog-debug": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "superlog-debug/SKILL.md",
+      "computedHash": "6b0d4b3b225ae65ea6f60bd7fd7e29ef4f176cb654d0f5e667c48475688da432"
+    },
+    "superlog-onboard": {
+      "source": "superloglabs/skills",
+      "sourceType": "github",
+      "skillPath": "superlog-onboard/SKILL.md",
+      "computedHash": "1a9c9aedc53f0e9d479180d8a86989da9fb659dd2a893af57321f3cc92cac366"
+    }
+  }
+}

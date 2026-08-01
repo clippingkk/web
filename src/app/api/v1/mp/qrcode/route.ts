@@ -24,5 +24,5 @@ export const GET = route(async (request) => {
   return new Response(result.data, {
     headers: { 'Content-Type': result.contentType },
   })
-})
+}, 'wechat.qrcode.generate')
 export const OPTIONS = options

@@ -27,5 +27,5 @@ export const POST = route(async (request) => {
   )
   if (!session.url) throw new ApiError('checkout URL not returned', 502)
   return json<CreatePaymentSubscriptionResponse>({ checkoutUrl: session.url })
-})
+}, 'payment.subscription.create')
 export const OPTIONS = options

@@ -18,4 +18,4 @@ export const GET = route(async (request, routeContext) => {
   )
   headers.set('Cache-Control', 'public, max-age=86400')
   return new Response(response.body, { status: response.status, headers })
-})
+}, 'image.proxy')

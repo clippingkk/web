@@ -14,5 +14,5 @@ export const POST = route(async (request) => {
   })
   if (!user) throw new ApiError('user not found', 404)
   return json(await createPaymentSheet(user))
-})
+}, 'payment.sheet.create')
 export const OPTIONS = options

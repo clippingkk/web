@@ -21,4 +21,4 @@ export const GET = route(async (request) => {
     `${getServerEnv().APP_ORIGIN}/auth/signin?checked=true`,
     307
   )
-})
+}, 'auth.email.verify')
