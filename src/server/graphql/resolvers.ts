@@ -856,6 +856,7 @@ export const resolvers: Record<string, Record<string, any>> = {
         .select({ id: nouns.id, noun: nouns.noun })
         .from(nouns)
         .where(eq(nouns.scope, 0))
+      const updatedAt = new Date()
       const values = args.payload.map((item: Args) => {
         const createdAt = new Date(item.createdAt)
         return {
@@ -872,6 +873,7 @@ export const resolvers: Record<string, Record<string, any>> = {
             .map((noun) => noun.id),
           source: sourceFromEnum(item.source),
           createdAt: Number.isNaN(createdAt.getTime()) ? new Date() : createdAt,
+          updatedAt,
         }
       })
       const created = values.length

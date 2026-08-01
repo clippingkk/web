@@ -26,6 +26,10 @@ beforeEach(() => {
   getDatabaseMock.mockReset()
 })
 
+afterEach(() => {
+  vi.useRealTimers()
+})
+
 test('treats legacy null clipping nouns as an empty list', async () => {
   const clipping = {
     content: 'A legacy clipping',
@@ -84,6 +88,9 @@ test('selects only legacy-compatible fields for a user order list', async () => 
 })
 
 test('selects only legacy-compatible noun fields when creating clippings', async () => {
+  const uploadedAt = new Date('2026-08-01T12:00:00.000Z')
+  vi.useFakeTimers()
+  vi.setSystemTime(uploadedAt)
   const where = vi.fn().mockResolvedValue([{ id: 7, noun: 'global noun' }])
   const from = vi.fn(() => ({ where }))
   const select = vi.fn(() => ({ from }))
@@ -107,6 +114,14 @@ test('selects only legacy-compatible noun fields when creating clippings', async
             createdAt: '2026-01-01T00:00:00.000Z',
             source: 'kindle',
           },
+          {
+            title: 'Another example',
+            content: 'No matching noun',
+            bookID: 'book-2',
+            pageAt: '24',
+            createdAt: 'not-a-date',
+            source: 'kindle',
+          },
         ],
       },
       { userId: 2 } as GraphQLContext
@@ -118,7 +133,15 @@ test('selects only legacy-compatible noun fields when creating clippings', async
   expect(values).toHaveBeenCalledWith([
     expect.objectContaining({
       content: 'A global noun appears here',
+      createdAt: new Date('2026-01-01T00:00:00.000Z'),
       nouns: [7],
+      updatedAt: uploadedAt,
+    }),
+    expect.objectContaining({
+      content: 'No matching noun',
+      createdAt: uploadedAt,
+      nouns: [],
+      updatedAt: uploadedAt,
     }),
   ])
   expect(cacheDeleteMock).toHaveBeenCalledWith('ck:books:2')
