@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.16.5](https://github.com/clippingkk/web/compare/v5.16.4...v5.16.5) (2026-08-01)
+
+
+### Bug Fixes
+
+* **clippings:** bind same-title clippings together ([444213f](https://github.com/clippingkk/web/commit/444213fa1172cd330b01d663758bdb25a5cf54c6))
+* **clippings:** bind same-title clippings together ([16dec9a](https://github.com/clippingkk/web/commit/16dec9a43a0218114e82cc95d3bcaff3e9bc3e2f))
+* **ui:** resolve accessibility lint errors ([24c073a](https://github.com/clippingkk/web/commit/24c073a68c92ff5c6d96bcf3f69e83ceddb0142e))
+* **ui:** resolve accessibility lint errors ([d918ba2](https://github.com/clippingkk/web/commit/d918ba235610ffe25486d5cafe0a00275381ae91))
+* **upload:** set clipping updated timestamp ([3dcadcf](https://github.com/clippingkk/web/commit/3dcadcf25702217af786b0848fddbd0c0ab2103c))
+* **upload:** support legacy noun schema ([77c7b6f](https://github.com/clippingkk/web/commit/77c7b6f04fbc989d158aaf23d6128a981498df32))
+* **upload:** support legacy noun schema ([56b3cda](https://github.com/clippingkk/web/commit/56b3cdaf7ce99b53f9648b1355b3ea5bf215f2e4))
+
 ## [5.16.4](https://github.com/clippingkk/web/compare/v5.16.3...v5.16.4) (2026-08-01)
 
 
