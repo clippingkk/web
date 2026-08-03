@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.17.1](https://github.com/clippingkk/web/compare/v5.17.0...v5.17.1) (2026-08-03)
+
+
+### Performance Improvements
+
+* **rsc:** execute server-side GraphQL in-process ([71f20a1](https://github.com/clippingkk/web/commit/71f20a1bf5e64e2f00291a8ade5c3d299ed3cff5))
+* **rsc:** execute server-side GraphQL in-process instead of over the public domain ([b191519](https://github.com/clippingkk/web/commit/b191519bafd4ba8856b27e8bbf7855848c5ad0db))
+
 ## [5.17.0](https://github.com/clippingkk/web/compare/v5.16.5...v5.17.0) (2026-08-01)
 
 
