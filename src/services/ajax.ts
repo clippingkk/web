@@ -41,6 +41,26 @@ export function getLocalToken() {
 let token = typeof window === 'undefined' ? null : getLocalToken()
 // let token = localProfile?.token
 
+export function resolveApiBase() {
+  if (API_HOST) {
+    return API_HOST
+  }
+
+  // Browser: same origin, relative URLs are fine.
+  if (typeof window !== 'undefined') {
+    return ''
+  }
+
+  // Server: the API is this same process, so stay on loopback rather than
+  // going back out through the public domain. Node's fetch also rejects the
+  // relative URL a browser would happily accept.
+  const appOriginPort = process.env.APP_ORIGIN
+    ? new URL(process.env.APP_ORIGIN).port
+    : ''
+  const port = process.env.PORT || appOriginPort || '3000'
+  return `http://127.0.0.1:${port}`
+}
+
 export async function request<T>(
   url: string,
   options: RequestInit = {}
@@ -57,7 +77,9 @@ export async function request<T>(
     headers.set('X-Accept-Language', getLanguage())
   }
 
-  const finalUrl = url.startsWith('http') ? url : `${API_HOST}/api${url}`
+  const finalUrl = url.startsWith('http')
+    ? url
+    : `${resolveApiBase()}/api${url}`
 
   try {
     const fetchResponse = await fetch(finalUrl, {
@@ -73,7 +95,9 @@ export async function request<T>(
 
     return response.data
   } catch (e) {
-    toast.error('请求挂了... 一会儿再试试')
+    if (typeof window !== 'undefined') {
+      toast.error('请求挂了... 一会儿再试试')
+    }
     return Promise.reject(e)
   }
 }
