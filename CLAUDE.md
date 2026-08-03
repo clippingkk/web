@@ -68,6 +68,12 @@ const response = await doApolloServerQuery<ProfileQuery>({
 const { data, loading } = useProfileQuery({ variables: { id } })
 ```
 
+The GraphQL API lives in this same project (`src/app/api/v2/graphql/route.ts`, backed by
+`src/server/graphql/`). Server components therefore execute **in-process** against the yoga
+instance via `src/server/graphql/local-transport.ts` — no socket, no DNS, no TLS. Only the
+browser client talks HTTP. Never point the server Apollo client at an absolute origin; that
+reintroduces a public round-trip to reach code already loaded in the same process.
+
 ### Server-Client Data Flow
 
 Server components prefetch with React Query, client hydrates:
@@ -102,7 +108,8 @@ const dehydratedState = dehydrate(rq)
 - `src/services/apollo.server.ts` - Server-side Apollo Client setup
 - `src/services/apollo.shard.ts` - Shared Apollo configuration
 - `src/services/wenqu.ts` - External book service API
-- `src/services/urls.ts` - URL constants and routing
+- `src/server/graphql/yoga.ts` - The graphql-yoga instance shared by the route handler and RSC
+- `src/server/graphql/local-transport.ts` - In-process GraphQL transport for server components
 
 **Generated Code:**
 

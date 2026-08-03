@@ -5,6 +5,7 @@ import {
   isUnauthorizedApolloError,
   request,
   requestJson,
+  resolveApiBase,
   updateToken,
 } from '@/services/ajax'
 
@@ -95,6 +96,29 @@ describe('HTTP client helpers', () => {
 
     await expect(request('/v2/example')).rejects.toThrow('not allowed')
     expect(toast.error).toHaveBeenCalledOnce()
+  })
+
+  it('keeps URLs relative in the browser', () => {
+    expect(resolveApiBase()).toBe('')
+  })
+
+  it('targets loopback on the server so requests never leave the box', () => {
+    vi.stubGlobal('window', undefined)
+    vi.stubEnv('PORT', '3000')
+
+    expect(resolveApiBase()).toBe('http://127.0.0.1:3000')
+
+    vi.unstubAllEnvs()
+  })
+
+  it('falls back to the APP_ORIGIN port when PORT is unset', () => {
+    vi.stubGlobal('window', undefined)
+    vi.stubEnv('PORT', '')
+    vi.stubEnv('APP_ORIGIN', 'http://localhost:3101')
+
+    expect(resolveApiBase()).toBe('http://127.0.0.1:3101')
+
+    vi.unstubAllEnvs()
   })
 
   it('recognizes unauthorized GraphQL errors', () => {

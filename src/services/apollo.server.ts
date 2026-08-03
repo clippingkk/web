@@ -12,19 +12,21 @@ import {
 import { redirect } from 'next/navigation'
 import { connection } from 'next/server'
 
-import { API_HOST } from '@/constants/config'
-import { getServerEnv } from '@/server/env'
+import {
+  LOCAL_GRAPHQL_URL,
+  localGraphQLFetch,
+} from '@/server/graphql/local-transport'
 
 import { authLink, isUnauthorizedApolloError } from './ajax'
 import { apolloCacheConfig } from './apollo.shard'
 
-export function getApolloServerGraphqlUrl() {
-  const origin = API_HOST || getServerEnv().APP_ORIGIN
-  return `${origin.replace(/\/$/, '')}/api/v2/graphql`
-}
-
 const { getClient } = registerApolloClient(() => {
-  const httpLink = new HttpLink({ uri: getApolloServerGraphqlUrl() })
+  // The API lives in this very process, so skip the network entirely instead of
+  // paying DNS + TLS + a public load balancer round-trip to reach ourselves.
+  const httpLink = new HttpLink({
+    uri: LOCAL_GRAPHQL_URL,
+    fetch: localGraphQLFetch,
+  })
   return new ApolloClient({
     cache: new InMemoryCache(apolloCacheConfig),
     link: ApolloLink.from([authLink, httpLink]),
