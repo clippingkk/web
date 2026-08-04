@@ -28,6 +28,7 @@ export async function wenquRequest<T = any>(
   options.next = {
     revalidate: 60 * 60, // 1 hour
   }
+  options.signal = AbortSignal.timeout(8000)
 
   if (cache.has(url)) {
     return cache.get(url) as T
