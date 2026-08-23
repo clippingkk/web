@@ -79,7 +79,9 @@ for (const [name, url] of [
   ['cache', redisUrl],
   ['queue', queueRedisUrl],
 ]) {
-  const client = createClient({ url })
+  // RESP2 to match src/server/redis.ts -- a preflight that negotiates a
+  // different protocol than the app is not checking the app's connection.
+  const client = createClient({ url, RESP: 2 })
   try {
     await client.connect()
     const [pong, size] = await Promise.all([client.ping(), client.dbSize()])

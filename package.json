@@ -182,7 +182,7 @@
     "react-image-crop": "^11.1.2",
     "react-phone-input-2": "^2.15.1",
     "react-slick": "^0.31.0",
-    "redis": "^5.11.0",
+    "redis": "^6.2.1",
     "require-in-the-middle": "^8.0.1",
     "resend": "^6.22.0",
     "rxjs": "^7.8.2",
