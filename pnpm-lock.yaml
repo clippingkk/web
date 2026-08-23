@@ -105,8 +105,8 @@ importers:
         specifier: ^2.10.0
         version: 2.10.0(@opentelemetry/api@1.9.1)
       '@prompt-pal/node-sdk':
-        specifier: npm:@jsr/prompt-pal__node-sdk@^0.4.7
-        version: '@jsr/prompt-pal__node-sdk@0.4.7'
+        specifier: npm:@jsr/prompt-pal__node-sdk@^0.4.8
+        version: '@jsr/prompt-pal__node-sdk@0.4.8'
       '@sentry/nextjs':
         specifier: ^10.70.0
         version: 10.70.0(@opentelemetry/core@2.10.0(@opentelemetry/api@1.9.1))(@opentelemetry/exporter-trace-otlp-http@0.221.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))(encoding@0.1.13)(next@16.3.2(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)(webpack@5.96.1(esbuild@0.28.2)(postcss@8.5.26))
@@ -1961,8 +1961,8 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
-  '@jsr/prompt-pal__node-sdk@0.4.7':
-    resolution: {integrity: sha512-82RzgQvAnYj6kqyh5/aKhERf/TNFf9s1AHmTDrX/Rkfs2kBFKDbG6AhCdgCxUE25zrg8hYIw5cj8dN8fRxI6oQ==, tarball: https://npm.jsr.io/~/11/@jsr/prompt-pal__node-sdk/0.4.7.tgz}
+  '@jsr/prompt-pal__node-sdk@0.4.8':
+    resolution: {integrity: sha512-6QUNDc9nS1Oxbwjc6j2+mIOkCS/v6Adqc5tsWX322johPLxskc+TYMUhEWBdoTnW/iABBuFdzOpYFSl+6BwAAQ==, tarball: https://npm.jsr.io/~/11/@jsr/prompt-pal__node-sdk/0.4.8.tgz}
 
   '@marsidev/react-turnstile@1.6.0':
     resolution: {integrity: sha512-T2Um71ZdBgQBiyS01xgRMvDWk+mEsrLtXLFVhOC917OVEO584wbPOWj1sw35RaM17+q9QoADgLVcH60xr9NRqQ==}
@@ -8743,7 +8743,7 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@jsr/prompt-pal__node-sdk@0.4.7': {}
+  '@jsr/prompt-pal__node-sdk@0.4.8': {}
 
   '@marsidev/react-turnstile@1.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
