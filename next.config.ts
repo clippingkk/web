@@ -3,7 +3,7 @@ import type { NextConfig } from 'next'
 const deploymentId = process.env.GIT_COMMIT?.trim() || undefined
 
 const config: NextConfig = {
-  serverExternalPackages: ['bullmq', 'pg', 'redis'],
+  serverExternalPackages: ['bullmq', 'ioredis', 'pg', 'redis'],
   // enablePrerenderSourceMaps: false,
   // productionBrowserSourceMaps: false,
   deploymentId,
