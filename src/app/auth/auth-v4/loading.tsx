@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import type React from 'react'
 
 function Loading() {
@@ -39,7 +39,7 @@ function Loading() {
               </div>
 
               <div className="mt-8 flex justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-slate-700 dark:text-slate-300" />
+                <LoaderCircle className="h-8 w-8 animate-spin text-slate-700 dark:text-slate-300" />
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { Home, UserX } from 'lucide-react'
+import { House, UserX } from 'lucide-react'
 import Link from 'next/link'
 
 import Surface from '@/components/ui/surface/surface'
@@ -28,7 +28,7 @@ async function ProfileNotFound() {
           href="/"
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-400 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300"
         >
-          <Home className="h-4 w-4" />
+          <House className="h-4 w-4" />
           {t('app.profile.notFound.goHome')}
         </Link>
       </Surface>

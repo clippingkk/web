@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 
 import { useTranslation } from '@/i18n/client'
 
@@ -14,7 +14,7 @@ function InfiniteScrollFooter(props: InfiniteScrollFooterProps) {
   if (state === 'loading') {
     return (
       <div className="mt-2 flex items-center justify-center gap-2 py-8 text-sm text-slate-500 dark:text-slate-400">
-        <Loader2 size={16} className="animate-spin text-blue-400" />
+        <LoaderCircle size={16} className="animate-spin text-blue-400" />
         <span>{t('app.clippings.loading')}</span>
       </div>
     )

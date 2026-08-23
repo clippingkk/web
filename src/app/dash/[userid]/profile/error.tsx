@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangle, Home, RotateCw } from 'lucide-react'
+import { TriangleAlert, House, RotateCw } from 'lucide-react'
 import Link from 'next/link'
 
 import Surface from '@/components/ui/surface/surface'
@@ -22,7 +22,7 @@ export default function ProfileError({
         className="with-slide-in w-full max-w-lg p-8 text-center"
       >
         <div className="mx-auto mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-400/10 ring-1 ring-rose-400/20 dark:bg-rose-400/15">
-          <AlertTriangle className="h-7 w-7 text-rose-500 dark:text-rose-300" />
+          <TriangleAlert className="h-7 w-7 text-rose-500 dark:text-rose-300" />
         </div>
 
         <h1 className="mb-2 text-xl font-semibold text-slate-900 dark:text-white">
@@ -60,7 +60,7 @@ export default function ProfileError({
             href="/"
             className="inline-flex items-center justify-center gap-2 text-sm text-slate-600 transition-colors hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-300"
           >
-            <Home className="h-4 w-4" />
+            <House className="h-4 w-4" />
             {t('app.profile.error.goHome')}
           </Link>
         </div>

@@ -1,14 +1,16 @@
 'use client'
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
+import { createColumnHelper, flexRender, useTable } from '@tanstack/react-table'
 import { Calendar, CreditCard, Receipt } from 'lucide-react'
 
+import {
+  type CoreTableFeatures,
+  tableFeaturesCore,
+} from '@/components/table/features'
 import { useTranslation } from '@/i18n/client'
 import type { Order } from '@/schema/generated'
+
+// Hoisted out of the render body: it was being rebuilt on every render.
+const columnHelper = createColumnHelper<CoreTableFeatures, Order>()
 
 type SubscriptionOrderListProps = {
   orders: Order[]
@@ -17,7 +19,6 @@ type SubscriptionOrderListProps = {
 function SubscriptionContent(props: SubscriptionOrderListProps) {
   const { t } = useTranslation()
   const { orders } = props
-  const columnHelper = createColumnHelper<Order>()
 
   const formatCurrency = (amount: number, currency: string) => {
     const formatter = new Intl.NumberFormat('en-US', {
@@ -56,10 +57,12 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
     return `${diffYears} year${diffYears > 1 ? 's' : ''} ago`
   }
 
-  const table = useReactTable({
+  const table = useTable({
     data: orders,
-    getCoreRowModel: getCoreRowModel(),
-    columns: [
+    features: tableFeaturesCore,
+    // columnHelper.columns preserves each column's own TValue; a bare array
+    // widens them to a single type, which v9's invariant generics reject.
+    columns: columnHelper.columns([
       columnHelper.accessor('orderID', {
         header: () => (
           <div className="flex items-center space-x-2">
@@ -121,7 +124,7 @@ function SubscriptionContent(props: SubscriptionOrderListProps) {
           )
         },
       }),
-    ],
+    ]),
   })
 
   return (

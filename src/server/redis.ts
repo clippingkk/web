@@ -3,9 +3,23 @@ import { createClient, RESP_TYPES } from 'redis'
 
 import { getServerEnv } from './env'
 
+// node-redis v6 negotiates RESP3 by default. Staying on RESP2 keeps the reply
+// shapes this module already parses -- notably the BLOB_STRING -> Buffer type
+// mapping in cacheGet and the integer reply from the rate-limit script -- so
+// the upgrade is a library change rather than a wire-protocol change. Moving to
+// RESP3 is worth doing separately, against a real Redis.
+function createRedisClient() {
+  return createClient({ url: getServerEnv().REDIS_URL, RESP: 2 })
+}
+
+// Derived from our own factory rather than `ReturnType<typeof createClient>`:
+// createClient is generic, so ReturnType resolves its parameters to their
+// constraints instead of the defaults an actual call infers.
+type RedisClient = ReturnType<typeof createRedisClient>
+
 type RedisState = {
-  client: ReturnType<typeof createClient>
-  connecting?: Promise<ReturnType<typeof createClient>>
+  client: RedisClient
+  connecting?: Promise<RedisClient>
 }
 
 const globalForRedis = globalThis as typeof globalThis & {
@@ -14,7 +28,7 @@ const globalForRedis = globalThis as typeof globalThis & {
 
 function state(): RedisState {
   if (!globalForRedis.clippingkkRedis) {
-    const client = createClient({ url: getServerEnv().REDIS_URL })
+    const client = createRedisClient()
     client.on('error', (error) => console.error('redis error', error))
     globalForRedis.clippingkkRedis = { client }
   }
@@ -68,13 +82,21 @@ export async function rateLimit(
   windowSeconds: number
 ) {
   const client = await getRedis()
-  const count = await client.eval(
+  const reply = await client.eval(
     `local n = redis.call('INCR', KEYS[1])
      if n == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end
      return n`,
     { keys: [key], arguments: [String(windowSeconds)] }
   )
-  return { allowed: Number(count) <= limit, count: Number(count) }
+  const count = Number(reply)
+  // A non-numeric reply would coerce to NaN and make every comparison false,
+  // silently rejecting all traffic. Fail loudly instead.
+  if (!Number.isFinite(count)) {
+    throw new Error(
+      `rateLimit: unexpected EVAL reply ${JSON.stringify(reply)} for key ${key}`
+    )
+  }
+  return { allowed: count <= limit, count }
 }
 
 export async function withRedisLock<T>(

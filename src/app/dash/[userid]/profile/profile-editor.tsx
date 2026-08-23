@@ -5,7 +5,7 @@ import Modal from '@annatarhe/lake-ui/modal'
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Globe2Icon, PenIcon, Settings, User2Icon } from 'lucide-react'
+import { Earth, PenIcon, Settings, UserRound } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
@@ -138,7 +138,7 @@ function ProfileEditor(props: ProfileEditorProps) {
                 type="text"
                 label={
                   <div className="mb-2 flex items-center gap-2">
-                    <User2Icon className="h-6 w-6" />
+                    <UserRound className="h-6 w-6" />
                     <span>Name</span>
                   </div>
                 }
@@ -151,7 +151,7 @@ function ProfileEditor(props: ProfileEditorProps) {
               type="text"
               label={
                 <div className="mb-2 flex items-center gap-2">
-                  <Globe2Icon className="h-6 w-6" />
+                  <Earth className="h-6 w-6" />
                   <span>Domain</span>
                 </div>
               }

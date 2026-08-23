@@ -1,5 +1,5 @@
 import Modal from '@annatarhe/lake-ui/modal'
-import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
+import { CircleAlert, CircleCheckBig, LoaderCircle } from 'lucide-react'
 import { useMemo } from 'react'
 
 import AnimateOnChange from '@/components/SimpleAnimation/AnimateOnChange'
@@ -26,9 +26,9 @@ function LoadingModal(props: LoadingModalProps) {
   const _getStepIcon = (step: UploadStep) => {
     switch (step) {
       case UploadStep.Done:
-        return <CheckCircle className="text-green-500" size={28} />
+        return <CircleCheckBig className="text-green-500" size={28} />
       case UploadStep.Error:
-        return <AlertCircle className="text-red-500" size={28} />
+        return <CircleAlert className="text-red-500" size={28} />
       default:
         return (
           <div className="h-7 w-7 rounded-full border-2 border-gray-300 dark:border-gray-600"></div>
@@ -99,10 +99,10 @@ function LoadingModal(props: LoadingModalProps) {
                         )}
                       >
                         {isCurrentStep(step as UploadStep) && (
-                          <Loader2 size={18} className="animate-spin" />
+                          <LoaderCircle size={18} className="animate-spin" />
                         )}
                         {isPastStep(step as UploadStep) && (
-                          <CheckCircle size={18} />
+                          <CircleCheckBig size={18} />
                         )}
                         {!isCurrentStep(step as UploadStep) &&
                           !isPastStep(step as UploadStep) && (
@@ -156,13 +156,13 @@ function LoadingModal(props: LoadingModalProps) {
                 <span className="text-3xl">
                   {props.stepAt !== UploadStep.Done &&
                     props.stepAt !== UploadStep.Error && (
-                      <Loader2 size={28} className="animate-spin" />
+                      <LoaderCircle size={28} className="animate-spin" />
                     )}
                   {props.stepAt === UploadStep.Done && (
-                    <CheckCircle size={28} />
+                    <CircleCheckBig size={28} />
                   )}
                   {props.stepAt === UploadStep.Error && (
-                    <AlertCircle size={28} />
+                    <CircleAlert size={28} />
                   )}
                 </span>
               </AnimateOnChange>

@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckCircle2, ChevronDown, XCircle } from 'lucide-react'
+import { CircleCheck, ChevronDown, CircleX } from 'lucide-react'
 import { useState } from 'react'
 
 import { useTranslation } from '@/i18n/client'
@@ -26,12 +26,12 @@ export default function RecordCard({ record }: RecordCardProps) {
       >
         <div className="flex items-center gap-3">
           {isSuccess ? (
-            <CheckCircle2
+            <CircleCheck
               size={20}
               className="text-green-500 dark:text-green-400"
             />
           ) : (
-            <XCircle size={20} className="text-red-500 dark:text-red-400" />
+            <CircleX size={20} className="text-red-500 dark:text-red-400" />
           )}
           <div>
             <div className="flex items-center gap-2">

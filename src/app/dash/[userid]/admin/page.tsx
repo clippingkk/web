@@ -1,4 +1,4 @@
-import { ArrowLeftCircle, ArrowRightCircle, BookOpenCheck } from 'lucide-react'
+import { CircleArrowLeft, CircleArrowRight, BookOpenCheck } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 
@@ -89,7 +89,7 @@ async function AdminPanel(props: PageProps) {
                 }`}
                 aria-disabled={offset <= 0}
               >
-                <ArrowLeftCircle className="h-4 w-4" />
+                <CircleArrowLeft className="h-4 w-4" />
                 {t('Previous')}
               </Link>
               <Link
@@ -97,7 +97,7 @@ async function AdminPanel(props: PageProps) {
                 className="inline-flex items-center gap-2 rounded-xl bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md dark:text-slate-950 dark:hover:bg-blue-300"
               >
                 {t('Next')}
-                <ArrowRightCircle className="h-4 w-4" />
+                <CircleArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
@@ -112,7 +112,7 @@ async function AdminPanel(props: PageProps) {
               className="inline-flex items-center gap-2 rounded-xl bg-blue-400 px-6 py-3 font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md dark:text-slate-950 dark:hover:bg-blue-300"
             >
               {t('Load More Books')}
-              <ArrowRightCircle className="h-5 w-5" />
+              <CircleArrowRight className="h-5 w-5" />
             </Link>
           </div>
         </div>

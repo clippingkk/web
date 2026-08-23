@@ -1,23 +1,23 @@
 import type { NextConfig } from 'next'
 
-// const isProd = process.env.NODE_ENV === 'production'
-
 const deploymentId = process.env.GIT_COMMIT?.trim() || undefined
 
 const config: NextConfig = {
-  serverExternalPackages: ['bullmq', 'pg', 'redis'],
+  serverExternalPackages: ['bullmq', 'ioredis', 'pg', 'redis'],
   // enablePrerenderSourceMaps: false,
   // productionBrowserSourceMaps: false,
   deploymentId,
   // Disable React Compiler to avoid false positives with Floating UI and manual memoization
   reactCompiler: false,
   cacheComponents: true,
-
-  // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
-  // cacheMaxMemorySize: 0,
   typedRoutes: true,
   experimental: {
     turbopackFileSystemCacheForDev: true,
+    // Next 16.3 defaults this to true, which shells out to `typescript/bin/tsc`.
+    // Our `typescript` entry is an alias for @typescript/typescript6, which ships
+    // `bin/tsc6` instead -- so CLI mode reports TypeScript as missing. The
+    // compiler-API path (lib/typescript.js) is present and is what 16.2 used.
+    useTypeScriptCli: false,
   },
   images: {
     remotePatterns: [

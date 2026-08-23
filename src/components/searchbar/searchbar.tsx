@@ -1,5 +1,5 @@
 import { useLazyQuery } from '@apollo/client/react'
-import { Command, Search, XCircle } from 'lucide-react'
+import { Command, Search, CircleX } from 'lucide-react'
 import type React from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -132,7 +132,7 @@ function SearchBar(props: SearchBarProps) {
                 className="text-slate-400 transition-colors hover:text-slate-600 dark:hover:text-slate-200"
                 aria-label="Close search"
               >
-                <XCircle className="h-5 w-5" />
+                <CircleX className="h-5 w-5" />
               </button>
             </div>
           </div>

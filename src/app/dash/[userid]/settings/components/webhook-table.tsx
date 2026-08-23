@@ -1,10 +1,11 @@
 import { flexRender, type Table as TableDef } from '@tanstack/react-table'
 
+import type { CoreTableFeatures } from '@/components/table/features'
 import type { FetchMyWebHooksQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
 type WebhookTableProps = {
-  table: TableDef<FetchMyWebHooksQuery['me']['webhooks'][0]>
+  table: TableDef<CoreTableFeatures, FetchMyWebHooksQuery['me']['webhooks'][0]>
 }
 
 function WebhookTable(props: WebhookTableProps) {

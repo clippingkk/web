@@ -1,6 +1,6 @@
 import Modal from '@annatarhe/lake-ui/modal'
 import { useMutation } from '@apollo/client/react'
-import { Loader2 } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
@@ -61,7 +61,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
           className="flex items-center justify-center rounded bg-gradient-to-r from-gray-500 to-pink-400 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
           onClick={() => onEnhance(Prompts.Professional)}
         >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {loading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
           {t('app.ai.professionalize')}
         </button>
         <button
@@ -70,7 +70,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
           className="flex items-center justify-center rounded bg-gradient-to-r from-pink-400 to-green-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
           onClick={() => onEnhance(Prompts.Deeper)}
         >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {loading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
           {t('app.ai.deeplize')}
         </button>
         <button
@@ -79,7 +79,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
           className="flex items-center justify-center rounded bg-gradient-to-r from-green-500 to-sky-400 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
           onClick={() => onEnhance(Prompts.Intriguing)}
         >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {loading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
           Make it more intriguing
         </button>
       </div>

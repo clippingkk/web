@@ -1,7 +1,7 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useQuery } from '@apollo/client/react'
-import { ExternalLink, Loader2 } from 'lucide-react'
+import { ExternalLink, LoaderCircle } from 'lucide-react'
 import { useState } from 'react'
 import { Streamdown } from 'streamdown'
 
@@ -50,7 +50,7 @@ function PersonalityView(props: PersonalityViewProps) {
         <div className="relative flex max-h-[80vh] min-h-[240px] w-full flex-col overflow-y-auto p-4 px-4">
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-xs">
-              <Loader2 className="text-primary h-8 w-8 animate-spin" />
+              <LoaderCircle className="text-primary h-8 w-8 animate-spin" />
             </div>
           )}
           {personalityData && (

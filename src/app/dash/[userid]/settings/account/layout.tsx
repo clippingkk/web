@@ -1,4 +1,4 @@
-import { AlertTriangle } from 'lucide-react'
+import { TriangleAlert } from 'lucide-react'
 import type React from 'react'
 
 import { getTranslation } from '@/i18n'
@@ -14,7 +14,7 @@ async function SettingsAccountPage({
   return (
     <SettingsSectionLayout
       icon={
-        <AlertTriangle className="h-8 w-8 text-red-600 dark:text-red-400" />
+        <TriangleAlert className="h-8 w-8 text-red-600 dark:text-red-400" />
       }
       iconBgClass="bg-red-100 dark:bg-red-900/30"
       title={t('app.settings.danger.removeAccount')}
