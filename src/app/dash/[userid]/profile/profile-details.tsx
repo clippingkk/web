@@ -1,4 +1,4 @@
-import { BarChart3, BookOpen, Rss } from 'lucide-react'
+import { ChartColumn, BookOpen, Rss } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -99,7 +99,7 @@ const ProfileDetails = async ({
           title={t('app.profile.yearlyReportTip') ?? ''}
         >
           <div className="rounded-lg bg-white/25 p-2.5 backdrop-blur-sm">
-            <BarChart3 className="h-6 w-6" />
+            <ChartColumn className="h-6 w-6" />
           </div>
           <div>
             <h3 className="font-semibold">

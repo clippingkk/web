@@ -1,4 +1,4 @@
-import { ChevronLeft, Crown, Home } from 'lucide-react'
+import { ChevronLeft, Crown, House } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -88,7 +88,7 @@ async function NavigateGuide(props: NavigateGuideProps) {
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors duration-200 hover:bg-white/20"
                   aria-label="Home"
                 >
-                  <Home className="h-5 w-5 text-white" />
+                  <House className="h-5 w-5 text-white" />
                 </Link>
                 <Link href="/" className="flex items-center gap-2">
                   <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white/10">

@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 
 import { useTranslation } from '@/i18n/client'
 
@@ -15,7 +15,7 @@ export function LoadingState({ isOverlay = false }: LoadingStateProps) {
 
   return (
     <div className={className}>
-      <Loader2 className="mb-4 h-8 w-8 animate-spin text-blue-400" />
+      <LoaderCircle className="mb-4 h-8 w-8 animate-spin text-blue-400" />
       <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
         {t('app.home.aiThinking') ||
           'AI is thinking about your next great read...'}

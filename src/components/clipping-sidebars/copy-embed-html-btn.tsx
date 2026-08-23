@@ -1,6 +1,6 @@
 'use client'
 import type { ClippingData } from '@annatarhe/clippingkk-widget'
-import { Code2 } from 'lucide-react'
+import { CodeXml } from 'lucide-react'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'
 
@@ -76,7 +76,7 @@ function CopyEmbedHTMLBtn({ clipping, book }: Props) {
     <SidebarContainer>
       <SidebarButton onClick={onCopyEmbedHtml} disabled={!clipping}>
         <SidebarIcon>
-          <Code2 className="h-full w-full" />
+          <CodeXml className="h-full w-full" />
         </SidebarIcon>
         <SidebarText>{t('app.clipping.embed.title')}</SidebarText>
       </SidebarButton>

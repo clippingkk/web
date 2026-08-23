@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangle, Home, RotateCw } from 'lucide-react'
+import { TriangleAlert, House, RotateCw } from 'lucide-react'
 import Link from 'next/link'
 
 import DecorBlobs from '@/components/ui/decor-blobs/decor-blobs'
@@ -29,7 +29,7 @@ export default function ErrorPage({
           </h2>
 
           <div className="mx-auto mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-400/10 ring-1 ring-rose-400/20 dark:bg-rose-400/15">
-            <AlertTriangle className="h-8 w-8 text-rose-500 dark:text-rose-300" />
+            <TriangleAlert className="h-8 w-8 text-rose-500 dark:text-rose-300" />
           </div>
 
           <h1 className="mb-2 text-center text-2xl font-semibold text-slate-900 dark:text-white">
@@ -61,7 +61,7 @@ export default function ErrorPage({
               href="/"
               className="mt-1 inline-flex items-center justify-center gap-2 text-sm text-slate-600 transition-colors hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-300"
             >
-              <Home className="h-4 w-4" />
+              <House className="h-4 w-4" />
               {t('error.goHome') || 'Return to home page'}
             </Link>
           </div>

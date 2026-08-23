@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import type React from 'react'
 
 import { cn } from '@/lib/utils'
@@ -148,7 +148,7 @@ export function Button({
       {/* Create a container for content to position it above the pseudo-elements */}
       <span className="relative z-10 flex items-center justify-center gap-2">
         {isLoading ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <LoaderCircle className="h-4 w-4 animate-spin" />
         ) : (
           leftIcon && <span className="flex items-center">{leftIcon}</span>
         )}

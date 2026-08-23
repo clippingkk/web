@@ -1,5 +1,5 @@
 'use client'
-import { Edit3 } from 'lucide-react'
+import { PenLine } from 'lucide-react'
 import { useState } from 'react'
 
 import AnimatedBackground from '@/components/animated-background/animated-background'
@@ -43,7 +43,7 @@ const ProfileHeader = ({ profile, uid, isInMyPage }: ProfileHeaderProps) => {
               disabled
               className="border-white/40 bg-white/70 px-3 py-1.5 text-sm backdrop-blur-sm transition-colors duration-200 hover:bg-white/90 dark:border-slate-800/40 dark:bg-slate-900/70 dark:hover:bg-slate-900/90"
             >
-              <Edit3 className="mr-2 h-4 w-4" />
+              <PenLine className="mr-2 h-4 w-4" />
               Change
             </Button>
           </div>

@@ -1,5 +1,6 @@
-import { ExternalLink, FileText, HelpCircle, Youtube } from 'lucide-react'
+import { ExternalLink, FileText, CircleQuestionMark } from 'lucide-react'
 
+import { Youtube } from '@/components/icons/brand-icons'
 import { getTranslation } from '@/i18n'
 
 async function ClippingsUploadHelp() {
@@ -8,7 +9,7 @@ async function ClippingsUploadHelp() {
   return (
     <div className="w-full rounded-xl bg-white/70 p-6 shadow-lg backdrop-blur-sm dark:bg-gray-800/70">
       <div className="mb-4 flex items-center">
-        <HelpCircle size={20} className="mr-2 text-blue-500" />
+        <CircleQuestionMark size={20} className="mr-2 text-blue-500" />
         <h3 className="text-lg font-semibold dark:text-slate-300">
           {t('app.upload.help.title')}
         </h3>

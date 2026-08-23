@@ -1,5 +1,5 @@
 'use client'
-import { FileText, Lock, Unlock, Upload } from 'lucide-react'
+import { FileText, Lock, LockOpen, Upload } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import type React from 'react'
 import { useCallback, useEffect, useState } from 'react'
@@ -117,7 +117,7 @@ function UploaderPageContent({ profile }: Props) {
             {isOn ? (
               <Lock size={20} className="mr-2 text-green-500" />
             ) : (
-              <Unlock size={20} className="mr-2 text-amber-500" />
+              <LockOpen size={20} className="mr-2 text-amber-500" />
             )}
             <span className="font-medium dark:text-slate-300">
               {t(`app.upload.private.${isOn ? 'on' : 'off'}.title`) ??

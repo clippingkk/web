@@ -1,9 +1,9 @@
 'use client' // Error boundaries must be Client Components
 import {
-  AlertCircle,
-  AlertTriangle,
+  CircleAlert,
+  TriangleAlert,
   ExternalLink,
-  HelpCircle,
+  CircleQuestionMark,
   RefreshCw,
 } from 'lucide-react'
 import { useEffect, useMemo } from 'react'
@@ -61,7 +61,7 @@ export default function ErrorPage({
       <div className="flex flex-col items-center text-center">
         {/* Error icon */}
         <div className="mb-6 animate-pulse rounded-full bg-red-100 p-4 dark:bg-red-900/30">
-          <AlertTriangle className="h-10 w-10 text-red-600 dark:text-red-400" />
+          <TriangleAlert className="h-10 w-10 text-red-600 dark:text-red-400" />
         </div>
 
         {/* Error heading */}
@@ -76,7 +76,7 @@ export default function ErrorPage({
               {/* Error header with status code */}
               <div className="flex items-center justify-between border-b border-gray-200 bg-white/50 p-4 dark:border-gray-700 dark:bg-gray-700/30">
                 <div className="flex items-center">
-                  <AlertCircle className="mr-2 h-5 w-5 text-red-500" />
+                  <CircleAlert className="mr-2 h-5 w-5 text-red-500" />
                   <span className="font-medium text-gray-900 dark:text-white">
                     {parsedError.code || 'Error'}
                   </span>
@@ -126,7 +126,7 @@ export default function ErrorPage({
                     rel="noopener noreferrer"
                     className="flex items-center justify-center text-blue-600 hover:underline dark:text-blue-400"
                   >
-                    <HelpCircle className="mr-1 h-4 w-4" />
+                    <CircleQuestionMark className="mr-1 h-4 w-4" />
                     View documentation
                     <ExternalLink className="ml-1 h-3 w-3" />
                   </a>

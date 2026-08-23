@@ -1,7 +1,7 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useMutation } from '@apollo/client/react'
-import { AlertOctagon, AlertTriangle, Trash2 } from 'lucide-react'
+import { OctagonAlert, TriangleAlert, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -24,7 +24,7 @@ function AccountRemoveButton() {
       toast.success('Bye bye')
       // show tips
       toast(t('app.settings.danger.removeAccountDone'), {
-        icon: <AlertOctagon className="h-4 w-4" />,
+        icon: <OctagonAlert className="h-4 w-4" />,
         // message: t('app.settings.danger.removeAccountDoneTip'),
       })
       setTimeout(() => {
@@ -57,7 +57,7 @@ function AccountRemoveButton() {
         title={
           <div className="flex flex-row items-center gap-4">
             <div className="rounded-full bg-red-100 dark:bg-red-900/30">
-              <AlertOctagon className="h-8 w-8 text-red-600 dark:text-red-400" />
+              <OctagonAlert className="h-8 w-8 text-red-600 dark:text-red-400" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">
               {t('app.settings.danger.removeAccount')}
@@ -71,7 +71,7 @@ function AccountRemoveButton() {
           {/* Custom modal header */}
           <div className="mb-6 flex flex-col items-center">
             <div className="mb-4 rounded-full bg-red-100 p-3 dark:bg-red-900/30">
-              <AlertOctagon className="h-8 w-8 text-red-600 dark:text-red-400" />
+              <OctagonAlert className="h-8 w-8 text-red-600 dark:text-red-400" />
             </div>
             <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
               {t('app.settings.danger.removeAccount')}
@@ -81,7 +81,7 @@ function AccountRemoveButton() {
           {/* Warning message */}
           <div className="mb-6 rounded-lg border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/60">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-500" />
+              <TriangleAlert className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-500" />
               <p className="whitespace-break-spaces text-gray-700 dark:text-gray-300">
                 {t('app.settings.danger.removeAccountTip1')}
               </p>

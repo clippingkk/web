@@ -1,11 +1,11 @@
-import { ArrowRight, XCircle } from 'lucide-react'
+import { ArrowRight, CircleX } from 'lucide-react'
 import Link from 'next/link'
 
 function CanceledPageContent() {
   return (
     <div className="flex flex-col items-center text-center">
       <span className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-rose-400/10 ring-1 ring-rose-400/20 dark:bg-rose-400/15">
-        <XCircle className="h-10 w-10 text-rose-500 dark:text-rose-300" />
+        <CircleX className="h-10 w-10 text-rose-500 dark:text-rose-300" />
       </span>
       <h1 className="mb-2 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-3xl font-semibold tracking-tight text-transparent md:text-4xl">
         Payment canceled

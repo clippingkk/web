@@ -1,6 +1,7 @@
-import { Code, Coffee, ExternalLink, Github, Heart, Server } from 'lucide-react'
+import { Code, Coffee, ExternalLink, Heart, Server } from 'lucide-react'
 import Link from 'next/link'
 
+import { Github } from '@/components/icons/brand-icons'
 import { getTranslation } from '@/i18n'
 
 const version = process.env.GIT_COMMIT ?? ''
