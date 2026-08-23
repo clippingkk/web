@@ -2,12 +2,12 @@
 
 import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { Link } from '@tiptap/extension-link'
-import { Placeholder } from '@tiptap/extension-placeholder'
 import { Table } from '@tiptap/extension-table'
 import { TableCell } from '@tiptap/extension-table-cell'
 import { TableHeader } from '@tiptap/extension-table-header'
 import { TableRow } from '@tiptap/extension-table-row'
 import { Typography } from '@tiptap/extension-typography'
+import { Placeholder } from '@tiptap/extensions'
 import { Markdown } from '@tiptap/markdown'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
@@ -46,6 +46,7 @@ function TiptapEditor(
     extensions: [
       StarterKit.configure({
         codeBlock: false, // We'll use CodeBlockLowlight instead
+        link: false, // configured explicitly below, with openOnClick off
       }),
       CodeBlockLowlight.configure({
         lowlight,
