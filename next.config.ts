@@ -1,7 +1,5 @@
 import type { NextConfig } from 'next'
 
-// const isProd = process.env.NODE_ENV === 'production'
-
 const deploymentId = process.env.GIT_COMMIT?.trim() || undefined
 
 const config: NextConfig = {
@@ -12,9 +10,6 @@ const config: NextConfig = {
   // Disable React Compiler to avoid false positives with Floating UI and manual memoization
   reactCompiler: false,
   cacheComponents: true,
-
-  // cacheHandler: (isProd && process.env.CACHE_REDIS_URI) ? require.resolve('./cache-handler.mjs') : undefined,
-  // cacheMaxMemorySize: 0,
   typedRoutes: true,
   experimental: {
     turbopackFileSystemCacheForDev: true,
