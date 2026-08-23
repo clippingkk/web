@@ -8,6 +8,20 @@ import { ApiError } from '@/server/errors'
 import { json, options, route } from '@/server/http'
 import { getStripe } from '@/server/integrations'
 
+const KNOWN_PAYMENT_STATUSES: readonly PaymentOrderInfoResponse['paymentStatus'][] =
+  ['paid', 'unpaid', 'no_payment_required']
+
+// Stripe's PaymentStatus is an open string union so new API values don't break
+// the SDK's types. Anything we don't recognise is reported as unpaid, which is
+// what every caller already treats a non-'paid' status as.
+function toPaymentStatus(
+  value: string
+): PaymentOrderInfoResponse['paymentStatus'] {
+  return (KNOWN_PAYMENT_STATUSES as readonly string[]).includes(value)
+    ? (value as PaymentOrderInfoResponse['paymentStatus'])
+    : 'unpaid'
+}
+
 export const GET = route(async (request) => {
   const uid = await requireUserId(request)
   const sessionId = new URL(request.url).searchParams.get('sessionId')
@@ -25,7 +39,7 @@ export const GET = route(async (request) => {
   return json<PaymentOrderInfoResponse>({
     uid: user.id,
     amount: session.amount_total,
-    paymentStatus: session.payment_status,
+    paymentStatus: toPaymentStatus(session.payment_status),
   })
 }, 'payment.order.read')
 export const OPTIONS = options
