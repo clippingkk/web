@@ -30,7 +30,7 @@ function repositoryUrl() {
 
 function telemetryAttributes(): Attributes {
   const attributes: Attributes = {
-    'service.version': process.env.GIT_COMMIT ?? '5.16.4',
+    'service.version': process.env.GIT_COMMIT ?? '5.17.0',
     'deployment.environment.name': deploymentEnvironment(),
     'vcs.repository.url.full': repositoryUrl(),
   }
