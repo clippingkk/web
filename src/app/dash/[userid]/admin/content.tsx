@@ -2,24 +2,33 @@
 import {
   type ColumnDef,
   flexRender,
-  getCoreRowModel,
   type Row,
-  useReactTable,
+  useTable,
 } from '@tanstack/react-table'
 import { BookOpen } from 'lucide-react'
 import { useMemo } from 'react'
 
+import {
+  type CoreTableFeatures,
+  tableFeaturesCore,
+} from '@/components/table/features'
 import type { UncheckBooksQueryQuery } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
 import HomelessBookSyncInput from './sync-input'
 
-const homelessBookColumn: ColumnDef<homelessBookTableItem, any>[] = [
+const homelessBookColumn: ColumnDef<
+  CoreTableFeatures,
+  homelessBookTableItem,
+  any
+>[] = [
   {
+    id: 'name',
     header: 'Name',
     accessorKey: 'name',
   },
   {
+    id: 'action',
     header: 'Action',
   },
 ]
@@ -28,14 +37,18 @@ type homelessBookTableItem = {
   name: string
 }
 
-function HomelessBookTableRow({ row }: { row: Row<homelessBookTableItem> }) {
+function HomelessBookTableRow({
+  row,
+}: {
+  row: Row<CoreTableFeatures, homelessBookTableItem>
+}) {
   return (
     <tr
       key={row.id}
       className="group transition-all duration-200 hover:bg-blue-50 dark:hover:bg-gray-800"
     >
       {row.getVisibleCells().map((cell) => {
-        if (cell.column.columnDef.header === 'Action') {
+        if (cell.column.id === 'action') {
           return (
             <td key={cell.id} className="px-6 py-5">
               <HomelessBookSyncInput bookName={cell.row.original.name} />
@@ -84,9 +97,9 @@ function HomelessBooksTable(props: Props) {
     )
   }, [data])
 
-  const table = useReactTable({
+  const table = useTable({
+    features: tableFeaturesCore,
     data: tableData,
-    getCoreRowModel: getCoreRowModel(),
     columns: homelessBookColumn,
   })
 
