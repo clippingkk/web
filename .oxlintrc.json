@@ -1,6 +1,12 @@
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "nextjs", "import", "jsx-a11y"],
+  "plugins": [
+    "react",
+    "typescript",
+    "nextjs",
+    "import",
+    "jsx-a11y"
+  ],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
@@ -15,6 +21,9 @@
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
     "react-hooks/exhaustive-deps": "off",
+    "react/refs": "off",
+    "react/incompatible-library": "off",
+    "react/preserve-manual-memoization": "off",
     "@next/next/no-img-element": "off",
     "@next/next/no-html-link-for-pages": "off",
     "prefer-template": "warn",
@@ -29,8 +38,12 @@
     "no-await-in-loop": "off"
   },
   "settings": {
-    "react": { "version": "19.0.0" },
-    "next": { "rootDir": "./" }
+    "react": {
+      "version": "19.0.0"
+    },
+    "next": {
+      "rootDir": "./"
+    }
   },
   "ignorePatterns": [
     "tailwind.config.js",
