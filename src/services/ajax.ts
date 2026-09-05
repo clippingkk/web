@@ -10,7 +10,6 @@ import {
   SSRMultipartLink,
 } from '@apollo/client-integration-nextjs'
 import { onError } from '@apollo/client/link/error'
-import { QueryClient } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
 import { cache } from 'react'
 import toast from 'react-hot-toast'
@@ -21,6 +20,9 @@ import type { ApiResponse } from '../contracts/http'
 import { getLanguage } from '../utils/locales'
 import profile from '../utils/profile'
 import { apolloCacheConfig } from './apollo.shard'
+import { createReactQueryClient } from './query-client'
+
+export { createReactQueryClient } from './query-client'
 
 export function getLocalToken() {
   let lToken = ''
@@ -219,17 +221,6 @@ export function makeApolloClientWithCredentials() {
       devtools: { enabled: process.env.NODE_ENV !== 'production' },
     })
   }
-}
-
-export function createReactQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60 * 60,
-        gcTime: 5000,
-      },
-    },
-  })
 }
 
 export const getReactQueryClient = cache(() => createReactQueryClient())

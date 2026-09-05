@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast'
 
 import { CreateClippingsDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
+import { getQueryGcTime } from '@/services/query-client'
 
 import { graphql } from '../gql'
 import { getReactQueryClient } from '../services/ajax'
@@ -125,7 +126,7 @@ export function useUploadData(_: boolean, willSyncServer: boolean) {
                 }
               ),
             staleTime: duration3Days,
-            gcTime: duration3Days,
+            gcTime: getQueryGcTime(duration3Days),
           })
           if (resp.count > 0) {
             i.bookId = resp.books[0].doubanId.toString()

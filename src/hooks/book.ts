@@ -1,6 +1,8 @@
 import { useQueries, useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
+import { getQueryGcTime } from '@/services/query-client'
+
 import {
   duration3Days,
   isValidDoubanId,
@@ -27,7 +29,7 @@ export function useSingleBook(
       wenquRequest<WenquSearchResponse>(`/books/search?dbId=${doubanId}`),
     enabled: Boolean(doubanId && doubanId.length > 3) && !skip,
     staleTime: duration3Days,
-    gcTime: duration3Days,
+    gcTime: getQueryGcTime(duration3Days),
   })
   const books = bs.data?.books
   if (!books || books.length === 0) {
@@ -42,7 +44,7 @@ export function useSingleBookSuspense(doubanId?: string): WenquBook | null {
     queryFn: () =>
       wenquRequest<WenquSearchResponse>(`/books/search?dbId=${doubanId}`),
     staleTime: duration3Days,
-    gcTime: duration3Days,
+    gcTime: getQueryGcTime(duration3Days),
   })
   const books = bs.data.books
   if (books.length === 0) {
@@ -110,6 +112,6 @@ export function useBookSearch(query: string, offset: number, visible = true) {
       ),
     enabled: query.length > 1 && visible,
     staleTime: duration3Days,
-    gcTime: duration3Days,
+    gcTime: getQueryGcTime(duration3Days),
   })
 }
