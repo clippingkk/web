@@ -13,11 +13,6 @@ const config: NextConfig = {
   typedRoutes: true,
   experimental: {
     turbopackFileSystemCacheForDev: true,
-    // Next 16.3 defaults this to true, which shells out to `typescript/bin/tsc`.
-    // Our `typescript` entry is an alias for @typescript/typescript6, which ships
-    // `bin/tsc6` instead -- so CLI mode reports TypeScript as missing. The
-    // compiler-API path (lib/typescript.js) is present and is what 16.2 used.
-    useTypeScriptCli: false,
   },
   images: {
     remotePatterns: [
