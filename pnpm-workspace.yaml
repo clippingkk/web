@@ -1,0 +1,17 @@
+packages:
+  - .
+
+allowBuilds:
+  '@sentry/cli': true
+  bufferutil: true
+  esbuild: true
+  lefthook: false
+  msgpackr-extract: true
+  protobufjs: false
+  sharp: true
+  utf-8-validate: true
+
+minimumReleaseAgeExclude:
+  - '@aws-sdk/client-s3@3.1127.0'
+  - jose@6.2.12
+  - lint-staged@17.5.0

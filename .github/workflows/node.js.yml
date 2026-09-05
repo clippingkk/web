@@ -23,26 +23,26 @@ jobs:
         node-version: [26.x]
 
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5.0.0
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
-      - uses: actions/checkout@v6
-      - uses: actions/cache@v5
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/cache@v6.1.0
         with:
           path: ${{ github.workspace }}/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6.1.0
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-      - uses: PromptPal/github-action@v1.0.2
+      - uses: PromptPal/github-action@v1.0.3
         env:
           PROMPTPAL_ENDPOINT: ${{ secrets.PROMPTPAL_ENDPOINT }}
           PROMPTPAL_API_TOKEN: ${{ secrets.PROMPTPAL_API_TOKEN }}
@@ -50,8 +50,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           command: pp g
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - run: pnpm run codegen
+      - run: pnpm run lint
+      - run: pnpm exec next typegen
+      - run: pnpm run typecheck
       - run: pnpm run typecheck:server
       - run: pnpm run test:server
       - run: pnpm run build # to make sure this version can be build
@@ -62,20 +65,20 @@ jobs:
           COVERALLS_REPO_TOKEN: ${{ secrets.CODEALLS_REPO_TOKEN }}
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6.2.0
         if: ${{ steps.release.outputs.release_created }}
         with:
           images: registry.cn-shanghai.aliyuncs.com/annatarhe/clippingkk-web
           tags: ${{ steps.release.outputs.tag_name }}
       - name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4.6.0
         if: ${{ steps.release.outputs.release_created }}
         with:
           registry: registry.cn-shanghai.aliyuncs.com
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PWD }}
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7.3.0
         if: ${{ steps.release.outputs.release_created }}
         env:
           GIT_COMMIT: ${{ github.sha }}
