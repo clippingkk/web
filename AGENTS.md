@@ -31,4 +31,4 @@ Recent history favors Conventional Commit-style messages such as `refactor(auth)
 
 ## Configuration Tips
 
-Runtime behavior depends on environment variables such as `PORT`, `GIT_COMMIT`, `NEXT_PUBLIC_PP_TOKEN`, and Redis/telemetry values used in deployment. Avoid committing secrets, and document any new env var in the PR description.
+Runtime behavior depends on environment variables such as `PORT`, `GIT_COMMIT`, `OPENAI_API_KEY`, `OPENAI_MODEL`, and Redis/telemetry values used in deployment. Avoid committing secrets, and document any new env var in the PR description.

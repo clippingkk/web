@@ -16,6 +16,9 @@ import {
   sql,
 } from 'drizzle-orm'
 
+import { requirePremium, aiClipping } from '../ai/access'
+import { generateAIText } from '../ai/generate'
+import { commentModes } from '../ai/prompts'
 import {
   decodeLegacyValue,
   encodeLegacyValue,
@@ -48,7 +51,6 @@ import { getServerEnv } from '../env'
 import { ApiError, assertFound } from '../errors'
 import {
   fetchGithubIdentity,
-  promptPalExecute,
   resolveEnsAvatar,
   sendOneTimePasscode,
   sendVerificationEmail,
@@ -1313,23 +1315,23 @@ export const resolvers: Record<string, Record<string, any>> = {
       args: Args,
       context: GraphQLContext
     ) => {
-      requiredUser(context)
-      const prompts: Record<number, string> = {
-        1: 'w4XVBg0NoYGb',
-        2: 'dgJe7a8WGVZj',
-        3: 'XMkwB53W58vz',
-        4: 'nKGPBDmNw4Xl',
-      }
-      const prompt = prompts[args.promptId]
-      if (!prompt) throw new ApiError('prompt not found')
+      await requirePremium(context.userId)
+      if (!(args.promptId in commentModes))
+        throw new ApiError('prompt not found')
       const clipping = args.clippingId
-        ? await clippingById(args.clippingId)
+        ? await aiClipping(args.clippingId, context.userId)
         : undefined
-      const content = await promptPalExecute(prompt, {
-        bookName: args.bookName ?? clipping?.title ?? '',
-        clipping: clipping?.content ?? '',
-        content: args.content,
-      })
+      const content = await generateAIText(
+        {
+          kind: 'comment',
+          mode: args.promptId,
+          language: context.language,
+          book: args.bookName ?? clipping?.title ?? '',
+          passage: clipping?.content ?? '',
+          comment: args.content,
+        },
+        context.request.signal
+      )
       return { content }
     },
     createNoun: async (_: unknown, args: Args, context: GraphQLContext) => {
@@ -1616,18 +1618,30 @@ export const resolvers: Record<string, Record<string, any>> = {
       const edges = rows.flatMap((row) => row.nfts)
       return { count: edges.length, edges }
     },
-    personalityByAI: async (user: User) => {
+    personalityByAI: async (user: User, _: Args, context: GraphQLContext) => {
+      await requirePremium(context.userId)
       const recent = await db()
         .select({ content: clippings.content })
         .from(clippings)
-        .where(and(eq(clippings.createdBy, user.id), activeClipping))
+        .where(
+          and(
+            eq(clippings.createdBy, user.id),
+            activeClipping,
+            clippingVisibleTo(context.userId)
+          )
+        )
         .orderBy(desc(clippings.id))
         .limit(30)
       if (!recent.length) return ''
       try {
-        return await promptPalExecute('PQDE7LRNqgkl', {
-          clippings: recent.map((row) => row.content).join('\n'),
-        })
+        return await generateAIText(
+          {
+            kind: 'personality',
+            language: context.language,
+            clippings: recent.map((row) => row.content),
+          },
+          context.request.signal
+        )
       } catch {
         return ''
       }
@@ -1806,13 +1820,19 @@ export const resolvers: Record<string, Record<string, any>> = {
         bookClippingID: bookNext?.id ?? 0,
       }
     },
-    aiSummary: async (clipping: Clipping) => {
+    aiSummary: async (clipping: Clipping, _: Args, context: GraphQLContext) => {
+      await requirePremium(context.userId)
+      await aiClipping(clipping.id, context.userId)
       try {
-        return await promptPalExecute('w4XVBg0NoYGb', {
-          bookName: clipping.title,
-          clipping: clipping.content,
-          content: '',
-        })
+        return await generateAIText(
+          {
+            kind: 'passage',
+            language: context.language,
+            book: { title: clipping.title },
+            passage: clipping.content,
+          },
+          context.request.signal
+        )
       } catch {
         return ''
       }

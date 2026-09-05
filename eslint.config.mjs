@@ -11,7 +11,6 @@ export default defineConfig([globalIgnores([
     "**/tailwind.config.js",
     "src/gql/**/*.ts",
     "src/**/*.mdx",
-    "src/types.g.ts",
     "src/schema/generated.ts",
     "node_modules/**/*",
     ".next/**/*",

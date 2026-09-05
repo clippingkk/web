@@ -1,9 +1,0 @@
-input:
-    http:
-        url: https://pp.shelltime.xyz
-        token: "@env.PROMPTPAL_API_TOKEN"
-output:
-    schema: ./schema.g.json
-    typescript_types:
-        prefix: CK
-        output: ./src/types.g.ts

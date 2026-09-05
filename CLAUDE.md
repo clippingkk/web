@@ -137,7 +137,7 @@ When schema changes occur:
 
 - `CACHE_REDIS_URI` - Redis connection for caching
 - `RSC_LOGGED_INFO_SECRET` - Server component logging
-- `NEXT_PUBLIC_PP_TOKEN` - PromptPal integration token
+- `OPENAI_API_KEY` and `OPENAI_MODEL` - server-only AI configuration
 
 ## State Management Guidelines
 

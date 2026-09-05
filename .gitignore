@@ -71,5 +71,3 @@ src/gql/
 
 .env.local
 .unikraft
-src/types.g.ts
-schema.g.json

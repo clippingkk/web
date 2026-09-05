@@ -219,28 +219,3 @@ export async function fetchGithubIdentity(code: string) {
     accessToken: tokenResponse.access_token,
   }
 }
-
-export async function promptPalExecute(
-  promptId: string,
-  args: Record<string, unknown>
-) {
-  const env = getServerEnv()
-  const response = await fetch(
-    `${env.PROMPTPAL_ENDPOINT.replace(/\/$/, '')}/api/v1/prompts/${promptId}/execute`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${requireEnv('PROMPTPAL_API_TOKEN')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ variables: args }),
-    }
-  )
-  if (!response.ok)
-    throw new ApiError(`PromptPal returned ${response.status}`, 502)
-  const payload = (await response.json()) as {
-    data?: { content?: string }
-    content?: string
-  }
-  return payload.data?.content ?? payload.content ?? ''
-}
