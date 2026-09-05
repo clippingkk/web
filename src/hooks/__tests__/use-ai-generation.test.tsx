@@ -127,6 +127,9 @@ test('partial stream errors end loading and expose an error', async () => {
     )
     requests[0].stream.close()
   })
-  await waitFor(() => expect(result.current.error).toBeTruthy())
-  expect(result.current.isLoading).toBe(false)
+  // The error event can arrive before the request's asynchronous cleanup ends loading.
+  await waitFor(() => {
+    expect(result.current.error).toBeTruthy()
+    expect(result.current.isLoading).toBe(false)
+  })
 })
