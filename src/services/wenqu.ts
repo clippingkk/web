@@ -1,4 +1,5 @@
 import { WENQU_API_HOST, WENQU_SIMPLE_TOKEN } from '../constants/config'
+import { getQueryGcTime } from './query-client'
 
 // import * as Sentry from '@sentry/react'
 
@@ -12,8 +13,6 @@ type WenquErrorResponse = {
   code: number
   error: string
 }
-
-const cache = new Map<string, any>()
 
 export async function wenquRequest<T = any>(
   url: string,
@@ -29,10 +28,6 @@ export async function wenquRequest<T = any>(
     revalidate: 60 * 60, // 1 hour
   }
 
-  if (cache.has(url)) {
-    return cache.get(url) as T
-  }
-
   try {
     const response: (T & { error: any }) | WenquErrorResponse = await fetch(
       WENQU_API_HOST + url,
@@ -41,7 +36,6 @@ export async function wenquRequest<T = any>(
     if ('error' in response) {
       throw new Error(response.error)
     }
-    cache.set(url, response)
     return response
   } catch (e) {
     // Sentry.captureException(e)
@@ -110,6 +104,6 @@ export function wenquBooksByIdsQueryOptions(dbIds: string[]) {
         `/books/search?dbIds=${dbIds.join('&dbIds=')}`
       ),
     staleTime: duration3Days,
-    gcTime: duration3Days,
+    gcTime: getQueryGcTime(duration3Days),
   }
 }

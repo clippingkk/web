@@ -11,6 +11,7 @@ import {
 import { duration3Days } from '@/hooks/book'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
+import { getQueryGcTime } from '@/services/query-client'
 import {
   type WenquBook,
   type WenquSearchResponse,
@@ -51,7 +52,7 @@ export default async function Image(req: {
       queryFn: () =>
         wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
       staleTime: duration3Days,
-      gcTime: duration3Days,
+      gcTime: getQueryGcTime(duration3Days),
     })
     b = bs.books.length === 1 ? bs.books[0] : null
   }
