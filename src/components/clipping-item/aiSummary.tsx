@@ -1,16 +1,10 @@
 import Modal from '@annatarhe/lake-ui/modal'
-import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
 
+import { useAIGeneration } from '@/hooks/use-ai-generation'
 // import { Streamdown } from 'streamdown'
 import { useTranslation } from '@/i18n/client'
 
-import client from '../../services/pp'
 import type { WenquBook } from '../../services/wenqu'
-import {
-  type CKPromptDescribeBookPassageVariables,
-  CKPrompts,
-} from '../../types.g'
 import { getLanguage } from '../../utils/locales'
 import { PulseLoader } from '../book-recommendation/pulse-loader'
 
@@ -38,49 +32,25 @@ export type serverGraphQLError = {
 }
 
 function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
-  const { cid, open, book, clippingContent, uid, onClose } = props
-  const [data, setData] = useState<string[]>([])
-
-  const { isLoading, error } = useQuery({
-    queryKey: ['book', book?.id, cid, 'aiSummary'],
-    queryFn: async () => {
-      return client
-        .executeStream<string, CKPromptDescribeBookPassageVariables>(
-          CKPrompts.DescribeBookPassage,
-          {
-            lang: getLanguage(),
-            bookTitle: book!.title,
-            author: book!.author,
-            pbDate: book!.pubdate,
-            url: book!.url,
-            isbn: book!.isbn,
-            summary: book!.summary,
-            passage: clippingContent,
-          },
-          uid ? uid.toString() : undefined,
-          {
-            onData: (chunk) => {
-              setData((d) => [...d, chunk.message])
-              return Promise.resolve()
-            },
-            onEnd: () => {
-              return Promise.resolve()
-            },
-          }
-        )
-        .then((final) => {
-          setData([final.message])
-          return final
-        })
+  const { cid, open, book, onClose } = props
+  const { text, isLoading, error } = useAIGeneration(
+    'passage',
+    {
+      clippingId: cid,
+      language: getLanguage(),
+      book: {
+        title: book?.title ?? '',
+        author: book?.author ?? '',
+        summary: book?.summary ?? '',
+        pubdate: book?.pubdate ?? '',
+        url: book?.url ?? '',
+        isbn: book?.isbn ?? '',
+      },
     },
-    enabled: open && !!cid && !!book,
-  })
-
+    open && !!cid && !!book
+  )
   const { t } = useTranslation()
-
-  const errMsg = useMemo(() => {
-    return error?.message
-  }, [error])
+  const errMsg = error?.message
 
   return (
     <Modal isOpen={open} onClose={onClose} title={t('app.clipping.aiSummary')}>
@@ -98,7 +68,7 @@ function ClippingAISummaryModal(props: ClippingAISummaryModalProps) {
         ) : (
           <div>
             {/* <Streamdown components={MarkdownComponents}> */}
-            {data.join('')}
+            {text}
             {/* </Streamdown> */}
           </div>
         )}

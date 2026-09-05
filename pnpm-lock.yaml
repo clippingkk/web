@@ -205,9 +205,6 @@ importers:
       '@opentelemetry/sdk-trace-base':
         specifier: ^2.11.0
         version: 2.11.0(@opentelemetry/api@1.9.1)
-      '@prompt-pal/node-sdk':
-        specifier: npm:@jsr/prompt-pal__node-sdk@^0.4.8
-        version: '@jsr/prompt-pal__node-sdk@0.4.8'
       '@sentry/nextjs':
         specifier: ^10.73.0
         version: 10.73.0(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@opentelemetry/exporter-trace-otlp-http@0.222.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.11.0(@opentelemetry/api@1.9.1))(encoding@0.1.13)(next@16.3.4(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@26.4.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)(supports-color@8.1.1)(webpack@5.96.1(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28))
@@ -223,6 +220,15 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4.3.3
         version: 4.3.3
+      '@tanstack/ai':
+        specifier: ^0.53.0
+        version: 0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4)
+      '@tanstack/ai-openai':
+        specifier: ^0.22.5
+        version: 0.22.5(@aws-sdk/credential-provider-node@3.972.82)(@smithy/signature-v4@5.7.3)(@tanstack/ai@0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4))(ws@8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.5.4)
+      '@tanstack/ai-react':
+        specifier: ^0.24.0
+        version: 0.24.0(@opentelemetry/api@1.9.1)(@tanstack/ai@0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@8.1.1)(zod@4.5.4)
       '@tanstack/query-sync-storage-persister':
         specifier: ^5.102.8
         version: 5.102.8
@@ -565,6 +571,14 @@ packages:
 
   '@adraffy/ens-normalize@1.11.1':
     resolution: {integrity: sha512-nhCBV3quEgesuf7c7KYfperqSS14T8bYuvJ8PcLJp6znkZpFc0AuW4qBtr8eKVyPPe/8RSr7sglCWPU5eaxwKQ==}
+
+  '@ag-ui/core@0.1.1-canary.beta.0':
+    resolution: {integrity: sha512-zcP3RH5p3HJTZ0kyQxNOL1blnVFTDpaShitR7UMS/thwFdl48V6CAG+WQBcYEu/dfa8mKonRez88N0Ok+nEI+w==}
+    peerDependencies:
+      zod: ^3.25.18 || ^4.0.0
+    peerDependenciesMeta:
+      zod:
+        optional: true
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -2055,9 +2069,6 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
-  '@jsr/prompt-pal__node-sdk@0.4.8':
-    resolution: {integrity: sha512-6QUNDc9nS1Oxbwjc6j2+mIOkCS/v6Adqc5tsWX322johPLxskc+TYMUhEWBdoTnW/iABBuFdzOpYFSl+6BwAAQ==, tarball: https://npm.jsr.io/~/11/@jsr/prompt-pal__node-sdk/0.4.8.tgz}
-
   '@marsidev/react-turnstile@1.6.1':
     resolution: {integrity: sha512-ojI9NLYv821IRKi7KraTkxTto6KC/m58hNNyKxvYxm/cQBu5MI5eMkaiJs2JSQBFiXE3LPQI3seJVjv/2lgALA==}
     peerDependencies:
@@ -3385,6 +3396,53 @@ packages:
 
   '@tailwindcss/postcss@4.3.3':
     resolution: {integrity: sha512-JTSZZGQi1AyKirbLN3azmjVzef92tcX7h+iSqPdaeStyFpGpDlKvvpxeOE8njhbUanbRwr3z8DyzhICWnMtQeg==}
+
+  '@tanstack/ai-client@0.31.0':
+    resolution: {integrity: sha512-K7VlIfyiPXpTkdVkfoGbful++/jr9wJet4ri0uhBvfxgIUi4FNM+50TadfcZ14H+L4mDdnVB4IaRYy+XGxV9aw==}
+
+  '@tanstack/ai-event-client@0.11.2':
+    resolution: {integrity: sha512-SlBC0jzlsjcdwYZqbvd7Wjny7GkGJGOZepHyJShDsfaiFNFUzGSP4SjOwV49YPfKwsFmR8hX67jQtBAmsnZWqQ==}
+
+  '@tanstack/ai-openai@0.22.5':
+    resolution: {integrity: sha512-jIslf1nXIHijGPXVn3kp5OWrj4gpEc6Sa23uKb97p0C6lI1Dr0VAnagLn4Is0Wjkg/rOqAbG8w2fhFylK5YQ5g==}
+    peerDependencies:
+      '@tanstack/ai': ^0.53.0
+
+  '@tanstack/ai-react@0.24.0':
+    resolution: {integrity: sha512-K+nmvVRPTubZ5JAROgpJoDAXuPBtO3TZxhGdbxRIxHjDcjEGnf7EP/Z0YAeJr5kjAM/Nhu68tDPyb5DTsUOwYQ==}
+    peerDependencies:
+      '@mcp-ui/client': ^7
+      '@tanstack/ai': ^0.53.0
+      '@types/react': '>=18.0.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    peerDependenciesMeta:
+      '@mcp-ui/client':
+        optional: true
+      react-dom:
+        optional: true
+
+  '@tanstack/ai-utils@0.4.0':
+    resolution: {integrity: sha512-xqvAgPJkIuGk1m+jZKyb7vBTQIaBmUD9EVzlPkDWWMp80n69uwL0TnBZCVk+OwL9goTQiFy648dnBfLsiJgl6A==}
+
+  '@tanstack/ai@0.53.0':
+    resolution: {integrity: sha512-a4zDqb7SU0PU+pua69y5IDKLHO9dsD99vMIrzKNfcJyzJ81aASIkbrXXcD4n15YOj+FaWPZmD4Qewmd+5IV4Iw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.9.0'
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+
+  '@tanstack/devtools-event-client@0.4.4':
+    resolution: {integrity: sha512-6T5Yop/793YI+H+5J8Hsyj4kCih9sl4t3ElLgKioW5hk3ocn+ZdSJ94tT7vL7uabxSugWYBZlOTMPzEw2puvQw==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@tanstack/openai-base@0.10.10':
+    resolution: {integrity: sha512-i/aU7dQ7lSx4vqfuRe+N9oF3kg7ggBDy/lHtWhcfGb0rDSMtdt7f9Xe/mZn8jgjrxLdm6N7TN9Dh2hPg11ENmg==}
+    peerDependencies:
+      '@tanstack/ai': ^0.53.0
 
   '@tanstack/query-core@5.102.8':
     resolution: {integrity: sha512-ZNjkJ33CqvPNec/6lZBnHqLc3EVGPZ9ySLhYahU9TcuRFdmwXewuj0c4hwSWcGHqEUwcSrKeZ+oGcvPBqXcQcg==}
@@ -4903,6 +4961,9 @@ packages:
   hast-util-from-parse5@8.0.3:
     resolution: {integrity: sha512-3kxEVkEKt0zvcZ3hCRYI8rqrgwtlIOFMWkbclACvjlDw8Li9S2hk/d51OI0nr/gIpdMHNepwgOKqZ/sy0Clpyg==}
 
+  hast-util-is-element@3.0.0:
+    resolution: {integrity: sha512-Val9mnv2IWpLbNPqc/pUem+a7Ipj2aHacCwgNfTiK0vJKl0LF+4Ba4+v1oPHFpf3bLYmreq0/l3Gud9S5OH42g==}
+
   hast-util-parse-selector@4.0.0:
     resolution: {integrity: sha512-wkQCkSYoOGCRKERFWcxMVMOcYE2K1AaNLU8DXS9arxnLOUEWbOXKXiJUNzEpqZ3JOKpnha3jkFrumEjVliDe7A==}
 
@@ -4920,6 +4981,9 @@ packages:
 
   hast-util-to-parse5@8.0.1:
     resolution: {integrity: sha512-MlWT6Pjt4CG9lFCjiz4BH7l9wmrMkfkJYCxFwKQic8+RTZgWPuWxwAfjJElsXkex7DJjfSJsQIt931ilUgmwdA==}
+
+  hast-util-to-text@4.0.2:
+    resolution: {integrity: sha512-KK6y/BN8lbaq654j7JgBydev7wuNMcID54lkRav1P0CaE1e47P72AWWPiGKXTJU271ooYzcvTAn/Zt0REnvc7A==}
 
   hast-util-whitespace@3.0.0:
     resolution: {integrity: sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==}
@@ -5837,6 +5901,26 @@ packages:
   oniguruma-to-es@4.3.6:
     resolution: {integrity: sha512-csuQ9x3Yr0cEIs/Zgx/OEt9iBw9vqIunAPQkx19R/fiMq2oGVTgcMqO/V3Ybqefr1TBvosI6jU539ksaBULJyA==}
 
+  openai@6.49.0:
+    resolution: {integrity: sha512-aYCc0C6L864eR6WSYIwQGyXriw/nIyZx0ObvhzOEVuk0zoBDpynjSbrionWI7q65B5H8jJX0DXR9snEzM6bfPg==}
+    peerDependencies:
+      '@aws-sdk/credential-provider-node': '>=3.972.0 <4'
+      '@smithy/hash-node': '>=4.3.0 <5'
+      '@smithy/signature-v4': '>=5.4.0 <6'
+      ws: ^8.18.0
+      zod: ^3.25 || ^4.0
+    peerDependenciesMeta:
+      '@aws-sdk/credential-provider-node':
+        optional: true
+      '@smithy/hash-node':
+        optional: true
+      '@smithy/signature-v4':
+        optional: true
+      ws:
+        optional: true
+      zod:
+        optional: true
+
   opentracing@0.14.7:
     resolution: {integrity: sha512-vz9iS7MJ5+Bp1URw8Khvdyw1H/hGvzHWlKQ7eRrQojSCDL1/SrWfrY9QebLw97n2deyRtzHRC3MkQfVNUCo91Q==}
     engines: {node: '>=0.10'}
@@ -5909,6 +5993,9 @@ packages:
 
   parse5@7.3.0:
     resolution: {integrity: sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw==}
+
+  partial-json@0.1.7:
+    resolution: {integrity: sha512-Njv/59hHaokb/hRUjce3Hdv12wd60MtM9Z5Olmn+nehe0QDAsRtRbJPvJ0Z91TusF0SuZRIvnM+S4l6EIP8leA==}
 
   party-js@2.2.0:
     resolution: {integrity: sha512-50hGuALCpvDTrQLPQ1fgUgxKIWAH28ShVkmeK/3zhO0YJyCqkhrZhQEkWPxDYLvbFJ7YAXyROmFEu35gKpZLtQ==}
@@ -6002,10 +6089,6 @@ packages:
 
   postcss@8.5.23:
     resolution: {integrity: sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==}
-    engines: {node: ^10 || ^12 || >=14}
-
-  postcss@8.5.26:
-    resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   postcss@8.5.28:
@@ -6180,6 +6263,12 @@ packages:
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
+  react-markdown@10.1.0:
+    resolution: {integrity: sha512-qKxVopLT/TyA6BX3Ue5NwabOsAzm0Q7kAPwq6L+wWDwisYs7R8vZ0nRXqq6rkueboxpkjvLGU9fWifiX/ZZFxQ==}
+    peerDependencies:
+      '@types/react': '>=18'
+      react: '>=18'
+
   react-phone-input-2@2.15.1:
     resolution: {integrity: sha512-W03abwhXcwUoq+vUFvC6ch2+LJYMN8qSOiO889UH6S7SyMCQvox/LF3QWt+cZagZrRdi5z2ON3omnjoCUmlaYw==}
     peerDependencies:
@@ -6228,6 +6317,9 @@ packages:
 
   rehype-harden@1.1.8:
     resolution: {integrity: sha512-Qn7vR1xrf6fZCrkm9TDWi/AB4ylrHy+jqsNm1EHOAmbARYA6gsnVJBq/sdBh6kmT4NEZxH5vgIjrscefJAOXcw==}
+
+  rehype-highlight@7.0.2:
+    resolution: {integrity: sha512-k158pK7wdC2qL3M5NcZROZ2tR/l7zOzjxXd5VGdcfIyoijjQqpHd3JKtYSBDpDZ38UI2WJWuFAtkMDxmx5kstA==}
 
   rehype-raw@7.0.0:
     resolution: {integrity: sha512-/aE8hCfKlQeA8LmyeyQvQF3eBiLRGNlfBJEvWH7ivp9sBqs7TNqBL5X3v157rM4IFETqDnIOO+z5M/biZbo9Ww==}
@@ -6717,6 +6809,9 @@ packages:
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
 
+  unist-util-find-after@5.0.0:
+    resolution: {integrity: sha512-amQa0Ep2m6hE2g72AugUItjbuM8X8cGQnFoHk0pGfrFeT9GZhzN5SW8nRsiGKK7Aif4CrACPENkA6P/Lw6fHGQ==}
+
   unist-util-is@6.0.1:
     resolution: {integrity: sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==}
 
@@ -7057,6 +7152,10 @@ packages:
 snapshots:
 
   '@adraffy/ens-normalize@1.11.1': {}
+
+  '@ag-ui/core@0.1.1-canary.beta.0(zod@4.5.4)':
+    optionalDependencies:
+      zod: 4.5.4
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -8517,8 +8616,6 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@jsr/prompt-pal__node-sdk@0.4.8': {}
-
   '@marsidev/react-turnstile@1.6.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       react: 19.2.8
@@ -9546,8 +9643,7 @@ snapshots:
 
   '@stablelib/base64@1.0.1': {}
 
-  '@standard-schema/spec@1.1.0':
-    optional: true
+  '@standard-schema/spec@1.1.0': {}
 
   '@standard-schema/utils@0.3.0': {}
 
@@ -9645,6 +9741,78 @@ snapshots:
       '@tailwindcss/oxide': 4.3.3
       postcss: 8.5.28
       tailwindcss: 4.3.3
+
+  '@tanstack/ai-client@0.31.0(@opentelemetry/api@1.9.1)(zod@4.5.4)':
+    dependencies:
+      '@tanstack/ai': 0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4)
+      '@tanstack/ai-event-client': 0.11.2
+      '@tanstack/ai-utils': 0.4.0
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - zod
+
+  '@tanstack/ai-event-client@0.11.2':
+    dependencies:
+      '@tanstack/devtools-event-client': 0.4.4
+
+  '@tanstack/ai-openai@0.22.5(@aws-sdk/credential-provider-node@3.972.82)(@smithy/signature-v4@5.7.3)(@tanstack/ai@0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4))(ws@8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.5.4)':
+    dependencies:
+      '@tanstack/ai': 0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4)
+      '@tanstack/ai-utils': 0.4.0
+      '@tanstack/openai-base': 0.10.10(@aws-sdk/credential-provider-node@3.972.82)(@smithy/signature-v4@5.7.3)(@tanstack/ai@0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4))(ws@8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.5.4)
+      openai: 6.49.0(@aws-sdk/credential-provider-node@3.972.82)(@smithy/signature-v4@5.7.3)(ws@8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.5.4)
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-provider-node'
+      - '@smithy/hash-node'
+      - '@smithy/signature-v4'
+      - ws
+      - zod
+
+  '@tanstack/ai-react@0.24.0(@opentelemetry/api@1.9.1)(@tanstack/ai@0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(supports-color@8.1.1)(zod@4.5.4)':
+    dependencies:
+      '@tanstack/ai': 0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4)
+      '@tanstack/ai-client': 0.31.0(@opentelemetry/api@1.9.1)(zod@4.5.4)
+      '@types/react': 19.2.18
+      react: 19.2.8
+      react-markdown: 10.1.0(@types/react@19.2.18)(react@19.2.8)(supports-color@8.1.1)
+      rehype-highlight: 7.0.2
+      rehype-raw: 7.0.0
+      rehype-sanitize: 6.0.0
+      remark-gfm: 4.0.1(supports-color@8.1.1)
+    optionalDependencies:
+      react-dom: 19.2.8(react@19.2.8)
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - supports-color
+      - zod
+
+  '@tanstack/ai-utils@0.4.0': {}
+
+  '@tanstack/ai@0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4)':
+    dependencies:
+      '@ag-ui/core': 0.1.1-canary.beta.0(zod@4.5.4)
+      '@standard-schema/spec': 1.1.0
+      '@tanstack/ai-event-client': 0.11.2
+      '@tanstack/ai-utils': 0.4.0
+      partial-json: 0.1.7
+    optionalDependencies:
+      '@opentelemetry/api': 1.9.1
+    transitivePeerDependencies:
+      - zod
+
+  '@tanstack/devtools-event-client@0.4.4': {}
+
+  '@tanstack/openai-base@0.10.10(@aws-sdk/credential-provider-node@3.972.82)(@smithy/signature-v4@5.7.3)(@tanstack/ai@0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4))(ws@8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.5.4)':
+    dependencies:
+      '@tanstack/ai': 0.53.0(@opentelemetry/api@1.9.1)(zod@4.5.4)
+      '@tanstack/ai-utils': 0.4.0
+      openai: 6.49.0(@aws-sdk/credential-provider-node@3.972.82)(@smithy/signature-v4@5.7.3)(ws@8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.5.4)
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-provider-node'
+      - '@smithy/hash-node'
+      - '@smithy/signature-v4'
+      - ws
+      - zod
 
   '@tanstack/query-core@5.102.8': {}
 
@@ -11071,6 +11239,10 @@ snapshots:
       vfile-location: 5.0.3
       web-namespaces: 2.0.1
 
+  hast-util-is-element@3.0.0:
+    dependencies:
+      '@types/hast': 3.0.5
+
   hast-util-parse-selector@4.0.0:
     dependencies:
       '@types/hast': 3.0.5
@@ -11140,6 +11312,13 @@ snapshots:
       space-separated-tokens: 2.0.2
       web-namespaces: 2.0.1
       zwitch: 2.0.4
+
+  hast-util-to-text@4.0.2:
+    dependencies:
+      '@types/hast': 3.0.5
+      '@types/unist': 3.0.3
+      hast-util-is-element: 3.0.0
+      unist-util-find-after: 5.0.0
 
   hast-util-whitespace@3.0.0:
     dependencies:
@@ -11350,7 +11529,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 26.2.0
+      '@types/node': 26.4.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -12204,6 +12383,13 @@ snapshots:
       regex: 6.1.0
       regex-recursion: 6.0.2
 
+  openai@6.49.0(@aws-sdk/credential-provider-node@3.972.82)(@smithy/signature-v4@5.7.3)(ws@8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.5.4):
+    optionalDependencies:
+      '@aws-sdk/credential-provider-node': 3.972.82
+      '@smithy/signature-v4': 5.7.3
+      ws: 8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      zod: 4.5.4
+
   opentracing@0.14.7: {}
 
   optimism@0.18.1:
@@ -12317,6 +12503,8 @@ snapshots:
     dependencies:
       entities: 6.0.1
 
+  partial-json@0.1.7: {}
+
   party-js@2.2.0: {}
 
   partysocket@0.0.25:
@@ -12392,12 +12580,6 @@ snapshots:
   postcss-value-parser@4.2.0: {}
 
   postcss@8.5.23:
-    dependencies:
-      nanoid: 3.3.18
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
-  postcss@8.5.26:
     dependencies:
       nanoid: 3.3.18
       picocolors: 1.1.1
@@ -12607,6 +12789,24 @@ snapshots:
 
   react-is@17.0.2: {}
 
+  react-markdown@10.1.0(@types/react@19.2.18)(react@19.2.8)(supports-color@8.1.1):
+    dependencies:
+      '@types/hast': 3.0.5
+      '@types/mdast': 4.0.4
+      '@types/react': 19.2.18
+      devlop: 1.1.0
+      hast-util-to-jsx-runtime: 2.3.6(supports-color@8.1.1)
+      html-url-attributes: 3.0.1
+      mdast-util-to-hast: 13.2.1
+      react: 19.2.8
+      remark-parse: 11.0.0(supports-color@8.1.1)
+      remark-rehype: 11.1.2
+      unified: 11.0.5
+      unist-util-visit: 5.1.0
+      vfile: 6.0.3
+    transitivePeerDependencies:
+      - supports-color
+
   react-phone-input-2@2.15.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
       classnames: 2.5.1
@@ -12672,6 +12872,14 @@ snapshots:
   rehype-harden@1.1.8:
     dependencies:
       unist-util-visit: 5.1.0
+
+  rehype-highlight@7.0.2:
+    dependencies:
+      '@types/hast': 3.0.5
+      hast-util-to-text: 4.0.2
+      lowlight: 3.3.0
+      unist-util-visit: 5.1.0
+      vfile: 6.0.3
 
   rehype-raw@7.0.0:
     dependencies:
@@ -13239,6 +13447,11 @@ snapshots:
       trough: 2.2.0
       vfile: 6.0.3
 
+  unist-util-find-after@5.0.0:
+    dependencies:
+      '@types/unist': 3.0.3
+      unist-util-is: 6.0.1
+
   unist-util-is@6.0.1:
     dependencies:
       '@types/unist': 3.0.3
@@ -13344,8 +13557,8 @@ snapshots:
   vite@8.1.5(@types/node@26.4.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.33.0
-      picomatch: 4.0.5
-      postcss: 8.5.26
+      picomatch: 4.0.7
+      postcss: 8.5.28
       rolldown: 1.1.5
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -13412,7 +13625,7 @@ snapshots:
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
       acorn: 8.18.0
-      browserslist: 4.28.8
+      browserslist: 4.28.9
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.24.5
       es-module-lexer: 1.7.0

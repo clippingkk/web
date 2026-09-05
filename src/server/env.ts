@@ -41,11 +41,8 @@ const envSchema = z.object({
   STRIPE_WEBHOOK_ENDPOINT_SECRET: z.string().optional(),
   WENQU_ENDPOINT: z.string().url().default('https://wenqu.annatarhe.cn/api/v1'),
   WENQU_TOKEN: z.string().optional(),
-  PROMPTPAL_ENDPOINT: z
-    .string()
-    .url()
-    .default('https://prompt-pal.annatarhe.com'),
-  PROMPTPAL_API_TOKEN: z.string().optional(),
+  OPENAI_API_KEY: z.string().optional(),
+  OPENAI_MODEL: z.string().optional(),
   MORALIS_KEY: z.string().optional(),
   RESEND_API_KEY: z.string().optional(),
   S3_ENDPOINT: z.string().url().default('https://s3.bitiful.net'),

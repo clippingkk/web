@@ -40,6 +40,3 @@ export const CF_TURNSTILE_SITE_KEY = __DEV__
 export const StripePremiumPriceId = __DEV__
   ? 'price_1Md7IUBkj5y79CYsLpkamBZm'
   : 'price_1MkRHVBkj5y79CYsWxE2X4LH'
-
-export const PP_API = 'https://pp.shelltime.xyz'
-export const PP_TOKEN = process.env.NEXT_PUBLIC_PP_TOKEN ?? ''

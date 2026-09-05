@@ -10,7 +10,7 @@ worker.
 - Node.js 26
 - pnpm 10.25 (the version pinned in `package.json`)
 - Docker with Compose for local PostgreSQL and Redis
-- A PromptPal API token when regenerating `src/types.g.ts`
+- An OpenAI API key and model for AI features (optional for builds)
 
 ## Local development
 
@@ -29,9 +29,24 @@ Edit `.env.local` before starting the app. The checked-in defaults connect to
 the PostgreSQL and Redis containers from `compose.yaml`. `pnpm dev` runs only
 the web process; `pnpm dev:worker` also processes background jobs.
 
-Generated GraphQL output under `src/gql/` is intentionally ignored. If
-`src/types.g.ts` is absent, set `PROMPTPAL_API_TOKEN` and run `pp g` using
-`promptpal.yml` before building or starting the app.
+Generated GraphQL output under `src/gql/` is intentionally ignored; `pnpm codegen`
+regenerates it. AI prompts are maintained in `src/server/ai/prompts.ts`.
+Set server-only `OPENAI_API_KEY` and `OPENAI_MODEL` before using AI features.
+The model must be supported by the installed TanStack AI OpenAI adapter.
+All AI generation requires an authenticated, active Premium subscription.
+Builds and non-AI features work without OpenAI credentials.
+
+## AI smoke checks
+
+`pnpm test` covers premium access, prompt behavior, SSE cancellation and errors,
+and actual OTLP export to a loopback collector with a mocked model response.
+For a live check, configure OpenAI, start the app, sign in with an active Premium
+account, and open a clipping explanation and the book recommendation modal.
+Verify incremental output and cancellation on close, then enhance a comment.
+Check `ai.generate` spans, `app.ai.generations`, `app.ai.duration`, token counts,
+and correlated completion logs in your telemetry backend. Free and anonymous
+requests must fail before any provider call. Never include keys or prompt content
+in screenshots or telemetry.
 
 ## Common commands
 

@@ -32,6 +32,9 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
       clippingId: props.clippingId,
       content: props.comment,
     },
+    onError(error) {
+      toast.error(error.message)
+    },
     onCompleted() {
       toast.success('Got an AI improved comment!')
       setOpened(true)

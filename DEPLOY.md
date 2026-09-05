@@ -109,16 +109,13 @@ service is unavailable.
 
 ## Build from source
 
-Fresh checkouts need the ignored PromptPal type output before Docker can copy
-the source tree. Generate it using `promptpal.yml`, then build the standalone
-Next.js image:
+Build the standalone Next.js image. AI prompts are version controlled and need
+no generation step. Supply `OPENAI_API_KEY` and `OPENAI_MODEL` as runtime secrets
+before enabling AI generation; no AI credentials are needed during the build.
 
 ```bash
-PROMPTPAL_API_TOKEN=replace-me pp g
-
 docker build \
   --build-arg GIT_COMMIT="$(git rev-parse HEAD)" \
-  --build-arg NEXT_PUBLIC_PP_TOKEN="$NEXT_PUBLIC_PP_TOKEN" \
   -t clippingkk-web:"$(git describe --tags --always)" \
   .
 ```

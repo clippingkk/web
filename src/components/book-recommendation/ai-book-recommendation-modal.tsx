@@ -1,12 +1,10 @@
 import Modal from '@annatarhe/lake-ui/modal'
-import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
 
 import { useMultipleBook } from '@/hooks/book'
+import { useAIGeneration } from '@/hooks/use-ai-generation'
 import { useTranslation } from '@/i18n/client'
 import { getLanguage } from '@/utils/locales'
 
-import client from '../../services/pp'
 import { EmptyState } from './empty-state'
 import { ErrorState } from './error-state'
 import { LoadingState } from './loading-state'
@@ -19,14 +17,6 @@ type AIBookRecommendationModalProps = {
   books: { doubanId: string }[]
 }
 
-type BookRecommendationVariables = {
-  list: string
-  lang: string
-}
-
-const bookRecommendationPrompt =
-  process.env.NEXT_PUBLIC_PP_BOOK_RECOMMENDATION_ID ?? ''
-
 function AIBookRecommendationModal({
   open,
   onClose,
@@ -35,52 +25,25 @@ function AIBookRecommendationModal({
 }: AIBookRecommendationModalProps) {
   const { t } = useTranslation()
 
-  const [recommendationData, setRecommendationData] = useState<string[]>([])
-
   const bookList = useMultipleBook(
-    books.map((book) => book.doubanId),
+    books.slice(0, 10).map((book) => book.doubanId),
     !open || !books.length || !uid
   )
 
-  // Create book information string for the API
-  const booksInfo =
-    bookList.books
-      .slice(0, 10)
-      .map(
-        (book) =>
-          `Title: ${book.title}, Author: ${book.author}, Summary: ${(book.summary ?? '').slice(0, 300)}`
-      )
-      .join('\n') || ''
-
-  const { isLoading, error } = useQuery({
-    queryKey: ['ai', 'book-recommendation', uid, books?.length, booksInfo],
-    queryFn: async () => {
-      // This is a placeholder - adjust the actual API call based on your backend implementation
-      return client
-        .executeStream<string, BookRecommendationVariables>(
-          bookRecommendationPrompt,
-          {
-            list: booksInfo,
-            lang: getLanguage(),
-          },
-          uid ? uid.toString() : undefined,
-          {
-            onData: (chunk) => {
-              setRecommendationData((d) => [...d, chunk.message])
-              return Promise.resolve()
-            },
-            onEnd: () => {
-              return Promise.resolve()
-            },
-          }
-        )
-        .then((final) => {
-          setRecommendationData([final.message])
-          return final
-        })
+  const recommendationBooks = bookList.books.slice(0, 10).map((book) => ({
+    title: book.title,
+    author: book.author,
+    summary: (book.summary ?? '').slice(0, 300),
+  }))
+  const { text, isLoading, error } = useAIGeneration(
+    'recommendations',
+    {
+      language: getLanguage(),
+      books: recommendationBooks,
     },
-    enabled: open && booksInfo.length > 0 && Boolean(bookRecommendationPrompt),
-  })
+    open && recommendationBooks.length > 0
+  )
+  const recommendationData = text ? [text] : []
 
   return (
     <Modal

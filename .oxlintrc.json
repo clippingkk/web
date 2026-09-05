@@ -49,7 +49,6 @@
     "tailwind.config.js",
     "src/gql/**/*.ts",
     "src/**/*.mdx",
-    "src/types.g.ts",
     "src/schema/generated.tsx",
     "node_modules",
     ".next",
