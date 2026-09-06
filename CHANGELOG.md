@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.18.0](https://github.com/clippingkk/web/compare/v5.17.0...v5.18.0) (2026-09-06)
+
+
+### Features
+
+* **ai:** replace PromptPal with TanStack AI OpenAI integration ([072fd2b](https://github.com/clippingkk/web/commit/072fd2b0c624c4118fe1dc3bd9c0fc154c89ce9f))
+* **auth:** migrate ClippingKK accounts and billing to Gate ([5a429c3](https://github.com/clippingkk/web/commit/5a429c373e78adde33e28a7f4cad809abc57722e))
+* **auth:** redesign sign-in page experience ([2014730](https://github.com/clippingkk/web/commit/201473024ca55b07034838032f123b90f0c824e6))
+* **share:** replace UTP with local SnapDOM posters ([754f293](https://github.com/clippingkk/web/commit/754f293e271394698e7b1774a47150b4dec35217))
+
+
+### Bug Fixes
+
+* **auth:** address Gate migration review findings ([dc7c2ff](https://github.com/clippingkk/web/commit/dc7c2ff9c491c2d3e1a09dc8796f01d4d2a1c833))
+* **auth:** resolve prerender error and polish sign-in page ([833fa58](https://github.com/clippingkk/web/commit/833fa588a7bd4607e1acea12ac7e35fb8e0dfde1))
+* **build:** defer server configuration reads to runtime ([6fcdf91](https://github.com/clippingkk/web/commit/6fcdf9142695b26e062f2a80d96af8e7f759faf7))
+* **deploy:** support optional runtime environment file ([d1e4a5c](https://github.com/clippingkk/web/commit/d1e4a5c0ef4c472c27aa84af9ca85e61231d7f87))
+* **query:** prevent server query-cache memory retention ([ad833b7](https://github.com/clippingkk/web/commit/ad833b7287239f4a390a9123ffd96f9ad5149c35))
+* **redis:** upgrade node-redis to v6 and pin RESP2 ([5e80f88](https://github.com/clippingkk/web/commit/5e80f88e7422f93e53b6d7f33ff1b145fdaec7c5))
+
+
+### Performance Improvements
+
+* **rsc:** execute server-side GraphQL in-process ([71f20a1](https://github.com/clippingkk/web/commit/71f20a1bf5e64e2f00291a8ade5c3d299ed3cff5))
+* **rsc:** execute server-side GraphQL in-process instead of over the public domain ([b191519](https://github.com/clippingkk/web/commit/b191519bafd4ba8856b27e8bbf7855848c5ad0db))
+
 ## [5.17.0](https://github.com/clippingkk/web/compare/v5.16.5...v5.17.0) (2026-08-01)
 
 
