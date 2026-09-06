@@ -40,8 +40,6 @@ function UpdateClippingBtn({ clipping, book }: Props) {
       <Preview
         visible={visible}
         onCancel={() => setVisible(false)}
-        onOk={() => setVisible(false)}
-        background={book.image}
         clipping={clipping}
         book={book}
       />
