@@ -10,12 +10,10 @@ import {
   SSRMultipartLink,
 } from '@apollo/client-integration-nextjs'
 import { onError } from '@apollo/client/link/error'
-import Cookies from 'js-cookie'
 import { cache } from 'react'
 import toast from 'react-hot-toast'
 
 import { API_HOST } from '../constants/config'
-import { COOKIE_TOKEN_KEY } from '../constants/storage'
 import type { ApiResponse } from '../contracts/http'
 import { getLanguage } from '../utils/locales'
 import profile from '../utils/profile'
@@ -25,26 +23,11 @@ import { createReactQueryClient } from './query-client'
 export { createReactQueryClient } from './query-client'
 
 export function getLocalToken() {
-  let lToken = ''
-
-  if (typeof document !== 'undefined' && document.cookie) {
-    lToken = Cookies.get(COOKIE_TOKEN_KEY) ?? ''
-  }
-
-  if (!lToken && typeof localStorage !== 'undefined') {
-    lToken = localStorage.getItem('clippingkk-token') ?? ''
-  }
-
-  return lToken
+  return ''
 }
 
-// FIXME: 由于循环依赖的问题，这里避免引入 './profile'
-// 但是 profile 中有一样的初始化获取逻辑
-let token = typeof window === 'undefined' ? null : getLocalToken()
-// let token = localProfile?.token
-
 export function resolveApiBase() {
-  if (API_HOST) {
+  if (API_HOST && typeof window === 'undefined') {
     return API_HOST
   }
 
@@ -68,11 +51,6 @@ export async function request<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const headers = new Headers(options.headers)
-
-  // set token if not exist
-  if (!headers.has('Authorization') && token) {
-    headers.set('Authorization', `Bearer ${token}`)
-  }
 
   // set language if not exist
   if (!headers.has('X-Accept-Language')) {
@@ -126,23 +104,15 @@ export function requestJson<TResponse, TBody>(
 }
 
 function apolloFetcher(url: RequestInfo | URL, options: RequestInit = {}) {
-  return fetch(url, options)
+  return fetch(url, { ...options, credentials: 'same-origin' })
 }
 
 export function updateToken(t: string) {
-  token = t
+  void t
 }
 
 export const authLink = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} as Record<string, string> }) => {
-    if (
-      typeof window !== 'undefined' &&
-      !('Authorization' in headers) &&
-      token
-    ) {
-      headers.Authorization = `Bearer ${token}`
-    }
-
     return {
       headers: {
         'X-Accept-Language': getLanguage(),
@@ -181,7 +151,7 @@ const errorLink = onError(({ error }) => {
 })
 
 const httpLink = new HttpLink({
-  uri: `${API_HOST}/api/v2/graphql`,
+  uri: '/api/v2/graphql',
   fetch: apolloFetcher,
 })
 

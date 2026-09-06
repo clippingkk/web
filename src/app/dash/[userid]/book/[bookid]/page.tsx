@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { Suspense } from 'react'
 
 import BookInfo from '@/components/book-info/book-info'
@@ -8,13 +7,13 @@ import BookInfoSkeleton from '@/components/book-info/book-info-skeleton'
 import Divider from '@/components/divider/divider'
 import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
 import { BOOK_CLIPPINGS_PAGE_SIZE } from '@/constants/features'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   BookDocument,
   type BookQuery,
   type BookQueryVariables,
 } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
+import { currentUserId } from '@/server/gate/current'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { getWenquBookByDbId } from '@/services/wenqu'
 
@@ -40,12 +39,9 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 async function Page(props: PageProps) {
   const { t } = await getTranslation()
   const { bookid, userid } = await props.params
-  const ck = await cookies()
-  const uidStr = ck.get(USER_ID_KEY)?.value
+  const uidStr = (await currentUserId())?.toString()
   const uid = uidStr ? parseInt(uidStr, 10) : undefined
   const dbId = bookid ?? ''
-
-  const token = ck.get(COOKIE_TOKEN_KEY)?.value
 
   if (!uid) {
     return null
@@ -64,11 +60,7 @@ async function Page(props: PageProps) {
       },
     },
     context: {
-      headers: token
-        ? {
-            Authorization: `Bearer ${token}`,
-          }
-        : {},
+      headers: {},
     },
   })
 

@@ -32,3 +32,13 @@ Recent history favors Conventional Commit-style messages such as `refactor(auth)
 ## Configuration Tips
 
 Runtime behavior depends on environment variables such as `PORT`, `GIT_COMMIT`, `OPENAI_API_KEY`, `OPENAI_MODEL`, and Redis/telemetry values used in deployment. Avoid committing secrets, and document any new env var in the PR description.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

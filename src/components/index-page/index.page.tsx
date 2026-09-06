@@ -1,7 +1,5 @@
-import { cookies } from 'next/headers'
-
-import { USER_ID_KEY } from '@/constants/storage'
 import type { PublicDataQuery } from '@/gql/graphql'
+import { currentUserId } from '@/server/gate/current'
 
 import type { WenquBook } from '../../services/wenqu'
 import PureImages from '../backgrounds/pure-images'
@@ -23,8 +21,7 @@ type IndexPageProps = {
 
 async function IndexPage(props: IndexPageProps) {
   const { publicData: data, books: bs } = props
-  const cs = await cookies()
-  const myUid = cs.get(USER_ID_KEY)?.value
+  const myUid = (await currentUserId())?.toString()
 
   return (
     <>

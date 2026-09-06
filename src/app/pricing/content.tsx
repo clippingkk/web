@@ -1,6 +1,7 @@
 import { Book, ChevronRight, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 
+import CheckoutButton from '@/components/pricing/checkout-button'
 import FreePlanFeatures from '@/components/pricing/free-plan-features'
 import PlanCard from '@/components/pricing/plan-card'
 import PremiumPlanFeatures from '@/components/pricing/premium-plan-features'
@@ -10,11 +11,11 @@ import { getTranslation } from '@/i18n'
 
 type PricingContentProps = {
   profile?: ProfileQuery['me'] | null
-  checkoutUrl?: string
+  premiumAvailable?: boolean
 }
 
 async function PricingContent(props: PricingContentProps) {
-  const { profile, checkoutUrl } = props
+  const { profile } = props
   const { t } = await getTranslation(undefined, 'pricing')
 
   const isPremium = checkIsPremium(profile?.premiumEndAt)
@@ -69,9 +70,7 @@ async function PricingContent(props: PricingContentProps) {
               <FreePlanFeatures>
                 <div className="w-full justify-center">
                   <Link
-                    href={
-                      profile?.id ? `/dash/${profile.id}/home` : '/auth/auth-v4'
-                    }
+                    href={profile?.id ? `/dash/${profile.id}/home` : '/auth'}
                     className="group relative z-10 inline-flex w-full items-center justify-center overflow-hidden rounded-xl bg-blue-400 px-6 py-4 text-xl font-bold text-white shadow-lg shadow-blue-400/30 transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-400/50 active:scale-[0.98]"
                   >
                     <span className="relative z-10 flex items-center gap-2">
@@ -99,6 +98,7 @@ async function PricingContent(props: PricingContentProps) {
             description={t('plan.premium.description')}
             features={
               <PremiumPlanFeatures>
+                {isPremium && <CheckoutButton signedIn={!!profile} portal />}
                 <div className="w-full">
                   {isPremium ? (
                     <Link
@@ -115,26 +115,10 @@ async function PricingContent(props: PricingContentProps) {
                       {/* Animated accent */}
                       <span className="absolute -top-1 -right-1 h-16 w-16 rotate-45 bg-white/20 transition-all duration-700 group-hover:scale-150 group-hover:opacity-100"></span>
                     </Link>
+                  ) : props.premiumAvailable ? (
+                    <CheckoutButton signedIn={!!profile} />
                   ) : (
-                    <Link
-                      href={(checkoutUrl ?? '/auth/auth-v4') as any}
-                      className="group relative z-10 inline-flex w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 px-6 py-5 text-lg font-bold text-white shadow-xl shadow-indigo-500/40 transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl hover:shadow-indigo-500/60 active:scale-[0.98]"
-                    >
-                      <span className="relative z-10 flex items-center gap-2">
-                        <Sparkles className="h-5 w-5" />
-                        {t('plan.premium.goto')}
-                      </span>
-                      <span className="absolute inset-0 z-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-                      <span className="absolute -inset-1 z-0 scale-[1.15] rounded-xl bg-indigo-500 opacity-0 blur-xl transition-all duration-500 group-hover:opacity-70"></span>
-                      {/* Particle effect */}
-                      <span className="absolute inset-0">
-                        <span className="absolute top-0 left-1/4 h-2 w-2 rounded-full bg-white opacity-0 transition-all duration-300 group-hover:animate-ping group-hover:opacity-60"></span>
-                        <span className="absolute top-1/3 left-3/4 h-1.5 w-1.5 rounded-full bg-white opacity-0 transition-all duration-500 group-hover:animate-ping group-hover:opacity-60"></span>
-                        <span className="absolute bottom-1/4 left-1/2 h-2 w-2 rounded-full bg-white opacity-0 transition-all duration-700 group-hover:animate-ping group-hover:opacity-60"></span>
-                      </span>
-                      {/* Shine effect */}
-                      <span className="absolute inset-0 z-0 translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 transition-transform duration-1000 group-hover:translate-x-[-300%]"></span>
-                    </Link>
+                    <p>Premium purchases are temporarily unavailable.</p>
                   )}
                 </div>
               </PremiumPlanFeatures>

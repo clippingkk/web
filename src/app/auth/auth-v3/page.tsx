@@ -1,14 +1,4 @@
-import type { Metadata } from 'next'
-
-import { generateMetadata as authGenerateMetadata } from '../../../components/og/og-with-auth'
-import AuthV3Content from './content'
-
-export function generateMetadata(): Metadata {
-  return authGenerateMetadata('auth/auth-v4')
+import { redirect } from 'next/navigation'
+export default function LegacyAuthPage() {
+  redirect('/auth')
 }
-
-function Page() {
-  return <AuthV3Content />
-}
-
-export default Page

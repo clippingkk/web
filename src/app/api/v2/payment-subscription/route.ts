@@ -1,31 +1,17 @@
-import { eq } from 'drizzle-orm'
-
-import type {
-  CreatePaymentSubscriptionRequest,
-  CreatePaymentSubscriptionResponse,
-} from '@/contracts/http'
 import { requireUserId } from '@/server/auth'
-import { getDatabase } from '@/server/db'
-import { users } from '@/server/db/schema'
-import { getServerEnv } from '@/server/env'
 import { ApiError } from '@/server/errors'
-import { body, json, options, route } from '@/server/http'
-import { createSubscriptionCheckout } from '@/server/payments'
-
+import { createCheckout } from '@/server/gate/billing'
+import { json, options, route } from '@/server/http'
 export const POST = route(async (request) => {
   const uid = await requireUserId(request)
-  const { priceId } = await body<CreatePaymentSubscriptionRequest>(request)
-  if (!priceId) throw new ApiError('priceId required')
-  const user = await getDatabase().db.query.users.findFirst({
-    where: eq(users.id, uid),
-  })
-  if (!user) throw new ApiError('user not found', 404)
-  const session = await createSubscriptionCheckout(
-    user,
-    priceId,
-    getServerEnv().APP_ORIGIN
+  const key = request.headers.get('idempotency-key') ?? undefined
+  if (key && (key.length < 16 || key.length > 255))
+    throw new ApiError('Invalid idempotency key')
+  const session = await createCheckout(
+    uid,
+    key ? `ck-${uid}-${key}` : undefined
   )
-  if (!session.url) throw new ApiError('checkout URL not returned', 502)
-  return json<CreatePaymentSubscriptionResponse>({ checkoutUrl: session.url })
-}, 'payment.subscription.create')
+  if (!session.url) throw new ApiError('Checkout unavailable', 503)
+  return json({ checkoutUrl: session.url })
+}, 'payment.gate.checkout')
 export const OPTIONS = options

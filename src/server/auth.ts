@@ -1,9 +1,14 @@
 import { createDecipheriv, createHash } from 'node:crypto'
 
+import { and, eq, isNull } from 'drizzle-orm'
 import { jwtVerify, SignJWT } from 'jose'
 
+import { getDatabase } from './db'
+import { users } from './db/schema'
 import { getServerEnv } from './env'
 import { ApiError } from './errors'
+import { cookieValue, assertSameOrigin } from './gate/security'
+import { readSession } from './gate/session'
 import { decodeLegacyValue, encodeLegacyValue } from './legacy-crypto'
 
 export { decodeLegacyValue, encodeLegacyValue } from './legacy-crypto'
@@ -19,6 +24,7 @@ function jwtKey() {
 }
 
 export async function issueToken(userId: number, expiresAt?: Date) {
+  requireLegacyAuth()
   const expiration =
     expiresAt ?? new Date(Date.now() + 180 * 24 * 60 * 60 * 1000)
   return new SignJWT({ id: String(userId) })
@@ -80,7 +86,33 @@ async function userFromXBasic(value: string) {
   return parsed.id
 }
 
+export function requireLegacyAuth() {
+  if (getServerEnv().LEGACY_AUTH_ENABLED !== '1')
+    throw new ApiError('Sign in through Gate.', 410, 'LEGACY_AUTH_DISABLED')
+}
 export async function optionalUserId(request: Request) {
+  const sessionId = cookieValue(request)
+  if (sessionId) {
+    if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method))
+      assertSameOrigin(request)
+    const session = await readSession(sessionId)
+    if (!session) throw new ApiError('Sign in again', 401, 'UNAUTHORIZED')
+    return session.localUserId
+  }
+  const id = await legacyUserId(request)
+  if (!id) return 0
+  const user = await getDatabase().db.query.users.findFirst({
+    where: and(eq(users.id, id), isNull(users.deletedAt)),
+  })
+  if (!user) throw new ApiError('Sign in again', 401, 'UNAUTHORIZED')
+  if (user.gateUserId)
+    await (await import('./gate/authz')).requireProductRead(id)
+  return id
+}
+async function legacyUserId(request: Request) {
+  if (request.headers.has('authorization') || request.headers.has('x-basic'))
+    requireLegacyAuth()
+
   const basic = request.headers.get('x-basic')
   if (basic) return userFromXBasic(basic)
 
@@ -105,5 +137,10 @@ export async function optionalUserId(request: Request) {
 export async function requireUserId(request: Request) {
   const id = await optionalUserId(request)
   if (!id) throw new ApiError('unauthorized', 401, 'UNAUTHORIZED')
+  if (
+    !['GET', 'HEAD', 'OPTIONS'].includes(request.method) &&
+    new URL(request.url).pathname !== '/api/auth/delete-account'
+  )
+    await (await import('./gate/authz')).requireProductWrite(id)
   return id
 }

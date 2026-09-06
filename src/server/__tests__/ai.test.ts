@@ -13,6 +13,7 @@ const mocks = vi.hoisted(() => ({
   user: vi.fn(),
   clipping: vi.fn(),
   auth: vi.fn(),
+  entitlements: vi.fn(),
   recent: vi.fn(),
   env: { OPENAI_API_KEY: 'test-key', OPENAI_MODEL: 'test-model' },
 }))
@@ -24,6 +25,7 @@ vi.mock('@tanstack/ai-openai', () => ({
   createOpenaiChat: mocks.adapter,
   OPENAI_CHAT_MODELS: ['test-model'],
 }))
+vi.mock('../gate/authz', () => ({ entitlements: mocks.entitlements }))
 vi.mock('../env', () => ({ getServerEnv: () => mocks.env }))
 vi.mock('../auth', async (original) => ({
   ...(await original<typeof import('../auth')>()),
@@ -63,6 +65,7 @@ beforeEach(() => {
   mocks.env.OPENAI_MODEL = 'test-model'
   mocks.recent.mockResolvedValue([{ content: 'Quote' }])
   mocks.auth.mockResolvedValue(7)
+  mocks.entitlements.mockResolvedValue({ premium: true })
   mocks.user.mockResolvedValue({
     id: 7,
     premiumEndAt: new Date(Date.now() + 60_000),
@@ -157,6 +160,7 @@ test.each([null, new Date(0), new Date()])(
   'rejects missing or expired premium: %s',
   async (premiumEndAt) => {
     mocks.user.mockResolvedValue({ premiumEndAt })
+    mocks.entitlements.mockResolvedValue({})
     await expect(requirePremium(7)).rejects.toMatchObject({ status: 403 })
   }
 )
@@ -195,6 +199,7 @@ test.each(['anonymous', 'free', 'expired'])(
   'every AI entry point rejects %s requesters without generating',
   async (state) => {
     mocks.auth.mockResolvedValue(state === 'anonymous' ? 0 : 7)
+    mocks.entitlements.mockResolvedValue({})
     mocks.user.mockResolvedValue({
       premiumEndAt: state === 'expired' ? new Date(0) : null,
     })

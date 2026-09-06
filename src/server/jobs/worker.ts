@@ -244,6 +244,29 @@ export function startWorker() {
     connection: queueConnection(),
     concurrency: Number.parseInt(process.env.WORKER_CONCURRENCY ?? '1', 10),
   })
+  let deleting = false
+  const deletionTimer = setInterval(async () => {
+    if (deleting) return
+    deleting = true
+    try {
+      await withSpan(
+        'auth.account.delete',
+        async () =>
+          (await import('../gate/deletion')).processPendingDeletions(),
+        { tracer }
+      )
+    } catch {
+      logger.emit({
+        severityNumber: SeverityNumber.WARN,
+        body: 'Account deletion will retry',
+        attributes: { outcome: 'retry' },
+      })
+    } finally {
+      deleting = false
+    }
+  }, 15000)
+  deletionTimer.unref()
+  worker.on('closed', () => clearInterval(deletionTimer))
   globalForWorker.clippingkkWorker = worker
   return worker
 }

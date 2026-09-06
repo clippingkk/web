@@ -1,9 +1,7 @@
 import { ExternalLink, Webhook } from 'lucide-react'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import { checkIsPremium } from '@/compute/user'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   FetchMyWebHooksDocument,
   type FetchMyWebHooksQuery,
@@ -13,6 +11,7 @@ import {
   type ProfileQueryVariables,
 } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
+import { currentUserId } from '@/server/gate/current'
 import { doApolloServerQuery } from '@/services/apollo.server'
 
 import WebHooksContent from './content'
@@ -22,16 +21,11 @@ type Props = {
   params: Promise<{ userid: string }>
 }
 async function WebhooksPage(props: Props) {
-  const [params, ck, { t }] = await Promise.all([
-    props.params,
-    cookies(),
-    getTranslation(),
-  ])
+  const [params, { t }] = await Promise.all([props.params, getTranslation()])
   const { userid } = params
-  const myUid = ck.get(USER_ID_KEY)?.value
-  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
+  const myUid = (await currentUserId())?.toString()
 
-  if (!myUid || !tk) {
+  if (!myUid) {
     return redirect(`/dash/${userid}/profile`)
   }
 
@@ -47,9 +41,7 @@ async function WebhooksPage(props: Props) {
       id: myUidInt,
     },
     context: {
-      headers: {
-        Authorization: `Bearer ${tk}`,
-      },
+      headers: {},
     },
   })
 
@@ -62,9 +54,7 @@ async function WebhooksPage(props: Props) {
       id: myUidInt,
     },
     context: {
-      headers: {
-        Authorization: `Bearer ${tk}`,
-      },
+      headers: {},
     },
   })
 

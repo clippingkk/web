@@ -19,6 +19,7 @@ import {
 import { requirePremium, aiClipping } from '../ai/access'
 import { generateAIText } from '../ai/generate'
 import { commentModes } from '../ai/prompts'
+import { requireLegacyAuth } from '../auth'
 import {
   decodeLegacyValue,
   encodeLegacyValue,
@@ -49,6 +50,7 @@ import {
 } from '../db/schema'
 import { getServerEnv } from '../env'
 import { ApiError, assertFound } from '../errors'
+import { canAdmin, premiumEndAt as gatePremiumEndAt } from '../gate/authz'
 import {
   fetchGithubIdentity,
   resolveEnsAvatar,
@@ -360,6 +362,7 @@ function htmlEscape(value: string) {
 export const resolvers: Record<string, Record<string, any>> = {
   Query: {
     auth: async (_: unknown, args: Args, context: GraphQLContext) => {
+      requireLegacyAuth()
       await verifyTurnstile(args.cfTurnstileToken, context.ip)
       const user = await db().query.users.findFirst({
         where: and(
@@ -376,6 +379,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       return authResponse(user)
     },
     mpAuth: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       const identity = await wechatLogin(args.code)
       const account = await db().query.externalAccounts.findFirst({
         where: eq(externalAccounts.wechatOpenId, identity.openid!),
@@ -403,6 +407,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       })
     },
     loginByApple: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       const claims = await verifyAppleIdentityToken(
         args.payload.idToken,
         args.payload.platform
@@ -414,6 +419,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       return authResponse(await userById(account.userId), { thirdParty: true })
     },
     loginByWeb3: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       const address = String(args.payload.address).toLowerCase()
       if (
         !(await verifyWeb3Signature(
@@ -434,6 +440,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       })
     },
     githubAuth: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       const identity = await fetchGithubIdentity(args.code)
       let user = await db().query.users.findFirst({
         where: and(eq(users.email, identity.email), activeUser),
@@ -581,13 +588,14 @@ export const resolvers: Record<string, Record<string, any>> = {
         .limit(pagination.limit)
     },
     wechatBindKey: async (_: unknown, _args: Args, context: GraphQLContext) => {
+      requireLegacyAuth()
       const uid = requiredUser(context)
       await userById(uid)
       return encodeLegacyValue(String(uid))
     },
     adminDashboard: async (_: unknown, args: Args, context: GraphQLContext) => {
       const uid = requiredUser(context)
-      if (!getServerEnv().rootUsers.has(uid))
+      if (!(await canAdmin(uid)))
         throw new ApiError('Forbidden', 403, 'FORBIDDEN')
       const pagination = legacyPage(args.pagination)
       const rows = await db()
@@ -707,6 +715,7 @@ export const resolvers: Record<string, Record<string, any>> = {
   },
   Mutation: {
     signup: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       const email = String(args.payload.email).toLowerCase()
       await validOtp(email, args.payload.otp)
       if (await db().query.users.findFirst({ where: eq(users.email, email) })) {
@@ -729,6 +738,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       return authResponse(user, { isNew: true })
     },
     loginV3: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       const email = String(args.payload.email).toLowerCase()
       await validOtp(email, args.payload.otp)
       let user = await db().query.users.findFirst({
@@ -754,6 +764,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       args: Args,
       context: GraphQLContext
     ) => {
+      requireLegacyAuth()
       const claims = await verifyAppleIdentityToken(
         args.payload.idToken,
         args.payload.platform
@@ -801,6 +812,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       args: Args,
       context: GraphQLContext
     ) => {
+      requireLegacyAuth()
       const address = String(args.payload.address).toLowerCase()
       if (
         !(await verifyWeb3Signature(
@@ -843,6 +855,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       return authResponse(user, { thirdParty: true, isNew })
     },
     authByPhone: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       await verifySmsCode(args.phone, args.code)
       const { user, isNew } = await findOrCreatePhoneUser(args.phone)
       return authResponse(user, { isNew })
@@ -1174,6 +1187,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       return true
     },
     sendResetTempCode: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       const email = String(args.email).toLowerCase()
       await userById(
         assertFound(
@@ -1188,6 +1202,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       return true
     },
     resetPassword: async (_: unknown, args: Args) => {
+      requireLegacyAuth()
       const email = String(args.email).toLowerCase()
       await validOtp(email, args.code)
       const [user] = await db()
@@ -1198,6 +1213,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       return authResponse(assertFound(user, 'user not found'))
     },
     bindPhone: async (_: unknown, args: Args, context: GraphQLContext) => {
+      requireLegacyAuth()
       await verifySmsCode(args.phone, args.code)
       const phone = normalizePhone(args.phone)
       const owner = await db().query.users.findFirst({
@@ -1255,11 +1271,9 @@ export const resolvers: Record<string, Record<string, any>> = {
       context: GraphQLContext
     ) => {
       const uid = requiredUser(context)
-      const { enqueueRemoveAccount, pendingAccountRemovalKey } =
-        await import('../jobs/queues')
-      const job = await enqueueRemoveAccount(uid)
-      if (!job.id) throw new ApiError('account deletion could not be scheduled')
-      await cacheSet(pendingAccountRemovalKey(uid), job.id, 24 * 60 * 60)
+      if (!getServerEnv().runWorker)
+        throw new ApiError('Account deletion worker is not enabled', 503)
+      await (await import('../gate/deletion')).scheduleDeletion(uid)
       return true
     },
     sendOneTimePasscode: async (
@@ -1267,6 +1281,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       args: Args,
       context: GraphQLContext
     ) => {
+      requireLegacyAuth()
       await verifyTurnstile(args.cfTurnstileToken, context.ip)
       const limit = await rateLimit(
         `otp:limit:${context.ip || args.address}`,
@@ -1389,14 +1404,18 @@ export const resolvers: Record<string, Record<string, any>> = {
   },
   User: {
     password: (user: User, _args: Args, context: GraphQLContext) =>
-      context.userId === user.id ? user.pwd : '',
+      getServerEnv().LEGACY_AUTH_ENABLED === '1' &&
+      !user.gateUserId &&
+      context.userId === user.id
+        ? user.pwd
+        : '',
     phone: (user: User, _args: Args, context: GraphQLContext) =>
       context.userId === user.id ? user.phone : '',
     email: (user: User, _args: Args, context: GraphQLContext) =>
       context.userId === user.id ? user.email : '',
     createdAt: (user: User) => date(user.createdAt),
     updatedAt: (user: User) => date(user.updatedAt),
-    premiumEndAt: (user: User) => date(user.premiumEndAt),
+    premiumEndAt: (user: User) => gatePremiumEndAt(user.id),
     wechatOpenid: async (user: User, _args: Args, context: GraphQLContext) => {
       if (context.userId !== user.id) return ''
       return (

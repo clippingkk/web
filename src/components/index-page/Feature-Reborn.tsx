@@ -1,12 +1,11 @@
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { ArrowRightFromLine, ExternalLink } from 'lucide-react'
-import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import type React from 'react'
 
-import { USER_ID_KEY } from '@/constants/storage'
 import { getTranslation } from '@/i18n'
+import { currentUserId } from '@/server/gate/current'
 
 import AndroidIcon from '../../assets/android-icon.svg'
 import AppleIcon from '../../assets/apple-icon.svg'
@@ -93,8 +92,7 @@ const DownloadChannel: React.FC<DownloadChannelProps> = ({
 async function FeatureReborn() {
   const { t } = await getTranslation()
 
-  const ck = await cookies()
-  const uid = ck.get(USER_ID_KEY)?.value
+  const uid = (await currentUserId())?.toString()
   const goLinkUrl = uid ? `/dash/${uid}/home` : '/auth/auth-v4'
 
   return (

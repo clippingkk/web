@@ -1,62 +1,29 @@
 'use client'
-import Cookies from 'js-cookie'
-
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-
 class MyProfile {
-  private _token = ''
-  private _uid = -1
-  static readonly TOKEN_KEY = 'clippingkk-token'
-  static readonly UID_KEY = 'clippingkk-uid'
-
-  constructor() {
-    if (typeof localStorage === 'undefined' || typeof window === 'undefined') {
-      return
-    }
-    let t = localStorage.getItem(MyProfile.TOKEN_KEY)
-    let u = localStorage.getItem(MyProfile.UID_KEY)
-
-    if (!t) {
-      t = Cookies.get(COOKIE_TOKEN_KEY) ?? ''
-    }
-    if (!u) {
-      u = Cookies.get(USER_ID_KEY) ?? null
-    }
-
-    if (t) {
-      this._token = t
-    }
-    if (u) {
-      this._uid = ~~u
-    }
+  private uidValue = -1
+  get token() {
+    return ''
   }
-
-  get token(): string {
-    return this._token
+  set token(_value: string) {}
+  get uid() {
+    return this.uidValue
   }
-  get uid(): number {
-    return this._uid
+  set uid(value: number) {
+    this.uidValue = value
   }
-
-  set token(v: string) {
-    this._token = v
-    localStorage.setItem(MyProfile.TOKEN_KEY, v)
-  }
-  set uid(uid: number) {
-    this._uid = uid
-    localStorage.setItem(MyProfile.UID_KEY, uid.toString())
-  }
-
   onLogout() {
-    this._token = ''
-    this._uid = -1
-    Cookies.remove(COOKIE_TOKEN_KEY)
-    Cookies.remove(USER_ID_KEY)
-    localStorage.clear()
-    sessionStorage.clear()
+    this.uidValue = -1
+    if (typeof window === 'undefined') return
+    for (const storage of [localStorage, sessionStorage])
+      for (const key of [
+        'ck-token',
+        'ck-uid',
+        'clippingkk-token',
+        'clippingkk-uid',
+        'REACT_QUERY_OFFLINE_CACHE',
+      ])
+        storage.removeItem(key)
   }
 }
-
 export default new MyProfile()
-
 export { getMyHomeLink } from './profile.utils'

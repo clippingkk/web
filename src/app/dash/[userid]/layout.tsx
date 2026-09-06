@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import type React from 'react'
 
 import DashboardContainer from '@/components/dashboard-container/container'
-import { USER_ID_KEY } from '@/constants/storage'
+import { currentUserId } from '@/server/gate/current'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -17,8 +16,7 @@ export const metadata: Metadata = {
 }
 
 const Layout = async (props: LayoutProps) => {
-  const cs = await cookies()
-  const myUid = cs.get(USER_ID_KEY)?.value
+  const myUid = (await currentUserId())?.toString()
   return (
     <DashboardContainer uidOrDomain={myUid}>
       {props.children}

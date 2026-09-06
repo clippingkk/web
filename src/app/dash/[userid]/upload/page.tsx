@@ -1,14 +1,13 @@
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
 } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
+import { currentUserId } from '@/server/gate/current'
 import { getApolloServerClient } from '@/services/apollo.server'
 
 import UploaderPageContent from './content'
@@ -23,13 +22,12 @@ export const metadata: Metadata = {
 }
 
 async function Page(props: Props) {
-  const [params, ck, { t }] = await Promise.all([
+  const [params, { t }] = await Promise.all([
     props.params,
-    cookies(),
     getTranslation(undefined, 'upload'),
   ])
   const { userid } = params
-  const myUid = ck.get(USER_ID_KEY)?.value
+  const myUid = (await currentUserId())?.toString()
 
   if (!myUid) {
     return redirect(`/dash/${userid}/profile`)
@@ -48,9 +46,7 @@ async function Page(props: Props) {
       id: myUidInt,
     },
     context: {
-      headers: {
-        Authorization: `Bearer ${ck.get(COOKIE_TOKEN_KEY)?.value}`,
-      },
+      headers: {},
     },
   })
   return (

@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import AIBookRecommendationButton from '@/components/book-recommendation/ai-book-recommendation-button'
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   BooksDocument,
   type BooksQuery,
@@ -15,6 +13,7 @@ import {
   type ProfileQueryVariables,
 } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
+import { currentUserId } from '@/server/gate/current'
 import { doApolloServerQuery } from '@/services/apollo.server'
 
 import HomePageContent from './content'
@@ -26,12 +25,11 @@ type PageProps = {
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const [ck, params] = await Promise.all([cookies(), props.params])
+  const [params] = await Promise.all([props.params])
   const pathUid: string = params.userid
   const uid = parseInt(pathUid, 10)
-  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
 
-  if (!tk) {
+  if (!(await currentUserId())) {
     return profileGenerateMetadata({})
   }
 
@@ -47,9 +45,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
         domain: Number.isNaN(uid) ? pathUid : null,
       },
       context: {
-        headers: {
-          Authorization: `Bearer ${tk}`,
-        },
+        headers: {},
       },
     })
     return profileGenerateMetadata({
@@ -62,14 +58,12 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 // the home page only available for myself
 async function Page(props: PageProps) {
-  const [params, ck, { t }] = await Promise.all([
+  const [params, { t }] = await Promise.all([
     props.params,
-    cookies(),
     getTranslation(undefined, 'home'),
   ])
   const { userid } = params
-  const myUid = ck.get(USER_ID_KEY)?.value
-  const token = ck.get(COOKIE_TOKEN_KEY)?.value
+  const myUid = (await currentUserId())?.toString()
 
   if (!myUid) {
     return redirect(`/dash/${userid}/profile`)
@@ -91,18 +85,14 @@ async function Page(props: PageProps) {
         id: myUidInt,
       },
       context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: {},
       },
     }),
     doApolloServerQuery<BooksQuery, BooksQueryVariables>({
       query: BooksDocument,
       fetchPolicy: 'network-only',
       context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: {},
       },
       variables: {
         id: myUidInt,
@@ -124,9 +114,7 @@ async function Page(props: PageProps) {
           domain: Number.isNaN(userid) ? userid : undefined,
         },
         context: {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: {},
         },
       })
     )

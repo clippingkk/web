@@ -1,111 +1,59 @@
 'use client'
 import Modal from '@annatarhe/lake-ui/modal'
-import { useMutation } from '@apollo/client/react'
-import { OctagonAlert, TriangleAlert, Trash2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useCallback, useState } from 'react'
-import { toast } from 'react-hot-toast'
-
-import { DeleteMyAccountDocument } from '@/gql/graphql'
-import { useTranslation } from '@/i18n/client'
-import profile from '@/utils/profile'
-
-function AccountRemoveButton() {
-  const { t } = useTranslation()
-  const [confirming, setConfirming] = useState(false)
-  const [doDelete] = useMutation(DeleteMyAccountDocument)
-  const { replace } = useRouter()
-
-  const doDeleteMyAccount = useCallback(async () => {
+import { useState } from 'react'
+export default function AccountRemoveButton() {
+  const [open, setOpen] = useState(false),
+    [busy, setBusy] = useState(false),
+    [message, setMessage] = useState('')
+  async function remove() {
+    setBusy(true)
     try {
-      await doDelete()
-      // do logout
-      profile.onLogout()
-      toast.success('Bye bye')
-      // show tips
-      toast(t('app.settings.danger.removeAccountDone'), {
-        icon: <OctagonAlert className="h-4 w-4" />,
-        // message: t('app.settings.danger.removeAccountDoneTip'),
+      const response = await fetch('/api/auth/delete-account', {
+        method: 'POST',
       })
-      setTimeout(() => {
-        replace('/')
-      }, 5_000)
-    } catch (err: unknown) {
-      console.error(err)
-      toast.error(err instanceof Error ? err.message : 'Something went wrong')
+      const result = await response.json()
+      if (!response.ok)
+        throw new Error(result.msg || 'Deletion could not be scheduled')
+      setMessage(result.data.message)
+      setOpen(false)
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : 'Please try again.')
+      setBusy(false)
     }
-  }, [doDelete, replace, t])
-
+  }
   return (
     <>
-      {/* Custom delete account button */}
       <button
-        className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-red-500 to-orange-500 px-6 py-3 shadow-lg transition-all duration-300 hover:from-red-600 hover:to-orange-600 hover:shadow-xl focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none active:scale-95 dark:focus:ring-offset-gray-900"
-        onClick={() => setConfirming(true)}
+        disabled={busy}
+        onClick={() => setOpen(true)}
+        className="rounded-lg bg-red-600 px-5 py-3 text-white"
       >
-        <span className="absolute inset-0 flex h-full w-full items-center justify-center bg-gradient-to-r from-red-600 to-orange-600 opacity-0 blur-md transition-opacity duration-300 ease-in-out group-hover:opacity-100"></span>
-        <span className="absolute top-0 left-0 h-full w-full bg-gradient-to-r from-pink-500/20 to-purple-500/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-
-        <span className="relative flex items-center justify-center gap-2 font-medium text-white">
-          <Trash2 className="h-5 w-5" />
-          {t('app.settings.danger.removeButton')}
-        </span>
+        Delete ClippingKK account
       </button>
-
-      {/* Enhanced Modal */}
+      <output className="block">{message}</output>
+      {busy && message && <a href="/">Return home</a>}
       <Modal
-        title={
-          <div className="flex flex-row items-center gap-4">
-            <div className="rounded-full bg-red-100 dark:bg-red-900/30">
-              <OctagonAlert className="h-8 w-8 text-red-600 dark:text-red-400" />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-              {t('app.settings.danger.removeAccount')}
-            </h3>
-          </div>
-        }
-        isOpen={confirming}
-        onClose={() => setConfirming(false)}
+        isOpen={open}
+        onClose={() => {
+          if (!busy) setOpen(false)
+        }}
+        title="Delete ClippingKK account?"
       >
-        <div className="p-6">
-          {/* Custom modal header */}
-          <div className="mb-6 flex flex-col items-center">
-            <div className="mb-4 rounded-full bg-red-100 p-3 dark:bg-red-900/30">
-              <OctagonAlert className="h-8 w-8 text-red-600 dark:text-red-400" />
-            </div>
-            <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-              {t('app.settings.danger.removeAccount')}
-            </h3>
-          </div>
-
-          {/* Warning message */}
-          <div className="mb-6 rounded-lg border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/60">
-            <div className="flex items-start gap-3">
-              <TriangleAlert className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-500" />
-              <p className="whitespace-break-spaces text-gray-700 dark:text-gray-300">
-                {t('app.settings.danger.removeAccountTip1')}
-              </p>
-            </div>
-          </div>
-
-          {/* Custom confirm button */}
+        <div className="space-y-4 p-6">
+          <p>
+            Your clippings and ClippingKK profile will be permanently deleted.
+            ClippingKK subscriptions will be cancelled. Your Gate identity and
+            other products are preserved.
+          </p>
           <button
-            className="relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-6 py-4 shadow-lg transition-all duration-300 hover:from-red-700 hover:to-orange-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none active:scale-95 dark:focus:ring-offset-gray-900"
-            onClick={async () => {
-              await doDeleteMyAccount()
-              setConfirming(false)
-            }}
+            disabled={busy}
+            onClick={remove}
+            className="rounded-lg bg-red-600 px-5 py-3 text-white"
           >
-            <span className="absolute inset-0 h-full w-full bg-black opacity-0 transition-opacity duration-300 hover:opacity-10"></span>
-            <span className="relative flex items-center justify-center gap-2 font-medium text-white">
-              <Trash2 className="h-5 w-5" />
-              {t('app.settings.danger.removeButton')}
-            </span>
+            {busy ? 'Scheduling…' : 'Permanently delete ClippingKK data'}
           </button>
         </div>
       </Modal>
     </>
   )
 }
-
-export default AccountRemoveButton

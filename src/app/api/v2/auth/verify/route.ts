@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm'
 
+import { requireLegacyAuth } from '@/server/auth'
 import { getDatabase } from '@/server/db'
 import { users } from '@/server/db/schema'
 import { getServerEnv } from '@/server/env'
@@ -8,6 +9,7 @@ import { route } from '@/server/http'
 import { cacheDelete, cacheGet } from '@/server/redis'
 
 export const GET = route(async (request) => {
+  requireLegacyAuth()
   const code = new URL(request.url).searchParams.get('code')
   if (!code) throw new ApiError('code required')
   const userId = Number(await cacheGet<number>(`auth:signup:mail:${code}`))

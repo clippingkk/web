@@ -13,7 +13,6 @@ import { cn } from '@/lib/utils'
 import profile from '@/utils/profile'
 
 import AvatarOnNavigationBar from './avatar'
-import { onCleanServerCookie } from './logout'
 
 type DropdownProps = {
   children: React.ReactNode
@@ -133,10 +132,11 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
   const isPremium = checkIsPremium(profileData.premiumEndAt)
 
   const handleLogout = useCallback(async () => {
-    await onCleanServerCookie()
+    const response = await fetch('/api/auth/logout', { method: 'POST' })
+    if (!response.ok) throw new Error('Sign out failed')
     profile.onLogout()
     toast.success(t('app.menu.logout.success') || 'Bye bye')
-    router.push('/')
+    window.location.assign('/')
   }, [router, t])
 
   return (
@@ -198,7 +198,7 @@ function LoggedNavigationBar(props: LoggedNavigationBarProps) {
               onClick={onPhoneLogin}
               icon={<QrCode className="h-4 w-4" />}
             >
-              {t('app.menu.loginByQRCode.title')}
+              Manage Gate account
             </MenuItem>
 
             <div className="my-1 h-px bg-slate-200 dark:bg-slate-800" />

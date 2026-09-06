@@ -1,13 +1,10 @@
 'use server'
-
 import { cookies } from 'next/headers'
 
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
-
-// remove cookies on server
+import { SESSION_COOKIE } from '@/server/gate/security'
+import { destroySession } from '@/server/gate/session'
 export async function onCleanServerCookie() {
-  'use server'
-  const cs = await cookies()
-  cs.delete(COOKIE_TOKEN_KEY)
-  cs.delete(USER_ID_KEY)
+  const jar = await cookies()
+  await destroySession(jar.get(SESSION_COOKIE)?.value ?? '')
+  for (const key of [SESSION_COOKIE, 'ck-token', 'ck-uid']) jar.delete(key)
 }
