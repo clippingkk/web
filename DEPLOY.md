@@ -43,9 +43,18 @@ optional authentication, payment, email, object-storage, and observability
 integrations from `.env.example` only when those features are enabled.
 
 The application validates its server environment before accepting requests. A
-missing or invalid `DATABASE_URL`, `REDIS_URL`, or `JWT_SECRET` causes the
-container to exit during startup. This validation does not connect to
+missing or invalid `DATABASE_URL` or `REDIS_URL` causes the container to exit
+during startup. `JWT_SECRET` must contain at least eight characters when
+`LEGACY_AUTH_ENABLED=1`. This validation does not connect to
 PostgreSQL or Redis; use `/probe` to verify service connectivity.
+
+Server configuration is read at process startup or request time, so builds do
+not require deployment secrets or running PostgreSQL and Redis services. Supply
+configuration through container environment variables (including Docker's
+`--env-file`) or a read-only file mounted at `/app/.env`. The mounted file is
+optional; injected environment variables take precedence. Restart the process
+after changing server configuration; the same image can be reused across
+environments.
 
 `NEXT_PUBLIC_*` values are embedded into browser assets during the image build.
 They are not runtime secrets and changing them requires a new image. The

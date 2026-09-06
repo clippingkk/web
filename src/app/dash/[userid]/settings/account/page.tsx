@@ -1,7 +1,11 @@
+import { connection } from 'next/server'
+
 import { gateConfig } from '@/server/gate/config'
 
 import AccountRemoveButton from './AccountRemoveButton'
-export default function Page() {
+export default async function Page() {
+  await connection()
+
   return (
     <div className="space-y-8">
       <section>
