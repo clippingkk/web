@@ -50,7 +50,8 @@ import {
 } from '../db/schema'
 import { getServerEnv } from '../env'
 import { ApiError, assertFound } from '../errors'
-import { canAdmin, premiumEndAt as gatePremiumEndAt } from '../gate/authz'
+import { canAdmin } from '../gate/authz'
+import { userPremiumEndAt } from '../gate/premium-loader'
 import {
   fetchGithubIdentity,
   resolveEnsAvatar,
@@ -1415,7 +1416,8 @@ export const resolvers: Record<string, Record<string, any>> = {
       context.userId === user.id ? user.email : '',
     createdAt: (user: User) => date(user.createdAt),
     updatedAt: (user: User) => date(user.updatedAt),
-    premiumEndAt: (user: User) => gatePremiumEndAt(user.id),
+    premiumEndAt: (user: User, _args: Args, context: GraphQLContext) =>
+      userPremiumEndAt(context.request, user.gateUserId),
     wechatOpenid: async (user: User, _args: Args, context: GraphQLContext) => {
       if (context.userId !== user.id) return ''
       return (

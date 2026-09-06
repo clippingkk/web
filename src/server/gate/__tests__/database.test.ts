@@ -145,3 +145,33 @@ it('durably disables access, retries upstream failure, removes dependent data an
   ).toBeInstanceOf(Date)
   expect((await ensureLocalUser(identity)).id).not.toBe(user.id)
 })
+
+it('retries member provisioning after Gate accepted the binding but local work rolled back', async () => {
+  const { provisionMember } = await import('../user')
+  const user = await ensureLocalUser(identity)
+  const bindings = new Set<string>()
+  let first = true
+  upstream.request.mockImplementation(
+    async (path: string, options?: RequestInit) => {
+      if (path.endsWith('/roles'))
+        return [{ id: 'member', slug: 'clippingkk-member' }]
+      bindings.add(String(options?.body))
+      if (first) {
+        first = false
+        throw new Error('Response lost after Gate committed')
+      }
+      return { id: 'binding' }
+    }
+  )
+  await expect(provisionMember(user.id)).rejects.toThrow('Response lost')
+  const { db } = await storage
+  expect((await db.select().from(schema.users))[0].gateProvisionedAt).toBeNull()
+  await provisionMember(user.id)
+  expect(bindings.size).toBe(1)
+  expect(
+    (await db.select().from(schema.users))[0].gateProvisionedAt
+  ).toBeInstanceOf(Date)
+  const calls = upstream.request.mock.calls.length
+  await provisionMember(user.id)
+  expect(upstream.request).toHaveBeenCalledTimes(calls)
+})

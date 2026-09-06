@@ -2,6 +2,8 @@
 
 The Next.js process now owns the legacy GraphQL endpoint, REST compatibility routes, PostgreSQL access, Redis cache, and the BullMQ worker. PostgreSQL and Redis remain external durable services in production; `compose.yaml` provides local instances.
 
+> Account and billing cutover is now governed by [Gate provisioning](gate-provisioning.md). Deploy Gate prerequisites first. The legacy Stripe webhook is retired and returns 410.
+
 ## Local setup
 
 1. Copy `.env.example` to `.env.local` and replace development secrets.
@@ -16,7 +18,7 @@ The Next.js process now owns the legacy GraphQL endpoint, REST compatibility rou
 1. Take PostgreSQL and Redis backups. Keep the existing databases and Redis DB assignments: cache DB 1 and queue DB 2.
 2. Run `pnpm db:preflight` against production. Resolve every missing-column error before deployment.
 3. Run `pnpm db:migrate`. The baseline uses `IF NOT EXISTS`, so it adopts the existing Ent tables without replacing data.
-4. Deploy the merged image with `RUN_WORKER=false`. Send internal smoke traffic to `/probe`, `/api/v2/graphql`, config, upload, and Stripe test-mode endpoints.
+4. Deploy the merged image with `RUN_WORKER=false`. Send internal smoke traffic to `/probe`, `/api/v2/graphql`, config, and upload endpoints. Verify billing through Gate Stripe test mode as described in the Gate guide.
 5. Move the primary site hostname to the new deployment. Keep `clippingkk-api.annatarhe.com` as a routing alias to the same deployment for old clients.
 6. Enable `RUN_WORKER=true` on exactly one initial replica. Scale worker concurrency with `WORKER_CONCURRENCY` only after observing Redis and database load.
 7. Remove public traffic from the Go service but leave one old instance alive for 24 hours so its Asynq worker can drain Redis DB 2. The Go binary starts HTTP and Asynq together; keeping the instance unregistered from the load balancer gives worker-only behavior operationally.
@@ -26,4 +28,4 @@ Do not point BullMQ at an Asynq queue name. Both can share Redis DB 2 during the
 
 ## Required production configuration
 
-Set every core value in `.env.example`. Integrations fail closed when their secret is absent. In particular, use the existing `JWT_SECRET` and `WECHAT_SECRET`; changing either invalidates JWT, `X-CLI`, and WeChat-bind compatibility tokens. Preserve the Stripe webhook secret and route Stripe to `/api/v2/stripe/webhooks` on the merged hostname.
+Set every core value in `.env.example`. Integrations fail closed when their secret is absent. In particular, use the existing `JWT_SECRET` and `WECHAT_SECRET`; changing either invalidates JWT, `X-CLI`, and WeChat-bind compatibility tokens. For the account migration, explicitly set `LEGACY_AUTH_ENABLED=1` while native clients still depend on these credentials. Configure Stripe in Gate and deliver events to Gate’s `/api/v1/webhooks/stripe/{environmentId}`; remove the old `/api/v2/stripe/webhooks` destination. Gate’s environment webhook secret replaces the old ClippingKK webhook secret. Follow [Gate provisioning](gate-provisioning.md) for service keys, roles, client registration, and billing validation.

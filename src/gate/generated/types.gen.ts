@@ -2848,6 +2848,63 @@ export type ReceiveStripeWebhookResponses = {
 export type ReceiveStripeWebhookResponse =
   ReceiveStripeWebhookResponses[keyof ReceiveStripeWebhookResponses]
 
+export type GetSubjectsPremiumStateData = {
+  body: {
+    environmentId: string
+    subjectIds: Array<string>
+  }
+  path: {
+    projectId: string
+  }
+  query?: never
+  url: '/api/v1/projects/{projectId}/billing/subjects/state'
+}
+
+export type GetSubjectsPremiumStateErrors = {
+  /**
+   * Invalid request
+   */
+  400: ProblemDetails
+  /**
+   * Authentication required
+   */
+  401: ProblemDetails
+  /**
+   * Permission denied
+   */
+  403: ProblemDetails
+  /**
+   * Not found
+   */
+  404: ProblemDetails
+  /**
+   * Conflict
+   */
+  409: ProblemDetails
+  /**
+   * Internal error
+   */
+  500: ProblemDetails
+}
+
+export type GetSubjectsPremiumStateError =
+  GetSubjectsPremiumStateErrors[keyof GetSubjectsPremiumStateErrors]
+
+export type GetSubjectsPremiumStateResponses = {
+  /**
+   * Premium states
+   */
+  200: {
+    data: Array<{
+      subjectId: string
+      premiumEndAt: string | null
+    }>
+  }
+}
+
+export type GetSubjectsPremiumStateResponse =
+  GetSubjectsPremiumStateResponses[keyof GetSubjectsPremiumStateResponses]
+
 export type GetSubjectBillingData = {
   body?: never
   path: {

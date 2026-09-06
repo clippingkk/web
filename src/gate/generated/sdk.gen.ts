@@ -305,6 +305,9 @@ import type {
   GetSubjectEntitlementsData,
   GetSubjectEntitlementsErrors,
   GetSubjectEntitlementsResponses,
+  GetSubjectsPremiumStateData,
+  GetSubjectsPremiumStateErrors,
+  GetSubjectsPremiumStateResponses,
   HealthData,
   HealthErrors,
   HealthResponses,
@@ -1007,6 +1010,8 @@ export const createProjectRole = <ThrowOnError extends boolean = false>(
 
 /**
  * Bind a role to a user or service account
+ *
+ * Idempotently create or update a role/principal binding. Repeating the same binding returns its existing ID.
  */
 export const createRoleBinding = <ThrowOnError extends boolean = false>(
   options: Options<CreateRoleBindingData, ThrowOnError>
@@ -1418,6 +1423,34 @@ export const receiveStripeWebhook = <ThrowOnError extends boolean = false>(
     ReceiveStripeWebhookErrors,
     ThrowOnError
   >({ url: '/api/v1/webhooks/stripe/{environmentId}', ...options })
+
+export const getSubjectsPremiumState = <ThrowOnError extends boolean = false>(
+  options: Options<GetSubjectsPremiumStateData, ThrowOnError>
+): RequestResult<
+  GetSubjectsPremiumStateResponses,
+  GetSubjectsPremiumStateErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    GetSubjectsPremiumStateResponses,
+    GetSubjectsPremiumStateErrors,
+    ThrowOnError
+  >({
+    security: [
+      {
+        in: 'cookie',
+        name: 'better-auth.session_token',
+        type: 'apiKey',
+      },
+      { name: 'X-API-Key', type: 'apiKey' },
+    ],
+    url: '/api/v1/projects/{projectId}/billing/subjects/state',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  })
 
 export const getSubjectBilling = <ThrowOnError extends boolean = false>(
   options: Options<GetSubjectBillingData, ThrowOnError>
