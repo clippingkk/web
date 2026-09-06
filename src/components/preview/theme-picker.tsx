@@ -1,22 +1,22 @@
-import { KonzertThemeMap } from '../../services/utp'
+import { Theme, themes } from './theme.config'
 
 type ThemePickerProps = {
+  disabled?: boolean
   className?: string
-  current: number
-  onChange: (t: number) => void
+  current: Theme
+  onChange: (t: Theme) => void
 }
 
 function ThemePicker(props: ThemePickerProps) {
-  const themes = Object.values(KonzertThemeMap)
-
   return (
-    <div className={`flex flex-wrap gap-2 ${props.className}`}>
+    <div className={`flex flex-wrap gap-2 ${props.className ?? ''}`}>
       {themes.map((theme) => {
         const isSelected = props.current === theme.id
         return (
           <button
             key={theme.id}
             type="button"
+            disabled={props.disabled}
             onClick={() => props.onChange(theme.id)}
             className={`rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 ${
               isSelected

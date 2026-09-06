@@ -1,5 +1,3 @@
-import type { RGBColor } from '../../services/mp'
-
 export enum Theme {
   classic = 0,
   colorful = 1,
@@ -8,58 +6,40 @@ export enum Theme {
   light = 4,
 }
 
-export type ThemeConfig = {
-  padding: string
-  bg: string
-  fontColor: string
-  fontFamily: string
-  footerBlur: string
-  footerBg: string
-  qrLineColor?: RGBColor
-  withQRCodeBg?: boolean
-}
-
-export const themeList: { [k in Theme]: ThemeConfig } = {
-  [Theme.classic]: {
-    padding: '1rem',
-    bg: '#fff',
-    fontColor: '#000',
-    fontFamily: '',
-    footerBlur: '30px',
-    footerBg: 'rgba(255, 255, 255, .3)',
+export const themes = [
+  {
+    id: Theme.classic,
+    name: 'Classic',
+    background: '#f6f0e4',
+    color: '#201c19',
+    accent: '#a33624',
   },
-  [Theme.colorful]: {
-    padding: '1rem',
-    bg: '',
-    fontColor: '',
-    fontFamily: '',
-    footerBlur: '30px',
-    footerBg: 'rgba(255, 255, 255, .3)',
+  {
+    id: Theme.colorful,
+    name: 'Colorful',
+    background: 'linear-gradient(145deg, #ffce32, #ff775e)',
+    color: '#29143d',
+    accent: '#622475',
   },
-  [Theme.dark]: {
-    padding: '1rem',
-    bg: 'rgba(27, 41, 68, 1)',
-    fontColor: '#cdd5f3',
-    fontFamily: '',
-    footerBlur: '30px',
-    footerBg: 'rgba(89, 123, 192, 0.6)',
-    qrLineColor: { r: 255, g: 255, b: 255 },
-    withQRCodeBg: true,
+  {
+    id: Theme.dark,
+    name: 'Noir',
+    background: 'linear-gradient(145deg, #101827, #293956)',
+    color: '#ffffff',
+    accent: '#b9f36c',
   },
-  [Theme.young]: {
-    padding: '1rem',
-    bg: 'linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)',
-    fontColor: 'rgba(27, 41, 68, 1)',
-    fontFamily: '',
-    footerBlur: '30px',
-    footerBg: 'rgba(255, 255, 255, .3)',
+  {
+    id: Theme.young,
+    name: 'Young',
+    background: 'linear-gradient(145deg, #bbf579, #65dccd)',
+    color: '#12352d',
+    accent: '#235a49',
   },
-  [Theme.light]: {
-    padding: '1rem',
-    bg: 'linear-gradient(225deg,#9cccfc 0,#e6cefd 99.54%)',
-    fontColor: '#343746',
-    fontFamily: '',
-    footerBlur: '30px',
-    footerBg: 'rgba(255, 255, 255, .3)',
+  {
+    id: Theme.light,
+    name: 'Bright',
+    background: 'linear-gradient(145deg, #d5c5ff, #b7e5ff)',
+    color: '#292047',
+    accent: '#64429f',
   },
-}
+] as const

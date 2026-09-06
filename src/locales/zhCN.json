@@ -468,6 +468,17 @@
         "add": "添加一个新名词",
         "update": "更新名词"
       }
+    },
+    "sharePoster": {
+      "theme": "主题",
+      "clippingLabel": "阅读与铭记",
+      "bookLabel": "我的书架",
+      "hint": "选择主题，将完整海报保存为 PNG 图片。",
+      "assetsError": "无法加载原始图片，请检查网络后重试。",
+      "exportError": "海报导出失败，请重试。",
+      "tooLarge": "海报超出了浏览器的图片尺寸限制。",
+      "retry": "重试",
+      "success": "图片已保存"
     }
   },
   "nouns": {

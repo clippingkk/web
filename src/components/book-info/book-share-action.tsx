@@ -37,8 +37,6 @@ function BookShareAction({
 
       <BookSharePreview
         onCancel={togglePreviewVisible}
-        onOk={togglePreviewVisible}
-        background={book.image}
         opened={sharePreviewVisible}
         book={book}
         uid={uid}

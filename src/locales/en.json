@@ -468,6 +468,17 @@
           }
         }
       }
+    },
+    "sharePoster": {
+      "theme": "Theme",
+      "clippingLabel": "READ & REMEMBER",
+      "bookLabel": "ON THE BOOKSHELF",
+      "hint": "Choose a look, then save your full poster as a PNG.",
+      "assetsError": "Original images could not be loaded. Check your connection and try again.",
+      "exportError": "The poster could not be exported. Please try again.",
+      "tooLarge": "This poster exceeds the browser’s image size limit.",
+      "retry": "Retry",
+      "success": "Image saved"
     }
   },
   "nouns": {
