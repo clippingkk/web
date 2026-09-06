@@ -1,7 +1,5 @@
-import { cookies } from 'next/headers'
 import { cache } from 'react'
 
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   FetchClippingDocument,
   type FetchClippingQuery,
@@ -11,6 +9,7 @@ import {
   type ProfileQueryVariables,
 } from '@/gql/graphql'
 import { duration3Days } from '@/hooks/book'
+import { currentUserId } from '@/server/gate/current'
 import { getReactQueryClient } from '@/services/ajax'
 import { getApolloServerClient } from '@/services/apollo.server'
 import { getQueryGcTime } from '@/services/query-client'
@@ -21,9 +20,7 @@ import {
 } from '@/services/wenqu'
 
 export const getClippingData = cache(async (clippingId: number) => {
-  const cs = await cookies()
-  const token = cs.get(COOKIE_TOKEN_KEY)?.value
-  const uid = cs.get(USER_ID_KEY)?.value
+  const uid = (await currentUserId())?.toString()
   const client = await getApolloServerClient()
 
   const clippingsResponse = await client.query<
@@ -36,11 +33,7 @@ export const getClippingData = cache(async (clippingId: number) => {
       id: clippingId,
     },
     context: {
-      headers: token
-        ? {
-            Authorization: `Bearer ${token}`,
-          }
-        : undefined,
+      headers: {},
     },
   })
 
@@ -52,11 +45,7 @@ export const getClippingData = cache(async (clippingId: number) => {
         id: ~~uid,
       },
       context: {
-        headers: token
-          ? {
-              Authorization: `Bearer ${token}`,
-            }
-          : undefined,
+        headers: {},
       },
     })
     myProfile = p.data!.me

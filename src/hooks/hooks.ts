@@ -1,6 +1,5 @@
 'use client'
 import type { MutationResult } from '@apollo/client/react'
-import * as sentry from '@sentry/react'
 import type { Route } from 'next'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -15,10 +14,6 @@ import type {
 } from '@/gql/graphql'
 import type { User } from '@/schema/generated'
 
-import { syncLoginStateToServer } from '../actions/login'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '../constants/storage'
-import { updateToken } from '../services/ajax'
-import profile from '../utils/profile'
 import { getUserSlug } from '../utils/profile.utils'
 
 type UserContent = Pick<
@@ -26,31 +21,8 @@ type UserContent = Pick<
   'id' | 'name' | 'email' | 'avatar' | 'createdAt' | 'domain'
 >
 
-async function onAuthEnd(data: { user: UserContent; token: string }) {
-  const { user, token } = data
-  await syncLoginStateToServer({ uid: user.id, token: token })
-  localStorage.setItem(
-    COOKIE_TOKEN_KEY,
-    JSON.stringify({
-      profile: user,
-      token: token,
-      createdAt: Date.now(),
-    })
-  )
-  sessionStorage.setItem(COOKIE_TOKEN_KEY, token)
-  sessionStorage.setItem(USER_ID_KEY, user.id.toString())
-
-  profile.token = token
-  profile.uid = user.id
-  const me = user
-  sentry.setUser({
-    email: me.email,
-    id: me.id.toString(),
-    username: me.name,
-  })
-  updateToken(profile.token)
-  // Cookies.set('token', profile.token, { expires: 365 })
-  // Cookies.set('uid', profile.uid.toString(), { expires: 365 })
+async function onAuthEnd(_data: { user: UserContent; token: string }) {
+  window.location.assign('/auth')
 }
 
 type AuthResultState<T> = {

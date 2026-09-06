@@ -1,5 +1,4 @@
 import { API_HOST } from '../constants/config'
-import profile from '../utils/profile'
 
 export type RGBColor = {
   r: number
@@ -25,9 +24,7 @@ export async function FetchQRCode(
   }
 
   return fetch(`${API_HOST}/api/v1/mp/qrcode?${params.toString()}`, {
-    headers: {
-      Authorization: `Bearer ${profile.token}`,
-    },
+    headers: {},
     credentials: 'include',
     mode: 'cors',
   })

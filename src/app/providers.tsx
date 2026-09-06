@@ -1,12 +1,12 @@
 'use client'
 
 import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { QueryClientProvider } from '@tanstack/react-query'
 import type React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { createReactQueryClient, makeApolloClient } from '../services/ajax'
-import { reactQueryPersister } from '../services/storage'
+import profile from '../utils/profile'
 
 type ClientOnlyProvidersProps = {
   children: React.ReactNode
@@ -16,6 +16,9 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
   const { children } = props
   // Use useState to ensure QueryClient is created only once per client instance
   const [rq] = useState(() => createReactQueryClient())
+  useEffect(() => {
+    profile.onLogout()
+  }, [])
   return (
     // <MetaMaskProvider
     //   sdkOptions={{
@@ -27,16 +30,11 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
     //     // Other options.
     //   }}
     // >
-    <PersistQueryClientProvider
-      client={rq}
-      persistOptions={{
-        persister: reactQueryPersister,
-      }}
-    >
+    <QueryClientProvider client={rq}>
       <ApolloNextAppProvider makeClient={makeApolloClient}>
         {children}
       </ApolloNextAppProvider>
-    </PersistQueryClientProvider>
+    </QueryClientProvider>
     // </MetaMaskProvider>
   )
 }

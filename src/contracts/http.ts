@@ -25,6 +25,7 @@ export type CreatePaymentSubscriptionResponse = {
 }
 
 export type PaymentOrderInfoResponse = {
+  premiumActive?: boolean
   uid: number
   amount: number | null
   paymentStatus: 'paid' | 'unpaid' | 'no_payment_required'

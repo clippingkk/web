@@ -24,6 +24,8 @@ export const users = pgTable(
   'users',
   {
     id: id(),
+    gateUserId: varchar('gate_user_id', { length: 255 }),
+    gateProvisionedAt: timestamp('gate_provisioned_at', { withTimezone: true }),
     name: varchar('name', { length: 255 }).notNull(),
     email: varchar('email', { length: 255 }).notNull(),
     phone: varchar('phone', { length: 255 }).notNull().default(''),
@@ -40,7 +42,10 @@ export const users = pgTable(
     updatedAt: updatedAt(),
     deletedAt: timestamp('deleted_at', { withTimezone: true }),
   },
-  (table) => [uniqueIndex('users_email_key').on(table.email)]
+  (table) => [
+    uniqueIndex('users_email_key').on(table.email),
+    uniqueIndex('users_gate_user_id_key').on(table.gateUserId),
+  ]
 )
 
 export const clippings = pgTable(
@@ -277,3 +282,20 @@ export type Clipping = typeof clippings.$inferSelect
 export type Comment = typeof comments.$inferSelect
 export type Noun = typeof nouns.$inferSelect
 export type Reaction = typeof reactions.$inferSelect
+
+// Transactional outbox: disabling access and scheduling deletion commit together.
+export const accountDeletions = pgTable('account_deletions', {
+  userId: int('user_id').primaryKey(),
+  gateUserId: varchar('gate_user_id', { length: 255 }),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+  createdAt: createdAt(),
+})
+
+export const accountRecoveryAudit = pgTable('account_recovery_audit', {
+  id: id(),
+  userId: int('user_id').notNull(),
+  gateUserId: varchar('gate_user_id', { length: 255 }).notNull(),
+  ticket: varchar('ticket', { length: 255 }).notNull(),
+  operator: varchar('operator', { length: 255 }).notNull(),
+  createdAt: createdAt(),
+})

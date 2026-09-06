@@ -38,7 +38,6 @@ test('validates required server environment during Node.js startup', async () =>
       issues: expect.arrayContaining([
         expect.objectContaining({ path: ['DATABASE_URL'] }),
         expect.objectContaining({ path: ['REDIS_URL'] }),
-        expect.objectContaining({ path: ['JWT_SECRET'] }),
       ]),
     })
   )

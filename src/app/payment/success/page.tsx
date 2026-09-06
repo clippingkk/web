@@ -1,9 +1,10 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+import { redirect } from 'next/navigation'
 
 import DecorBlobs from '@/components/ui/decor-blobs/decor-blobs'
 import Surface from '@/components/ui/surface/surface'
+import { currentUserId } from '@/server/gate/current'
 import { getReactQueryClient } from '@/services/ajax'
-import { getPaymentOrderInfo } from '@/services/payment'
 
 import PaymentSuccessContent from './content'
 
@@ -12,14 +13,12 @@ type PaymentSuccessPageProps = {
 }
 
 async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
-  const { sessionId, uid } = await props.searchParams
+  const { sessionId } = await props.searchParams
 
   const rq = getReactQueryClient()
 
-  await rq.prefetchQuery({
-    queryKey: ['payment', 'result', sessionId],
-    queryFn: () => getPaymentOrderInfo(sessionId),
-  })
+  const uid = await currentUserId()
+  if (!uid) redirect('/auth')
 
   const d = dehydrate(rq)
 

@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 
-import { StripePremiumPriceId } from '@/constants/config'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   ProfileDocument,
   type ProfileQuery,
   type ProfileQueryVariables,
 } from '@/gql/graphql'
+import { listPlans } from '@/server/gate/billing'
+import { gateConfig } from '@/server/gate/config'
+import { currentUserId } from '@/server/gate/current'
 import { doApolloServerQuery } from '@/services/apollo.server'
-import { getPaymentSubscription } from '@/services/payment'
 
 import { metadata as pricingMetadata } from '../../components/og/og-with-pricing'
 import PricingContent from './content'
@@ -19,23 +18,14 @@ export const metadata: Metadata = {
 }
 
 async function PricingPage() {
-  const cs = await cookies()
-  const uid = cs.get(USER_ID_KEY)?.value
-  const tk = cs.get(COOKIE_TOKEN_KEY)?.value
+  const uid = (await currentUserId())?.toString()
 
-  let checkoutUrl = ''
+  const plans = gateConfig().apiKey ? await listPlans() : []
+  const premiumAvailable = plans.some(
+    (plan) => plan.key === 'premium' && plan.active
+  )
   let profile: ProfileQuery['me'] | null = null
-  if (uid && tk) {
-    const paymentSubscription = await getPaymentSubscription(
-      StripePremiumPriceId,
-      {
-        headers: {
-          Authorization: `Bearer ${tk}`,
-        },
-      }
-    )
-    checkoutUrl = paymentSubscription.checkoutUrl
-
+  if (uid) {
     const profileResponse = await doApolloServerQuery<
       ProfileQuery,
       ProfileQueryVariables
@@ -45,15 +35,15 @@ async function PricingPage() {
         id: ~~uid,
       },
       context: {
-        headers: {
-          Authorization: `Bearer ${tk}`,
-        },
+        headers: {},
       },
     })
     profile = profileResponse.data!.me
   }
 
-  return <PricingContent profile={profile} checkoutUrl={checkoutUrl} />
+  return (
+    <PricingContent profile={profile} premiumAvailable={premiumAvailable} />
+  )
 }
 
 export default PricingPage

@@ -1,10 +1,8 @@
 import { MessageSquare } from 'lucide-react'
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 import PageHeader from '@/components/ui/page-header/page-header'
-import { COOKIE_TOKEN_KEY } from '@/constants/storage'
 import {
   GetCommentListDocument,
   type GetCommentListQuery,
@@ -37,9 +35,6 @@ export default async function CommentsPage({ params }: Props) {
     notFound()
   }
 
-  const ck = await cookies()
-  const token = ck.get(COOKIE_TOKEN_KEY)?.value
-
   const { data } = await doApolloServerQuery<
     GetCommentListQuery,
     GetCommentListQueryVariables
@@ -52,9 +47,7 @@ export default async function CommentsPage({ params }: Props) {
       },
     },
     context: {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : '',
-      },
+      headers: {},
     },
   })
 

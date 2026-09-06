@@ -10,7 +10,6 @@ import { getTranslation } from '@/i18n'
 
 import UserActions from './actions'
 import WechatBindButton from './bind'
-import ProfileBindPhone from './bind-phone'
 import PersonalityView from './personality'
 import ProfileEditor from './profile-editor'
 
@@ -38,7 +37,7 @@ const ProfileDetails = async ({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <UserName name={profile.name} premiumEndAt={profile.premiumEndAt} />
-            {profile.phone === '' && isInMyPage && <ProfileBindPhone />}
+
             {isInMyPage && uid && (
               <ProfileEditor
                 uid={uid}

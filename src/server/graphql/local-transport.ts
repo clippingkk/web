@@ -24,6 +24,18 @@ export const localGraphQLFetch = (async (
 
   try {
     const incoming = await headers()
+    for (const name of ['cookie', 'origin']) {
+      const value = incoming.get(name)
+      if (value) request.headers.set(name, value)
+    }
+    if (request.headers.get('cookie')?.includes('ck-session='))
+      request.headers.delete('authorization')
+    // In-process SSR queries originate here, never at an external browser.
+    if (request.headers.has('cookie') && !request.headers.has('origin'))
+      request.headers.set(
+        'origin',
+        new URL((await import('../env')).getServerEnv().APP_ORIGIN).origin
+      )
     const forwardedFor = incoming.get('x-forwarded-for')
     if (forwardedFor) {
       request.headers.set('x-forwarded-for', forwardedFor)

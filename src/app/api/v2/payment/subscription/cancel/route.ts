@@ -1,30 +1,21 @@
-import { and, eq } from 'drizzle-orm'
-
-import type {
-  CancelPaymentSubscriptionRequest,
-  CancelPaymentSubscriptionResponse,
-} from '@/contracts/http'
 import { requireUserId } from '@/server/auth'
-import { getDatabase } from '@/server/db'
-import { orders } from '@/server/db/schema'
 import { ApiError } from '@/server/errors'
+import { subjectBillingPath } from '@/server/gate/billing'
+import { gateRequest } from '@/server/gate/client'
+import { gateConfig } from '@/server/gate/config'
 import { body, json, options, route } from '@/server/http'
-import { getStripe } from '@/server/integrations'
-
 export const DELETE = route(async (request) => {
-  const uid = await requireUserId(request)
-  const { subscriptionId } =
-    await body<CancelPaymentSubscriptionRequest>(request)
+  const uid = await requireUserId(request),
+    { subscriptionId } = await body<{ subscriptionId: string }>(request)
   if (!subscriptionId) throw new ApiError('subscriptionId required')
-  const order = await getDatabase().db.query.orders.findFirst({
-    where: and(
-      eq(orders.subscriptionId, subscriptionId),
-      eq(orders.userOrders, uid)
-    ),
-  })
-  if (!order) throw new ApiError('subscription may not belongs to you', 403)
-  return json<CancelPaymentSubscriptionResponse>(
-    await getStripe().subscriptions.cancel(subscriptionId)
+  return json(
+    await gateRequest(`${await subjectBillingPath(uid)}/cancel`, {
+      method: 'POST',
+      body: JSON.stringify({
+        subscriptionId,
+        environmentId: gateConfig().environmentId,
+      }),
+    })
   )
-}, 'payment.subscription.cancel')
+}, 'payment.gate.cancel')
 export const OPTIONS = options

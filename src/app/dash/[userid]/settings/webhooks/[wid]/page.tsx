@@ -1,12 +1,12 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   FetchWebhookDocument,
   type FetchWebhookQuery,
   type FetchWebhookQueryVariables,
 } from '@/gql/graphql'
+import { currentUserId } from '@/server/gate/current'
 import { doApolloServerQuery } from '@/services/apollo.server'
 
 import WebhookDetailContent from './components/content'
@@ -16,13 +16,12 @@ type Props = {
 }
 
 async function WebhookDetailPage(props: Props) {
-  const [params, ck] = await Promise.all([props.params, cookies()])
+  const [params] = await Promise.all([props.params, cookies()])
   const { wid, userid } = params
 
-  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
-  const myUid = ck.get(USER_ID_KEY)?.value
+  const myUid = (await currentUserId())?.toString()
 
-  if (!myUid || !tk) {
+  if (!myUid) {
     return redirect(`/dash/${userid}/profile`)
   }
 
@@ -35,9 +34,7 @@ async function WebhookDetailPage(props: Props) {
       id: parseInt(wid, 10),
     },
     context: {
-      headers: {
-        Authorization: `Bearer ${tk}`,
-      },
+      headers: {},
     },
   })
 

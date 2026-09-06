@@ -19,6 +19,8 @@ function PaymentSuccessContent(props: PaymentSuccessContentProps) {
     queryKey: ['payment', 'result', sessionId],
     queryFn: () => getPaymentOrderInfo(sessionId),
     enabled: !!sessionId,
+    refetchInterval: (query) =>
+      query.state.data?.premiumActive ? false : 3000,
   })
   useEffect(() => {
     if (error) {
@@ -27,13 +29,7 @@ function PaymentSuccessContent(props: PaymentSuccessContentProps) {
   }, [error])
 
   useEffect(() => {
-    if (data) {
-      party.confetti(document.querySelector('body')!)
-    }
-  }, [data])
-
-  useEffect(() => {
-    if (!data || data.paymentStatus !== 'paid') {
+    if (!data?.premiumActive) {
       return
     }
     party.confetti(document.querySelector('body')!)
@@ -45,10 +41,12 @@ function PaymentSuccessContent(props: PaymentSuccessContentProps) {
         <PartyPopper className="h-10 w-10 text-emerald-500 dark:text-emerald-300" />
       </span>
       <h1 className="mb-2 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl">
-        Congratulations!
+        {data?.premiumActive ? 'Premium is active' : 'Confirming your payment'}
       </h1>
       <p className="mb-8 text-lg text-slate-600 dark:text-slate-300">
-        Welcome to ClippingKK Premium.
+        {data?.premiumActive
+          ? 'Welcome to ClippingKK Premium.'
+          : 'Payment processing can take a moment. This page checks automatically.'}
       </p>
       <Link
         href={homeLink as any}

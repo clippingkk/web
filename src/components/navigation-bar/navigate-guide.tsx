@@ -1,15 +1,14 @@
 import { ChevronLeft, Crown, House } from 'lucide-react'
-import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   type ProfileQuery,
   type ProfileQueryVariables,
   ProfileDocument,
 } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
+import { currentUserId } from '@/server/gate/current'
 import { doApolloServerQuery } from '@/services/apollo.server'
 
 import logoDark from '../../assets/logo-dark.svg'
@@ -25,13 +24,11 @@ type NavigateGuideProps = {
 
 async function NavigateGuide(props: NavigateGuideProps) {
   const { t } = await getTranslation()
-  const ck = await cookies()
-  const uid = ck.get(USER_ID_KEY)?.value
-  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
+  const uid = (await currentUserId())?.toString()
 
   const pid = props.uid ?? 0
   let p: ProfileQuery['me'] | null = null
-  if (uid && tk) {
+  if (uid) {
     const { data } = await doApolloServerQuery<
       ProfileQuery,
       ProfileQueryVariables
@@ -41,9 +38,7 @@ async function NavigateGuide(props: NavigateGuideProps) {
         id: pid,
       },
       context: {
-        headers: {
-          Authorization: `Bearer ${tk}`,
-        },
+        headers: {},
       },
     })
     p = data!.me

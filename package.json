@@ -25,7 +25,9 @@
     "db:preflight": "node scripts/db-preflight.mjs",
     "db:check": "drizzle-kit check",
     "coveralls": "vitest run --coverage && coveralls < ./coverage/lcov.info",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "gate:generate": "node tools/gate-codegen/generate.mjs",
+    "account:recover": "node scripts/recover-gate-account.mjs"
   },
   "repository": {
     "type": "git",
@@ -42,6 +44,7 @@
     "node": ">=26 <27"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@graphql-codegen/cli": "^7.4.0",
     "@graphql-codegen/client-preset": "^6.1.3",
     "@graphql-codegen/introspection": "6.1.0",

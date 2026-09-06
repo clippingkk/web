@@ -1,6 +1,5 @@
 'use client'
 
-import Modal from '@annatarhe/lake-ui/modal'
 import { useCallback, useState } from 'react'
 
 import type { ProfileQuery } from '@/gql/graphql'
@@ -16,7 +15,6 @@ import {
   NAV_SHELL_CLASSES,
 } from './constants'
 import LoginButton from './login-button'
-import LoginByQRCode from './login-by-qrcode'
 import PrimaryNav from './primary-nav'
 
 type NavigationBarProps = {
@@ -26,8 +24,6 @@ type NavigationBarProps = {
 function NavigationBar(props: NavigationBarProps) {
   const { myProfile: profile } = props
   const [searchVisible, setSearchVisible] = useState(false)
-  const [loginByQRCodeModalVisible, setLoginByQRCodeModalVisible] =
-    useState(false)
 
   const onSearchbarClose = useCallback(() => {
     setSearchVisible(false)
@@ -54,7 +50,7 @@ function NavigationBar(props: NavigationBarProps) {
               <LoggedNavigationBar
                 onSearch={() => setSearchVisible(true)}
                 uidOrDomain={profileSlug}
-                onPhoneLogin={() => setLoginByQRCodeModalVisible(true)}
+                onPhoneLogin={() => window.location.assign('/api/auth/account')}
                 profile={profile}
               />
             </div>
@@ -67,15 +63,6 @@ function NavigationBar(props: NavigationBarProps) {
         visible={searchVisible}
         onClose={onSearchbarClose}
       />
-      <Modal
-        isOpen={loginByQRCodeModalVisible}
-        onClose={() => {
-          setLoginByQRCodeModalVisible(false)
-        }}
-        title="Login by QR Code"
-      >
-        <LoginByQRCode />
-      </Modal>
     </>
   )
 }

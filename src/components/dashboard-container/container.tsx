@@ -1,5 +1,4 @@
 import { ServerError } from '@apollo/client'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import type React from 'react'
 
@@ -8,8 +7,8 @@ import {
   type ProfileQuery,
   type ProfileQueryVariables,
 } from '@/gql/graphql'
+import { currentUserId } from '@/server/gate/current'
 
-import { COOKIE_TOKEN_KEY } from '../../constants/storage'
 import { doApolloServerQuery } from '../../services/apollo.server'
 import Footer from '../footer/Footer'
 import NavigationBar from '../navigation-bar/navigation-bar'
@@ -22,11 +21,10 @@ type DashboardContainerProps = {
 }
 
 async function DashboardContainer(props: DashboardContainerProps) {
-  const { uidOrDomain, header, children } = props
-  const ck = await cookies()
-  const token = ck.get(COOKIE_TOKEN_KEY)
+  const { header, children } = props
+  const uidOrDomain = await currentUserId()
 
-  const isUidType = !Number.isNaN(parseInt(props.uidOrDomain as string, 10))
+  const isUidType = true
 
   let myProfile: ProfileQuery | null = null
 
@@ -42,11 +40,7 @@ async function DashboardContainer(props: DashboardContainerProps) {
           domain: isUidType ? undefined : String(uidOrDomain),
         },
         context: {
-          headers: token
-            ? {
-                Authorization: `Bearer ${token.value}`,
-              }
-            : null,
+          headers: {},
         },
       })
       myProfile = data

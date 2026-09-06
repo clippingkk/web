@@ -1,8 +1,6 @@
 import { CircleArrowLeft, CircleArrowRight, BookOpenCheck } from 'lucide-react'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 
-import { COOKIE_TOKEN_KEY } from '@/constants/storage'
 import {
   UncheckBooksQueryDocument,
   type UncheckBooksQueryQuery,
@@ -19,15 +17,12 @@ type PageProps = {
 }
 
 async function AdminPanel(props: PageProps) {
-  const [ck, params, sp, { t }] = await Promise.all([
-    cookies(),
+  const [params, sp, { t }] = await Promise.all([
     props.params,
     props.searchParams,
     getTranslation(),
   ])
   const uid = ~~params.userid
-
-  const token = ck.get(COOKIE_TOKEN_KEY)
 
   const offset = sp.offset ? ~~sp.offset : 0
 
@@ -45,9 +40,7 @@ async function AdminPanel(props: PageProps) {
       },
     },
     context: {
-      headers: {
-        Authorization: `Bearer ${token?.value}`,
-      },
+      headers: {},
     },
   })
 

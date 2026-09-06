@@ -1,16 +1,12 @@
 'use client'
-import Cookies from 'js-cookie'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
-import { USER_ID_KEY } from '@/constants/storage'
 import { useUploadData } from '@/hooks/my-file'
 import { useActionTrack } from '@/hooks/tracke'
 
 import FloatingProgress from '../progress/floating'
 import DropOverlay from './drop-overlay'
-
-const uid = Cookies.get(USER_ID_KEY)
 
 function GlobalUpload() {
   const onUploadTrack = useActionTrack('upload')
@@ -19,7 +15,19 @@ function GlobalUpload() {
 
   const isUploadPage = /dash\/\d+\/upload/.test(pathname)
 
-  const id = parseInt(uid ?? '0', 10)
+  const [id, setId] = useState(0)
+  useEffect(() => {
+    let active = true
+    fetch('/api/auth/session', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((r) => {
+        if (active) setId(r.data?.userId ?? 0)
+      })
+      .catch(() => undefined)
+    return () => {
+      active = false
+    }
+  }, [])
   const { onUpload, step, at, count } = useUploadData(true, id > 0)
   const [isDraging, setIsDraging] = useState(false)
   const onDropEnd = useCallback(
@@ -43,7 +51,7 @@ function GlobalUpload() {
   )
 
   useEffect(() => {
-    if (isUploadPage) {
+    if (isUploadPage || !id) {
       return
     }
 
@@ -53,7 +61,7 @@ function GlobalUpload() {
       document.body.removeEventListener('dragover', stopDragOver)
       document.body.removeEventListener('drop', onDropEnd)
     }
-  }, [stopDragOver, onDropEnd, isUploadPage])
+  }, [stopDragOver, onDropEnd, isUploadPage, id])
 
   return (
     <>

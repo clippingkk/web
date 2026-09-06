@@ -9,7 +9,22 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1),
   REDIS_URL: z.string().min(1),
   QUEUE_REDIS_URL: z.string().min(1).optional(),
-  JWT_SECRET: z.string().min(8),
+  JWT_SECRET: z.string().default(''),
+  LEGACY_AUTH_ENABLED: z.enum(['0', '1']).default('0'),
+  GATE_BASE_URL: z
+    .string()
+    .url()
+    .default(
+      process.env.NODE_ENV === 'production'
+        ? 'https://evonia-gate.annatarhe.com'
+        : 'http://localhost:3621'
+    ),
+  GATE_CLIENT_ID: z.string().default(''),
+  GATE_CLIENT_SECRET: z.string().default(''),
+  GATE_PROJECT_ID: z.string().default(''),
+  GATE_ENVIRONMENT_ID: z.string().default(''),
+  GATE_API_KEY: z.string().default(''),
+  GATE_RESOURCE: z.string().url().default('https://clippingkk.annatarhe.com'),
   APP_ORIGIN: z.string().url().default('http://localhost:3101'),
   CORS_ALLOWED_ORIGINS: z.string().default('http://localhost:3101'),
   ROOT_USERS: z.string().default('1'),
@@ -68,6 +83,10 @@ export function getServerEnv(): ServerEnv {
   if (parsedEnv) return parsedEnv
 
   const values = envSchema.parse(process.env)
+  if (values.LEGACY_AUTH_ENABLED === '1' && values.JWT_SECRET.length < 8)
+    throw new Error(
+      'JWT_SECRET of at least 8 characters is required while legacy authentication is enabled'
+    )
   parsedEnv = {
     ...values,
     corsAllowedOrigins: new Set(

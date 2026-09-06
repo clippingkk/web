@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import { GetCommentDocument, type GetCommentQuery } from '@/gql/graphql'
+import { currentUserId } from '@/server/gate/current'
 import { doApolloServerQuery } from '@/services/apollo.server'
 
 import CommentDetail from './comment-detail'
@@ -23,16 +22,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'Comment Not Found' }
   }
 
-  const ck = await cookies()
-  const token = ck.get(COOKIE_TOKEN_KEY)?.value
-
   const { data } = await doApolloServerQuery<GetCommentQuery>({
     query: GetCommentDocument,
     variables: { id },
     context: {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : '',
-      },
+      headers: {},
     },
   })
 
@@ -63,24 +57,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 async function CommentPage({ params }: Props) {
   const { commentid } = await params
 
-  const ck = await cookies()
-
-  const uid = parseInt(ck.get(USER_ID_KEY)?.value || '0', 10)
+  const uid = parseInt((await currentUserId())?.toString() || '0', 10)
   const id = parseInt(commentid, 10)
 
   if (Number.isNaN(uid) || uid <= 0 || Number.isNaN(id)) {
     notFound()
   }
 
-  const token = ck.get(COOKIE_TOKEN_KEY)?.value
-
   const { data } = await doApolloServerQuery<GetCommentQuery>({
     query: GetCommentDocument,
     variables: { id },
     context: {
-      headers: {
-        Authorization: token ? `Bearer ${token}` : '',
-      },
+      headers: {},
     },
   })
 

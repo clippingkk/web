@@ -1,12 +1,10 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
 import ProfileTabs from '@/components/profile-tabs/profile-tabs'
 import PersonalActivity from '@/components/profile/activity'
-import { COOKIE_TOKEN_KEY, USER_ID_KEY } from '@/constants/storage'
 import {
   FetchClippingsByUidDocument,
   type FetchClippingsByUidQuery,
@@ -16,6 +14,7 @@ import {
   type ProfileQueryVariables,
 } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
+import { currentUserId } from '@/server/gate/current'
 import { getReactQueryClient } from '@/services/ajax'
 import { doApolloServerQuery } from '@/services/apollo.server'
 import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '@/services/wenqu'
@@ -49,22 +48,16 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 }
 
 async function Page(props: PageProps) {
-  const [params, , ck, { t }] = await Promise.all([
+  const [params, , { t }] = await Promise.all([
     props.params,
     props.searchParams,
-    cookies(),
     getTranslation(),
   ])
   const pathUid: string = params.userid
-  const myUidStr = ck.get(USER_ID_KEY)?.value
+  const myUidStr = (await currentUserId())?.toString()
   const myUid = myUidStr ? parseInt(myUidStr, 10) : undefined
 
-  const tk = ck.get(COOKIE_TOKEN_KEY)?.value
-
   const headers: Record<string, string> = {}
-  if (tk) {
-    headers.Authorization = `Bearer ${tk}`
-  }
 
   const isTargetUidType = !Number.isNaN(parseInt(pathUid, 10))
   const { data: profile } = await doApolloServerQuery<
