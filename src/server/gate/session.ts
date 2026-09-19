@@ -17,14 +17,19 @@ export interface GateSession {
   refreshToken?: string
   accessTokenExpiresAt: number
   expiresAt: number
+  /** Absent for browser sessions. A native session is never valid as a cookie, nor the reverse. */
+  kind?: 'native'
+  /** The public client a native session was issued to; refresh and revoke must use it. */
+  clientId?: string
 }
 const key = (id: string) => `ck:gate:session:${id}`
 export async function createSession(
-  input: Omit<GateSession, 'id' | 'expiresAt'>
+  input: Omit<GateSession, 'id' | 'expiresAt'>,
+  id = randomToken()
 ) {
   const session = {
     ...input,
-    id: randomToken(),
+    id,
     expiresAt: Date.now() + SESSION_TTL * 1000,
   }
   await cacheSet(key(session.id), session, SESSION_TTL)
@@ -41,12 +46,17 @@ export async function destroySession(id: string) {
       await getRedis()
     ).sRem(`ck:gate:user-sessions:${session.localUserId}`, id)
   if (session?.refreshToken)
-    await revokeToken(session.refreshToken).catch(() => undefined)
+    await revokeToken(session.refreshToken, session.clientId).catch(
+      () => undefined
+    )
 }
-export async function readSession(id: string): Promise<GateSession | null> {
+export async function readSession(
+  id: string,
+  kind?: 'native'
+): Promise<GateSession | null> {
   if (!id || !/^[\w-]{43}$/.test(id)) return null
   const session = await cacheGet<GateSession>(key(id))
-  if (!session) return null
+  if (!session || session.kind !== kind) return null
   const active = await getDatabase().db.query.users.findFirst({
     where: and(
       eq(users.id, session.localUserId),
@@ -67,7 +77,7 @@ export async function readSession(id: string): Promise<GateSession | null> {
   if (!(await redis.set(lockKey, lock, { NX: true, PX: 20000 }))) {
     for (let i = 0; i < 110; i++) {
       await new Promise((resolve) => setTimeout(resolve, 100))
-      if (!(await redis.exists(lockKey))) return readSession(id)
+      if (!(await redis.exists(lockKey))) return readSession(id, kind)
     }
     throw new ApiError('Session refresh is busy. Retry shortly.', 503)
   }
@@ -80,7 +90,7 @@ export async function readSession(id: string): Promise<GateSession | null> {
       return null
     }
     try {
-      const tokens = await refreshTokens(current.refreshToken)
+      const tokens = await refreshTokens(current.refreshToken, current.clientId)
       const updated = {
         ...current,
         accessToken: tokens.accessToken,
@@ -95,7 +105,9 @@ export async function readSession(id: string): Promise<GateSession | null> {
         EX: ttl,
       })
       if (!written) {
-        await revokeToken(updated.refreshToken!).catch(() => undefined)
+        await revokeToken(updated.refreshToken!, updated.clientId).catch(
+          () => undefined
+        )
         return null
       }
       return updated

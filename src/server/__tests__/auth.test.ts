@@ -42,3 +42,15 @@ test('legacy credentials are rejected when compatibility is disabled', async () 
     )
   ).rejects.toMatchObject({ code: 'LEGACY_AUTH_DISABLED' })
 })
+
+test('a malformed native credential is unauthorized, never a legacy rejection', async () => {
+  process.env.LEGACY_AUTH_ENABLED = '0'
+  resetServerEnvForTests()
+  await expect(
+    optionalUserId(
+      new Request('https://example.test', {
+        headers: { Authorization: 'Bearer ck_ios_not-a-real-token' },
+      })
+    )
+  ).rejects.toMatchObject({ status: 401, code: 'UNAUTHORIZED' })
+})

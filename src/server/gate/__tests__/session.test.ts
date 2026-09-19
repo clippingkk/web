@@ -110,3 +110,43 @@ it('rejects every session for a disabled local account', async () => {
   expect(await readSession(original.id)).toBeNull()
   expect(state.refresh).not.toHaveBeenCalled()
 })
+it('keeps browser and native sessions from standing in for each other', async () => {
+  const web = await session()
+  expect(await readSession(web.id, 'native')).toBeNull()
+  state.values.clear()
+  const native = await createSession({
+    localUserId: 1,
+    gateUserId: 'gate-user',
+    accessToken: 'token',
+    refreshToken: 'refresh',
+    accessTokenExpiresAt: Date.now() + 600000,
+    kind: 'native',
+    clientId: 'ios-client',
+  })
+  expect(await readSession(native.id)).toBeNull()
+  expect(await readSession(native.id, 'native')).toMatchObject({
+    clientId: 'ios-client',
+  })
+})
+it('refreshes a native session as the client it was issued to', async () => {
+  const native = await createSession({
+    localUserId: 1,
+    gateUserId: 'gate-user',
+    accessToken: 'old',
+    refreshToken: 'refresh',
+    accessTokenExpiresAt: Date.now() - 1,
+    kind: 'native',
+    clientId: 'ios-client',
+  })
+  state.refresh.mockResolvedValue({
+    accessToken: 'new',
+    refreshToken: 'rotated',
+    expiresIn: 600,
+  })
+  await readSession(native.id, 'native')
+  expect(state.refresh).toHaveBeenCalledWith('refresh', 'ios-client')
+  state.refresh.mockClear()
+  const web = await session()
+  await readSession(web.id)
+  expect(state.refresh).toHaveBeenCalledWith('refresh', undefined)
+})
