@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev --turbopack --port 3101",
-    "dev:worker": "RUN_WORKER=true next dev --turbopack --port 3101",
     "build": "pnpm codegen && next build --turbopack",
     "start": "next start -p $PORT",
     "typecheck": "tsc --noEmit",

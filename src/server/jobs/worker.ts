@@ -244,6 +244,15 @@ export function startWorker() {
     connection: queueConnection(),
     concurrency: Number.parseInt(process.env.WORKER_CONCURRENCY ?? '1', 10),
   })
+  // Every web process runs the worker, so a Redis outage must only be logged.
+  worker.on('error', (error) =>
+    logger.emit({
+      severityNumber: SeverityNumber.ERROR,
+      severityText: 'ERROR',
+      body: 'Background worker error',
+      attributes: { 'error.message': error.message },
+    })
+  )
   let deleting = false
   const deletionTimer = setInterval(async () => {
     if (deleting) return

@@ -57,7 +57,6 @@ GATE_ENVIRONMENT_ID=...
 GATE_API_KEY=...
 GATE_RESOURCE=https://clippingkk.annatarhe.com
 LEGACY_AUTH_ENABLED=1
-RUN_WORKER=true
 ```
 
 Set `DATABASE_URL` and `REDIS_URL` as usual. Keep the existing `JWT_SECRET` while `LEGACY_AUTH_ENABLED=1`; the flag defaults to `0`. Retain provider/legacy encryption secrets only while old clients need them. Browser APIs use the same origin; `NEXT_PUBLIC_API_HOST` must not redirect browser authentication to an older backend.
@@ -78,9 +77,9 @@ Review the preview, then repeat with `--apply`. The binding and `account_recover
 
 ## Deletion and operations
 
-Deletion disables the local account and writes `account_deletions` in one transaction. All sessions and legacy tokens check that active account before granting access. With `RUN_WORKER=true`, the worker retries pending deletion every 15 seconds, revokes ClippingKK sessions, removes Gate access to this project, cancels its subscriptions, and removes local owned/dependent data. Gate's shared identity, browser sessions, other projects, and accounting records survive. A later registration gets a new numeric account.
+Deletion disables the local account and writes `account_deletions` in one transaction. All sessions and legacy tokens check that active account before granting access. The worker inside every web process retries pending deletion every 15 seconds, revokes ClippingKK sessions, removes Gate access to this project, cancels its subscriptions, and removes local owned/dependent data. Gate's shared identity, browser sessions, other projects, and accounting records survive. A later registration gets a new numeric account.
 
-A 202 means queued, not completed. Inspect `account_deletions.completed_at` for completion. Pending rows survive a process restart and Gate/Redis failures. Logs record retries without email, tokens, or content; investigate sustained retries. A deployment without a worker must not expose account deletion.
+A 202 means queued, not completed. Inspect `account_deletions.completed_at` for completion. Pending rows survive a process restart and Gate/Redis failures. Logs record retries without email, tokens, or content; investigate sustained retries.
 
 Monitor `auth.gate.*`, `auth.account.delete`, and `payment.gate.*` operations, failed callbacks, refresh failures, Gate availability, and deletion backlog. Rollback should retain the additive database schema and Gate data; do not revive deleted accounts or switch billing back to local extension logic.
 

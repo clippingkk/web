@@ -1272,8 +1272,6 @@ export const resolvers: Record<string, Record<string, any>> = {
       context: GraphQLContext
     ) => {
       const uid = requiredUser(context)
-      if (!getServerEnv().runWorker)
-        throw new ApiError('Account deletion worker is not enabled', 503)
       await (await import('../gate/deletion')).scheduleDeletion(uid)
       return true
     },

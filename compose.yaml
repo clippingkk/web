@@ -13,7 +13,6 @@ services:
       JWT_SECRET: local-development-secret-change-me
       QUEUE_REDIS_URL: redis://redis:6379/2
       REDIS_URL: redis://redis:6379/1
-      RUN_WORKER: 'true'
     ports:
       - '3101:3000'
     depends_on:

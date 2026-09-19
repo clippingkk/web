@@ -1,15 +1,8 @@
 import { requireUserId } from '@/server/auth'
-import { getServerEnv } from '@/server/env'
-import { ApiError } from '@/server/errors'
 import { scheduleDeletion } from '@/server/gate/deletion'
 import { cookie, SESSION_COOKIE } from '@/server/gate/security'
 import { json, route } from '@/server/http'
 export const POST = route(async (request) => {
-  if (!getServerEnv().runWorker)
-    throw new ApiError(
-      'Account deletion worker is not enabled. Contact support.',
-      503
-    )
   await scheduleDeletion(await requireUserId(request))
   const response = json(
     {

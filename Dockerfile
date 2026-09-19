@@ -37,7 +37,6 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV RUN_WORKER=false
 ARG GIT_COMMIT
 ENV GIT_COMMIT=$GIT_COMMIT
 # Uncomment the following line in case you want to disable telemetry during runtime.

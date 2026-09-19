@@ -2,7 +2,7 @@
 
 ClippingKK is a full-stack Next.js application for importing, organizing, and
 sharing Kindle highlights. The Next.js process serves the web UI, GraphQL and
-REST APIs, PostgreSQL-backed data access, Redis caching, and an optional BullMQ
+REST APIs, PostgreSQL-backed data access, Redis caching, and the BullMQ
 worker.
 
 ## Requirements
@@ -22,12 +22,12 @@ cp .env.example .env.local
 pnpm infra:up
 pnpm db:migrate
 pnpm codegen
-pnpm dev:worker
+pnpm dev
 ```
 
 Edit `.env.local` before starting the app. The checked-in defaults connect to
-the PostgreSQL and Redis containers from `compose.yaml`. `pnpm dev` runs only
-the web process; `pnpm dev:worker` also processes background jobs.
+the PostgreSQL and Redis containers from `compose.yaml`. `pnpm dev` serves the
+web app and processes background jobs in the same process.
 
 Generated GraphQL output under `src/gql/` is intentionally ignored; `pnpm codegen`
 regenerates it. AI prompts are maintained in `src/server/ai/prompts.ts`.

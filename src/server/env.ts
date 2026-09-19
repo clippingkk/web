@@ -29,7 +29,6 @@ const envSchema = z.object({
   APP_ORIGIN: z.string().url().default('http://localhost:3101'),
   CORS_ALLOWED_ORIGINS: z.string().default('http://localhost:3101'),
   ROOT_USERS: z.string().default('1'),
-  RUN_WORKER: z.enum(['true', 'false']).default('false'),
   DEBUG: z.enum(['true', 'false']).default('false'),
   GIT_COMMIT: z.string().default(''),
 
@@ -74,7 +73,6 @@ const envSchema = z.object({
 export type ServerEnv = z.infer<typeof envSchema> & {
   corsAllowedOrigins: Set<string>
   rootUsers: Set<number>
-  runWorker: boolean
   debug: boolean
 }
 
@@ -98,7 +96,6 @@ export function getServerEnv(): ServerEnv {
         .map((value) => Number.parseInt(value.trim(), 10))
         .filter(Number.isFinite)
     ),
-    runWorker: values.RUN_WORKER === 'true',
     debug: values.DEBUG === 'true',
   }
   return parsedEnv

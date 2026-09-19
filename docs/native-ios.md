@@ -56,7 +56,7 @@ Keep these distinct. An outage reported as 401 would sign out every iOS user and
 
 ## Account deletion
 
-iOS deletes through the GraphQL `removeMyAccount` mutation, like web, which needs `RUN_WORKER=true`. Disabling the account fails the next session read; the worker's `destroyUserSessions` then removes every remaining session, native ones included, through the shared per-user index.
+iOS deletes through the GraphQL `removeMyAccount` mutation, like web. Disabling the account fails the next session read; the worker's `destroyUserSessions` then removes every remaining session, native ones included, through the shared per-user index.
 
 ## Checks
 

@@ -31,7 +31,6 @@ JWT_SECRET=replace-with-a-long-random-secret
 APP_ORIGIN=https://clippingkk.example.com
 CORS_ALLOWED_ORIGINS=https://clippingkk.example.com
 ROOT_USERS=1
-RUN_WORKER=false
 WORKER_CONCURRENCY=1
 DEBUG=false
 ```
@@ -97,10 +96,10 @@ docker run -d \
 Proxy the public HTTPS hostname to `127.0.0.1:3101` and preserve the original
 host and forwarding headers. Do not expose PostgreSQL or Redis publicly.
 
-Start the first rollout with `RUN_WORKER=false`. After the web/API smoke checks
-pass, set `RUN_WORKER=true` on exactly one initial application replica and
-recreate that container. Increase `WORKER_CONCURRENCY` or the number of worker
-enabled replicas only after observing database and Redis load.
+Every application container also runs the BullMQ worker and the account
+deletion loop; there is no separate worker service to deploy. Jobs are locked
+through Redis and PostgreSQL, so multiple replicas are safe. Increase
+`WORKER_CONCURRENCY` only after observing database and Redis load.
 
 ## Verify the deployment
 
@@ -138,8 +137,8 @@ are neither loaded by `next build` nor copied into the standalone image.
 
 For an upgrade, retain the previous image tag, back up durable services, apply
 the new release's migrations, and recreate the container with the same runtime
-environment. Deploy with the worker disabled, verify `/probe` and application
-flows, and then re-enable worker processing.
+environment. Then verify `/probe` and application flows. The new container
+starts processing queued jobs as soon as it boots.
 
 To roll back, recreate the container from the previous pinned image. Database
 migrations may not be backward-compatible; restore the pre-upgrade backup when
