@@ -18,7 +18,7 @@ Create a project and environments in Gate. Register a confidential web OIDC clie
 - Production callback: `https://clippingkk.annatarhe.com/api/auth/callback`.
 - Development callback: `http://localhost:3101/api/auth/callback`.
 - Post-logout origins: `https://clippingkk.annatarhe.com/`, `http://localhost:3101/`. Ordinary ClippingKK logout does not use global Gate logout.
-- Add `https://clippingkk.annatarhe.com` to Gate's `GATE_ALLOWED_AUDIENCES`; use the same value in `GATE_RESOURCE`. Override both for custom origins.
+- `https://clippingkk.annatarhe.com` is one of Gate's built-in product audiences; use the same value in `GATE_RESOURCE`. For a custom origin, add it to Gate's `GATE_ALLOWED_AUDIENCES` and override `GATE_RESOURCE` to match.
 
 Create roles:
 
