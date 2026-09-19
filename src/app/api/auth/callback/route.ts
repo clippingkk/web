@@ -1,4 +1,6 @@
-import { metrics } from '@opentelemetry/api'
+import { metrics, trace } from '@opentelemetry/api'
+import { logs, SeverityNumber } from '@opentelemetry/api-logs'
+import { GraphQLError } from 'graphql'
 import { NextResponse } from 'next/server'
 
 import { ApiError } from '@/server/errors'
@@ -22,6 +24,7 @@ import { getRedis } from '@/server/redis'
 const outcomes = metrics
   .getMeter('clippingkk.auth')
   .createCounter('auth.login.outcomes')
+const logger = logs.getLogger('clippingkk.auth')
 export const GET = route(async (request) => {
   const params = new URL(request.url).searchParams
   const state = params.get('state') ?? ''
@@ -77,6 +80,26 @@ export const GET = route(async (request) => {
   } catch (error) {
     outcomes.add(1, { outcome: 'failure' })
     const code = error instanceof ApiError ? error.code : 'LOGIN_FAILED'
+    // This catch returns a redirect, so route()'s error path never sees the
+    // failure. Record it here or the cause is lost: every Gate rejection
+    // otherwise collapses to LOGIN_FAILED and the generic auth-card message.
+    trace
+      .getActiveSpan()
+      ?.recordException(error instanceof Error ? error : new Error(String(error)))
+    logger.emit({
+      severityNumber: SeverityNumber.ERROR,
+      severityText: 'ERROR',
+      body: 'Gate sign-in callback failed',
+      attributes: {
+        operation: 'auth.gate.callback',
+        'error.code': code,
+        'error.message': error instanceof Error ? error.message : String(error),
+        ...(error instanceof GraphQLError && {
+          'gate.error': String(error.extensions.gateError ?? ''),
+          'gate.status': Number(error.extensions.code ?? 0),
+        }),
+      },
+    })
     response = NextResponse.redirect(
       new URL(`/auth?error=${encodeURIComponent(code)}`, gateConfig().appOrigin)
     )
