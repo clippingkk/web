@@ -20,6 +20,17 @@ Create a project and environments in Gate. Register a confidential web OIDC clie
 - Post-logout origins: `https://clippingkk.annatarhe.com/`, `http://localhost:3101/`. Ordinary ClippingKK logout does not use global Gate logout.
 - `https://clippingkk.annatarhe.com` is one of Gate's built-in product audiences; use the same value in `GATE_RESOURCE`. For a custom origin, add it to Gate's `GATE_ALLOWED_AUDIENCES` and override `GATE_RESOURCE` to match.
 
+### The iOS native client
+
+The iOS app signs in through this backend (`/api/auth/native/*`, see [native-ios.md](native-ios.md)), which talks to Gate as a second, **native** OIDC client. Register one per environment:
+
+- Type: **Native**. Gate derives `token_endpoint_auth_method=none`; there is no secret.
+- Scopes: `openid profile email offline_access`. Tick `offline_access` at registration: it is what puts `refresh_token` in the client's grant types, and neither scopes nor grant types can be edited afterwards. Without it every session ends with the ten-minute access token, and the exchange endpoint refuses the grant with a 503 to make that visible.
+- Redirect URI: `com.annatarhe.clippingkk://oauth/callback`, identical in every environment. Gate matches it exactly and a client's redirect URIs cannot be edited; a typo means registering a new client.
+- No post-logout URIs.
+
+Put the resulting client id in `GATE_NATIVE_CLIENT_ID`. The native client uses the same `GATE_RESOURCE` audience, roles and service key as the web client.
+
 Create roles:
 
 | Slug | Permissions |
@@ -40,6 +51,7 @@ APP_ORIGIN=https://clippingkk.annatarhe.com
 GATE_BASE_URL=https://evonia-gate.annatarhe.com
 GATE_CLIENT_ID=...
 GATE_CLIENT_SECRET=...
+GATE_NATIVE_CLIENT_ID=...
 GATE_PROJECT_ID=...
 GATE_ENVIRONMENT_ID=...
 GATE_API_KEY=...
@@ -52,7 +64,7 @@ Set `DATABASE_URL` and `REDIS_URL` as usual. Keep the existing `JWT_SECRET` whil
 
 Apply the committed ClippingKK SQL migrations before starting the application. No destructive user backfill runs. Users authenticate through Gate once: a unique case-insensitive verified email match attaches their original numeric account. Conflicts and deleted accounts fail closed. Local name/avatar/bio/domain remain product-owned; a later Gate email change cannot change the subject binding.
 
-Gate-unlinked legacy clients retain non-billing functionality while compatibility is enabled. Linked legacy clients use Gate permissions and Premium access. Legacy payment sheets return `GATE_UPGRADE_REQUIRED`; they cannot issue local Premium access. Turn off `LEGACY_AUTH_ENABLED` after clients migrate. Keep schema compatibility fields until those consumers retire.
+Gate-unlinked legacy clients retain non-billing functionality while compatibility is enabled. Linked legacy clients use Gate permissions and Premium access. Legacy payment sheets return `GATE_UPGRADE_REQUIRED`; they cannot issue local Premium access. iOS builds that sign in through Gate use a native credential and do not depend on this flag; earlier iOS builds do. Turn off `LEGACY_AUTH_ENABLED` after clients migrate. Keep schema compatibility fields until those consumers retire.
 
 ## Assisted account recovery
 

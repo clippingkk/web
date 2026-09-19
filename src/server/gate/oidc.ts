@@ -52,6 +52,29 @@ export function buildAuthorizationUrl(p: {
   return url.toString()
 }
 
+/**
+ * The iOS app's authorization request. The challenge comes from the device,
+ * which keeps the verifier; `state` and `nonce` stay on the server.
+ */
+export function buildNativeAuthorizationUrl(p: {
+  state: string
+  nonce: string
+  challenge: string
+  clientId: string
+}): string {
+  const url = new URL(`${gateConfig().issuer}/oauth2/authorize`)
+  url.searchParams.set('response_type', 'code')
+  url.searchParams.set('client_id', p.clientId)
+  url.searchParams.set('redirect_uri', gateConfig().nativeRedirectUri)
+  url.searchParams.set('scope', gateConfig().scopes)
+  url.searchParams.set('state', p.state)
+  url.searchParams.set('nonce', p.nonce)
+  url.searchParams.set('code_challenge', p.challenge)
+  url.searchParams.set('code_challenge_method', 'S256')
+  url.searchParams.set('resource', gateConfig().resource)
+  return url.toString()
+}
+
 export function buildEndSessionUrl(p: {
   idToken?: string
   postLogoutRedirectUri: string
@@ -86,10 +109,15 @@ interface TokenResponseBody {
  * The credentials go into Basic verbatim rather than percent-encoded first:
  * that is what Gate decodes, and Gate's own ids and secrets contain no
  * characters that would differ either way.
+ *
+ * A native client is public (`token_endpoint_auth_method: none`): it has no
+ * secret, so it sends no Basic header and identifies itself by the `client_id`
+ * in the form alone.
  */
 async function tokenEndpoint(
   path: string,
-  form: Record<string, string>
+  form: Record<string, string>,
+  publicClient = false
 ): Promise<TokenResponseBody> {
   const credentials = Buffer.from(
     `${gateConfig().clientId}:${gateConfig().clientSecret}`
@@ -102,7 +130,7 @@ async function tokenEndpoint(
       signal: AbortSignal.timeout(10000),
       cache: 'no-store',
       headers: {
-        Authorization: `Basic ${credentials}`,
+        ...(publicClient ? {} : { Authorization: `Basic ${credentials}` }),
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json',
       },
@@ -175,21 +203,61 @@ export async function exchangeCode(p: {
   )
 }
 
-export async function refreshTokens(refreshToken: string): Promise<GateTokens> {
+export async function exchangeNativeCode(p: {
+  code: string
+  verifier: string
+  clientId: string
+}): Promise<GateTokens> {
   return toTokens(
-    await tokenEndpoint('/oauth2/token', {
-      grant_type: 'refresh_token',
-      refresh_token: refreshToken,
-      client_id: gateConfig().clientId,
-      resource: gateConfig().resource,
-    })
+    await tokenEndpoint(
+      '/oauth2/token',
+      {
+        grant_type: 'authorization_code',
+        code: p.code,
+        code_verifier: p.verifier,
+        redirect_uri: gateConfig().nativeRedirectUri,
+        client_id: p.clientId,
+        resource: gateConfig().resource,
+      },
+      true
+    )
+  )
+}
+
+/**
+ * `nativeClientId` is the public client a native session was issued to. Gate
+ * binds a refresh token to its client, so it must be refreshed and revoked as
+ * that client, never as the web one.
+ */
+export async function refreshTokens(
+  refreshToken: string,
+  nativeClientId?: string
+): Promise<GateTokens> {
+  return toTokens(
+    await tokenEndpoint(
+      '/oauth2/token',
+      {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        client_id: nativeClientId ?? gateConfig().clientId,
+        resource: gateConfig().resource,
+      },
+      Boolean(nativeClientId)
+    )
   )
 }
 
 /** Throws if Gate rejects the revocation; logout paths should treat that as non-fatal. */
-export async function revokeToken(token: string): Promise<void> {
-  await tokenEndpoint('/oauth2/revoke', {
-    token,
-    client_id: gateConfig().clientId,
-  })
+export async function revokeToken(
+  token: string,
+  nativeClientId?: string
+): Promise<void> {
+  await tokenEndpoint(
+    '/oauth2/revoke',
+    {
+      token,
+      client_id: nativeClientId ?? gateConfig().clientId,
+    },
+    Boolean(nativeClientId)
+  )
 }

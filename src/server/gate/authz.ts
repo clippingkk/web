@@ -83,6 +83,13 @@ async function requireProductPermission(userId: number, permission: string) {
       principalId: subject,
       permission,
     }),
+  }).catch((error: unknown) => {
+    // A 401 here is Gate rejecting OUR service key, not the caller's session.
+    // Passed through, every client would read it as "sign in again" and the
+    // native apps would wipe their credentials over a server misconfiguration.
+    if (error instanceof ApiError && error.status === 401)
+      throw new ApiError('Gate is temporarily unavailable. Retry shortly.', 503)
+    throw error
   })
   if (!result.allowed)
     throw new ApiError('Product access denied', 403, 'FORBIDDEN')

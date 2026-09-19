@@ -21,6 +21,7 @@ const envSchema = z.object({
     ),
   GATE_CLIENT_ID: z.string().default(''),
   GATE_CLIENT_SECRET: z.string().default(''),
+  GATE_NATIVE_CLIENT_ID: z.string().default(''),
   GATE_PROJECT_ID: z.string().default(''),
   GATE_ENVIRONMENT_ID: z.string().default(''),
   GATE_API_KEY: z.string().default(''),

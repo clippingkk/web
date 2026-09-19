@@ -46,13 +46,14 @@ function isJwksLookupFailure(err: unknown): boolean {
 }
 
 async function verifySignature(
-  idToken: string
+  idToken: string,
+  audience: string
 ): Promise<JWTVerifyResult<JWTPayload>> {
   const options: JWTVerifyOptions = {
     algorithms: ['ES256'],
     requiredClaims: ['exp', 'iat', 'sub', 'iss', 'aud'],
     issuer: gateConfig().issuer,
-    audience: gateConfig().clientId,
+    audience,
     clockTolerance: 5,
   }
 
@@ -87,14 +88,18 @@ function unauthorized(message: string): GraphQLError {
  * Verifies a Gate ID token and reduces it to the identity ClippingKK stores.
  * Rejects anything that is not ES256, not from Gate's issuer, not audienced at
  * our client, or not tied to the nonce we generated for this login attempt.
+ *
+ * `audience` is the client the login was started for: the web client unless a
+ * native sign-in passes its own public client id.
  */
 export async function verifyIdToken(
   idToken: string,
-  nonce: string
+  nonce: string,
+  audience: string = gateConfig().clientId
 ): Promise<GateIdentity> {
   let payload: JWTPayload
   try {
-    ;({ payload } = await verifySignature(idToken))
+    ;({ payload } = await verifySignature(idToken, audience))
   } catch (err) {
     throw unauthorized(
       err instanceof Error
@@ -110,10 +115,10 @@ export async function verifyIdToken(
   }
 
   if (
-    (payload.azp && payload.azp !== gateConfig().clientId) ||
+    (payload.azp && payload.azp !== audience) ||
     (Array.isArray(payload.aud) &&
       payload.aud.length > 1 &&
-      payload.azp !== gateConfig().clientId)
+      payload.azp !== audience)
   )
     throw unauthorized('id token authorized party mismatch')
 

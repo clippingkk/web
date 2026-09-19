@@ -7,6 +7,7 @@ import { getDatabase } from './db'
 import { users } from './db/schema'
 import { getServerEnv } from './env'
 import { ApiError } from './errors'
+import { nativeCredential, readNativeSession } from './gate/native'
 import { cookieValue, assertSameOrigin } from './gate/security'
 import { readSession } from './gate/session'
 import { decodeLegacyValue, encodeLegacyValue } from './legacy-crypto'
@@ -91,6 +92,14 @@ export function requireLegacyAuth() {
     throw new ApiError('Sign in through Gate.', 410, 'LEGACY_AUTH_DISABLED')
 }
 export async function optionalUserId(request: Request) {
+  // First, and with no fallback: an explicit native credential is never
+  // retried as a cookie or legacy token, and never reaches the legacy 410.
+  const native = nativeCredential(request)
+  if (native) {
+    const session = await readNativeSession(native)
+    if (!session) throw new ApiError('Sign in again', 401, 'UNAUTHORIZED')
+    return session.localUserId
+  }
   const sessionId = cookieValue(request)
   if (sessionId) {
     if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method))
