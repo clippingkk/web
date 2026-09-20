@@ -3,6 +3,10 @@
     "title": "Something went wrong!",
     "generic": "An unexpected error occurred. Please try again.",
     "tryAgain": "Try again",
-    "goHome": "Return to home page"
+    "goHome": "Return to home page",
+    "reference": "Reference ID",
+    "copy": "Copy",
+    "copied": "Copied",
+    "signIn": "Sign in again"
   }
 }
