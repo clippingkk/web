@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.18.1](https://github.com/clippingkk/web/compare/v5.18.0...v5.18.1) (2026-09-20)
+
+
+### Bug Fixes
+
+* **auth:** surface Gate sign-in failures and repair the mail sender ([373a5ac](https://github.com/clippingkk/web/commit/373a5ac2cfbfeddba53562b8e93effe3f52c9dcd))
+* **auth:** surface the real cause of a failed Gate sign-in ([dd7c5c1](https://github.com/clippingkk/web/commit/dd7c5c1a0f6aad99bc68e0c434b6006eb014491e))
+* **db:** verify schema at startup and reconcile the legacy ck2 baseline ([4a3c018](https://github.com/clippingkk/web/commit/4a3c0188c413011aa6c9013b5e17c778d08c9c4a))
+* **db:** verify schema at startup and reconcile the legacy ck2 baseline ([3e4772e](https://github.com/clippingkk/web/commit/3e4772e1d482608e2bc4e8fb895246a13b41f88c))
+* **mail:** send from the verified no-reply subdomain ([9212657](https://github.com/clippingkk/web/commit/92126575ec094c459a596c2e2209639ad4d928b9))
+
 ## [5.18.0](https://github.com/clippingkk/web/compare/v5.17.0...v5.18.0) (2026-09-19)
 
 
