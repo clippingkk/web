@@ -47,6 +47,13 @@ during startup. `JWT_SECRET` must contain at least eight characters when
 `LEGACY_AUTH_ENABLED=1`. This validation does not connect to
 PostgreSQL or Redis; use `/probe` to verify service connectivity.
 
+The container then verifies that PostgreSQL carries every table and column
+`src/server/db/schema.ts` declares, and exits listing anything missing rather
+than failing each request with `column ... does not exist`. Only existence is
+checked, never types, defaults or index names. A database it cannot reach is
+logged and does not block startup, because that failure is transient. Set
+`DB_SCHEMA_CHECK=0` to boot anyway; `/probe` still reports the drift.
+
 Server configuration is read at process startup or request time, so builds do
 not require deployment secrets or running PostgreSQL and Redis services. Supply
 configuration through container environment variables (including Docker's
@@ -113,7 +120,8 @@ docker logs --tail 200 clippingkk-web
 
 Also smoke-test sign-in, `/api/v2/graphql`, uploads, and any enabled payment or
 export integrations. A `503` from `/probe` means at least one required data
-service is unavailable.
+service is unavailable, or that the database schema has drifted from
+`src/server/db/schema.ts`; the response body names which.
 
 ## Build from source
 

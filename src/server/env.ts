@@ -11,6 +11,7 @@ const envSchema = z.object({
   QUEUE_REDIS_URL: z.string().min(1).optional(),
   JWT_SECRET: z.string().default(''),
   LEGACY_AUTH_ENABLED: z.enum(['0', '1']).default('0'),
+  DB_SCHEMA_CHECK: z.enum(['0', '1']).default('1'),
   GATE_BASE_URL: z
     .string()
     .url()
