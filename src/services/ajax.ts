@@ -135,6 +135,20 @@ export function isUnauthorizedApolloError(error: unknown) {
   )
 }
 
+/**
+ * Deliberately does not treat a transport-level 404 as "not found": that means
+ * the GraphQL endpoint itself was misrouted, and rendering a not-found page for
+ * it would hide a broken deployment. Only a resolver saying NOT_FOUND counts.
+ */
+export function isNotFoundApolloError(error: unknown) {
+  return (
+    CombinedGraphQLErrors.is(error) &&
+    error.errors.some(
+      (graphQLError) => graphQLError.extensions?.code === 'NOT_FOUND'
+    )
+  )
+}
+
 const errorLink = onError(({ error }) => {
   if (isUnauthorizedApolloError(error)) {
     if (typeof window !== 'undefined') {
