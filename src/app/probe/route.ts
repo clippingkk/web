@@ -4,6 +4,7 @@ import { withSpan } from '@superlog/otel-helpers'
 import { connection } from 'next/server'
 
 import { isDatabaseReady } from '@/server/db'
+import { getSchemaStatus } from '@/server/db/schema-check'
 import { isRedisReady } from '@/server/redis'
 
 const tracer = trace.getTracer('clippingkk.web.probe')
@@ -27,9 +28,14 @@ export async function GET() {
         isDatabaseReady(),
         isRedisReady(),
       ])
-      const outcome = database && redis ? 'success' : 'error'
+      // Covers the paths where the boot check deliberately left the process alive:
+      // DB_SCHEMA_CHECK=0, and a schema check that could not reach the database.
+      const schema = getSchemaStatus() ?? { status: 'unchecked' as const }
+      const schemaOk = schema.status === 'ok' || schema.status === 'unchecked'
+      const outcome = database && redis && schemaOk ? 'success' : 'error'
       const attributes = {
         'dependency.database.ready': database,
+        'dependency.database.schema': schema.status,
         'dependency.redis.ready': redis,
         outcome,
       }
@@ -43,8 +49,8 @@ export async function GET() {
         body: 'Readiness check completed',
         attributes,
       })
-      if (!database || !redis)
-        return Response.json({ database, redis }, { status: 503 })
+      if (!database || !redis || !schemaOk)
+        return Response.json({ database, redis, schema }, { status: 503 })
       return new Response(null, { status: 204 })
     },
     { tracer }
