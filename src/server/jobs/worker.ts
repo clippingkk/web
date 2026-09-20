@@ -5,6 +5,8 @@ import { Worker, type Job } from 'bullmq'
 import { and, asc, eq, isNull, sql } from 'drizzle-orm'
 import { Resend } from 'resend'
 
+import { MAIL_FROM } from '@/constants/config'
+
 import { getDatabase } from '../db'
 import { clippings, externalAccounts, users } from '../db/schema'
 import { requireEnv } from '../env'
@@ -97,7 +99,7 @@ async function exportToMail(email: string, uid: number) {
     .join('\n---\n\n')
   const resend = new Resend(requireEnv('RESEND_API_KEY'))
   const result = await resend.emails.send({
-    from: 'ClippingKK <noreply@annatarhe.com>',
+    from: MAIL_FROM,
     to: email,
     subject: 'Your ClippingKK export',
     html: '<p>Your ClippingKK export is attached.</p>',
