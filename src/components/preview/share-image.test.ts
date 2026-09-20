@@ -1,16 +1,28 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { capturePoster, posterFilename, prepareImage } from './share-image'
+import {
+  capturePoster,
+  loadPosterFonts,
+  posterFilename,
+  prepareImage,
+} from './share-image'
 
-const toBlob = vi.hoisted(() => vi.fn())
-vi.mock('@zumer/snapdom', () => ({ snapdom: { toBlob } }))
+const { snapdom, toBlob } = vi.hoisted(() => ({
+  snapdom: vi.fn(),
+  toBlob: vi.fn(),
+}))
+const load = vi.fn()
+vi.mock('@zumer/snapdom', () => ({ snapdom }))
 
 beforeEach(() => {
   vi.restoreAllMocks()
   Object.defineProperty(document, 'fonts', {
     configurable: true,
-    value: { ready: Promise.resolve() },
+    value: { ready: Promise.resolve(), load },
   })
+  load.mockReset().mockResolvedValue([])
+  snapdom.mockReset().mockResolvedValue({ url: 'data:image/svg+xml,', toBlob })
+  toBlob.mockReset()
   toBlob.mockResolvedValue(new Blob(['png'], { type: 'image/png' }))
 })
 
@@ -20,17 +32,33 @@ describe('poster export', () => {
     poster.textContent = '完整内容\nAll paragraphs'
     const blob = await capturePoster(poster)
     expect(blob.type).toBe('image/png')
-    const [copy, options] = toBlob.mock.calls[0]
+    const [copy, options] = snapdom.mock.calls[0]
     expect(copy).not.toBe(poster)
     expect(copy.textContent).toBe(poster.textContent)
-    expect(options).toMatchObject({ type: 'png', scale: 3, dpr: 1 })
+    expect(options).toMatchObject({ scale: 3, dpr: 1, embedFonts: true })
+    expect(toBlob).toHaveBeenCalledWith({ type: 'png' })
     expect(document.body.contains(copy)).toBe(false)
+  })
+  it('requests each text run in its own font and survives failures', async () => {
+    load.mockRejectedValueOnce(new Error('offline'))
+    const poster = document.createElement('div')
+    poster.innerHTML =
+      '<p style="font-family:WenKai, Literata, serif;font-weight:400">阅读</p>' +
+      '<p style="font-family:WenKai;font-weight:400">记住</p>' +
+      '<h2 style="font-family:Literata;font-weight:700;font-style:italic">Remember</h2>'
+    document.body.append(poster)
+    await expect(loadPosterFonts(poster)).resolves.toBeUndefined()
+    poster.remove()
+    expect(load.mock.calls).toEqual([
+      ['normal 400 16px WenKai', '阅读记住'],
+      ['italic 700 16px Literata', 'Remember'],
+    ])
   })
   it('rejects oversized posters before capture', async () => {
     const poster = document.createElement('div')
     Object.defineProperty(poster, 'scrollHeight', { value: 6000 })
     await expect(capturePoster(poster)).rejects.toThrow('poster-too-large')
-    expect(toBlob).not.toHaveBeenCalled()
+    expect(snapdom).not.toHaveBeenCalled()
   })
   it('rejects SVG output and removes the capture copy', async () => {
     toBlob.mockResolvedValue(new Blob(['svg'], { type: 'image/svg+xml' }))

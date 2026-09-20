@@ -1,5 +1,10 @@
 'use client'
 
+import '@fontsource/literata/400.css'
+import '@fontsource/literata/400-italic.css'
+import '@fontsource/literata/700.css'
+import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css'
+import 'lxgw-wenkai-webfont/lxgwwenkai-bold.css'
 import Modal from '@annatarhe/lake-ui/modal'
 import FileSaver from 'file-saver'
 import { useEffect, useRef, useState } from 'react'
@@ -12,6 +17,7 @@ import { resolveMediaUrl } from '@/utils/image'
 import {
   capturePoster,
   decodeImages,
+  loadPosterFonts,
   posterFilename,
   prepareImage,
 } from './share-image'
@@ -81,7 +87,7 @@ function PosterSession({ data: initialData }: { data: PosterData }) {
       ? data.clipping.creator.avatar
       : data.book.image
     if (required && !Object.keys(images).length) return
-    Promise.all([decodeImages(poster.current), document.fonts?.ready])
+    Promise.all([decodeImages(poster.current), loadPosterFonts(poster.current)])
       .then(() => {
         if (!cancelled) setReady(true)
       })
