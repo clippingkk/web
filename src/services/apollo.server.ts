@@ -9,7 +9,7 @@ import {
   InMemoryCache,
   registerApolloClient,
 } from '@apollo/client-integration-nextjs'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { connection } from 'next/server'
 
 import {
@@ -17,7 +17,11 @@ import {
   localGraphQLFetch,
 } from '@/server/graphql/local-transport'
 
-import { authLink, isUnauthorizedApolloError } from './ajax'
+import {
+  authLink,
+  isNotFoundApolloError,
+  isUnauthorizedApolloError,
+} from './ajax'
 import { apolloCacheConfig } from './apollo.shard'
 
 const { getClient } = registerApolloClient(() => {
@@ -46,9 +50,14 @@ export async function doApolloServerQuery<
   return client
     .query(options)
     .then((result) => ({ data: result.data as TData }))
-    .catch((e: any) => {
+    .catch((e: unknown) => {
       if (isUnauthorizedApolloError(e)) {
         return redirect('/auth/auth-v4?clean=true')
+      }
+      // assertFound throws rather than returning null, so without this a missing
+      // user reached the route's error.tsx instead of its not-found.tsx.
+      if (isNotFoundApolloError(e)) {
+        return notFound()
       }
       throw e
     })

@@ -3,6 +3,10 @@
     "title": "出错了！",
     "generic": "发生意外错误，请重试。",
     "tryAgain": "再试一次",
-    "goHome": "返回首页"
+    "goHome": "返回首页",
+    "reference": "错误编号",
+    "copy": "复制",
+    "copied": "已复制",
+    "signIn": "重新登录"
   }
 }

@@ -528,7 +528,11 @@ export const resolvers: Record<string, Record<string, any>> = {
       return { users: publicUsers, books: bookRows, clippings: publicClippings }
     },
     me: async (_: unknown, args: Args, context: GraphQLContext) => {
-      if (args.id) return userById(args.id)
+      // Callers with no numeric id send the sentinel -1 rather than omitting the
+      // field -- myIdByDomain.graphql hardcodes it -- and -1 is truthy, so a bare
+      // `if (args.id)` sent every domain lookup to userById(-1) and 404'd.
+      const id = Number(args.id)
+      if (Number.isInteger(id) && id > 0) return userById(id)
       if (args.domain) {
         return assertFound(
           await db().query.users.findFirst({
