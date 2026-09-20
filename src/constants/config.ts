@@ -28,6 +28,11 @@ export const LEANCLOUD = {
   SERVER_URL: 'https://clippingkk-lc.annatarhe.cn',
 }
 
+// Sender for every transactional email ClippingKK sends. The domain is the
+// `no-reply-clippingkk.annatarhe.com` subdomain, not annatarhe.com itself.
+export const MAIL_FROM =
+  'ClippingKK <clippingkk@no-reply-clippingkk.annatarhe.com>'
+
 export const APP_API_STEP_LIMIT = 10
 
 export const APP_URL_ORIGIN = __DEV__

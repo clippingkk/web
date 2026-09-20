@@ -85,7 +85,10 @@ export async function provisionMember(userId: number) {
     if (!member)
       throw new ApiError(
         'ClippingKK member role is not configured in Gate',
-        503
+        503,
+        // Distinct from the default BAD_REQUEST: a provisioning gap on our side
+        // is not the reader's stale login attempt, and must not read like one.
+        'GATE_NOT_CONFIGURED'
       )
     await gateRequest(`${projectPath()}/role-bindings`, {
       method: 'POST',

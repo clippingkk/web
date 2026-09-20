@@ -6,6 +6,8 @@ import Stripe from 'stripe'
 import { createPublicClient, http, verifyMessage } from 'viem'
 import { mainnet } from 'viem/chains'
 
+import { MAIL_FROM } from '@/constants/config'
+
 import { getServerEnv, requireEnv } from './env'
 import { ApiError } from './errors'
 
@@ -51,7 +53,7 @@ export async function verifySmsCode(phone: string, code: string) {
 export async function sendOneTimePasscode(email: string, code: string) {
   const resend = new Resend(requireEnv('RESEND_API_KEY'))
   const result = await resend.emails.send({
-    from: 'ClippingKK <noreply@annatarhe.com>',
+    from: MAIL_FROM,
     to: email,
     subject: `${code} is your ClippingKK one-time passcode`,
     html: `<main style="font-family:system-ui;max-width:560px;margin:auto"><h1>ClippingKK</h1><p>Your one-time passcode is:</p><p style="font-size:32px;font-weight:700;letter-spacing:8px">${code}</p><p>This code expires in 10 minutes.</p></main>`,
@@ -63,7 +65,7 @@ export async function sendVerificationEmail(email: string, code: string) {
   const resend = new Resend(requireEnv('RESEND_API_KEY'))
   const href = `${getServerEnv().APP_ORIGIN}/api/v2/auth/verify?code=${encodeURIComponent(code)}`
   const result = await resend.emails.send({
-    from: 'ClippingKK <noreply@annatarhe.com>',
+    from: MAIL_FROM,
     to: email,
     subject: 'Verify your ClippingKK account',
     html: `<main style="font-family:system-ui;max-width:560px;margin:auto"><h1>ClippingKK</h1><p>Finish creating your account:</p><p><a href="${href}">Verify email</a></p></main>`,
