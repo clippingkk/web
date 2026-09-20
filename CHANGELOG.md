@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.18.2](https://github.com/clippingkk/web/compare/v5.18.1...v5.18.2) (2026-09-20)
+
+
+### Features
+
+* **error:** share one error boundary UI and stop showing minified React text ([97cc4f8](https://github.com/clippingkk/web/commit/97cc4f80073fd22ddb90797dc9ed4ed06a29a2e2))
+* **preview:** set share posters in LXGW WenKai and Literata ([d9b7103](https://github.com/clippingkk/web/commit/d9b710321e760233a49c9a0b7b32e274cbb5d1de))
+* **preview:** set share posters in LXGW WenKai and Literata ([7bbf41a](https://github.com/clippingkk/web/commit/7bbf41a7f076f920a68b810431b483759077a54d))
+
+
+### Bug Fixes
+
+* **apollo:** give the SSR GraphQL link a URL Node can parse ([667bccc](https://github.com/clippingkk/web/commit/667bccc434d992644016aa8513cdc9c768c9a6d2))
+* **graphql:** keep ApiError message and code through production masking ([237e038](https://github.com/clippingkk/web/commit/237e03856f7c5d51227e16b77e0e197dc8458c03))
+* **graphql:** resolve me by domain when id is the -1 sentinel ([a3f6ef5](https://github.com/clippingkk/web/commit/a3f6ef510bff78cf714e6563c57c84fe7749d3a1))
+* **profile:** stop domain-slug profile URLs from crashing the server render ([7242f82](https://github.com/clippingkk/web/commit/7242f82b1b1a18189af12f5166e16d7e887a1812))
+
+
+### Continuous Integration
+
+* **release:** bump only patch versions via release-please config ([debc705](https://github.com/clippingkk/web/commit/debc705537b9e73f6e2fc8741bf6774e11321df9))
+
 ## [5.18.1](https://github.com/clippingkk/web/compare/v5.18.0...v5.18.1) (2026-09-20)
 
 
