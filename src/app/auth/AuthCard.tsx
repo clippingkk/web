@@ -40,6 +40,32 @@ export function AuthCardLoading() {
   )
 }
 
+/**
+ * Copy for the `?error=` codes the Gate callback redirects with (see
+ * src/app/api/auth/callback/route.ts). Anything unmapped falls back to
+ * GENERIC_ERROR, so a new code degrades into vague-but-true rather than blank.
+ */
+const ERROR_MESSAGES: Record<string, string> = {
+  EMAIL_VERIFICATION_REQUIRED: 'Verify your email in Gate, then try again.',
+  FORBIDDEN:
+    'Your ClippingKK access has been removed. Contact support to restore access.',
+  ACCOUNT_RECOVERY_REQUIRED:
+    'We could not safely link your existing account. Contact support to recover your clippings.',
+  // The attempt was stale or replayed: the state entry had expired or was bound
+  // to a different browser. Starting over is all this needs.
+  BAD_REQUEST: 'Your sign-in link expired. Please start again.',
+  // Gate rejected the token exchange or the id token. Nothing the reader can act
+  // on, and a retry often clears it.
+  LOGIN_FAILED:
+    'We could not complete sign-in with Gate. Please try again in a moment.',
+  // Gate answered, but ClippingKK is not set up inside it -- a missing member
+  // role, say. "Try again" would be a lie, so do not say it.
+  GATE_NOT_CONFIGURED:
+    'ClippingKK sign-in is not configured correctly. Please try again later.',
+}
+
+const GENERIC_ERROR = 'Sign-in could not be completed. Please try again.'
+
 export default function AuthCard({
   error,
   next,
@@ -57,15 +83,7 @@ export default function AuthCard({
           className="mt-6 flex items-start gap-3 rounded-xl border border-amber-300/60 bg-amber-50 p-4 text-sm leading-relaxed text-amber-950 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-100"
         >
           <TriangleAlert aria-hidden className="mt-0.5 size-5 shrink-0" />
-          <p>
-            {error === 'EMAIL_VERIFICATION_REQUIRED'
-              ? 'Verify your email in Gate, then try again.'
-              : error === 'FORBIDDEN'
-                ? 'Your ClippingKK access has been removed. Contact support to restore access.'
-                : error === 'ACCOUNT_RECOVERY_REQUIRED'
-                  ? 'We could not safely link your existing account. Contact support to recover your clippings.'
-                  : 'Sign-in could not be completed. Please try again.'}
-          </p>
+          <p>{ERROR_MESSAGES[error] ?? GENERIC_ERROR}</p>
         </div>
       )}
       <a

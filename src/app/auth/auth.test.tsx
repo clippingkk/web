@@ -76,6 +76,15 @@ it.each([
     'ACCOUNT_RECOVERY_REQUIRED',
     'We could not safely link your existing account. Contact support to recover your clippings.',
   ],
+  ['BAD_REQUEST', 'Your sign-in link expired. Please start again.'],
+  [
+    'LOGIN_FAILED',
+    'We could not complete sign-in with Gate. Please try again in a moment.',
+  ],
+  [
+    'GATE_NOT_CONFIGURED',
+    'ClippingKK sign-in is not configured correctly. Please try again later.',
+  ],
   ['UNKNOWN', 'Sign-in could not be completed. Please try again.'],
 ])('shows %s even with a valid session', async (error, message) => {
   mocks.session.mockResolvedValue({ localUserId: 42 })

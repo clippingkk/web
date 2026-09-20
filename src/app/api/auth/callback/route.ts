@@ -80,12 +80,22 @@ export const GET = route(async (request) => {
   } catch (error) {
     outcomes.add(1, { outcome: 'failure' })
     const code = error instanceof ApiError ? error.code : 'LOGIN_FAILED'
+    const message = error instanceof Error ? error.message : String(error)
+    const gate =
+      error instanceof GraphQLError
+        ? {
+            'gate.error': String(error.extensions.gateError ?? ''),
+            'gate.status': Number(error.extensions.code ?? 0),
+          }
+        : undefined
     // This catch returns a redirect, so route()'s error path never sees the
     // failure. Record it here or the cause is lost: every Gate rejection
     // otherwise collapses to LOGIN_FAILED and the generic auth-card message.
     trace
       .getActiveSpan()
-      ?.recordException(error instanceof Error ? error : new Error(String(error)))
+      ?.recordException(
+        error instanceof Error ? error : new Error(String(error))
+      )
     logger.emit({
       severityNumber: SeverityNumber.ERROR,
       severityText: 'ERROR',
@@ -93,13 +103,15 @@ export const GET = route(async (request) => {
       attributes: {
         operation: 'auth.gate.callback',
         'error.code': code,
-        'error.message': error instanceof Error ? error.message : String(error),
-        ...(error instanceof GraphQLError && {
-          'gate.error': String(error.extensions.gateError ?? ''),
-          'gate.status': Number(error.extensions.code ?? 0),
-        }),
+        'error.message': message,
+        ...gate,
       },
     })
+    // Also to stderr. The record above only reaches the OTel collector, so with
+    // no collector -- or no access to one -- a failing login leaves container
+    // logs completely silent, which is how a misconfigured Gate audience stayed
+    // invisible while every sign-in failed.
+    console.error('Gate sign-in callback failed', { code, message, ...gate })
     response = NextResponse.redirect(
       new URL(`/auth?error=${encodeURIComponent(code)}`, gateConfig().appOrigin)
     )
