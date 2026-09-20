@@ -30,6 +30,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params
   const pathUid: string = params.userid
   const uid = parseInt(pathUid, 10)
+  const isTargetUidType = !Number.isNaN(uid)
 
   const profileResponse = await doApolloServerQuery<
     ProfileQuery,
@@ -38,12 +39,12 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     query: ProfileDocument,
     fetchPolicy: 'network-only',
     variables: {
-      id: Number.isNaN(uid) ? -1 : uid,
-      domain: Number.isNaN(uid) ? pathUid : null,
+      id: isTargetUidType ? uid : undefined,
+      domain: isTargetUidType ? undefined : pathUid,
     },
   })
   return profileGenerateMetadata({
-    profile: profileResponse.data!.me,
+    profile: profileResponse.data?.me ?? undefined,
   })
 }
 

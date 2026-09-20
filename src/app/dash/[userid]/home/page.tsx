@@ -28,32 +28,31 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const [params] = await Promise.all([props.params])
   const pathUid: string = params.userid
   const uid = parseInt(pathUid, 10)
+  const isTargetUidType = !Number.isNaN(uid)
 
   if (!(await currentUserId())) {
     return profileGenerateMetadata({})
   }
 
-  try {
-    const profileResponse = await doApolloServerQuery<
-      ProfileQuery,
-      ProfileQueryVariables
-    >({
-      query: ProfileDocument,
-      fetchPolicy: 'network-only',
-      variables: {
-        id: Number.isNaN(uid) ? -1 : uid,
-        domain: Number.isNaN(uid) ? pathUid : null,
-      },
-      context: {
-        headers: {},
-      },
-    })
-    return profileGenerateMetadata({
-      profile: profileResponse.data!.me,
-    })
-  } catch {
-    return profileGenerateMetadata({})
-  }
+  // No try/catch: doApolloServerQuery turns 401 into a redirect and 404 into
+  // notFound(), and both signal by throwing. Catching here would swallow them.
+  const profileResponse = await doApolloServerQuery<
+    ProfileQuery,
+    ProfileQueryVariables
+  >({
+    query: ProfileDocument,
+    fetchPolicy: 'network-only',
+    variables: {
+      id: isTargetUidType ? uid : undefined,
+      domain: isTargetUidType ? undefined : pathUid,
+    },
+    context: {
+      headers: {},
+    },
+  })
+  return profileGenerateMetadata({
+    profile: profileResponse.data?.me ?? undefined,
+  })
 }
 
 // the home page only available for myself

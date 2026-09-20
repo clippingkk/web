@@ -230,3 +230,44 @@ test('rejects a book update for a clipping owned by another user', async () => {
   ).rejects.toThrow('not your clipping')
   expect(update).not.toHaveBeenCalled()
 })
+
+// Callers with no numeric id send -1 rather than omitting it; myIdByDomain.graphql
+// hardcodes `me(id: -1, domain: $domain)`. A truthy check sent those to userById(-1),
+// which 404'd every domain-slug profile URL.
+test.each([-1, 0, null, undefined, Number.NaN])(
+  'resolves me by domain when the id argument is %s',
+  async (id) => {
+    const owner = { id: 1, domain: 'annatar.he' } as User
+    const findFirst = vi.fn().mockResolvedValue(owner)
+    getDatabaseMock.mockReturnValue({ db: { query: { users: { findFirst } } } })
+
+    await expect(
+      resolvers.Query.me({}, { id, domain: 'annatar.he' }, {
+        userId: 0,
+      } as GraphQLContext)
+    ).resolves.toEqual(owner)
+
+    const condition = new PgDialect().sqlToQuery(
+      findFirst.mock.calls[0]?.[0].where as SQL
+    )
+    expect(condition.params).toContain('annatar.he')
+  }
+)
+
+test('still resolves me by a real id, ignoring a domain sent alongside it', async () => {
+  const owner = { id: 7, domain: 'someone.else' } as User
+  const findFirst = vi.fn().mockResolvedValue(owner)
+  getDatabaseMock.mockReturnValue({ db: { query: { users: { findFirst } } } })
+
+  await expect(
+    resolvers.Query.me({}, { id: 7, domain: 'annatar.he' }, {
+      userId: 0,
+    } as GraphQLContext)
+  ).resolves.toEqual(owner)
+
+  const condition = new PgDialect().sqlToQuery(
+    findFirst.mock.calls[0]?.[0].where as SQL
+  )
+  expect(condition.params).toContain(7)
+  expect(condition.params).not.toContain('annatar.he')
+})
