@@ -37,6 +37,7 @@ vi.mock('./share-image', async (importOriginal) => ({
   capturePoster: mocks.capture,
   prepareImage: mocks.prepare,
   decodeImages: vi.fn().mockResolvedValue(undefined),
+  loadPosterFonts: vi.fn().mockResolvedValue(undefined),
 }))
 
 const data = {

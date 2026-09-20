@@ -4,6 +4,7 @@ import type { CSSProperties, Ref } from 'react'
 import type { Clipping, User } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
 
+import { isLatin, LATIN_STACK, posterFontFamily } from './poster-fonts'
 import { Theme, themes } from './theme.config'
 
 export type ShareClipping = Pick<
@@ -52,6 +53,10 @@ export default function SharePoster({
     overflowWrap: 'anywhere',
     margin: 0,
   }
+  const dateText =
+    date && !Number.isNaN(date.getTime())
+      ? new Intl.DateTimeFormat(locale).format(date)
+      : ''
   return (
     <div
       ref={ref}
@@ -61,8 +66,7 @@ export default function SharePoster({
         padding: 28,
         background: palette.background,
         color: palette.color,
-        fontFamily:
-          'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        fontFamily: LATIN_STACK,
         textAlign: 'left',
         lineHeight: 1.5,
       }}
@@ -76,10 +80,17 @@ export default function SharePoster({
           paddingBottom: 16,
         }}
       >
-        <strong style={{ fontSize: 20, letterSpacing: -1 }}>
+        <strong style={{ fontSize: 20, fontWeight: 700 }}>
           ClippingKK<span style={{ color: palette.accent }}>.</span>
         </strong>
-        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1 }}>
+        <span
+          style={{
+            fontFamily: posterFontFamily(label),
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: 1.5,
+          }}
+        >
           {label}
         </span>
       </header>
@@ -89,10 +100,10 @@ export default function SharePoster({
             aria-hidden="true"
             style={{
               color: palette.accent,
-              fontSize: 100,
-              height: 90,
-              fontWeight: 900,
-              lineHeight: 1.3,
+              fontSize: 96,
+              height: 76,
+              fontWeight: 700,
+              lineHeight: 1.25,
             }}
           >
             “
@@ -100,10 +111,10 @@ export default function SharePoster({
           <blockquote
             style={{
               ...textStyle,
-              fontSize: 27,
-              lineHeight: 1.65,
-              fontWeight: 800,
-              letterSpacing: '-0.6px',
+              fontFamily: posterFontFamily(clipping.content),
+              fontSize: 25,
+              lineHeight: 1.75,
+              fontWeight: 400,
               paddingBottom: 32,
             }}
           >
@@ -116,11 +127,27 @@ export default function SharePoster({
               marginBottom: 28,
             }}
           >
-            <h2 style={{ ...textStyle, fontSize: 19, fontWeight: 800 }}>
+            <h2
+              style={{
+                ...textStyle,
+                fontFamily: posterFontFamily(book.title || clipping.title),
+                fontSize: 19,
+                fontWeight: 700,
+                lineHeight: 1.4,
+              }}
+            >
               {book.title || clipping.title}
             </h2>
             {book.author && (
-              <p style={{ ...textStyle, fontSize: 13, marginTop: 6 }}>
+              <p
+                style={{
+                  ...textStyle,
+                  fontFamily: posterFontFamily(book.author),
+                  fontStyle: isLatin(book.author) ? 'italic' : 'normal',
+                  fontSize: 14,
+                  marginTop: 6,
+                }}
+              >
                 {book.author}
               </p>
             )}
@@ -143,12 +170,25 @@ export default function SharePoster({
               />
             )}
             <div style={{ minWidth: 0 }}>
-              <strong style={{ ...textStyle, fontSize: 13 }}>
+              <strong
+                style={{
+                  ...textStyle,
+                  fontFamily: posterFontFamily(clipping.creator.name),
+                  fontSize: 14,
+                  fontWeight: 700,
+                }}
+              >
                 {clipping.creator.name}
               </strong>
-              {date && !Number.isNaN(date.getTime()) && (
-                <div style={{ fontSize: 11, marginTop: 3 }}>
-                  {new Intl.DateTimeFormat(locale).format(date)}
+              {dateText && (
+                <div
+                  style={{
+                    fontFamily: posterFontFamily(dateText),
+                    fontSize: 11,
+                    marginTop: 3,
+                  }}
+                >
+                  {dateText}
                 </div>
               )}
             </div>
@@ -172,10 +212,10 @@ export default function SharePoster({
           <h1
             style={{
               ...textStyle,
-              fontSize: 34,
-              fontWeight: 900,
-              lineHeight: 1.15,
-              letterSpacing: '-1px',
+              fontFamily: posterFontFamily(book.title),
+              fontSize: 32,
+              fontWeight: 700,
+              lineHeight: 1.3,
               marginTop: 28,
             }}
           >
@@ -185,8 +225,9 @@ export default function SharePoster({
             <p
               style={{
                 ...textStyle,
-                fontSize: 16,
-                fontWeight: 700,
+                fontFamily: posterFontFamily(book.author),
+                fontStyle: isLatin(book.author) ? 'italic' : 'normal',
+                fontSize: 17,
                 marginTop: 14,
                 color: palette.accent,
               }}
@@ -198,8 +239,9 @@ export default function SharePoster({
             <p
               style={{
                 ...textStyle,
+                fontFamily: posterFontFamily(book.summary),
                 fontSize: 16,
-                lineHeight: 1.8,
+                lineHeight: 1.85,
                 marginTop: 24,
               }}
             >
@@ -220,9 +262,7 @@ export default function SharePoster({
         }}
       >
         <div>
-          <strong style={{ fontSize: 22, letterSpacing: '-1px' }}>
-            ClippingKK.
-          </strong>
+          <strong style={{ fontSize: 22, fontWeight: 700 }}>ClippingKK.</strong>
           <div style={{ fontSize: 10, marginTop: 5 }}>
             {new URL(origin).hostname}
           </div>
