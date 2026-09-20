@@ -164,8 +164,12 @@ const errorLink = onError(({ error }) => {
   }
 })
 
+// This client is also constructed while server-rendering client components, and
+// Node's fetch rejects the relative URL a browser accepts. resolveApiBase() is
+// '' in the browser and a loopback origin on the server -- loopback, not the
+// public domain, so we never leave the process to reach our own API.
 const httpLink = new HttpLink({
-  uri: '/api/v2/graphql',
+  uri: `${resolveApiBase()}/api/v2/graphql`,
   fetch: apolloFetcher,
 })
 
