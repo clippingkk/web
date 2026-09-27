@@ -2,7 +2,13 @@ import { describe, expect, it } from 'vitest'
 
 import { uploadProcessMachine } from '@/hooks/my-file.machine'
 
-import { IMPORT_STEPS, isUploadRoute, stepIndex, UploadStep } from '../uploader'
+import {
+  IMPORT_STEPS,
+  isTextFile,
+  isUploadRoute,
+  stepIndex,
+  UploadStep,
+} from '../uploader'
 
 describe('upload steps', () => {
   it('uses the state machine state names', () => {
@@ -29,5 +35,18 @@ describe('isUploadRoute', () => {
     expect(isUploadRoute('/dash/42/uploads')).toBe(false)
     expect(isUploadRoute('/dash/42/home')).toBe(false)
     expect(isUploadRoute(null)).toBe(false)
+  })
+})
+
+describe('isTextFile', () => {
+  it('accepts plain text by type or by extension', () => {
+    expect(isTextFile({ name: 'notes', type: 'text/plain' })).toBe(true)
+    expect(isTextFile({ name: 'My Clippings.txt', type: '' })).toBe(true)
+    expect(isTextFile({ name: 'MY CLIPPINGS.TXT', type: '' })).toBe(true)
+  })
+
+  it('rejects everything else', () => {
+    expect(isTextFile({ name: 'cover.png', type: 'image/png' })).toBe(false)
+    expect(isTextFile({ name: 'clippings.txt.zip', type: '' })).toBe(false)
   })
 })

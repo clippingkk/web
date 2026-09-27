@@ -16,16 +16,12 @@ import Section from '@/components/layout/section'
 import { useClippingsImport } from '@/hooks/use-clippings-import'
 import { useTranslation } from '@/i18n/client'
 import { cn } from '@/lib/utils'
-import { UploadStep } from '@/services/uploader'
+import { isTextFile, UploadStep } from '@/services/uploader'
 
 function formatSize(bytes: number) {
   if (bytes < 1024) return `${bytes} B`
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`
-}
-
-function isTextFile(file: File) {
-  return file.type === 'text/plain' || file.name.toLowerCase().endsWith('.txt')
 }
 
 type ImportPanelProps = {

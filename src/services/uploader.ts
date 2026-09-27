@@ -21,6 +21,11 @@ export function stepIndex(step: UploadStep): number {
   return (IMPORT_STEPS as readonly UploadStep[]).indexOf(step)
 }
 
+/** Kindle exports are plain text; some browsers report no type for them. */
+export function isTextFile(file: Pick<File, 'name' | 'type'>): boolean {
+  return file.type === 'text/plain' || file.name.toLowerCase().endsWith('.txt')
+}
+
 /** The import page has its own drop zone, so the global one stands down. */
 export function isUploadRoute(pathname?: string | null): boolean {
   return !!pathname && /^\/dash\/[^/]+\/upload\/?$/.test(pathname)

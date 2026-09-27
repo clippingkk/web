@@ -15,7 +15,7 @@ import VisibilityChoice, {
 } from '@/components/import/visibility-choice'
 import { useClippingsImport } from '@/hooks/use-clippings-import'
 import { useTranslation } from '@/i18n/client'
-import { isUploadRoute, UploadStep } from '@/services/uploader'
+import { isTextFile, isUploadRoute, UploadStep } from '@/services/uploader'
 
 import DropOverlay from './drop-overlay'
 
@@ -51,10 +51,7 @@ function GlobalUpload({ libraryHref }: GlobalUploadProps) {
     e.preventDefault()
     setDragging(false)
     const dropped = e.dataTransfer?.files?.[0]
-    if (
-      dropped &&
-      (dropped.type === 'text/plain' || dropped.name.endsWith('.txt'))
-    ) {
+    if (dropped && isTextFile(dropped)) {
       setVisibility('public')
       setFile(dropped)
     }
