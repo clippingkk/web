@@ -63,4 +63,10 @@ describe('useActiveSegment', () => {
     const onSquare = renderHook(() => useActiveSegment(null))
     expect(onSquare.result.current('square')).toBe(true)
   })
+
+  it('survives a malformed slug in the URL', () => {
+    at('50%', 'home')
+    const { result } = renderHook(() => useActiveSegment(viewer))
+    expect(result.current('home')).toBe(false)
+  })
 })

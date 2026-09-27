@@ -12,5 +12,6 @@ export default function DashError({
   reset: () => void
   retry?: () => void
 }) {
+  // Next 16 passes retry, which refetches the segment; reset only re-renders.
   return <ErrorState error={error} reset={retry ?? reset} variant="inline" />
 }
