@@ -1,0 +1,77 @@
+{
+  "yearly": {
+    "meta": {
+      "title": "{{name}}'s {{year}} in reading",
+      "description": "The books {{name}} highlighted in {{year}}, and the passages worth keeping.",
+      "descriptionWithBooks": "The books {{name}} highlighted in {{year}}: {{titles}}."
+    },
+    "eyebrow": "Year in reading",
+    "title": "{{name}}'s {{year}} in reading",
+    "summary": "A year of reading, told through the passages {{name}} chose to keep.",
+    "profile": "View profile",
+    "years": {
+      "label": "Choose a year"
+    },
+    "stats": {
+      "label": "The year in numbers",
+      "books_one": "book",
+      "books_other": "books",
+      "highlights_one": "highlight",
+      "highlights_other": "highlights",
+      "top": "Most highlighted"
+    },
+    "books": {
+      "title": "The year's books",
+      "description": "In order of how many passages were kept from each.",
+      "highlights_one": "{{count}} highlight this year",
+      "highlights_other": "{{count}} highlights this year",
+      "all": "All highlights from this book",
+      "rest": "Also read this year"
+    },
+    "empty": {
+      "title": "No highlights in {{year}}",
+      "description": "{{name}} didn't keep any highlights this year. Try another year."
+    }
+  },
+  "favourites": {
+    "meta": {
+      "title": "Favourites card",
+      "description": "Pick the books that shaped you and save them as an image to share."
+    },
+    "eyebrow": "Favourites card",
+    "title": "The books that shaped you",
+    "description": "Search for {{min}} to {{max}} books, give the card a title, and save it as an image to share.",
+    "titleField": {
+      "label": "Card title",
+      "default": "Books that stayed with me"
+    },
+    "search": {
+      "label": "Search books",
+      "placeholder": "Search by title or author",
+      "hint": "Type at least two characters to search.",
+      "loading": "Searching…",
+      "empty": "No books found for “{{query}}”.",
+      "results": "Search results"
+    },
+    "pick": {
+      "add": "Add {{title}}",
+      "remove": "Remove {{title}}",
+      "added": "Added"
+    },
+    "count": "{{count}} of {{max}} books",
+    "needMore": "Pick at least {{min}} books to save the card.",
+    "full": "The card is full. Remove a book to add another.",
+    "clear": "Clear",
+    "card": {
+      "label": "Card preview",
+      "empty": "Your picks will appear here.",
+      "footer": "Made with ClippingKK"
+    },
+    "export": {
+      "action": "Save as image",
+      "busy": "Saving…",
+      "done": "Image saved.",
+      "failed": "Couldn't create the image. Please try again."
+    }
+  }
+}

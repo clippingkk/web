@@ -1,0 +1,74 @@
+{
+  "yearly": {
+    "meta": {
+      "title": "{{name}}의 {{year}}년 독서",
+      "description": "{{name}}님이 {{year}}년에 밑줄 친 책과 간직할 만한 문장들.",
+      "descriptionWithBooks": "{{name}}님이 {{year}}년에 밑줄 친 책: {{titles}}."
+    },
+    "eyebrow": "올해의 독서",
+    "title": "{{name}}의 {{year}}년 독서",
+    "summary": "{{name}}님이 간직한 문장들로 돌아보는 한 해의 독서.",
+    "profile": "프로필 보기",
+    "years": {
+      "label": "연도 선택"
+    },
+    "stats": {
+      "label": "숫자로 보는 한 해",
+      "books_other": "권의 책",
+      "highlights_other": "개의 하이라이트",
+      "top": "가장 많이 밑줄 친 책"
+    },
+    "books": {
+      "title": "올해의 책",
+      "description": "책마다 간직한 문장이 많은 순서로 정렬했어요.",
+      "highlights_other": "올해 하이라이트 {{count}}개",
+      "all": "이 책의 하이라이트 모두 보기",
+      "rest": "올해 함께 읽은 책"
+    },
+    "empty": {
+      "title": "{{year}}년에는 하이라이트가 없어요",
+      "description": "{{name}}님은 이 해에 하이라이트를 남기지 않았어요. 다른 연도를 골라 보세요."
+    }
+  },
+  "favourites": {
+    "meta": {
+      "title": "인생 책 카드",
+      "description": "나를 만든 책들을 골라 이미지로 저장하고 공유하세요."
+    },
+    "eyebrow": "인생 책 카드",
+    "title": "나를 만든 책들",
+    "description": "책을 {{min}}권에서 {{max}}권까지 검색해 고르고, 카드 제목을 정한 뒤 이미지로 저장해 공유하세요.",
+    "titleField": {
+      "label": "카드 제목",
+      "default": "마음에 남은 책들"
+    },
+    "search": {
+      "label": "책 검색",
+      "placeholder": "제목이나 저자로 검색",
+      "hint": "두 글자 이상 입력하면 검색해요.",
+      "loading": "검색 중…",
+      "empty": "“{{query}}”에 맞는 책을 찾지 못했어요.",
+      "results": "검색 결과"
+    },
+    "pick": {
+      "add": "{{title}} 추가",
+      "remove": "{{title}} 빼기",
+      "added": "추가됨"
+    },
+    "count": "{{max}}권 중 {{count}}권",
+    "needMore": "카드를 저장하려면 책을 {{min}}권 이상 골라 주세요.",
+    "full": "카드가 가득 찼어요. 다른 책을 넣으려면 한 권을 빼 주세요.",
+    "clear": "비우기",
+    "card": {
+      "label": "카드 미리보기",
+      "empty": "고른 책이 여기에 나타나요.",
+      "footer": "ClippingKK로 만들었어요"
+    },
+    "export": {
+      "action": "이미지로 저장",
+      "busy": "저장 중…",
+      "done": "이미지를 저장했어요.",
+      "failed": "이미지를 만들지 못했어요. 다시 시도해 주세요."
+    }
+  }
+}

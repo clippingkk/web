@@ -1,0 +1,74 @@
+{
+  "yearly": {
+    "meta": {
+      "title": "{{name}} 的 {{year}} 阅读年报",
+      "description": "{{name}} 在 {{year}} 年划线的书，和那些值得留住的句子。",
+      "descriptionWithBooks": "{{name}} 在 {{year}} 年划线的书：{{titles}}。"
+    },
+    "eyebrow": "年度阅读",
+    "title": "{{name}} 的 {{year}} 阅读年报",
+    "summary": "用 {{name}} 留下的句子，讲述这一年的阅读。",
+    "profile": "查看主页",
+    "years": {
+      "label": "选择年份"
+    },
+    "stats": {
+      "label": "这一年的数字",
+      "books_other": "本书",
+      "highlights_other": "条书摘",
+      "top": "划线最多"
+    },
+    "books": {
+      "title": "这一年的书",
+      "description": "按每本书留下的书摘数量排序。",
+      "highlights_other": "今年 {{count}} 条书摘",
+      "all": "查看这本书的全部书摘",
+      "rest": "今年还读了"
+    },
+    "empty": {
+      "title": "{{year}} 年没有书摘",
+      "description": "{{name}} 这一年没有留下书摘，换个年份看看吧。"
+    }
+  },
+  "favourites": {
+    "meta": {
+      "title": "阅读喜好卡",
+      "description": "挑出影响你的那些书，保存成一张图片分享出去。"
+    },
+    "eyebrow": "阅读喜好卡",
+    "title": "塑造了你的那些书",
+    "description": "搜索并挑选 {{min}} 到 {{max}} 本书，给卡片起个标题，然后保存为图片分享。",
+    "titleField": {
+      "label": "卡片标题",
+      "default": "留在我心里的书"
+    },
+    "search": {
+      "label": "搜索书籍",
+      "placeholder": "按书名或作者搜索",
+      "hint": "至少输入两个字开始搜索。",
+      "loading": "正在搜索…",
+      "empty": "没有找到与「{{query}}」相关的书。",
+      "results": "搜索结果"
+    },
+    "pick": {
+      "add": "添加《{{title}}》",
+      "remove": "移除《{{title}}》",
+      "added": "已添加"
+    },
+    "count": "已选 {{count}} / {{max}} 本",
+    "needMore": "至少挑选 {{min}} 本书才能保存卡片。",
+    "full": "卡片已满。移除一本书后才能再添加。",
+    "clear": "清空",
+    "card": {
+      "label": "卡片预览",
+      "empty": "挑选的书会出现在这里。",
+      "footer": "由 ClippingKK 制作"
+    },
+    "export": {
+      "action": "保存为图片",
+      "busy": "正在保存…",
+      "done": "图片已保存。",
+      "failed": "无法生成图片，请再试一次。"
+    }
+  }
+}
