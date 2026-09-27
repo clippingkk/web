@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "《{{book}}》· {{name}} 的书摘",
+    "fallbackTitle": "{{name}} 的书摘"
+  },
+  "kicker": "摘自",
+  "page": "第 {{page}} 页",
+  "private": "这条书摘仅你自己可见",
+  "reactions": {
+    "label": "表态",
+    "reactedBy": "{{names}} 表示了态度",
+    "failed": "操作失败，请稍后重试。"
+  },
+  "actions": {
+    "label": "书摘操作",
+    "share": "分享",
+    "more": "更多",
+    "copyLink": "复制链接",
+    "linkCopied": "链接已复制",
+    "embed": "复制嵌入代码",
+    "embedCopied": "嵌入代码已复制，可以粘贴到你的网站。",
+    "copyFailed": "无法复制到剪贴板。",
+    "douban": "在豆瓣打开",
+    "visibility": "可见范围",
+    "public": "公开",
+    "private": "仅自己",
+    "madePublic": "已设为公开",
+    "madePrivate": "已设为仅自己可见",
+    "visibilityFailed": "修改可见范围失败，请重试。",
+    "changeBook": "更换书籍…"
+  },
+  "siblings": {
+    "label": "继续阅读",
+    "prev": "上一条",
+    "next": "下一条",
+    "inBook": "同一本书",
+    "byUser": "来自 {{name}}",
+    "none": "这里只有这一条书摘。"
+  },
+  "book": {
+    "open": "打开这本书",
+    "highlightsBy": "{{name}} 的全部书摘"
+  },
+  "ai": {
+    "title": "阅读笔记",
+    "description": "结合整本书，由 AI 解读这段文字。",
+    "generate": "解读这段话",
+    "regenerate": "重新解读",
+    "premiumTitle": "读懂一段话的上下文",
+    "premiumDescription": "高级会员可以让 AI 解读任意一条书摘。",
+    "upgrade": "了解高级会员",
+    "noBook": "先为这条书摘匹配书籍，才能生成解读。",
+    "error": "生成解读失败。"
+  },
+  "comments": {
+    "title": "讨论",
+    "count_other": "{{count}} 条评论",
+    "empty": "还没有人发言，来说点什么吧。",
+    "signInTitle": "加入讨论",
+    "signInDescription": "登录后，说说这段话对你意味着什么。",
+    "signIn": "登录",
+    "label": "你的评论",
+    "progress": "{{count}} / {{min}} 字",
+    "ready": "{{count}} 字",
+    "tooShort": "至少写 {{min}} 个字。",
+    "submit": "发表评论",
+    "posted": "评论已发表",
+    "failed": "发表失败，请重试。",
+    "markdownTip": "支持 Markdown。",
+    "delete": "删除评论",
+    "deleteTitle": "删除这条评论？",
+    "deleteDescription": "删除后无法恢复。",
+    "confirmDelete": "删除",
+    "cancel": "取消",
+    "deleted": "评论已删除",
+    "deleteFailed": "删除失败。",
+    "viewClipping": "查看书摘"
+  },
+  "notFound": {
+    "title": "这条书摘无法查看",
+    "description": "它可能被作者设为了仅自己可见，或已经删除。",
+    "action": "去广场看看"
+  },
+  "commentsPage": {
+    "metaTitle": "{{name}} 的评论",
+    "ownerTitle": "我的评论",
+    "visitorTitle": "{{name}} 的评论",
+    "description": "在书摘下留下的想法，按时间倒序。",
+    "emptyTitle": "还没有评论",
+    "emptyDescription": "在书摘下发表的评论会出现在这里。",
+    "back": "回到主页"
+  },
+  "commentPage": {
+    "metaTitle": "{{name}} 的评论",
+    "title": "评论",
+    "back": "全部评论"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "title": "{{book}} · {{name}}의 하이라이트",
+    "fallbackTitle": "{{name}}의 하이라이트"
+  },
+  "kicker": "출처",
+  "page": "{{page}}쪽",
+  "private": "나만 볼 수 있는 하이라이트예요",
+  "reactions": {
+    "label": "반응",
+    "reactedBy": "{{names}}님이 반응했어요",
+    "failed": "반응을 바꾸지 못했어요. 다시 시도해 주세요."
+  },
+  "actions": {
+    "label": "하이라이트 작업",
+    "share": "공유",
+    "more": "더 보기",
+    "copyLink": "링크 복사",
+    "linkCopied": "링크를 복사했어요",
+    "embed": "임베드 코드 복사",
+    "embedCopied": "임베드 코드를 복사했어요. 웹사이트에 붙여 넣으세요.",
+    "copyFailed": "클립보드에 복사하지 못했어요.",
+    "douban": "Douban에서 열기",
+    "visibility": "공개 범위",
+    "public": "공개",
+    "private": "나만 보기",
+    "madePublic": "이제 모두에게 보여요",
+    "madePrivate": "이제 나만 볼 수 있어요",
+    "visibilityFailed": "공개 범위를 바꾸지 못했어요.",
+    "changeBook": "책 변경…"
+  },
+  "siblings": {
+    "label": "계속 읽기",
+    "prev": "이전",
+    "next": "다음",
+    "inBook": "같은 책에서",
+    "byUser": "{{name}}님의",
+    "none": "여기에는 이 하이라이트뿐이에요."
+  },
+  "book": {
+    "open": "책 열기",
+    "highlightsBy": "{{name}}님의 모든 하이라이트"
+  },
+  "ai": {
+    "title": "읽기 노트",
+    "description": "책의 맥락에서 AI가 이 문장을 풀이해요.",
+    "generate": "이 문장 풀이하기",
+    "regenerate": "다시 풀이하기",
+    "premiumTitle": "문장을 맥락 속에서 이해하기",
+    "premiumDescription": "프리미엄 회원은 어떤 하이라이트든 AI 풀이를 받을 수 있어요.",
+    "upgrade": "프리미엄 보기",
+    "noBook": "풀이를 받으려면 먼저 이 하이라이트에 책을 지정하세요.",
+    "error": "풀이를 만들지 못했어요."
+  },
+  "comments": {
+    "title": "대화",
+    "count_other": "댓글 {{count}}개",
+    "empty": "아직 아무도 말하지 않았어요. 대화를 시작해 보세요.",
+    "signInTitle": "대화에 참여하기",
+    "signInDescription": "로그인하고 이 문장이 어떤 의미인지 나눠 보세요.",
+    "signIn": "로그인",
+    "label": "내 댓글",
+    "progress": "{{count}} / {{min}}자",
+    "ready": "{{count}}자",
+    "tooShort": "최소 {{min}}자 이상 써 주세요.",
+    "submit": "댓글 남기기",
+    "posted": "댓글을 남겼어요",
+    "failed": "댓글을 남기지 못했어요. 다시 시도해 주세요.",
+    "markdownTip": "마크다운을 쓸 수 있어요.",
+    "delete": "댓글 삭제",
+    "deleteTitle": "이 댓글을 삭제할까요?",
+    "deleteDescription": "삭제하면 되돌릴 수 없어요.",
+    "confirmDelete": "삭제",
+    "cancel": "취소",
+    "deleted": "댓글을 삭제했어요",
+    "deleteFailed": "댓글을 삭제하지 못했어요.",
+    "viewClipping": "하이라이트 보기"
+  },
+  "notFound": {
+    "title": "볼 수 없는 하이라이트예요",
+    "description": "작성자가 비공개로 바꾸었거나 삭제했을 수 있어요.",
+    "action": "광장으로 가기"
+  },
+  "commentsPage": {
+    "metaTitle": "{{name}}의 댓글",
+    "ownerTitle": "내 댓글",
+    "visitorTitle": "{{name}}의 댓글",
+    "description": "하이라이트에 남긴 생각을 최신순으로 보여 줍니다.",
+    "emptyTitle": "아직 댓글이 없어요",
+    "emptyDescription": "하이라이트에 남긴 댓글이 여기에 표시돼요.",
+    "back": "프로필로 돌아가기"
+  },
+  "commentPage": {
+    "metaTitle": "{{name}}님의 댓글",
+    "title": "댓글",
+    "back": "모든 댓글"
+  }
+}
