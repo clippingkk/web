@@ -5,16 +5,11 @@
  */
 export const NAMESPACES = [
   'auth',
-  'book',
-  'clipping-detail',
-  'clippings',
   'common',
   'error',
-  'home',
   'import',
   'library',
   'marketing',
-  'navigation',
   'payment',
   'policy',
   'pricing',
@@ -23,8 +18,6 @@ export const NAMESPACES = [
   'report',
   'search',
   'settings',
-  'upload',
-  'webhook',
 ] as const
 
 export type Namespace = (typeof NAMESPACES)[number]
