@@ -1,1 +1,1 @@
-export { default } from '@/components/loading/center-page'
+export { default } from '@/components/layout/page-loading'

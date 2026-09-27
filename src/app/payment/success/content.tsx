@@ -1,62 +1,100 @@
 'use client'
-import { useQuery } from '@tanstack/react-query'
-import { ArrowRight, PartyPopper } from 'lucide-react'
-import Link from 'next/link'
-import party from 'party-js'
-import { useEffect } from 'react'
-import toast from 'react-hot-toast'
 
+import Button from '@annatarhe/lake-ui/button'
+import EmptyState from '@annatarhe/lake-ui/empty-state'
+import Spinner from '@annatarhe/lake-ui/spinner'
+import { useQuery } from '@tanstack/react-query'
+import { BadgeCheck, Clock } from 'lucide-react'
+import type { Route } from 'next'
+import Link from 'next/link'
+import type React from 'react'
+import { useState } from 'react'
+
+import { useTranslation } from '@/i18n/client'
 import { getPaymentOrderInfo } from '@/services/payment'
+
+const POLL_INTERVAL_MS = 3000
+/** About a minute of checking before the page stops and says so. */
+export const MAX_ATTEMPTS = 20
 
 type PaymentSuccessContentProps = {
   sessionId: string
-  homeLink: string
+  libraryHref: Route
+  subscriptionHref: Route
 }
 
 function PaymentSuccessContent(props: PaymentSuccessContentProps) {
-  const { sessionId, homeLink } = props
-  const { data, error } = useQuery({
+  const { sessionId, libraryHref, subscriptionHref } = props
+  const { t } = useTranslation(undefined, 'payment')
+  const [attempts, setAttempts] = useState(0)
+  const exhausted = attempts >= MAX_ATTEMPTS
+
+  const { data } = useQuery({
     queryKey: ['payment', 'result', sessionId],
-    queryFn: () => getPaymentOrderInfo(sessionId),
-    enabled: !!sessionId,
+    queryFn: async () => {
+      try {
+        return await getPaymentOrderInfo(sessionId)
+      } finally {
+        setAttempts((n) => n + 1)
+      }
+    },
+    // A failed check is just another attempt; the interval tries again.
+    retry: false,
+    staleTime: 0,
+    gcTime: 0,
+    enabled: !exhausted,
     refetchInterval: (query) =>
-      query.state.data?.premiumActive ? false : 3000,
+      query.state.data?.premiumActive ? false : POLL_INTERVAL_MS,
+    // Readers switch tabs while Stripe finishes; the attempt limit bounds it.
+    refetchIntervalInBackground: true,
   })
-  useEffect(() => {
-    if (error) {
-      toast.error('got error, your payment might not been process conrdly')
-    }
-  }, [error])
 
-  useEffect(() => {
-    if (!data?.premiumActive) {
-      return
-    }
-    party.confetti(document.querySelector('body')!)
-  }, [data])
+  const active = data?.premiumActive === true
 
-  return (
-    <div className="flex flex-col items-center text-center">
-      <span className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-400/10 ring-1 ring-emerald-400/20 dark:bg-emerald-400/15">
-        <PartyPopper className="h-10 w-10 text-emerald-500 dark:text-emerald-300" />
-      </span>
-      <h1 className="mb-2 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-4xl font-semibold tracking-tight text-transparent md:text-5xl">
-        {data?.premiumActive ? 'Premium is active' : 'Confirming your payment'}
-      </h1>
-      <p className="mb-8 text-lg text-slate-600 dark:text-slate-300">
-        {data?.premiumActive
-          ? 'Welcome to ClippingKK Premium.'
-          : 'Payment processing can take a moment. This page checks automatically.'}
-      </p>
-      <Link
-        href={homeLink as any}
-        className="inline-flex items-center gap-2 rounded-xl bg-blue-400 px-6 py-3 font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300"
-      >
-        Go to my profile
-        <ArrowRight className="h-4 w-4" />
-      </Link>
+  const links = (
+    <div className="flex flex-wrap justify-center gap-2">
+      <Button variant="primary" render={<Link href={libraryHref} />}>
+        {t('success.library')}
+      </Button>
+      <Button variant="ghost" render={<Link href={subscriptionHref} />}>
+        {t('success.subscription')}
+      </Button>
     </div>
   )
+
+  let state: React.ReactNode
+  if (active) {
+    state = (
+      <EmptyState
+        headingLevel={1}
+        icon={<BadgeCheck className="text-lake-success size-6" />}
+        title={t('success.active.title')}
+        description={t('success.active.description')}
+        action={links}
+      />
+    )
+  } else if (exhausted) {
+    state = (
+      <EmptyState
+        headingLevel={1}
+        icon={<Clock className="size-6" />}
+        title={t('success.pending.title')}
+        description={t('success.pending.description')}
+        action={links}
+      />
+    )
+  } else {
+    state = (
+      <EmptyState
+        headingLevel={1}
+        icon={<Spinner size="md" />}
+        title={t('success.confirming.title')}
+        description={t('success.confirming.description')}
+      />
+    )
+  }
+
+  return <div aria-live="polite">{state}</div>
 }
 
 export default PaymentSuccessContent

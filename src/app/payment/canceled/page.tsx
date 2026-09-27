@@ -1,25 +1,53 @@
+import Button from '@annatarhe/lake-ui/button'
+import EmptyState from '@annatarhe/lake-ui/empty-state'
+import { CircleSlash } from 'lucide-react'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import DecorBlobs from '@/components/ui/decor-blobs/decor-blobs'
-import Surface from '@/components/ui/surface/surface'
+import Page from '@/components/layout/page'
+import { getTranslation } from '@/i18n'
+import { pageMetadata } from '@/lib/metadata'
+import { getViewer } from '@/server/data/viewer'
+import { dashHref } from '@/utils/profile.utils'
 
-import CanceledPageContent from './content'
-
-export const metadata: Metadata = {
-  title: 'Payment canceled',
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslation(undefined, 'payment')
+  return pageMetadata({ title: t('canceled.meta.title') })
 }
 
-function CanceledPage() {
+async function CanceledPage() {
+  const [viewer, { t }] = await Promise.all([
+    getViewer(),
+    getTranslation(undefined, 'payment'),
+  ])
   return (
-    <div className="anna-page-container relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-10">
-      <DecorBlobs tone="danger" />
-      <Surface
-        variant="elevated"
-        className="with-slide-in relative z-10 w-full max-w-xl p-8 md:p-12"
-      >
-        <CanceledPageContent />
-      </Surface>
-    </div>
+    <Page width="reading" className="flex-1 justify-center py-20 md:py-28">
+      <EmptyState
+        headingLevel={1}
+        icon={<CircleSlash className="size-6" />}
+        title={t('canceled.title')}
+        description={t('canceled.description')}
+        action={
+          <div className="flex flex-wrap justify-center gap-2">
+            <Button variant="primary" render={<Link href="/pricing" />}>
+              {t('canceled.pricing')}
+            </Button>
+            {viewer ? (
+              <Button
+                variant="ghost"
+                render={<Link href={dashHref(viewer, 'home')} />}
+              >
+                {t('canceled.library')}
+              </Button>
+            ) : (
+              <Button variant="ghost" render={<Link href="/" />}>
+                {t('canceled.home')}
+              </Button>
+            )}
+          </div>
+        }
+      />
+    </Page>
   )
 }
 

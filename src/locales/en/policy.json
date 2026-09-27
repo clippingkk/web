@@ -1,0 +1,48 @@
+{
+  "privacy": {
+    "meta": {
+      "title": "Privacy Policy",
+      "description": "How ClippingKK collects, uses and protects your personal data."
+    },
+    "eyebrow": "Legal",
+    "title": "Privacy Policy",
+    "effective": "Effective {{date}}",
+    "englishOnly": "This policy is published in English, which is the authoritative version."
+  },
+  "support": {
+    "meta": {
+      "title": "Support",
+      "description": "Get help with ClippingKK: importing highlights, your account, billing and privacy."
+    },
+    "eyebrow": "Support",
+    "title": "How can we help?",
+    "description": "ClippingKK is an independent project. When you write, a person reads it.",
+    "email": {
+      "title": "Email us",
+      "body": "Tell us what you were trying to do and what happened. Screenshots help.",
+      "action": "Write an email"
+    },
+    "topics": {
+      "title": "Common questions",
+      "import": {
+        "title": "Importing from Kindle",
+        "body": "Connect your Kindle to a computer, open the documents folder and add My Clippings.txt on the Import page of your library.",
+        "action": "Go to Import"
+      },
+      "account": {
+        "title": "Recovering an older account",
+        "body": "If you used to sign in with a phone number, WeChat, a wallet or a different Apple email, email us from the address you use now and we'll help link your old library."
+      },
+      "billing": {
+        "title": "Billing and subscriptions",
+        "body": "Manage or cancel Premium from Subscription settings. For refunds or anything unexpected on your bill, email us.",
+        "action": "See plans"
+      },
+      "privacy": {
+        "title": "Privacy and your data",
+        "body": "Read how we handle your data, or ask us to export or delete it.",
+        "action": "Read the privacy policy"
+      }
+    }
+  }
+}
