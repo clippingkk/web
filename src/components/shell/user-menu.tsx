@@ -13,7 +13,6 @@ import {
   UserRound,
   UserRoundCog,
 } from 'lucide-react'
-import type { Route } from 'next'
 import Link from 'next/link'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
@@ -22,6 +21,7 @@ import { useTheme } from '@/components/theme/use-theme'
 import { useTranslation } from '@/i18n/client'
 import { resolveMediaUrl } from '@/utils/image'
 import profile from '@/utils/profile'
+import { dashHref } from '@/utils/profile.utils'
 
 import type { ShellViewer } from './types'
 
@@ -45,19 +45,18 @@ function UserMenu({ viewer }: UserMenuProps) {
   }, [t])
 
   const avatar = viewer.avatar ? resolveMediaUrl(viewer.avatar) : null
-  const base = `/dash/${viewer.slug}`
   const items: MenuEntry[] = [
     {
       key: 'profile',
       label: t('shell.userMenu.profile'),
       icon: <UserRound className="size-4" />,
-      render: <Link href={`${base}/profile` as Route} />,
+      render: <Link href={dashHref(viewer.slug, 'profile')} />,
     },
     {
       key: 'settings',
       label: t('shell.userMenu.settings'),
       icon: <Settings className="size-4" />,
-      render: <Link href={`${base}/settings/web` as Route} />,
+      render: <Link href={dashHref(viewer.slug, 'settings/web')} />,
     },
     { type: 'separator', key: 'sep-theme' },
     { type: 'label', key: 'theme-label', label: t('shell.userMenu.theme') },
@@ -110,7 +109,7 @@ function UserMenu({ viewer }: UserMenuProps) {
             key: 'admin',
             label: t('shell.userMenu.admin'),
             icon: <ShieldCheck className="size-4" />,
-            render: <Link href={`${base}/admin` as Route} />,
+            render: <Link href={dashHref(viewer.slug, 'admin')} />,
           } satisfies MenuEntry,
         ]
       : []),
