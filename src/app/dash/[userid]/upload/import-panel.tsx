@@ -30,7 +30,8 @@ type ImportPanelProps = {
 
 function ImportPanel({ libraryHref }: ImportPanelProps) {
   const { t } = useTranslation(undefined, 'import')
-  const { step, at, count, errors, result, start, reset } = useClippingsImport()
+  const { step, at, count, errors, result, failedStep, start, reset } =
+    useClippingsImport()
   const [file, setFile] = useState<File | null>(null)
   // Public is the default for every import; it isn't remembered.
   const [visibility, setVisibility] = useState<ImportVisibility>('public')
@@ -63,6 +64,7 @@ function ImportPanel({ libraryHref }: ImportPanelProps) {
         at={at}
         count={count}
         errors={errors}
+        failedStep={failedStep}
         result={result}
         libraryHref={libraryHref}
         onReset={onReset}

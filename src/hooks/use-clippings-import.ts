@@ -18,9 +18,18 @@ import { uploadProcessMachine } from './my-file.machine'
 
 const UPLOADED_KEY = 'app.uploaded.clippings'
 const BATCH_SIZE = 20
+const LOOKUP_CONCURRENCY = 4
 
-type ImportErrorKind = 'read' | 'parse' | 'search' | 'upload'
+type FatalErrorKind = 'read' | 'parse' | 'upload'
+type ImportErrorKind = FatalErrorKind | 'search'
 export type ImportError = { kind: ImportErrorKind; message: string }
+
+/** The step each fatal error stops the import at. */
+const FAILED_AT: Record<FatalErrorKind, UploadStep> = {
+  read: UploadStep.Parse,
+  parse: UploadStep.Parse,
+  upload: UploadStep.Uploading,
+}
 
 export type ImportResult = {
   /** Highlights sent to the server in this run. */
@@ -50,6 +59,21 @@ function messageOf(error: unknown) {
   return error instanceof Error ? error.message : String(error)
 }
 
+/** Runs `task` over `items`, at most `limit` at a time. */
+async function forEachLimit<T>(
+  items: T[],
+  limit: number,
+  task: (item: T) => Promise<void>
+) {
+  let next = 0
+  const worker = async () => {
+    while (next < items.length) await task(items[next++])
+  }
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, worker)
+  )
+}
+
 async function findDoubanId(title: string): Promise<string | null> {
   const rq = getReactQueryClient()
   const resp = await rq.fetchQuery({
@@ -67,8 +91,8 @@ async function findDoubanId(title: string): Promise<string | null> {
 
 /**
  * Parses a Kindle "My Clippings.txt", matches each title to a Douban book,
- * and uploads new highlights in batches. `at`/`count` count highlights while
- * matching books and batches while uploading.
+ * and uploads new highlights in batches. `at`/`count` count books while
+ * matching and batches while uploading.
  */
 export function useClippingsImport() {
   const [state, send] = useMachine(uploadProcessMachine)
@@ -77,13 +101,15 @@ export function useClippingsImport() {
   const [at, setAt] = useState(0)
   const [errors, setErrors] = useState<ImportError[]>([])
   const [result, setResult] = useState<ImportResult | null>(null)
+  const [failedStep, setFailedStep] = useState<UploadStep | null>(null)
   const client = useApolloClient()
   const [createClippings] = useMutation(CreateClippingsDocument)
   const [onSyncEnd] = useMutation(OnSyncEndDocument)
 
   const fail = useCallback(
-    (kind: ImportErrorKind, error: unknown) => {
+    (kind: FatalErrorKind, error: unknown) => {
       setErrors((list) => list.concat({ kind, message: messageOf(error) }))
+      setFailedStep(FAILED_AT[kind])
       send({ type: 'Error' })
     },
     [send]
@@ -94,6 +120,7 @@ export function useClippingsImport() {
       const startedAt = Date.now()
       setErrors([])
       setResult(null)
+      setFailedStep(null)
       setAt(0)
       setCount(0)
       send({ type: 'Next' })
@@ -123,21 +150,22 @@ export function useClippingsImport() {
       const duplicates = items.length - fresh.length
 
       send({ type: 'Next' })
-      setCount(fresh.length)
+      const titles = [...new Set(fresh.map((item) => item.title))]
+      setCount(titles.length)
       const byTitle = new Map<string, string | null>()
-      for (let i = 0; i < fresh.length; i++) {
-        setAt(i + 1)
-        const item = fresh[i]
-        if (!byTitle.has(item.title)) {
-          try {
-            byTitle.set(item.title, await findDoubanId(item.title))
-          } catch (error) {
-            byTitle.set(item.title, null)
-            setErrors((list) =>
-              list.concat({ kind: 'search', message: messageOf(error) })
-            )
-          }
+      let matched = 0
+      await forEachLimit(titles, LOOKUP_CONCURRENCY, async (title) => {
+        try {
+          byTitle.set(title, await findDoubanId(title))
+        } catch (error) {
+          byTitle.set(title, null)
+          setErrors((list) =>
+            list.concat({ kind: 'search', message: messageOf(error) })
+          )
         }
+        setAt(++matched)
+      })
+      for (const item of fresh) {
         const doubanId = byTitle.get(item.title)
         if (doubanId) item.bookId = doubanId
       }
@@ -162,9 +190,11 @@ export function useClippingsImport() {
           setAt(i + 1)
         }
         if (batches.length > 0) {
+          // best-effort: the highlights are saved either way, and a retry
+          // would find nothing new to send it for
           await onSyncEnd({
             variables: { startedAt: Math.floor(startedAt / 1000) },
-          })
+          }).catch(() => undefined)
         }
       } catch (error) {
         fail('upload', error)
@@ -182,10 +212,11 @@ export function useClippingsImport() {
   const reset = useCallback(() => {
     setErrors([])
     setResult(null)
+    setFailedStep(null)
     setAt(0)
     setCount(0)
     send({ type: 'Reset' })
   }, [send])
 
-  return { step, at, count, errors, result, start, reset }
+  return { step, at, count, errors, result, failedStep, start, reset }
 }

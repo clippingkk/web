@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import { QueryClient } from '@tanstack/react-query'
-import { act, renderHook } from '@testing-library/react'
+import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { UploadStep } from '@/services/uploader'
@@ -117,6 +117,7 @@ describe('useClippingsImport', () => {
     expect(result.current.errors).toEqual([
       { kind: 'upload', message: 'server down' },
     ])
+    expect(result.current.failedStep).toBe(UploadStep.Uploading)
     expect(mocks.onSyncEnd).not.toHaveBeenCalled()
 
     act(() => result.current.reset())
@@ -154,6 +155,43 @@ describe('useClippingsImport', () => {
     expect(result.current.errors).toEqual([
       { kind: 'read', message: 'NotReadableError' },
     ])
+    expect(result.current.failedStep).toBe(UploadStep.Parse)
     expect(mocks.createClippings).not.toHaveBeenCalled()
+  })
+
+  it('counts books, not highlights, while matching', async () => {
+    let release = () => {}
+    const gate = new Promise<void>((resolve) => {
+      release = resolve
+    })
+    mocks.wenquRequest.mockImplementation(async () => {
+      await gate
+      return { count: 1, books: [{ doubanId: 1234 }] }
+    })
+    const { result } = renderHook(() => useClippingsImport())
+
+    let run = Promise.resolve()
+    act(() => {
+      run = result.current.start(kindleExport(), { visible: true })
+    })
+    await waitFor(() =>
+      expect(result.current.step).toBe(UploadStep.SearchingBook)
+    )
+    expect(result.current.count).toBe(titles.size)
+    expect(result.current.at).toBe(0)
+
+    release()
+    await act(() => run)
+    expect(result.current.step).toBe(UploadStep.Done)
+  })
+
+  it('finishes the import when only the sync hook fails', async () => {
+    mocks.onSyncEnd.mockRejectedValue(new Error('hook down'))
+    const { result } = renderHook(() => useClippingsImport())
+
+    await act(() => result.current.start(kindleExport(), { visible: true }))
+
+    expect(result.current.step).toBe(UploadStep.Done)
+    expect(result.current.errors).toEqual([])
   })
 })

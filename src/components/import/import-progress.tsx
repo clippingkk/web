@@ -19,15 +19,19 @@ type ImportProgressProps = {
   count: number
   errors: ImportError[]
   result: ImportResult | null
+  /** Where a failed import stopped; the steps before it did finish. */
+  failedStep?: UploadStep | null
   libraryHref: Route
   onReset: () => void
 }
 
 function ImportProgress(props: ImportProgressProps) {
-  const { step, at, count, errors, result, libraryHref, onReset } = props
+  const { step, at, count, errors, result, failedStep, libraryHref, onReset } =
+    props
   const { t } = useTranslation(undefined, 'import')
   const current = stepIndex(step)
   const failed = step === UploadStep.Error
+  const reached = failed ? stepIndex(failedStep ?? UploadStep.Parse) : current
 
   const progressLabel =
     step === UploadStep.Parse
@@ -42,9 +46,10 @@ function ImportProgress(props: ImportProgressProps) {
     <div className="flex flex-col gap-6">
       <ol aria-label={t('steps.label')} className="grid grid-cols-4 gap-2">
         {IMPORT_STEPS.map((s, index) => {
-          const done = step === UploadStep.Done || (!failed && index < current)
+          const done = step === UploadStep.Done || index < reached
           const active =
             !failed && index === current && step !== UploadStep.Done
+          const broken = failed && index === reached
           return (
             <li
               key={s}
@@ -54,16 +59,27 @@ function ImportProgress(props: ImportProgressProps) {
               <span
                 className={cn(
                   'h-1 rounded-full transition-colors duration-200',
-                  done || active ? 'bg-lake-accent' : 'bg-lake-line'
+                  broken
+                    ? 'bg-lake-danger'
+                    : done || active
+                      ? 'bg-lake-accent'
+                      : 'bg-lake-line'
                 )}
               />
               <span
                 className={cn(
                   'flex items-center gap-1.5 text-xs font-medium sm:text-sm',
-                  done || active ? 'text-lake-fg' : 'text-lake-fg-subtle'
+                  done || active || broken
+                    ? 'text-lake-fg'
+                    : 'text-lake-fg-subtle'
                 )}
               >
-                {done ? (
+                {broken ? (
+                  <CircleAlert
+                    className="text-lake-danger size-3.5"
+                    aria-hidden="true"
+                  />
+                ) : done ? (
                   <Check className="size-3.5" aria-hidden="true" />
                 ) : active ? (
                   <Spinner size="xs" />
