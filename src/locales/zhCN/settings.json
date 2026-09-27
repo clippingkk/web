@@ -136,6 +136,8 @@
     "confirmTitle": "删除你的 ClippingKK 账户？",
     "confirmDescription": "这会永久删除你的书摘和资料。请输入 {{name}} 确认。",
     "confirmLabel": "输入你的名字以确认",
+    "confirmWord": "删除账户",
+    "confirmWordLabel": "输入上面的文字以确认",
     "confirm": "永久删除",
     "cancel": "取消",
     "scheduled": "已安排删除账户。",

@@ -136,6 +136,8 @@
     "confirmTitle": "ClippingKK 계정을 삭제할까요?",
     "confirmDescription": "하이라이트와 프로필이 영구히 삭제돼요. 확인하려면 {{name}}을(를) 입력하세요.",
     "confirmLabel": "확인을 위해 이름 입력",
+    "confirmWord": "계정 삭제",
+    "confirmWordLabel": "위의 문구를 입력해 확인하세요",
     "confirm": "영구 삭제",
     "cancel": "취소",
     "scheduled": "계정 삭제가 예약됐어요.",

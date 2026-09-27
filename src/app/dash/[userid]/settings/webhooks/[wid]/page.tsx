@@ -11,6 +11,7 @@ import { pageMetadata } from '@/lib/metadata'
 import { serverQuery } from '@/server/data/query'
 import { requireViewer } from '@/server/data/viewer'
 import { dashHref } from '@/utils/profile.utils'
+import { parseRouteId } from '@/utils/route-id'
 
 import DeliveryList from './delivery-list'
 
@@ -25,12 +26,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 async function WebhookDetailPage(props: Props) {
   const { wid } = await props.params
-  if (!/^\d+$/.test(wid)) notFound()
+  const id = parseRouteId(wid)
+  if (id === null) notFound()
   const [viewer, { t }] = await Promise.all([
     requireViewer(),
     getTranslation(undefined, 'settings'),
   ])
-  const data = await serverQuery(FetchWebhookDocument, { id: Number(wid) })
+  const data = await serverQuery(FetchWebhookDocument, { id })
   const webhook = data.webHook
   const deliveries = webhook.records.records
 

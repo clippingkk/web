@@ -137,6 +137,8 @@
     "confirmTitle": "Delete your ClippingKK account?",
     "confirmDescription": "This permanently deletes your highlights and profile. Type {{name}} to confirm.",
     "confirmLabel": "Type your name to confirm",
+    "confirmWord": "DELETE",
+    "confirmWordLabel": "Type the word above to confirm",
     "confirm": "Delete permanently",
     "cancel": "Cancel",
     "scheduled": "Account deletion scheduled.",

@@ -20,6 +20,8 @@ export default function AccountRemoveButton({
   const [open, setOpen] = useState(false)
   const [typed, setTyped] = useState('')
   const [scheduled, setScheduled] = useState('')
+  // readers without a display name type a fixed word instead
+  const phrase = name.trim() || t('account.confirmWord')
 
   async function remove() {
     let response: Response
@@ -66,13 +68,17 @@ export default function AccountRemoveButton({
         onConfirm={remove}
         tone="danger"
         title={t('account.confirmTitle')}
-        description={t('account.confirmDescription', { name })}
+        description={t('account.confirmDescription', { name: phrase })}
         confirmLabel={t('account.confirm')}
         cancelLabel={t('account.cancel')}
-        confirmDisabled={!name || typed.trim() !== name}
+        confirmDisabled={typed.trim() !== phrase}
       >
         <InputField
-          label={t('account.confirmLabel')}
+          label={
+            name.trim()
+              ? t('account.confirmLabel')
+              : t('account.confirmWordLabel')
+          }
           value={typed}
           autoComplete="off"
           onChange={(e) => setTyped(e.target.value)}

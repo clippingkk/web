@@ -14,7 +14,8 @@ export async function currentPath(): Promise<string> {
   return isSameOriginPath(value) ? value : '/'
 }
 
-function safeDecode(value: string) {
+/** decodeURIComponent that returns the input on a malformed escape. */
+export function safeDecode(value: string) {
   try {
     return decodeURIComponent(value)
   } catch {
