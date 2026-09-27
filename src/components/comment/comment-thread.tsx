@@ -2,18 +2,17 @@
 
 import Button from '@annatarhe/lake-ui/button'
 import EmptyState from '@annatarhe/lake-ui/empty-state'
-import { useApolloClient } from '@apollo/client/react'
 import { MessageSquare } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useCallback, useState } from 'react'
 
-import { GetCommentListDocument } from '@/gql/graphql'
+import LoadMoreFooter from '@/components/list/load-more-footer'
 import { useTranslation } from '@/i18n/client'
 import { authHref } from '@/lib/auth-href'
 
 import CommentComposer from './comment-composer'
 import CommentItem, { type CommentItemData } from './comment-item'
+import { useCommentPages } from './use-comment-pages'
 
 type CommentThreadProps = {
   clippingId: number
@@ -39,51 +38,9 @@ function CommentThread(props: CommentThreadProps) {
     viewer,
   } = props
   const { t } = useTranslation(undefined, 'reading')
-  const client = useApolloClient()
   const pathname = usePathname()
-  const [items, setItems] = useState(initialItems)
-  const [count, setCount] = useState(initialCount)
-  const [loading, setLoading] = useState(false)
-
-  const fetchPage = useCallback(
-    async (lastId?: number) => {
-      const { data } = await client.query({
-        query: GetCommentListDocument,
-        variables: { cid: clippingId, pagination: { limit: pageSize, lastId } },
-        fetchPolicy: 'network-only',
-      })
-      return data?.getCommentList
-    },
-    [client, clippingId, pageSize]
-  )
-
-  const reload = useCallback(async () => {
-    const page = await fetchPage()
-    if (!page) return
-    setItems(page.items)
-    setCount(page.count)
-  }, [fetchPage])
-
-  const loadMore = useCallback(async () => {
-    const lastId = items.at(-1)?.id
-    if (!lastId || loading) return
-    setLoading(true)
-    try {
-      const page = await fetchPage(lastId)
-      if (!page) return
-      setItems((current) => {
-        const seen = new Set(current.map((c) => c.id))
-        return [...current, ...page.items.filter((c) => !seen.has(c.id))]
-      })
-    } finally {
-      setLoading(false)
-    }
-  }, [items, loading, fetchPage])
-
-  const onDeleted = useCallback((id: number) => {
-    setItems((current) => current.filter((c) => c.id !== id))
-    setCount((n) => Math.max(0, n - 1))
-  }, [])
+  const { items, count, loading, hasMore, loadMore, reload, remove } =
+    useCommentPages({ cid: clippingId, initialItems, initialCount, pageSize })
 
   return (
     <section aria-labelledby="discussion-title" className="flex flex-col gap-6">
@@ -126,7 +83,7 @@ function CommentThread(props: CommentThreadProps) {
               key={comment.id}
               comment={comment}
               viewerId={viewer?.id}
-              onDeleted={onDeleted}
+              onDeleted={remove}
             />
           ))}
         </div>
@@ -134,16 +91,13 @@ function CommentThread(props: CommentThreadProps) {
         <p className="type-meta py-4">{t('comments.empty')}</p>
       ) : null}
 
-      {items.length < count ? (
-        <Button
-          variant="ghost"
-          size="sm"
-          className="self-center"
+      {items.length > 0 ? (
+        <LoadMoreFooter
+          hasMore={hasMore}
           loading={loading}
-          onClick={loadMore}
-        >
-          {t('comments.loadMore')}
-        </Button>
+          onLoadMore={loadMore}
+          showEnd={count > pageSize}
+        />
       ) : null}
     </section>
   )
