@@ -49,7 +49,18 @@
     "premiumDescription": "프리미엄 회원은 어떤 하이라이트든 AI 풀이를 받을 수 있어요.",
     "upgrade": "프리미엄 보기",
     "noBook": "풀이를 받으려면 먼저 이 하이라이트에 책을 지정하세요.",
-    "error": "풀이를 만들지 못했어요."
+    "error": "풀이를 만들지 못했어요.",
+    "enhance": {
+      "label": "AI로 다듬기",
+      "professional": "더 매끄럽게",
+      "deeper": "더 깊이 있게",
+      "intriguing": "더 흥미롭게",
+      "title": "다시 쓴 제안",
+      "working": "댓글을 다시 쓰는 중…",
+      "keep": "내 글 유지",
+      "use": "이 버전 사용",
+      "failed": "댓글을 다시 쓰지 못했어요."
+    }
   },
   "comments": {
     "title": "대화",

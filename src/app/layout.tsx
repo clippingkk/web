@@ -6,7 +6,6 @@ import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css'
 import 'lxgw-wenkai-webfont/lxgwwenkai-bold.css'
 import '../styles/global.css'
 import '../styles/tailwind.css'
-import '../styles/legacy-scale.css'
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import type React from 'react'
@@ -72,8 +71,8 @@ function Layout(props: LayoutProps) {
               <AppToaster />
             </I18nRoot>
             <div data-st-role="modal" />
-            <div data-st-role="sheet" data-ui-scale="standard" />
-            <div data-st-role="popover" data-ui-scale="standard" />
+            <div data-st-role="sheet" />
+            <div data-st-role="popover" />
             <div data-st-role="tooltip" />
             <div data-id="modal" />
           </ClientOnlyProviders>

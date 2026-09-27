@@ -62,7 +62,6 @@ function MarketingShell({ children }: MarketingShellProps) {
     <div className="bg-lake-canvas text-lake-fg flex min-h-dvh flex-col">
       <NavbarContainer
         animated={false}
-        data-ui-scale="standard"
         className="border-lake-line bg-lake-canvas/85 shadow-none backdrop-blur-sm"
         innerClassName="flex h-14 items-center gap-4 py-0 sm:gap-6"
       >

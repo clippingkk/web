@@ -1,117 +1,110 @@
+'use client'
+
+import Button from '@annatarhe/lake-ui/button'
+import Menu from '@annatarhe/lake-ui/menu'
 import Modal from '@annatarhe/lake-ui/modal'
+import Spinner from '@annatarhe/lake-ui/spinner'
 import { useMutation } from '@apollo/client/react'
-import { LoaderCircle } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { Sparkles } from 'lucide-react'
+import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { AiEnhanceCommentDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
-import MarkdownPreview from '../markdown-editor/md-preview'
-
 type AICommentEnhancerProps = {
   bookName?: string
   clippingId: number
   comment: string
-  onAccept: (nt: string) => void
+  onAccept: (nextComment: string) => void
 }
 
-enum Prompts {
-  Professional = 1,
-  Deeper = 2,
-  Intriguing = 3,
-}
+/** Server-side prompt ids for each rewrite style. */
+const STYLES = [
+  { key: 'professional', promptId: 1 },
+  { key: 'deeper', promptId: 2 },
+  { key: 'intriguing', promptId: 3 },
+] as const
 
+/** Premium: rewrite a draft comment in one of a few styles. */
 function AICommentEnhancer(props: AICommentEnhancerProps) {
-  const [opened, setOpened] = useState(false)
-  const { t } = useTranslation()
-  const [doEnhance, { loading, data }] = useMutation(AiEnhanceCommentDocument, {
-    variables: {
-      promptId: -1,
-      bookName: props.bookName,
-      clippingId: props.clippingId,
-      content: props.comment,
-    },
-    onError(error) {
-      toast.error(error.message)
-    },
-    onCompleted() {
-      toast.success('Got an AI improved comment!')
-      setOpened(true)
-    },
-  })
-
-  const onEnhance = useCallback(
-    (promptId: Prompts) => {
-      return doEnhance({
-        variables: {
-          promptId: promptId,
-          bookName: props.bookName,
-          clippingId: props.clippingId,
-          content: props.comment,
-        },
-      })
-    },
-    [doEnhance, props.bookName, props.clippingId, props.comment]
+  const { bookName, clippingId, comment, onAccept } = props
+  const { t } = useTranslation(undefined, 'reading')
+  const [open, setOpen] = useState(false)
+  const [enhance, { loading, data, reset }] = useMutation(
+    AiEnhanceCommentDocument
   )
+  const suggestion = data?.aiEnhanceComment.content ?? ''
+
+  const run = async (promptId: number) => {
+    setOpen(true)
+    reset()
+    try {
+      await enhance({
+        variables: { promptId, bookName, clippingId, content: comment },
+      })
+    } catch (error) {
+      setOpen(false)
+      toast.error(
+        error instanceof Error ? error.message : t('ai.enhance.failed')
+      )
+    }
+  }
 
   return (
     <>
-      <div className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          disabled={loading}
-          className="flex items-center justify-center rounded bg-gradient-to-r from-gray-500 to-pink-400 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
-          onClick={() => onEnhance(Prompts.Professional)}
-        >
-          {loading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
-          {t('app.ai.professionalize')}
-        </button>
-        <button
-          type="button"
-          disabled={loading}
-          className="flex items-center justify-center rounded bg-gradient-to-r from-pink-400 to-green-500 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
-          onClick={() => onEnhance(Prompts.Deeper)}
-        >
-          {loading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
-          {t('app.ai.deeplize')}
-        </button>
-        <button
-          type="button"
-          disabled={loading}
-          className="flex items-center justify-center rounded bg-gradient-to-r from-green-500 to-sky-400 px-4 py-2 font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
-          onClick={() => onEnhance(Prompts.Intriguing)}
-        >
-          {loading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
-          Make it more intriguing
-        </button>
-      </div>
+      <Menu
+        label={t('ai.enhance.label')}
+        trigger={
+          <Button
+            variant="ghost"
+            size="sm"
+            loading={loading}
+            leadingIcon={<Sparkles className="size-4" />}
+          >
+            {t('ai.enhance.label')}
+          </Button>
+        }
+        items={STYLES.map((style) => ({
+          key: style.key,
+          label: t(`ai.enhance.${style.key}`),
+          onSelect: () => void run(style.promptId),
+        }))}
+      />
       <Modal
-        isOpen={opened || loading}
-        onClose={() => setOpened(false)}
-        title="Enhanced Comment"
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        title={t('ai.enhance.title')}
+        size="lg"
+        footer={
+          <div className="flex justify-end gap-2">
+            <Button variant="ghost" onClick={() => setOpen(false)}>
+              {t('ai.enhance.keep')}
+            </Button>
+            <Button
+              variant="primary"
+              disabled={!suggestion}
+              onClick={() => {
+                onAccept(suggestion)
+                setOpen(false)
+              }}
+            >
+              {t('ai.enhance.use')}
+            </Button>
+          </div>
+        }
       >
-        <MarkdownPreview
-          value={data?.aiEnhanceComment.content ?? '## Loading'}
-        />
-        <div className="flex w-full justify-end">
-          <button
-            type="button"
-            onClick={() => setOpened(false)}
-            className="mr-4 rounded bg-gray-300 px-4 py-2 font-medium text-black transition-colors hover:bg-gray-400"
-          >
-            {t('app.common.cancel')}
-          </button>
-          <button
-            type="button"
-            className="rounded bg-gradient-to-br from-green-300 to-pink-400 px-4 py-2 font-medium text-black transition-opacity hover:opacity-90"
-            onClick={() => {
-              setOpened(false)
-              props.onAccept(data?.aiEnhanceComment.content ?? '')
-            }}
-          >
-            {t('app.common.accept')}
-          </button>
+        <div aria-live="polite" className="min-h-32">
+          {loading || !suggestion ? (
+            <div className="flex flex-col items-center gap-3 py-10">
+              <Spinner size="md" />
+              <p className="type-meta">{t('ai.enhance.working')}</p>
+            </div>
+          ) : (
+            <p className="text-lake-fg text-[0.9375rem] leading-relaxed whitespace-pre-wrap">
+              {suggestion}
+            </p>
+          )}
         </div>
       </Modal>
     </>

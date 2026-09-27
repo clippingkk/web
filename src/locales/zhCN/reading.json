@@ -49,7 +49,18 @@
     "premiumDescription": "高级会员可以让 AI 解读任意一条书摘。",
     "upgrade": "了解高级会员",
     "noBook": "先为这条书摘匹配书籍，才能生成解读。",
-    "error": "生成解读失败。"
+    "error": "生成解读失败。",
+    "enhance": {
+      "label": "用 AI 润色",
+      "professional": "更得体",
+      "deeper": "更深入",
+      "intriguing": "更有趣",
+      "title": "改写建议",
+      "working": "正在改写你的评论…",
+      "keep": "保留原文",
+      "use": "使用这一版",
+      "failed": "改写失败。"
+    }
   },
   "comments": {
     "title": "讨论",

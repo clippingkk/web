@@ -1,14 +1,13 @@
-import Spinner from '@/components/loading/spinner'
+import Spinner from '@annatarhe/lake-ui/spinner'
 
-function DashboardLoadingPage() {
+import Page from '@/components/layout/page'
+
+function Loading() {
   return (
-    <div className="flex min-h-[60vh] w-full flex-col items-center justify-center gap-4">
-      <Spinner />
-      <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
-        Loading…
-      </span>
-    </div>
+    <Page width="default" className="items-center py-24">
+      <Spinner size="md" />
+    </Page>
   )
 }
 
-export default DashboardLoadingPage
+export default Loading

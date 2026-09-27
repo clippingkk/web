@@ -49,7 +49,18 @@
     "premiumDescription": "Premium members can ask AI to explain any highlight.",
     "upgrade": "See Premium",
     "noBook": "Match this highlight to a book to get an explanation.",
-    "error": "Couldn't generate an explanation."
+    "error": "Couldn't generate an explanation.",
+    "enhance": {
+      "label": "Improve with AI",
+      "professional": "More polished",
+      "deeper": "Go deeper",
+      "intriguing": "More intriguing",
+      "title": "A suggested rewrite",
+      "working": "Rewriting your comment…",
+      "keep": "Keep mine",
+      "use": "Use this version",
+      "failed": "Couldn't rewrite the comment."
+    }
   },
   "comments": {
     "title": "Discussion",

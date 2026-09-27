@@ -12,10 +12,7 @@ async function AppFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer
-      data-ui-scale="standard"
-      className="border-lake-line bg-lake-canvas border-t"
-    >
+    <footer className="border-lake-line bg-lake-canvas border-t">
       <div className="text-lake-fg-subtle mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-6 text-[0.8125rem] sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p>
           © {year}{' '}

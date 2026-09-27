@@ -21,7 +21,6 @@ function MobileTabBar({ viewer }: MobileTabBarProps) {
   return (
     <nav
       aria-label={t('shell.nav.label')}
-      data-ui-scale="standard"
       className="border-lake-line bg-lake-canvas/90 fixed inset-x-0 bottom-0 z-30 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur-sm md:hidden"
     >
       <ul className="mx-auto grid max-w-md grid-cols-4">

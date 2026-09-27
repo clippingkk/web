@@ -118,10 +118,7 @@ function GlobalUpload({ libraryHref }: GlobalUploadProps) {
         </div>
       </Sheet>
       {step !== UploadStep.None ? (
-        <output
-          data-ui-scale="standard"
-          className="rounded-lake-panel border-lake-line bg-lake-surface-raised shadow-lake-overlay animate-in fade-in slide-in-from-bottom-4 fixed right-4 bottom-20 z-40 flex items-center gap-3 border px-4 py-3 text-sm md:bottom-6"
-        >
+        <output className="rounded-lake-panel border-lake-line bg-lake-surface-raised shadow-lake-overlay animate-in fade-in slide-in-from-bottom-4 fixed right-4 bottom-20 z-40 flex items-center gap-3 border px-4 py-3 text-sm md:bottom-6">
           {running ? (
             <>
               <Spinner size="sm" />

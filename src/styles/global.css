@@ -52,130 +52,39 @@
 }
 
 .tiptap-editor .ProseMirror blockquote {
-  border-left: 3px solid #e5e7eb;
+  border-left: 3px solid var(--lake-line-strong);
   padding-left: 1rem;
   margin: 0.5rem 0;
   font-style: italic;
-  color: #6b7280;
-}
-
-.dark .tiptap-editor .ProseMirror blockquote {
-  border-left-color: #4b5563;
-  color: #9ca3af;
+  color: var(--lake-fg-muted);
 }
 
 .tiptap-editor .ProseMirror code {
-  background-color: #f3f4f6;
-  color: #1f2937;
+  background-color: var(--lake-surface-muted);
+  color: var(--lake-fg);
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
   font-size: 0.9em;
 }
 
-.dark .tiptap-editor .ProseMirror code {
-  background-color: #374151;
-  color: #f9fafb;
-}
-
 .tiptap-editor .ProseMirror pre {
-  background-color: #f3f4f6;
-  color: #1f2937;
+  background-color: var(--lake-surface-muted);
+  color: var(--lake-fg);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
   margin: 0.5rem 0;
 }
 
-.dark .tiptap-editor .ProseMirror pre {
-  background-color: #1f2937;
-  color: #f9fafb;
-}
-
 .tiptap-editor .ProseMirror .is-empty::before {
   content: attr(data-placeholder);
   float: left;
-  color: #9ca3af;
+  color: var(--lake-fg-subtle);
   pointer-events: none;
   height: 0;
 }
 
-/* Apple Sign-In button dark mode styles */
-.dark .apple-button-wrapper svg {
-  filter: invert(1);
-}
-
-.dark .apple-button-wrapper .apple-auth-btn {
-  background-color: #000 !important;
-  color: #fff !important;
-}
-
-:root {
-  --gray-text-color: #707070;
-}
-
-/* a {
-  text-decoration: none;
-  color: black;
-}
-
-div[role="group"][tabindex] {
-  flex: 1;
-}
-
-.h-min-screen {
-  min-height: 100vh;
-} */
+/* Keep intrinsic image widths (the share poster sizes images inline). */
 img {
   max-width: unset;
-}
-
-/*
- * Unified page shell gradient — aligns with CLAUDE.md (blue-400 primary,
- * adjacent-value subtle gradients). Used as the background for every
- * route via `DashboardContainer` and standalone pages (auth, error,
- * policy, payment).
- */
-.anna-page-container {
-  @apply bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50;
-}
-
-.dark .anna-page-container {
-  @apply bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950;
-}
-
-/* AI Book Recommendation Button Animations */
-@keyframes float-up {
-  0% {
-    opacity: 0;
-    transform: translateY(0) translateX(-50%);
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-20px) translateX(-50%);
-  }
-}
-
-.animate-float-up {
-  animation: float-up 2s infinite;
-}
-
-.animation-delay-300 {
-  animation-delay: 0.3s;
-}
-
-.animation-delay-600 {
-  animation-delay: 0.6s;
-}
-
-.animation-delay-900 {
-  animation-delay: 0.9s;
-}
-
-.animation-delay-1200 {
-  animation-delay: 1.2s;
 }
