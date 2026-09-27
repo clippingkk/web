@@ -1,27 +1,27 @@
-query publicData {
-  public {
+query publicData($limit: Int) {
+  public(limit: $limit) {
     users {
       id
       avatar
-      bio
       name
       domain
       premiumEndAt
     }
     books {
       doubanId
+      clippingsCount
     }
     clippings {
       id
       content
       bookID
       title
+      createdAt
       creator {
         id
         name
         avatar
         domain
-        premiumEndAt
       }
     }
   }
