@@ -1,38 +1,44 @@
-import { ArrowRight, ExternalLink, LogIn, TriangleAlert } from 'lucide-react'
+import { buttonStyles } from '@annatarhe/lake-ui/button'
+import Card from '@annatarhe/lake-ui/card'
+import Skeleton from '@annatarhe/lake-ui/skeleton'
+import { ArrowRight, ExternalLink, TriangleAlert } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-import Surface from '@/components/ui/surface/surface'
+import { SUPPORT_EMAIL } from '@/constants/config'
+import { cn } from '@/lib/utils'
+import { withLink } from '@/lib/with-link'
 
-function AuthCardFrame({ children }: { children: ReactNode }) {
+/** The `auth` namespace's `t`, resolved by the server component above. */
+export type AuthTranslate = (key: string) => string
+
+function AuthCardFrame({
+  t,
+  children,
+}: {
+  t: AuthTranslate
+  children: ReactNode
+}) {
   return (
-    <Surface variant="elevated" className="w-full p-6 sm:p-9">
-      <span className="mb-6 inline-flex rounded-2xl bg-indigo-500/10 p-3 text-indigo-600 dark:text-indigo-300">
-        <LogIn aria-hidden className="size-6" />
-      </span>
-      <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-        Sign in to ClippingKK
-      </h2>
-      <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        Your Evonia Gate account connects you to ClippingKK. Your books and
-        clippings stay here.
+    <Card variant="elevated" padding="lg" className="w-full sm:p-9">
+      <h2 className="type-title text-lake-fg">{t('card.title')}</h2>
+      <p className="type-body text-lake-fg-muted mt-3">
+        {t('card.description')}
       </p>
       {children}
-    </Surface>
+    </Card>
   )
 }
 
-export function AuthCardLoading() {
+export function AuthCardLoading({ t }: { t: AuthTranslate }) {
   return (
-    <AuthCardFrame>
+    <AuthCardFrame t={t}>
       <div className="mt-8">
-        <output className="sr-only">Loading sign-in options…</output>
-        <div aria-hidden className="motion-safe:animate-pulse">
-          <div className="h-12 rounded-xl bg-slate-200 dark:bg-slate-700" />
-          <div className="mx-auto mt-5 h-5 w-48 rounded bg-slate-200 dark:bg-slate-700" />
-          <div className="mt-8 border-t border-slate-200/70 pt-6 dark:border-slate-700/70">
-            <div className="h-4 w-full rounded bg-slate-200 dark:bg-slate-700" />
-            <div className="mt-2 h-4 w-4/5 rounded bg-slate-200 dark:bg-slate-700" />
-            <div className="mt-2 h-4 w-3/5 rounded bg-slate-200 dark:bg-slate-700" />
+        <output className="sr-only">{t('card.loading')}</output>
+        <div aria-hidden="true" className="flex flex-col gap-4">
+          <Skeleton className="rounded-lake-control h-12 w-full" />
+          <Skeleton shape="text" className="mx-auto w-48" />
+          <div className="border-lake-line mt-4 border-t pt-6">
+            <Skeleton shape="text" lines={3} />
           </div>
         </div>
       </div>
@@ -41,74 +47,83 @@ export function AuthCardLoading() {
 }
 
 /**
- * Copy for the `?error=` codes the Gate callback redirects with (see
+ * The `?error=` codes the Gate callback redirects with (see
  * src/app/api/auth/callback/route.ts). Anything unmapped falls back to
- * GENERIC_ERROR, so a new code degrades into vague-but-true rather than blank.
+ * `errors.generic`, so a new code degrades into vague-but-true rather than
+ * blank.
  */
-const ERROR_MESSAGES: Record<string, string> = {
-  EMAIL_VERIFICATION_REQUIRED: 'Verify your email in Gate, then try again.',
-  FORBIDDEN:
-    'Your ClippingKK access has been removed. Contact support to restore access.',
-  ACCOUNT_RECOVERY_REQUIRED:
-    'We could not safely link your existing account. Contact support to recover your clippings.',
-  // The attempt was stale or replayed: the state entry had expired or was bound
-  // to a different browser. Starting over is all this needs.
-  BAD_REQUEST: 'Your sign-in link expired. Please start again.',
-  // Gate rejected the token exchange or the id token. Nothing the reader can act
-  // on, and a retry often clears it.
-  LOGIN_FAILED:
-    'We could not complete sign-in with Gate. Please try again in a moment.',
+const ERROR_CODES = new Set([
+  'EMAIL_VERIFICATION_REQUIRED',
+  'FORBIDDEN',
+  'ACCOUNT_RECOVERY_REQUIRED',
+  // The attempt was stale or replayed: the state entry had expired or was
+  // bound to a different browser. Starting over is all this needs.
+  'BAD_REQUEST',
+  // Gate rejected the token exchange or the id token. Nothing the reader can
+  // act on, and a retry often clears it.
+  'LOGIN_FAILED',
   // Gate answered, but ClippingKK is not set up inside it -- a missing member
-  // role, say. "Try again" would be a lie, so do not say it.
-  GATE_NOT_CONFIGURED:
-    'ClippingKK sign-in is not configured correctly. Please try again later.',
-}
+  // role, say. "Try again" would be a lie, so the copy does not say it.
+  'GATE_NOT_CONFIGURED',
+])
 
-const GENERIC_ERROR = 'Sign-in could not be completed. Please try again.'
+const linkClass =
+  'rounded-sm font-medium text-lake-accent-text underline decoration-lake-accent/40 underline-offset-4 outline-none transition-colors duration-150 hover:decoration-current focus-visible:ring-2 focus-visible:ring-lake-ring'
 
 export default function AuthCard({
+  t,
   error,
   next,
   accountUrl,
 }: {
+  t: AuthTranslate
   error?: string
   next?: string
   accountUrl: string
 }) {
+  const message = error
+    ? t(ERROR_CODES.has(error) ? `errors.${error}` : 'errors.generic')
+    : null
   return (
-    <AuthCardFrame>
-      {error && (
+    <AuthCardFrame t={t}>
+      {message ? (
         <div
           role="alert"
-          className="mt-6 flex items-start gap-3 rounded-xl border border-amber-300/60 bg-amber-50 p-4 text-sm leading-relaxed text-amber-950 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-100"
+          className="rounded-lake-control border-lake-warning/30 bg-lake-warning-soft text-lake-fg mt-6 flex items-start gap-3 border p-4 text-sm leading-relaxed"
         >
-          <TriangleAlert aria-hidden className="mt-0.5 size-5 shrink-0" />
-          <p>{ERROR_MESSAGES[error] ?? GENERIC_ERROR}</p>
+          <TriangleAlert
+            aria-hidden="true"
+            className="text-lake-warning mt-0.5 size-4 shrink-0"
+          />
+          <p>{message}</p>
         </div>
-      )}
+      ) : null}
       <a
-        className="mt-8 flex min-h-12 items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-3 font-semibold text-white shadow-lg shadow-blue-600/15 outline-offset-4 hover:from-blue-700 hover:to-indigo-700 focus-visible:outline-2 focus-visible:outline-blue-500 motion-safe:transition-colors"
+        className={cn(
+          buttonStyles({ variant: 'primary', size: 'lg' }),
+          'mt-8 w-full'
+        )}
         href={`/api/auth/login${next ? `?next=${encodeURIComponent(next)}` : ''}`}
       >
-        Continue with Gate
-        <ArrowRight aria-hidden className="size-5" />
+        {t('card.continue')}
+        <ArrowRight aria-hidden="true" className="size-4" />
       </a>
       <a
-        className="mx-auto mt-4 flex min-h-11 w-fit items-center gap-2 rounded text-sm font-medium text-slate-600 outline-offset-4 hover:text-blue-600 focus-visible:outline-2 focus-visible:outline-blue-500 dark:text-slate-300 dark:hover:text-blue-300"
+        className={cn(
+          buttonStyles({ variant: 'ghost', size: 'md' }),
+          'mt-3 w-full'
+        )}
         href={accountUrl}
       >
-        Manage your Gate account
-        <ExternalLink aria-hidden className="size-3.5" />
+        {t('card.manage')}
+        <ExternalLink aria-hidden="true" className="size-3.5" />
       </a>
-      <p className="mt-6 border-t border-slate-200/70 pt-6 text-sm leading-relaxed text-slate-500 dark:border-slate-700/70 dark:text-slate-400">
-        Previously used phone, WeChat, a wallet, or a different Apple email?{' '}
-        <a
-          className="rounded font-medium text-blue-700 underline decoration-blue-500/30 underline-offset-4 outline-offset-4 hover:decoration-current focus-visible:outline-2 focus-visible:outline-blue-500 dark:text-blue-300"
-          href="mailto:iamhele1994@gmail.com"
-        >
-          Contact support
-        </a>{' '}
-        to verify and recover your old account.
+      <p className="border-lake-line text-lake-fg-muted mt-6 border-t pt-6 text-sm leading-relaxed">
+        {withLink(t('card.legacy'), (label) => (
+          <a className={linkClass} href={`mailto:${SUPPORT_EMAIL}`}>
+            {label}
+          </a>
+        ))}
       </p>
     </AuthCardFrame>
   )
