@@ -75,7 +75,8 @@ function CommandPalette({ open, onClose, viewer }: CommandPaletteProps) {
   const listId = useId()
   const [query, setQuery] = useState('')
   const [debounced, setDebounced] = useState('')
-  const [active, setActive] = useState(0)
+  // tracked by id so the highlight stays put when results land and reorder
+  const [activeId, setActiveId] = useState<string | null>(null)
   // mounted only while open (and never on the server), so read storage once
   const [recent] = useState<string[]>(() => readRecent())
   const listRef = useRef<HTMLDivElement>(null)
@@ -162,6 +163,11 @@ function CommandPalette({ open, onClose, viewer }: CommandPaletteProps) {
     return [...goTo, ...mine, ...community, ...people]
   }, [query, viewer, recent, data, t])
 
+  const active = Math.max(
+    0,
+    options.findIndex((o) => o.id === activeId)
+  )
+
   useEffect(() => {
     listRef.current
       ?.querySelector(`[data-index="${active}"]`)
@@ -172,7 +178,7 @@ function CommandPalette({ open, onClose, viewer }: CommandPaletteProps) {
     if (!option) return
     if (option.query) {
       setQuery(option.query)
-      setActive(0)
+      setActiveId(null)
       return
     }
     if (option.href) {
@@ -185,10 +191,10 @@ function CommandPalette({ open, onClose, viewer }: CommandPaletteProps) {
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault()
-      setActive((i) => Math.min(i + 1, options.length - 1))
+      setActiveId(options[Math.min(active + 1, options.length - 1)]?.id ?? null)
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
-      setActive((i) => Math.max(i - 1, 0))
+      setActiveId(options[Math.max(active - 1, 0)]?.id ?? null)
     } else if (e.key === 'Enter') {
       e.preventDefault()
       choose(options[active])
@@ -251,12 +257,12 @@ function CommandPalette({ open, onClose, viewer }: CommandPaletteProps) {
           value={query}
           onChange={(e) => {
             setQuery(e.target.value)
-            setActive(0)
+            setActiveId(null)
           }}
           onKeyDown={onKeyDown}
           className="text-lake-fg placeholder:text-lake-fg-subtle w-full bg-transparent text-base outline-none"
         />
-        {searching ? <Spinner size="xs" /> : null}
+        {searching ? <Spinner size="xs" label={t('searching')} /> : null}
       </div>
       <div className="max-h-[min(60vh,28rem)] overflow-y-auto p-2">
         {showEmpty ? (
@@ -293,7 +299,7 @@ function CommandPalette({ open, onClose, viewer }: CommandPaletteProps) {
                         tabIndex={-1}
                         aria-selected={selected}
                         data-index={index}
-                        onMouseMove={() => setActive(index)}
+                        onMouseMove={() => setActiveId(option.id)}
                         onClick={() => choose(option)}
                         className={cn(
                           'rounded-lake-control flex cursor-pointer items-start gap-3 px-3 py-2',
