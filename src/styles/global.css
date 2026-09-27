@@ -109,39 +109,6 @@
   color: #fff !important;
 }
 
-html {
-  font-size: 12px;
-  font-display: swap;
-}
-
-html[lang='zh'] {
-  font-family: var(--font-lxgw);
-}
-
-html[lang='ja'] {
-  font-family: var(--font-lxgw);
-}
-
-html[lang='ko'] {
-  font-family: var(--font-lxgw);
-}
-
-html[lang='en'] {
-  font-family: var(--font-lato);
-}
-
-body {
-  font-family:
-    Roboto,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Microsoft Jhenghei',
-    'Hiragino Sans GB',
-    'Microsoft YaHei',
-    sans-serif;
-  scroll-behavior: smooth;
-}
-
 :root {
   --gray-text-color: #707070;
 }
@@ -174,13 +141,6 @@ img {
 
 .dark .anna-page-container {
   @apply bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950;
-}
-
-::-webkit-scrollbar {
-  width: 0;
-  /* Remove scrollbar space */
-  background: transparent;
-  /* Optional: just make scrollbar invisible */
 }
 
 /* AI Book Recommendation Button Animations */

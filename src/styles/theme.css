@@ -1,0 +1,248 @@
+/*
+ * ClippingKK "reading room" theme.
+ *
+ * lake-ui ships its semantic tokens (`--lake-*`) in a zero-specificity,
+ * layered block, so these unlayered overrides always win. Every lake-ui
+ * component and every `*-lake-*` utility in the app reads from here.
+ */
+
+:root {
+  color-scheme: light;
+
+  --lake-canvas: #f7f5f0;
+  --lake-surface: #fffefb;
+  --lake-surface-raised: #ffffff;
+  --lake-surface-muted: #efece5;
+  --lake-field: #ffffff;
+  --lake-fg: #1c1a17;
+  --lake-fg-muted: #57524b;
+  --lake-fg-subtle: #736c63;
+  --lake-line: #e4dfd5;
+  --lake-line-strong: #d1cbbf;
+  --lake-accent: #60a5fa;
+  --lake-accent-hover: #3b82f6;
+  /* white on blue-400 fails AA, so text on the accent uses dark ink */
+  --lake-accent-fg: #0b1526;
+  --lake-accent-text: #2563eb;
+  --lake-accent-soft: rgb(96 165 250 / 0.14);
+  --lake-ring: rgb(96 165 250 / 0.45);
+  --lake-danger: #c2412d;
+  --lake-danger-fg: #ffffff;
+  --lake-danger-soft: rgb(194 65 45 / 0.1);
+  --lake-success: #3f7a4b;
+  --lake-success-soft: rgb(63 122 75 / 0.12);
+  --lake-warning: #a56a12;
+  --lake-warning-soft: rgb(165 106 18 / 0.12);
+  --lake-overlay: rgb(28 26 23 / 0.32);
+
+  --lake-radius-control: 8px;
+  --lake-radius-panel: 12px;
+  --lake-shadow-card: 0 1px 2px rgb(28 26 23 / 0.04);
+  --lake-shadow-overlay: 0 16px 40px -12px rgb(28 26 23 / 0.22);
+  --lake-blur: 0px;
+
+  /* highlighter-pen marker behind quoted passages */
+  --app-marker: rgb(242 214 117 / 0.45);
+
+  --app-font-latin:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial;
+  --app-font-cjk:
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC';
+}
+
+:root:lang(ja) {
+  --app-font-cjk:
+    'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', Meiryo,
+    'Noto Sans CJK JP';
+}
+
+:root:lang(ko) {
+  --app-font-cjk: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans CJK KR';
+}
+
+.dark {
+  color-scheme: dark;
+
+  --lake-canvas: #141311;
+  --lake-surface: #1b1a17;
+  --lake-surface-raised: #23211e;
+  --lake-surface-muted: #2a2824;
+  --lake-field: #1f1d1a;
+  --lake-fg: #ece7df;
+  --lake-fg-muted: #b4ada2;
+  --lake-fg-subtle: #8a8378;
+  --lake-line: #302d29;
+  --lake-line-strong: #3f3b35;
+  --lake-accent: #60a5fa;
+  --lake-accent-hover: #93c5fd;
+  --lake-accent-fg: #0b1526;
+  --lake-accent-text: #60a5fa;
+  --lake-accent-soft: rgb(96 165 250 / 0.18);
+  --lake-ring: rgb(96 165 250 / 0.5);
+  --lake-danger: #f0806b;
+  --lake-danger-fg: #1b0b07;
+  --lake-danger-soft: rgb(240 128 107 / 0.14);
+  --lake-success: #7bc08a;
+  --lake-success-soft: rgb(123 192 138 / 0.14);
+  --lake-warning: #e3b45a;
+  --lake-warning-soft: rgb(227 180 90 / 0.14);
+  --lake-overlay: rgb(0 0 0 / 0.6);
+
+  --lake-shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
+  --lake-shadow-overlay: 0 16px 40px -12px rgb(0 0 0 / 0.6);
+
+  --app-marker: rgb(217 182 78 / 0.22);
+}
+
+@theme inline {
+  --color-marker: var(--app-marker);
+
+  --font-sans: var(--app-font-latin), var(--app-font-cjk), sans-serif;
+  --font-reading:
+    'Literata', 'LXGW WenKai', ui-serif, Georgia, 'Songti SC', serif;
+  --font-lxgw: 'LXGW WenKai', var(--app-font-cjk), serif;
+  /* legacy alias: `font-lato` has always meant the system UI stack */
+  --font-lato: var(--app-font-latin), var(--app-font-cjk), sans-serif;
+
+  --ease-soft: cubic-bezier(0.2, 0, 0, 1);
+}
+
+html {
+  background-color: var(--lake-canvas);
+  color: var(--lake-fg);
+  scrollbar-gutter: stable;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@supports (scrollbar-color: auto) {
+  html {
+    scrollbar-color: var(--lake-line-strong) transparent;
+    scrollbar-width: thin;
+  }
+}
+
+::selection {
+  background-color: var(--app-marker);
+}
+
+/* Type roles. Sizes are fixed per role; never combine with `text-*` sizes. */
+@utility type-display {
+  font-family: var(--font-reading);
+  font-size: 2.25rem;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+
+  @media (width >= 48rem) {
+    font-size: 3rem;
+  }
+
+  &:is(:lang(zh), :lang(ja), :lang(ko)) {
+    letter-spacing: 0;
+  }
+}
+
+@utility type-title {
+  font-family: var(--font-reading);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+
+  @media (width >= 48rem) {
+    font-size: 2rem;
+  }
+
+  &:is(:lang(zh), :lang(ja), :lang(ko)) {
+    letter-spacing: 0;
+  }
+}
+
+@utility type-heading {
+  font-family: var(--font-reading);
+  font-size: 1.25rem;
+  line-height: 1.35;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+@utility type-body {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+@utility type-quote {
+  font-family: var(--font-reading);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  font-weight: 400;
+  text-wrap: pretty;
+
+  &:is(:lang(zh), :lang(ja), :lang(ko)) {
+    line-height: 1.85;
+  }
+}
+
+@utility type-quote-lg {
+  font-family: var(--font-reading);
+  font-size: 1.375rem;
+  line-height: 1.7;
+  font-weight: 400;
+  text-wrap: pretty;
+
+  @media (width >= 48rem) {
+    font-size: 1.5rem;
+  }
+
+  &:is(:lang(zh), :lang(ja), :lang(ko)) {
+    line-height: 1.85;
+  }
+}
+
+@utility type-meta {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--lake-fg-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility type-eyebrow {
+  font-size: 0.75rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lake-fg-subtle);
+
+  &:is(:lang(zh), :lang(ja), :lang(ko)) {
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+}
+
+/* A highlighter stroke behind inline text, e.g. <mark className="marker"> */
+@utility marker {
+  background-image: linear-gradient(
+    transparent 55%,
+    var(--app-marker) 55%,
+    var(--app-marker) 92%,
+    transparent 92%
+  );
+  background-color: transparent;
+  color: inherit;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

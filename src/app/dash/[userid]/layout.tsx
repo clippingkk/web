@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import type React from 'react'
 
-import DashboardContainer from '@/components/dashboard-container/container'
-import { currentUserId } from '@/server/gate/current'
+import AppShell from '@/components/shell/app-shell'
+import { getViewer } from '@/server/data/viewer'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -15,12 +15,25 @@ export const metadata: Metadata = {
   },
 }
 
-const Layout = async (props: LayoutProps) => {
-  const myUid = (await currentUserId())?.toString()
+async function Layout(props: LayoutProps) {
+  const viewer = await getViewer()
   return (
-    <DashboardContainer uidOrDomain={myUid}>
+    <AppShell
+      viewer={
+        viewer
+          ? {
+              id: viewer.id,
+              name: viewer.name,
+              avatar: viewer.avatar,
+              slug: viewer.slug,
+              isPremium: viewer.isPremium,
+              isAdmin: viewer.isAdmin,
+            }
+          : null
+      }
+    >
       {props.children}
-    </DashboardContainer>
+    </AppShell>
   )
 }
 

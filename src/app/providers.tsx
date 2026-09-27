@@ -2,8 +2,11 @@
 
 import { ApolloNextAppProvider } from '@apollo/client-integration-nextjs'
 import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type React from 'react'
 import { useState, useEffect } from 'react'
+
+import ThemeSync from '@/components/theme/theme-sync'
 
 import { createReactQueryClient, makeApolloClient } from '../services/ajax'
 import profile from '../utils/profile'
@@ -20,22 +23,13 @@ function ClientOnlyProviders(props: ClientOnlyProvidersProps) {
     profile.onLogout()
   }, [])
   return (
-    // <MetaMaskProvider
-    //   sdkOptions={{
-    //     dappMetadata: {
-    //       name: 'ClippingKK',
-    //       url: typeof window === 'undefined' ? '' : window.location.href,
-    //     },
-    //     infuraAPIKey: process.env.NEXT_PUBLIC_INFURA_KEY,
-    //     // Other options.
-    //   }}
-    // >
     <QueryClientProvider client={rq}>
       <ApolloNextAppProvider makeClient={makeApolloClient}>
+        <ThemeSync />
         {children}
+        <ReactQueryDevtools initialIsOpen={false} />
       </ApolloNextAppProvider>
     </QueryClientProvider>
-    // </MetaMaskProvider>
   )
 }
 

@@ -1,26 +1,13 @@
 import type React from 'react'
 
-import { currentUserId } from '@/server/gate/current'
-
-import DashboardContainer from '../../../components/dashboard-container/container'
-import NavigateGuide from '../../../components/navigation-bar/navigate-guide'
+import MarketingShell from '@/components/shell/marketing-shell'
 
 type LayoutProps = {
   children: React.ReactNode
 }
 
-const Layout = async (props: LayoutProps) => {
-  const myUid = (await currentUserId())?.toString()
-  return (
-    <DashboardContainer
-      uidOrDomain={myUid}
-      header={
-        <NavigateGuide uid={myUid ? ~~myUid : undefined} title="Success" />
-      }
-    >
-      {props.children}
-    </DashboardContainer>
-  )
+function Layout(props: LayoutProps) {
+  return <MarketingShell>{props.children}</MarketingShell>
 }
 
 export default Layout

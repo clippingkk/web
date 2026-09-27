@@ -46,7 +46,6 @@
     }
   },
   "ignorePatterns": [
-    "tailwind.config.js",
     "src/gql/**/*.ts",
     "src/**/*.mdx",
     "src/schema/generated.tsx",

@@ -4,13 +4,13 @@ import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import Cookies from 'js-cookie'
-import { useEffect } from 'react'
 import {
   initReactI18next,
   useTranslation as useTranslationOrg,
 } from 'react-i18next'
 
 import { STORAGE_LANG_KEY } from '@/constants/storage'
+import { toHtmlLang } from '@/lib/theme'
 
 import { getOptions, languages } from './settings'
 
@@ -46,16 +46,13 @@ i18next
     preload: runsOnServerSide ? languages : [],
   })
 
+if (!runsOnServerSide) {
+  i18next.on('languageChanged', (lng) => {
+    Cookies.set(STORAGE_LANG_KEY, lng)
+    document.documentElement.lang = toHtmlLang(lng)
+  })
+}
+
 export function useTranslation(_lng?: string, ns?: string, options?: any) {
-  const ret = useTranslationOrg(ns, options)
-  const { i18n } = ret
-  useEffect(() => {
-    i18n.on('languageChanged', (lng) => {
-      Cookies.set(STORAGE_LANG_KEY, lng)
-    })
-    return () => {
-      i18n.off('languageChanged')
-    }
-  }, [i18n.off, i18n.on])
-  return ret
+  return useTranslationOrg(ns, options)
 }

@@ -1,4 +1,5 @@
 'use client'
+import '@/styles/react-animation.css'
 import type React from 'react'
 import { useEffect, useState } from 'react'
 

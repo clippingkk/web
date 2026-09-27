@@ -1,6 +1,3 @@
-import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+// lake-ui's `cn` merges its own token classes (rounded-lake-*, shadow-lake-*)
+// correctly, so the app uses the same instance.
+export { cn } from '@annatarhe/lake-ui/utils'

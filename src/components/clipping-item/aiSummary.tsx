@@ -5,7 +5,7 @@ import { useAIGeneration } from '@/hooks/use-ai-generation'
 import { useTranslation } from '@/i18n/client'
 
 import type { WenquBook } from '../../services/wenqu'
-import { getLanguage } from '../../utils/locales'
+import { getLanguage } from '@/i18n/language'
 import { PulseLoader } from '../book-recommendation/pulse-loader'
 
 type ClippingAISummaryModalProps = {

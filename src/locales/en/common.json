@@ -1,0 +1,46 @@
+{
+  "shell": {
+    "skipToContent": "Skip to content",
+    "signIn": "Sign in",
+    "openLibrary": "Open library",
+    "nav": {
+      "label": "Main",
+      "library": "Library",
+      "square": "Square",
+      "upload": "Import",
+      "me": "Me"
+    },
+    "search": {
+      "open": "Search"
+    },
+    "userMenu": {
+      "label": "Account menu",
+      "profile": "Profile",
+      "settings": "Settings",
+      "theme": "Theme",
+      "themeSystem": "System",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "account": "Manage Gate account",
+      "admin": "Admin",
+      "signOut": "Sign out",
+      "signedOut": "Signed out. See you soon.",
+      "signOutFailed": "Couldn't sign out. Please try again.",
+      "premium": "Premium"
+    },
+    "footer": {
+      "label": "Footer",
+      "tagline": "A quiet place for the passages that stayed with you.",
+      "pricing": "Pricing",
+      "privacy": "Privacy",
+      "support": "Support",
+      "version": "Build version"
+    }
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "This page couldn't be loaded. It may be a temporary problem.",
+    "retry": "Try again",
+    "home": "Back to library"
+  }
+}

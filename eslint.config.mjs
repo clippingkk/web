@@ -8,7 +8,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig([globalIgnores([
-    "**/tailwind.config.js",
     "src/gql/**/*.ts",
     "src/**/*.mdx",
     "src/schema/generated.ts",

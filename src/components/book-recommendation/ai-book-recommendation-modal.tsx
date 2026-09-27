@@ -3,7 +3,7 @@ import Modal from '@annatarhe/lake-ui/modal'
 import { useMultipleBook } from '@/hooks/book'
 import { useAIGeneration } from '@/hooks/use-ai-generation'
 import { useTranslation } from '@/i18n/client'
-import { getLanguage } from '@/utils/locales'
+import { getLanguage } from '@/i18n/language'
 
 import { EmptyState } from './empty-state'
 import { ErrorState } from './error-state'

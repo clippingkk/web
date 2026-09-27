@@ -1,0 +1,46 @@
+{
+  "shell": {
+    "skipToContent": "跳到正文",
+    "signIn": "登录",
+    "openLibrary": "打开书房",
+    "nav": {
+      "label": "主导航",
+      "library": "书房",
+      "square": "广场",
+      "upload": "导入",
+      "me": "我的"
+    },
+    "search": {
+      "open": "搜索"
+    },
+    "userMenu": {
+      "label": "账户菜单",
+      "profile": "个人主页",
+      "settings": "设置",
+      "theme": "外观",
+      "themeSystem": "跟随系统",
+      "themeLight": "浅色",
+      "themeDark": "深色",
+      "account": "管理 Gate 账户",
+      "admin": "管理后台",
+      "signOut": "退出登录",
+      "signedOut": "已退出，下次见。",
+      "signOutFailed": "退出失败，请重试。",
+      "premium": "高级会员"
+    },
+    "footer": {
+      "label": "页脚",
+      "tagline": "安放那些打动过你的句子。",
+      "pricing": "价格",
+      "privacy": "隐私政策",
+      "support": "帮助与支持",
+      "version": "构建版本"
+    }
+  },
+  "error": {
+    "title": "出了点问题",
+    "description": "页面暂时无法加载，可能只是临时故障。",
+    "retry": "重试",
+    "home": "回到书房"
+  }
+}
