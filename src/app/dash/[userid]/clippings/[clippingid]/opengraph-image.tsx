@@ -23,8 +23,7 @@ function absolute(src: string | URL) {
   return url.href
 }
 
-export default async function Image(props: ImageProps) {
-  const { clippingid } = await props.params
+async function loadClipping(clippingid: string) {
   const id = /^\d+$/.test(clippingid) ? Number(clippingid) : -1
   // Private or missing clippings get the brand card instead of an error.
   const data =
@@ -40,9 +39,21 @@ export default async function Image(props: ImageProps) {
     clipping && isValidDoubanId(clipping.bookID)
       ? await getWenquBookByDbId(clipping.bookID).catch(() => null)
       : null
+  return { clipping, book }
+}
 
+async function loadFont() {
   const fontUrl = absolute(new URL('LXGWWenKai-Regular.ttf', import.meta.url))
-  const font = await fetch(fontUrl).then((res) => res.arrayBuffer())
+  return fetch(fontUrl).then((res) => res.arrayBuffer())
+}
+
+export default async function Image(props: ImageProps) {
+  const { clippingid } = await props.params
+  // the font needs nothing from the clipping, so it downloads alongside
+  const [{ clipping, book }, font] = await Promise.all([
+    loadClipping(clippingid),
+    loadFont(),
+  ])
 
   return new ImageResponse(
     <OGImageClipping
