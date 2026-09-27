@@ -1,0 +1,121 @@
+{
+  "home": {
+    "meta": {
+      "title": "{{name}}의 서재",
+      "description": "{{name}}님이 ClippingKK에서 읽고 있는 책과 문장."
+    },
+    "ownerEyebrow": "내 서재",
+    "ownerTitle": "다시 오신 걸 환영해요, {{name}}님",
+    "visitorEyebrow": "서재",
+    "visitorTitle": "{{name}}의 서재",
+    "summary": "책 {{books}}권 · 하이라이트 {{clippings}}개",
+    "import": "하이라이트 가져오기",
+    "viewProfile": "프로필 보기",
+    "recommend": "책 추천받기",
+    "nowReading": {
+      "title": "지금 읽는 책",
+      "latest": "최근 하이라이트",
+      "openBook": "책 열기"
+    },
+    "shelf": {
+      "title": "책장",
+      "ownerDescription": "하이라이트한 모든 책을 최근 순으로 보여 줍니다.",
+      "visitorDescription": "공개 하이라이트가 있는 책을 최근 순으로 보여 줍니다."
+    },
+    "unchecked": {
+      "title_other": "책이 지정되지 않은 하이라이트 {{count}}개",
+      "description": "가져올 때 자동으로 책을 찾지 못했어요.",
+      "action": "정리하기"
+    },
+    "profile": {
+      "title": "프로필을 완성해 주세요",
+      "description": "이름, 아바타, 짧은 링크를 추가하면 친구들이 서재를 찾기 쉬워요.",
+      "action": "프로필 편집",
+      "dismiss": "닫기"
+    },
+    "empty": {
+      "ownerTitle": "서재가 비어 있어요",
+      "ownerDescription": "Kindle의 My Clippings.txt를 가져오면 책이 여기에 나타나요.",
+      "visitorTitle": "아직 공개된 내용이 없어요",
+      "visitorDescription": "{{name}}님이 공개한 하이라이트가 없어요."
+    }
+  },
+  "book": {
+    "meta": {
+      "title": "{{title}} · {{name}}의 하이라이트",
+      "description": "{{title}}의 하이라이트 {{count}}개."
+    },
+    "fromLibrary": "{{name}}의 서재에서",
+    "readSpan": "{{from}} – {{to}} 읽음",
+    "share": "공유",
+    "douban": "Douban",
+    "about": "책 소개",
+    "showMore": "더 보기",
+    "showLess": "접기",
+    "highlightsTitle": "하이라이트",
+    "order": {
+      "label": "정렬",
+      "newest": "최신순",
+      "oldest": "오래된순"
+    },
+    "layout": {
+      "label": "보기",
+      "grid": "카드",
+      "list": "목록"
+    },
+    "notFound": {
+      "title": "이 책에는 볼 수 있는 하이라이트가 없어요",
+      "description": "비공개이거나 이 서재에 없는 책일 수 있어요.",
+      "action": "서재로 돌아가기"
+    }
+  },
+  "square": {
+    "meta": {
+      "title": "광장",
+      "description": "지금 ClippingKK 독자들이 나누는 문장."
+    },
+    "eyebrow": "광장",
+    "title": "오늘 독자들이 남긴 문장",
+    "description": "ClippingKK 독자들이 공개한 하이라이트를 최신순으로 보여 줍니다.",
+    "empty": {
+      "title": "광장이 조용해요",
+      "description": "아직 공개된 하이라이트가 없어요."
+    },
+    "layout": {
+      "label": "보기",
+      "grid": "카드",
+      "list": "목록"
+    }
+  },
+  "unchecked": {
+    "meta": {
+      "title": "책 지정 필요"
+    },
+    "eyebrow": "서재",
+    "title": "책 지정이 필요한 하이라이트",
+    "description": "가져올 때 책을 찾지 못한 하이라이트입니다. 한 번 책을 지정하면 같은 제목의 하이라이트가 함께 옮겨져요.",
+    "back": "서재로 돌아가기",
+    "group_other": "하이라이트 {{count}}개",
+    "findBook": "책 찾기",
+    "matched": "하이라이트 {{count}}개를 {{title}}(으)로 옮겼어요.",
+    "empty": {
+      "title": "모두 정리됐어요",
+      "description": "서재의 모든 하이라이트가 책에 연결되어 있어요.",
+      "action": "서재로 돌아가기"
+    }
+  },
+  "match": {
+    "title": "책 찾기",
+    "description": "제목이 “{{title}}”인 모든 하이라이트가 선택한 책으로 옮겨져요.",
+    "searchLabel": "책 제목",
+    "searchPlaceholder": "제목이나 저자로 검색",
+    "results_other": "{{count}}권 찾음",
+    "empty": "검색 결과가 없어요.",
+    "hint": "두 글자 이상 입력해 검색하세요.",
+    "confirm": "이 책으로 지정",
+    "cancel": "취소",
+    "saving": "하이라이트를 옮기는 중…",
+    "done": "{{title}}(으)로 옮겼어요.",
+    "failed": "책을 바꾸지 못했어요. 다시 시도해 주세요."
+  }
+}

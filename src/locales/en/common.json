@@ -42,5 +42,19 @@
     "description": "This page couldn't be loaded. It may be a temporary problem.",
     "retry": "Try again",
     "home": "Back to library"
+  },
+  "clipping": {
+    "page": "p. {{page}}",
+    "private": "Private",
+    "public": "Public"
+  },
+  "book": {
+    "highlights_one": "{{count}} highlight",
+    "highlights_other": "{{count}} highlights"
+  },
+  "list": {
+    "end": "You've reached the end.",
+    "loading": "Loading more",
+    "loadMore": "Load more"
   }
 }

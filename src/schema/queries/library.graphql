@@ -1,0 +1,34 @@
+query libraryOverview($uid: Int!, $pagination: PaginationLegacy!) {
+  me(id: $uid) {
+    id
+    recents {
+      id
+      title
+      content
+      bookID
+      pageAt
+      createdAt
+      visible
+    }
+  }
+  books(uid: $uid, pagination: $pagination) {
+    doubanId
+    clippingsCount
+    lastReadingAt
+  }
+}
+
+query libraryBooks($uid: Int!, $pagination: PaginationLegacy!) {
+  books(uid: $uid, pagination: $pagination) {
+    doubanId
+    clippingsCount
+    lastReadingAt
+  }
+}
+
+query uncheckedCount($uid: Int!) {
+  book(id: 0, uid: $uid, pagination: { limit: 1, offset: 0 }) {
+    doubanId
+    clippingsCount
+  }
+}

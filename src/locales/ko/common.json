@@ -42,5 +42,18 @@
     "description": "페이지를 불러오지 못했습니다. 일시적인 문제일 수 있습니다.",
     "retry": "다시 시도",
     "home": "서재로 돌아가기"
+  },
+  "clipping": {
+    "page": "{{page}}쪽",
+    "private": "나만 보기",
+    "public": "공개"
+  },
+  "book": {
+    "highlights_other": "하이라이트 {{count}}개"
+  },
+  "list": {
+    "end": "마지막까지 봤어요.",
+    "loading": "더 불러오는 중",
+    "loadMore": "더 보기"
   }
 }

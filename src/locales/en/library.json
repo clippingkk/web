@@ -1,0 +1,124 @@
+{
+  "home": {
+    "meta": {
+      "title": "{{name}}'s library",
+      "description": "The books and passages {{name}} is reading, on ClippingKK."
+    },
+    "ownerEyebrow": "Your library",
+    "ownerTitle": "Welcome back, {{name}}",
+    "visitorEyebrow": "Library",
+    "visitorTitle": "{{name}}'s library",
+    "summary": "{{books}} books · {{clippings}} highlights",
+    "import": "Import highlights",
+    "viewProfile": "View profile",
+    "recommend": "Recommend books",
+    "nowReading": {
+      "title": "Now reading",
+      "latest": "Latest highlight",
+      "openBook": "Open book"
+    },
+    "shelf": {
+      "title": "Shelf",
+      "ownerDescription": "Every book you've highlighted, most recent first.",
+      "visitorDescription": "Books with public highlights, most recent first."
+    },
+    "unchecked": {
+      "title_one": "{{count}} highlight needs a book",
+      "title_other": "{{count}} highlights need a book",
+      "description": "We couldn't match these to a book automatically.",
+      "action": "Review"
+    },
+    "profile": {
+      "title": "Finish setting up your profile",
+      "description": "Add your name, an avatar and a short link so friends can find your library.",
+      "action": "Edit profile",
+      "dismiss": "Dismiss"
+    },
+    "empty": {
+      "ownerTitle": "Your library is empty",
+      "ownerDescription": "Import My Clippings.txt from your Kindle and your books will appear here.",
+      "visitorTitle": "Nothing shared yet",
+      "visitorDescription": "{{name}} hasn't made any highlights public."
+    }
+  },
+  "book": {
+    "meta": {
+      "title": "{{title}} · {{name}}'s highlights",
+      "description": "{{count}} highlights from {{title}}."
+    },
+    "fromLibrary": "From {{name}}'s library",
+    "readSpan": "Read {{from}} – {{to}}",
+    "share": "Share",
+    "douban": "Douban",
+    "about": "About this book",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "highlightsTitle": "Highlights",
+    "order": {
+      "label": "Order",
+      "newest": "Newest",
+      "oldest": "Oldest"
+    },
+    "layout": {
+      "label": "Layout",
+      "grid": "Grid",
+      "list": "List"
+    },
+    "notFound": {
+      "title": "No visible highlights for this book",
+      "description": "They may be private, or this book isn't in the library.",
+      "action": "Back to library"
+    }
+  },
+  "square": {
+    "meta": {
+      "title": "Square",
+      "description": "Passages readers are sharing on ClippingKK right now."
+    },
+    "eyebrow": "Square",
+    "title": "From readers today",
+    "description": "Public highlights from the ClippingKK community, newest first.",
+    "empty": {
+      "title": "The square is quiet",
+      "description": "No one has shared a public highlight yet."
+    },
+    "layout": {
+      "label": "Layout",
+      "grid": "Grid",
+      "list": "List"
+    }
+  },
+  "unchecked": {
+    "meta": {
+      "title": "Needs a book"
+    },
+    "eyebrow": "Library",
+    "title": "Needs a book",
+    "description": "These highlights weren't matched to a book when you imported them. Find the right book once and every highlight with the same title moves together.",
+    "back": "Back to library",
+    "group_one": "{{count}} highlight",
+    "group_other": "{{count}} highlights",
+    "findBook": "Find book",
+    "matched": "Moved {{count}} highlights to {{title}}.",
+    "empty": {
+      "title": "Everything is matched",
+      "description": "Every highlight in your library belongs to a book.",
+      "action": "Back to library"
+    }
+  },
+  "match": {
+    "title": "Find the book",
+    "description": "Every highlight titled “{{title}}” moves to the book you choose.",
+    "searchLabel": "Book title",
+    "searchPlaceholder": "Search by title or author",
+    "results_one": "{{count}} match",
+    "results_other": "{{count}} matches",
+    "empty": "No books match that search.",
+    "hint": "Type at least two characters to search.",
+    "confirm": "Use this book",
+    "cancel": "Cancel",
+    "saving": "Moving highlights…",
+    "done": "Moved to {{title}}.",
+    "failed": "Couldn't update the book. Please try again."
+  }
+}

@@ -1,0 +1,17 @@
+query bookShelf($id: Int!, $uid: Int!, $pagination: PaginationLegacy!) {
+  book(id: $id, uid: $uid, pagination: $pagination) {
+    doubanId
+    startReadingAt
+    lastReadingAt
+    clippingsCount
+    clippings {
+      id
+      title
+      content
+      bookID
+      pageAt
+      createdAt
+      visible
+    }
+  }
+}

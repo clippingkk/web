@@ -96,6 +96,23 @@ export async function getWenquBookByDbId(
   return response.books.length === 1 ? response.books[0] : null
 }
 
+/**
+ * Valid, de-duplicated Douban ids in chunks of 10, the batch size the
+ * client hook (useMultipleBook) requests. Server prefetches must use the same
+ * chunks so their cache keys hydrate the client queries.
+ */
+export function chunkDoubanIds(doubanIds: readonly string[]): string[][] {
+  const unique: string[] = []
+  for (const id of doubanIds) {
+    if (isValidDoubanId(id) && !unique.includes(id)) unique.push(id)
+  }
+  const chunks: string[][] = []
+  for (let i = 0; i < unique.length; i += 10) {
+    chunks.push(unique.slice(i, i + 10))
+  }
+  return chunks
+}
+
 export function wenquBooksByIdsQueryOptions(dbIds: string[]) {
   return {
     queryKey: ['wenqu', 'books', 'dbIds', dbIds] as const,

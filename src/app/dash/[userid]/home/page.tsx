@@ -1,178 +1,228 @@
+import Button from '@annatarhe/lake-ui/button'
+import EmptyState from '@annatarhe/lake-ui/empty-state'
+import { HydrationBoundary } from '@tanstack/react-query'
+import { BookMarked, BookOpenText, Upload } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 import AIBookRecommendationButton from '@/components/book-recommendation/ai-book-recommendation-button'
-import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
-import {
-  BooksDocument,
-  type BooksQuery,
-  type BooksQueryVariables,
-  ProfileDocument,
-  type ProfileQuery,
-  type ProfileQueryVariables,
-} from '@/gql/graphql'
+import Callout from '@/components/layout/callout'
+import Page from '@/components/layout/page'
+import PageHeader from '@/components/layout/page-header'
+import Section from '@/components/layout/section'
+import UserChip from '@/components/user/user-chip'
+import { LibraryOverviewDocument, UncheckedCountDocument } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
-import { currentUserId } from '@/server/gate/current'
-import { doApolloServerQuery } from '@/services/apollo.server'
+import { pageMetadata } from '@/lib/metadata'
+import { resolvePathUser } from '@/server/data/path-user'
+import { serverQuery } from '@/server/data/query'
+import { getViewer } from '@/server/data/viewer'
+import { prefetchWenquBooks } from '@/server/data/wenqu'
+import { isValidDoubanId } from '@/services/wenqu'
+import { resolveMediaUrl } from '@/utils/image'
+import { dashHref, getUserSlug, isUsableDomain } from '@/utils/profile.utils'
 
-import HomePageContent from './content'
-import NoContentAlert from './no-content'
-import ReadingBook from './reading-book'
+import LibraryShelf from './library-shelf'
+import NowReading from './now-reading'
+import ProfileCallout from './profile-callout'
+
+const SHELF_PAGE_SIZE = 18
 
 type PageProps = {
   params: Promise<{ userid: string }>
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const [params] = await Promise.all([props.params])
-  const pathUid: string = params.userid
-  const uid = parseInt(pathUid, 10)
-  const isTargetUidType = !Number.isNaN(uid)
-
-  if (!(await currentUserId())) {
-    return profileGenerateMetadata({})
-  }
-
-  // No try/catch: doApolloServerQuery turns 401 into a redirect and 404 into
-  // notFound(), and both signal by throwing. Catching here would swallow them.
-  const profileResponse = await doApolloServerQuery<
-    ProfileQuery,
-    ProfileQueryVariables
-  >({
-    query: ProfileDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      id: isTargetUidType ? uid : undefined,
-      domain: isTargetUidType ? undefined : pathUid,
-    },
-    context: {
-      headers: {},
-    },
-  })
-  return profileGenerateMetadata({
-    profile: profileResponse.data?.me ?? undefined,
+  const { userid } = await props.params
+  const [user, { t }] = await Promise.all([
+    resolvePathUser(userid),
+    getTranslation(undefined, 'library'),
+  ])
+  return pageMetadata({
+    title: t('home.meta.title', { name: user.name }),
+    description: user.bio || t('home.meta.description', { name: user.name }),
+    path: dashHref(user, 'home'),
+    image: user.avatar ? resolveMediaUrl(user.avatar) : null,
+    type: 'profile',
   })
 }
 
-// the home page only available for myself
-async function Page(props: PageProps) {
-  const [params, { t }] = await Promise.all([
-    props.params,
-    getTranslation(undefined, 'home'),
+async function LibraryPage(props: PageProps) {
+  const { userid } = await props.params
+  const [pathUser, viewer, { t }] = await Promise.all([
+    resolvePathUser(userid),
+    getViewer(),
+    getTranslation(undefined, 'library'),
   ])
-  const { userid } = params
-  const myUid = (await currentUserId())?.toString()
+  const isOwner = viewer?.id === pathUser.id
+  const slug = getUserSlug(pathUser)
 
-  if (!myUid) {
-    return redirect(`/dash/${userid}/profile`)
-  }
-
-  const myUidInt = myUid ? parseInt(myUid, 10) : undefined
-
-  const reqs: [
-    ReturnType<typeof doApolloServerQuery<ProfileQuery, ProfileQueryVariables>>,
-    ReturnType<typeof doApolloServerQuery<BooksQuery, BooksQueryVariables>>,
-    ReturnType<
-      typeof doApolloServerQuery<ProfileQuery, ProfileQueryVariables>
-    >?,
-  ] = [
-    doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
-      query: ProfileDocument,
-      fetchPolicy: 'network-only',
-      variables: {
-        id: myUidInt,
-      },
-      context: {
-        headers: {},
-      },
+  const [overview, unchecked] = await Promise.all([
+    serverQuery(LibraryOverviewDocument, {
+      uid: pathUser.id,
+      pagination: { limit: SHELF_PAGE_SIZE, offset: 0 },
     }),
-    doApolloServerQuery<BooksQuery, BooksQueryVariables>({
-      query: BooksDocument,
-      fetchPolicy: 'network-only',
-      context: {
-        headers: {},
-      },
-      variables: {
-        id: myUidInt,
-        pagination: {
-          limit: 10,
-          offset: 0,
-        },
-      },
-    }),
-  ]
+    isOwner
+      ? serverQuery(
+          UncheckedCountDocument,
+          { uid: pathUser.id },
+          { notFound: 'null' }
+        )
+      : Promise.resolve(null),
+  ])
 
-  if (myUid !== userid) {
-    reqs.push(
-      doApolloServerQuery<ProfileQuery, ProfileQueryVariables>({
-        query: ProfileDocument,
-        fetchPolicy: 'network-only',
-        variables: {
-          id: Number.isNaN(userid) ? undefined : Number(userid),
-          domain: Number.isNaN(userid) ? userid : undefined,
-        },
-        context: {
-          headers: {},
-        },
-      })
-    )
-  }
+  const books = overview.books
+  const latest = overview.me.recents.find((c) => isValidDoubanId(c.bookID))
+  const prefetched = await prefetchWenquBooks([
+    ...(latest ? [latest.bookID] : []),
+    ...books.map((b) => b.doubanId),
+  ])
 
-  const [profileResponse, booksResponse, accessingProfileResponse] =
-    await Promise.all(reqs)
+  const uncheckedCount = unchecked?.book.clippingsCount ?? 0
+  const needsProfile =
+    isOwner &&
+    (pathUser.name.startsWith('user.') ||
+      !pathUser.avatar ||
+      !pathUser.bio ||
+      !isUsableDomain(pathUser.domain))
 
-  const recents = profileResponse.data!.me.recents
-  const firstBookId =
-    recents.length > 0 && (recents[0].bookID?.length ?? 0) > 3
-      ? recents[0].bookID!
-      : ''
+  const summary = t('home.summary', {
+    books: pathUser.booksCount,
+    clippings: pathUser.clippingsCount,
+  })
 
   return (
-    <section className="page h-full">
-      {firstBookId && (
-        <div className="with-slide-in mt-4">
-          <h2 className="relative z-10 mb-8 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-center text-3xl font-semibold tracking-tight text-transparent md:text-4xl">
-            {t('app.home.reading')}
-          </h2>
-          <ReadingBook
-            bookId={firstBookId}
-            clipping={recents?.[0]}
-            uid={myUidInt!}
-          />
-        </div>
-      )}
-      <header className="my-12 flex flex-col items-center justify-center gap-4 md:flex-row">
-        <h2 className="relative z-10 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-center text-3xl font-semibold tracking-tight text-transparent md:text-4xl">
-          {t('app.home.title')}
-        </h2>
-        <div className="mt-2 flex items-center gap-3 md:mt-0">
-          <Link
-            href={`/dash/${myUidInt}/unchecked`}
-            className="inline-flex items-center rounded-xl bg-blue-400 px-5 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300"
-          >
-            {t('app.home.unchecked')}
-          </Link>
-          <AIBookRecommendationButton
-            uid={myUidInt!}
-            books={booksResponse.data!.books}
-          />
-        </div>
-      </header>
-      {!firstBookId && booksResponse.data!.books.length === 0 && (
-        <div className="flex flex-wrap items-center justify-center">
-          <NoContentAlert domain={userid} />
-        </div>
-      )}
-      <HomePageContent
-        userid={userid}
-        myUid={myUidInt}
-        targetProfile={
-          accessingProfileResponse?.data?.me ?? profileResponse.data!.me
+    <Page width="wide">
+      <PageHeader
+        eyebrow={
+          isOwner ? (
+            t('home.ownerEyebrow')
+          ) : (
+            <UserChip
+              href={dashHref(pathUser, 'profile')}
+              name={pathUser.name}
+              avatar={pathUser.avatar}
+              className="normal-case"
+            />
+          )
+        }
+        title={
+          isOwner
+            ? t('home.ownerTitle', { name: pathUser.name })
+            : t('home.visitorTitle', { name: pathUser.name })
+        }
+        meta={<span>{summary}</span>}
+        actions={
+          isOwner ? (
+            <>
+              {books.length > 0 ? (
+                <AIBookRecommendationButton uid={pathUser.id} books={books} />
+              ) : null}
+              <Button
+                variant="primary"
+                size="sm"
+                leadingIcon={<Upload className="size-4" />}
+                render={<Link href={dashHref(pathUser, 'upload')} />}
+              >
+                {t('home.import')}
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="secondary"
+              size="sm"
+              render={<Link href={dashHref(pathUser, 'profile')} />}
+            >
+              {t('home.viewProfile')}
+            </Button>
+          )
         }
       />
-    </section>
+
+      {uncheckedCount > 0 || needsProfile ? (
+        <div className="flex flex-col gap-3">
+          {uncheckedCount > 0 ? (
+            <Callout
+              tone="warning"
+              icon={<BookMarked />}
+              title={t('home.unchecked.title', { count: uncheckedCount })}
+              description={t('home.unchecked.description')}
+              action={
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  render={<Link href={dashHref(pathUser, 'unchecked')} />}
+                >
+                  {t('home.unchecked.action')}
+                </Button>
+              }
+            />
+          ) : null}
+          {needsProfile ? (
+            <ProfileCallout
+              editHref={`${dashHref(pathUser, 'profile')}?with_profile_editor=1`}
+            />
+          ) : null}
+        </div>
+      ) : null}
+
+      <HydrationBoundary state={prefetched.state}>
+        {latest ? (
+          <NowReading
+            slug={slug}
+            clipping={latest}
+            book={prefetched.byId.get(latest.bookID)}
+            isOwner={isOwner}
+          />
+        ) : null}
+
+        <Section
+          id="shelf"
+          title={t('home.shelf.title')}
+          description={
+            isOwner
+              ? t('home.shelf.ownerDescription')
+              : t('home.shelf.visitorDescription')
+          }
+        >
+          {books.length > 0 ? (
+            <LibraryShelf
+              uid={pathUser.id}
+              slug={slug}
+              initialBooks={books}
+              pageSize={SHELF_PAGE_SIZE}
+            />
+          ) : (
+            <EmptyState
+              icon={<BookOpenText className="size-6" />}
+              title={
+                isOwner
+                  ? t('home.empty.ownerTitle')
+                  : t('home.empty.visitorTitle')
+              }
+              description={
+                isOwner
+                  ? t('home.empty.ownerDescription')
+                  : t('home.empty.visitorDescription', {
+                      name: pathUser.name,
+                    })
+              }
+              action={
+                isOwner ? (
+                  <Button
+                    variant="primary"
+                    render={<Link href={dashHref(pathUser, 'upload')} />}
+                  >
+                    {t('home.import')}
+                  </Button>
+                ) : null
+              }
+            />
+          )}
+        </Section>
+      </HydrationBoundary>
+    </Page>
   )
 }
 
-export default Page
+export default LibraryPage

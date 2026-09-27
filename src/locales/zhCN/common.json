@@ -42,5 +42,18 @@
     "description": "页面暂时无法加载，可能只是临时故障。",
     "retry": "重试",
     "home": "回到书房"
+  },
+  "clipping": {
+    "page": "第 {{page}} 页",
+    "private": "仅自己可见",
+    "public": "公开"
+  },
+  "book": {
+    "highlights_other": "{{count}} 条书摘"
+  },
+  "list": {
+    "end": "已经到底了。",
+    "loading": "正在加载",
+    "loadMore": "加载更多"
   }
 }
