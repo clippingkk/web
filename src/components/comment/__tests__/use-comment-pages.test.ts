@@ -97,4 +97,29 @@ describe('useCommentPages', () => {
     expect(result.current.items.map((c) => c.id)).toEqual([9, 1])
     expect(result.current.count).toBe(2)
   })
+
+  it('starts again from the top once every loaded comment is deleted', async () => {
+    query.mockResolvedValue(page(comments(3, 4), 2))
+    const { result } = renderHook(() =>
+      useCommentPages({
+        uid: 5,
+        initialItems: comments(1),
+        initialCount: 3,
+        pageSize: 3,
+      })
+    )
+
+    act(() => result.current.remove(1))
+    expect(result.current.hasMore).toBe(true)
+    await act(() => result.current.loadMore())
+
+    expect(query).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variables: expect.objectContaining({
+          pagination: { limit: 3, lastId: undefined },
+        }),
+      })
+    )
+    expect(result.current.items.map((c) => c.id)).toEqual([3, 4])
+  })
 })

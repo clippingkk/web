@@ -45,8 +45,10 @@ export function useCommentPages(options: UseCommentPagesOptions) {
   }, [fetchPage])
 
   const loadMore = useCallback(async () => {
+    if (loading) return
     const lastId = items.at(-1)?.id
-    if (!lastId || loading) return
+    // every loaded comment was deleted: start again from the top
+    if (!lastId) return reload()
     setLoading(true)
     const page = await fetchPage(lastId).finally(() => setLoading(false))
     const next = page?.items ?? []
@@ -56,7 +58,7 @@ export function useCommentPages(options: UseCommentPagesOptions) {
     // a short page means the list has ended, whatever the count said
     if (next.length < pageSize)
       setCount((n) => Math.min(n, items.length + fresh.length))
-  }, [items, loading, fetchPage, pageSize])
+  }, [items, loading, fetchPage, pageSize, reload])
 
   const remove = useCallback((id: number) => {
     setItems((current) => current.filter((c) => c.id !== id))

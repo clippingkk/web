@@ -87,11 +87,11 @@ function CommentThread(props: CommentThreadProps) {
             />
           ))}
         </div>
-      ) : viewer ? (
+      ) : viewer && !hasMore ? (
         <p className="type-meta py-4">{t('comments.empty')}</p>
       ) : null}
 
-      {items.length > 0 ? (
+      {items.length > 0 || hasMore ? (
         <LoadMoreFooter
           hasMore={hasMore}
           loading={loading}

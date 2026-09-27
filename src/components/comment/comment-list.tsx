@@ -36,7 +36,7 @@ function CommentList(props: CommentListProps) {
     pageSize,
   })
 
-  if (items.length === 0) {
+  if (items.length === 0 && !hasMore) {
     return (
       <EmptyState
         icon={<MessageSquare className="size-6" />}

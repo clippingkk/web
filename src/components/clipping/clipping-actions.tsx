@@ -65,6 +65,12 @@ function ClippingActions(props: ClippingActionsProps) {
   const [shareOpen, setShareOpen] = useState(false)
   const [matchOpen, setMatchOpen] = useState(false)
   const [visible, setVisible] = useState(clipping.visible)
+  const [syncedVisible, setSyncedVisible] = useState(clipping.visible)
+  // a refresh (or a change made elsewhere) wins over the local choice
+  if (syncedVisible !== clipping.visible) {
+    setSyncedVisible(clipping.visible)
+    setVisible(clipping.visible)
+  }
   const [toggleVisible] = useMutation(ToggleClippingVisibleDocument)
 
   const copy = async (text: string, success: string) => {
