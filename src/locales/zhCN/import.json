@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "导入书摘"
+  },
+  "eyebrow": "导入",
+  "title": "从 Kindle 导入",
+  "description": "导入 Kindle 里的 My Clippings.txt。新的书摘会加入你的书房，导入过的会自动跳过。",
+  "file": {
+    "title": "书摘文件",
+    "drop": "把 My Clippings.txt 拖到这里，或",
+    "browse": "选择文件",
+    "hint": "Kindle 的 documents 文件夹里的纯文本文件。",
+    "wrongType": "这看起来不是 My Clippings.txt，请选择 Kindle 里的 .txt 文件。",
+    "selected": "{{name}} · {{size}}",
+    "change": "换一个文件"
+  },
+  "visibility": {
+    "title": "谁可以看到这些书摘",
+    "label": "可见范围",
+    "public": "公开",
+    "private": "仅自己",
+    "publicDescription": "会出现在你的主页和广场上。",
+    "privateDescription": "只有你能看到，之后也可以单独公开某条书摘。"
+  },
+  "submit": "公开导入",
+  "submitPrivate": "私密导入",
+  "steps": {
+    "label": "导入进度",
+    "parse": "读取文件",
+    "searchingBook": "匹配书籍",
+    "uploading": "保存书摘",
+    "done": "完成"
+  },
+  "progress": {
+    "parse": "正在读取文件…",
+    "searchingBook": "正在匹配书籍 {{at}} / {{count}}",
+    "uploading": "正在保存第 {{at}} / {{count}} 批"
+  },
+  "done": {
+    "title_other": "导入了 {{count}} 条书摘",
+    "nothingNew": "没有新的书摘",
+    "duplicates_other": "有 {{count}} 条书摘之前已经导入过。",
+    "openLibrary": "打开书房",
+    "another": "再导入一个文件"
+  },
+  "errors": {
+    "title": "导入中断了",
+    "read": "无法打开这个文件。请确认它仍在你的设备上，然后重试。",
+    "parse": "无法读取这个文件。目前只支持英文和中文的 Kindle 导出文件。",
+    "upload": "保存到一半失败了。已保存的书摘会保留，重新导入会自动跳过。",
+    "search": "部分书籍没能匹配，已留待整理。",
+    "retry": "重试"
+  },
+  "help": {
+    "title": "My Clippings.txt 在哪里？",
+    "body": "用 USB 线把 Kindle 连接到电脑，打开 Kindle 磁盘里的 documents 文件夹，就能找到 My Clippings.txt。",
+    "video": "观看视频教程"
+  },
+  "global": {
+    "title": "导入这个文件？",
+    "description": "把 {{name}} 导入你的书房。",
+    "overlay": "松开即可导入 Kindle 书摘",
+    "start": "导入",
+    "cancel": "取消",
+    "running": "正在导入…",
+    "done": "导入完成",
+    "failed": "导入失败",
+    "view": "查看"
+  },
+  "busy": "另一个导入还在进行中，请等它完成后再试。"
+}

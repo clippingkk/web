@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "title": "Import highlights"
+  },
+  "eyebrow": "Import",
+  "title": "Import from Kindle",
+  "description": "Bring in the My Clippings.txt file from your Kindle. New highlights are added to your library; ones you've imported before are skipped.",
+  "file": {
+    "title": "Your clippings file",
+    "drop": "Drop My Clippings.txt here, or",
+    "browse": "choose a file",
+    "hint": "A plain text file from your Kindle's documents folder.",
+    "wrongType": "That doesn't look like My Clippings.txt. Choose the .txt file from your Kindle.",
+    "selected": "{{name}} · {{size}}",
+    "change": "Choose another file"
+  },
+  "visibility": {
+    "title": "Who can see these highlights",
+    "label": "Visibility",
+    "public": "Public",
+    "private": "Only me",
+    "publicDescription": "Shown on your profile and in the Square.",
+    "privateDescription": "Only you can see them. You can make single highlights public later."
+  },
+  "submit": "Import as public",
+  "submitPrivate": "Import as private",
+  "steps": {
+    "label": "Import progress",
+    "parse": "Read file",
+    "searchingBook": "Match books",
+    "uploading": "Save highlights",
+    "done": "Done"
+  },
+  "progress": {
+    "parse": "Reading your file…",
+    "searchingBook": "Matching books {{at}} of {{count}}",
+    "uploading": "Saving batch {{at}} of {{count}}"
+  },
+  "done": {
+    "title_one": "Imported {{count}} highlight",
+    "title_other": "Imported {{count}} highlights",
+    "nothingNew": "Nothing new to import",
+    "duplicates_one": "{{count}} highlight was already in your library.",
+    "duplicates_other": "{{count}} highlights were already in your library.",
+    "openLibrary": "Open library",
+    "another": "Import another file"
+  },
+  "errors": {
+    "title": "The import stopped",
+    "read": "We couldn't open this file. Check it's still on your device and try again.",
+    "parse": "We couldn't read this file. Only English and Chinese Kindle exports are supported.",
+    "upload": "Saving failed part-way. Highlights saved so far are kept; importing again will skip them.",
+    "search": "Some books couldn't be matched and were left for review.",
+    "retry": "Try again"
+  },
+  "help": {
+    "title": "Where is My Clippings.txt?",
+    "body": "Connect your Kindle to a computer with a USB cable. Open the Kindle drive, go into the documents folder, and you'll find My Clippings.txt.",
+    "video": "Watch the video guide"
+  },
+  "global": {
+    "title": "Import this file?",
+    "description": "Import {{name}} into your library.",
+    "overlay": "Drop to import your Kindle highlights",
+    "start": "Import",
+    "cancel": "Cancel",
+    "running": "Importing…",
+    "done": "Import finished",
+    "failed": "Import failed",
+    "view": "View"
+  },
+  "busy": "Another import is still running. Try again when it finishes."
+}

@@ -1,6 +1,8 @@
 import type React from 'react'
 
+import GlobalUpload from '@/components/uploads/global'
 import { getTranslation } from '@/i18n'
+import { dashHref } from '@/utils/profile.utils'
 
 import AppFooter from './app-footer'
 import AppTopBar from './app-top-bar'
@@ -32,6 +34,9 @@ async function AppShell({ viewer, children }: AppShellProps) {
       </main>
       <AppFooter />
       {viewer ? <MobileTabBar viewer={viewer} /> : null}
+      {viewer ? (
+        <GlobalUpload libraryHref={dashHref(viewer.slug, 'home')} />
+      ) : null}
     </div>
   )
 }

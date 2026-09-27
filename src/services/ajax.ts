@@ -13,9 +13,10 @@ import { onError } from '@apollo/client/link/error'
 import { cache } from 'react'
 import toast from 'react-hot-toast'
 
+import { getLanguage } from '@/i18n/language'
+
 import { API_HOST } from '../constants/config'
 import type { ApiResponse } from '../contracts/http'
-import { getLanguage } from '@/i18n/language'
 import profile from '../utils/profile'
 import { classifyApolloError } from './apollo-errors'
 import { apolloCacheConfig } from './apollo.shard'

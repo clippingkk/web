@@ -13,7 +13,6 @@ import type React from 'react'
 import { Suspense } from 'react'
 
 import AppToaster from '@/components/app-toaster'
-import GlobalUpload from '@/components/uploads/global'
 import { bootScript, SERVER_THEME, THEME_COLORS } from '@/lib/theme'
 
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
@@ -68,7 +67,6 @@ function Layout(props: LayoutProps) {
         <Suspense fallback={<Loading />}>
           <ClientOnlyProviders>
             {props.children}
-            <GlobalUpload />
             <AppToaster />
             <div data-st-role="modal" />
             <div data-st-role="sheet" data-ui-scale="standard" />
