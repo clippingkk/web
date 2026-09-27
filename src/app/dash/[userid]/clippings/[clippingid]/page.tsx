@@ -139,9 +139,7 @@ async function ClippingPage(props: PageProps) {
               }
             />
             {clipping.pageAt ? (
-              <span className="type-meta">
-                {t('page', { page: clipping.pageAt })}
-              </span>
+              <span className="type-meta">{clipping.pageAt}</span>
             ) : null}
             {isOwner && !clipping.visible ? (
               <Badge

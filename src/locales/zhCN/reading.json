@@ -4,7 +4,6 @@
     "fallbackTitle": "{{name}} 的书摘"
   },
   "kicker": "摘自",
-  "page": "第 {{page}} 页",
   "private": "这条书摘仅你自己可见",
   "reactions": {
     "label": "表态",

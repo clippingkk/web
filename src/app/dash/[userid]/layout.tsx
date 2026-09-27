@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type React from 'react'
 
 import AppShell from '@/components/shell/app-shell'
+import type { ShellViewer } from '@/components/shell/types'
 import { getViewer } from '@/server/data/viewer'
 
 type LayoutProps = {
@@ -15,26 +16,22 @@ export const metadata: Metadata = {
   },
 }
 
-async function Layout(props: LayoutProps) {
+async function shellViewer(): Promise<ShellViewer | null> {
   const viewer = await getViewer()
-  return (
-    <AppShell
-      viewer={
-        viewer
-          ? {
-              id: viewer.id,
-              name: viewer.name,
-              avatar: viewer.avatar,
-              slug: viewer.slug,
-              isPremium: viewer.isPremium,
-              isAdmin: viewer.isAdmin,
-            }
-          : null
+  return viewer
+    ? {
+        id: viewer.id,
+        name: viewer.name,
+        avatar: viewer.avatar,
+        slug: viewer.slug,
+        isPremium: viewer.isPremium,
+        isAdmin: viewer.isAdmin,
       }
-    >
-      {props.children}
-    </AppShell>
-  )
+    : null
+}
+
+function Layout(props: LayoutProps) {
+  return <AppShell viewer={shellViewer()}>{props.children}</AppShell>
 }
 
 export default Layout

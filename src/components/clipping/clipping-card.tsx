@@ -70,7 +70,8 @@ function ClippingCard(props: ClippingCardProps) {
   const isPrivate = showPrivate && clipping.visible === false
   const date = formatDate(clipping.createdAt, i18n.language)
   const meta = [
-    clipping.pageAt ? t('clipping.page', { page: clipping.pageAt }) : null,
+    // Kindle's own label: a location like "#73" or a page like "第 12 页"
+    clipping.pageAt || null,
     date || null,
   ].filter(Boolean)
 

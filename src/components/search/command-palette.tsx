@@ -260,7 +260,7 @@ function CommandPalette({ open, onClose, viewer }: CommandPaletteProps) {
             setActiveId(null)
           }}
           onKeyDown={onKeyDown}
-          className="text-lake-fg placeholder:text-lake-fg-subtle w-full bg-transparent text-base outline-none"
+          className="text-lake-fg placeholder:text-lake-fg-subtle w-full border-0 bg-transparent p-0 text-base outline-none focus:ring-0 [&::-webkit-search-cancel-button]:hidden"
         />
         {searching ? <Spinner size="xs" label={t('searching')} /> : null}
       </div>

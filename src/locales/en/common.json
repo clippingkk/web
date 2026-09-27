@@ -44,7 +44,6 @@
     "home": "Back to library"
   },
   "clipping": {
-    "page": "p. {{page}}",
     "private": "Private",
     "public": "Public"
   },

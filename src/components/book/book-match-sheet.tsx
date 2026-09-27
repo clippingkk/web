@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils'
 import type { WenquBook } from '@/services/wenqu'
 
 import BookCover from './book-cover'
+import { publishedYear } from './book-meta'
 
 type BookMatchSheetProps = {
   open: boolean
@@ -137,7 +138,7 @@ function BookMatchSheet(props: BookMatchSheetProps) {
                         {book.title}
                       </span>
                       <span className="text-lake-fg-muted block truncate text-sm">
-                        {[book.author, book.press, book.pubdate]
+                        {[book.author, book.press, publishedYear(book.pubdate)]
                           .filter(Boolean)
                           .join(' · ')}
                       </span>

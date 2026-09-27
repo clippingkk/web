@@ -41,7 +41,7 @@ function BookCover({ book, title, author, className }: BookCoverProps) {
           height={48}
           alt={book?.title ?? title}
           onError={() => setFailed(true)}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover text-transparent"
         />
       ) : (
         <div className="flex h-full flex-col justify-between p-[10%]">
