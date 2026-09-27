@@ -139,6 +139,7 @@
     "sync": "연결",
     "synced": "{{title}}을(를) 연결했어요",
     "failed": "이 제목을 연결하지 못했어요.",
+    "invalidId": "Douban ID는 네 자리 이상의 숫자예요.",
     "placeholder": "Douban ID"
   }
 }

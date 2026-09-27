@@ -5,6 +5,7 @@ import SegmentedControl from '@annatarhe/lake-ui/segmented-control'
 import Cookies from 'js-cookie'
 import { Monitor, Moon, Sun } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useState, useTransition } from 'react'
 
 import {
   SettingsCard,
@@ -32,11 +33,15 @@ function GeneralSettingsPage() {
   const { t, i18n } = useTranslation(undefined, 'settings')
   const router = useRouter()
   const { preference, setPreference } = useTheme()
+  const [chosen, setChosen] = useState<string | null>(null)
+  const [switching, startSwitch] = useTransition()
 
-  const onLanguageChange = async (value: string) => {
+  // The refresh brings the new language's strings; I18nProvider switches once
+  // they arrive, so nothing renders as raw keys in between.
+  const onLanguageChange = (value: string) => {
+    setChosen(value)
     Cookies.set(STORAGE_LANG_KEY, value, { expires: 365, sameSite: 'lax' })
-    await i18n.changeLanguage(value)
-    router.refresh()
+    startSwitch(() => router.refresh())
   }
 
   return (
@@ -53,7 +58,8 @@ function GeneralSettingsPage() {
               label={t('general.language')}
               className="w-48 [&_label]:sr-only"
               options={LANGUAGES}
-              value={normalize(i18n.language ?? 'en')}
+              value={chosen ?? normalize(i18n.language ?? 'en')}
+              disabled={switching}
               onChange={(e) => onLanguageChange(e.target.value)}
             />
           }

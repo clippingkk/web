@@ -140,6 +140,7 @@
     "sync": "Sync",
     "synced": "Synced {{title}}",
     "failed": "Couldn't sync this title.",
+    "invalidId": "A Douban id is a number of at least four digits.",
     "placeholder": "Douban id"
   }
 }

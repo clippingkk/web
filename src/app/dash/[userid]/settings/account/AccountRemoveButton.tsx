@@ -22,9 +22,14 @@ export default function AccountRemoveButton({
   const [scheduled, setScheduled] = useState('')
 
   async function remove() {
-    const response = await fetch('/api/auth/delete-account', {
-      method: 'POST',
-    })
+    let response: Response
+    try {
+      response = await fetch('/api/auth/delete-account', { method: 'POST' })
+    } catch (error) {
+      // offline or blocked: say so, and keep the dialog open to retry
+      toast.error(t('account.failed'))
+      throw error
+    }
     const result = await response.json().catch(() => null)
     if (!response.ok) {
       toast.error(result?.msg || t('account.failed'))

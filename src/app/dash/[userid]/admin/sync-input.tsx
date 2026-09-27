@@ -20,7 +20,10 @@ function HomelessBookSyncInput({ bookName }: { bookName: string }) {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const id = doubanId.trim()
-    if (!/^\d{4,}$/.test(id)) return
+    if (!/^\d{4,}$/.test(id)) {
+      toast.error(t('admin.invalidId'))
+      return
+    }
     try {
       await sync({ variables: { title: bookName, doubanID: id } })
       toast.success(t('admin.synced', { title: bookName }))

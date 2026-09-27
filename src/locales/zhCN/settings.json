@@ -139,6 +139,7 @@
     "sync": "关联",
     "synced": "已关联《{{title}}》",
     "failed": "关联失败。",
+    "invalidId": "豆瓣 ID 是至少四位的数字。",
     "placeholder": "豆瓣 ID"
   }
 }
