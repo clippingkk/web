@@ -23,11 +23,22 @@ export function maskError(error: unknown, message: string, isDev?: boolean) {
     error instanceof GraphQLError ? (error.originalError ?? error) : error
   if (original instanceof ApiError)
     return new GraphQLError(original.message, {
+      // Keep where it happened, so a client can tell which field failed.
+      ...(error instanceof GraphQLError
+        ? {
+            nodes: error.nodes,
+            source: error.source,
+            positions: error.positions,
+            path: error.path,
+          }
+        : {}),
       extensions: {
         code: original.code,
         http: { status: original.status },
       },
     })
+  // In development yoga's default adds the original message and stack under
+  // extensions.originalError; the top-level message stays masked everywhere.
   return defaultMaskError(error, message, isDev)
 }
 
@@ -37,5 +48,8 @@ export const yoga = createYoga({
   context: createGraphQLContext,
   cors: false,
   graphiql: process.env.NODE_ENV !== 'production',
-  maskedErrors: process.env.NODE_ENV === 'production' ? { maskError } : false,
+  // Masked in every environment, so dev and prod hand pages the same codes:
+  // with masking off, an ApiError reached serverQuery() without its code and a
+  // 404 in dev rendered the error boundary instead of not-found.
+  maskedErrors: { maskError },
 })
