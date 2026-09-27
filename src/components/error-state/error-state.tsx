@@ -9,11 +9,13 @@ import {
   TriangleAlert,
 } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 import DecorBlobs from '@/components/ui/decor-blobs/decor-blobs'
 import Surface from '@/components/ui/surface/surface'
 import { useTranslation } from '@/i18n/client'
+import { authHref } from '@/lib/auth-href'
 import { cn } from '@/lib/utils'
 
 /**
@@ -44,6 +46,7 @@ export default function ErrorState({
   description,
 }: ErrorStateProps) {
   const { t } = useTranslation(undefined, 'error')
+  const pathname = usePathname()
   const [copied, setCopied] = useState(false)
 
   const message = error.message?.trim() ?? ''
@@ -127,7 +130,7 @@ export default function ErrorState({
 
         {isAuthError && (
           <Link
-            href="/auth/auth-v4?clean=true"
+            href={authHref(pathname)}
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-blue-400/40 px-4 py-3 text-sm font-medium text-blue-500 transition-all duration-200 hover:bg-blue-400/10 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:text-blue-300"
           >
             <LogIn className="h-4 w-4" />

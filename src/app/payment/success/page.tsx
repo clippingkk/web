@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 
 import DecorBlobs from '@/components/ui/decor-blobs/decor-blobs'
 import Surface from '@/components/ui/surface/surface'
+import { authHref } from '@/lib/auth-href'
+import { currentPath } from '@/server/data/current-path'
 import { currentUserId } from '@/server/gate/current'
 import { getReactQueryClient } from '@/services/ajax'
 
@@ -18,7 +20,7 @@ async function PaymentSuccessPage(props: PaymentSuccessPageProps) {
   const rq = getReactQueryClient()
 
   const uid = await currentUserId()
-  if (!uid) redirect('/auth')
+  if (!uid) redirect(authHref(await currentPath()))
 
   const d = dehydrate(rq)
 

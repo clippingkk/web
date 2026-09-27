@@ -3,9 +3,11 @@ import Link from 'next/link'
 
 import Surface from '@/components/ui/surface/surface'
 import { getTranslation } from '@/i18n'
+import { authHref } from '@/lib/auth-href'
+import { currentPath } from '@/server/data/current-path'
 
 async function ProfileForbidden() {
-  const { t } = await getTranslation()
+  const [{ t }, path] = await Promise.all([getTranslation(), currentPath()])
 
   return (
     <div className="flex w-full items-center justify-center py-10">
@@ -25,7 +27,7 @@ async function ProfileForbidden() {
         </p>
 
         <Link
-          href="/auth/auth-v4"
+          href={authHref(path)}
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-400 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300"
         >
           <LogIn className="h-4 w-4" />

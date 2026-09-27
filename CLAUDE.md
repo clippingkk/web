@@ -58,15 +58,19 @@ Multi-provider auth using XState machine:
 ### GraphQL Integration
 
 ```typescript
-// Server components
-const response = await doApolloServerQuery<ProfileQuery>({
-  query: ProfileDocument,
-  context: { headers: { Authorization: 'Bearer ' + token } },
-})
+// Server components (src/server/data/*): UNAUTHORIZED redirects to sign-in with
+// `next`, NOT_FOUND/FORBIDDEN render not-found. doApolloServerQuery is deprecated.
+const data = await serverQuery(ProfileDocument, { id })
+const viewer = await getViewer() // or requireViewer() / requireViewerRoute()
+const user = await resolvePathUser(params.userid)
 
 // Client components use generated hooks
 const { data, loading } = useProfileQuery({ variables: { id } })
 ```
+
+Links: build sign-in links with `authHref(next)` (`src/lib/auth-href.ts`) and user
+URLs with `dashHref` / `clippingHref` / `bookHref` (`src/utils/profile.utils.ts`),
+never by hand.
 
 The GraphQL API lives in this same project (`src/app/api/v2/graphql/route.ts`, backed by
 `src/server/graphql/`). Server components therefore execute **in-process** against the yoga

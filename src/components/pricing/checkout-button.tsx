@@ -1,5 +1,9 @@
 'use client'
+import { usePathname } from 'next/navigation'
 import { useRef, useState } from 'react'
+
+import { authHref } from '@/lib/auth-href'
+
 export default function CheckoutButton({
   signedIn,
   portal = false,
@@ -10,9 +14,10 @@ export default function CheckoutButton({
   const [busy, setBusy] = useState(false),
     [error, setError] = useState('')
   const key = useRef<string | null>(null)
+  const pathname = usePathname()
   async function open() {
     if (!signedIn) {
-      window.location.assign('/auth?next=/pricing')
+      window.location.assign(authHref(pathname ?? '/pricing'))
       return
     }
     setBusy(true)

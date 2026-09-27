@@ -1,0 +1,12 @@
+# The signed-in reader, as src/server/data/viewer.ts needs it. Keep it lean:
+# every page that knows who is looking pays for this query.
+query viewer($id: Int) {
+  me(id: $id) {
+    id
+    name
+    avatar
+    domain
+    email
+    premiumEndAt
+  }
+}

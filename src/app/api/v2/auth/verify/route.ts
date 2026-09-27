@@ -1,5 +1,6 @@
 import { eq } from 'drizzle-orm'
 
+import { authHref } from '@/lib/auth-href'
 import { requireLegacyAuth } from '@/server/auth'
 import { getDatabase } from '@/server/db'
 import { users } from '@/server/db/schema'
@@ -20,7 +21,7 @@ export const GET = route(async (request) => {
     .where(eq(users.id, userId))
   await cacheDelete(`auth:signup:mail:${code}`)
   return Response.redirect(
-    `${getServerEnv().APP_ORIGIN}/auth/signin?checked=true`,
+    new URL(authHref(), getServerEnv().APP_ORIGIN).toString(),
     307
   )
 }, 'auth.email.verify')

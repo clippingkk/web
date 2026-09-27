@@ -7,6 +7,7 @@ import {
   countDistinct,
   desc,
   eq,
+  getTableColumns,
   gte,
   ilike,
   inArray,
@@ -15,6 +16,8 @@ import {
   or,
   sql,
 } from 'drizzle-orm'
+
+import { DOMAIN_PATTERN } from '@/utils/profile.utils'
 
 import { requirePremium, aiClipping } from '../ai/access'
 import { generateAIText } from '../ai/generate'
@@ -193,6 +196,11 @@ async function visibleClippingById(id: number, userId: number) {
   )
 }
 
+/** ILIKE pattern for a substring search, with the reader's `%`, `_` and `\` literal. */
+function containsPattern(query: unknown) {
+  return `%${String(query).replace(/[\\%_]/g, '\\$&')}%`
+}
+
 async function authResponse(
   user: User,
   options?: { thirdParty?: boolean; isNew?: boolean }
@@ -239,21 +247,57 @@ async function validOtp(address: string, otp: string) {
   }
 }
 
-async function loadComments(filters: {
-  clippingId?: number
-  userId?: number
-  pagination?: Args
-}) {
-  const conditions = [activeComment]
+/**
+ * Comments whose clipping the viewer may see. A comment on a private (or
+ * deleted) clipping is left out entirely: listing it would leak that the
+ * clipping exists, and its belongsTo could not be resolved anyway.
+ */
+function commentConditions(
+  filters: { clippingId?: number; userId?: number },
+  viewerId: number
+) {
+  const conditions = [
+    activeComment,
+    activeClipping,
+    clippingVisibleTo(viewerId),
+  ]
   if (filters.clippingId)
     conditions.push(eq(comments.belongsTo, filters.clippingId))
   if (filters.userId) conditions.push(eq(comments.createdBy, filters.userId))
-  const pagination = page(filters.pagination)
-  conditions.push(lt(comments.id, pagination.lastId))
-  return db()
-    .select()
+  return conditions
+}
+
+async function countComments(
+  filters: { clippingId?: number; userId?: number },
+  viewerId: number
+) {
+  const [total] = await db()
+    .select({ value: count() })
     .from(comments)
-    .where(and(...conditions))
+    .innerJoin(clippings, eq(clippings.id, comments.belongsTo))
+    .where(and(...commentConditions(filters, viewerId)))
+  return total.value
+}
+
+async function loadComments(
+  filters: {
+    clippingId?: number
+    userId?: number
+    pagination?: Args
+  },
+  viewerId: number
+) {
+  const pagination = page(filters.pagination)
+  return db()
+    .select(getTableColumns(comments))
+    .from(comments)
+    .innerJoin(clippings, eq(clippings.id, comments.belongsTo))
+    .where(
+      and(
+        ...commentConditions(filters, viewerId),
+        lt(comments.id, pagination.lastId)
+      )
+    )
     .orderBy(desc(comments.id))
     .limit(pagination.limit)
 }
@@ -489,7 +533,8 @@ export const resolvers: Record<string, Record<string, any>> = {
             clippingVisibleTo(context.userId)
           )
         )
-      if (!row?.clippingsCount) throw new ApiError('book not found', 404)
+      if (!row?.clippingsCount)
+        throw new ApiError('book not found', 404, 'NOT_FOUND')
       return { doubanId, uid, ...row, pagination: legacyPage(args.pagination) }
     },
     public: async (_: unknown, args: Args) => {
@@ -611,7 +656,7 @@ export const resolvers: Record<string, Record<string, any>> = {
         .offset(pagination.offset)
       return { uncheckedBooks: rows }
     },
-    reportYearly: async (_: unknown, args: Args) => {
+    reportYearly: async (_: unknown, args: Args, context: GraphQLContext) => {
       const user = args.domain
         ? assertFound(
             await db().query.users.findFirst({
@@ -633,6 +678,7 @@ export const resolvers: Record<string, Record<string, any>> = {
           and(
             eq(clippings.createdBy, user.id),
             activeClipping,
+            clippingVisibleTo(context.userId),
             gte(clippings.createdAt, from),
             lt(clippings.createdAt, until)
           )
@@ -642,7 +688,7 @@ export const resolvers: Record<string, Record<string, any>> = {
     },
     search: async (_: unknown, args: Args, context: GraphQLContext) => {
       const scopeUser = args.scope === 'Me' ? requiredUser(context) : 0
-      const q = `%${args.query}%`
+      const q = containsPattern(args.query)
       const foundUsers =
         args.type === 'BookName'
           ? []
@@ -696,25 +742,25 @@ export const resolvers: Record<string, Record<string, any>> = {
         throw new ApiError('Forbidden', 403)
       return hook
     },
-    getComment: async (_: unknown, args: Args) =>
-      assertFound(
-        await db().query.comments.findFirst({ where: eq(comments.id, args.id) })
-      ),
-    getCommentList: async (_: unknown, args: Args) => {
-      const conditions = [activeComment]
-      if (args.cid) conditions.push(eq(comments.belongsTo, args.cid))
-      if (args.uid) conditions.push(eq(comments.createdBy, args.uid))
-      const [total] = await db()
-        .select({ value: count() })
-        .from(comments)
-        .where(and(...conditions))
-      return {
-        count: total.value,
-        items: await loadComments({
-          clippingId: args.cid,
-          userId: args.uid,
-          pagination: args.pagination,
+    getComment: async (_: unknown, args: Args, context: GraphQLContext) => {
+      const comment = assertFound(
+        await db().query.comments.findFirst({
+          where: eq(comments.id, args.id),
         }),
+        'comment not found'
+      )
+      // A comment on a clipping the viewer may not see does not exist for them.
+      await visibleClippingById(comment.belongsTo, context.userId)
+      return comment
+    },
+    getCommentList: async (_: unknown, args: Args, context: GraphQLContext) => {
+      const filters = { clippingId: args.cid, userId: args.uid }
+      return {
+        count: await countComments(filters, context.userId),
+        items: await loadComments(
+          { ...filters, pagination: args.pagination },
+          context.userId
+        ),
       }
     },
   },
@@ -1031,12 +1077,14 @@ export const resolvers: Record<string, Record<string, any>> = {
       )
     },
     createComment: async (_: unknown, args: Args, context: GraphQLContext) => {
-      await clippingById(args.cid)
+      const createdBy = requiredUser(context)
+      // Commenting must not confirm that someone else's private clipping exists.
+      await visibleClippingById(args.cid, createdBy)
       const [created] = await db()
         .insert(comments)
         .values({
           belongsTo: args.cid,
-          createdBy: requiredUser(context),
+          createdBy,
           content: args.content,
         })
         .returning()
@@ -1101,8 +1149,14 @@ export const resolvers: Record<string, Record<string, any>> = {
       }
       if (args.domain !== undefined && args.domain !== null) {
         const domain = String(args.domain).trim().toLowerCase()
-        if (!/^[a-z0-9][a-z0-9-]{2,31}$/.test(domain))
-          throw new ApiError('domain invalid')
+        if (!DOMAIN_PATTERN.test(domain))
+          throw new ApiError(
+            'Domain must be 3-32 letters, numbers or dashes, and cannot start with a dash.'
+          )
+        // /dash/123 always means user 123, so a numeric domain could never be
+        // reached and would shadow another account's id.
+        if (/^\d+$/.test(domain))
+          throw new ApiError('Domain cannot be only numbers.')
         const exists = await db().query.users.findFirst({
           where: and(eq(users.domain, domain), sql`${users.id} <> ${id}`),
         })
@@ -1487,21 +1541,15 @@ export const resolvers: Record<string, Record<string, any>> = {
         )
         .orderBy(desc(clippings.createdAt))
         .limit(20),
-    comments: (user: User) => loadComments({ userId: user.id }),
-    commentList: async (user: User, args: Args) => {
-      const conditions = and(activeComment, eq(comments.createdBy, user.id))
-      const [total] = await db()
-        .select({ value: count() })
-        .from(comments)
-        .where(conditions)
-      return {
-        count: total.value,
-        items: await loadComments({
-          userId: user.id,
-          pagination: args.pagination,
-        }),
-      }
-    },
+    comments: (user: User, _args: Args, context: GraphQLContext) =>
+      loadComments({ userId: user.id }, context.userId),
+    commentList: async (user: User, args: Args, context: GraphQLContext) => ({
+      count: await countComments({ userId: user.id }, context.userId),
+      items: await loadComments(
+        { userId: user.id, pagination: args.pagination },
+        context.userId
+      ),
+    }),
     clippingsCount: async (user: User) => {
       const [row] = await db()
         .select({ value: count() })
@@ -1747,7 +1795,8 @@ export const resolvers: Record<string, Record<string, any>> = {
         nouns: activeNouns,
       }
     },
-    comments: (clipping: Clipping) => loadComments({ clippingId: clipping.id }),
+    comments: (clipping: Clipping, _args: Args, context: GraphQLContext) =>
+      loadComments({ clippingId: clipping.id }, context.userId),
     reactions: (clipping: Clipping) =>
       db()
         .select()
@@ -1795,22 +1844,28 @@ export const resolvers: Record<string, Record<string, any>> = {
         }),
       }
     },
-    prevClipping: async (clipping: Clipping) => {
+    // Siblings are only ever the same creator's clippings that the viewer may
+    // see: neither another reader's clippings of the same book nor this
+    // creator's private ones (unless the viewer is the creator) may leak
+    // through an id.
+    prevClipping: async (
+      clipping: Clipping,
+      _args: Args,
+      context: GraphQLContext
+    ) => {
+      const sibling = and(
+        eq(clippings.createdBy, clipping.createdBy),
+        lt(clippings.id, clipping.id),
+        activeClipping,
+        clippingVisibleTo(context.userId)
+      )
       const [userPrev, bookPrev] = await Promise.all([
         db().query.clippings.findFirst({
-          where: and(
-            eq(clippings.createdBy, clipping.createdBy),
-            lt(clippings.id, clipping.id),
-            activeClipping
-          ),
+          where: sibling,
           orderBy: desc(clippings.id),
         }),
         db().query.clippings.findFirst({
-          where: and(
-            eq(clippings.bookId, clipping.bookId),
-            lt(clippings.id, clipping.id),
-            activeClipping
-          ),
+          where: and(sibling, eq(clippings.bookId, clipping.bookId)),
           orderBy: desc(clippings.id),
         }),
       ])
@@ -1819,22 +1874,24 @@ export const resolvers: Record<string, Record<string, any>> = {
         bookClippingID: bookPrev?.id ?? 0,
       }
     },
-    nextClipping: async (clipping: Clipping) => {
+    nextClipping: async (
+      clipping: Clipping,
+      _args: Args,
+      context: GraphQLContext
+    ) => {
+      const sibling = and(
+        eq(clippings.createdBy, clipping.createdBy),
+        sql`${clippings.id} > ${clipping.id}`,
+        activeClipping,
+        clippingVisibleTo(context.userId)
+      )
       const [userNext, bookNext] = await Promise.all([
         db().query.clippings.findFirst({
-          where: and(
-            eq(clippings.createdBy, clipping.createdBy),
-            sql`${clippings.id} > ${clipping.id}`,
-            activeClipping
-          ),
+          where: sibling,
           orderBy: asc(clippings.id),
         }),
         db().query.clippings.findFirst({
-          where: and(
-            eq(clippings.bookId, clipping.bookId),
-            sql`${clippings.id} > ${clipping.id}`,
-            activeClipping
-          ),
+          where: and(sibling, eq(clippings.bookId, clipping.bookId)),
           orderBy: asc(clippings.id),
         }),
       ])
@@ -1862,7 +1919,10 @@ export const resolvers: Record<string, Record<string, any>> = {
     },
   },
   Comment: {
-    belongsTo: (comment: Comment) => clippingById(comment.belongsTo),
+    // Non-null in the schema, so a clipping the viewer may not see is a
+    // NOT_FOUND rather than null -- never its content.
+    belongsTo: (comment: Comment, _args: Args, context: GraphQLContext) =>
+      visibleClippingById(comment.belongsTo, context.userId),
     creator: (comment: Comment) => userById(comment.createdBy),
     replyTo: async (comment: Comment) => {
       if (comment.replyTo <= 0) return null
@@ -1883,8 +1943,17 @@ export const resolvers: Record<string, Record<string, any>> = {
   },
   Noun: {
     bookId: (noun: Noun) => noun.bookId || null,
-    clipping: (noun: Noun) =>
-      noun.clippingId > 0 ? clippingById(noun.clippingId) : null,
+    // Nullable: a private or deleted clipping is simply absent.
+    clipping: async (noun: Noun, _args: Args, context: GraphQLContext) =>
+      noun.clippingId > 0
+        ? ((await db().query.clippings.findFirst({
+            where: and(
+              eq(clippings.id, noun.clippingId),
+              activeClipping,
+              clippingVisibleTo(context.userId)
+            ),
+          })) ?? null)
+        : null,
     updaters: (noun: Noun) =>
       noun.updaters.length
         ? db()

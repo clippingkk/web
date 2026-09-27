@@ -2,6 +2,8 @@ import { Book, Quote } from 'lucide-react'
 import Link from 'next/link'
 import { useMemo } from 'react'
 
+import { clippingHref } from '@/utils/profile.utils'
+
 type Props = {
   clipping: { id: number; content: string; title?: string; bookName?: string }
   profile?: { id: number; domain: string }
@@ -52,7 +54,8 @@ function SearchClippingItem(props: Props) {
       </div>
 
       <Link
-        href={`/dash/${(profile?.domain ?? '').length > 3 ? profile?.domain : profile?.id}/clippings/${c.id}`}
+        // The search bar only opens for a signed-in reader, so profile is set.
+        href={clippingHref(profile ?? { id: 0 }, c.id)}
         className="relative block rounded-lg bg-white/90 p-5 backdrop-blur-md transition-all duration-300 dark:bg-slate-800/90"
         onClick={onClick}
         aria-label={`View clipping: ${c.content.substring(0, 50)}${c.content.length > 50 ? '...' : ''}`}

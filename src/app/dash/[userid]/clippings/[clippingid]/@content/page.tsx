@@ -5,6 +5,7 @@ import ElegantDivider from '@/components/divider/elegant-divider'
 import ClippingRichContent from '@/components/text-content/clipping-rich-content'
 import { checkIsPremium } from '@/compute/user'
 import { getTranslation } from '@/i18n'
+import { authHref } from '@/lib/auth-href'
 import { isGrandAdmin } from '@/services/admin'
 import { resolveMediaUrl } from '@/utils/image'
 
@@ -16,7 +17,7 @@ type PageProps = {
 }
 
 async function ClippingContent(props: PageProps) {
-  const { clippingid } = await props.params
+  const { clippingid, userid } = await props.params
   const cid = ~~clippingid
 
   const { clipping, me, bookData, uid } = await getClippingData(cid)
@@ -72,7 +73,7 @@ async function ClippingContent(props: PageProps) {
       <footer className="flex flex-col gap-4 pt-6 lg:flex-row lg:items-center lg:justify-between">
         {me?.id === 0 && (
           <Link
-            href={'/auth/auth-v4'}
+            href={authHref(`/dash/${userid}/clippings/${clippingid}`)}
             className="group -ml-3 flex items-center gap-4 rounded-xl p-3 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-zinc-800/50"
           >
             <div className="relative">

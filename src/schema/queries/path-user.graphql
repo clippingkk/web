@@ -1,0 +1,15 @@
+# The user a `/dash/[userid]` URL points at (src/server/data/path-user.ts).
+query pathUser($id: Int, $domain: String) {
+  me(id: $id, domain: $domain) {
+    id
+    name
+    avatar
+    domain
+    bio
+    createdAt
+    premiumEndAt
+    clippingsCount
+    booksCount
+    isFan
+  }
+}

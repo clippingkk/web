@@ -7,6 +7,8 @@ import {
   type ProfileQuery,
   type ProfileQueryVariables,
 } from '@/gql/graphql'
+import { authHref } from '@/lib/auth-href'
+import { currentPath } from '@/server/data/current-path'
 import { currentUserId } from '@/server/gate/current'
 
 import { doApolloServerQuery } from '../../services/apollo.server'
@@ -47,12 +49,9 @@ async function DashboardContainer(props: DashboardContainerProps) {
     } catch (e) {
       if (e instanceof ServerError) {
         const statusCode = e.statusCode
-        if (statusCode === 401) {
-          return redirect('/auth/auth-v4?clean=true')
-        }
-        // user not found. maybe need to login again
-        if (statusCode === 404) {
-          return redirect('/auth/auth-v4?clean=true')
+        // 401: session gone. 404: user not found, maybe needs to sign in again.
+        if (statusCode === 401 || statusCode === 404) {
+          return redirect(authHref(await currentPath()))
         }
       }
       throw e

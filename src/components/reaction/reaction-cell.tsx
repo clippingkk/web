@@ -1,11 +1,12 @@
 import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { useApolloClient, useMutation } from '@apollo/client/react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 
 import { ReactionCreateDocument, ReactionRemoveDocument } from '@/gql/graphql'
+import { authHref } from '@/lib/auth-href'
 
 import { ReactionTarget } from '../../schema/generated'
 import Loading2Icon from '../icons/loading2.svg'
@@ -30,6 +31,7 @@ function ReactionCell(props: ReactionCellProps) {
 
   const client = useApolloClient()
   const navigate = useRouter()
+  const pathname = usePathname()
 
   const [doReactionCreate, { loading: isCreating }] = useMutation(
     ReactionCreateDocument,
@@ -60,7 +62,7 @@ function ReactionCell(props: ReactionCellProps) {
 
   const onCellClick = useCallback(() => {
     if (!myUid || myUid <= 0) {
-      navigate.push('/auth/auth-v4')
+      navigate.push(authHref(pathname))
       return
     }
     if (data.done) {
@@ -90,6 +92,7 @@ function ReactionCell(props: ReactionCellProps) {
     doReactionRemove,
     myUid,
     navigate,
+    pathname,
     symbol,
   ])
 

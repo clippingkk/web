@@ -19,6 +19,7 @@ vi.mock('next/link', () => ({
     children: React.ReactNode
   }) => <a href={href}>{children}</a>,
 }))
+vi.mock('next/navigation', () => ({ usePathname: () => '/dash/42/home' }))
 
 afterEach(cleanup)
 
@@ -49,7 +50,9 @@ it('offers a sign-in link only when the session is what failed', () => {
   const { unmount } = render(
     <ErrorState error={new Error('Sign in again')} reset={reset} />
   )
-  expect(screen.getByText('error.signIn')).toBeTruthy()
+  expect(
+    screen.getByText('error.signIn').closest('a')?.getAttribute('href')
+  ).toBe(`/auth?next=${encodeURIComponent('/dash/42/home')}`)
   unmount()
 
   render(<ErrorState error={new Error('book not found')} reset={reset} />)

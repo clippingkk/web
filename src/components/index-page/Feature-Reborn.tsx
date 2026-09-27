@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type React from 'react'
 
 import { getTranslation } from '@/i18n'
+import { authHref } from '@/lib/auth-href'
 import { currentUserId } from '@/server/gate/current'
 
 import AndroidIcon from '../../assets/android-icon.svg'
@@ -93,7 +94,7 @@ async function FeatureReborn() {
   const { t } = await getTranslation()
 
   const uid = (await currentUserId())?.toString()
-  const goLinkUrl = uid ? `/dash/${uid}/home` : '/auth/auth-v4'
+  const goLinkUrl = uid ? `/dash/${uid}/home` : authHref()
 
   return (
     <div className="relative w-full overflow-hidden py-24 lg:py-36">

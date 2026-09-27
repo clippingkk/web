@@ -17,6 +17,7 @@ import { API_HOST } from '../constants/config'
 import type { ApiResponse } from '../contracts/http'
 import { getLanguage } from '../utils/locales'
 import profile from '../utils/profile'
+import { classifyApolloError } from './apollo-errors'
 import { apolloCacheConfig } from './apollo.shard'
 import { createReactQueryClient } from './query-client'
 
@@ -126,13 +127,7 @@ export const authLink = new ApolloLink((operation, forward) => {
 })
 
 export function isUnauthorizedApolloError(error: unknown) {
-  if (error instanceof ServerError) return error.statusCode === 401
-  return (
-    CombinedGraphQLErrors.is(error) &&
-    error.errors.some(
-      (graphQLError) => graphQLError.extensions?.code === 'UNAUTHORIZED'
-    )
-  )
+  return classifyApolloError(error) === 'unauthorized'
 }
 
 /**
@@ -141,12 +136,7 @@ export function isUnauthorizedApolloError(error: unknown) {
  * it would hide a broken deployment. Only a resolver saying NOT_FOUND counts.
  */
 export function isNotFoundApolloError(error: unknown) {
-  return (
-    CombinedGraphQLErrors.is(error) &&
-    error.errors.some(
-      (graphQLError) => graphQLError.extensions?.code === 'NOT_FOUND'
-    )
-  )
+  return classifyApolloError(error) === 'not_found'
 }
 
 const errorLink = onError(({ error }) => {
