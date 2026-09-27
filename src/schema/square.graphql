@@ -5,10 +5,10 @@ query fetchSquareData($pagination: Pagination!) {
     content
     bookID
     pageAt
+    createdAt
     creator {
       id
       avatar
-      clippingsCount
       name
       domain
     }

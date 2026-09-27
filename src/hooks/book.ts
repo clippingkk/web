@@ -4,8 +4,8 @@ import { useMemo } from 'react'
 import { getQueryGcTime } from '@/services/query-client'
 
 import {
+  chunkDoubanIds,
   duration3Days,
-  isValidDoubanId,
   type WenquBook,
   wenquBooksByIdsQueryOptions,
   type WenquSearchResponse,
@@ -57,22 +57,8 @@ export function useMultipleBook(
   doubanIds: string[],
   skip?: boolean
 ): bookRequestReturn {
-  const validDoubanIdList = useMemo(() => {
-    return doubanIds.filter(isValidDoubanId).reduce<string[]>((acc, x) => {
-      if (!acc.includes(x)) {
-        acc.push(x)
-      }
-      return acc
-    }, [])
-  }, [doubanIds])
-  const chunkedDbIds = useMemo(() => {
-    const result: string[][] = []
-    const chunkSize = 10
-    for (let i = 0; i < validDoubanIdList.length; i += chunkSize) {
-      result.push(validDoubanIdList.slice(i, i + chunkSize))
-    }
-    return result
-  }, [validDoubanIdList])
+  const chunkedDbIds = useMemo(() => chunkDoubanIds(doubanIds), [doubanIds])
+  const validDoubanIdList = useMemo(() => chunkedDbIds.flat(), [chunkedDbIds])
 
   const bbs = useQueries({
     queries: chunkedDbIds.map((dbIds) => ({
@@ -105,7 +91,7 @@ export function useBookSearch(query: string, offset: number, visible = true) {
     queryKey: ['wenqu', 'books', 'search', query, 50, offset],
     queryFn: (ctx) =>
       wenquRequest<WenquSearchResponse>(
-        `/books/search?query=${query}&limit=50&offset=${offset}`,
+        `/books/search?query=${encodeURIComponent(query)}&limit=50&offset=${offset}`,
         {
           signal: ctx.signal,
         }

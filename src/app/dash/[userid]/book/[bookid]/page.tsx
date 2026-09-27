@@ -1,109 +1,90 @@
-import dayjs from 'dayjs'
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
 
-import BookInfo from '@/components/book-info/book-info'
-import BookInfoSkeleton from '@/components/book-info/book-info-skeleton'
-import Divider from '@/components/divider/divider'
-import { generateMetadata as bookGenerateMetadata } from '@/components/og/og-with-book'
-import { BOOK_CLIPPINGS_PAGE_SIZE } from '@/constants/features'
-import {
-  BookDocument,
-  type BookQuery,
-  type BookQueryVariables,
-} from '@/gql/graphql'
+import BookHeader from '@/components/book/book-header'
+import Page from '@/components/layout/page'
+import { BookShelfDocument } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
-import { currentUserId } from '@/server/gate/current'
-import { doApolloServerQuery } from '@/services/apollo.server'
+import { pageMetadata } from '@/lib/metadata'
+import { resolvePathUser } from '@/server/data/path-user'
+import { serverQuery } from '@/server/data/query'
+import { getViewer } from '@/server/data/viewer'
 import { getWenquBookByDbId } from '@/services/wenqu'
+import { bookHref, getUserSlug } from '@/utils/profile.utils'
 
-import BookPageContent from './content'
+import BookClippings from './book-clippings'
+
+const PAGE_SIZE = 24
 
 type PageProps = {
   params: Promise<{ bookid: string; userid: string }>
 }
 
-export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const { bookid, userid } = await props.params
-  const dbId = bookid ?? ''
-  const b = await getWenquBookByDbId(dbId)
-
-  return bookGenerateMetadata(userid, b)
+function parseBookId(bookid: string) {
+  return /^\d+$/.test(bookid) ? Number(bookid) : Number.NaN
 }
 
-// <Head>
-//   <title>{bookData?.title} - clippingkk</title>
-//   <OGWithBook book={bookData} domain={domain} />
-// </Head>
-
-async function Page(props: PageProps) {
-  const { t } = await getTranslation()
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { bookid, userid } = await props.params
-  const uidStr = (await currentUserId())?.toString()
-  const uid = uidStr ? parseInt(uidStr, 10) : undefined
-  const dbId = bookid ?? ''
-
-  if (!uid) {
-    return null
-  }
-
-  const { data: clippingsData } = await doApolloServerQuery<
-    BookQuery,
-    BookQueryVariables
-  >({
-    query: BookDocument,
-    variables: {
-      id: ~~dbId,
-      pagination: {
-        limit: BOOK_CLIPPINGS_PAGE_SIZE,
-        offset: 0,
-      },
-    },
-    context: {
-      headers: {},
-    },
+  const [user, book, { t }] = await Promise.all([
+    resolvePathUser(userid),
+    getWenquBookByDbId(bookid),
+    getTranslation(undefined, 'library'),
+  ])
+  const title = book?.title ?? ''
+  return pageMetadata({
+    title: title
+      ? t('book.meta.title', { title, name: user.name })
+      : t('home.meta.title', { name: user.name }),
+    description: book?.summary?.slice(0, 180) || undefined,
+    path: bookHref(user, bookid),
+    image: book?.image,
+    type: 'book',
   })
+}
 
-  const bookData = await getWenquBookByDbId(dbId)
-
-  if (!bookData || !clippingsData) {
-    return null
-  }
-  let duration = 0
-  if (clippingsData?.book.startReadingAt && clippingsData?.book.lastReadingAt) {
-    const result = dayjs(clippingsData.book.lastReadingAt).diff(
-      dayjs(clippingsData.book.startReadingAt),
-      'd',
-      false
-    )
-    duration = result || 0
-  }
-
-  const clippingsCount = clippingsData.book.clippingsCount ?? 0
+async function BookPage(props: PageProps) {
+  const { bookid, userid } = await props.params
+  const bookId = parseBookId(bookid)
+  const [pathUser, viewer] = await Promise.all([
+    resolvePathUser(userid),
+    getViewer(),
+  ])
+  const [data, book] = await Promise.all([
+    // An unknown or non-numeric id has no visible clippings: not found.
+    serverQuery(BookShelfDocument, {
+      id: Number.isNaN(bookId) ? -1 : bookId,
+      uid: pathUser.id,
+      pagination: { limit: PAGE_SIZE, offset: 0 },
+    }),
+    getWenquBookByDbId(bookid),
+  ])
+  const isOwner = viewer?.id === pathUser.id
+  const shelf = data.book
+  const fallbackTitle = shelf.clippings[0]?.title ?? bookid
 
   return (
-    <>
-      <Suspense fallback={<BookInfoSkeleton />}>
-        <BookInfo
-          bookId={dbId}
-          uid={uid}
-          duration={duration}
-          isLastReadingBook={clippingsData.book.isLastReadingBook}
-          clippingsCount={clippingsCount}
-          startReadingAt={clippingsData.book.startReadingAt}
-          lastReadingAt={clippingsData.book.lastReadingAt}
-        />
-      </Suspense>
-      <Divider
-        title={
-          clippingsCount > 0
-            ? `${clippingsCount} ${t('app.book.title')}`
-            : t('app.book.title')
-        }
+    <Page width="wide">
+      <BookHeader
+        book={book}
+        fallbackTitle={fallbackTitle}
+        owner={pathUser}
+        isOwner={isOwner}
+        clippingsCount={shelf.clippingsCount}
+        startReadingAt={shelf.startReadingAt}
+        lastReadingAt={shelf.lastReadingAt}
       />
-      <BookPageContent book={bookData} userid={userid} />
-    </>
+      <BookClippings
+        bookId={bookId}
+        uid={pathUser.id}
+        slug={getUserSlug(pathUser)}
+        bookTitle={book?.title ?? fallbackTitle}
+        totalCount={shelf.clippingsCount}
+        initialClippings={shelf.clippings}
+        pageSize={PAGE_SIZE}
+        isOwner={isOwner}
+      />
+    </Page>
   )
 }
 
-export default Page
+export default BookPage

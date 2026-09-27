@@ -38,6 +38,8 @@ type ClippingCardProps = {
   variant?: ClippingCardVariant
   /** Owner view: mark clippings that only the owner can see. */
   showPrivate?: boolean
+  /** Omit the book title when the surrounding UI already shows it. */
+  hideSource?: boolean
   className?: string
 }
 
@@ -56,6 +58,7 @@ function ClippingCard(props: ClippingCardProps) {
     creator,
     variant = 'grid',
     showPrivate = false,
+    hideSource = false,
     className,
   } = props
   const { t, i18n } = useTranslation(undefined, 'common')
@@ -63,7 +66,7 @@ function ClippingCard(props: ClippingCardProps) {
   const lines = splitClippingLines(clipping.content)
   if (lines.length === 0) return null
 
-  const title = bookTitle || clipping.title || ''
+  const title = hideSource ? '' : bookTitle || clipping.title || ''
   const isPrivate = showPrivate && clipping.visible === false
   const date = formatDate(clipping.createdAt, i18n.language)
   const meta = [

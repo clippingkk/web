@@ -1,0 +1,121 @@
+{
+  "home": {
+    "meta": {
+      "title": "{{name}} 的书房",
+      "description": "{{name}} 在 ClippingKK 上读过的书与摘录。"
+    },
+    "ownerEyebrow": "我的书房",
+    "ownerTitle": "欢迎回来，{{name}}",
+    "visitorEyebrow": "书房",
+    "visitorTitle": "{{name}} 的书房",
+    "summary": "{{books}} 本书 · {{clippings}} 条书摘",
+    "import": "导入书摘",
+    "viewProfile": "查看主页",
+    "recommend": "为我荐书",
+    "nowReading": {
+      "title": "在读",
+      "latest": "最新书摘",
+      "openBook": "打开这本书"
+    },
+    "shelf": {
+      "title": "书架",
+      "ownerDescription": "你划过线的每一本书，按最近阅读排序。",
+      "visitorDescription": "有公开书摘的书，按最近阅读排序。"
+    },
+    "unchecked": {
+      "title_other": "{{count}} 条书摘还没有对应的书",
+      "description": "导入时没能自动匹配到书籍。",
+      "action": "去整理"
+    },
+    "profile": {
+      "title": "完善你的个人资料",
+      "description": "填写名字、头像和个人链接，方便朋友找到你的书房。",
+      "action": "编辑资料",
+      "dismiss": "不再提示"
+    },
+    "empty": {
+      "ownerTitle": "书房还是空的",
+      "ownerDescription": "从 Kindle 导入 My Clippings.txt，你读过的书就会出现在这里。",
+      "visitorTitle": "还没有公开的内容",
+      "visitorDescription": "{{name}} 还没有公开任何书摘。"
+    }
+  },
+  "book": {
+    "meta": {
+      "title": "{{title}} · {{name}} 的书摘",
+      "description": "《{{title}}》的 {{count}} 条书摘。"
+    },
+    "fromLibrary": "来自 {{name}} 的书房",
+    "readSpan": "{{from}} – {{to}} 阅读",
+    "share": "分享",
+    "douban": "豆瓣",
+    "about": "关于这本书",
+    "showMore": "展开",
+    "showLess": "收起",
+    "highlightsTitle": "书摘",
+    "order": {
+      "label": "排序",
+      "newest": "最新",
+      "oldest": "最早"
+    },
+    "layout": {
+      "label": "布局",
+      "grid": "卡片",
+      "list": "列表"
+    },
+    "notFound": {
+      "title": "这本书没有可见的书摘",
+      "description": "书摘可能设为了仅自己可见，或这本书不在这个书房里。",
+      "action": "回到书房"
+    }
+  },
+  "square": {
+    "meta": {
+      "title": "广场",
+      "description": "读者们正在 ClippingKK 上分享的句子。"
+    },
+    "eyebrow": "广场",
+    "title": "今天，读者们摘下的句子",
+    "description": "ClippingKK 读者公开分享的书摘，按时间倒序。",
+    "empty": {
+      "title": "广场还很安静",
+      "description": "还没有人公开分享书摘。"
+    },
+    "layout": {
+      "label": "布局",
+      "grid": "卡片",
+      "list": "列表"
+    }
+  },
+  "unchecked": {
+    "meta": {
+      "title": "待整理的书摘"
+    },
+    "eyebrow": "书房",
+    "title": "待整理的书摘",
+    "description": "这些书摘导入时没有匹配到书籍。为同名书摘找到对应的书，它们会一起归档。",
+    "back": "回到书房",
+    "group_other": "{{count}} 条书摘",
+    "findBook": "查找书籍",
+    "matched": "已将 {{count}} 条书摘归入《{{title}}》。",
+    "empty": {
+      "title": "全部整理好了",
+      "description": "书房里的每条书摘都已归入对应的书。",
+      "action": "回到书房"
+    }
+  },
+  "match": {
+    "title": "查找对应的书",
+    "description": "所有标题为「{{title}}」的书摘都会归入你选择的书。",
+    "searchLabel": "书名",
+    "searchPlaceholder": "按书名或作者搜索",
+    "results_other": "找到 {{count}} 本",
+    "empty": "没有找到匹配的书。",
+    "hint": "至少输入两个字开始搜索。",
+    "confirm": "就是这本",
+    "cancel": "取消",
+    "saving": "正在归档书摘…",
+    "done": "已归入《{{title}}》。",
+    "failed": "更新失败，请重试。"
+  }
+}
