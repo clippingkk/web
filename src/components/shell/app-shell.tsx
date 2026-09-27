@@ -25,6 +25,11 @@ async function ViewerExtras({ viewer }: Pick<AppShellProps, 'viewer'>) {
   if (!resolved) return null
   return (
     <>
+      {/* room for the fixed tab bar, which only signed-in readers get */}
+      <div
+        aria-hidden="true"
+        className="h-[calc(4rem+env(safe-area-inset-bottom))] md:hidden"
+      />
       <MobileTabBar viewer={resolved} />
       <GlobalUpload libraryHref={dashHref(resolved.slug, 'home')} />
     </>
@@ -63,7 +68,7 @@ function AppShell({ viewer, children }: AppShellProps) {
       <Suspense fallback={<TopBarPlaceholder />}>
         <ViewerTopBar viewer={viewer} />
       </Suspense>
-      <main id="main" className="app-main flex flex-1 flex-col pb-20 md:pb-0">
+      <main id="main" className="app-main flex flex-1 flex-col">
         {children}
       </main>
       <Suspense fallback={null}>
