@@ -1,9 +1,4 @@
-import {
-  ApolloLink,
-  HttpLink,
-  type OperationVariables,
-  type QueryOptions,
-} from '@apollo/client'
+import { ApolloLink, HttpLink } from '@apollo/client'
 import {
   ApolloClient,
   InMemoryCache,
@@ -11,7 +6,6 @@ import {
 } from '@apollo/client-integration-nextjs'
 import { connection } from 'next/server'
 
-import { handleQueryError } from '@/server/data/query-error'
 import {
   LOCAL_GRAPHQL_URL,
   localGraphQLFetch,
@@ -36,24 +30,4 @@ const { getClient } = registerApolloClient(() => {
 export async function getApolloServerClient() {
   await connection()
   return getClient()
-}
-
-/**
- * @deprecated Use serverQuery() from '@/server/data/query'. Kept so existing
- * pages compile; it maps errors exactly like serverQuery() (sign-in redirect
- * with `next` for UNAUTHORIZED, notFound() for NOT_FOUND and FORBIDDEN).
- */
-export async function doApolloServerQuery<
-  TData,
-  TVariables extends OperationVariables = OperationVariables,
->(options: QueryOptions<TVariables, TData>): Promise<{ data: TData }> {
-  const client = await getApolloServerClient()
-  try {
-    const result = await client.query(options)
-    return { data: result.data as TData }
-  } catch (error) {
-    await handleQueryError(error)
-    // handleQueryError only resolves when asked to; with defaults it throws.
-    throw error
-  }
 }

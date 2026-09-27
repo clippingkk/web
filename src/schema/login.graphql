@@ -1,6 +1,0 @@
-#import './fragment/auth.graphql'
-query githubLogin($code: String!) {
-  githubAuth(code: $code) {
-    ...AuthLoginResponse
-  }
-}

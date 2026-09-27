@@ -1,7 +1,0 @@
-#import '../fragments/auth.graphql'
-
-mutation doLoginV3($payload: LoginV3Payload!) {
-  loginV3(payload: $payload) {
-    ...AuthLoginResponse
-  }
-}

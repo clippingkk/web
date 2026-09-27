@@ -32,8 +32,6 @@ vi.mock('@/server/graphql/local-transport', () => ({
   localGraphQLFetch: vi.fn(),
 }))
 
-import { doApolloServerQuery } from '@/services/apollo.server'
-
 import { serverQuery } from '../query'
 
 const Doc = parse('query probe($id: Int) { me(id: $id) { id } }')
@@ -167,32 +165,4 @@ it.each([
   )
   expect(mocks.notFound).not.toHaveBeenCalled()
   expect(mocks.redirect).not.toHaveBeenCalled()
-})
-
-describe('doApolloServerQuery (deprecated wrapper)', () => {
-  it('keeps its { data } shape', async () => {
-    mocks.query.mockResolvedValue({ data: { me: { id: 3 } } })
-    await expect(doApolloServerQuery({ query: Doc })).resolves.toEqual({
-      data: { me: { id: 3 } },
-    })
-  })
-
-  it('maps errors exactly like serverQuery', async () => {
-    mocks.query.mockRejectedValueOnce(graphQLError({ code: 'UNAUTHORIZED' }))
-    await expect(doApolloServerQuery({ query: Doc })).rejects.toThrow(
-      'NEXT_REDIRECT'
-    )
-    expect(mocks.redirect).toHaveBeenCalledWith(
-      `/auth?next=${encodeURIComponent(PAGE)}`
-    )
-
-    mocks.query.mockRejectedValueOnce(graphQLError({ code: 'FORBIDDEN' }))
-    await expect(doApolloServerQuery({ query: Doc })).rejects.toThrow(
-      'NEXT_NOT_FOUND'
-    )
-
-    const unexpected = new Error('boom')
-    mocks.query.mockRejectedValueOnce(unexpected)
-    await expect(doApolloServerQuery({ query: Doc })).rejects.toBe(unexpected)
-  })
 })

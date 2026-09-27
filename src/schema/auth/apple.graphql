@@ -1,7 +1,0 @@
-#import '../fragments/auth.graphql'
-
-query loginByApple($payload: appleVerifyPayload!) {
-  loginByApple(payload: $payload) {
-    ...AuthLoginResponse
-  }
-}

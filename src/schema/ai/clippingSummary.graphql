@@ -1,6 +1,0 @@
-query fetchClippingAISummary($id: Int!) {
-  clipping(id: $id) {
-    id
-    aiSummary
-  }
-}
