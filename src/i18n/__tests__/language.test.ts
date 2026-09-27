@@ -14,15 +14,15 @@ describe('getLanguage', () => {
     document.cookie = `${STORAGE_LANG_KEY}=; max-age=0; path=/`
   })
 
-  it('prefers the language i18next has settled on', () => {
+  it('prefers the language cookie, which a language switch updates', () => {
     i18n.language = 'ko'
     document.cookie = `${STORAGE_LANG_KEY}=zhCN; path=/`
-    expect(getLanguage()).toBe('ko')
+    expect(getLanguage()).toBe('zhCN')
   })
 
-  it('falls back to the language cookie', () => {
-    document.cookie = `${STORAGE_LANG_KEY}=zhCN; path=/`
-    expect(getLanguage()).toBe('zhCN')
+  it('falls back to the language i18next detected', () => {
+    i18n.language = 'ko'
+    expect(getLanguage()).toBe('ko')
   })
 
   it('defaults to English', () => {

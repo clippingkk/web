@@ -4,14 +4,15 @@ import Cookies from 'js-cookie'
 import { STORAGE_LANG_KEY } from '@/constants/storage'
 
 /**
- * The active UI language on the client: the i18next instance once it has
- * detected one, then the language cookie, then English.
+ * The active UI language on the client: the language cookie, which every
+ * language switch writes, then the i18next default instance, then English.
+ * The cookie comes first because that instance only detects the language at
+ * page load; the rendered tree uses I18nProvider's instance instead.
  */
 export function getLanguage(): string {
-  if (i18next.language) return i18next.language
   if (typeof document !== 'undefined') {
     const stored = Cookies.get(STORAGE_LANG_KEY)
     if (stored) return stored
   }
-  return 'en'
+  return i18next.language || 'en'
 }
