@@ -5,10 +5,10 @@ import type React from 'react'
 
 import { getTranslation } from '@/i18n'
 import { getViewer } from '@/server/data/viewer'
+import { dashHref } from '@/utils/profile.utils'
 
 import AppFooter from './app-footer'
 import Brand from './brand'
-import { shellHref } from './nav-items'
 import SignInButton from './sign-in-button'
 
 type MarketingShellProps = {
@@ -43,7 +43,7 @@ async function MarketingShell({ children }: MarketingShellProps) {
             <Button
               size="sm"
               variant="primary"
-              render={<Link href={shellHref(viewer.slug, 'home')} />}
+              render={<Link href={dashHref(viewer.slug, 'home')} />}
             >
               {t('shell.openLibrary')}
             </Button>

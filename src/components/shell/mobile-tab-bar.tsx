@@ -4,8 +4,9 @@ import Link from 'next/link'
 
 import { useTranslation } from '@/i18n/client'
 import { cn } from '@/lib/utils'
+import { dashHref } from '@/utils/profile.utils'
 
-import { MOBILE_NAV_ITEMS, shellHref } from './nav-items'
+import { MOBILE_NAV_ITEMS } from './nav-items'
 import type { ShellViewer } from './types'
 import { useActiveSegment } from './use-active-segment'
 
@@ -30,7 +31,7 @@ function MobileTabBar({ viewer }: MobileTabBarProps) {
           return (
             <li key={item.key}>
               <Link
-                href={shellHref(viewer.slug, item.segment)}
+                href={dashHref(viewer.slug, item.segment)}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'flex flex-col items-center gap-1 py-2 text-[0.6875rem] font-medium transition-colors duration-150 outline-none focus-visible:bg-lake-surface-muted',

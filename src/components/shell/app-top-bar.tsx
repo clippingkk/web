@@ -5,9 +5,10 @@ import NavbarContainer from '@annatarhe/lake-ui/navbar-container'
 import Link from 'next/link'
 
 import { useTranslation } from '@/i18n/client'
+import { dashHref } from '@/utils/profile.utils'
 
 import Brand from './brand'
-import { PRIMARY_NAV_ITEMS, shellHref } from './nav-items'
+import { PRIMARY_NAV_ITEMS } from './nav-items'
 import SearchTrigger from './search-trigger'
 import SignInButton from './sign-in-button'
 import type { ShellViewer } from './types'
@@ -29,7 +30,7 @@ function AppTopBar({ viewer }: AppTopBarProps) {
       className="border-lake-line bg-lake-canvas/85 shadow-none backdrop-blur-sm"
       innerClassName="flex h-14 items-center gap-4 py-0 sm:gap-6"
     >
-      <Brand href={viewer ? shellHref(viewer.slug, 'home') : '/'} />
+      <Brand href={viewer ? dashHref(viewer.slug, 'home') : '/'} />
       {viewer ? (
         <NavTabs
           aria-label={t('shell.nav.label')}
@@ -42,7 +43,7 @@ function AppTopBar({ viewer }: AppTopBarProps) {
               label: t(`shell.nav.${item.key}`),
               icon: <Icon className="size-4" aria-hidden="true" />,
               active: isActive(item.segment),
-              render: <Link href={shellHref(viewer.slug, item.segment)} />,
+              render: <Link href={dashHref(viewer.slug, item.segment)} />,
             }
           })}
         />

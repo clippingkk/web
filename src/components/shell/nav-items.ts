@@ -5,7 +5,6 @@ import {
   Upload,
   UserRound,
 } from 'lucide-react'
-import type { Route } from 'next'
 
 export type ShellNavSegment = 'home' | 'square' | 'upload' | 'profile'
 
@@ -25,7 +24,3 @@ export const MOBILE_NAV_ITEMS: readonly ShellNavItem[] = [
   ...PRIMARY_NAV_ITEMS,
   { key: 'me', icon: UserRound, segment: 'profile' },
 ]
-
-export function shellHref(slug: string, segment: ShellNavSegment): Route {
-  return `/dash/${slug}/${segment}` as Route
-}
