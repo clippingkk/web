@@ -1,27 +1,58 @@
+import type { Metadata } from 'next'
 import type React from 'react'
+import { Suspense } from 'react'
 
-import SettingsSidebar from '@/components/settings-sidebar/settings-sidebar'
-import Surface from '@/components/ui/surface/surface'
+import Page from '@/components/layout/page'
+import PageHeader from '@/components/layout/page-header'
+import SettingsNav from '@/components/settings/settings-nav'
+import SettingsSkeleton from '@/components/settings/settings-skeleton'
 import { getTranslation } from '@/i18n'
+import { pageMetadata } from '@/lib/metadata'
+import { currentPath, dashSubpath } from '@/server/data/current-path'
+import { requireViewerRoute } from '@/server/data/path-user'
+import { getUserSlug } from '@/utils/profile.utils'
 
-type SettingsPageProps = {
-  children?: React.ReactNode
+type SettingsLayoutProps = {
+  children: React.ReactNode
+  params: Promise<{ userid: string }>
 }
 
-async function SettingsPageContent(props: SettingsPageProps) {
-  const { children } = props
-  const { t } = await getTranslation()
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslation(undefined, 'settings')
+  return pageMetadata({ title: t('meta.title') })
+}
+
+async function SettingsFrame({ children, params }: SettingsLayoutProps) {
+  const { userid } = await params
+  const { subpath, search } = dashSubpath(
+    await currentPath(),
+    userid,
+    'settings/web'
+  )
+  const [viewer, { t }] = await Promise.all([
+    requireViewerRoute(userid, subpath, search),
+    getTranslation(undefined, 'settings'),
+  ])
+
   return (
-    <Surface
-      variant="default"
-      className="my-6 flex w-full flex-col overflow-hidden p-0 md:flex-row"
-    >
-      <SettingsSidebar title={t('app.settings.title')} />
-      <div className="min-h-[32rem] w-full flex-1 border-t border-slate-200/60 p-6 md:border-t-0 md:border-l md:p-8 dark:border-slate-800/60">
-        {children}
+    <>
+      <PageHeader title={t('title')} description={t('description')} />
+      <div className="grid gap-8 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-12">
+        <SettingsNav slug={getUserSlug(viewer)} />
+        <div className="flex min-w-0 flex-col gap-10">{children}</div>
       </div>
-    </Surface>
+    </>
   )
 }
 
-export default SettingsPageContent
+function SettingsLayout(props: SettingsLayoutProps) {
+  return (
+    <Page width="default">
+      <Suspense fallback={<SettingsSkeleton />}>
+        <SettingsFrame {...props} />
+      </Suspense>
+    </Page>
+  )
+}
+
+export default SettingsLayout

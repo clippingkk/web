@@ -8,6 +8,7 @@ import { formatDate } from '@/utils/format-date'
 import { dashHref } from '@/utils/profile.utils'
 
 import BookCover from './book-cover'
+import { publishedYear } from './book-meta'
 import BookShareButton from './book-share-button'
 import BookSummary from './book-summary'
 
@@ -43,7 +44,7 @@ async function BookHeader(props: BookHeaderProps) {
   ])
   const lng = i18n.language
   const title = book?.title || fallbackTitle
-  const byline = [book?.author, book?.press, book?.pubdate]
+  const byline = [book?.author, book?.press, publishedYear(book?.pubdate)]
     .map((v) => v?.trim())
     .filter(Boolean)
   const from = formatDate(startReadingAt, lng)

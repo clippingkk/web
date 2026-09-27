@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "title": "Settings"
+  },
+  "title": "Settings",
+  "description": "Your preferences, subscription, integrations and account.",
+  "nav": {
+    "label": "Settings sections",
+    "web": "General",
+    "orders": "Subscription",
+    "webhooks": "Webhooks",
+    "exports": "Exports",
+    "account": "Account"
+  },
+  "general": {
+    "title": "General",
+    "description": "How ClippingKK looks and which language it speaks.",
+    "language": "Language",
+    "languageDescription": "Used for the interface and AI explanations.",
+    "theme": "Appearance",
+    "themeDescription": "Follow your system, or pick a side.",
+    "themeSystem": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark"
+  },
+  "orders": {
+    "title": "Subscription",
+    "description": "Your ClippingKK Premium subscription, billed through Gate.",
+    "empty": "You don't have a subscription yet.",
+    "premium": "Premium",
+    "renews": "Renews {{date}}",
+    "ends": "Ends {{date}}",
+    "status": {
+      "active": "Active",
+      "trialing": "Trial",
+      "past_due": "Payment due",
+      "canceled": "Canceled",
+      "incomplete": "Incomplete",
+      "unpaid": "Unpaid"
+    },
+    "upgrade": "See Premium",
+    "manage": "Manage billing"
+  },
+  "webhooks": {
+    "title": "Webhooks",
+    "description": "Get a POST request whenever new highlights are imported.",
+    "docs": "How webhooks work",
+    "new": "New webhook",
+    "premiumTitle": "Webhooks are a Premium feature",
+    "premiumDescription": "Upgrade to send new highlights to your own services.",
+    "upgrade": "See Premium",
+    "emptyTitle": "No webhooks yet",
+    "emptyDescription": "Add an endpoint and we'll call it after each import.",
+    "columns": {
+      "url": "Endpoint",
+      "event": "Event",
+      "actions": "Actions"
+    },
+    "event": {
+      "onCreateClippings": "New highlights imported",
+      "unknown": "Unknown"
+    },
+    "view": "Deliveries",
+    "delete": "Delete",
+    "deleteTitle": "Delete this webhook?",
+    "deleteDescription": "We'll stop calling {{url}}. Past deliveries are removed too.",
+    "confirmDelete": "Delete",
+    "cancel": "Cancel",
+    "deleted": "Webhook deleted",
+    "deleteFailed": "Couldn't delete the webhook.",
+    "create": {
+      "title": "New webhook",
+      "url": "Endpoint URL",
+      "urlHint": "We'll send a JSON array of the new highlights with each import.",
+      "invalidUrl": "Enter a valid https:// URL.",
+      "tooLong": "Keep the URL under 255 characters.",
+      "submit": "Create webhook",
+      "created": "Webhook created",
+      "failed": "Couldn't create the webhook."
+    },
+    "detail": {
+      "back": "All webhooks",
+      "title": "Deliveries",
+      "description": "Recent requests sent to {{url}}.",
+      "notFound": "This webhook doesn't exist or isn't yours.",
+      "empty": "No deliveries yet. They'll appear after your next import.",
+      "request": "Request",
+      "response": "Response",
+      "status": "Status {{status}}",
+      "failed": "Failed",
+      "duration": "{{ms}} ms",
+      "showBody": "Show body",
+      "hideBody": "Hide body",
+      "count_one": "{{count}} delivery",
+      "count_other": "{{count}} deliveries"
+    }
+  },
+  "exports": {
+    "title": "Exports",
+    "description": "Send your highlights to other tools. Exports run in the background and may take a few minutes.",
+    "flomo": "Flomo",
+    "flomoDescription": "Post every highlight to your flomo inbox.",
+    "notion": "Notion",
+    "notionDescription": "Append highlights to a Notion page.",
+    "mail": "Email",
+    "mailDescription": "Receive all your highlights as a Markdown file.",
+    "start": "Export",
+    "queued": "Export started. It may take a few minutes.",
+    "flomoTitle": "Export to flomo",
+    "flomoSubmit": "Export to flomo",
+    "notionTitle": "Export to Notion",
+    "notionSubmit": "Export to Notion",
+    "mailTitle": "Export to email",
+    "mailTips": "We’ll send every highlight to this address as a Markdown file.",
+    "mailLabel": "Email address",
+    "mailPlaceholder": "you@example.com",
+    "mailSubmit": "Export to email",
+    "errors": {
+      "invalidUrl": "Enter a valid URL.",
+      "notFlomo": "Use your flomo API address, which starts with https://flomoapp.com/.",
+      "invalidEmail": "Enter a valid email address.",
+      "tokenTooShort": "The token needs at least 5 characters.",
+      "tokenTooLong": "The token can be at most 255 characters.",
+      "pageIdTooShort": "The page ID needs at least 5 characters.",
+      "pageIdTooLong": "The page ID can be at most 255 characters."
+    }
+  },
+  "account": {
+    "title": "Account",
+    "description": "Sign-in, security and your ClippingKK data.",
+    "gateTitle": "Sign-in and security",
+    "gateDescription": "Your email, password and connected sign-in accounts are managed in Gate.",
+    "gateLink": "Manage Gate account",
+    "deleteTitle": "Delete ClippingKK account",
+    "deleteDescription": "Deletes your ClippingKK highlights and profile and cancels ClippingKK subscriptions. Your Gate account and other products stay available.",
+    "deleteButton": "Delete account…",
+    "confirmTitle": "Delete your ClippingKK account?",
+    "confirmDescription": "This permanently deletes your highlights and profile. Type {{name}} to confirm.",
+    "confirmLabel": "Type your name to confirm",
+    "confirmWord": "DELETE",
+    "confirmWordLabel": "Type the word above to confirm",
+    "confirm": "Delete permanently",
+    "cancel": "Cancel",
+    "scheduled": "Account deletion scheduled.",
+    "failed": "Deletion could not be scheduled. Please try again.",
+    "home": "Return home"
+  },
+  "admin": {
+    "meta": {
+      "title": "Admin"
+    },
+    "eyebrow": "Admin",
+    "title": "Books without metadata",
+    "description": "Titles readers imported that Wenqu couldn't match. Sync one to a Douban id to fix it for everyone.",
+    "empty": "Every imported title has a match.",
+    "columns": {
+      "title": "Kindle title",
+      "action": "Douban id"
+    },
+    "sync": "Sync",
+    "synced": "Synced {{title}}",
+    "failed": "Couldn't sync this title.",
+    "invalidId": "A Douban id is a number of at least four digits.",
+    "placeholder": "Douban id"
+  }
+}

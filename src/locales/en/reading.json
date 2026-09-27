@@ -4,7 +4,6 @@
     "fallbackTitle": "A highlight by {{name}}"
   },
   "kicker": "From",
-  "page": "p. {{page}}",
   "private": "Only you can see this highlight",
   "reactions": {
     "label": "Reactions",

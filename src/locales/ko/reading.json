@@ -4,7 +4,6 @@
     "fallbackTitle": "{{name}}의 하이라이트"
   },
   "kicker": "출처",
-  "page": "{{page}}쪽",
   "private": "나만 볼 수 있는 하이라이트예요",
   "reactions": {
     "label": "반응",

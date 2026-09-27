@@ -44,7 +44,6 @@
     "home": "回到书房"
   },
   "clipping": {
-    "page": "第 {{page}} 页",
     "private": "仅自己可见",
     "public": "公开"
   },

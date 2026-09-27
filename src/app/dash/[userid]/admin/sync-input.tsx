@@ -1,65 +1,59 @@
-import { useApolloClient, useMutation } from '@apollo/client/react'
-import { LinkIcon } from 'lucide-react'
-import { useCallback, useState } from 'react'
+'use client'
+
+import Button from '@annatarhe/lake-ui/button'
+import InputField from '@annatarhe/lake-ui/form-input-field'
+import { useMutation } from '@apollo/client/react'
+import { useRouter } from 'next/navigation'
+import type React from 'react'
+import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { SyncHomelessBookDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { toastPromiseDefaultOption } from '@/services/misc'
 
-type HomelessBookSyncInputProps = {
-  bookName: string
-}
-
-function HomelessBookSyncInput(props: HomelessBookSyncInputProps) {
-  const client = useApolloClient()
+function HomelessBookSyncInput({ bookName }: { bookName: string }) {
+  const { t } = useTranslation(undefined, 'settings')
+  const router = useRouter()
   const [doubanId, setDoubanId] = useState('')
-  const [doSyncHomelessBook] = useMutation(SyncHomelessBookDocument)
-  const { t } = useTranslation()
+  const [sync, { loading }] = useMutation(SyncHomelessBookDocument)
 
-  const onConfirm = useCallback(() => {
-    if (!doubanId.trim()) {
-      toast.error(t('Please enter a valid Douban ID'))
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const id = doubanId.trim()
+    if (!/^\d{4,}$/.test(id)) {
+      toast.error(t('admin.invalidId'))
       return
     }
-
-    toast
-      .promise(
-        doSyncHomelessBook({
-          variables: {
-            title: props.bookName,
-            doubanID: doubanId,
-          },
-        }),
-        toastPromiseDefaultOption
-      )
-      .then(() => {
-        client.resetStore()
-        setDoubanId('')
-      })
-  }, [doubanId, client, props.bookName, t, doSyncHomelessBook])
+    try {
+      await sync({ variables: { title: bookName, doubanID: id } })
+      toast.success(t('admin.synced', { title: bookName }))
+      setDoubanId('')
+      router.refresh()
+    } catch {
+      toast.error(t('admin.failed'))
+    }
+  }
 
   return (
-    <div className="flex items-center gap-3">
-      <div className="relative min-w-0 flex-1">
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-          <LinkIcon className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-        </div>
-        <input
-          type="text"
-          value={doubanId}
-          onChange={(e) => setDoubanId(e.target.value)}
-          placeholder={t('Douban ID')}
-          className="block w-full rounded-lg border border-gray-200 bg-white py-2.5 pr-3 pl-10 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
-        />
-      </div>
-      <button
-        onClick={onConfirm}
-        className="inline-flex flex-shrink-0 items-center rounded-lg bg-blue-400 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:bg-blue-500 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none dark:bg-blue-400 dark:hover:bg-blue-500"
+    <form onSubmit={onSubmit} className="flex items-center justify-end gap-2">
+      <InputField
+        aria-label={t('admin.columns.action')}
+        inputMode="numeric"
+        placeholder={t('admin.placeholder')}
+        value={doubanId}
+        onChange={(e) => setDoubanId(e.target.value)}
+        className="w-36"
+      />
+      <Button
+        type="submit"
+        variant="secondary"
+        size="sm"
+        loading={loading}
+        disabled={!/^\d{4,}$/.test(doubanId.trim())}
       >
-        {t('Confirm')}
-      </button>
-    </div>
+        {t('admin.sync')}
+      </Button>
+    </form>
   )
 }
 

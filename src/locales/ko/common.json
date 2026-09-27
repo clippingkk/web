@@ -44,7 +44,6 @@
     "home": "서재로 돌아가기"
   },
   "clipping": {
-    "page": "{{page}}쪽",
     "private": "나만 보기",
     "public": "공개"
   },

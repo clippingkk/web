@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "title": "设置"
+  },
+  "title": "设置",
+  "description": "偏好、订阅、集成与账户。",
+  "nav": {
+    "label": "设置分类",
+    "web": "通用",
+    "orders": "订阅",
+    "webhooks": "Webhook",
+    "exports": "导出",
+    "account": "账户"
+  },
+  "general": {
+    "title": "通用",
+    "description": "ClippingKK 的外观与语言。",
+    "language": "语言",
+    "languageDescription": "用于界面和 AI 解读。",
+    "theme": "外观",
+    "themeDescription": "跟随系统，或者自己选。",
+    "themeSystem": "跟随系统",
+    "themeLight": "浅色",
+    "themeDark": "深色"
+  },
+  "orders": {
+    "title": "订阅",
+    "description": "你的 ClippingKK 高级会员订阅，通过 Gate 计费。",
+    "empty": "你还没有订阅。",
+    "premium": "高级会员",
+    "renews": "{{date}} 续费",
+    "ends": "{{date}} 到期",
+    "status": {
+      "active": "生效中",
+      "trialing": "试用中",
+      "past_due": "待付款",
+      "canceled": "已取消",
+      "incomplete": "未完成",
+      "unpaid": "未支付"
+    },
+    "upgrade": "了解高级会员",
+    "manage": "管理账单"
+  },
+  "webhooks": {
+    "title": "Webhook",
+    "description": "每次导入新书摘时，向你的服务发送一个 POST 请求。",
+    "docs": "Webhook 说明",
+    "new": "新建 Webhook",
+    "premiumTitle": "Webhook 是高级会员功能",
+    "premiumDescription": "升级后即可把新书摘推送到你自己的服务。",
+    "upgrade": "了解高级会员",
+    "emptyTitle": "还没有 Webhook",
+    "emptyDescription": "添加一个地址，每次导入后我们都会调用它。",
+    "columns": {
+      "url": "地址",
+      "event": "事件",
+      "actions": "操作"
+    },
+    "event": {
+      "onCreateClippings": "导入了新书摘",
+      "unknown": "未知"
+    },
+    "view": "投递记录",
+    "delete": "删除",
+    "deleteTitle": "删除这个 Webhook？",
+    "deleteDescription": "将不再调用 {{url}}，历史投递记录也会一并删除。",
+    "confirmDelete": "删除",
+    "cancel": "取消",
+    "deleted": "Webhook 已删除",
+    "deleteFailed": "删除失败。",
+    "create": {
+      "title": "新建 Webhook",
+      "url": "地址",
+      "urlHint": "每次导入时，会发送新书摘组成的 JSON 数组。",
+      "invalidUrl": "请输入有效的 https:// 地址。",
+      "tooLong": "地址不能超过 255 个字符。",
+      "submit": "创建",
+      "created": "Webhook 已创建",
+      "failed": "创建失败。"
+    },
+    "detail": {
+      "back": "全部 Webhook",
+      "title": "投递记录",
+      "description": "最近发往 {{url}} 的请求。",
+      "notFound": "这个 Webhook 不存在或不属于你。",
+      "empty": "还没有投递记录，下次导入后会出现在这里。",
+      "request": "请求",
+      "response": "响应",
+      "status": "状态 {{status}}",
+      "failed": "失败",
+      "duration": "{{ms}} 毫秒",
+      "showBody": "展开内容",
+      "hideBody": "收起内容",
+      "count_other": "{{count}} 次投递"
+    }
+  },
+  "exports": {
+    "title": "导出",
+    "description": "把书摘发送到其他工具。导出在后台进行，可能需要几分钟。",
+    "flomo": "flomo",
+    "flomoDescription": "把每条书摘发送到你的 flomo。",
+    "notion": "Notion",
+    "notionDescription": "把书摘追加到一个 Notion 页面。",
+    "mail": "邮件",
+    "mailDescription": "以 Markdown 文件的形式接收全部书摘。",
+    "start": "导出",
+    "queued": "已开始导出，可能需要几分钟。",
+    "flomoTitle": "导出至 flomo",
+    "flomoSubmit": "导出至 flomo",
+    "notionTitle": "导出至 Notion",
+    "notionSubmit": "导出至 Notion",
+    "mailTitle": "导出至邮箱",
+    "mailTips": "我们会把全部书摘以 Markdown 文件发送到这个邮箱。",
+    "mailLabel": "邮箱地址",
+    "mailPlaceholder": "you@example.com",
+    "mailSubmit": "导出至邮箱",
+    "errors": {
+      "invalidUrl": "请输入有效的网址。",
+      "notFlomo": "请使用以 https://flomoapp.com/ 开头的 flomo API 地址。",
+      "invalidEmail": "请输入有效的邮箱地址。",
+      "tokenTooShort": "Token 至少需要 5 个字符。",
+      "tokenTooLong": "Token 最多 255 个字符。",
+      "pageIdTooShort": "页面 ID 至少需要 5 个字符。",
+      "pageIdTooLong": "页面 ID 最多 255 个字符。"
+    }
+  },
+  "account": {
+    "title": "账户",
+    "description": "登录、安全与你的 ClippingKK 数据。",
+    "gateTitle": "登录与安全",
+    "gateDescription": "邮箱、密码和关联的登录方式在 Gate 中管理。",
+    "gateLink": "管理 Gate 账户",
+    "deleteTitle": "删除 ClippingKK 账户",
+    "deleteDescription": "删除你在 ClippingKK 的书摘和资料，并取消 ClippingKK 订阅。你的 Gate 账户和其他产品不受影响。",
+    "deleteButton": "删除账户…",
+    "confirmTitle": "删除你的 ClippingKK 账户？",
+    "confirmDescription": "这会永久删除你的书摘和资料。请输入 {{name}} 确认。",
+    "confirmLabel": "输入你的名字以确认",
+    "confirmWord": "删除账户",
+    "confirmWordLabel": "输入上面的文字以确认",
+    "confirm": "永久删除",
+    "cancel": "取消",
+    "scheduled": "已安排删除账户。",
+    "failed": "无法安排删除，请重试。",
+    "home": "回到首页"
+  },
+  "admin": {
+    "meta": {
+      "title": "管理"
+    },
+    "eyebrow": "管理",
+    "title": "缺少书籍信息的标题",
+    "description": "读者导入后文渠没能匹配的书名。关联到豆瓣 ID 后，所有人都会受益。",
+    "empty": "所有导入的书名都已匹配。",
+    "columns": {
+      "title": "Kindle 书名",
+      "action": "豆瓣 ID"
+    },
+    "sync": "关联",
+    "synced": "已关联《{{title}}》",
+    "failed": "关联失败。",
+    "invalidId": "豆瓣 ID 是至少四位的数字。",
+    "placeholder": "豆瓣 ID"
+  }
+}

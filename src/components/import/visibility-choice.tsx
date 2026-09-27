@@ -22,6 +22,7 @@ function VisibilityChoice({ value, onChange }: VisibilityChoiceProps) {
   return (
     <div className="flex flex-col gap-2">
       <SegmentedControl
+        className="w-fit"
         aria-label={t('visibility.label')}
         value={value}
         onValueChange={onChange}

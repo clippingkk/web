@@ -1,4 +1,5 @@
 'use client'
+import Button from '@annatarhe/lake-ui/button'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useMutation } from '@apollo/client/react'
@@ -10,7 +11,6 @@ import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
 
 import BrandFlomoLogo from '@/assets/brand-flomo.png'
-import { Button } from '@/components/button/button'
 import { ExportDataToDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { ExportDestination } from '@/schema/generated'
@@ -19,18 +19,17 @@ import ExportTriggerButton from './export-trigger-button'
 
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)
-  const { t } = useTranslation()
+  const { t } = useTranslation(undefined, 'settings')
   const [mutate] = useMutation(ExportDataToDocument)
 
   const formSchema = z.object({
     endpoint: z
       .string()
-      .url(t('app.settings.export.flomo.invalidUrl') || 'Invalid URL')
+      .url(t('exports.errors.invalidUrl'))
       .max(255)
       .refine(
         (value) => value.startsWith('https://flomoapp.com/'),
-        t('app.settings.export.flomo.notFlomo') ||
-          'Must be a valid Flomo endpoint'
+        t('exports.errors.notFlomo')
       ),
   })
 
@@ -56,7 +55,7 @@ function ExportToFlomo() {
           args: data.endpoint,
         },
       })
-      toast.success(t('app.settings.export.success'))
+      toast.success(t('exports.queued'))
       reset()
       setVisible(false)
     } catch (e) {
@@ -69,19 +68,19 @@ function ExportToFlomo() {
         onClick={() => setVisible(true)}
         icon={
           <Image
-            className="mb-3"
             src={BrandFlomoLogo}
             width={BrandFlomoLogo.width / 2.5}
             height={BrandFlomoLogo.height / 2.5}
             alt="flomo"
           />
         }
-        label={t('app.settings.export.flomo.title', 'Flomo')}
+        title={t('exports.flomo')}
+        description={t('exports.flomoDescription')}
       />
       <Modal
         isOpen={visible}
         onClose={() => setVisible(false)}
-        title={t('app.settings.export.flomo.title')}
+        title={t('exports.flomoTitle')}
       >
         <div className="w-full p-4">
           <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -98,8 +97,8 @@ function ExportToFlomo() {
               )}
             />
             <div className="mt-4 w-full text-right">
-              <Button type="submit" isLoading={isSubmitting}>
-                {t('app.settings.export.flomo.submit')}
+              <Button type="submit" loading={isSubmitting}>
+                {t('exports.flomoSubmit')}
               </Button>
             </div>
           </form>

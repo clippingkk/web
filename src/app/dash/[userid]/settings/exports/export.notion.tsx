@@ -1,4 +1,5 @@
 'use client'
+import Button from '@annatarhe/lake-ui/button'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useMutation } from '@apollo/client/react'
@@ -10,7 +11,6 @@ import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
 
 import BrandNotionLogo from '@/assets/brand-notion.svg'
-import { Button } from '@/components/button/button'
 import { ExportDataToDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { ExportDestination } from '@/schema/generated'
@@ -19,33 +19,17 @@ import ExportTriggerButton from './export-trigger-button'
 
 function ExportToNotion() {
   const [visible, setVisible] = useState(false)
-  const { t } = useTranslation()
+  const { t } = useTranslation(undefined, 'settings')
 
   const formSchema = z.object({
     notionToken: z
       .string()
-      .min(
-        5,
-        t('app.settings.export.notion.tokenTooShort') ||
-          'Token must be at least 5 characters'
-      )
-      .max(
-        255,
-        t('app.settings.export.notion.tokenTooLong') ||
-          'Token must be at most 255 characters'
-      ),
+      .min(5, t('exports.errors.tokenTooShort'))
+      .max(255, t('exports.errors.tokenTooLong')),
     notionPageId: z
       .string()
-      .min(
-        5,
-        t('app.settings.export.notion.pageIdTooShort') ||
-          'Page ID must be at least 5 characters'
-      )
-      .max(
-        255,
-        t('app.settings.export.notion.pageIdTooLong') ||
-          'Page ID must be at most 255 characters'
-      ),
+      .min(5, t('exports.errors.pageIdTooShort'))
+      .max(255, t('exports.errors.pageIdTooLong')),
   })
 
   type FormValues = z.infer<typeof formSchema>
@@ -54,7 +38,7 @@ function ExportToNotion() {
     control,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -65,7 +49,7 @@ function ExportToNotion() {
 
   const [mutate] = useMutation(ExportDataToDocument, {
     onCompleted() {
-      toast.success(t('app.settings.export.success'))
+      toast.success(t('exports.queued'))
       reset()
       setVisible(false)
     },
@@ -91,14 +75,14 @@ function ExportToNotion() {
             src={BrandNotionLogo}
             width={BrandNotionLogo.width / 1.5}
             height={BrandNotionLogo.height / 1.5}
-            className="mb-3"
             alt="notion"
           />
         }
-        label={t('app.settings.export.notion.title', 'Notion')}
+        title={t('exports.notion')}
+        description={t('exports.notionDescription')}
       />
       <Modal
-        title={t('app.settings.export.notion.title')}
+        title={t('exports.notionTitle')}
         isOpen={visible}
         onClose={() => setVisible(false)}
       >
@@ -126,6 +110,7 @@ function ExportToNotion() {
                   label="Notion Token"
                   className="flex w-full items-center"
                   placeholder="Notion Token"
+                  error={errors.notionToken?.message}
                 />
               )}
             />
@@ -138,12 +123,13 @@ function ExportToNotion() {
                   label="Notion Page ID"
                   className="mt-4 flex w-full items-center"
                   placeholder="Notion Page ID"
+                  error={errors.notionPageId?.message}
                 />
               )}
             />
             <div className="mt-4 w-full text-right">
-              <Button type="submit" isLoading={isSubmitting}>
-                {t('app.settings.export.notion.submit')}
+              <Button type="submit" loading={isSubmitting}>
+                {t('exports.notionSubmit')}
               </Button>
             </div>
           </form>
