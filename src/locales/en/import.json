@@ -68,5 +68,6 @@
     "done": "Import finished",
     "failed": "Import failed",
     "view": "View"
-  }
+  },
+  "busy": "Another import is still running. Try again when it finishes."
 }

@@ -8,6 +8,7 @@ import type { Route } from 'next'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 import VisibilityChoice, {
   type ImportVisibility,
@@ -77,10 +78,11 @@ function GlobalUpload({ libraryHref }: GlobalUploadProps) {
     }
   }, [disabled, onDragOver, onDrop])
 
-  const onStart = () => {
+  const onStart = async () => {
     if (!file) return
-    void start(file, { visible: toVisibleFlag(visibility) })
     setFile(null)
+    const started = await start(file, { visible: toVisibleFlag(visibility) })
+    if (!started) toast.error(t('busy'))
   }
 
   return (

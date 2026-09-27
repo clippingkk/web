@@ -112,7 +112,11 @@ function ImportPanel({ libraryHref }: ImportPanelProps) {
               type="file"
               accept=".txt,text/plain"
               className="sr-only"
-              onChange={(e) => pick(e.target.files?.[0])}
+              onChange={(e) => {
+                pick(e.target.files?.[0])
+                // let picking the same file again fire onChange
+                e.target.value = ''
+              }}
             />
           </label>
           <p className="type-meta">{t('file.hint')}</p>
@@ -129,9 +133,13 @@ function ImportPanel({ libraryHref }: ImportPanelProps) {
         className="self-start"
         disabled={!file}
         leadingIcon={<Upload className="size-4" />}
-        onClick={() =>
-          file && start(file, { visible: toVisibleFlag(visibility) })
-        }
+        onClick={async () => {
+          if (!file) return
+          const started = await start(file, {
+            visible: toVisibleFlag(visibility),
+          })
+          if (!started) toast.error(t('busy'))
+        }}
       >
         {visibility === 'public' ? t('submit') : t('submitPrivate')}
       </Button>

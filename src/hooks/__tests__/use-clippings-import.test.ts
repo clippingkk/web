@@ -170,7 +170,7 @@ describe('useClippingsImport', () => {
     })
     const { result } = renderHook(() => useClippingsImport())
 
-    let run = Promise.resolve()
+    let run: Promise<unknown> = Promise.resolve()
     act(() => {
       run = result.current.start(kindleExport(), { visible: true })
     })
@@ -195,19 +195,23 @@ describe('useClippingsImport', () => {
     expect(result.current.errors).toEqual([])
   })
 
-  it('ignores a second start while an import is running', async () => {
-    const { result } = renderHook(() => useClippingsImport())
+  it('runs one import at a time across hook instances', async () => {
+    const page = renderHook(() => useClippingsImport())
+    const dropZone = renderHook(() => useClippingsImport())
 
+    let results: boolean[] = []
     await act(async () => {
-      const first = result.current.start(kindleExport(), { visible: true })
-      const second = result.current.start(kindleExport(), { visible: true })
-      await Promise.all([first, second])
+      results = await Promise.all([
+        page.result.current.start(kindleExport(), { visible: true }),
+        dropZone.result.current.start(kindleExport(), { visible: true }),
+      ])
     })
 
+    expect(results).toEqual([true, false])
     expect(mocks.createClippings).toHaveBeenCalledTimes(
       Math.ceil(highlights.length / 20)
     )
-    expect(result.current.step).toBe(UploadStep.Done)
+    expect(dropZone.result.current.step).toBe(UploadStep.None)
   })
 
   it('starts again from a finished run without an explicit reset', async () => {

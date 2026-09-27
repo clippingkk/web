@@ -1,6 +1,6 @@
 import { useApolloClient, useMutation } from '@apollo/client/react'
 import { useMachine } from '@xstate/react'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { CreateClippingsDocument, OnSyncEndDocument } from '@/gql/graphql'
 import { getQueryGcTime } from '@/services/query-client'
@@ -23,6 +23,11 @@ const LOOKUP_CONCURRENCY = 4
 type FatalErrorKind = 'read' | 'parse' | 'upload'
 type ImportErrorKind = FatalErrorKind | 'search'
 export type ImportError = { kind: ImportErrorKind; message: string }
+
+// One import at a time across the app (the import page and the global drop
+// zone each hold a hook): concurrent runs would race each other's progress
+// and dedupe record.
+let importRunning = false
 
 /** The step each fatal error stops the import at. */
 const FAILED_AT: Record<FatalErrorKind, UploadStep> = {
@@ -213,16 +218,16 @@ export function useClippingsImport() {
     [client, createClippings, fail, onSyncEnd, send]
   )
 
-  const running = useRef(false)
-  // One import at a time: a second run would race the first's progress and
-  // its dedupe record.
+  /** Resolves false, without starting, while another import is running. */
   const start = useCallback(
     (file: File, options: { visible: boolean }) => {
-      if (running.current) return Promise.resolve()
-      running.current = true
-      return run(file, options).finally(() => {
-        running.current = false
-      })
+      if (importRunning) return Promise.resolve(false)
+      importRunning = true
+      return run(file, options)
+        .then(() => true)
+        .finally(() => {
+          importRunning = false
+        })
     },
     [run]
   )
