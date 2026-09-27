@@ -192,6 +192,7 @@
     "require-in-the-middle": "^8.0.1",
     "resend": "^6.26.0",
     "rxjs": "^7.8.2",
+    "server-only": "^0.0.1",
     "sharp": "^0.35.4",
     "shiki": "^4.4.3",
     "streamdown": "^2.6.0",

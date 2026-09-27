@@ -9,19 +9,15 @@ import {
   InMemoryCache,
   registerApolloClient,
 } from '@apollo/client-integration-nextjs'
-import { notFound, redirect } from 'next/navigation'
 import { connection } from 'next/server'
 
+import { handleQueryError } from '@/server/data/query-error'
 import {
   LOCAL_GRAPHQL_URL,
   localGraphQLFetch,
 } from '@/server/graphql/local-transport'
 
-import {
-  authLink,
-  isNotFoundApolloError,
-  isUnauthorizedApolloError,
-} from './ajax'
+import { authLink } from './ajax'
 import { apolloCacheConfig } from './apollo.shard'
 
 const { getClient } = registerApolloClient(() => {
@@ -42,23 +38,22 @@ export async function getApolloServerClient() {
   return getClient()
 }
 
+/**
+ * @deprecated Use serverQuery() from '@/server/data/query'. Kept so existing
+ * pages compile; it maps errors exactly like serverQuery() (sign-in redirect
+ * with `next` for UNAUTHORIZED, notFound() for NOT_FOUND and FORBIDDEN).
+ */
 export async function doApolloServerQuery<
   TData,
   TVariables extends OperationVariables = OperationVariables,
 >(options: QueryOptions<TVariables, TData>): Promise<{ data: TData }> {
   const client = await getApolloServerClient()
-  return client
-    .query(options)
-    .then((result) => ({ data: result.data as TData }))
-    .catch((e: unknown) => {
-      if (isUnauthorizedApolloError(e)) {
-        return redirect('/auth/auth-v4?clean=true')
-      }
-      // assertFound throws rather than returning null, so without this a missing
-      // user reached the route's error.tsx instead of its not-found.tsx.
-      if (isNotFoundApolloError(e)) {
-        return notFound()
-      }
-      throw e
-    })
+  try {
+    const result = await client.query(options)
+    return { data: result.data as TData }
+  } catch (error) {
+    await handleQueryError(error)
+    // handleQueryError only resolves when asked to; with defaults it throws.
+    throw error
+  }
 }

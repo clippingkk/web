@@ -6,6 +6,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // Next resolves `server-only` to an empty module on the server; the npm
+      // package's default export throws, which is the client-bundle guard.
+      'server-only': fileURLToPath(
+        new URL('./node_modules/server-only/empty.js', import.meta.url)
+      ),
     },
   },
   test: {
@@ -15,7 +20,9 @@ export default defineConfig({
     clearMocks: true,
     server: {
       deps: {
-        inline: ['graphql', '@graphql-tools/schema', '@graphql-tools/utils'],
+        // One graphql realm: everything that touches the schema is inlined
+        // so yoga's executor and the schema share graphql's instanceof checks.
+        inline: ['graphql', /@graphql-tools\//, 'graphql-yoga', /@envelop\//],
       },
     },
     coverage: {
