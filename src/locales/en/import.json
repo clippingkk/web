@@ -47,6 +47,7 @@
   },
   "errors": {
     "title": "The import stopped",
+    "read": "We couldn't open this file. Check it's still on your device and try again.",
     "parse": "We couldn't read this file. Only English and Chinese Kindle exports are supported.",
     "upload": "Saving failed part-way. Highlights saved so far are kept; importing again will skip them.",
     "search": "Some books couldn't be matched and were left for review.",

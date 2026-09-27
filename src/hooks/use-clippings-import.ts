@@ -98,9 +98,16 @@ export function useClippingsImport() {
       setCount(0)
       send({ type: 'Next' })
 
+      let text: string
+      try {
+        text = await file.text()
+      } catch (error) {
+        fail('read', error)
+        return
+      }
+
       let items: (TClippingItem & { digest: string })[]
       try {
-        const text = await file.text()
         const parsed = new ClippingTextParser(text).execute()
         const digests = await Promise.all(
           parsed.map((item) => digestMessage(JSON.stringify(item)))

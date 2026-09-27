@@ -96,9 +96,9 @@ function ImportProgress(props: ImportProgressProps) {
             <span className="flex flex-col gap-1">
               {errors.map((error, i) => (
                 <span key={i}>
-                  {error.kind === 'parse' || error.kind === 'upload'
-                    ? t(`errors.${error.kind}`)
-                    : error.message}
+                  {error.kind === 'search'
+                    ? error.message
+                    : t(`errors.${error.kind}`)}
                 </span>
               ))}
             </span>
