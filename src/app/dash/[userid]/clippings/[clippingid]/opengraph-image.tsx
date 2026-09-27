@@ -3,95 +3,61 @@ import { ImageResponse } from 'next/og'
 import Logo from '@/assets/bootsplash_logo@3x.png'
 import OGImageClipping from '@/components/og/image-clipping'
 import { APP_URL_ORIGIN } from '@/constants/config'
-import {
-  FetchClippingDocument,
-  type FetchClippingQuery,
-  type FetchClippingQueryVariables,
-} from '@/gql/graphql'
-import { duration3Days } from '@/hooks/book'
-import { getReactQueryClient } from '@/services/ajax'
-import { getApolloServerClient } from '@/services/apollo.server'
-import { getQueryGcTime } from '@/services/query-client'
-import {
-  type WenquBook,
-  type WenquSearchResponse,
-  wenquRequest,
-} from '@/services/wenqu'
+import { FetchClippingDocument } from '@/gql/graphql'
+import { serverQuery } from '@/server/data/query'
+import { getWenquBookByDbId, isValidDoubanId } from '@/services/wenqu'
 
-export const alt = 'About Acme'
+export const alt = 'A highlight shared on ClippingKK'
 export const size = {
   width: 1200,
   height: 630,
 }
 export const contentType = 'image/png'
 
-// Image generation
-export default async function Image(req: {
-  params: { userid: string; clippingid: string }
-}) {
-  const cid = ~~req.params.clippingid
+type ImageProps = {
+  params: Promise<{ userid: string; clippingid: string }>
+}
 
-  const client = await getApolloServerClient()
-  const clippingsResponse = await client.query<
-    FetchClippingQuery,
-    FetchClippingQueryVariables
-  >({
-    query: FetchClippingDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      id: ~~cid,
-    },
-  })
+function absolute(src: string | URL) {
+  const url = new URL(src, APP_URL_ORIGIN)
+  return url.href
+}
 
-  const rq = getReactQueryClient()
-  const bookID = clippingsResponse.data!.clipping.bookID
-  let b: WenquBook | null = null
-  if (bookID && bookID.length > 3) {
-    const bs = await rq.fetchQuery({
-      queryKey: ['wenqu', 'books', 'dbId', bookID],
-      queryFn: () =>
-        wenquRequest<WenquSearchResponse>(`/books/search?dbId=${bookID}`),
-      staleTime: duration3Days,
-      gcTime: getQueryGcTime(duration3Days),
-    })
-    b = bs.books.length === 1 ? bs.books[0] : null
-  }
+export default async function Image(props: ImageProps) {
+  const { clippingid } = await props.params
+  const id = /^\d+$/.test(clippingid) ? Number(clippingid) : -1
+  // Private or missing clippings get the brand card instead of an error.
+  const data =
+    id > 0
+      ? await serverQuery(
+          FetchClippingDocument,
+          { id },
+          { notFound: 'null', unauthorized: 'null' }
+        ).catch(() => null)
+      : null
+  const clipping = data?.clipping
+  const book =
+    clipping && isValidDoubanId(clipping.bookID)
+      ? await getWenquBookByDbId(clipping.bookID).catch(() => null)
+      : null
 
-  let u = new URL('LXGWWenKai-Regular.ttf', import.meta.url)
-  let logoSrc = Logo.src
-
-  if (!u.host) {
-    u = new URL(u, APP_URL_ORIGIN)
-  }
-  if (!logoSrc.startsWith('http')) {
-    logoSrc = new URL(logoSrc, APP_URL_ORIGIN).href
-  }
-
-  const LXGWWenKai = fetch(u).then((res) => res.arrayBuffer())
-
-  const content = clippingsResponse.data!.clipping.content
-
-  if (!b) {
-    return new Response(
-      JSON.stringify({
-        error: 'Book not found',
-      }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    )
-  }
+  const fontUrl = absolute(new URL('LXGWWenKai-Regular.ttf', import.meta.url))
+  const font = await fetch(fontUrl).then((res) => res.arrayBuffer())
 
   return new ImageResponse(
-    <OGImageClipping content={content} b={b} logoSrc={logoSrc} />,
+    <OGImageClipping
+      content={
+        clipping?.content ?? 'ClippingKK — the passages that stayed with you.'
+      }
+      b={{
+        title: book?.title ?? clipping?.title ?? 'ClippingKK',
+        author: book?.author ?? '',
+      }}
+      logoSrc={absolute(Logo.src)}
+    />,
     {
       ...size,
-      fonts: [
-        {
-          name: 'LXGWWenKai',
-          data: await LXGWWenKai,
-          style: 'normal',
-          weight: 400,
-        },
-      ],
+      fonts: [{ name: 'LXGWWenKai', data: font, style: 'normal', weight: 400 }],
     }
   )
 }

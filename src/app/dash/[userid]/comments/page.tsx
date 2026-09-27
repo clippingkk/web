@@ -1,68 +1,75 @@
-import { MessageSquare } from 'lucide-react'
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 
-import PageHeader from '@/components/ui/page-header/page-header'
-import {
-  GetCommentListDocument,
-  type GetCommentListQuery,
-  type GetCommentListQueryVariables,
-} from '@/gql/graphql'
-import { doApolloServerQuery } from '@/services/apollo.server'
+import CommentList from '@/components/comment/comment-list'
+import Page from '@/components/layout/page'
+import PageHeader from '@/components/layout/page-header'
+import { GetCommentListDocument } from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
+import { pageMetadata } from '@/lib/metadata'
+import { resolvePathUser } from '@/server/data/path-user'
+import { serverQuery } from '@/server/data/query'
+import { getViewer } from '@/server/data/viewer'
+import { dashHref } from '@/utils/profile.utils'
 
-import CommentsList from './comments-list'
+const PAGE_SIZE = 20
 
 type Props = {
-  params: Promise<{
-    userid: string
-  }>
+  params: Promise<{ userid: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { userid } = await params
-
-  return {
-    title: `Comments - User ${userid}`,
-    description: 'View all comments and discussions',
-  }
+  const [user, { t }] = await Promise.all([
+    resolvePathUser(userid),
+    getTranslation(undefined, 'reading'),
+  ])
+  return pageMetadata({
+    title: t('commentsPage.metaTitle', { name: user.name }),
+    path: dashHref(user, 'comments'),
+  })
 }
 
 export default async function CommentsPage({ params }: Props) {
   const { userid } = await params
-  const uid = parseInt(userid, 10)
-
-  if (Number.isNaN(uid)) {
-    notFound()
-  }
-
-  const { data } = await doApolloServerQuery<
-    GetCommentListQuery,
-    GetCommentListQueryVariables
-  >({
-    query: GetCommentListDocument,
-    variables: {
-      uid,
-      pagination: {
-        limit: 20,
-      },
-    },
-    context: {
-      headers: {},
-    },
+  const [user, viewer, { t }] = await Promise.all([
+    resolvePathUser(userid),
+    getViewer(),
+    getTranslation(undefined, 'reading'),
+  ])
+  const data = await serverQuery(GetCommentListDocument, {
+    uid: user.id,
+    pagination: { limit: PAGE_SIZE },
   })
-
-  if (!data?.getCommentList) {
-    notFound()
-  }
+  const isOwner = viewer?.id === user.id
 
   return (
-    <section className="anna-fade-in w-full">
+    <Page width="reading">
       <PageHeader
-        icon={<MessageSquare className="h-5 w-5" />}
-        title="My Comments"
-        description="View and manage all your comments and discussions"
+        back={{
+          href: dashHref(user, 'profile'),
+          label: t('commentsPage.back'),
+        }}
+        title={
+          isOwner
+            ? t('commentsPage.ownerTitle')
+            : t('commentsPage.visitorTitle', { name: user.name })
+        }
+        description={t('commentsPage.description')}
+        meta={
+          <span>
+            {t('comments.count', { count: data.getCommentList.count })}
+          </span>
+        }
       />
-      <CommentsList initialData={data.getCommentList} userId={uid} />
-    </section>
+      <CommentList
+        uid={user.id}
+        initialItems={data.getCommentList.items}
+        initialCount={data.getCommentList.count}
+        pageSize={PAGE_SIZE}
+        viewerId={viewer?.id}
+        emptyTitle={t('commentsPage.emptyTitle')}
+        emptyDescription={t('commentsPage.emptyDescription')}
+      />
+    </Page>
   )
 }

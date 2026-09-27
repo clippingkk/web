@@ -1,8 +1,6 @@
-import type { WenquBook } from '../../services/wenqu'
-
 type ClippingOpenGraphImageProps = {
   content: string
-  b: WenquBook
+  b: { title: string; author?: string | null }
   logoSrc: string
 }
 

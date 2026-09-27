@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "title": "{{book}} · highlighted by {{name}}",
+    "fallbackTitle": "A highlight by {{name}}"
+  },
+  "kicker": "From",
+  "page": "p. {{page}}",
+  "private": "Only you can see this highlight",
+  "reactions": {
+    "label": "Reactions",
+    "reactedBy": "Reacted by {{names}}",
+    "failed": "Couldn't update your reaction. Please try again."
+  },
+  "actions": {
+    "label": "Highlight actions",
+    "share": "Share",
+    "more": "More",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
+    "embed": "Copy embed code",
+    "embedCopied": "Embed code copied. Paste it into your site.",
+    "copyFailed": "Couldn't copy to the clipboard.",
+    "douban": "Open in Douban",
+    "visibility": "Visibility",
+    "public": "Public",
+    "private": "Only me",
+    "madePublic": "Now visible to everyone",
+    "madePrivate": "Now only visible to you",
+    "visibilityFailed": "Couldn't change visibility. Please try again.",
+    "changeBook": "Change book…"
+  },
+  "siblings": {
+    "label": "Keep reading",
+    "prev": "Previous",
+    "next": "Next",
+    "inBook": "in this book",
+    "byUser": "from {{name}}",
+    "none": "This is the only highlight here."
+  },
+  "book": {
+    "open": "Open book",
+    "highlightsBy": "All highlights by {{name}}"
+  },
+  "ai": {
+    "title": "Reading note",
+    "description": "An AI explanation of this passage, in context of the book.",
+    "generate": "Explain this passage",
+    "regenerate": "Explain again",
+    "premiumTitle": "Understand a passage in context",
+    "premiumDescription": "Premium members can ask AI to explain any highlight.",
+    "upgrade": "See Premium",
+    "noBook": "Match this highlight to a book to get an explanation.",
+    "error": "Couldn't generate an explanation."
+  },
+  "comments": {
+    "title": "Discussion",
+    "count_one": "{{count}} comment",
+    "count_other": "{{count}} comments",
+    "empty": "No one has said anything yet. Start the conversation.",
+    "signInTitle": "Join the conversation",
+    "signInDescription": "Sign in to share what this passage means to you.",
+    "signIn": "Sign in",
+    "label": "Your comment",
+    "progress": "{{count}} / {{min}} characters",
+    "ready": "{{count}} characters",
+    "tooShort": "Write at least {{min}} characters.",
+    "submit": "Post comment",
+    "posted": "Comment posted",
+    "failed": "Couldn't post your comment. Please try again.",
+    "markdownTip": "Markdown works here.",
+    "delete": "Delete comment",
+    "deleteTitle": "Delete this comment?",
+    "deleteDescription": "This can't be undone.",
+    "confirmDelete": "Delete",
+    "cancel": "Cancel",
+    "deleted": "Comment deleted",
+    "deleteFailed": "Couldn't delete the comment.",
+    "loadMore": "Show more comments",
+    "viewClipping": "View highlight"
+  },
+  "notFound": {
+    "title": "This highlight isn't available",
+    "description": "Its owner may have made it private, or it was removed.",
+    "action": "Go to the square"
+  },
+  "commentsPage": {
+    "metaTitle": "{{name}}'s comments",
+    "ownerTitle": "Your comments",
+    "visitorTitle": "{{name}}'s comments",
+    "description": "Thoughts left on highlights, newest first.",
+    "emptyTitle": "No comments yet",
+    "emptyDescription": "Comments on highlights will show up here.",
+    "back": "Back to profile"
+  },
+  "commentPage": {
+    "metaTitle": "A comment by {{name}}",
+    "title": "Comment",
+    "back": "All comments"
+  }
+}

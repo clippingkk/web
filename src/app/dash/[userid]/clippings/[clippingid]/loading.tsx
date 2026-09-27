@@ -1,14 +1,23 @@
+import Skeleton from '@annatarhe/lake-ui/skeleton'
+
+import Page from '@/components/layout/page'
+
 function Loading() {
   return (
-    <div className="container mt-4 w-full lg:mt-20">
-      <div className="flex h-156 w-full flex-col gap-6 px-4 lg:flex-row">
-        <div className="h-32 flex-1 animate-pulse rounded-xs bg-slate-400 lg:h-full" />
-        <div className="h-24 animate-pulse rounded-xs bg-slate-400 lg:h-full lg:w-96" />
+    <Page width="wide">
+      <div
+        aria-hidden="true"
+        className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16"
+      >
+        <div className="flex max-w-3xl flex-col gap-6">
+          <Skeleton shape="text" className="w-24" />
+          <Skeleton shape="text" className="h-6 w-1/2" />
+          <Skeleton shape="text" lines={6} className="mt-4" />
+          <Skeleton shape="text" className="w-48" />
+        </div>
+        <Skeleton className="rounded-lake-panel hidden h-72 lg:block" />
       </div>
-      <div className="w-full px-4">
-        <div className="mt-12 mb-8 h-64 w-full animate-pulse rounded-xs bg-slate-400" />
-      </div>
-    </div>
+    </Page>
   )
 }
 

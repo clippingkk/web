@@ -1,89 +1,64 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { GetCommentDocument, type GetCommentQuery } from '@/gql/graphql'
-import { currentUserId } from '@/server/gate/current'
-import { doApolloServerQuery } from '@/services/apollo.server'
+import Page from '@/components/layout/page'
+import PageHeader from '@/components/layout/page-header'
+import { GetCommentDocument } from '@/gql/graphql'
+import { getTranslation } from '@/i18n'
+import { pageMetadata } from '@/lib/metadata'
+import { serverQuery } from '@/server/data/query'
+import { getViewer } from '@/server/data/viewer'
+import { dashHref } from '@/utils/profile.utils'
 
 import CommentDetail from './comment-detail'
 
 type Props = {
-  params: Promise<{
-    userid: string
-    commentid: string
-  }>
+  params: Promise<{ userid: string; commentid: string }>
+}
+
+function parseId(value: string) {
+  return /^\d+$/.test(value) ? Number(value) : null
+}
+
+async function loadComment(commentid: string) {
+  const id = parseId(commentid)
+  if (!id) notFound()
+  // The server hides comments on clippings the viewer can't see.
+  const { getComment } = await serverQuery(GetCommentDocument, { id })
+  return getComment
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { commentid } = await params
-  const id = parseInt(commentid, 10)
-
-  if (Number.isNaN(id)) {
-    return { title: 'Comment Not Found' }
-  }
-
-  const { data } = await doApolloServerQuery<GetCommentQuery>({
-    query: GetCommentDocument,
-    variables: { id },
-    context: {
-      headers: {},
-    },
+  const [comment, { t }] = await Promise.all([
+    loadComment(commentid),
+    getTranslation(undefined, 'reading'),
+  ])
+  return pageMetadata({
+    title: t('commentPage.metaTitle', { name: comment.creator.name }),
+    description: comment.content.slice(0, 160),
+    type: 'article',
   })
-
-  if (!data?.getComment) {
-    return { title: 'Comment Not Found' }
-  }
-
-  const comment = data.getComment
-  const truncatedContent =
-    comment.content.length > 160
-      ? `${comment.content.substring(0, 160)}...`
-      : comment.content
-
-  return {
-    title: `Comment by ${comment.creator.name} on "${comment.belongsTo.title}"`,
-    description: truncatedContent,
-    openGraph: {
-      title: `Comment by ${comment.creator.name}`,
-      description: truncatedContent,
-      type: 'article',
-      publishedTime: comment.createdAt,
-      modifiedTime: comment.updatedAt,
-      authors: [comment.creator.name],
-    },
-  }
 }
 
-async function CommentPage({ params }: Props) {
+export default async function CommentPage({ params }: Props) {
   const { commentid } = await params
+  const [comment, viewer, { t }] = await Promise.all([
+    loadComment(commentid),
+    getViewer(),
+    getTranslation(undefined, 'reading'),
+  ])
 
-  const uid = parseInt((await currentUserId())?.toString() || '0', 10)
-  const id = parseInt(commentid, 10)
-
-  if (Number.isNaN(uid) || uid <= 0 || Number.isNaN(id)) {
-    notFound()
-  }
-
-  const { data } = await doApolloServerQuery<GetCommentQuery>({
-    query: GetCommentDocument,
-    variables: { id },
-    context: {
-      headers: {},
-    },
-  })
-
-  if (!data?.getComment) {
-    notFound()
-  }
-
-  const comment = data.getComment
-
-  // Check if the comment belongs to the user
-  if (comment.creator.id !== uid) {
-    notFound()
-  }
-
-  return <CommentDetail comment={comment} />
+  return (
+    <Page width="reading">
+      <PageHeader
+        back={{
+          href: dashHref(comment.creator, 'comments'),
+          label: t('commentPage.back'),
+        }}
+        title={t('commentPage.title')}
+      />
+      <CommentDetail comment={comment} viewerId={viewer?.id} />
+    </Page>
+  )
 }
-
-export default CommentPage
