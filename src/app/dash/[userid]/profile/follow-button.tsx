@@ -22,6 +22,12 @@ function FollowButton({ userId, isFan, signedIn }: FollowButtonProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [following, setFollowing] = useState(isFan)
+  const [synced, setSynced] = useState({ userId, isFan })
+  // another profile, or fresh server data after a refresh, wins
+  if (synced.userId !== userId || synced.isFan !== isFan) {
+    setSynced({ userId, isFan })
+    setFollowing(isFan)
+  }
   const [hover, setHover] = useState(false)
   const [follow, { loading: followLoading }] = useMutation(FollowUserDocument)
   const [unfollow, { loading: unfollowLoading }] =
@@ -33,6 +39,7 @@ function FollowButton({ userId, isFan, signedIn }: FollowButtonProps) {
       router.push(authHref(pathname))
       return
     }
+    if (loading) return
     const next = !following
     setFollowing(next)
     try {

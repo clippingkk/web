@@ -83,11 +83,17 @@ function ProfileEditor(props: ProfileEditorProps) {
     defaultValues: { name: '', bio, domain },
   })
 
+  const leave = (saved: boolean) => {
+    setOpen(false)
+    // drop ?with_profile_editor so a refresh doesn't reopen the dialog; that
+    // navigation also brings fresh server data
+    if (defaultOpen) router.replace(pathname as Route)
+    else if (saved) router.refresh()
+  }
+
   const close = () => {
     reset()
-    setOpen(false)
-    // drop ?with_profile_editor so a refresh doesn't reopen the dialog
-    if (defaultOpen) router.replace(pathname as Route)
+    leave(false)
   }
 
   const onSubmit = async (values: FormValues) => {
@@ -107,8 +113,7 @@ function ProfileEditor(props: ProfileEditorProps) {
         },
       })
       toast.success(t('editor.saved'))
-      setOpen(false)
-      router.refresh()
+      leave(true)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : t('editor.failed'))
     }
