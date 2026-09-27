@@ -13,6 +13,7 @@ import type React from 'react'
 import { Suspense } from 'react'
 
 import AppToaster from '@/components/app-toaster'
+import I18nRoot from '@/i18n/root'
 import { bootScript, SERVER_THEME, THEME_COLORS } from '@/lib/theme'
 
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
@@ -66,8 +67,10 @@ function Layout(props: LayoutProps) {
         />
         <Suspense fallback={<Loading />}>
           <ClientOnlyProviders>
-            {props.children}
-            <AppToaster />
+            <I18nRoot>
+              {props.children}
+              <AppToaster />
+            </I18nRoot>
             <div data-st-role="modal" />
             <div data-st-role="sheet" data-ui-scale="standard" />
             <div data-st-role="popover" data-ui-scale="standard" />
