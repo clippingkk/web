@@ -1,44 +1,27 @@
 'use client'
+import Button from '@annatarhe/lake-ui/button'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import { useSuspenseQuery, useMutation } from '@apollo/client/react'
+import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail } from 'lucide-react'
-import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
 
-import { Button } from '@/components/button/button'
-import {
-  ProfileDocument,
-  type ProfileQuery,
-  type ProfileQueryVariables,
-  ExportDataToDocument,
-} from '@/gql/graphql'
+import { ExportDataToDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { ExportDestination } from '@/schema/generated'
 
 import ExportTriggerButton from './export-trigger-button'
 
-function ExportToMail() {
+function ExportToMail({ email }: { email: string }) {
   const [visible, setVisible] = useState(false)
   const open = () => setVisible(true)
   const close = () => setVisible(false)
   const { t } = useTranslation()
-
-  const userDomain = useParams<{ userid: string }>().userid
-  const isTypeUid = !Number.isNaN(parseInt(userDomain, 10))
-  const { data: p } = useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    {
-      variables: {
-        id: isTypeUid ? ~~userDomain : undefined,
-        domain: isTypeUid ? undefined : userDomain,
-      },
-    }
-  )
+  const { t: ts } = useTranslation(undefined, 'settings')
 
   const formSchema = z.object({
     endpoint: z
@@ -59,7 +42,7 @@ function ExportToMail() {
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      endpoint: p.me.email || '',
+      endpoint: email,
     },
   })
 
@@ -95,10 +78,9 @@ function ExportToMail() {
     <>
       <ExportTriggerButton
         onClick={open}
-        icon={
-          <Mail className="mb-3 h-12 w-12 text-blue-600 dark:text-blue-400" />
-        }
-        label={t('app.settings.export.email.button', 'Email')}
+        icon={<Mail className="text-lake-accent-text" />}
+        title={ts('exports.mail')}
+        description={ts('exports.mailDescription')}
       />
       <Modal
         isOpen={visible}
@@ -119,14 +101,13 @@ function ExportToMail() {
                   {...field}
                   type="email"
                   placeholder={t('app.settings.export.email.title')}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-400 dark:focus:ring-blue-400"
                 />
               )}
             />
           </div>
 
           <div className="mt-4 flex w-full justify-end">
-            <Button type="submit" fullWidth isLoading={isSubmitting}>
+            <Button type="submit" fullWidth loading={isSubmitting}>
               {t('app.settings.export.email.submit')}
             </Button>
           </div>

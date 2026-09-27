@@ -1,4 +1,5 @@
 'use client'
+import Button from '@annatarhe/lake-ui/button'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useMutation } from '@apollo/client/react'
@@ -10,7 +11,6 @@ import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
 
 import BrandNotionLogo from '@/assets/brand-notion.svg'
-import { Button } from '@/components/button/button'
 import { ExportDataToDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { ExportDestination } from '@/schema/generated'
@@ -20,6 +20,7 @@ import ExportTriggerButton from './export-trigger-button'
 function ExportToNotion() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
+  const { t: ts } = useTranslation(undefined, 'settings')
 
   const formSchema = z.object({
     notionToken: z
@@ -91,11 +92,11 @@ function ExportToNotion() {
             src={BrandNotionLogo}
             width={BrandNotionLogo.width / 1.5}
             height={BrandNotionLogo.height / 1.5}
-            className="mb-3"
             alt="notion"
           />
         }
-        label={t('app.settings.export.notion.title', 'Notion')}
+        title={ts('exports.notion')}
+        description={ts('exports.notionDescription')}
       />
       <Modal
         title={t('app.settings.export.notion.title')}
@@ -142,7 +143,7 @@ function ExportToNotion() {
               )}
             />
             <div className="mt-4 w-full text-right">
-              <Button type="submit" isLoading={isSubmitting}>
+              <Button type="submit" loading={isSubmitting}>
                 {t('app.settings.export.notion.submit')}
               </Button>
             </div>

@@ -1,40 +1,36 @@
+import type { Metadata } from 'next'
+
+import { SettingsSection } from '@/components/settings/settings-section'
 import { getTranslation } from '@/i18n'
+import { pageMetadata } from '@/lib/metadata'
+import { requireViewer } from '@/server/data/viewer'
 
 import ExportToFlomo from './export.flomo'
 import ExportToMail from './export.mail'
 import ExportToNotion from './export.notion'
 
-async function Exports() {
-  const { t } = await getTranslation()
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslation(undefined, 'settings')
+  return pageMetadata({ title: t('exports.title') })
+}
 
+async function ExportsPage() {
+  const [viewer, { t }] = await Promise.all([
+    requireViewer(),
+    getTranslation(undefined, 'settings'),
+  ])
   return (
-    <div className="w-full py-4">
-      <h3 className="mb-6 text-xl font-medium text-gray-700 dark:text-gray-300">
-        {t('app.settings.exports.availableOptions', 'Available Export Options')}
-      </h3>
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {/* Export cards with consistent styling */}
-        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm backdrop-blur-sm transition-all duration-200 hover:shadow-md dark:border-gray-700 dark:bg-gray-800/60">
-          <div className="p-5">
-            <ExportToFlomo />
-          </div>
-        </div>
-
-        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm backdrop-blur-sm transition-all duration-200 hover:shadow-md dark:border-gray-700 dark:bg-gray-800/60">
-          <div className="p-5">
-            <ExportToNotion />
-          </div>
-        </div>
-
-        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm backdrop-blur-sm transition-all duration-200 hover:shadow-md dark:border-gray-700 dark:bg-gray-800/60">
-          <div className="p-5">
-            <ExportToMail />
-          </div>
-        </div>
+    <SettingsSection
+      title={t('exports.title')}
+      description={t('exports.description')}
+    >
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ExportToFlomo />
+        <ExportToNotion />
+        <ExportToMail email={viewer.email ?? ''} />
       </div>
-    </div>
+    </SettingsSection>
   )
 }
 
-export default Exports
+export default ExportsPage

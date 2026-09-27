@@ -1,117 +1,99 @@
-import { CircleArrowLeft, CircleArrowRight, BookOpenCheck } from 'lucide-react'
+import { buttonStyles } from '@annatarhe/lake-ui/button'
+import EmptyState from '@annatarhe/lake-ui/empty-state'
+import { BookCheck } from 'lucide-react'
+import type { Metadata, Route } from 'next'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
-import {
-  UncheckBooksQueryDocument,
-  type UncheckBooksQueryQuery,
-  type UncheckBooksQueryQueryVariables,
-} from '@/gql/graphql'
+import Page from '@/components/layout/page'
+import PageHeader from '@/components/layout/page-header'
+import { UncheckBooksQueryDocument } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
-import { getApolloServerClient } from '@/services/apollo.server'
+import { pageMetadata } from '@/lib/metadata'
+import { requireViewerRoute } from '@/server/data/path-user'
+import { serverQuery } from '@/server/data/query'
+import { dashHref } from '@/utils/profile.utils'
 
-import HomelessBooksTable from './content'
+import HomelessBookSyncInput from './sync-input'
+
+const PAGE_SIZE = 50
 
 type PageProps = {
   params: Promise<{ userid: string }>
   searchParams: Promise<{ offset?: string }>
 }
 
-async function AdminPanel(props: PageProps) {
-  const [params, sp, { t }] = await Promise.all([
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslation(undefined, 'settings')
+  return pageMetadata({ title: t('admin.meta.title') })
+}
+
+async function AdminPage(props: PageProps) {
+  const [{ userid }, { offset: rawOffset }] = await Promise.all([
     props.params,
     props.searchParams,
-    getTranslation(),
   ])
-  const uid = ~~params.userid
-
-  const offset = sp.offset ? ~~sp.offset : 0
-
-  const ac = await getApolloServerClient()
-
-  const { data } = await ac.query<
-    UncheckBooksQueryQuery,
-    UncheckBooksQueryQueryVariables
-  >({
-    query: UncheckBooksQueryDocument,
-    variables: {
-      pagination: {
-        limit: 50,
-        offset,
-      },
-    },
-    context: {
-      headers: {},
-    },
-  })
+  const viewer = await requireViewerRoute(userid, 'admin')
+  // Non-admins learn nothing about this page existing.
+  if (!viewer.isAdmin) notFound()
+  const offset = Math.max(0, Number.parseInt(rawOffset ?? '0', 10) || 0)
+  const [data, { t }] = await Promise.all([
+    serverQuery(UncheckBooksQueryDocument, {
+      pagination: { limit: PAGE_SIZE, offset },
+    }),
+    getTranslation(undefined, 'settings'),
+  ])
+  const books = data.adminDashboard.uncheckedBooks
+  const base = dashHref(viewer, 'admin')
+  const pageLink = (next: number) => `${base}?offset=${next}` as Route
 
   return (
-    <section className="with-slide-in w-full">
-      <div className="overflow-hidden rounded-2xl border border-white/40 bg-white/70 shadow-sm backdrop-blur-xl dark:border-slate-800/40 dark:bg-slate-900/70">
-        <div className="bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500 px-8 py-8">
-          <div className="flex items-center justify-center gap-4 text-white">
-            <div className="rounded-xl bg-white/15 p-2 ring-1 ring-white/20 backdrop-blur-sm">
-              <BookOpenCheck className="h-7 w-7" />
-            </div>
-            <div className="text-center">
-              <h1 className="text-3xl font-semibold tracking-tight">
-                {t('Homeless Books')}
-              </h1>
-              <p className="mt-1 text-sm text-blue-50">
-                {t('Manage and sync unprocessed book entries')}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-6 md:p-8">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-blue-400" />
-              <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
-                {t('Showing books')} {offset + 1} -{' '}
-                {offset + (data!.adminDashboard.uncheckedBooks?.length || 0)}
-              </span>
-            </div>
-            <div className="flex gap-3">
-              <Link
-                href={`/dash/${uid}/admin?offset=${Math.max(0, offset - 50)}`}
-                className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                  offset <= 0
-                    ? 'cursor-not-allowed border-slate-200 text-slate-400 opacity-50 dark:border-slate-700 dark:text-slate-500'
-                    : 'border-slate-200 text-slate-700 hover:border-blue-400/60 hover:bg-blue-400/5 dark:border-slate-700 dark:text-slate-200 dark:hover:border-blue-400/60 dark:hover:bg-blue-400/10'
-                }`}
-                aria-disabled={offset <= 0}
-              >
-                <CircleArrowLeft className="h-4 w-4" />
-                {t('Previous')}
-              </Link>
-              <Link
-                href={`/dash/${uid}/admin?offset=${offset + 50}`}
-                className="inline-flex items-center gap-2 rounded-xl bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md dark:text-slate-950 dark:hover:bg-blue-300"
-              >
-                {t('Next')}
-                <CircleArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-
-          <HomelessBooksTable
-            data={data!.adminDashboard.uncheckedBooks ?? []}
-          />
-
-          <div className="mt-8 flex justify-center">
-            <Link
-              href={`/dash/${uid}/admin?offset=${offset + 50}`}
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-400 px-6 py-3 font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md dark:text-slate-950 dark:hover:bg-blue-300"
+    <Page width="default">
+      <PageHeader
+        eyebrow={t('admin.eyebrow')}
+        title={t('admin.title')}
+        description={t('admin.description')}
+      />
+      {books.length === 0 ? (
+        <EmptyState
+          icon={<BookCheck className="size-6" />}
+          title={t('admin.empty')}
+        />
+      ) : (
+        <ul className="rounded-lake-panel border-lake-line bg-lake-surface border">
+          {books.map((book) => (
+            <li
+              key={book.title}
+              className="border-lake-line flex flex-col gap-3 border-b px-5 py-4 last:border-b-0 sm:flex-row sm:items-center sm:justify-between"
             >
-              {t('Load More Books')}
-              <CircleArrowRight className="h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
+              <span className="font-reading text-lake-fg">{book.title}</span>
+              <HomelessBookSyncInput bookName={book.title} />
+            </li>
+          ))}
+        </ul>
+      )}
+      <nav className="flex justify-between">
+        {offset > 0 ? (
+          <Link
+            href={pageLink(Math.max(0, offset - PAGE_SIZE))}
+            className={buttonStyles({ variant: 'ghost', size: 'sm' })}
+          >
+            ←
+          </Link>
+        ) : (
+          <span />
+        )}
+        {books.length === PAGE_SIZE ? (
+          <Link
+            href={pageLink(offset + PAGE_SIZE)}
+            className={buttonStyles({ variant: 'ghost', size: 'sm' })}
+          >
+            →
+          </Link>
+        ) : null}
+      </nav>
+    </Page>
   )
 }
 
-export default AdminPanel
+export default AdminPage

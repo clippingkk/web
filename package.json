@@ -119,7 +119,6 @@
     "@tanstack/query-sync-storage-persister": "^5.102.8",
     "@tanstack/react-query": "^5.102.8",
     "@tanstack/react-query-persist-client": "^5.102.8",
-    "@tanstack/react-table": "^9.2.4",
     "@tiptap/core": "^3.31.3",
     "@tiptap/extension-code-block-lowlight": "^3.31.3",
     "@tiptap/extension-link": "^3.31.3",

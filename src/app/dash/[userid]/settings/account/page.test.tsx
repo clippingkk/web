@@ -7,6 +7,15 @@ import Page from './page'
 
 vi.mock('next/server', () => ({ connection: vi.fn() }))
 vi.mock('@/server/gate/config', () => ({ gateConfig: vi.fn() }))
+vi.mock('@/server/data/viewer', () => ({
+  getViewer: vi.fn(async () => ({ id: 1, name: 'Reader' })),
+}))
+vi.mock('@/i18n', () => ({
+  getTranslation: vi.fn(async () => ({
+    t: (key: string) =>
+      key === 'account.gateLink' ? 'Manage Gate account' : key,
+  })),
+}))
 vi.mock('./AccountRemoveButton', () => ({ default: () => null }))
 
 test('reads Gate configuration only after the request boundary resolves', async () => {

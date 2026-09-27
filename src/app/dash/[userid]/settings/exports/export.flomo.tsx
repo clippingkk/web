@@ -1,4 +1,5 @@
 'use client'
+import Button from '@annatarhe/lake-ui/button'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import Modal from '@annatarhe/lake-ui/modal'
 import { useMutation } from '@apollo/client/react'
@@ -10,7 +11,6 @@ import { toast } from 'react-hot-toast'
 import { z } from 'zod/v4'
 
 import BrandFlomoLogo from '@/assets/brand-flomo.png'
-import { Button } from '@/components/button/button'
 import { ExportDataToDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { ExportDestination } from '@/schema/generated'
@@ -20,6 +20,7 @@ import ExportTriggerButton from './export-trigger-button'
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)
   const { t } = useTranslation()
+  const { t: ts } = useTranslation(undefined, 'settings')
   const [mutate] = useMutation(ExportDataToDocument)
 
   const formSchema = z.object({
@@ -69,14 +70,14 @@ function ExportToFlomo() {
         onClick={() => setVisible(true)}
         icon={
           <Image
-            className="mb-3"
             src={BrandFlomoLogo}
             width={BrandFlomoLogo.width / 2.5}
             height={BrandFlomoLogo.height / 2.5}
             alt="flomo"
           />
         }
-        label={t('app.settings.export.flomo.title', 'Flomo')}
+        title={ts('exports.flomo')}
+        description={ts('exports.flomoDescription')}
       />
       <Modal
         isOpen={visible}
@@ -98,7 +99,7 @@ function ExportToFlomo() {
               )}
             />
             <div className="mt-4 w-full text-right">
-              <Button type="submit" isLoading={isSubmitting}>
+              <Button type="submit" loading={isSubmitting}>
                 {t('app.settings.export.flomo.submit')}
               </Button>
             </div>

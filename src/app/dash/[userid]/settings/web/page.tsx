@@ -1,55 +1,95 @@
 'use client'
-import Select from '@annatarhe/lake-ui/form-select-field'
+
+import SelectField from '@annatarhe/lake-ui/form-select-field'
+import SegmentedControl from '@annatarhe/lake-ui/segmented-control'
 import Cookies from 'js-cookie'
+import { Monitor, Moon, Sun } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
+import {
+  SettingsCard,
+  SettingsRow,
+  SettingsSection,
+} from '@/components/settings/settings-section'
+import { useTheme } from '@/components/theme/use-theme'
 import { STORAGE_LANG_KEY } from '@/constants/storage'
 import { useTranslation } from '@/i18n/client'
+import type { ThemePreference } from '@/lib/theme'
 
-const langOptions = [
-  {
-    label: 'English',
-    value: 'en',
-  },
-  {
-    label: '简体中文',
-    value: 'zh',
-  },
-  {
-    label: '한국어',
-    value: 'ko',
-  },
+const LANGUAGES = [
+  { value: 'en', label: 'English' },
+  { value: 'zh', label: '简体中文' },
+  { value: 'ko', label: '한국어' },
 ]
 
-function SettingsWebPage() {
-  const { i18n } = useTranslation()
-  const r = useRouter()
-  return (
-    <div className="w-full">
-      <div className="mb-4 flex w-full items-center justify-around">
-        <Select
-          label="Language"
-          options={langOptions}
-          className="flex w-full items-center justify-between"
-          value={langOptions.find((x) => x.value === i18n.language)?.value}
-          onChange={(e) => {
-            const v = e.target.value
+function normalize(language: string) {
+  if (language.startsWith('zh')) return 'zh'
+  if (language.startsWith('ko')) return 'ko'
+  return 'en'
+}
 
-            Cookies.set(STORAGE_LANG_KEY, v!)
-            i18n.changeLanguage(v!)
-            r.refresh()
-          }}
+function GeneralSettingsPage() {
+  const { t, i18n } = useTranslation(undefined, 'settings')
+  const router = useRouter()
+  const { preference, setPreference } = useTheme()
+
+  const onLanguageChange = async (value: string) => {
+    Cookies.set(STORAGE_LANG_KEY, value, { expires: 365, sameSite: 'lax' })
+    await i18n.changeLanguage(value)
+    router.refresh()
+  }
+
+  return (
+    <SettingsSection
+      title={t('general.title')}
+      description={t('general.description')}
+    >
+      <SettingsCard>
+        <SettingsRow
+          label={t('general.language')}
+          description={t('general.languageDescription')}
+          control={
+            <SelectField
+              label={t('general.language')}
+              className="w-48 [&_label]:sr-only"
+              options={LANGUAGES}
+              value={normalize(i18n.language ?? 'en')}
+              onChange={(e) => onLanguageChange(e.target.value)}
+            />
+          }
         />
-      </div>
-      {/* <div className='w-full flex items-center justify-around mb-4'>
-        <Switch
-          label={t('app.settings.theme')}
-          value={colorScheme === 'dark'}
-          onChange={(v) => setColorScheme(v ? 'dark' : 'light')}
+        <SettingsRow
+          label={t('general.theme')}
+          description={t('general.themeDescription')}
+          control={
+            <SegmentedControl
+              aria-label={t('general.theme')}
+              size="sm"
+              value={preference}
+              onValueChange={(value: ThemePreference) => setPreference(value)}
+              options={[
+                {
+                  value: 'system',
+                  label: t('general.themeSystem'),
+                  icon: <Monitor className="size-4" />,
+                },
+                {
+                  value: 'light',
+                  label: t('general.themeLight'),
+                  icon: <Sun className="size-4" />,
+                },
+                {
+                  value: 'dark',
+                  label: t('general.themeDark'),
+                  icon: <Moon className="size-4" />,
+                },
+              ]}
+            />
+          }
         />
-      </div> */}
-    </div>
+      </SettingsCard>
+    </SettingsSection>
   )
 }
 
-export default SettingsWebPage
+export default GeneralSettingsPage

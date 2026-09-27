@@ -1,28 +1,43 @@
 'use client'
+
+import Button from '@annatarhe/lake-ui/button'
 import type React from 'react'
 
-type ExportTriggerButtonProps = {
+import { useTranslation } from '@/i18n/client'
+
+type ExportCardProps = {
   onClick: () => void
   icon: React.ReactNode
-  label: string
+  title: string
+  description: string
 }
 
+/** One export destination: what it does and a button to start. */
 function ExportTriggerButton({
   onClick,
   icon,
-  label,
-}: ExportTriggerButtonProps) {
+  title,
+  description,
+}: ExportCardProps) {
+  const { t } = useTranslation(undefined, 'settings')
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="flex h-full w-full flex-col items-center justify-center rounded-lg bg-white p-4 transition-colors duration-200 hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none dark:bg-gray-800 dark:hover:bg-gray-700/80 dark:focus:ring-indigo-400 dark:focus:ring-offset-gray-900"
-    >
-      {icon}
-      <span className="font-medium text-gray-800 dark:text-gray-200">
-        {label}
-      </span>
-    </button>
+    <div className="rounded-lake-panel border-lake-line bg-lake-surface flex h-full flex-col gap-4 border p-5">
+      <div className="flex h-10 items-center [&_img]:h-8 [&_img]:w-auto [&_svg]:size-8">
+        {icon}
+      </div>
+      <div className="flex flex-1 flex-col gap-1">
+        <h3 className="text-lake-fg font-medium">{title}</h3>
+        <p className="text-lake-fg-muted text-sm">{description}</p>
+      </div>
+      <Button
+        variant="secondary"
+        size="sm"
+        className="self-start"
+        onClick={onClick}
+      >
+        {t('exports.start')}
+      </Button>
+    </div>
   )
 }
 

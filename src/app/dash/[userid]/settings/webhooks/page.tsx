@@ -1,102 +1,81 @@
+import { buttonStyles } from '@annatarhe/lake-ui/button'
+import EmptyState from '@annatarhe/lake-ui/empty-state'
 import { ExternalLink, Webhook } from 'lucide-react'
-import { redirect } from 'next/navigation'
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import { checkIsPremium } from '@/compute/user'
-import {
-  FetchMyWebHooksDocument,
-  type FetchMyWebHooksQuery,
-  type FetchMyWebHooksQueryVariables,
-  ProfileDocument,
-  type ProfileQuery,
-  type ProfileQueryVariables,
-} from '@/gql/graphql'
+import { SettingsSection } from '@/components/settings/settings-section'
+import { FetchMyWebHooksDocument } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
-import { currentUserId } from '@/server/gate/current'
-import { doApolloServerQuery } from '@/services/apollo.server'
+import { pageMetadata } from '@/lib/metadata'
+import { serverQuery } from '@/server/data/query'
+import { requireViewer } from '@/server/data/viewer'
+import { dashHref } from '@/utils/profile.utils'
 
-import WebHooksContent from './content'
-import WebhookCreateButton from './create-button'
+import CreateWebhook from './create-webhook'
+import WebhookList from './webhook-list'
 
-type Props = {
-  params: Promise<{ userid: string }>
+const DOCS_URL =
+  'https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslation(undefined, 'settings')
+  return pageMetadata({ title: t('webhooks.title') })
 }
-async function WebhooksPage(props: Props) {
-  const [params, { t }] = await Promise.all([props.params, getTranslation()])
-  const { userid } = params
-  const myUid = (await currentUserId())?.toString()
 
-  if (!myUid) {
-    return redirect(`/dash/${userid}/profile`)
-  }
-
-  const myUidInt = parseInt(myUid, 10)
-
-  const { data: profileResponse } = await doApolloServerQuery<
-    ProfileQuery,
-    ProfileQueryVariables
-  >({
-    query: ProfileDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      id: myUidInt,
-    },
-    context: {
-      headers: {},
-    },
-  })
-
-  const { data: webhooksResp } = await doApolloServerQuery<
-    FetchMyWebHooksQuery,
-    FetchMyWebHooksQueryVariables
-  >({
-    query: FetchMyWebHooksDocument,
-    variables: {
-      id: myUidInt,
-    },
-    context: {
-      headers: {},
-    },
-  })
-
-  const isPremium = checkIsPremium(profileResponse!.me.premiumEndAt)
+export default async function WebhooksPage() {
+  const [viewer, { t }] = await Promise.all([
+    requireViewer(),
+    getTranslation(undefined, 'settings'),
+  ])
+  const data = await serverQuery(FetchMyWebHooksDocument, { id: viewer.id })
+  const webhooks = data.me.webhooks
 
   return (
-    <>
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div className="flex items-start gap-3">
-          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-400/10 text-blue-500 ring-1 ring-blue-400/20 dark:bg-blue-400/15 dark:text-blue-300">
-            <Webhook size={20} />
-          </span>
-          <div>
-            <h1 className="bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-2xl font-semibold tracking-tight text-transparent">
-              {t('app.settings.webhook.title')}
-            </h1>
-            <a
-              href="https://annatarhe.notion.site/Webhook-24f26f59c0764365b3deb8e4c8e770ae"
-              target="_blank"
-              referrerPolicy="no-referrer"
-              rel="noreferrer"
-              className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-300 dark:hover:text-blue-200"
+    <SettingsSection
+      title={t('webhooks.title')}
+      description={
+        <>
+          {t('webhooks.description')}{' '}
+          <a
+            href={DOCS_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="text-lake-accent-text inline-flex items-center gap-1 font-medium hover:underline"
+          >
+            {t('webhooks.docs')}
+            <ExternalLink className="size-3" aria-hidden="true" />
+          </a>
+        </>
+      }
+      actions={viewer.isPremium ? <CreateWebhook /> : undefined}
+    >
+      {!viewer.isPremium && webhooks.length === 0 ? (
+        <EmptyState
+          icon={<Webhook className="size-6" />}
+          title={t('webhooks.premiumTitle')}
+          description={t('webhooks.premiumDescription')}
+          action={
+            <Link
+              href="/pricing"
+              className={buttonStyles({ variant: 'primary', size: 'sm' })}
             >
-              <span>{t('app.settings.webhook.docLink')}</span>
-              <ExternalLink size={12} />
-            </a>
-          </div>
-        </div>
-        <WebhookCreateButton isPremium={isPremium} />
-      </div>
-
-      <div className="overflow-hidden rounded-2xl border border-white/40 bg-white/60 shadow-sm backdrop-blur-xl dark:border-slate-800/40 dark:bg-slate-900/60">
-        <div className="space-y-6 p-4 md:p-6">
-          <WebHooksContent
-            isPremium={isPremium}
-            webhooks={webhooksResp!.me.webhooks}
-            userId={userid}
-          />
-        </div>
-      </div>
-    </>
+              {t('webhooks.upgrade')}
+            </Link>
+          }
+        />
+      ) : webhooks.length === 0 ? (
+        <EmptyState
+          icon={<Webhook className="size-6" />}
+          title={t('webhooks.emptyTitle')}
+          description={t('webhooks.emptyDescription')}
+        />
+      ) : (
+        <WebhookList
+          webhooks={webhooks}
+          basePath={dashHref(viewer, 'settings/webhooks')}
+        />
+      )}
+    </SettingsSection>
   )
 }
-
-export default WebhooksPage
