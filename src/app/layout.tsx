@@ -14,7 +14,7 @@ import { Suspense } from 'react'
 
 import AppToaster from '@/components/app-toaster'
 import GlobalUpload from '@/components/uploads/global'
-import { bootScript, DEFAULT_THEME } from '@/lib/theme'
+import { bootScript, SERVER_THEME } from '@/lib/theme'
 
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
@@ -51,8 +51,8 @@ function Layout(props: LayoutProps) {
   return (
     <html
       lang="en"
-      className={DEFAULT_THEME === 'dark' ? 'dark' : undefined}
-      data-theme={DEFAULT_THEME === 'dark' ? 'dark' : 'light'}
+      className={SERVER_THEME === 'dark' ? 'dark' : undefined}
+      data-theme={SERVER_THEME}
       suppressHydrationWarning
     >
       <head>

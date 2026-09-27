@@ -8,6 +8,7 @@ import {
   isThemePreference,
   resolveTheme,
   type ResolvedTheme,
+  SERVER_THEME,
   type ThemePreference,
 } from '@/lib/theme'
 
@@ -19,11 +20,12 @@ type ThemeSnapshot = {
 const DARK_QUERY = '(prefers-color-scheme: dark)'
 const SERVER_SNAPSHOT: ThemeSnapshot = {
   preference: DEFAULT_THEME,
-  resolved: resolveTheme(DEFAULT_THEME, true),
+  resolved: SERVER_THEME,
 }
 
 const listeners = new Set<() => void>()
 let snapshot: ThemeSnapshot | null = null
+let media: MediaQueryList | null = null
 
 function systemPrefersDark() {
   return window.matchMedia?.(DARK_QUERY).matches ?? false
@@ -49,17 +51,23 @@ function getSnapshot(): ThemeSnapshot {
   return snapshot
 }
 
+function onSystemChange() {
+  if (getSnapshot().preference === 'system') emit(compute('system'))
+}
+
+// One OS listener for the whole store, however many components use the hook.
 function subscribe(listener: () => void) {
   listeners.add(listener)
-  const media = window.matchMedia?.(DARK_QUERY)
-  const onSystemChange = () => {
-    const current = getSnapshot()
-    if (current.preference === 'system') emit(compute('system'))
+  if (listeners.size === 1) {
+    media = window.matchMedia?.(DARK_QUERY) ?? null
+    media?.addEventListener('change', onSystemChange)
   }
-  media?.addEventListener('change', onSystemChange)
   return () => {
     listeners.delete(listener)
-    media?.removeEventListener('change', onSystemChange)
+    if (listeners.size === 0) {
+      media?.removeEventListener('change', onSystemChange)
+      media = null
+    }
   }
 }
 

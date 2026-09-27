@@ -8,6 +8,13 @@ export type ResolvedTheme = 'light' | 'dark'
 // has been checked in both themes. Flip to 'system' after that.
 export const DEFAULT_THEME: ThemePreference = 'dark'
 
+/**
+ * What the server renders on <html> before the boot script runs. The server
+ * cannot see the OS setting, so a 'system' default renders light and the boot
+ * script corrects it before first paint.
+ */
+export const SERVER_THEME: ResolvedTheme = resolveTheme(DEFAULT_THEME, false)
+
 export function isThemePreference(value: unknown): value is ThemePreference {
   return (
     typeof value === 'string' &&
