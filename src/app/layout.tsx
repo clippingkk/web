@@ -14,7 +14,7 @@ import { Suspense } from 'react'
 
 import AppToaster from '@/components/app-toaster'
 import GlobalUpload from '@/components/uploads/global'
-import { bootScript, SERVER_THEME } from '@/lib/theme'
+import { bootScript, SERVER_THEME, THEME_COLORS } from '@/lib/theme'
 
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
@@ -29,8 +29,8 @@ type LayoutProps = {
 export const viewport: Viewport = {
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F7F5F0' },
-    { media: '(prefers-color-scheme: dark)', color: '#141311' },
+    { media: '(prefers-color-scheme: light)', color: THEME_COLORS.light },
+    { media: '(prefers-color-scheme: dark)', color: THEME_COLORS.dark },
   ],
 }
 

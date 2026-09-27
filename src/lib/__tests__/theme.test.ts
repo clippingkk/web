@@ -1,10 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import {
+  applyResolvedTheme,
   bootScript,
   DEFAULT_THEME,
   isThemePreference,
   resolveTheme,
+  THEME_COLORS,
   toHtmlLang,
 } from '../theme'
 
@@ -89,5 +91,31 @@ describe('bootScript', () => {
     expect(document.documentElement.dataset.theme).toBe(
       DEFAULT_THEME === 'dark' ? 'dark' : 'light'
     )
+  })
+})
+
+describe('applyResolvedTheme', () => {
+  afterEach(() => {
+    document.head
+      .querySelectorAll('meta[name="theme-color"]')
+      .forEach((m) => m.remove())
+  })
+
+  it('points both browser-chrome colours at an explicit choice', () => {
+    for (const media of ['light', 'dark']) {
+      const meta = document.createElement('meta')
+      meta.name = 'theme-color'
+      meta.media = `(prefers-color-scheme: ${media})`
+      meta.content = THEME_COLORS[media as 'light' | 'dark']
+      document.head.append(meta)
+    }
+
+    applyResolvedTheme('dark')
+
+    const colors = [
+      ...document.head.querySelectorAll('meta[name="theme-color"]'),
+    ].map((m) => m.getAttribute('content'))
+    expect(colors).toEqual([THEME_COLORS.dark, THEME_COLORS.dark])
+    expect(document.documentElement.dataset.theme).toBe('dark')
   })
 })

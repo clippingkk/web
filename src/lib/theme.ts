@@ -49,8 +49,18 @@ export function bootScript(): string {
   return `(function(){try{var d=document.documentElement,c=document.cookie;function g(n){var m=c.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));return m?decodeURIComponent(m[1]):''}var t=g(${JSON.stringify(STORAGE_THEME_KEY)});if(t!=='light'&&t!=='dark'&&t!=='system')t=${JSON.stringify(DEFAULT_THEME)};var k=t==='dark'||(t==='system'&&!!window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.classList.toggle('dark',k);d.setAttribute('data-theme',k?'dark':'light');var l=g(${JSON.stringify(STORAGE_LANG_KEY)}).toLowerCase();d.lang=l.indexOf('zh')===0?'zh-CN':l.indexOf('ja')===0?'ja':l.indexOf('ko')===0?'ko':'en'}catch(e){}})()`
 }
 
+/** Browser chrome (mobile address bar) colours; match --lake-canvas. */
+export const THEME_COLORS: Record<ResolvedTheme, string> = {
+  light: '#F7F5F0',
+  dark: '#141311',
+}
+
 export function applyResolvedTheme(theme: ResolvedTheme) {
   const root = document.documentElement
   root.classList.toggle('dark', theme === 'dark')
   root.setAttribute('data-theme', theme)
+  // The viewport tags follow prefers-color-scheme; an explicit choice wins.
+  for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+    meta.setAttribute('content', THEME_COLORS[theme])
+  }
 }
