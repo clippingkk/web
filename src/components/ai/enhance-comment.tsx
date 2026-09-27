@@ -85,7 +85,7 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
             </Button>
             <Button
               variant="primary"
-              disabled={!suggestion}
+              disabled={!suggestion.trim()}
               onClick={() => {
                 onAccept(suggestion)
                 setOpen(false)
@@ -97,14 +97,19 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
         }
       >
         <div aria-live="polite" className="min-h-32">
-          {loading || !suggestion ? (
+          {loading || !data ? (
             <div className="flex flex-col items-center gap-3 py-10">
               <Spinner size="md" />
               <p className="type-meta">{t('ai.enhance.working')}</p>
             </div>
-          ) : (
+          ) : suggestion.trim() ? (
             <p className="text-lake-fg text-[0.9375rem] leading-relaxed whitespace-pre-wrap">
               {suggestion}
+            </p>
+          ) : (
+            // a finished rewrite can still come back empty
+            <p className="type-meta py-10 text-center">
+              {t('ai.enhance.empty')}
             </p>
           )}
         </div>

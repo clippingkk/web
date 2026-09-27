@@ -57,6 +57,7 @@
       "intriguing": "More intriguing",
       "title": "A suggested rewrite",
       "working": "Rewriting your comment…",
+      "empty": "The rewrite came back empty. Try another style.",
       "keep": "Keep mine",
       "use": "Use this version",
       "failed": "Couldn't rewrite the comment."
