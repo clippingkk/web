@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { unstable_rethrow } from 'next/navigation'
+import { connection } from 'next/server'
 
 import { getTranslation } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
@@ -20,6 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** A Gate outage shows "purchases are paused" instead of failing the page. */
 async function isPremiumAvailable() {
+  // Plans are live data, and Gate config needs the server env, which a build
+  // doesn't have: never prerender this.
+  await connection()
   if (!gateConfig().apiKey) return false
   try {
     const plans = await listPlans()
