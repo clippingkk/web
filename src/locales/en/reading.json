@@ -74,7 +74,8 @@
     "cancel": "Cancel",
     "deleted": "Comment deleted",
     "deleteFailed": "Couldn't delete the comment.",
-    "viewClipping": "View highlight"
+    "viewClipping": "View highlight",
+    "placeholder": "What does this passage mean to you?"
   },
   "notFound": {
     "title": "This highlight isn't available",

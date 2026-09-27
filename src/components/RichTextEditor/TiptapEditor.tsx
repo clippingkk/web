@@ -26,6 +26,7 @@ type TiptapEditorProps = {
   withMindMap?: boolean
   style?: React.CSSProperties
   className?: string
+  placeholder?: string
   markdown?: string
   onContentChange?: (content: string) => void
 }
@@ -39,7 +40,14 @@ function TiptapEditor(
   props: TiptapEditorProps,
   ref: ForwardedRef<TiptapEditorRef>
 ) {
-  const { className, editable = true, markdown, onContentChange, style } = props
+  const {
+    className,
+    editable = true,
+    markdown,
+    onContentChange,
+    placeholder,
+    style,
+  } = props
 
   const editor = useEditor({
     immediatelyRender: typeof window !== 'undefined',
@@ -65,7 +73,7 @@ function TiptapEditor(
       TableCell,
       Typography,
       Placeholder.configure({
-        placeholder: 'Enter some text...',
+        placeholder: placeholder ?? '',
         showOnlyWhenEditable: true,
         includeChildren: true,
       }),

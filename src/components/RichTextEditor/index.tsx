@@ -8,6 +8,7 @@ type CKBaseEditorProps = {
   withMindMap?: boolean
   style?: React.CSSProperties
   className?: string
+  placeholder?: string
   // Table of Content
   markdown?: string
   onContentChange?: (content: string) => void
@@ -25,6 +26,7 @@ function CKBaseEditor(props: CKBaseEditorProps) {
     editable,
     markdown,
     onContentChange,
+    placeholder,
     style,
     ref: editor,
   } = props
@@ -38,6 +40,7 @@ function CKBaseEditor(props: CKBaseEditorProps) {
         editable={editable}
         markdown={markdown}
         onContentChange={onContentChange}
+        placeholder={placeholder}
       />
     </div>
   )

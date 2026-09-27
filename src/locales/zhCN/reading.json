@@ -73,7 +73,8 @@
     "cancel": "取消",
     "deleted": "评论已删除",
     "deleteFailed": "删除失败。",
-    "viewClipping": "查看书摘"
+    "viewClipping": "查看书摘",
+    "placeholder": "这段话对你意味着什么？"
   },
   "notFound": {
     "title": "这条书摘无法查看",

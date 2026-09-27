@@ -73,7 +73,8 @@
     "cancel": "취소",
     "deleted": "댓글을 삭제했어요",
     "deleteFailed": "댓글을 삭제하지 못했어요.",
-    "viewClipping": "하이라이트 보기"
+    "viewClipping": "하이라이트 보기",
+    "placeholder": "이 문장이 당신에게 어떤 의미인가요?"
   },
   "notFound": {
     "title": "볼 수 없는 하이라이트예요",
