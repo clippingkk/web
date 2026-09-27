@@ -1,25 +1,38 @@
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import Avatar from '@annatarhe/lake-ui/avatar'
+import Badge from '@annatarhe/lake-ui/badge'
+import { HydrationBoundary } from '@tanstack/react-query'
+import { ChartColumn, Crown, LibraryBig, Rss } from 'lucide-react'
+import type { Metadata, Route } from 'next'
+import Link from 'next/link'
+import type React from 'react'
 
-import { generateMetadata as profileGenerateMetadata } from '@/components/og/og-with-user-profile'
-import ProfileTabs from '@/components/profile-tabs/profile-tabs'
+import Page from '@/components/layout/page'
+import Section from '@/components/layout/section'
 import PersonalActivity from '@/components/profile/activity'
+import { checkIsPremium } from '@/compute/user'
+import { API_HOST } from '@/constants/config'
 import {
   FetchClippingsByUidDocument,
-  type FetchClippingsByUidQuery,
-  type FetchClippingsByUidQueryVariables,
-  ProfileDocument,
-  type ProfileQuery,
-  type ProfileQueryVariables,
+  GetCommentListDocument,
+  ProfilePageDocument,
 } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
-import { currentUserId } from '@/server/gate/current'
-import { getReactQueryClient } from '@/services/ajax'
-import { doApolloServerQuery } from '@/services/apollo.server'
-import { isValidDoubanId, wenquBooksByIdsQueryOptions } from '@/services/wenqu'
+import { pageMetadata } from '@/lib/metadata'
+import { resolvePathUser } from '@/server/data/path-user'
+import { serverQuery } from '@/server/data/query'
+import { getViewer } from '@/server/data/viewer'
+import { prefetchWenquBooks } from '@/server/data/wenqu'
+import { formatDate } from '@/utils/format-date'
+import { resolveMediaUrl } from '@/utils/image'
+import { dashHref, getUserSlug, isUsableDomain } from '@/utils/profile.utils'
 
-import ProfilePageContent from './content'
+import FollowButton from './follow-button'
+import OwnerAvatar from './owner-avatar'
+import PersonalityView from './personality'
+import ProfileEditor from './profile-editor'
+import ProfileTabs from './profile-tabs'
+
+const PAGE_SIZE = 20
 
 type PageProps = {
   params: Promise<{ userid: string }>
@@ -27,150 +40,235 @@ type PageProps = {
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const params = await props.params
-  const pathUid: string = params.userid
-  const uid = parseInt(pathUid, 10)
-  const isTargetUidType = !Number.isNaN(uid)
-
-  const profileResponse = await doApolloServerQuery<
-    ProfileQuery,
-    ProfileQueryVariables
-  >({
-    query: ProfileDocument,
-    fetchPolicy: 'network-only',
-    variables: {
-      id: isTargetUidType ? uid : undefined,
-      domain: isTargetUidType ? undefined : pathUid,
-    },
-  })
-  return profileGenerateMetadata({
-    profile: profileResponse.data?.me ?? undefined,
+  const { userid } = await props.params
+  const [user, { t }] = await Promise.all([
+    resolvePathUser(userid),
+    getTranslation(undefined, 'profile'),
+  ])
+  return pageMetadata({
+    title: t('meta.title', { name: user.name }),
+    description:
+      user.bio ||
+      t('meta.description', { name: user.name, count: user.clippingsCount }),
+    path: dashHref(user, 'profile'),
+    image: user.avatar ? resolveMediaUrl(user.avatar) : null,
+    type: 'profile',
   })
 }
 
-async function Page(props: PageProps) {
-  const [params, , { t }] = await Promise.all([
-    props.params,
-    props.searchParams,
-    getTranslation(),
-  ])
-  const pathUid: string = params.userid
-  const myUidStr = (await currentUserId())?.toString()
-  const myUid = myUidStr ? parseInt(myUidStr, 10) : undefined
+/** Aug–Dec shows this year's report; earlier months still show last year's. */
+function reportYear(now = new Date()) {
+  return now.getFullYear() - (now.getMonth() > 6 ? 0 : 1)
+}
 
-  const headers: Record<string, string> = {}
+type LinkCardProps = {
+  href: string
+  icon: React.ReactNode
+  title: string
+  description: string
+  external?: boolean
+}
 
-  const isTargetUidType = !Number.isNaN(parseInt(pathUid, 10))
-  const { data: profile } = await doApolloServerQuery<
-    ProfileQuery,
-    ProfileQueryVariables
-  >({
-    query: ProfileDocument,
-    variables: {
-      id: isTargetUidType ? parseInt(pathUid, 10) : undefined,
-      domain: isTargetUidType ? undefined : pathUid,
-    },
-    context: {
-      headers,
-    },
-  })
-
-  if (!profile?.me) {
-    notFound()
-  }
-
-  const profileMe = profile.me
-
-  const rq = getReactQueryClient()
-  let initialClippings: FetchClippingsByUidQuery['clippingList'] | undefined
-
-  if (myUid) {
-    const clippingsResponse = await doApolloServerQuery<
-      FetchClippingsByUidQuery,
-      FetchClippingsByUidQueryVariables
-    >({
-      query: FetchClippingsByUidDocument,
-      variables: {
-        uid: profileMe.id,
-        pagination: { limit: 20 },
-      },
-      context: { headers },
-    })
-    initialClippings = clippingsResponse.data.clippingList
-
-    const bookIds = initialClippings.items
-      .map((x) => x.bookID)
-      .filter(isValidDoubanId)
-
-    if (bookIds.length >= 1) {
-      await rq.prefetchQuery(wenquBooksByIdsQueryOptions(bookIds))
-    }
-  }
-
-  const dehydratedState = dehydrate(rq)
-
-  return (
-    <section className="w-full">
-      <div className="anna-fade-in">
-        <ProfilePageContent profile={profileMe} myUid={myUid} />
-
-        {/* Activity chart section */}
-        <div className="group/activity relative mt-8 w-full">
-          <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-400/20 via-indigo-400/20 to-sky-400/20 opacity-40 blur transition-opacity duration-500 group-hover/activity:opacity-60" />
-
-          <div className="relative overflow-hidden rounded-3xl border border-white/40 bg-white/70 p-8 shadow-sm backdrop-blur-xl dark:border-slate-800/40 dark:bg-slate-900/70">
-            <div
-              className="pointer-events-none absolute inset-0 rounded-3xl opacity-20 dark:opacity-10"
-              style={{
-                backgroundImage:
-                  'radial-gradient(circle at 1px 1px, rgba(59,130,246,0.18) 1px, transparent 0)',
-                backgroundSize: '20px 20px',
-              }}
-            />
-
-            <div className="relative">
-              <div className="mb-6 flex items-center gap-3">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-400/10 text-blue-500 ring-1 ring-blue-400/20 dark:bg-blue-400/15 dark:text-blue-300">
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
-                  </svg>
-                </span>
-                <h2 className="bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-2xl font-semibold tracking-tight text-transparent">
-                  {t('app.profile.activity')}
-                </h2>
-              </div>
-              <PersonalActivity data={profileMe.analysis.daily} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tabbed content section */}
-      <div className="pt-6">
-        {myUid && (
-          <HydrationBoundary state={dehydratedState}>
-            <ProfileTabs
-              uid={profileMe.id}
-              userDomain={profileMe.domain}
-              profile={profileMe}
-              initialClippings={initialClippings}
-            />
-          </HydrationBoundary>
-        )}
-      </div>
-    </section>
+function LinkCard({ href, icon, title, description, external }: LinkCardProps) {
+  const className =
+    'group rounded-lake-panel border-lake-line bg-lake-surface hover:border-lake-line-strong flex items-start gap-3 border p-4 transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-lake-ring'
+  const body = (
+    <>
+      <span
+        aria-hidden="true"
+        className="text-lake-accent-text bg-lake-accent-soft rounded-lake-control shrink-0 p-2 [&_svg]:size-4"
+      >
+        {icon}
+      </span>
+      <span className="flex min-w-0 flex-col gap-0.5">
+        <span className="text-lake-fg group-hover:text-lake-accent-text text-sm font-medium transition-colors duration-150">
+          {title}
+        </span>
+        <span className="text-lake-fg-muted text-sm">{description}</span>
+      </span>
+    </>
+  )
+  return external ? (
+    <a href={href} target="_blank" rel="noreferrer" className={className}>
+      {body}
+    </a>
+  ) : (
+    <Link href={href as Route} className={className}>
+      {body}
+    </Link>
   )
 }
 
-export default Page
+async function ProfilePage(props: PageProps) {
+  const [{ userid }, { with_profile_editor }] = await Promise.all([
+    props.params,
+    props.searchParams,
+  ])
+  const [pathUser, viewer, { t, i18n }] = await Promise.all([
+    resolvePathUser(userid),
+    getViewer(),
+    getTranslation(undefined, 'profile'),
+  ])
+  const isOwner = viewer?.id === pathUser.id
+  const [profile, clippings, comments] = await Promise.all([
+    serverQuery(ProfilePageDocument, { id: pathUser.id }),
+    serverQuery(FetchClippingsByUidDocument, {
+      uid: pathUser.id,
+      pagination: { limit: PAGE_SIZE },
+    }),
+    serverQuery(GetCommentListDocument, {
+      uid: pathUser.id,
+      pagination: { limit: PAGE_SIZE },
+    }),
+  ])
+  const user = profile.me
+  const prefetched = await prefetchWenquBooks(
+    clippings.clippingList.items.map((c) => c.bookID)
+  )
+  const isPremium = checkIsPremium(user.premiumEndAt)
+  const year = reportYear()
+  const handle = isUsableDomain(user.domain) ? `@${user.domain}` : null
+
+  const stats = [
+    { label: t('stats.highlights'), value: user.clippingsCount },
+    { label: t('stats.books'), value: user.booksCount },
+    { label: t('stats.followers'), value: user.followers.length },
+  ]
+
+  return (
+    <Page width="default">
+      <header className="border-lake-line flex flex-col gap-6 border-b pb-8 sm:flex-row sm:items-center">
+        {isOwner ? (
+          <OwnerAvatar
+            uid={user.id}
+            name={user.name}
+            avatar={user.avatar}
+            isPremium={isPremium}
+          />
+        ) : (
+          <Avatar
+            src={user.avatar ? resolveMediaUrl(user.avatar) : null}
+            name={user.name}
+            size="xl"
+            ring={isPremium ? 'premium' : 'none'}
+          />
+        )}
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="type-title text-lake-fg">{user.name}</h1>
+            {isPremium ? (
+              <Badge
+                tone="warning"
+                variant="soft"
+                size="sm"
+                icon={<Crown className="size-3" aria-hidden="true" />}
+              >
+                {t('premium')}
+              </Badge>
+            ) : null}
+          </div>
+          <p className="type-meta flex flex-wrap gap-x-3">
+            {handle ? <span>{handle}</span> : null}
+            <span>
+              {t('joined', {
+                date: formatDate(user.createdAt, i18n.language, 'long'),
+              })}
+            </span>
+          </p>
+          <p className="text-lake-fg-muted max-w-2xl whitespace-pre-line">
+            {user.bio || (isOwner ? t('noBio') : null)}
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2 sm:self-start">
+          {isOwner ? (
+            <>
+              <ProfileEditor
+                name={user.name}
+                bio={user.bio}
+                domain={user.domain}
+                defaultOpen={with_profile_editor === '1'}
+              />
+              {isPremium ? <PersonalityView uid={user.id} /> : null}
+            </>
+          ) : (
+            <FollowButton
+              userId={user.id}
+              isFan={user.isFan}
+              signedIn={!!viewer}
+            />
+          )}
+        </div>
+      </header>
+
+      <dl
+        aria-label={t('stats.label')}
+        className="border-lake-line divide-lake-line rounded-lake-panel grid grid-cols-3 divide-x border"
+      >
+        {stats.map((stat) => (
+          <div
+            key={stat.label}
+            className="flex flex-col gap-1 px-4 py-4 sm:px-6"
+          >
+            <dt className="type-meta">{stat.label}</dt>
+            <dd className="font-reading text-lake-fg text-2xl font-semibold tabular-nums">
+              {stat.value.toLocaleString(i18n.language)}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <Section
+        id="activity"
+        variant="card"
+        title={t('activity.title')}
+        description={t('activity.description')}
+      >
+        <div className="no-scrollbar overflow-x-auto">
+          <PersonalActivity data={user.analysis.daily} />
+        </div>
+      </Section>
+
+      <Section id="more" title={t('links.title', { name: user.name })}>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <LinkCard
+            href={`/report/yearly?uid=${user.id}&year=${year}`}
+            icon={<ChartColumn />}
+            title={t('links.yearly', { year })}
+            description={t('links.yearlyDescription')}
+          />
+          {isOwner ? (
+            <LinkCard
+              href="/report/favourites"
+              icon={<LibraryBig />}
+              title={t('links.favourites')}
+              description={t('links.favouritesDescription')}
+            />
+          ) : null}
+          <LinkCard
+            external
+            href={`${API_HOST}/api/rss/user/${user.id}/clippings`}
+            icon={<Rss />}
+            title={t('links.rss')}
+            description={t('links.rssDescription')}
+          />
+        </div>
+      </Section>
+
+      <HydrationBoundary state={prefetched.state}>
+        <ProfileTabs
+          uid={user.id}
+          slug={getUserSlug(user)}
+          isOwner={isOwner}
+          viewerId={viewer?.id}
+          pageSize={PAGE_SIZE}
+          initialClippings={clippings.clippingList.items}
+          clippingsCount={clippings.clippingList.count}
+          initialComments={comments.getCommentList.items}
+          commentsCount={comments.getCommentList.count}
+        />
+      </HydrationBoundary>
+    </Page>
+  )
+}
+
+export default ProfilePage

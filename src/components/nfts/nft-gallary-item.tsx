@@ -1,82 +1,77 @@
+import Skeleton from '@annatarhe/lake-ui/skeleton'
 import { useEffect, useMemo, useState } from 'react'
+
+import { cn } from '@/lib/utils'
 
 import type { NftItem } from '../../schema/generated'
 import type { NFTMetadata } from '../../services/nft'
 
 type NFTGallaryItemProps = {
   data: NftItem
+  selected?: boolean
   onClick?: (data: NftItem, realImage: string) => void
 }
 
 function NFTGallaryItem(props: NFTGallaryItemProps) {
+  const { data, selected, onClick } = props
   const metadata = useMemo<NFTMetadata | null>(() => {
     try {
-      return JSON.parse(props.data.metadata)
+      return JSON.parse(data.metadata)
     } catch {
       return null
     }
-  }, [props.data.metadata])
+  }, [data.metadata])
 
-  const realImageUrl = useMemo(() => {
+  const imageUrl = useMemo(() => {
     const url = metadata?.image
-    if (!url) {
-      return null
-    }
-
-    if (url.startsWith('ipfs')) {
-      return url.replace('ipfs://', 'https://gateway.moralisipfs.com/ipfs/')
-    }
-    return url
+    if (!url) return null
+    return url.startsWith('ipfs')
+      ? url.replace('ipfs://', 'https://gateway.moralisipfs.com/ipfs/')
+      : url
   }, [metadata?.image])
 
-  const [isImageLoaded, setIsImageLoaded] = useState(false)
-  const [isImageLoadError, setIsImageLoadError] = useState<boolean | null>(null)
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
 
   useEffect(() => {
-    if (!realImageUrl) {
-      return
-    }
-    let m: HTMLImageElement | null = document.createElement('img')
-    m.onload = () => {
-      setIsImageLoaded(true)
-    }
-    m.onerror = () => {
-      setIsImageLoadError(true)
-    }
-    m.src = realImageUrl
+    if (!imageUrl) return
+    let active = true
+    const img = document.createElement('img')
+    img.onload = () => active && setStatus('ready')
+    img.onerror = () => active && setStatus('error')
+    img.src = imageUrl
     return () => {
-      m = null
+      active = false
     }
-  }, [realImageUrl])
+  }, [imageUrl])
 
-  if (isImageLoadError) {
-    return null
+  if (!imageUrl || status === 'error') return null
+  if (status === 'loading') {
+    return <Skeleton className="rounded-lake-control aspect-square w-full" />
   }
 
-  if (!isImageLoaded || !realImageUrl) {
-    return <div className="h-28 w-28 animate-pulse bg-gray-500" />
-  }
   return (
     <button
       type="button"
-      className="mx-auto mt-4 flex w-32 cursor-pointer items-center justify-center border-none bg-transparent p-0"
-      onClick={() => {
-        if (props.onClick) {
-          props.onClick(props.data, realImageUrl)
-        }
-      }}
+      aria-pressed={selected}
+      onClick={() => onClick?.(data, imageUrl)}
+      className={cn(
+        'rounded-lake-control flex w-full flex-col overflow-hidden border text-left transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-lake-ring',
+        selected
+          ? 'border-lake-accent ring-lake-accent ring-1'
+          : 'border-lake-line hover:border-lake-line-strong'
+      )}
     >
-      <div className="bg-opacity-0 hover:bg-opacity-30 bg-gray-400 duration-300">
-        <img
-          src={realImageUrl}
-          className="h-full w-full rounded-t-lg"
-          alt={props.data.name}
-        />
-        <div className="rounded-b-lg p-2">
-          <h6 className="text-sm text-white">{props.data.name}</h6>
-          <span className="text-xs text-white">{metadata?.name ?? ''}</span>
-        </div>
-      </div>
+      <img
+        src={imageUrl}
+        alt={data.name}
+        className="aspect-square w-full object-cover"
+      />
+      <span className="flex flex-col p-2">
+        <span className="text-lake-fg truncate text-sm font-medium">
+          {data.name}
+        </span>
+        <span className="type-meta truncate">{metadata?.name ?? ''}</span>
+      </span>
     </button>
   )
 }

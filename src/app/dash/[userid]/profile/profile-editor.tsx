@@ -1,246 +1,189 @@
 'use client'
+
+import Button from '@annatarhe/lake-ui/button'
 import InputField from '@annatarhe/lake-ui/form-input-field'
 import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
 import Modal from '@annatarhe/lake-ui/modal'
-import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Earth, PenIcon, Settings, UserRound } from 'lucide-react'
-import React, { useCallback, useMemo, useState } from 'react'
+import { PenLine } from 'lucide-react'
+import type { Route } from 'next'
+import { usePathname, useRouter } from 'next/navigation'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 
-import Button from '@/components/button/button'
-import ExternalAccountList from '@/components/externalAccount/list'
 import { UpdateProfileDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
-import { uploadImage } from '@/services/misc'
 import { isUsableDomain } from '@/utils/profile.utils'
 
 type ProfileEditorProps = {
-  uid: number
-  withNameChange: boolean
+  name: string
   bio: string
   domain: string
-
-  withProfileEditor?: string
+  /** Opened from the library's "finish your profile" nudge. */
+  defaultOpen?: boolean
 }
 
 /**
- * The domain follows the server's rule (see updateUserProfile): 3-32 letters,
- * digits or dashes, not all digits. The current value is always accepted so a
- * legacy domain that predates the rule never blocks editing the rest.
+ * The domain follows the server's rule (see updateUserProfile). The current
+ * value is always accepted, so a legacy domain that predates the rule never
+ * blocks editing the bio.
  */
-function makeProfileFormSchema(currentDomain: string) {
+function makeSchema(currentDomain: string, messages: Record<string, string>) {
   return z.object({
-    name: z.string().optional(),
-    bio: z.string().max(255).optional(),
+    name: z.string().trim().max(64).optional(),
+    bio: z
+      .string()
+      .max(255)
+      .refine((v) => v.split('\n').length <= 4, messages.bioTooLong),
     domain: z
       .string()
       .trim()
       .toLowerCase()
       .refine(
-        (value) =>
-          (!!currentDomain && value === currentDomain.toLowerCase()) ||
-          isUsableDomain(value),
-        '3-32 letters, numbers or dashes, and not only numbers'
+        (v) =>
+          v === '' ||
+          (!!currentDomain && v === currentDomain.toLowerCase()) ||
+          isUsableDomain(v),
+        messages.domainInvalid
       ),
-    avatar: z.instanceof(File).nullable().optional(),
   })
 }
 
-type ProfileFormValues = z.infer<ReturnType<typeof makeProfileFormSchema>>
+type FormValues = z.infer<ReturnType<typeof makeSchema>>
 
 function ProfileEditor(props: ProfileEditorProps) {
-  // Initialize state from prop
-  const [visible, setVisible] = useState(() => !!props.withProfileEditor)
+  const { name, bio, domain, defaultOpen = false } = props
+  const { t } = useTranslation(undefined, 'profile')
+  const router = useRouter()
+  const pathname = usePathname()
+  const [open, setOpen] = useState(defaultOpen)
+  const [updateProfile] = useMutation(UpdateProfileDocument)
+  const canRename = name.startsWith('user.')
+  const currentDomain = domain.toLowerCase()
+  const domainLocked = isUsableDomain(domain)
 
-  const [doUpdate, { client }] = useMutation(UpdateProfileDocument)
-  const { t } = useTranslation()
-
-  const profileFormSchema = useMemo(
-    () => makeProfileFormSchema(props.domain),
-    [props.domain]
+  const schema = useMemo(
+    () =>
+      makeSchema(domain, {
+        bioTooLong: t('editor.bioTooLong'),
+        domainInvalid: t('editor.domainInvalid'),
+      }),
+    [domain, t]
   )
-  const hasUsableDomain = isUsableDomain(props.domain)
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
     reset,
-  } = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
-    defaultValues: {
-      name: '',
-      bio: props.bio,
-      domain: props.domain,
-      avatar: null,
-    },
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { name: '', bio, domain },
   })
 
-  const onSubmit = async (values: ProfileFormValues) => {
-    // pre upload image here
-    if (values.bio && values.bio.split('\n').length > 4) {
-      toast.error(t('app.profile.editor.max4line'))
-      return
-    }
-    if (!isValid) {
-      toast.error(t('app.profile.editor.invalid'))
-      return
-    }
+  const close = () => {
+    reset()
+    setOpen(false)
+    // drop ?with_profile_editor so a refresh doesn't reopen the dialog
+    if (defaultOpen) router.replace(pathname as Route)
+  }
 
-    let avatarUrl = ''
-    if (values.avatar) {
-      try {
-        const resp = await uploadImage(values.avatar)
-        avatarUrl = resp.filePath
-      } catch (e: any) {
-        toast.error(e)
-        throw e
-      }
-    }
-
-    // A usable domain is permanent; an unchanged one is not sent at all (null
-    // leaves it alone -- an empty string would fail the server's rule).
-    const domain =
-      hasUsableDomain || values.domain === props.domain.toLowerCase()
+  const onSubmit = async (values: FormValues) => {
+    // A usable domain is permanent; an unchanged one is not sent (null leaves
+    // it alone, an empty string would fail the server's rule).
+    const nextDomain =
+      domainLocked || !values.domain || values.domain === currentDomain
         ? null
         : values.domain
-
     try {
-      await doUpdate({
+      await updateProfile({
         variables: {
-          name: values.name && values.name !== '' ? values.name : null,
-          avatar: avatarUrl !== '' ? avatarUrl : null,
-          bio: values.bio && values.bio !== '' ? values.bio : null,
-          domain,
+          name: canRename && values.name ? values.name : null,
+          bio: values.bio !== bio ? values.bio : null,
+          domain: nextDomain,
+          avatar: null,
         },
       })
-      reset()
-      setVisible(false)
-      client.resetStore()
-      toast.success(t('app.profile.editor.updated'))
-    } catch (err: any) {
-      console.error(err)
-      toast.error(err)
+      toast.success(t('editor.saved'))
+      setOpen(false)
+      router.refresh()
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : t('editor.failed'))
     }
   }
 
-  const onEditCancel = useCallback(() => {
-    reset()
-    setVisible(false)
-  }, [reset])
-
   return (
-    <React.Fragment>
-      <Tooltip content={t('app.profile.editor.title')}>
-        <Button
-          onClick={() => setVisible(true)}
-          variant="ghost"
-          title={t('app.profile.editor.title') ?? ''}
-        >
-          <Settings className="h-6 w-6" />
-        </Button>
-      </Tooltip>
-      <Modal
-        isOpen={visible}
-        title={t('app.profile.editor.title')}
-        onClose={onEditCancel}
+    <>
+      <Button
+        variant="secondary"
+        size="sm"
+        leadingIcon={<PenLine className="size-4" />}
+        onClick={() => setOpen(true)}
       >
-        <div className="p-4">
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            {props.withNameChange && (
-              <InputField
-                type="text"
-                label={
-                  <div className="mb-2 flex items-center gap-2">
-                    <UserRound className="h-6 w-6" />
-                    <span>Name</span>
-                  </div>
-                }
-                placeholder={'Name'}
-                {...register('name')}
-                error={errors.name?.message}
-              />
-            )}
+        {t('edit')}
+      </Button>
+      <Modal
+        isOpen={open}
+        onClose={close}
+        title={t('editor.title')}
+        size="md"
+        footer={
+          <div className="flex justify-end gap-2">
+            <Button variant="ghost" onClick={close}>
+              {t('editor.cancel')}
+            </Button>
+            <Button
+              variant="primary"
+              type="submit"
+              form="profile-editor"
+              loading={isSubmitting}
+            >
+              {t('editor.save')}
+            </Button>
+          </div>
+        }
+      >
+        <form
+          id="profile-editor"
+          className="flex flex-col gap-5"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          {canRename ? (
             <InputField
-              type="text"
-              label={
-                <div className="mb-2 flex items-center gap-2">
-                  <Earth className="h-6 w-6" />
-                  <span>Domain</span>
-                </div>
-              }
-              placeholder={'Domain'}
+              label={t('editor.name')}
+              placeholder={t('editor.namePlaceholder')}
+              autoComplete="nickname"
+              data-autofocus
+              {...register('name')}
+              error={errors.name?.message}
+            />
+          ) : null}
+          <div className="flex flex-col gap-1.5">
+            <InputField
+              label={t('editor.domain')}
+              placeholder="your-name"
+              autoCapitalize="none"
+              spellCheck={false}
+              disabled={domainLocked}
               {...register('domain')}
-              disabled={hasUsableDomain}
               error={errors.domain?.message}
             />
-            <TextareaField
-              label={
-                <div className="mb-2 flex items-center gap-2">
-                  <PenIcon className="h-6 w-6" />
-                  <span>Bio</span>
-                </div>
-              }
-              placeholder={'Bio'}
-              {...register('bio')}
-              error={errors.bio?.message}
-              rows={4}
-            />
-            <div className="mt-6 flex items-center justify-end gap-4">
-              <button
-                className="rounded-xl border border-white/40 bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 transition-colors duration-200 hover:bg-white/90 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:border-slate-800/40 dark:bg-slate-900/70 dark:text-slate-200 dark:hover:bg-slate-900/90"
-                onClick={onEditCancel}
-                type="button"
-              >
-                {t('app.common.cancel')}
-              </button>
-              <button
-                className={`inline-flex items-center justify-center gap-2 rounded-xl bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none disabled:cursor-not-allowed disabled:bg-blue-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300 ${isSubmitting ? 'cursor-wait' : ''}`}
-                type="submit"
-                disabled={!isValid || isSubmitting}
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center">
-                    <svg
-                      className="mr-2 -ml-1 h-4 w-4 animate-spin text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    {t('app.common.processing')}
-                  </span>
-                ) : (
-                  t('app.common.doUpdate')
-                )}
-              </button>
-            </div>
-          </form>
-
-          <hr className="my-10" />
-          {visible && <ExternalAccountList uid={props.uid} />}
-        </div>
+            <p className="type-meta">
+              {domainLocked ? t('editor.domainLocked') : t('editor.domainHint')}
+            </p>
+          </div>
+          <TextareaField
+            label={t('editor.bio')}
+            placeholder={t('editor.bioPlaceholder')}
+            rows={4}
+            {...register('bio')}
+            error={errors.bio?.message}
+          />
+        </form>
       </Modal>
-    </React.Fragment>
+    </>
   )
 }
 
