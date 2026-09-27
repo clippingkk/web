@@ -6,7 +6,7 @@ import Tooltip from '@annatarhe/lake-ui/tooltip'
 import { useMutation } from '@apollo/client/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Earth, PenIcon, Settings, UserRound } from 'lucide-react'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
@@ -16,6 +16,7 @@ import ExternalAccountList from '@/components/externalAccount/list'
 import { UpdateProfileDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { uploadImage } from '@/services/misc'
+import { isUsableDomain } from '@/utils/profile.utils'
 
 type ProfileEditorProps = {
   uid: number
@@ -26,20 +27,30 @@ type ProfileEditorProps = {
   withProfileEditor?: string
 }
 
-const profileFormSchema = z.object({
-  name: z.string().optional(),
-  bio: z.string().max(255).optional(),
-  domain: z
-    .string()
-    .min(3)
-    .max(32)
-    .trim()
-    .toLowerCase()
-    .regex(/^\w+[.|-]?\w+$/),
-  avatar: z.instanceof(File).nullable().optional(),
-})
+/**
+ * The domain follows the server's rule (see updateUserProfile): 3-32 letters,
+ * digits or dashes, not all digits. The current value is always accepted so a
+ * legacy domain that predates the rule never blocks editing the rest.
+ */
+function makeProfileFormSchema(currentDomain: string) {
+  return z.object({
+    name: z.string().optional(),
+    bio: z.string().max(255).optional(),
+    domain: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .refine(
+        (value) =>
+          (!!currentDomain && value === currentDomain.toLowerCase()) ||
+          isUsableDomain(value),
+        '3-32 letters, numbers or dashes, and not only numbers'
+      ),
+    avatar: z.instanceof(File).nullable().optional(),
+  })
+}
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+type ProfileFormValues = z.infer<ReturnType<typeof makeProfileFormSchema>>
 
 function ProfileEditor(props: ProfileEditorProps) {
   // Initialize state from prop
@@ -48,6 +59,11 @@ function ProfileEditor(props: ProfileEditorProps) {
   const [doUpdate, { client }] = useMutation(UpdateProfileDocument)
   const { t } = useTranslation()
 
+  const profileFormSchema = useMemo(
+    () => makeProfileFormSchema(props.domain),
+    [props.domain]
+  )
+  const hasUsableDomain = isUsableDomain(props.domain)
   const {
     register,
     handleSubmit,
@@ -85,8 +101,12 @@ function ProfileEditor(props: ProfileEditorProps) {
       }
     }
 
-    // 因为不能重复填写
-    const domain = props.domain.length > 2 ? '' : values.domain
+    // A usable domain is permanent; an unchanged one is not sent at all (null
+    // leaves it alone -- an empty string would fail the server's rule).
+    const domain =
+      hasUsableDomain || values.domain === props.domain.toLowerCase()
+        ? null
+        : values.domain
 
     try {
       await doUpdate({
@@ -157,7 +177,7 @@ function ProfileEditor(props: ProfileEditorProps) {
               }
               placeholder={'Domain'}
               {...register('domain')}
-              disabled={props.domain.length > 2}
+              disabled={hasUsableDomain}
               error={errors.domain?.message}
             />
             <TextareaField
