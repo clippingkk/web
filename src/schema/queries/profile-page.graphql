@@ -1,0 +1,23 @@
+query profilePage($id: Int!) {
+  me(id: $id) {
+    id
+    name
+    avatar
+    bio
+    domain
+    createdAt
+    premiumEndAt
+    isFan
+    clippingsCount
+    booksCount
+    followers {
+      id
+    }
+    analysis {
+      daily {
+        date
+        count
+      }
+    }
+  }
+}

@@ -9,9 +9,10 @@ import { useTranslation } from '@/i18n/client'
 
 import type { ShellViewer } from './types'
 
-const SearchBar = dynamic(() => import('@/components/searchbar/searchbar'), {
-  ssr: false,
-})
+const CommandPalette = dynamic(
+  () => import('@/components/search/command-palette'),
+  { ssr: false }
+)
 
 function isEditableTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) return false
@@ -61,10 +62,10 @@ function SearchTrigger({ viewer }: SearchTriggerProps) {
         <Kbd className="hidden sm:inline-flex">⌘K</Kbd>
       </button>
       {open ? (
-        <SearchBar
-          visible={open}
+        <CommandPalette
+          open={open}
           onClose={onClose}
-          profile={{ id: viewer.id, domain: viewer.slug }}
+          viewer={{ id: viewer.id, slug: viewer.slug }}
         />
       ) : null}
     </>

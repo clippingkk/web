@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "title": "{{name}}",
+    "description": "ClippingKK의 {{name}}: 하이라이트 {{count}}개."
+  },
+  "joined": "{{date}} 가입",
+  "stats": {
+    "label": "읽기 통계",
+    "highlights": "하이라이트",
+    "books": "책",
+    "followers": "팔로워"
+  },
+  "follow": "팔로우",
+  "following": "팔로잉",
+  "unfollow": "언팔로우",
+  "followFailed": "처리하지 못했어요. 다시 시도해 주세요.",
+  "edit": "프로필 편집",
+  "noBio": "아직 소개가 없어요.",
+  "activity": {
+    "title": "읽기 기록",
+    "description": "지난 1년 동안 하루에 남긴 하이라이트 수.",
+    "less": "적음",
+    "more": "많음"
+  },
+  "links": {
+    "title": "{{name}}님의 더 많은 기록",
+    "yearly": "{{year}}년 독서 결산",
+    "yearlyDescription": "한 해 동안 읽은 책과 문장을 돌아봐요.",
+    "favourites": "애장서 카드",
+    "favouritesDescription": "나를 만든 책을 골라 공유할 카드를 만들어요.",
+    "rss": "RSS 피드",
+    "rssDescription": "새 공개 하이라이트를 피드 리더에서 받아 보세요."
+  },
+  "tabs": {
+    "label": "프로필 섹션",
+    "clippings": "하이라이트",
+    "comments": "댓글"
+  },
+  "clippings": {
+    "ownerNote": "공개 하이라이트만 여기에 표시돼요.",
+    "emptyTitle": "공개 하이라이트가 없어요",
+    "emptyDescription": "공개한 하이라이트가 여기에 표시돼요."
+  },
+  "comments": {
+    "emptyTitle": "아직 댓글이 없어요",
+    "emptyDescription": "하이라이트에 남긴 댓글이 여기에 표시돼요.",
+    "viewAll": "모든 댓글 보기"
+  },
+  "editor": {
+    "title": "프로필 편집",
+    "name": "이름",
+    "namePlaceholder": "어떻게 불러 드릴까요?",
+    "domain": "프로필 링크",
+    "domainHint": "3–32자의 영문, 숫자, 하이픈. 한 번 정하면 바꿀 수 없어요.",
+    "domainLocked": "프로필 링크가 설정되어 있어요.",
+    "domainInvalid": "3–32자의 영문, 숫자, 하이픈을 쓰고 숫자만으로는 만들 수 없어요.",
+    "bio": "소개",
+    "bioPlaceholder": "요즘 읽는 책에 대해 한두 줄",
+    "bioTooLong": "소개는 4줄까지 쓸 수 있어요.",
+    "save": "저장",
+    "cancel": "취소",
+    "saved": "프로필을 저장했어요",
+    "failed": "프로필을 저장하지 못했어요."
+  },
+  "avatar": {
+    "change": "아바타 변경",
+    "title": "아바타",
+    "upload": "업로드",
+    "nft": "NFT",
+    "drop": "이미지를 여기로 끌어 오거나",
+    "browse": "파일 선택",
+    "hint": "PNG, JPG, GIF, SVG, 최대 5MB",
+    "remove": "이미지 제거",
+    "wrongType": "이미지 파일을 선택해 주세요.",
+    "nftEmpty": "연결된 지갑에서 NFT를 찾지 못했어요.",
+    "save": "이 아바타 사용",
+    "cancel": "취소",
+    "saved": "아바타를 바꿨어요",
+    "failed": "아바타를 바꾸지 못했어요."
+  },
+  "personality": {
+    "open": "독서 성향",
+    "title": "나의 독서 성향",
+    "loading": "하이라이트를 읽는 중…",
+    "failed": "독서 성향을 만들지 못했어요."
+  },
+  "premium": "프리미엄"
+}

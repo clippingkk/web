@@ -7,13 +7,8 @@ query fetchClippingsByUid($uid: Int!, $pagination: Pagination!) {
       content
       bookID
       pageAt
-      creator {
-        id
-        avatar
-        clippingsCount
-        name
-        domain
-      }
+      createdAt
+      visible
     }
   }
 }

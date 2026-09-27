@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "title": "{{name}}",
+    "description": "{{name}} on ClippingKK: {{count}} highlights."
+  },
+  "joined": "Joined {{date}}",
+  "stats": {
+    "label": "Reading stats",
+    "highlights": "Highlights",
+    "books": "Books",
+    "followers": "Followers"
+  },
+  "follow": "Follow",
+  "following": "Following",
+  "unfollow": "Unfollow",
+  "followFailed": "Couldn't update. Please try again.",
+  "edit": "Edit profile",
+  "noBio": "No bio yet.",
+  "activity": {
+    "title": "Reading activity",
+    "description": "Highlights per day over the past year.",
+    "less": "Less",
+    "more": "More"
+  },
+  "links": {
+    "title": "More from {{name}}",
+    "yearly": "{{year}} in reading",
+    "yearlyDescription": "A look back at the year's books and highlights.",
+    "favourites": "Favourites card",
+    "favouritesDescription": "Pick the books that shaped you and save a shareable card.",
+    "rss": "RSS feed",
+    "rssDescription": "Follow new public highlights in your feed reader."
+  },
+  "tabs": {
+    "label": "Profile sections",
+    "clippings": "Highlights",
+    "comments": "Comments"
+  },
+  "clippings": {
+    "ownerNote": "Only public highlights appear here.",
+    "emptyTitle": "No public highlights",
+    "emptyDescription": "Public highlights will show up here."
+  },
+  "comments": {
+    "emptyTitle": "No comments yet",
+    "emptyDescription": "Comments on highlights will show up here.",
+    "viewAll": "View all comments"
+  },
+  "editor": {
+    "title": "Edit profile",
+    "name": "Name",
+    "namePlaceholder": "How should we call you?",
+    "domain": "Profile link",
+    "domainHint": "3–32 letters, numbers or dashes. Once set, it can't be changed.",
+    "domainLocked": "Your profile link is set.",
+    "domainInvalid": "Use 3–32 letters, numbers or dashes, and not only numbers.",
+    "bio": "Bio",
+    "bioPlaceholder": "A line or two about what you read",
+    "bioTooLong": "Keep your bio to 4 lines.",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saved": "Profile updated",
+    "failed": "Couldn't save your profile."
+  },
+  "avatar": {
+    "change": "Change avatar",
+    "title": "Avatar",
+    "upload": "Upload",
+    "nft": "NFT",
+    "drop": "Drop an image here, or",
+    "browse": "choose a file",
+    "hint": "PNG, JPG, GIF or SVG, up to 5 MB",
+    "remove": "Remove image",
+    "wrongType": "Please choose an image file.",
+    "nftEmpty": "No NFTs found for your connected wallets.",
+    "save": "Use this avatar",
+    "cancel": "Cancel",
+    "saved": "Avatar updated",
+    "failed": "Couldn't update your avatar."
+  },
+  "personality": {
+    "open": "Reading personality",
+    "title": "Your reading personality",
+    "loading": "Reading your highlights…",
+    "failed": "Couldn't generate your reading personality."
+  },
+  "premium": "Premium"
+}

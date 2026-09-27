@@ -1,0 +1,25 @@
+{
+  "title": "검색",
+  "placeholder": "하이라이트, 책, 독자 검색…",
+  "hint": "두 글자 이상 입력하세요.",
+  "empty": "“{{query}}”와 일치하는 결과가 없어요.",
+  "searching": "검색 중…",
+  "recent": "최근 검색",
+  "goTo": "바로 가기",
+  "mine": "내 하이라이트",
+  "community": "독자들의 하이라이트",
+  "people": "독자",
+  "keys": {
+    "navigate": "이동",
+    "open": "열기",
+    "close": "닫기"
+  },
+  "pages": {
+    "library": "서재",
+    "square": "광장",
+    "upload": "하이라이트 가져오기",
+    "profile": "프로필",
+    "settings": "설정",
+    "unchecked": "책 지정이 필요한 하이라이트"
+  }
+}

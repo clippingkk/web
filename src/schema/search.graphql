@@ -1,8 +1,32 @@
-query searchQuery($query: String!) {
-  search(query: $query) {
+query commandSearch($query: String!, $withMine: Boolean!) {
+  mine: search(query: $query, scope: Me, type: BookName)
+    @include(if: $withMine) {
     clippings {
       id
+      title
       content
+      creator {
+        id
+        domain
+      }
+    }
+  }
+  community: search(query: $query) {
+    clippings {
+      id
+      title
+      content
+      creator {
+        id
+        name
+        domain
+      }
+    }
+    users {
+      id
+      name
+      avatar
+      domain
     }
   }
 }

@@ -1,3 +1,0 @@
-mutation claimCliAPIToken($token: String!) {
-  claimAPIKey(token: $token)
-}

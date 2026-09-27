@@ -56,5 +56,10 @@
     "end": "You've reached the end.",
     "loading": "Loading more",
     "loadMore": "Load more"
+  },
+  "notFound": {
+    "title": "We couldn't find that page",
+    "description": "The link may be broken, or the reader or highlight is no longer here.",
+    "home": "Go home"
   }
 }

@@ -1,0 +1,25 @@
+{
+  "title": "Search",
+  "placeholder": "Search highlights, books and readers…",
+  "hint": "Type at least two characters.",
+  "empty": "Nothing matches “{{query}}”.",
+  "searching": "Searching…",
+  "recent": "Recent searches",
+  "goTo": "Go to",
+  "mine": "Your highlights",
+  "community": "From readers",
+  "people": "Readers",
+  "keys": {
+    "navigate": "to move",
+    "open": "to open",
+    "close": "to close"
+  },
+  "pages": {
+    "library": "Library",
+    "square": "Square",
+    "upload": "Import highlights",
+    "profile": "Profile",
+    "settings": "Settings",
+    "unchecked": "Highlights that need a book"
+  }
+}

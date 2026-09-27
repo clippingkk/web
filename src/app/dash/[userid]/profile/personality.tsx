@@ -1,7 +1,10 @@
 'use client'
+
+import Button from '@annatarhe/lake-ui/button'
 import Modal from '@annatarhe/lake-ui/modal'
+import Spinner from '@annatarhe/lake-ui/spinner'
 import { useQuery } from '@apollo/client/react'
-import { ExternalLink, LoaderCircle } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { Streamdown } from 'streamdown'
 
@@ -10,60 +13,50 @@ import { FetchUserPersonalityDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 
 type PersonalityViewProps = {
-  uid?: number
-  domain?: string
+  uid: number
 }
 
-function PersonalityView(props: PersonalityViewProps) {
-  const { uid, domain } = props
-  const { t } = useTranslation()
-  const [isOpen, setIsOpen] = useState(false)
-  const open = () => setIsOpen(true)
-  const close = () => setIsOpen(false)
-
+/** Premium: an AI portrait of the owner's reading, from their highlights. */
+function PersonalityView({ uid }: PersonalityViewProps) {
+  const { t } = useTranslation(undefined, 'profile')
+  const [open, setOpen] = useState(false)
   const { data, loading, error } = useQuery(FetchUserPersonalityDocument, {
-    variables: {
-      id: uid,
-      domain,
-    },
-    skip: !isOpen,
+    variables: { id: uid },
+    skip: !open,
   })
-
-  const personalityData = data?.me.personalityByAI
+  const text = data?.me.personalityByAI
 
   return (
     <>
-      <button
-        onClick={open}
-        className="group ml-4 inline-flex items-center gap-2 rounded-lg border border-white/40 bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/90 hover:shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-slate-800/40 dark:bg-slate-900/70 dark:text-slate-100 dark:hover:bg-slate-900/90"
-        title={t('app.profile.personality.tooltip') ?? ''}
+      <Button
+        variant="ghost"
+        size="sm"
+        leadingIcon={<Sparkles className="size-4" />}
+        onClick={() => setOpen(true)}
       >
-        <ExternalLink className="h-4 w-4 transition-transform group-hover:rotate-12" />
-        {t('app.profile.personality.title')}
-      </button>
-
+        {t('personality.open')}
+      </Button>
       <Modal
-        isOpen={isOpen}
-        onClose={close}
-        title={t('app.profile.personality.title')}
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        title={t('personality.title')}
+        size="lg"
       >
-        <div className="relative flex max-h-[80vh] min-h-[240px] w-full flex-col overflow-y-auto p-4 px-4">
-          {loading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-xs">
-              <LoaderCircle className="text-primary h-8 w-8 animate-spin" />
+        <div aria-live="polite" className="min-h-40">
+          {loading ? (
+            <div className="flex flex-col items-center gap-3 py-12">
+              <Spinner size="md" />
+              <p className="type-meta">{t('personality.loading')}</p>
             </div>
-          )}
-          {personalityData && (
-            <Streamdown components={MarkdownComponents}>
-              {personalityData}
-            </Streamdown>
-          )}
-          {error && (
-            <div className="mt-4 w-full rounded-xl border border-rose-400/20 bg-rose-400/10 p-4 text-rose-600 dark:text-rose-300">
-              <h3 className="mb-2 font-semibold">Error</h3>
-              <p>{error.message}</p>
+          ) : error ? (
+            <p className="text-lake-danger text-sm">
+              {error.message || t('personality.failed')}
+            </p>
+          ) : text ? (
+            <div className="text-lake-fg text-[0.9375rem] leading-relaxed">
+              <Streamdown components={MarkdownComponents}>{text}</Streamdown>
             </div>
-          )}
+          ) : null}
         </div>
       </Modal>
     </>

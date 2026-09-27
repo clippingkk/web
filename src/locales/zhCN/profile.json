@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "title": "{{name}}",
+    "description": "{{name}} 在 ClippingKK 上的 {{count}} 条书摘。"
+  },
+  "joined": "{{date}} 加入",
+  "stats": {
+    "label": "阅读数据",
+    "highlights": "书摘",
+    "books": "本书",
+    "followers": "关注者"
+  },
+  "follow": "关注",
+  "following": "已关注",
+  "unfollow": "取消关注",
+  "followFailed": "操作失败，请重试。",
+  "edit": "编辑资料",
+  "noBio": "还没有简介。",
+  "activity": {
+    "title": "阅读足迹",
+    "description": "过去一年每天摘录的数量。",
+    "less": "少",
+    "more": "多"
+  },
+  "links": {
+    "title": "{{name}} 的更多内容",
+    "yearly": "{{year}} 年度阅读",
+    "yearlyDescription": "回顾这一年读过的书和摘下的句子。",
+    "favourites": "心爱书单卡片",
+    "favouritesDescription": "挑出影响你的书，生成一张可分享的卡片。",
+    "rss": "RSS 订阅",
+    "rssDescription": "在阅读器里订阅新的公开书摘。"
+  },
+  "tabs": {
+    "label": "主页分栏",
+    "clippings": "书摘",
+    "comments": "评论"
+  },
+  "clippings": {
+    "ownerNote": "这里只展示公开的书摘。",
+    "emptyTitle": "还没有公开的书摘",
+    "emptyDescription": "公开的书摘会出现在这里。"
+  },
+  "comments": {
+    "emptyTitle": "还没有评论",
+    "emptyDescription": "在书摘下发表的评论会出现在这里。",
+    "viewAll": "查看全部评论"
+  },
+  "editor": {
+    "title": "编辑资料",
+    "name": "名字",
+    "namePlaceholder": "我们该怎么称呼你？",
+    "domain": "个人链接",
+    "domainHint": "3–32 位字母、数字或短横线，设置后不可修改。",
+    "domainLocked": "个人链接已设置。",
+    "domainInvalid": "请使用 3–32 位字母、数字或短横线，且不能全是数字。",
+    "bio": "简介",
+    "bioPlaceholder": "一两句话，说说你在读什么",
+    "bioTooLong": "简介最多 4 行。",
+    "save": "保存",
+    "cancel": "取消",
+    "saved": "资料已更新",
+    "failed": "保存失败。"
+  },
+  "avatar": {
+    "change": "更换头像",
+    "title": "头像",
+    "upload": "上传",
+    "nft": "NFT",
+    "drop": "把图片拖到这里，或",
+    "browse": "选择文件",
+    "hint": "PNG、JPG、GIF 或 SVG，不超过 5 MB",
+    "remove": "移除图片",
+    "wrongType": "请选择图片文件。",
+    "nftEmpty": "没有在你绑定的钱包里找到 NFT。",
+    "save": "使用这个头像",
+    "cancel": "取消",
+    "saved": "头像已更新",
+    "failed": "头像更新失败。"
+  },
+  "personality": {
+    "open": "阅读人格",
+    "title": "你的阅读人格",
+    "loading": "正在阅读你的书摘…",
+    "failed": "生成阅读人格失败。"
+  },
+  "premium": "高级会员"
+}
