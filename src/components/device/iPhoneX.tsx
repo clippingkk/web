@@ -1,3 +1,4 @@
+import '@/styles/devices.min.css'
 import type React from 'react'
 
 type DeviceIPhoneXProps = {

@@ -15,7 +15,7 @@ import toast from 'react-hot-toast'
 
 import { API_HOST } from '../constants/config'
 import type { ApiResponse } from '../contracts/http'
-import { getLanguage } from '../utils/locales'
+import { getLanguage } from '@/i18n/language'
 import profile from '../utils/profile'
 import { classifyApolloError } from './apollo-errors'
 import { apolloCacheConfig } from './apollo.shard'

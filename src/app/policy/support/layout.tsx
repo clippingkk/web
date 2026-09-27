@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import type React from 'react'
 
-import DashboardContainer from '@/components/dashboard-container/container'
-import { currentUserId } from '@/server/gate/current'
+import MarketingShell from '@/components/shell/marketing-shell'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -15,13 +14,8 @@ export const metadata: Metadata = {
   },
 }
 
-const Layout = async (props: LayoutProps) => {
-  const myUid = (await currentUserId())?.toString()
-  return (
-    <DashboardContainer uidOrDomain={myUid}>
-      {props.children}
-    </DashboardContainer>
-  )
+function Layout(props: LayoutProps) {
+  return <MarketingShell>{props.children}</MarketingShell>
 }
 
 export default Layout

@@ -1,60 +1,36 @@
-import 'react-phone-input-2/lib/style.css'
-import '../styles/devices.min.css'
-// import 'emoji-mart/css/emoji-mart.css'
-import '../styles/cmdk-raycast.css'
-import '../styles/effect-glow.css'
+import '@fontsource/literata/400.css'
+import '@fontsource/literata/400-italic.css'
+import '@fontsource/literata/600.css'
+import '@fontsource/literata/700.css'
+import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css'
+import 'lxgw-wenkai-webfont/lxgwwenkai-bold.css'
 import '../styles/global.css'
-import '../styles/react-animation.css'
 import '../styles/tailwind.css'
-// next.js not allow to use modern css. just remove it when next.js support it
-// import '@annatarhe/lake-ui/style.css'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import type { Metadata } from 'next'
+import '../styles/legacy-scale.css'
+import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import type React from 'react'
 import { Suspense } from 'react'
-import { Toaster } from 'react-hot-toast'
 
+import AppToaster from '@/components/app-toaster'
 import GlobalUpload from '@/components/uploads/global'
+import { bootScript, SERVER_THEME, THEME_COLORS } from '@/lib/theme'
 
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
 import { CDN_DEFAULT_DOMAIN } from '../constants/config'
-import '../prefers-dark'
-import '../utils/locales'
-import '../utils/settings'
 import Loading from './loading'
 import ClientOnlyProviders from './providers'
-
-// import localFont from 'next/font/local'
-
-// const lxgw = localFont({
-//   src: [{
-//     path: '../src/assets/fonts/LXGWWenKai-Light.woff2',
-//     weight: '200',
-//   }, {
-//     path: '../src/assets/fonts/LXGWWenKai-Regular.woff2',
-//     weight: '400'
-//   }, {
-//     path: '../src/assets/fonts/LXGWWenKai-Bold.woff2',
-//     weight: '700'
-//   }],
-//   display: 'swap',
-//   variable: '--font-lxgw',
-//   fallback: ['Helvetica']
-// })
 
 const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 type LayoutProps = {
   children: React.ReactNode
 }
 
-export const viewport = {
+export const viewport: Viewport = {
+  viewportFit: 'cover',
   themeColor: [
-    {
-      media: '(prefers-color-scheme: light)',
-      color: 'rgba(33, 150, 243, 0.9)',
-    },
-    { media: '(prefers-color-scheme: dark)', color: 'rgba(30, 34, 31, 0.9)' },
+    { media: '(prefers-color-scheme: light)', color: THEME_COLORS.light },
+    { media: '(prefers-color-scheme: dark)', color: THEME_COLORS.dark },
   ],
 }
 
@@ -71,39 +47,34 @@ export const metadata: Metadata = {
   },
 }
 
-async function Layout(props: LayoutProps) {
-  // const loggedInfo = (uid && token) ? await cloakSSROnlySecret(JSON.stringify({ uid: ~~uid, token }), RSC_LOGGED_INFO_KEY) : '{}'
-
+function Layout(props: LayoutProps) {
   return (
     <html
       lang="en"
-      className="dark"
-      style={
-        {
-          '--font-lato':
-            'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-          '--font-lxgw': 'LxgwWenKai',
-        } as React.CSSProperties
-      }
+      className={SERVER_THEME === 'dark' ? 'dark' : undefined}
+      data-theme={SERVER_THEME}
+      suppressHydrationWarning
     >
-      <Script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
-      />
-      <body>
+      <head>
+        {/* applies the stored theme and language before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: bootScript() }} />
+      </head>
+      <body className="bg-lake-canvas text-lake-fg font-sans">
+        <Script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "2cea4dd03c8441d5a8d4f9499b303cb6"}'
+        />
         <Suspense fallback={<Loading />}>
           <ClientOnlyProviders>
             {props.children}
-            <div id="dialog"></div>
-            <div id="toast"></div>
-            <div id="searchbar" className="raycast"></div>
             <GlobalUpload />
-            <Toaster position="top-center" />
-            <ReactQueryDevtools initialIsOpen={false} />
-            <div data-id="modal" />
+            <AppToaster />
             <div data-st-role="modal" />
+            <div data-st-role="sheet" data-ui-scale="standard" />
+            <div data-st-role="popover" data-ui-scale="standard" />
             <div data-st-role="tooltip" />
+            <div data-id="modal" />
           </ClientOnlyProviders>
         </Suspense>
       </body>

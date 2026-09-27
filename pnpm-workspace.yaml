@@ -13,6 +13,7 @@ allowBuilds:
   utf-8-validate: true
 
 minimumReleaseAgeExclude:
+  - '@annatarhe/lake-ui'
   - '@aws-sdk/client-s3@3.1127.0'
   - jose@6.2.12
   - lint-staged@17.5.0

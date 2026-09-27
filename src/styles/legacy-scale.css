@@ -1,0 +1,123 @@
+/*
+ * Transitional compat layer (delete once every route renders inside <Page>).
+ *
+ * The old UI was designed against `html { font-size: 12px }`. The root is
+ * back to the browser default, so pages that have not been migrated yet
+ * redeclare Tailwind's rem-based scale at 0.75x to keep their proportions.
+ * Migrated pages mark themselves with `data-ui="editorial"`, and shell
+ * chrome with `data-ui-scale="standard"`; both get the real scale.
+ */
+
+:root:not(:has([data-ui='editorial'])) {
+  --spacing: 0.1875rem;
+
+  --text-xs: 0.5625rem;
+  --text-sm: 0.65625rem;
+  --text-base: 0.75rem;
+  --text-lg: 0.84375rem;
+  --text-xl: 0.9375rem;
+  --text-2xl: 1.125rem;
+  --text-3xl: 1.40625rem;
+  --text-4xl: 1.6875rem;
+  --text-5xl: 2.25rem;
+  --text-6xl: 2.8125rem;
+  --text-7xl: 3.375rem;
+  --text-8xl: 4.5rem;
+  --text-9xl: 6rem;
+
+  --radius-xs: 0.09375rem;
+  --radius-sm: 0.1875rem;
+  --radius-md: 0.28125rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.5625rem;
+  --radius-2xl: 0.75rem;
+  --radius-3xl: 1.125rem;
+  --radius-4xl: 1.5rem;
+
+  --container-3xs: 12rem;
+  --container-2xs: 13.5rem;
+  --container-xs: 15rem;
+  --container-sm: 18rem;
+  --container-md: 21rem;
+  --container-lg: 24rem;
+  --container-xl: 27rem;
+  --container-2xl: 31.5rem;
+  --container-3xl: 36rem;
+  --container-4xl: 42rem;
+  --container-5xl: 48rem;
+  --container-6xl: 54rem;
+  --container-7xl: 60rem;
+
+  --width-128: 24rem;
+  --width-144: 27rem;
+  --height-128: 24rem;
+  --height-144: 27rem;
+  --height-156: 30rem;
+
+  --lake-radius-control: 6px;
+  --lake-radius-panel: 9px;
+}
+
+:root:not(:has([data-ui='editorial'])) body {
+  font-size: 0.75rem;
+}
+
+[data-ui-scale='standard'] {
+  --spacing: 0.25rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6rem;
+  --text-9xl: 8rem;
+
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+
+  --container-3xs: 16rem;
+  --container-2xs: 18rem;
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-7xl: 80rem;
+
+  --lake-radius-control: 8px;
+  --lake-radius-panel: 12px;
+
+  font-size: 1rem;
+}
+
+/* Pages that predate <Page> relied on the old container's width and padding. */
+:root:not(:has([data-ui='editorial'])) .app-main {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-7xl);
+  padding: calc(var(--spacing) * 8) calc(var(--spacing) * 4);
+}
+
+@media (width >= 48rem) {
+  :root:not(:has([data-ui='editorial'])) .app-main {
+    padding: calc(var(--spacing) * 10) calc(var(--spacing) * 6);
+  }
+}
