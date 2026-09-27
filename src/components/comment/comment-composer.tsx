@@ -72,6 +72,7 @@ function CommentComposer(props: CommentComposerProps) {
             className="min-h-28 w-full px-3.5 py-3 outline-none"
             markdown={content}
             onContentChange={setContent}
+            placeholder={t('comments.placeholder')}
             ref={editor}
           />
         </div>

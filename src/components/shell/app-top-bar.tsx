@@ -26,7 +26,6 @@ function AppTopBar({ viewer }: AppTopBarProps) {
   return (
     <NavbarContainer
       animated={false}
-      data-ui-scale="standard"
       className="border-lake-line bg-lake-canvas/85 shadow-none backdrop-blur-sm"
       innerClassName="flex h-14 items-center gap-4 py-0 sm:gap-6"
     >

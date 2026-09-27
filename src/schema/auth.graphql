@@ -1,7 +1,0 @@
-#import '../fragments/auth.graphql'
-
-query auth($email: String!, $password: String!, $cfTurnstileToken: String!) {
-  auth(email: $email, pwd: $password, cfTurnstileToken: $cfTurnstileToken) {
-    ...AuthLoginResponse
-  }
-}

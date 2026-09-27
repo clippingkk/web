@@ -14,14 +14,10 @@ type PageProps = {
   children: React.ReactNode
 }
 
-/**
- * The root of every rebuilt route. `data-ui="editorial"` also switches the
- * document out of the transitional compact scale (styles/legacy-scale.css).
- */
+/** The root of every route: reading, default or wide measure. */
 function Page({ width = 'default', className, children }: PageProps) {
   return (
     <div
-      data-ui="editorial"
       className={cn(
         'mx-auto flex w-full flex-col gap-10 px-4 py-8 sm:px-6 md:py-12',
         widths[width],

@@ -7,10 +7,7 @@ import Spinner from '@annatarhe/lake-ui/spinner'
  */
 function Loading() {
   return (
-    <div
-      data-ui="editorial"
-      className="bg-lake-canvas text-lake-fg flex min-h-dvh w-full flex-col items-center justify-center gap-6 px-6"
-    >
+    <div className="bg-lake-canvas text-lake-fg flex min-h-dvh w-full flex-col items-center justify-center gap-6 px-6">
       <span
         aria-hidden="true"
         className="rounded-lake-control bg-lake-fg font-reading text-lake-canvas flex size-10 items-center justify-center text-lg font-semibold"

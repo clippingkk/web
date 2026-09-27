@@ -140,19 +140,13 @@ export default function ErrorState({
 
   if (variant === 'inline')
     return (
-      <div
-        data-ui="editorial"
-        className="mx-auto flex w-full max-w-3xl justify-center px-4 py-16 sm:px-6"
-      >
+      <div className="mx-auto flex w-full max-w-3xl justify-center px-4 py-16 sm:px-6">
         {state}
       </div>
     )
 
   return (
-    <div
-      data-ui="editorial"
-      className="bg-lake-canvas text-lake-fg flex min-h-dvh w-full flex-col"
-    >
+    <div className="bg-lake-canvas text-lake-fg flex min-h-dvh w-full flex-col">
       <header className="mx-auto flex h-14 w-full max-w-5xl items-center px-4 sm:px-6">
         <Brand href="/" />
       </header>

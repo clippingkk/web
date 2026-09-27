@@ -1,7 +1,0 @@
-#import '../fragments/auth.graphql'
-
-query authByWeb3($payload: web3VerifyPayload!) {
-  loginByWeb3(payload: $payload) {
-    ...AuthLoginResponse
-  }
-}

@@ -41,17 +41,17 @@ This is the **ClippingKK web application** - a Next.js 15 application for managi
 
 - **GraphQL**: Apollo Client with separate server/client instances
 - **REST API**: "Wenqu" service for book metadata via `wenquRequest()`
-- **State Management**: XState for complex flows (auth), React Query for server state
-- **Caching**: 3-day stale time for React Query, persistent cache with custom persister
+- **State Management**: XState for the Kindle import flow (`src/hooks/my-file.machine.ts`), React Query for Wenqu book metadata
+- **Caching**: Wenqu queries are fresh for 3 days; other React Query queries go stale after a few seconds
 
 ### Authentication Flow
 
-Multi-provider auth using XState machine:
+Sign-in goes through **Gate** (OIDC): `/auth` → `/api/auth/login` → Gate → `/api/auth/callback`,
+which stores the session in Redis and sets the HttpOnly `ck-session` cookie.
 
-- Email/password with OTP
-- Apple Sign-In, GitHub OAuth, MetaMask wallet
-- JWT tokens in secure cookies with automatic refresh
-- Cloudflare Turnstile for bot protection
+- Server components: `getViewer()` / `requireViewer()` / `requireViewerRoute()` (`src/server/data/`)
+- Build sign-in links with `authHref(next)` so readers come back to where they were
+- Premium status and admin rights come from Gate (`premiumEndAt`, `isAdmin` on the viewer)
 
 ## Key Patterns
 
@@ -64,8 +64,9 @@ const data = await serverQuery(ProfileDocument, { id })
 const viewer = await getViewer() // or requireViewer() / requireViewerRoute()
 const user = await resolvePathUser(params.userid)
 
-// Client components use generated hooks
-const { data, loading } = useProfileQuery({ variables: { id } })
+// Client components pass the generated document to Apollo's hooks
+import { useQuery } from '@apollo/client/react'
+const { data, loading } = useQuery(ProfileDocument, { variables: { id } })
 ```
 
 Links: build sign-in links with `authHref(next)` (`src/lib/auth-href.ts`) and user
@@ -103,7 +104,8 @@ const dehydratedState = dehydrate(rq)
 
 - `codegen.yml` - GraphQL code generation
 - `next.config.ts` - Next.js config with image domains
-- `tailwind.config.js` - UI styling configuration
+- `src/styles/tailwind.css` - Tailwind v4 entry (CSS-first, no `tailwind.config.js`)
+- `src/styles/theme.css` - the app's design tokens, type roles and utilities
 - `.oxlintrc.json` - oxlint linting rules
 - `.oxfmtrc.json` - oxfmt formatting rules
 
@@ -117,7 +119,7 @@ const dehydratedState = dehydrate(rq)
 
 **Generated Code:**
 
-- `src/gql/generated.tsx` - GraphQL types and hooks (auto-generated)
+- `src/gql/graphql.ts` - GraphQL types and typed `XxxDocument`s (auto-generated, gitignored)
 - `src/schema/generated.tsx` - GraphQL schema types (auto-generated)
 - `src/schema/` - GraphQL schema definitions
 
@@ -162,8 +164,13 @@ The application supports multiple languages using **i18next** with Next.js integ
 
 ### i18n Architecture
 
-- **Server Components**: Use `useTranslation()` from `src/i18n/index.ts`
-- **Client Components**: Use `useTranslation()` from `react-i18next`
+- **Server Components**: `const { t } = await getTranslation(undefined, 'ns')` from `src/i18n/index.ts`
+- **Client Components**: `useTranslation(undefined, 'ns')` from `src/i18n/client.ts`
+- **Hydration**: `src/i18n/root.tsx` seeds a per-request i18next instance with the reader's
+  language, so client components render the right language on the server too
+- **New namespace files** must be added to `NAMESPACES` in `src/i18n/namespaces.ts` (a test checks
+  the list and that every language has the same keys)
+- Never write `t('key') ?? 'fallback'` — `t` never returns nullish
 - **Translation Files**: Located in `src/locales/{language}.json` and `src/locales/{language}/{namespace}.json`
 - **Language Detection**: Stored in cookies using `STORAGE_LANG_KEY`
 - **Resource Loading**: Dynamic imports via `i18next-resources-to-backend`
@@ -172,18 +179,18 @@ The application supports multiple languages using **i18next** with Next.js integ
 
 ```typescript
 // Server component
-import { useTranslation } from '@/i18n'
+import { getTranslation } from '@/i18n'
 
 async function ServerComponent() {
-  const { t } = await useTranslation('en', 'namespace')
+  const { t } = await getTranslation(undefined, 'namespace')
   return <div>{t('key')}</div>
 }
 
 // Client component
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@/i18n/client'
 
 function ClientComponent() {
-  const { t } = useTranslation('namespace')
+  const { t } = useTranslation(undefined, 'namespace')
   return <div>{t('key')}</div>
 }
 ```
@@ -239,73 +246,48 @@ This editor replaced Lexical. The component maintains a legacy interface (`Legac
 
 ## UI Style Guidelines
 
-### Design Principles
+The UI is built on **`@annatarhe/lake-ui`** (the maintainer's component library) with an
+"editorial reading room" look: paper-like, typography-first, calm; the highlights are the hero.
 
-- **Simple & Elegant**: Minimize visual noise, focus on content and readability
-- **Subtle Gradients**: Use closely related colors for smooth, sophisticated gradients
-- **Consistent Spacing**: Use Tailwind's spacing scale consistently throughout
+### Components
 
-### Color System
+- Use lake-ui for primitives: `button` (polymorphic via `render={<Link href=… />}`; `buttonStyles()`
+  for plain `<a>`), `icon-button`, `menu`, `popover`, `modal`, `sheet`, `confirm-dialog`, `tabs`,
+  `nav-tabs`, `segmented-control`, `avatar`, `badge`, `skeleton`, `spinner`, `empty-state`,
+  `progress`, `table`, `tooltip`, `kbd`, form fields, `contribution-wall`. Import per component:
+  `import Button from '@annatarhe/lake-ui/button'`.
+- App-level building blocks: `components/layout/{page,page-header,section,callout}`,
+  `components/shell/*` (app and marketing shells), `components/clipping/clipping-card` (one card,
+  variants `grid|list|compact|feature`), `components/book/*`, `components/user/user-chip`,
+  `components/list/{masonry-grid,load-more-footer}`.
+- Every route renders inside `<Page width="reading|default|wide">`.
+- `cn()` from `@/lib/utils` (it re-exports lake-ui's, which understands the lake token classes).
 
-- **Primary Color**: `blue-400` (applies to both light and dark themes)
-  - Light theme: `bg-blue-400`, `text-blue-400`, `border-blue-400`
-  - Dark theme: `dark:bg-blue-400`, `dark:text-blue-400`, `dark:border-blue-400`
-- **Gradient Colors**: Use adjacent color values for subtle gradients
-  - Example: `from-blue-300 via-blue-400 to-blue-500`
-  - Alternative: `from-blue-400 to-indigo-400` for slight hue shifts
-- **Neutral Palette**:
-  - Light mode: `zinc-800` to `zinc-50`
-  - Dark mode: `gray-50` to `gray-900`
+### Tokens (never raw palette classes)
 
-### Theme Support
-
-- **Implementation**: Use Tailwind's dark mode classes with `class` strategy
-
-### Component Styling Patterns
-
-```tsx
-// Example button with theme support
-<button className="
-  bg-blue-400 hover:bg-blue-500
-  dark:bg-blue-400 dark:hover:bg-blue-500
-  text-white transition-colors duration-200
-  px-4 py-2 rounded-lg shadow-sm
-">
-
-// Example gradient background
-<div className="
-  bg-gradient-to-br from-blue-300 to-blue-500
-  dark:from-blue-400 dark:to-blue-600
-">
-
-// Example card with subtle shadow
-<div className="
-  bg-white dark:bg-zinc-800
-  border border-gray-200 dark:border-zinc-700
-  shadow-sm hover:shadow-md transition-shadow
-  rounded-xl p-6
-">
-```
+- Colors come from lake-ui's semantic tokens, themed in `src/styles/theme.css`:
+  `bg-lake-canvas|surface|surface-raised|surface-muted`, `text-lake-fg|fg-muted|fg-subtle`,
+  `border-lake-line|line-strong`, `bg-lake-accent` + `text-lake-accent-fg`, `text-lake-accent-text`
+  for links, `bg-lake-accent-soft`, `text-lake-danger|success|warning`, `bg-marker` (highlighter).
+- The accent is blue-400. Text on the accent uses dark ink (`text-lake-accent-fg`); white on
+  blue-400 fails contrast.
+- Tokens switch with the theme, so no `dark:` variants are needed.
+- Radius: `rounded-lake-control` (controls) and `rounded-lake-panel` (cards, dialogs).
+  Shadows: `shadow-lake-card`, `shadow-lake-overlay`.
 
 ### Typography
 
-- **Font Stack**: System fonts for optimal performance
-- **Text Colors**:
-  - Primary: `text-gray-900 dark:text-zinc-50`
-  - Secondary: `text-gray-600 dark:text-zinc-400`
-  - Muted: `text-gray-400 dark:text-zinc-500`
-- **Font Sizes**: Use Tailwind's default scale (`text-sm`, `text-base`, `text-lg`, etc.)
+- Type roles (`src/styles/theme.css`): `type-display`, `type-title`, `type-heading`, `type-body`,
+  `type-quote`, `type-quote-lg`, `type-meta`, `type-eyebrow`. Don't combine a role with `text-*`
+  size classes.
+- `font-reading` (Literata + LXGW WenKai) for quotes, titles and book names; `font-sans` for UI.
 
-### Interactive Elements
+### Motion and interaction
 
-- **Hover States**: Subtle color shifts, no dramatic changes
-- **Focus States**: Clear focus rings using `focus:ring-2 focus:ring-blue-400`
-- **Transitions**: Always include smooth transitions (`transition-all duration-200`)
-- **Disabled States**: Use `opacity-50 cursor-not-allowed`
+- 150–250ms color/opacity transitions; no gradients, glassmorphism, glow or hover lift.
+- Respect `motion-reduce`; focus rings via `focus-visible:ring-2 focus-visible:ring-lake-ring`.
 
-### Layout Guidelines
+### Theme
 
-- **Container**: Max width with responsive padding
-- **Spacing**: Consistent use of Tailwind spacing units
-- **Border Radius**: Prefer `rounded-lg` or `rounded-xl` for modern feel
-- **Shadows**: Use sparingly - `shadow-sm` for cards, `shadow-md` on hover
+- The `ck-theme` cookie holds `system|light|dark`; an inline script in `<head>` applies it before
+  paint (`src/lib/theme.ts`). `useTheme()` in `components/theme/use-theme.ts` reads/sets it.

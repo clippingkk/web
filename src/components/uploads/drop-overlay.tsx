@@ -8,7 +8,6 @@ type DropOverlayProps = {
 function DropOverlay({ label, onClose }: DropOverlayProps) {
   return (
     <div
-      data-ui-scale="standard"
       className="bg-lake-overlay animate-in fade-in fixed inset-0 z-50 flex items-center justify-center p-6 duration-150"
       onClick={onClose}
       onDragLeave={(e) => {

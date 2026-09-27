@@ -1,3 +1,0 @@
-mutation deleteNoun($id: Int!) {
-  deleteNoun(id: $id)
-}

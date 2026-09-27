@@ -41,7 +41,6 @@ async function SkipLink() {
   return (
     <a
       href="#main"
-      data-ui-scale="standard"
       className="rounded-lake-control bg-lake-surface-raised text-lake-fg shadow-lake-overlay sr-only z-50 px-3 py-2 text-sm focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
     >
       {t('shell.skipToContent')}

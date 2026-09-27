@@ -4,9 +4,8 @@ export const THEME_PREFERENCES = ['system', 'light', 'dark'] as const
 export type ThemePreference = (typeof THEME_PREFERENCES)[number]
 export type ResolvedTheme = 'light' | 'dark'
 
-// Light mode has never shipped, so dark stays the default until every route
-// has been checked in both themes. Flip to 'system' after that.
-export const DEFAULT_THEME: ThemePreference = 'dark'
+// Follow the reader's OS until they pick a side in Settings or the user menu.
+export const DEFAULT_THEME: ThemePreference = 'system'
 
 /**
  * What the server renders on <html> before the boot script runs. The server
