@@ -116,8 +116,8 @@ importers:
         specifier: ^0.0.9
         version: 0.0.9
       '@annatarhe/lake-ui':
-        specifier: ^0.0.31
-        version: 0.0.31(lucide-react@1.41.0(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: ^0.0.33
+        version: 0.0.33(lucide-react@1.41.0(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@apollo/client':
         specifier: ^4.2.12
         version: 4.2.12(graphql-ws@6.2.1(graphql@17.0.2)(ws@8.21.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)))(graphql@17.0.2)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(rxjs@7.8.2)
@@ -286,9 +286,6 @@ importers:
       bullmq:
         specifier: ^6.3.4
         version: 6.3.4(ioredis@6.0.0(supports-color@8.1.1))(pg@8.23.0)(redis@6.2.1(@opentelemetry/api@1.9.1))
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
       dataloader:
         specifier: ^2.2.3
         version: 2.2.3
@@ -433,9 +430,6 @@ importers:
       stripe:
         specifier: ^22.6.1
         version: 22.6.1(@types/node@26.4.1)
-      tailwind-merge:
-        specifier: ^3.6.0
-        version: 3.6.0
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
@@ -586,10 +580,10 @@ packages:
   '@annatarhe/clippingkk-widget@0.0.9':
     resolution: {integrity: sha512-YckNnme78QbOk3vO7UJx4lTVs0NaBba+J86DVrL2DwLI3pEB1exXPABTq8vuDpvN9atcGIBkQGK6g8ptyCh6Ow==}
 
-  '@annatarhe/lake-ui@0.0.31':
-    resolution: {integrity: sha512-6i9Ei7HOd7aHREwyr2yH68sT8P4HfUa+vYWNkcXYFRRlX7aTA0xwkx/ckNA2e0Hv4VZvylPwoY9NkXKp5o7Iwg==}
+  '@annatarhe/lake-ui@0.0.33':
+    resolution: {integrity: sha512-s7Yy0IOLO8RkZO7cipSvqMcm5jU9k+Ehawa5opC4IneSdwRA1DLfw0z4N0AGOVk3VTbWUFDtzgjcyKJYARPUdw==}
     peerDependencies:
-      lucide-react: ^0.475.0
+      lucide-react: ^0.475.0 || ^0.539.0 || ^1.41.0
       react: ^19.0.0
       react-dom: ^19.0.0
 
@@ -7186,7 +7180,7 @@ snapshots:
 
   '@annatarhe/clippingkk-widget@0.0.9': {}
 
-  '@annatarhe/lake-ui@0.0.31(lucide-react@1.41.0(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@annatarhe/lake-ui@0.0.33(lucide-react@1.41.0(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@floating-ui/react': 0.27.20(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       clsx: 2.1.1
