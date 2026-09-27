@@ -8,7 +8,7 @@ import SettingsNav from '@/components/settings/settings-nav'
 import SettingsSkeleton from '@/components/settings/settings-skeleton'
 import { getTranslation } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
-import { currentPath } from '@/server/data/current-path'
+import { currentPath, dashSubpath } from '@/server/data/current-path'
 import { requireViewerRoute } from '@/server/data/path-user'
 import { getUserSlug } from '@/utils/profile.utils'
 
@@ -22,21 +22,13 @@ export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata({ title: t('meta.title') })
 }
 
-/** `/dash/x/settings/orders?y` → `settings/orders` plus its search. */
-function subpathOf(path: string, userid: string) {
-  const prefix = `/dash/${userid}/`
-  const [pathname, search = ''] = path.split('?')
-  const rest = decodeURIComponent(pathname).startsWith(
-    decodeURIComponent(prefix)
-  )
-    ? pathname.slice(prefix.length)
-    : 'settings/web'
-  return { subpath: rest || 'settings/web', search: search ? `?${search}` : '' }
-}
-
 async function SettingsFrame({ children, params }: SettingsLayoutProps) {
   const { userid } = await params
-  const { subpath, search } = subpathOf(await currentPath(), userid)
+  const { subpath, search } = dashSubpath(
+    await currentPath(),
+    userid,
+    'settings/web'
+  )
   const [viewer, { t }] = await Promise.all([
     requireViewerRoute(userid, subpath, search),
     getTranslation(undefined, 'settings'),
