@@ -4,6 +4,7 @@
  * folder; a test fails when they drift.
  */
 export const NAMESPACES = [
+  'auth',
   'book',
   'clipping-detail',
   'clippings',
@@ -12,10 +13,14 @@ export const NAMESPACES = [
   'home',
   'import',
   'library',
+  'marketing',
   'navigation',
+  'payment',
+  'policy',
   'pricing',
   'profile',
   'reading',
+  'report',
   'search',
   'settings',
   'upload',
