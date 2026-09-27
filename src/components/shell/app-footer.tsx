@@ -49,16 +49,6 @@ async function AppFooter() {
                 GitHub
               </a>
             </li>
-            <li>
-              <a
-                href="https://beian.miit.gov.cn/"
-                target="_blank"
-                rel="noreferrer"
-                className={linkClass}
-              >
-                豫ICP备15003571号
-              </a>
-            </li>
             {version ? (
               <li
                 className="font-mono text-xs"
