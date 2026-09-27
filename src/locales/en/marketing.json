@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "Keep the passages that stayed with you",
+    "description": "ClippingKK turns your Kindle highlights into a quiet library of the passages you loved — easy to revisit, private by choice, and yours to share."
+  },
+  "hero": {
+    "eyebrow": "For readers who highlight",
+    "title": "Keep the passages that stayed with you.",
+    "description": "Bring in your Kindle highlights and ClippingKK sets them in order, book by book — a quiet library to return to, whenever a line comes back to you.",
+    "start": "Start your library",
+    "open": "Open your library",
+    "pricing": "See pricing",
+    "note": "Free to start. No card needed."
+  },
+  "specimen": {
+    "label": "Highlighted on Kindle",
+    "highlight": "I went to the woods because I wished to live deliberately,",
+    "rest": " to front only the essential facts of life, and see if I could not learn what it had to teach.",
+    "book": "Walden",
+    "author": "Henry David Thoreau"
+  },
+  "clippings": {
+    "eyebrow": "Public highlights",
+    "title": "From readers today",
+    "description": "Passages readers chose to share, fresh from their libraries.",
+    "empty": {
+      "title": "No public highlights yet",
+      "description": "When readers share a passage, it will appear here."
+    }
+  },
+  "books": {
+    "eyebrow": "Shelves",
+    "title": "On the shelves",
+    "description": "Books readers are highlighting right now."
+  },
+  "readers": {
+    "eyebrow": "Readers",
+    "title": "Keeping a library here",
+    "description": "Only highlights a reader marks as public ever appear outside their library."
+  },
+  "features": {
+    "eyebrow": "How it works",
+    "title": "Everything you highlight, in one place",
+    "import": {
+      "title": "Import from Kindle",
+      "body": "Add the My Clippings.txt file from your Kindle, and each highlight is matched to its book — cover, author and all."
+    },
+    "library": {
+      "title": "A quiet library that is yours",
+      "body": "Browse by book, return to a passage years later, and keep private whatever you would rather not share."
+    },
+    "share": {
+      "title": "Share as posters, RSS or API",
+      "body": "Turn a passage into a poster, follow a reader over RSS, or send your highlights on to other tools with webhooks and the API."
+    }
+  },
+  "cta": {
+    "title": "Give your highlights a home.",
+    "description": "Start with the passages already waiting on your Kindle.",
+    "start": "Start your library",
+    "open": "Open your library",
+    "pricing": "Compare plans"
+  }
+}

@@ -1,20 +1,58 @@
 {
-  "unlock": "프리미엄 기능 잠금 해제",
-  "title": "완벽한 플랜 선택",
-  "subtitle": "귀하의 요구 사항에 가장 적합한 플랜을 선택하고 ClippingKK가 제공하는 모든 기능의 잠금을 해제하세요.",
-  "help": "도움말 및 지원",
-  "questions": "우리 플랜에 대해 질문이 있으신가요? 문의하세요",
+  "meta": {
+    "title": "요금제",
+    "description": "ClippingKK는 일상적인 독서에 무료입니다. 프리미엄은 무제한 하이라이트, 더 많은 AI, RSS, 웹훅과 개발자 도구를 더합니다."
+  },
+  "eyebrow": "요금제",
+  "title": "독서와 함께 자라는 서재.",
+  "subtitle": "무료로 시작해 모든 하이라이트를 한곳에 간직하세요. 서가가 무료 플랜보다 커지면 그때 업그레이드하면 됩니다.",
+  "badge": {
+    "current": "현재 플랜",
+    "recommended": "추천"
+  },
   "plan": {
     "free": {
-      "name": "무료 플랜",
-      "description": "ClippingKK를 시작하기 위한 기본 기능입니다.",
-      "goto": "무료로 시작하기"
+      "name": "무료",
+      "description": "하이라이트를 간직하고 다시 읽는 데 필요한 모든 것.",
+      "price": "언제나 무료",
+      "start": "무료로 시작하기",
+      "open": "내 서재 열기"
     },
     "premium": {
-      "name": "프리미엄 플랜",
-      "description": "모든 기능, 무제한 클리핑 및 우선 지원을 잠금 해제하세요.",
-      "goto": "프리미엄으로 업그레이드"
+      "name": "프리미엄",
+      "description": "서재가 큰 독자, 그리고 하이라이트로 무언가를 만들고 싶은 분을 위해.",
+      "price": "Stripe로 결제 · 언제든 해지 가능",
+      "active": "계정에 프리미엄이 활성화되어 있어요.",
+      "unavailable": "지금은 프리미엄을 구매할 수 없어요. 잠시 후 다시 확인해 주세요."
     }
   },
-  "go": "대시보드로 이동"
+  "features": {
+    "label": "포함 내용",
+    "freeStorage": "하이라이트 최대 2,000개",
+    "premiumStorage": "무제한 하이라이트",
+    "freeAi": "처음 10회 AI 요청",
+    "premiumAi": "매월 AI 요청 1,000회",
+    "books": "책 수 제한 없음",
+    "web": "웹에서 전체 서재 이용",
+    "widget": "iOS 홈 화면 위젯",
+    "privacy": "비공개 하이라이트와 안전한 보관",
+    "rss": "하이라이트 RSS 피드",
+    "webhooks": "새 하이라이트 웹훅",
+    "cli": "명령줄 업로드와 GitHub Actions",
+    "support": "이메일 지원",
+    "prioritySupport": "우선 이메일 지원"
+  },
+  "checkout": {
+    "upgrade": "프리미엄으로 업그레이드",
+    "manage": "구독 관리",
+    "signIn": "로그인하고 업그레이드",
+    "opening": "여는 중…",
+    "unavailable": "지금은 결제를 진행할 수 없어요. 다시 시도해 주세요.",
+    "failed": "문제가 발생했어요. 다시 시도해 주세요."
+  },
+  "help": {
+    "title": "요금제나 결제에 대해 궁금한 점이 있나요?",
+    "body": "<link>{{email}}</link>로 메일을 보내 주시면 해결을 도와드릴게요.",
+    "secure": "결제는 Stripe에서 안전하게 처리되며, ClippingKK는 카드 정보를 보지 않습니다."
+  }
 }

@@ -1,0 +1,48 @@
+{
+  "privacy": {
+    "meta": {
+      "title": "隐私政策",
+      "description": "ClippingKK 如何收集、使用和保护你的个人数据。"
+    },
+    "eyebrow": "法律信息",
+    "title": "隐私政策",
+    "effective": "生效日期：{{date}}",
+    "englishOnly": "本政策以英文发布，并以英文版本为准。"
+  },
+  "support": {
+    "meta": {
+      "title": "帮助与支持",
+      "description": "获取 ClippingKK 的帮助：导入书摘、账户、付款与隐私。"
+    },
+    "eyebrow": "帮助与支持",
+    "title": "有什么可以帮你？",
+    "description": "ClippingKK 是一个独立项目。你的每封来信，都会有人认真读。",
+    "email": {
+      "title": "发邮件给我们",
+      "body": "告诉我们你想做什么、实际发生了什么。附上截图会很有帮助。",
+      "action": "写邮件"
+    },
+    "topics": {
+      "title": "常见问题",
+      "import": {
+        "title": "从 Kindle 导入",
+        "body": "把 Kindle 连接到电脑，打开 documents 文件夹，在书房的「导入」页面添加 My Clippings.txt。",
+        "action": "前往导入"
+      },
+      "account": {
+        "title": "找回旧账户",
+        "body": "如果你以前用手机号、微信、钱包或其他 Apple 邮箱登录，请用现在的邮箱给我们写信，我们会帮你关联原来的书房。"
+      },
+      "billing": {
+        "title": "付款与订阅",
+        "body": "在订阅设置中管理或取消高级会员。如需退款或账单有异常，请发邮件给我们。",
+        "action": "查看方案"
+      },
+      "privacy": {
+        "title": "隐私与数据",
+        "body": "了解我们如何处理你的数据，或请我们导出、删除你的数据。",
+        "action": "阅读隐私政策"
+      }
+    }
+  }
+}

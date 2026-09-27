@@ -20,6 +20,40 @@ vi.mock('next/link', () => ({
   }) => <a href={href}>{children}</a>,
 }))
 vi.mock('next/navigation', () => ({ usePathname: () => '/dash/42/home' }))
+vi.mock('@annatarhe/lake-ui/button', () => ({
+  default: ({
+    render,
+    children,
+    leadingIcon,
+    onClick,
+  }: {
+    render?: React.ReactElement<{ children?: React.ReactNode }>
+    children: React.ReactNode
+    leadingIcon?: React.ReactNode
+    onClick?: () => void
+  }) =>
+    render ? (
+      React.cloneElement(render, undefined, leadingIcon, children)
+    ) : (
+      <button type="button" onClick={onClick}>
+        {leadingIcon}
+        {children}
+      </button>
+    ),
+}))
+vi.mock('@annatarhe/lake-ui/empty-state', () => ({
+  default: (props: {
+    title: React.ReactNode
+    description?: React.ReactNode
+    action?: React.ReactNode
+  }) => (
+    <section>
+      <h1>{props.title}</h1>
+      <p>{props.description}</p>
+      {props.action}
+    </section>
+  ),
+}))
 
 afterEach(cleanup)
 
@@ -46,6 +80,14 @@ it('shows a message that was written for the reader', () => {
   expect(screen.getByText('user not found')).toBeTruthy()
 })
 
+it('retries through the callback it was given', () => {
+  const retry = vi.fn()
+  render(<ErrorState error={new Error('offline')} reset={retry} />)
+
+  screen.getByText('error.tryAgain').click()
+  expect(retry).toHaveBeenCalledOnce()
+})
+
 it('offers a sign-in link only when the session is what failed', () => {
   const { unmount } = render(
     <ErrorState error={new Error('Sign in again')} reset={reset} />
@@ -57,4 +99,14 @@ it('offers a sign-in link only when the session is what failed', () => {
 
   render(<ErrorState error={new Error('book not found')} reset={reset} />)
   expect(screen.queryByText('error.signIn')).toBeNull()
+})
+
+it('renders the full-page variant with its own brand and main landmark', () => {
+  render(
+    <ErrorState error={new Error('offline')} reset={reset} variant="page" />
+  )
+  expect(screen.getByRole('main')).toBeTruthy()
+  expect(
+    screen.getByText('ClippingKK').closest('a')?.getAttribute('href')
+  ).toBe('/')
 })

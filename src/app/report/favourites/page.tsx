@@ -1,15 +1,37 @@
 import type { Metadata } from 'next'
 
-import { metadata as indexPageMetadata } from '../../../components/og/og-with-index'
-import ReportFavouritesPage from './content'
+import Page from '@/components/layout/page'
+import PageHeader from '@/components/layout/page-header'
+import { getTranslation } from '@/i18n'
+import { pageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  ...indexPageMetadata,
-  title: 'My favourites books',
+import FavouritesBuilder from './favourites-builder'
+import { MAX_BOOKS, MIN_BOOKS } from './limits'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTranslation(undefined, 'report')
+  return pageMetadata({
+    title: t('favourites.meta.title'),
+    description: t('favourites.meta.description'),
+    path: '/report/favourites',
+  })
 }
 
-function FavouritesPage() {
-  return <ReportFavouritesPage />
+async function FavouritesPage() {
+  const { t } = await getTranslation(undefined, 'report')
+  return (
+    <Page width="wide">
+      <PageHeader
+        eyebrow={t('favourites.eyebrow')}
+        title={t('favourites.title')}
+        description={t('favourites.description', {
+          min: MIN_BOOKS,
+          max: MAX_BOOKS,
+        })}
+      />
+      <FavouritesBuilder />
+    </Page>
+  )
 }
 
 export default FavouritesPage

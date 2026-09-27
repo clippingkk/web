@@ -1,6 +1,7 @@
 import type { Route } from 'next'
 import { redirect } from 'next/navigation'
 
+import { getTranslation } from '@/i18n'
 import { ApiError } from '@/server/errors'
 import { gateConfig } from '@/server/gate/config'
 import { currentSession } from '@/server/gate/current'
@@ -30,8 +31,10 @@ export default async function AuthContent({ searchParams }: AuthPageProps) {
       (safeNext(params.next ?? null) ??
         `/dash/${session.localUserId}/home`) as Route
     )
+  const { t } = await getTranslation(undefined, 'auth')
   return (
     <AuthCard
+      t={t}
       error={authError}
       next={params.next}
       accountUrl={`${gateConfig().baseUrl}/account`}

@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "留住那些打动过你的句子",
+    "description": "ClippingKK 把你的 Kindle 划线整理成一座安静的书房：随时重温，私密可选，也可以分享给别人。"
+  },
+  "hero": {
+    "eyebrow": "写给爱划线的读者",
+    "title": "留住那些打动过你的句子。",
+    "description": "导入 Kindle 划线，ClippingKK 会按书为你整理妥当。哪天某句话又浮上心头，这里有一座安静的书房等你回来。",
+    "start": "开始建立书房",
+    "open": "打开我的书房",
+    "pricing": "查看价格",
+    "note": "免费开始，无需绑卡。"
+  },
+  "specimen": {
+    "label": "Kindle 上的划线",
+    "highlight": "竹杖芒鞋轻胜马，谁怕？",
+    "rest": "一蓑烟雨任平生。",
+    "book": "《定风波·莫听穿林打叶声》",
+    "author": "苏轼"
+  },
+  "clippings": {
+    "eyebrow": "公开书摘",
+    "title": "今日读者书摘",
+    "description": "读者愿意分享的句子，刚从他们的书房里来。",
+    "empty": {
+      "title": "还没有公开的书摘",
+      "description": "读者分享的句子会出现在这里。"
+    }
+  },
+  "books": {
+    "eyebrow": "书架",
+    "title": "书架上的书",
+    "description": "读者们最近在划线的书。"
+  },
+  "readers": {
+    "eyebrow": "读者",
+    "title": "在这里安放书房的人",
+    "description": "只有读者设为公开的书摘，才会出现在他们的书房之外。"
+  },
+  "features": {
+    "eyebrow": "如何使用",
+    "title": "你的每一处划线，都在一个地方",
+    "import": {
+      "title": "从 Kindle 导入",
+      "body": "添加 Kindle 里的 My Clippings.txt，每条划线都会对应到它的书，封面、作者一应俱全。"
+    },
+    "library": {
+      "title": "一座只属于你的安静书房",
+      "body": "按书浏览，多年后也能找回那一段；不想分享的，就只留给自己。"
+    },
+    "share": {
+      "title": "分享为海报、RSS 或 API",
+      "body": "把一段话做成海报，用 RSS 关注一位读者，或通过 Webhook 和 API 把书摘送进其他工具。"
+    }
+  },
+  "cta": {
+    "title": "给你的划线一个家。",
+    "description": "就从 Kindle 里已有的那些句子开始。",
+    "start": "开始建立书房",
+    "open": "打开我的书房",
+    "pricing": "比较方案"
+  }
+}

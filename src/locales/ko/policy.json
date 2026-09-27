@@ -1,0 +1,48 @@
+{
+  "privacy": {
+    "meta": {
+      "title": "개인정보 처리방침",
+      "description": "ClippingKK가 개인정보를 수집하고 이용하며 보호하는 방식."
+    },
+    "eyebrow": "법적 고지",
+    "title": "개인정보 처리방침",
+    "effective": "시행일: {{date}}",
+    "englishOnly": "이 방침은 영어로 게시되며, 영어판이 효력을 가집니다."
+  },
+  "support": {
+    "meta": {
+      "title": "지원",
+      "description": "ClippingKK 도움말: 하이라이트 가져오기, 계정, 결제, 개인정보."
+    },
+    "eyebrow": "지원",
+    "title": "무엇을 도와드릴까요?",
+    "description": "ClippingKK는 독립 프로젝트예요. 보내 주신 메일은 사람이 직접 읽어요.",
+    "email": {
+      "title": "이메일 보내기",
+      "body": "무엇을 하려고 했고 어떤 일이 일어났는지 알려 주세요. 스크린샷이 있으면 큰 도움이 돼요.",
+      "action": "이메일 쓰기"
+    },
+    "topics": {
+      "title": "자주 묻는 질문",
+      "import": {
+        "title": "Kindle에서 가져오기",
+        "body": "Kindle을 컴퓨터에 연결하고 documents 폴더를 연 다음, 서재의 가져오기 페이지에서 My Clippings.txt를 추가하세요.",
+        "action": "가져오기로 이동"
+      },
+      "account": {
+        "title": "예전 계정 복구",
+        "body": "예전에 전화번호, WeChat, 지갑 또는 다른 Apple 이메일로 로그인하셨다면 지금 쓰는 주소로 메일을 보내 주세요. 이전 서재 연결을 도와드릴게요."
+      },
+      "billing": {
+        "title": "결제와 구독",
+        "body": "구독 설정에서 프리미엄을 관리하거나 해지할 수 있어요. 환불이나 청구 내역에 이상이 있으면 메일로 알려 주세요.",
+        "action": "요금제 보기"
+      },
+      "privacy": {
+        "title": "개인정보와 데이터",
+        "body": "데이터를 어떻게 다루는지 읽어 보시거나, 데이터 내보내기나 삭제를 요청하세요.",
+        "action": "개인정보 처리방침 읽기"
+      }
+    }
+  }
+}

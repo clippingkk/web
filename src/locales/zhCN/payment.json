@@ -1,0 +1,37 @@
+{
+  "success": {
+    "meta": {
+      "title": "已收到付款"
+    },
+    "confirming": {
+      "title": "正在确认付款",
+      "description": "通常只需几秒钟。保持页面打开即可，它会自动刷新状态。"
+    },
+    "active": {
+      "title": "高级会员已开通",
+      "description": "感谢你支持 ClippingKK。无限书摘、更多 AI 次数和全部开发者工具，现在都归你了。"
+    },
+    "pending": {
+      "title": "仍在确认中",
+      "description": "Stripe 还没有完成付款确认。一旦确认，高级会员会自动开通，无需重复付款。"
+    },
+    "missing": {
+      "title": "没有找到这笔结账",
+      "description": "这个链接缺少结账信息。如果你刚刚完成付款，订阅很快会出现在订阅设置里。"
+    },
+    "library": "开始阅读",
+    "subscription": "管理订阅",
+    "subscriptionSettings": "订阅设置",
+    "pricing": "查看价格"
+  },
+  "canceled": {
+    "meta": {
+      "title": "已取消结账"
+    },
+    "title": "已取消结账",
+    "description": "没有产生任何扣款，你的方案也没有变化。准备好了随时可以升级。",
+    "pricing": "返回价格页",
+    "library": "打开我的书房",
+    "home": "回到首页"
+  }
+}

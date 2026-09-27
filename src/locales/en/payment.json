@@ -1,0 +1,37 @@
+{
+  "success": {
+    "meta": {
+      "title": "Payment received"
+    },
+    "confirming": {
+      "title": "Confirming your payment",
+      "description": "This usually takes a few seconds. You can keep this page open — it checks on its own."
+    },
+    "active": {
+      "title": "Premium is active",
+      "description": "Thank you for supporting ClippingKK. Unlimited highlights, more AI and every developer tool are yours now."
+    },
+    "pending": {
+      "title": "Still confirming",
+      "description": "Stripe hasn't finished confirming your payment yet. Premium will activate automatically as soon as it does — there's no need to pay again."
+    },
+    "missing": {
+      "title": "We couldn't find this checkout",
+      "description": "This link is missing its checkout reference. If you just paid, your subscription will appear in Subscription settings shortly."
+    },
+    "library": "Start reading",
+    "subscription": "Manage subscription",
+    "subscriptionSettings": "Subscription settings",
+    "pricing": "View pricing"
+  },
+  "canceled": {
+    "meta": {
+      "title": "Checkout canceled"
+    },
+    "title": "Checkout canceled",
+    "description": "No payment was taken and your plan hasn't changed. You can upgrade whenever you're ready.",
+    "pricing": "Back to pricing",
+    "library": "Open your library",
+    "home": "Go home"
+  }
+}

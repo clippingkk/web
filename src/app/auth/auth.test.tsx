@@ -1,7 +1,10 @@
 import { cleanup, render, screen } from '@testing-library/react'
+import type React from 'react'
 import { renderToString } from 'react-dom/server'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 
+import { SUPPORT_EMAIL } from '@/constants/config'
+import en from '@/locales/en/auth.json'
 import { ApiError } from '@/server/errors'
 
 const mocks = vi.hoisted(() => ({ session: vi.fn(), redirect: vi.fn() }))
@@ -13,6 +16,21 @@ vi.mock('@/server/gate/config', () => ({
   }),
 }))
 vi.mock('next/navigation', () => ({ redirect: mocks.redirect }))
+// getTranslation reads the language cookie; no cookie means English.
+vi.mock('next/headers', () => ({
+  cookies: async () => ({ get: () => undefined }),
+}))
+vi.mock('@annatarhe/lake-ui/button', () => ({
+  buttonStyles: () => 'button',
+}))
+vi.mock('@annatarhe/lake-ui/card', () => ({
+  default: ({ children }: { children: React.ReactNode }) => (
+    <section>{children}</section>
+  ),
+}))
+vi.mock('@annatarhe/lake-ui/skeleton', () => ({
+  default: () => <span />,
+}))
 
 import AuthContent from './AuthContent'
 import AuthPage from './page'
@@ -25,10 +43,12 @@ beforeEach(() => {
 })
 afterEach(cleanup)
 
-it('renders the welcome shell and accessible fallback while request data is pending', () => {
-  const html = renderToString(<AuthPage searchParams={new Promise(() => {})} />)
-  expect(html).toContain('Your best reading moments,')
-  expect(html).toContain('Loading sign-in options…')
+it('renders the welcome shell and accessible fallback while request data is pending', async () => {
+  const html = renderToString(
+    await AuthPage({ searchParams: new Promise(() => {}) })
+  )
+  expect(html).toContain(en.page.title)
+  expect(html).toContain(en.card.loading)
   expect(html).toContain('<output')
   expect(mocks.session).not.toHaveBeenCalled()
 })
@@ -48,7 +68,7 @@ it('renders signed-out actions and preserves encoded next forwarding', async () 
   ).toBe('https://gate.example/account')
   expect(
     screen.getByRole('link', { name: 'Contact support' }).getAttribute('href')
-  ).toBe('mailto:iamhele1994@gmail.com')
+  ).toBe(`mailto:${SUPPORT_EMAIL}`)
   expect(screen.queryByRole('alert')).toBeNull()
 })
 

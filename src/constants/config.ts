@@ -33,6 +33,10 @@ export const LEANCLOUD = {
 export const MAIL_FROM =
   'ClippingKK <clippingkk@no-reply-clippingkk.annatarhe.com>'
 
+// The one address readers are asked to write to for help, billing questions
+// and account recovery.
+export const SUPPORT_EMAIL = 'annatar.he+ck.support@gmail.com'
+
 export const APP_API_STEP_LIMIT = 10
 
 export const APP_URL_ORIGIN = __DEV__

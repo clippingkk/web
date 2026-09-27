@@ -1,20 +1,58 @@
 {
-  "unlock": "解锁高级功能",
-  "title": "选择完美计划",
-  "subtitle": "选择最适合您需求的计划，解锁 ClippingKK 提供的所有功能。",
-  "help": "帮助与支持",
-  "questions": "对我们的计划有疑问？请联系我们：",
+  "meta": {
+    "title": "价格",
+    "description": "ClippingKK 的日常阅读功能免费。高级会员提供无限书摘、更多 AI 次数、RSS、Webhook 和开发者工具。"
+  },
+  "eyebrow": "价格",
+  "title": "一座随阅读一起生长的书房。",
+  "subtitle": "免费开始，把每一处划线收在一个地方。书架放不下了，再升级也不迟。",
+  "badge": {
+    "current": "当前方案",
+    "recommended": "推荐"
+  },
   "plan": {
     "free": {
-      "name": "免费计划",
-      "description": "助您开始使用 ClippingKK 的基础功能。",
-      "goto": "免费开始"
+      "name": "免费版",
+      "description": "收藏、重温书摘所需的一切。",
+      "price": "永久免费",
+      "start": "免费开始",
+      "open": "打开我的书房"
     },
     "premium": {
-      "name": "高级计划",
-      "description": "解锁所有特性、无限量剪藏及优先支持。",
-      "goto": "升级到高级版"
+      "name": "高级版",
+      "description": "写给书房很大的读者，也写给想在书摘之上做点什么的人。",
+      "price": "通过 Stripe 付款 · 随时取消",
+      "active": "你的账户已开通高级会员。",
+      "unavailable": "高级会员暂时无法购买，请稍后再来看看。"
     }
   },
-  "go": "前往控制台"
+  "features": {
+    "label": "包含内容",
+    "freeStorage": "最多 2,000 条书摘",
+    "premiumStorage": "无限书摘",
+    "freeAi": "前 10 次 AI 请求",
+    "premiumAi": "每月 1,000 次 AI 请求",
+    "books": "不限书籍数量",
+    "web": "网页端完整书房",
+    "widget": "iOS 桌面小组件",
+    "privacy": "私密书摘与安全存储",
+    "rss": "书摘 RSS 订阅",
+    "webhooks": "新书摘 Webhook 推送",
+    "cli": "命令行上传与 GitHub Actions",
+    "support": "邮件支持",
+    "prioritySupport": "优先邮件支持"
+  },
+  "checkout": {
+    "upgrade": "升级到高级版",
+    "manage": "管理订阅",
+    "signIn": "登录后升级",
+    "opening": "正在打开…",
+    "unavailable": "暂时无法结账，请再试一次。",
+    "failed": "出了点问题，请再试一次。"
+  },
+  "help": {
+    "title": "对方案或付款有疑问？",
+    "body": "写信到 <link>{{email}}</link>，我们会帮你解决。",
+    "secure": "付款由 Stripe 安全处理，ClippingKK 不会接触你的银行卡信息。"
+  }
 }
