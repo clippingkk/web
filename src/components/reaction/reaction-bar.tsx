@@ -25,7 +25,7 @@ type ReactionState = {
   count: number
   done: boolean
   reactionId?: number
-  names: string[]
+  recent: { id: number; name: string }[]
 }
 
 function toState(
@@ -39,7 +39,8 @@ function toState(
       count: group?.count ?? 0,
       done: group?.done ?? false,
       reactionId: group?.recently.find((r) => r.creator.id === viewerId)?.id,
-      names: group?.recently.map((r) => r.creator.name) ?? [],
+      recent:
+        group?.recently.map((r) => ({ id: r.id, name: r.creator.name })) ?? [],
     }
   }
   return state
@@ -57,6 +58,13 @@ function ReactionBar({ clippingId, viewerId, symbolCounts }: ReactionBarProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [state, setState] = useState(() => toState(symbolCounts, viewerId))
+  const [synced, setSynced] = useState({ symbolCounts, viewerId })
+  // Fresh server data (after router.refresh) replaces the optimistic state;
+  // that is how a reaction created here learns the id it needs to be removed.
+  if (synced.symbolCounts !== symbolCounts || synced.viewerId !== viewerId) {
+    setSynced({ symbolCounts, viewerId })
+    setState(toState(symbolCounts, viewerId))
+  }
   const [pending, setPending] = useState<string | null>(null)
   const [, startTransition] = useTransition()
   const [createReaction] = useMutation(ReactionCreateDocument)
@@ -68,22 +76,22 @@ function ReactionBar({ clippingId, viewerId, symbolCounts }: ReactionBarProps) {
       return
     }
     const before = state[symbol]
-    if (before.done && !before.reactionId) {
-      // our reaction isn't in the "recently" window; refresh to learn its id
-      startTransition(() => router.refresh())
-      return
-    }
+    // just created here and the refresh carrying its id hasn't landed yet
+    if (before.done && !before.reactionId) return
+    const removing = before.done
     setPending(symbol)
     setState((s) => ({
       ...s,
-      [symbol]: {
-        ...before,
-        done: !before.done,
-        count: Math.max(0, before.count + (before.done ? -1 : 1)),
-      },
+      [symbol]: removing
+        ? {
+            count: Math.max(0, before.count - 1),
+            done: false,
+            recent: before.recent.filter((r) => r.id !== before.reactionId),
+          }
+        : { ...before, count: before.count + 1, done: true },
     }))
     try {
-      if (before.done && before.reactionId) {
+      if (removing && before.reactionId) {
         await removeReaction({
           variables: { rid: before.reactionId, symbol },
         })
@@ -95,8 +103,9 @@ function ReactionBar({ clippingId, viewerId, symbolCounts }: ReactionBarProps) {
             symbol,
           },
         })
+        // the mutation returns no id; the refreshed props bring it back
+        startTransition(() => router.refresh())
       }
-      startTransition(() => router.refresh())
     } catch {
       setState((s) => ({ ...s, [symbol]: before }))
       toast.error(t('reactions.failed'))
@@ -113,7 +122,8 @@ function ReactionBar({ clippingId, viewerId, symbolCounts }: ReactionBarProps) {
           <button
             type="button"
             aria-pressed={item.done}
-            disabled={pending === symbol}
+            // a reaction added here waits for its id before it can be undone
+            disabled={pending === symbol || (item.done && !item.reactionId)}
             onClick={() => onToggle(symbol)}
             className={cn(
               'inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-sm tabular-nums transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-lake-ring disabled:opacity-60',
@@ -130,10 +140,13 @@ function ReactionBar({ clippingId, viewerId, symbolCounts }: ReactionBarProps) {
         )
         return (
           <li key={symbol}>
-            {item.names.length > 0 ? (
+            {item.recent.length > 0 ? (
               <Tooltip
                 content={t('reactions.reactedBy', {
-                  names: item.names.slice(0, 5).join(', '),
+                  names: item.recent
+                    .slice(0, 5)
+                    .map((r) => r.name)
+                    .join(', '),
                 })}
               >
                 {button}
