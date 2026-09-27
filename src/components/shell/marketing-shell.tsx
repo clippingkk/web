@@ -4,6 +4,7 @@ import Link from 'next/link'
 import type React from 'react'
 import { Suspense } from 'react'
 
+import GlobalUpload from '@/components/uploads/global'
 import { getTranslation } from '@/i18n'
 import { getViewer } from '@/server/data/viewer'
 import { dashHref } from '@/utils/profile.utils'
@@ -48,6 +49,13 @@ async function MarketingNav() {
   )
 }
 
+/** Signed-in readers can drop My Clippings.txt on public pages too. */
+async function MarketingExtras() {
+  const viewer = await getViewer()
+  if (!viewer) return null
+  return <GlobalUpload libraryHref={dashHref(viewer.slug, 'home')} />
+}
+
 /** Chrome for public pages: landing, pricing, payment, policy, reports. */
 function MarketingShell({ children }: MarketingShellProps) {
   return (
@@ -68,6 +76,9 @@ function MarketingShell({ children }: MarketingShellProps) {
       </main>
       <Suspense fallback={null}>
         <AppFooter />
+      </Suspense>
+      <Suspense fallback={null}>
+        <MarketingExtras />
       </Suspense>
     </div>
   )
