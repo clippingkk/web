@@ -37,6 +37,8 @@ function AICommentEnhancer(props: AICommentEnhancerProps) {
   const suggestion = data?.aiEnhanceComment.content ?? ''
 
   const run = async (promptId: number) => {
+    // one rewrite at a time, so a quick second pick can't race the first
+    if (loading) return
     setOpen(true)
     reset()
     try {
