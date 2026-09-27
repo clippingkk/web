@@ -9,6 +9,7 @@ import { pageMetadata } from '@/lib/metadata'
 import { serverQuery } from '@/server/data/query'
 import { getViewer } from '@/server/data/viewer'
 import { dashHref } from '@/utils/profile.utils'
+import { parseRouteId } from '@/utils/route-id'
 
 import CommentDetail from './comment-detail'
 
@@ -16,13 +17,9 @@ type Props = {
   params: Promise<{ userid: string; commentid: string }>
 }
 
-function parseId(value: string) {
-  return /^\d+$/.test(value) ? Number(value) : null
-}
-
 async function loadComment(commentid: string) {
-  const id = parseId(commentid)
-  if (!id) notFound()
+  const id = parseRouteId(commentid)
+  if (id === null) notFound()
   // The server hides comments on clippings the viewer can't see.
   const { getComment } = await serverQuery(GetCommentDocument, { id })
   return getComment

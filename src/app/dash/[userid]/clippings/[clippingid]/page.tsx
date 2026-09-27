@@ -29,9 +29,10 @@ import {
   dashHref,
   getUserSlug,
 } from '@/utils/profile.utils'
+import { parseRouteId } from '@/utils/route-id'
 
 import CommentsSection from './comments-section'
-import { getClippingPage, parseClippingId } from './data'
+import { getClippingPage } from './data'
 
 type PageProps = {
   params: Promise<{ clippingid: string; userid: string }>
@@ -41,7 +42,7 @@ type PageProps = {
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { clippingid } = await props.params
   const [{ clipping, book }, { t }] = await Promise.all([
-    getClippingPage(parseClippingId(clippingid)),
+    getClippingPage(parseRouteId(clippingid)),
     getTranslation(undefined, 'reading'),
   ])
   const name = clipping.creator.name
@@ -70,7 +71,7 @@ async function ClippingPage(props: PageProps) {
     props.searchParams,
   ])
   const [{ clipping, book }, viewer, { t, i18n }] = await Promise.all([
-    getClippingPage(parseClippingId(clippingid)),
+    getClippingPage(parseRouteId(clippingid)),
     getViewer(),
     getTranslation(undefined, 'reading'),
   ])

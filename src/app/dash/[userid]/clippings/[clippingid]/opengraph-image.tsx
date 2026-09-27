@@ -6,6 +6,7 @@ import { APP_URL_ORIGIN } from '@/constants/config'
 import { FetchClippingDocument } from '@/gql/graphql'
 import { serverQuery } from '@/server/data/query'
 import { getWenquBookByDbId, isValidDoubanId } from '@/services/wenqu'
+import { parseRouteId } from '@/utils/route-id'
 
 export const alt = 'A highlight shared on ClippingKK'
 export const size = {
@@ -24,16 +25,15 @@ function absolute(src: string | URL) {
 }
 
 async function loadClipping(clippingid: string) {
-  const id = /^\d+$/.test(clippingid) ? Number(clippingid) : -1
+  const id = parseRouteId(clippingid)
   // Private or missing clippings get the brand card instead of an error.
-  const data =
-    id > 0
-      ? await serverQuery(
-          FetchClippingDocument,
-          { id },
-          { notFound: 'null', unauthorized: 'null' }
-        ).catch(() => null)
-      : null
+  const data = id
+    ? await serverQuery(
+        FetchClippingDocument,
+        { id },
+        { notFound: 'null', unauthorized: 'null' }
+      ).catch(() => null)
+    : null
   const clipping = data?.clipping
   const book =
     clipping && isValidDoubanId(clipping.bookID)
