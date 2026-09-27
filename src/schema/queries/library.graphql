@@ -28,6 +28,7 @@ query libraryBooks($uid: Int!, $pagination: PaginationLegacy!) {
 
 query uncheckedCount($uid: Int!) {
   book(id: 0, uid: $uid, pagination: { limit: 1, offset: 0 }) {
+    doubanId
     clippingsCount
   }
 }
