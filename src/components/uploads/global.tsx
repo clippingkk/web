@@ -39,6 +39,10 @@ function GlobalUpload({ libraryHref }: GlobalUploadProps) {
   const [dragging, setDragging] = useState(false)
   const [file, setFile] = useState<File | null>(null)
   const [visibility, setVisibility] = useState<ImportVisibility>('public')
+  const running =
+    step !== UploadStep.None &&
+    step !== UploadStep.Done &&
+    step !== UploadStep.Error
 
   const onDragOver = useCallback((e: DragEvent) => {
     if (!hasFiles(e)) return
@@ -46,16 +50,22 @@ function GlobalUpload({ libraryHref }: GlobalUploadProps) {
     setDragging(true)
   }, [])
 
-  const onDrop = useCallback((e: DragEvent) => {
-    if (!hasFiles(e)) return
-    e.preventDefault()
-    setDragging(false)
-    const dropped = e.dataTransfer?.files?.[0]
-    if (dropped && isTextFile(dropped)) {
-      setVisibility('public')
-      setFile(dropped)
-    }
-  }, [])
+  const onDrop = useCallback(
+    (e: DragEvent) => {
+      if (!hasFiles(e)) return
+      // still claim the drop, or the browser would open the file
+      e.preventDefault()
+      setDragging(false)
+      // one import at a time; this one shows its progress in the corner
+      if (running) return
+      const dropped = e.dataTransfer?.files?.[0]
+      if (dropped && isTextFile(dropped)) {
+        setVisibility('public')
+        setFile(dropped)
+      }
+    },
+    [running]
+  )
 
   useEffect(() => {
     if (disabled) return
@@ -66,11 +76,6 @@ function GlobalUpload({ libraryHref }: GlobalUploadProps) {
       document.body.removeEventListener('drop', onDrop)
     }
   }, [disabled, onDragOver, onDrop])
-
-  const running =
-    step !== UploadStep.None &&
-    step !== UploadStep.Done &&
-    step !== UploadStep.Error
 
   const onStart = () => {
     if (!file) return

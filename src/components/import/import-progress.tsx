@@ -110,12 +110,8 @@ function ImportProgress(props: ImportProgressProps) {
           title={t('errors.title')}
           description={
             <span className="flex flex-col gap-1">
-              {errors.map((error, i) => (
-                <span key={i}>
-                  {error.kind === 'search'
-                    ? error.message
-                    : t(`errors.${error.kind}`)}
-                </span>
+              {[...new Set(errors.map((error) => error.kind))].map((kind) => (
+                <span key={kind}>{t(`errors.${kind}`)}</span>
               ))}
             </span>
           }

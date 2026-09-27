@@ -1,6 +1,6 @@
 import { useApolloClient, useMutation } from '@apollo/client/react'
 import { useMachine } from '@xstate/react'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import { CreateClippingsDocument, OnSyncEndDocument } from '@/gql/graphql'
 import { getQueryGcTime } from '@/services/query-client'
@@ -47,9 +47,12 @@ function readUploaded(): Set<string> {
   }
 }
 
-function saveUploaded(digests: Set<string>) {
+function saveUploaded(digests: string[]) {
   try {
-    localStorage.setItem(UPLOADED_KEY, JSON.stringify([...digests]))
+    // merge with what's stored, so another tab's import keeps its record
+    const merged = readUploaded()
+    for (const digest of digests) merged.add(digest)
+    localStorage.setItem(UPLOADED_KEY, JSON.stringify([...merged]))
   } catch {
     // quota or privacy mode: the server dedupes on data_id anyway
   }
@@ -115,9 +118,11 @@ export function useClippingsImport() {
     [send]
   )
 
-  const start = useCallback(
+  const run = useCallback(
     async (file: File, options: { visible: boolean }) => {
       const startedAt = Date.now()
+      // a finished or failed run parks the machine until Reset
+      send({ type: 'Reset' })
       setErrors([])
       setResult(null)
       setFailedStep(null)
@@ -185,8 +190,7 @@ export function useClippingsImport() {
               visible: options.visible,
             },
           })
-          for (const item of batches[i]) uploaded.add(item.digest)
-          saveUploaded(uploaded)
+          saveUploaded(batches[i].map((item) => item.digest))
           setAt(i + 1)
         }
         if (batches.length > 0) {
@@ -207,6 +211,20 @@ export function useClippingsImport() {
       send({ type: 'Next' })
     },
     [client, createClippings, fail, onSyncEnd, send]
+  )
+
+  const running = useRef(false)
+  // One import at a time: a second run would race the first's progress and
+  // its dedupe record.
+  const start = useCallback(
+    (file: File, options: { visible: boolean }) => {
+      if (running.current) return Promise.resolve()
+      running.current = true
+      return run(file, options).finally(() => {
+        running.current = false
+      })
+    },
+    [run]
   )
 
   const reset = useCallback(() => {

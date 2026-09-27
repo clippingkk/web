@@ -81,7 +81,11 @@ function ImportPanel({ libraryHref }: ImportPanelProps) {
             setDragging(true)
           }}
           onDragOver={(e) => e.preventDefault()}
-          onDragLeave={() => setDragging(false)}
+          onDragLeave={(e) => {
+            // moving onto a child fires dragleave too; only leaving counts
+            if (!e.currentTarget.contains(e.relatedTarget as Node | null))
+              setDragging(false)
+          }}
           onDrop={onDrop}
           className={cn(
             'rounded-lake-panel flex flex-col items-center gap-3 border border-dashed px-6 py-12 text-center transition-colors duration-150 focus-within:ring-2 focus-within:ring-lake-ring',

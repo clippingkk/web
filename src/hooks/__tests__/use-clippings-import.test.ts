@@ -194,4 +194,50 @@ describe('useClippingsImport', () => {
     expect(result.current.step).toBe(UploadStep.Done)
     expect(result.current.errors).toEqual([])
   })
+
+  it('ignores a second start while an import is running', async () => {
+    const { result } = renderHook(() => useClippingsImport())
+
+    await act(async () => {
+      const first = result.current.start(kindleExport(), { visible: true })
+      const second = result.current.start(kindleExport(), { visible: true })
+      await Promise.all([first, second])
+    })
+
+    expect(mocks.createClippings).toHaveBeenCalledTimes(
+      Math.ceil(highlights.length / 20)
+    )
+    expect(result.current.step).toBe(UploadStep.Done)
+  })
+
+  it('starts again from a finished run without an explicit reset', async () => {
+    const { result } = renderHook(() => useClippingsImport())
+    await act(() => result.current.start(kindleExport(), { visible: true }))
+    localStorage.clear()
+
+    await act(() => result.current.start(kindleExport(), { visible: true }))
+
+    expect(result.current.step).toBe(UploadStep.Done)
+    expect(result.current.result?.imported).toBe(highlights.length)
+  })
+
+  it('keeps the dedupe record another tab wrote meanwhile', async () => {
+    // mid-import, another tab records a digest of its own
+    mocks.createClippings.mockImplementationOnce(async () => {
+      localStorage.setItem(
+        'app.uploaded.clippings',
+        JSON.stringify(['from-another-tab'])
+      )
+      return { data: { createClippings: [] } }
+    })
+    const { result } = renderHook(() => useClippingsImport())
+
+    await act(() => result.current.start(kindleExport(), { visible: true }))
+
+    const stored = JSON.parse(
+      localStorage.getItem('app.uploaded.clippings') ?? '[]'
+    ) as string[]
+    expect(stored).toContain('from-another-tab')
+    expect(stored).toHaveLength(highlights.length + 1)
+  })
 })
