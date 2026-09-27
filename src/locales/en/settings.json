@@ -105,7 +105,25 @@
     "mail": "Email",
     "mailDescription": "Receive all your highlights as a Markdown file.",
     "start": "Export",
-    "queued": "Export started. It may take a few minutes."
+    "queued": "Export started. It may take a few minutes.",
+    "flomoTitle": "Export to flomo",
+    "flomoSubmit": "Export to flomo",
+    "notionTitle": "Export to Notion",
+    "notionSubmit": "Export to Notion",
+    "mailTitle": "Export to email",
+    "mailTips": "We’ll send every highlight to this address as a Markdown file.",
+    "mailLabel": "Email address",
+    "mailPlaceholder": "you@example.com",
+    "mailSubmit": "Export to email",
+    "errors": {
+      "invalidUrl": "Enter a valid URL.",
+      "notFlomo": "Use your flomo API address, which starts with https://flomoapp.com/.",
+      "invalidEmail": "Enter a valid email address.",
+      "tokenTooShort": "The token needs at least 5 characters.",
+      "tokenTooLong": "The token can be at most 255 characters.",
+      "pageIdTooShort": "The page ID needs at least 5 characters.",
+      "pageIdTooLong": "The page ID can be at most 255 characters."
+    }
   },
   "account": {
     "title": "Account",

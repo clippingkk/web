@@ -104,7 +104,25 @@
     "mail": "邮件",
     "mailDescription": "以 Markdown 文件的形式接收全部书摘。",
     "start": "导出",
-    "queued": "已开始导出，可能需要几分钟。"
+    "queued": "已开始导出，可能需要几分钟。",
+    "flomoTitle": "导出至 flomo",
+    "flomoSubmit": "导出至 flomo",
+    "notionTitle": "导出至 Notion",
+    "notionSubmit": "导出至 Notion",
+    "mailTitle": "导出至邮箱",
+    "mailTips": "我们会把全部书摘以 Markdown 文件发送到这个邮箱。",
+    "mailLabel": "邮箱地址",
+    "mailPlaceholder": "you@example.com",
+    "mailSubmit": "导出至邮箱",
+    "errors": {
+      "invalidUrl": "请输入有效的网址。",
+      "notFlomo": "请使用以 https://flomoapp.com/ 开头的 flomo API 地址。",
+      "invalidEmail": "请输入有效的邮箱地址。",
+      "tokenTooShort": "Token 至少需要 5 个字符。",
+      "tokenTooLong": "Token 最多 255 个字符。",
+      "pageIdTooShort": "页面 ID 至少需要 5 个字符。",
+      "pageIdTooLong": "页面 ID 最多 255 个字符。"
+    }
   },
   "account": {
     "title": "账户",

@@ -20,16 +20,10 @@ function ExportToMail({ email }: { email: string }) {
   const [visible, setVisible] = useState(false)
   const open = () => setVisible(true)
   const close = () => setVisible(false)
-  const { t } = useTranslation()
-  const { t: ts } = useTranslation(undefined, 'settings')
+  const { t } = useTranslation(undefined, 'settings')
 
   const formSchema = z.object({
-    endpoint: z
-      .string()
-      .email(
-        t('app.settings.export.email.invalidEmail') || 'Invalid email address'
-      )
-      .max(255),
+    endpoint: z.string().email(t('exports.errors.invalidEmail')).max(255),
   })
 
   type FormValues = z.infer<typeof formSchema>
@@ -38,7 +32,7 @@ function ExportToMail({ email }: { email: string }) {
     control,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,7 +42,7 @@ function ExportToMail({ email }: { email: string }) {
 
   const [mutate] = useMutation(ExportDataToDocument, {
     onCompleted() {
-      toast.success(t('app.settings.export.success'))
+      toast.success(t('exports.queued'))
       reset()
       close()
     },
@@ -79,18 +73,12 @@ function ExportToMail({ email }: { email: string }) {
       <ExportTriggerButton
         onClick={open}
         icon={<Mail className="text-lake-accent-text" />}
-        title={ts('exports.mail')}
-        description={ts('exports.mailDescription')}
+        title={t('exports.mail')}
+        description={t('exports.mailDescription')}
       />
-      <Modal
-        isOpen={visible}
-        onClose={close}
-        title={t('app.settings.export.email.title')}
-      >
+      <Modal isOpen={visible} onClose={close} title={t('exports.mailTitle')}>
         <form className="w-full p-4" onSubmit={handleSubmit(onSubmit)}>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            {t('app.settings.export.email.tips')}
-          </p>
+          <p className="text-lake-fg-muted mb-4">{t('exports.mailTips')}</p>
 
           <div className="mb-4">
             <Controller
@@ -100,7 +88,9 @@ function ExportToMail({ email }: { email: string }) {
                 <InputField
                   {...field}
                   type="email"
-                  placeholder={t('app.settings.export.email.title')}
+                  label={t('exports.mailLabel')}
+                  placeholder={t('exports.mailPlaceholder')}
+                  error={errors.endpoint?.message}
                 />
               )}
             />
@@ -108,7 +98,7 @@ function ExportToMail({ email }: { email: string }) {
 
           <div className="mt-4 flex w-full justify-end">
             <Button type="submit" fullWidth loading={isSubmitting}>
-              {t('app.settings.export.email.submit')}
+              {t('exports.mailSubmit')}
             </Button>
           </div>
         </form>

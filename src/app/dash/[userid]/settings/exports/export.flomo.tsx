@@ -19,19 +19,17 @@ import ExportTriggerButton from './export-trigger-button'
 
 function ExportToFlomo() {
   const [visible, setVisible] = useState(false)
-  const { t } = useTranslation()
-  const { t: ts } = useTranslation(undefined, 'settings')
+  const { t } = useTranslation(undefined, 'settings')
   const [mutate] = useMutation(ExportDataToDocument)
 
   const formSchema = z.object({
     endpoint: z
       .string()
-      .url(t('app.settings.export.flomo.invalidUrl') || 'Invalid URL')
+      .url(t('exports.errors.invalidUrl'))
       .max(255)
       .refine(
         (value) => value.startsWith('https://flomoapp.com/'),
-        t('app.settings.export.flomo.notFlomo') ||
-          'Must be a valid Flomo endpoint'
+        t('exports.errors.notFlomo')
       ),
   })
 
@@ -57,7 +55,7 @@ function ExportToFlomo() {
           args: data.endpoint,
         },
       })
-      toast.success(t('app.settings.export.success'))
+      toast.success(t('exports.queued'))
       reset()
       setVisible(false)
     } catch (e) {
@@ -76,13 +74,13 @@ function ExportToFlomo() {
             alt="flomo"
           />
         }
-        title={ts('exports.flomo')}
-        description={ts('exports.flomoDescription')}
+        title={t('exports.flomo')}
+        description={t('exports.flomoDescription')}
       />
       <Modal
         isOpen={visible}
         onClose={() => setVisible(false)}
-        title={t('app.settings.export.flomo.title')}
+        title={t('exports.flomoTitle')}
       >
         <div className="w-full p-4">
           <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -100,7 +98,7 @@ function ExportToFlomo() {
             />
             <div className="mt-4 w-full text-right">
               <Button type="submit" loading={isSubmitting}>
-                {t('app.settings.export.flomo.submit')}
+                {t('exports.flomoSubmit')}
               </Button>
             </div>
           </form>
