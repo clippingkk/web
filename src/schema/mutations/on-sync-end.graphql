@@ -1,0 +1,3 @@
+mutation onSyncEnd($startedAt: Int!) {
+  onCreateClippingEnd(startedAt: $startedAt)
+}

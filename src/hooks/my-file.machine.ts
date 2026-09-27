@@ -40,8 +40,8 @@ export const uploadProcessMachine = createMachine({
     },
 
     done: {
-      after: {
-        '3000': 'none',
+      on: {
+        Reset: 'none',
       },
     },
 

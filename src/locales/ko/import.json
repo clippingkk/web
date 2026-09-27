@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "하이라이트 가져오기"
+  },
+  "eyebrow": "가져오기",
+  "title": "Kindle에서 가져오기",
+  "description": "Kindle의 My Clippings.txt 파일을 가져오세요. 새 하이라이트는 서재에 추가되고, 이미 가져온 항목은 건너뜁니다.",
+  "file": {
+    "title": "클리핑 파일",
+    "drop": "My Clippings.txt를 여기로 끌어 오거나",
+    "browse": "파일 선택",
+    "hint": "Kindle documents 폴더에 있는 텍스트 파일이에요.",
+    "wrongType": "My Clippings.txt가 아닌 것 같아요. Kindle의 .txt 파일을 선택하세요.",
+    "selected": "{{name}} · {{size}}",
+    "change": "다른 파일 선택"
+  },
+  "visibility": {
+    "title": "누가 볼 수 있나요",
+    "label": "공개 범위",
+    "public": "공개",
+    "private": "나만 보기",
+    "publicDescription": "프로필과 광장에 표시돼요.",
+    "privateDescription": "나만 볼 수 있어요. 나중에 하이라이트별로 공개할 수 있어요."
+  },
+  "submit": "공개로 가져오기",
+  "submitPrivate": "비공개로 가져오기",
+  "steps": {
+    "label": "가져오기 진행 상황",
+    "parse": "파일 읽기",
+    "searchingBook": "책 찾기",
+    "uploading": "하이라이트 저장",
+    "done": "완료"
+  },
+  "progress": {
+    "parse": "파일을 읽는 중…",
+    "searchingBook": "책 찾는 중 {{at}} / {{count}}",
+    "uploading": "{{count}}개 중 {{at}}번째 묶음 저장 중"
+  },
+  "done": {
+    "title_other": "하이라이트 {{count}}개를 가져왔어요",
+    "nothingNew": "새로 가져올 하이라이트가 없어요",
+    "duplicates_other": "하이라이트 {{count}}개는 이미 서재에 있어요.",
+    "openLibrary": "서재 열기",
+    "another": "다른 파일 가져오기"
+  },
+  "errors": {
+    "title": "가져오기가 중단됐어요",
+    "parse": "이 파일을 읽을 수 없어요. 영어와 중국어 Kindle 파일만 지원해요.",
+    "upload": "저장 도중 실패했어요. 이미 저장된 하이라이트는 유지되고, 다시 가져오면 건너뛰어요.",
+    "search": "일부 책을 찾지 못해 정리 목록에 남겨 두었어요.",
+    "retry": "다시 시도"
+  },
+  "help": {
+    "title": "My Clippings.txt는 어디에 있나요?",
+    "body": "USB 케이블로 Kindle을 컴퓨터에 연결하고 Kindle 드라이브의 documents 폴더를 열면 My Clippings.txt가 있어요.",
+    "video": "영상 가이드 보기"
+  },
+  "global": {
+    "title": "이 파일을 가져올까요?",
+    "description": "{{name}}을(를) 서재로 가져와요.",
+    "overlay": "놓으면 Kindle 하이라이트를 가져와요",
+    "start": "가져오기",
+    "cancel": "취소",
+    "running": "가져오는 중…",
+    "done": "가져오기 완료",
+    "failed": "가져오기 실패",
+    "view": "보기"
+  }
+}
