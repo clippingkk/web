@@ -2,6 +2,106 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.0](https://github.com/clippingkk/web/compare/v5.18.2...v5.19.0) (2026-09-27)
+
+
+### Features
+
+* **auth:** restyle sign-in and the root error, not-found and loading states ([3d0389d](https://github.com/clippingkk/web/commit/3d0389d357e972422f8ea196947126bcdbaea4ad))
+* **clipping:** rebuild clipping reading view and comments ([153b872](https://github.com/clippingkk/web/commit/153b872f3fdb944b119cc22d387a4fb3e417b237))
+* **clipping:** rebuild the clipping reading view and comments ([9385dad](https://github.com/clippingkk/web/commit/9385dada8450f3096abd5c1f01d432dc9259c3d3))
+* **data:** add serverQuery, viewer and path-user helpers ([0a107be](https://github.com/clippingkk/web/commit/0a107bea07e4ad95c2a674d4861d8613e38651c7))
+* **landing:** rebuild the landing page in the editorial style ([87a060d](https://github.com/clippingkk/web/commit/87a060dcdfcb41ad59ffaadba4d298dc4e8f287b))
+* **library:** add shared clipping, book and list components ([f29df0a](https://github.com/clippingkk/web/commit/f29df0a3c5bc8187c05e460130c06890007606ac))
+* **library:** rebuild library, book, square and unchecked pages ([f9790ab](https://github.com/clippingkk/web/commit/f9790ab2ea1ed6109b68cf9a370914afb89d8d14))
+* **library:** rebuild library, book, square and unchecked pages ([736ba23](https://github.com/clippingkk/web/commit/736ba23dd87e7fcc5191d22f2feb82246e869e68))
+* **pricing:** rebuild pricing, payment and policy pages ([c6cd24e](https://github.com/clippingkk/web/commit/c6cd24e5520cf3c85206516e1437ae982e1a6c83))
+* **profile:** rebuild profile and add a command palette ([145527a](https://github.com/clippingkk/web/commit/145527abf3ff3b8692778a2720f8d110c5aee505))
+* **profile:** rebuild the profile and add a ⌘K command palette ([3b72b2c](https://github.com/clippingkk/web/commit/3b72b2cfe416d45e3cb98d2f2d39c6d0938989a7))
+* **public:** rebuild landing, auth, pricing, payment, policy and reports ([209364d](https://github.com/clippingkk/web/commit/209364d847e15c48aff5ffc263e03985e6e79c34))
+* **report:** rebuild the yearly report and the favourites card ([c0b7034](https://github.com/clippingkk/web/commit/c0b70347fd33d3cbf67bbba6ac780daf3534d993))
+* **settings:** rebuild settings and admin on lake-ui ([54e833c](https://github.com/clippingkk/web/commit/54e833c237e9facafe1f96cc2382e61f4af8b1bc))
+* **settings:** rebuild settings and admin, fix i18n hydration ([6fb8d1b](https://github.com/clippingkk/web/commit/6fb8d1b85051e6ba3f3f8ee83ffb766fa3f13f4d))
+* **shell:** accept a dropped My Clippings.txt on public pages too ([e8f79f1](https://github.com/clippingkk/web/commit/e8f79f1bd66f3307ffcaae2e3a56f5ffc8b5ef4d))
+* **ui:** add editorial theme, theme/lang boot and lake-ui app shells ([6ef9c43](https://github.com/clippingkk/web/commit/6ef9c43867a2b220d1d9b171c24097d360af2cb4))
+* **ui:** add the editorial design system, theme boot and lake-ui shells ([085dc5a](https://github.com/clippingkk/web/commit/085dc5a29c010b20daa88071e113d716b71b92f4))
+* **upload:** rebuild the Kindle import flow ([4f62560](https://github.com/clippingkk/web/commit/4f62560c31f32946331ee72699e4bd5f208f472b))
+* **upload:** rebuild the Kindle import flow ([a4ed131](https://github.com/clippingkk/web/commit/a4ed13137eff249b1b282187799bc12d93cdd0f1))
+
+
+### Bug Fixes
+
+* **ai:** run one comment rewrite at a time ([acb5e31](https://github.com/clippingkk/web/commit/acb5e31b485c93b804db3e1c1e3dfd6236e7a141))
+* **ai:** say so when a comment rewrite comes back empty ([ed874c6](https://github.com/clippingkk/web/commit/ed874c60c5f72761d75d90c932383c8fe357b8b6))
+* **auth:** preserve next across legacy sign-in redirects ([d00c924](https://github.com/clippingkk/web/commit/d00c9241c14a743a0474bde7d3ff87f7ec6620bd))
+* **auth:** read an expired browser session as signed out ([562c0c5](https://github.com/clippingkk/web/commit/562c0c5d70f268a7d811c221dbb8c6ff768836ba))
+* **auth:** read an expired browser session as signed out ([1869c38](https://github.com/clippingkk/web/commit/1869c38b1b198da7de4fe5fa1febeee27806b3a4))
+* **clipping:** localize the comment editor placeholder ([69f39e1](https://github.com/clippingkk/web/commit/69f39e1098dffa8fd1d65c1fc88d568adb9e8e28))
+* **clipping:** resync visibility from the server and recover an emptied comment list ([a0e9b6d](https://github.com/clippingkk/web/commit/a0e9b6d384814e982dedff9e7b4f946a39e48b43))
+* **data:** add route utilities and close clipping visibility leaks ([dd919e6](https://github.com/clippingkk/web/commit/dd919e628cb6af7a07c6c4bc7a4da29410903832))
+* **graphql:** scope clipping siblings to visible clippings of the creator ([4e6e473](https://github.com/clippingkk/web/commit/4e6e4732dd26fe1f2affc4921ad0ec71d4956e95))
+* **i18n:** register the public-page locale namespaces ([597c2bd](https://github.com/clippingkk/web/commit/597c2bd9ee56d8eab4a822b5e21fd689235ff6fb))
+* **i18n:** render client components in the reader's language ([4c500df](https://github.com/clippingkk/web/commit/4c500df787e12ea173672ac9b0d175bf179669a5))
+* **i18n:** send the current language to the API and reuse server translations ([786c179](https://github.com/clippingkk/web/commit/786c17979b4266efd21ba997063ab1d38548df5d))
+* **library:** select doubanId in the unchecked count ([79347d7](https://github.com/clippingkk/web/commit/79347d7688d072320f21e2ab4f6b65c2475c24df))
+* **pricing:** read Gate plans at request time ([06ccedf](https://github.com/clippingkk/web/commit/06ccedfedbce5ae42d1d9b9f8d43c67dbff2c93f))
+* **profile:** resync follow state across profiles and drop the editor nudge on save ([12eead9](https://github.com/clippingkk/web/commit/12eead93740ab2894328d215397609c02dfd6400))
+* **profile:** use one domain and slug rule in the client ([b35abd0](https://github.com/clippingkk/web/commit/b35abd0a6f187fca1cbe7fdfedb2ab9be00973c1))
+* **reaction:** resync with fresh server data so new reactions can be undone ([a35f00c](https://github.com/clippingkk/web/commit/a35f00c74b15a5bb173e5e8047b17c81ca48e5ea))
+* **search:** keep the palette highlight on the same result as results land ([e4c83cb](https://github.com/clippingkk/web/commit/e4c83cbe48963b9edd538429e799b52382c203d7))
+* **settings:** let nameless readers delete their account and guard the redirect ([ec63565](https://github.com/clippingkk/web/commit/ec6356537cb537113a64e3331788bfc77b28c383))
+* **settings:** localize the export forms and show their validation errors ([65c3588](https://github.com/clippingkk/web/commit/65c3588a5fa54c24bb0ac065cbf7f0af5ddf2798))
+* **settings:** parse the settings subpath without throwing or misaligning ([9d1310c](https://github.com/clippingkk/web/commit/9d1310cbf4d9649e22e0db88ef7bd5b2b90803cf))
+* **settings:** surface network and input errors, and switch language cleanly ([a78da27](https://github.com/clippingkk/web/commit/a78da276e80ad7a3b921adbb18a0b021772c2b86))
+* **shell:** keep a malformed slug from crashing the nav ([4792afd](https://github.com/clippingkk/web/commit/4792afde71414e6bfdc868a24f3c5041ca78573c))
+* **shell:** reserve tab bar room only for readers who get the tab bar ([6c00ca0](https://github.com/clippingkk/web/commit/6c00ca0f9ac5cbb1b57d627ea71b3cd217b7a9b5))
+* **shell:** resolve avatar paths through the media CDN ([6c08bca](https://github.com/clippingkk/web/commit/6c08bcafae4c968e62e49adf1aa69d193bca0016))
+* **theme:** derive the server theme once and share one OS listener ([997fb54](https://github.com/clippingkk/web/commit/997fb54bd82889792d04076ffe27476799c400e6))
+* **theme:** point the browser chrome colour at the chosen theme ([745b8f0](https://github.com/clippingkk/web/commit/745b8f057eac16ec166c12103a34fbfa685e0c6f))
+* **ui:** stream shell chrome and polish the rebuilt pages ([33773a9](https://github.com/clippingkk/web/commit/33773a9f16ef517d2708d6bffe08be5990fdfda5))
+* **upload:** hold the one-import-at-a-time rule across the whole app ([e3761d1](https://github.com/clippingkk/web/commit/e3761d137dd56055dbed49836d78dd954dce26b9))
+* **upload:** match books in parallel and show where a failed import stopped ([50300aa](https://github.com/clippingkk/web/commit/50300aa32355c20f78b2c6793625c0b0271bad03))
+* **upload:** run one import at a time and keep other tabs' dedupe record ([f41d82f](https://github.com/clippingkk/web/commit/f41d82f240f3bbe71e3635d49634f2d0ca20fc82))
+* **upload:** tell a file that can't be opened apart from one that can't be parsed ([02c5cfa](https://github.com/clippingkk/web/commit/02c5cfa0b7fe472a9689680cb8ef1a8884dad98b))
+
+
+### Performance Improvements
+
+* **og:** fetch the clipping card font alongside its data ([6705169](https://github.com/clippingkk/web/commit/6705169b8a22b2665d7b8cfd2b7469bc1c075d67))
+* **search:** debounce book searches instead of deferring them ([32387f8](https://github.com/clippingkk/web/commit/32387f8b6624bdfab513cd791a63da4b6200584b))
+
+
+### Code Refactoring
+
+* **comment:** share comment paging between the thread and /comments ([391dfc6](https://github.com/clippingkk/web/commit/391dfc626ae591bd335ec54f90211dd746782637))
+* **data:** drop unused operations and the deprecated query wrapper ([c6cc055](https://github.com/clippingkk/web/commit/c6cc055accb780682d45b76c251c55909162fe32))
+* **route:** parse clipping and comment ids in one place ([6bb1401](https://github.com/clippingkk/web/commit/6bb140176bb6a430ae12d89074366b16156e3fdb))
+* **shell:** build nav links with dashHref ([b985842](https://github.com/clippingkk/web/commit/b98584294b8d6fe1483b9ba6f0c0439feaf9eade))
+* **shell:** build user menu links with dashHref ([d07c1f3](https://github.com/clippingkk/web/commit/d07c1f30f38f98681b4a832e81c790db09e90bce))
+* **ui:** retire the compact scale and legacy code ([a8980e2](https://github.com/clippingkk/web/commit/a8980e254c474f46cb014d6502effa4b76d8f7c1))
+* **ui:** retire the compact scale and the last legacy components ([9bb4110](https://github.com/clippingkk/web/commit/9bb4110d39b224c69c919a1c5aeae86fdce9c3da))
+* **upload:** share the text-file check and drop the dead file reader ([f9621a3](https://github.com/clippingkk/web/commit/f9621a3dae4444d7f83d488261dbc58b9e285d99))
+
+
+### Documentation
+
+* **claude:** describe Gate auth, the i18n provider and the lake-ui design system ([c210b98](https://github.com/clippingkk/web/commit/c210b98b4671b0eb96dcc65676013b97b132ebd4))
+
+
+### Miscellaneous
+
+* **deps:** remove dead modules and unused dependencies ([a8bcc15](https://github.com/clippingkk/web/commit/a8bcc1562f71f3f706dd5e0e3f0554094dabc4ce))
+* **i18n:** drop the seven namespaces nothing reads anymore ([ebc373e](https://github.com/clippingkk/web/commit/ebc373e6fdd4e6f80408c448aeaab070f2c67137))
+* **i18n:** prune the default locale files to the keys still read ([74d86ff](https://github.com/clippingkk/web/commit/74d86ffce1038a8c4219b809695b7c0fb82a9b48))
+* **i18n:** prune the default locale files to the keys still read ([9a5e814](https://github.com/clippingkk/web/commit/9a5e81480fdf045b9db9d95f33639d8e20309dc6))
+* release 5.19.0 ([a29b4f9](https://github.com/clippingkk/web/commit/a29b4f99e724748eecd69e366ea1da9fb4412e89))
+* **styles:** rely on lake-ui's theme.css to scan its components ([1bbb841](https://github.com/clippingkk/web/commit/1bbb8411dd65b09f76c147059e5f137282553855))
+
+
+### Build System
+
+* **deps:** upgrade @annatarhe/lake-ui to 0.0.33 ([5cddd2f](https://github.com/clippingkk/web/commit/5cddd2f7088e0b14c25b2fc3fa7b4120d464692f))
+
 ## [5.18.2](https://github.com/clippingkk/web/compare/v5.18.1...v5.18.2) (2026-09-20)
 
 
