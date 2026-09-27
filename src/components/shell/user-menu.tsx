@@ -20,6 +20,7 @@ import { toast } from 'react-hot-toast'
 
 import { useTheme } from '@/components/theme/use-theme'
 import { useTranslation } from '@/i18n/client'
+import { resolveMediaUrl } from '@/utils/image'
 import profile from '@/utils/profile'
 
 import type { ShellViewer } from './types'
@@ -43,6 +44,7 @@ function UserMenu({ viewer }: UserMenuProps) {
     window.location.assign('/')
   }, [t])
 
+  const avatar = viewer.avatar ? resolveMediaUrl(viewer.avatar) : null
   const base = `/dash/${viewer.slug}`
   const items: MenuEntry[] = [
     {
@@ -132,7 +134,7 @@ function UserMenu({ viewer }: UserMenuProps) {
           aria-label={t('shell.userMenu.label')}
         >
           <Avatar
-            src={viewer.avatar}
+            src={avatar}
             name={viewer.name}
             size="sm"
             ring={viewer.isPremium ? 'premium' : 'none'}
@@ -141,7 +143,7 @@ function UserMenu({ viewer }: UserMenuProps) {
       }
       header={
         <div className="flex min-w-0 items-center gap-3 px-1 py-1">
-          <Avatar src={viewer.avatar} name={viewer.name} size="md" />
+          <Avatar src={avatar} name={viewer.name} size="md" />
           <div className="min-w-0">
             <p className="text-lake-fg truncate text-sm font-medium">
               {viewer.name}
