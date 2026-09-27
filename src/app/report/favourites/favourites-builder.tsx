@@ -7,11 +7,12 @@ import Spinner from '@annatarhe/lake-ui/spinner'
 import download from 'downloadjs'
 import { toPng } from 'html-to-image'
 import { Check, Download, Plus, X } from 'lucide-react'
-import { useDeferredValue, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import BookCover from '@/components/book/book-cover'
 import { useBookSearch } from '@/hooks/book'
+import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { useTranslation } from '@/i18n/client'
 import { cn } from '@/lib/utils'
 import type { WenquBook } from '@/services/wenqu'
@@ -37,7 +38,7 @@ function FavouritesBuilder() {
   const [exporting, setExporting] = useState(false)
   const cardRef = useRef<HTMLElement>(null)
 
-  const searchText = useDeferredValue(query.trim())
+  const searchText = useDebouncedValue(query.trim(), 300)
   const search = useBookSearch(searchText, 0)
   const results = (search.data?.books ?? []).slice(0, RESULT_LIMIT)
 

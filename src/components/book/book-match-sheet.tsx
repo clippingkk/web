@@ -7,11 +7,12 @@ import Spinner from '@annatarhe/lake-ui/spinner'
 import { useMutation } from '@apollo/client/react'
 import { Check } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useDeferredValue, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { UpdateClippingBookIdDocument } from '@/gql/graphql'
 import { useBookSearch } from '@/hooks/book'
+import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { useTranslation } from '@/i18n/client'
 import { cn } from '@/lib/utils'
 import type { WenquBook } from '@/services/wenqu'
@@ -33,7 +34,7 @@ function BookMatchSheet(props: BookMatchSheetProps) {
   const { t } = useTranslation(undefined, 'library')
   const router = useRouter()
   const [query, setQuery] = useState(title)
-  const deferredQuery = useDeferredValue(query.trim())
+  const deferredQuery = useDebouncedValue(query.trim(), 300)
   const [selected, setSelected] = useState<WenquBook | null>(null)
   const search = useBookSearch(deferredQuery, 0, open)
   const [updateBook, { loading: saving }] = useMutation(
