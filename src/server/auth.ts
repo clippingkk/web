@@ -104,9 +104,12 @@ export async function optionalUserId(request: Request) {
   if (sessionId) {
     if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method))
       assertSameOrigin(request)
+    // An expired or revoked browser session reads as signed out: public
+    // pages still render, and anything that needs a reader asks for sign-in
+    // through requiredUser. Throwing here failed every request, public ones
+    // included, and sent the browser to sign-in from the landing page.
     const session = await readSession(sessionId)
-    if (!session) throw new ApiError('Sign in again', 401, 'UNAUTHORIZED')
-    return session.localUserId
+    return session?.localUserId ?? 0
   }
   const id = await legacyUserId(request)
   if (!id) return 0

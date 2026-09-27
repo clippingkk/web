@@ -73,3 +73,19 @@ test('a refresh outage surfaces as 503 so the app keeps its credential', async (
     optionalUserId(request({ Authorization: `Bearer ${token}` }))
   ).rejects.toMatchObject({ status: 503 })
 })
+
+test('an ended browser session reads as signed out instead of failing', async () => {
+  state.cookie.mockResolvedValue(null)
+  const stale = new Request('https://clippingkk.example/square', {
+    headers: { Cookie: `ck-session=${'c'.repeat(43)}` },
+  })
+  await expect(optionalUserId(stale)).resolves.toBe(0)
+})
+
+test('a live browser session resolves to its reader', async () => {
+  state.cookie.mockResolvedValue({ localUserId: 7 })
+  const live = new Request('https://clippingkk.example/square', {
+    headers: { Cookie: `ck-session=${'c'.repeat(43)}` },
+  })
+  await expect(optionalUserId(live)).resolves.toBe(7)
+})
