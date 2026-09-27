@@ -7,7 +7,10 @@ import { ApiError } from '@/server/errors'
 const mocks = vi.hoisted(() => ({ session: vi.fn(), redirect: vi.fn() }))
 vi.mock('@/server/gate/current', () => ({ currentSession: mocks.session }))
 vi.mock('@/server/gate/config', () => ({
-  gateConfig: () => ({ baseUrl: 'https://gate.example' }),
+  gateConfig: () => ({
+    baseUrl: 'https://gate.example',
+    appOrigin: 'https://clippingkk.example',
+  }),
 }))
 vi.mock('next/navigation', () => ({ redirect: mocks.redirect }))
 
@@ -62,6 +65,29 @@ it('redirects authenticated users to their dashboard', async () => {
   mocks.session.mockResolvedValue({ localUserId: 42 })
   await expect(
     AuthContent({ searchParams: Promise.resolve({}) })
+  ).rejects.toThrow('NEXT_REDIRECT')
+  expect(mocks.redirect).toHaveBeenCalledWith('/dash/42/home')
+})
+
+it('sends a signed-in reader to a safe next instead of the dashboard', async () => {
+  mocks.session.mockResolvedValue({ localUserId: 42 })
+  const next = '/dash/annatarhe/clippings/7?iac=0#comments'
+  await expect(
+    AuthContent({ searchParams: Promise.resolve({ next }) })
+  ).rejects.toThrow('NEXT_REDIRECT')
+  expect(mocks.redirect).toHaveBeenCalledWith(next)
+})
+
+it.each([
+  'https://evil.test/dash',
+  '//evil.test',
+  '/\\evil.test',
+  '/auth?next=/dash/1/home',
+  '/api/auth/logout',
+])('ignores an unsafe next (%s) for a signed-in reader', async (next) => {
+  mocks.session.mockResolvedValue({ localUserId: 42 })
+  await expect(
+    AuthContent({ searchParams: Promise.resolve({ next }) })
   ).rejects.toThrow('NEXT_REDIRECT')
   expect(mocks.redirect).toHaveBeenCalledWith('/dash/42/home')
 })

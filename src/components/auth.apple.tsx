@@ -5,6 +5,7 @@ import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { LoginByAppleDocument } from '@/gql/graphql'
+import { authHref } from '@/lib/auth-href'
 
 import { useAuthBy3rdPartSuccessed } from '../hooks/hooks'
 import { AppleLoginPlatforms } from '../schema/generated'
@@ -33,7 +34,8 @@ function AuthByAppleButton(props: AuthAppleProps) {
         },
       })
       if (r.data?.loginByApple.noAccountFrom3rdPart) {
-        router.push(`/auth/callback/apple?i=${id_token}`)
+        // The Apple callback page is gone; /auth is where it always ended up.
+        router.push(authHref())
         return
       }
     },

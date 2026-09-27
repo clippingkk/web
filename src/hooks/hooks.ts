@@ -14,7 +14,8 @@ import type {
 } from '@/gql/graphql'
 import type { User } from '@/schema/generated'
 
-import { getUserSlug } from '../utils/profile.utils'
+import { authHref } from '../lib/auth-href'
+import { dashHref } from '../utils/profile.utils'
 
 type UserContent = Pick<
   User,
@@ -22,7 +23,7 @@ type UserContent = Pick<
 >
 
 async function onAuthEnd(_data: { user: UserContent; token: string }) {
-  window.location.assign('/auth')
+  window.location.assign(authHref())
 }
 
 type AuthResultState<T> = {
@@ -71,7 +72,7 @@ export function useAuthBy3rdPartSuccessed(
 ) {
   useAuthResultEffect(
     { called, loading, error, authResponse },
-    (response) => `/dash/${getUserSlug(response.user)}/home?from_auth=1`
+    (response) => `${dashHref(response.user, 'home')}?from_auth=1`
   )
 }
 
@@ -81,12 +82,11 @@ export function useLoginV3Successed(
   error?: Error,
   authResponse?: DoLoginV3Mutation['loginV3']
 ) {
-  useAuthResultEffect(
-    { called, loading, error, authResponse },
-    (response) =>
-      `/dash/${getUserSlug(response.user)}/${
-        response.isNewUser ? 'newbie' : 'home'
-      }?from_auth=1`
+  useAuthResultEffect({ called, loading, error, authResponse }, (response) =>
+    response.isNewUser
+      ? // The onboarding page is gone; the profile editor asks the same things.
+        `${dashHref(response.user, 'profile')}?with_profile_editor=1&from_auth=1`
+      : `${dashHref(response.user, 'home')}?from_auth=1`
   )
 }
 
@@ -98,7 +98,7 @@ export function useAuthByPhoneSuccessed(
 ) {
   useAuthResultEffect(
     { called, loading, error, authResponse },
-    (response) => `/dash/${getUserSlug(response.user)}/home?from_auth=1`,
+    (response) => `${dashHref(response.user, 'home')}?from_auth=1`,
     { skipZeroIdGuard: true }
   )
 }
@@ -136,7 +136,7 @@ export function useSignupSuccess(result: MutationResult<SignupMutation>) {
           duration: 10_000,
         }
       )
-      navigate('/auth/auth-v4')
+      navigate(authHref())
     }
   }, [result, navigate])
 }

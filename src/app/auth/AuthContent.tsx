@@ -1,8 +1,10 @@
+import type { Route } from 'next'
 import { redirect } from 'next/navigation'
 
 import { ApiError } from '@/server/errors'
 import { gateConfig } from '@/server/gate/config'
 import { currentSession } from '@/server/gate/current'
+import { safeNext } from '@/server/gate/security'
 
 import AuthCard from './AuthCard'
 
@@ -20,7 +22,14 @@ export default async function AuthContent({ searchParams }: AuthPageProps) {
     }
     throw error
   })
-  if (session && !authError) redirect(`/dash/${session.localUserId}/home`)
+  // Already signed in: go where the link wanted to take them, which is how a
+  // page that bounced a signed-out reader here gets them back after sign-in in
+  // another tab. safeNext() refuses foreign origins and /auth itself.
+  if (session && !authError)
+    redirect(
+      (safeNext(params.next ?? null) ??
+        `/dash/${session.localUserId}/home`) as Route
+    )
   return (
     <AuthCard
       error={authError}

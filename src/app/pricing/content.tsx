@@ -8,6 +8,7 @@ import PremiumPlanFeatures from '@/components/pricing/premium-plan-features'
 import { checkIsPremium } from '@/compute/user'
 import type { ProfileQuery } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
+import { authHref } from '@/lib/auth-href'
 
 type PricingContentProps = {
   profile?: ProfileQuery['me'] | null
@@ -70,7 +71,11 @@ async function PricingContent(props: PricingContentProps) {
               <FreePlanFeatures>
                 <div className="w-full justify-center">
                   <Link
-                    href={profile?.id ? `/dash/${profile.id}/home` : '/auth'}
+                    href={
+                      profile?.id
+                        ? `/dash/${profile.id}/home`
+                        : authHref('/pricing')
+                    }
                     className="group relative z-10 inline-flex w-full items-center justify-center overflow-hidden rounded-xl bg-blue-400 px-6 py-4 text-xl font-bold text-white shadow-lg shadow-blue-400/30 transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-400/50 active:scale-[0.98]"
                   >
                     <span className="relative z-10 flex items-center gap-2">

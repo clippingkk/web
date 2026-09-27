@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import { AppFeatures } from '@/constants/features'
 import { getTranslation } from '@/i18n/index'
+import { authHref } from '@/lib/auth-href'
 
 import PureImages from '../backgrounds/pure-images'
 import LinkIndicator from '../link-indicator'
@@ -55,7 +56,7 @@ async function Hero(props: HeroProps) {
             {/* Primary Call to Action - Go button with enhanced fancy effects */}
             <div className="my-10 flex items-center justify-center">
               <Link
-                href={myUid ? `/dash/${myUid}/home` : '/auth/auth-v4'}
+                href={myUid ? `/dash/${myUid}/home` : authHref()}
                 className="group relative z-10 scale-110 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500 px-14 py-6 text-3xl font-black text-white shadow-2xl shadow-blue-500/40 transition-all duration-500 hover:-translate-y-2 hover:scale-105 hover:shadow-[0_0_30px_5px] hover:shadow-blue-500/50 active:scale-95 active:shadow-inner"
               >
                 <span className="relative z-10 flex items-center gap-3">
