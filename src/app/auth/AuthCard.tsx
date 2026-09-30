@@ -68,7 +68,7 @@ const ERROR_CODES = new Set([
 ])
 
 const linkClass =
-  'rounded-sm font-medium text-lake-accent-text underline decoration-lake-accent/40 underline-offset-4 outline-none transition-colors duration-150 hover:decoration-current focus-visible:ring-2 focus-visible:ring-lake-ring'
+  'rounded-sm font-medium text-lake-accent-text underline decoration-lake-accent-text/40 underline-offset-4 outline-none transition-colors duration-150 hover:decoration-current focus-visible:ring-2 focus-visible:ring-lake-ring'
 
 export default function AuthCard({
   t,

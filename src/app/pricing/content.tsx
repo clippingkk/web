@@ -146,7 +146,7 @@ async function PricingContent({
           {withLink(t('help.body', { email: SUPPORT_EMAIL }), (label) => (
             <a
               href={`mailto:${SUPPORT_EMAIL}`}
-              className="text-lake-accent-text decoration-lake-accent/40 focus-visible:ring-lake-ring rounded-sm font-medium underline underline-offset-4 transition-colors duration-150 outline-none hover:decoration-current focus-visible:ring-2"
+              className="text-lake-accent-text decoration-lake-accent-text/40 focus-visible:ring-lake-ring rounded-sm font-medium underline underline-offset-4 transition-colors duration-150 outline-none hover:decoration-current focus-visible:ring-2"
             >
               {label}
             </a>

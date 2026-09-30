@@ -125,7 +125,7 @@ function ClippingCard(props: ClippingCardProps) {
         <figure className="flex flex-col gap-4">
           <span
             aria-hidden="true"
-            className="font-reading text-lake-accent/50 h-8 text-6xl leading-none select-none"
+            className="font-reading text-lake-accent-text/50 h-8 text-6xl leading-none select-none"
           >
             “
           </span>

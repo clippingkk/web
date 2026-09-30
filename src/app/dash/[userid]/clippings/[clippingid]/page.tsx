@@ -115,7 +115,7 @@ async function ClippingPage(props: PageProps) {
           <blockquote className="relative">
             <span
               aria-hidden="true"
-              className="font-reading text-lake-accent/40 absolute -top-8 -left-1 text-7xl leading-none select-none md:-left-10"
+              className="font-reading text-lake-accent-text/40 absolute -top-8 -left-1 text-7xl leading-none select-none md:-left-10"
             >
               “
             </span>

@@ -10,7 +10,11 @@
     "start": "开始建立书房",
     "open": "打开我的书房",
     "pricing": "查看价格",
-    "note": "免费开始，无需绑卡。"
+    "note": "免费开始，无需绑卡。",
+    "quote": {
+      "own": "来自你的书房",
+      "public": "{{name}} 的划线"
+    }
   },
   "specimen": {
     "label": "Kindle 上的划线",
