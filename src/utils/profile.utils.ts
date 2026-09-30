@@ -50,6 +50,7 @@ export type DashSection =
   | 'settings/exports'
   | 'settings/orders'
   | 'settings/webhooks'
+  | 'settings/mcp'
 
 export function dashHref(user: SlugSource, section: DashSection = 'home') {
   return `/dash/${slugOf(user)}/${section}` as Route

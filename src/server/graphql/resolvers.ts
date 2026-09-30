@@ -30,6 +30,16 @@ import {
   issueToken,
   verifyToken,
 } from '../auth'
+import {
+  activeClipping,
+  booksForUser,
+  clippingVisibleTo,
+  containsPattern,
+  legacyPage,
+  page,
+  sourceFromEnum,
+  sourceToEnum,
+} from '../clippings/queries'
 import { getDatabase } from '../db'
 import {
   clippings,
@@ -87,7 +97,6 @@ type Book = {
 }
 
 const db = () => getDatabase().db
-const activeClipping = isNull(clippings.deletedAt)
 const activeUser = isNull(users.deletedAt)
 const activeComment = and(
   isNull(comments.deletedAt),
@@ -99,33 +108,11 @@ function requiredUser(context: GraphQLContext) {
   return context.userId
 }
 
-function page(args?: { limit?: number; lastId?: number | null }) {
-  return {
-    limit: Math.min(Math.max(args?.limit ?? 20, 1), 100),
-    lastId: args?.lastId ?? 1 << 30,
-  }
-}
-
-function legacyPage(args?: { limit?: number; offset?: number }) {
-  return {
-    limit: Math.min(Math.max(args?.limit ?? 20, 1), 100),
-    offset: Math.max(args?.offset ?? 0, 0),
-  }
-}
-
 function date(value?: Date | string | null) {
   if (!value) return ''
   return value instanceof Date
     ? value.toISOString()
     : new Date(value).toISOString()
-}
-
-function sourceFromEnum(value?: string | null) {
-  return value === 'weread' ? 2 : value === 'unknown' ? 0 : 1
-}
-
-function sourceToEnum(value: number) {
-  return value === 2 ? 'weread' : value === 0 ? 'unknown' : 'kindle'
 }
 
 function targetFromEnum(value: string) {
@@ -177,12 +164,6 @@ async function clippingById(id: number, includeDeleted = false) {
   )
 }
 
-function clippingVisibleTo(userId: number) {
-  return userId
-    ? or(eq(clippings.visible, true), eq(clippings.createdBy, userId))
-    : eq(clippings.visible, true)
-}
-
 async function visibleClippingById(id: number, userId: number) {
   return assertFound(
     await db().query.clippings.findFirst({
@@ -194,11 +175,6 @@ async function visibleClippingById(id: number, userId: number) {
     }),
     'clipping not found'
   )
-}
-
-/** ILIKE pattern for a substring search, with the reader's `%`, `_` and `\` literal. */
-function containsPattern(query: unknown) {
-  return `%${String(query).replace(/[\\%_]/g, '\\$&')}%`
 }
 
 async function authResponse(
@@ -300,39 +276,6 @@ async function loadComments(
     )
     .orderBy(desc(comments.id))
     .limit(pagination.limit)
-}
-
-async function booksForUser(
-  uid: number,
-  pagination: { limit: number; offset: number },
-  viewerId: number
-) {
-  const rows = await db()
-    .select({
-      doubanId: clippings.bookId,
-      clippingsCount: count(clippings.id),
-      startReadingAt: sql<Date>`min(${clippings.createdAt})`,
-      lastReadingAt: sql<Date>`max(${clippings.createdAt})`,
-    })
-    .from(clippings)
-    .where(
-      and(
-        eq(clippings.createdBy, uid),
-        activeClipping,
-        clippingVisibleTo(viewerId),
-        sql`${clippings.bookId} <> ''`,
-        sql`${clippings.bookId} <> '0'`
-      )
-    )
-    .groupBy(clippings.bookId)
-    .orderBy(sql`max(${clippings.createdAt}) desc`)
-    .limit(pagination.limit)
-    .offset(pagination.offset)
-  return rows.map((row, index) => ({
-    ...row,
-    uid,
-    isLastReadingBook: pagination.offset + index === 0,
-  }))
 }
 
 async function createOrUpdateExternal(

@@ -299,3 +299,26 @@ export const accountRecoveryAudit = pgTable('account_recovery_audit', {
   operator: varchar('operator', { length: 255 }).notNull(),
   createdAt: createdAt(),
 })
+
+// Personal access tokens for the MCP server. Only the sha256 of a token is
+// stored; `prefix` is the part shown back to the reader to tell tokens apart.
+export const mcpTokens = pgTable(
+  'mcp_tokens',
+  {
+    id: id(),
+    userId: int('user_id').notNull(),
+    name: varchar('name', { length: 64 }).notNull(),
+    tokenHash: varchar('token_hash', { length: 64 }).notNull(),
+    prefix: varchar('prefix', { length: 16 }).notNull(),
+    lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }),
+    revokedAt: timestamp('revoked_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    uniqueIndex('mcp_tokens_token_hash_key').on(table.tokenHash),
+    index('mcp_tokens_user_id_idx').on(table.userId),
+  ]
+)
+
+export type McpToken = typeof mcpTokens.$inferSelect

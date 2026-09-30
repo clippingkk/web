@@ -5,6 +5,7 @@ import {
   CreditCard,
   FileDown,
   type LucideIcon,
+  PlugZap,
   SlidersHorizontal,
   UserRound,
   Webhook,
@@ -17,12 +18,13 @@ import { cn } from '@/lib/utils'
 import { dashHref } from '@/utils/profile.utils'
 
 const SECTIONS: {
-  key: 'web' | 'orders' | 'webhooks' | 'exports' | 'account'
+  key: 'web' | 'orders' | 'webhooks' | 'mcp' | 'exports' | 'account'
   icon: LucideIcon
 }[] = [
   { key: 'web', icon: SlidersHorizontal },
   { key: 'orders', icon: CreditCard },
   { key: 'webhooks', icon: Webhook },
+  { key: 'mcp', icon: PlugZap },
   { key: 'exports', icon: FileDown },
   { key: 'account', icon: UserRound },
 ]

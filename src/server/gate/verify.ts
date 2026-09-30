@@ -144,3 +144,32 @@ export async function verifyIdToken(
     emailVerified: payload.email_verified === true,
   }
 }
+
+export interface GateAccessToken {
+  gateUserId: string
+  /** The OAuth client the token was issued to (`azp`). */
+  clientId: string
+  scopes: string[]
+  /** Seconds since the epoch. */
+  expiresAt: number
+}
+
+/**
+ * Verifies a Gate access token presented to ClippingKK as a resource server
+ * (the MCP endpoint). Gate issues a JWT only when the client asked for a
+ * `resource`, and puts that resource in `aud` — so requiring our resource there
+ * is what rejects tokens minted for another product. Throws on any failure.
+ */
+export async function verifyGateAccessToken(
+  token: string
+): Promise<GateAccessToken> {
+  const { payload } = await verifySignature(token, gateConfig().resource)
+  if (!payload.sub) throw new Error('access token has no subject')
+  return {
+    gateUserId: payload.sub,
+    clientId:
+      claimString(payload, 'azp') ?? claimString(payload, 'client_id') ?? '',
+    scopes: claimString(payload, 'scope')?.split(' ').filter(Boolean) ?? [],
+    expiresAt: payload.exp as number,
+  }
+}

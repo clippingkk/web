@@ -9,6 +9,7 @@
     "web": "通用",
     "orders": "订阅",
     "webhooks": "Webhook",
+    "mcp": "AI 与 MCP",
     "exports": "导出",
     "account": "账户"
   },
@@ -92,6 +93,58 @@
       "showBody": "展开内容",
       "hideBody": "收起内容",
       "count_other": "{{count}} 次投递"
+    }
+  },
+  "mcp": {
+    "title": "AI 助手（MCP）",
+    "description": "让 Claude、Cursor 等 MCP 客户端读取你的书摘、书籍和阅读报告。仅限只读，且只能访问你自己的书库。",
+    "endpoint": "服务器地址",
+    "oauthTitle": "使用 ClippingKK 登录",
+    "oauthDescription": "支持 MCP 登录的客户端（例如 Claude）只需要服务器地址，在浏览器中确认授权即可。",
+    "tokenTitle": "使用访问令牌",
+    "tokenDescription": "对于只能配置固定请求头的客户端，请在下方创建令牌，并以 Bearer 令牌的形式发送。",
+    "copy": "复制",
+    "copied": "已复制",
+    "copyFailed": "复制失败，请手动选中文本复制。",
+    "tokens": {
+      "title": "访问令牌",
+      "description": "令牌在过期或被撤销之前都可以读取你的书库，请像密码一样妥善保管。",
+      "new": "新建令牌",
+      "emptyTitle": "还没有访问令牌",
+      "emptyDescription": "为不支持 MCP 登录的客户端创建一个令牌。",
+      "columns": {
+        "name": "名称",
+        "token": "令牌",
+        "lastUsed": "最近使用",
+        "expires": "过期时间",
+        "actions": "操作"
+      },
+      "never": "从未",
+      "noExpiry": "永不过期",
+      "revoke": "撤销",
+      "revokeTitle": "撤销这个令牌？",
+      "revokeDescription": "使用「{{name}}」的客户端将立即失去访问权限。",
+      "confirmRevoke": "撤销令牌",
+      "cancel": "取消",
+      "revoked": "令牌已撤销",
+      "revokeFailed": "撤销失败，请重试。"
+    },
+    "create": {
+      "title": "新建访问令牌",
+      "name": "名称",
+      "namePlaceholder": "我笔记本上的 Claude Code",
+      "nameRequired": "请为令牌起个名字。",
+      "nameTooLong": "名称请少于 64 个字符。",
+      "expiry": "有效期",
+      "expiry30": "30 天",
+      "expiry90": "90 天",
+      "expiry365": "1 年",
+      "expiryNever": "永不过期",
+      "submit": "创建令牌",
+      "failed": "创建失败，请重试。",
+      "createdTitle": "请立即复制令牌",
+      "createdDescription": "令牌只会显示这一次。如果丢失，请撤销后重新创建。",
+      "done": "完成"
     }
   },
   "exports": {
