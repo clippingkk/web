@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.1](https://github.com/clippingkk/web/compare/v5.19.0...v5.19.1) (2026-09-30)
+
+
+### Features
+
+* **landing:** real highlight in the hero, white-on-blue primary buttons ([596243d](https://github.com/clippingkk/web/commit/596243d58d98851638d3f6fe612b830e3f5d7525))
+* **landing:** real highlight in the hero, white-on-blue primary buttons ([f918bb5](https://github.com/clippingkk/web/commit/f918bb5e667c94267ca08776bb57805e9dbea972))
+
+
+### Miscellaneous
+
+* **footer:** remove ICP filing link from app footer ([d745c8e](https://github.com/clippingkk/web/commit/d745c8ed1f081cd810883cb7a6b50590aeb1aaf0))
+* **footer:** remove ICP filing link from app footer ([09d5b57](https://github.com/clippingkk/web/commit/09d5b575fea333ee97f0baf041f9c1a674cb8e03))
+
 ## [5.19.0](https://github.com/clippingkk/web/compare/v5.18.2...v5.19.0) (2026-09-27)
 
 
