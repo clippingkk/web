@@ -58,16 +58,15 @@ per reader. A browser `Origin` must be `APP_ORIGIN` or one of `CORS_ALLOWED_ORIG
   authorization server is Gate's issuer.
 - MCP clients register with Gate through Client ID Metadata Documents; Gate has no dynamic client
   registration.
-- Gate must list this resource in `GATE_MCP_RESOURCES`, with the ClippingKK web client as the
-  anchor. See `docs/mcp.md` in the Gate repository:
-
-```bash
-GATE_MCP_RESOURCES=https://clippingkk.annatarhe.com=<GATE_CLIENT_ID>
-```
+- In Gate, the ClippingKK project's **MCP server URL** (Project settings, or `mcpResource` on
+  `PATCH /projects/{id}`) must equal `GATE_RESOURCE`, for example
+  `https://clippingkk.annatarhe.com`. MCP clients then sign in under the ClippingKK project, and
+  Gate issues tokens audienced at it. See `docs/mcp.md` in the Gate repository.
 
 `GATE_RESOURCE` must equal the origin clients connect to. OAuth therefore works only on the
 deployed origin. For local development, either use a personal access token, or set
-`GATE_RESOURCE=http://localhost:3101` and list that resource in a local Gate.
+`GATE_RESOURCE=http://localhost:3101` and use the same URL as the project's MCP server URL in a
+local Gate.
 
 ## Connecting a client
 
