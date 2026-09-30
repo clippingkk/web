@@ -200,6 +200,14 @@ function ClientComponent() {
 - Chinese variants (`zh`, `zh-CN`, etc.) are normalized to `zhCN` for file loading
 - Cookie value determines default language, falls back to `en`
 
+## MCP Server
+
+`/api/v3/mcp` is a read-only MCP server (protocol 2026-07-28, `@modelcontextprotocol/server` v2)
+over the caller's own library. Tools live in `src/server/mcp/tools/`, their SQL in
+`src/server/mcp/queries.ts`, and every query must stay scoped to `createdBy = userId`. Callers use
+`ck_mcp_` personal access tokens (Settings → AI & MCP) or Gate OAuth tokens audienced at
+`GATE_RESOURCE`. See `docs/mcp.md`.
+
 ## Rich Text Editor
 
 The application uses **Tiptap** (a headless editor built on ProseMirror) for rich text editing, replacing the legacy Lexical editor.

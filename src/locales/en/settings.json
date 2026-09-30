@@ -9,6 +9,7 @@
     "web": "General",
     "orders": "Subscription",
     "webhooks": "Webhooks",
+    "mcp": "AI & MCP",
     "exports": "Exports",
     "account": "Account"
   },
@@ -93,6 +94,58 @@
       "hideBody": "Hide body",
       "count_one": "{{count}} delivery",
       "count_other": "{{count}} deliveries"
+    }
+  },
+  "mcp": {
+    "title": "AI assistants (MCP)",
+    "description": "Let Claude, Cursor and other MCP clients read your highlights, books and reading reports. Access is read-only and limited to your own library.",
+    "endpoint": "Server URL",
+    "oauthTitle": "Sign in with ClippingKK",
+    "oauthDescription": "Clients that support MCP sign-in (such as Claude) only need the server URL. You approve access in the browser.",
+    "tokenTitle": "Use an access token",
+    "tokenDescription": "For clients that take a fixed header, create a token below and send it as a Bearer token.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFailed": "Couldn't copy. Select the text and copy it manually.",
+    "tokens": {
+      "title": "Access tokens",
+      "description": "Each token can read your library until it expires or you revoke it. Treat it like a password.",
+      "new": "New token",
+      "emptyTitle": "No access tokens",
+      "emptyDescription": "Create one to connect a client that does not support MCP sign-in.",
+      "columns": {
+        "name": "Name",
+        "token": "Token",
+        "lastUsed": "Last used",
+        "expires": "Expires",
+        "actions": "Actions"
+      },
+      "never": "Never",
+      "noExpiry": "No expiry",
+      "revoke": "Revoke",
+      "revokeTitle": "Revoke this token?",
+      "revokeDescription": "Clients using \"{{name}}\" lose access immediately.",
+      "confirmRevoke": "Revoke token",
+      "cancel": "Cancel",
+      "revoked": "Token revoked",
+      "revokeFailed": "Couldn't revoke the token. Try again."
+    },
+    "create": {
+      "title": "New access token",
+      "name": "Name",
+      "namePlaceholder": "Claude Code on my laptop",
+      "nameRequired": "Give the token a name.",
+      "nameTooLong": "Keep the name under 64 characters.",
+      "expiry": "Expires",
+      "expiry30": "30 days",
+      "expiry90": "90 days",
+      "expiry365": "1 year",
+      "expiryNever": "Never",
+      "submit": "Create token",
+      "failed": "Couldn't create the token. Try again.",
+      "createdTitle": "Copy your token now",
+      "createdDescription": "This is the only time it is shown. If you lose it, revoke it and create a new one.",
+      "done": "Done"
     }
   },
   "exports": {

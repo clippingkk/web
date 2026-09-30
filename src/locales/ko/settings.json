@@ -9,6 +9,7 @@
     "web": "일반",
     "orders": "구독",
     "webhooks": "웹훅",
+    "mcp": "AI 및 MCP",
     "exports": "내보내기",
     "account": "계정"
   },
@@ -92,6 +93,58 @@
       "showBody": "본문 보기",
       "hideBody": "본문 숨기기",
       "count_other": "전송 {{count}}건"
+    }
+  },
+  "mcp": {
+    "title": "AI 어시스턴트 (MCP)",
+    "description": "Claude, Cursor 등 MCP 클라이언트가 내 하이라이트, 책, 독서 리포트를 읽을 수 있게 합니다. 읽기 전용이며 내 서재에만 접근합니다.",
+    "endpoint": "서버 URL",
+    "oauthTitle": "ClippingKK로 로그인",
+    "oauthDescription": "MCP 로그인을 지원하는 클라이언트(예: Claude)는 서버 URL만 있으면 됩니다. 브라우저에서 접근을 승인하세요.",
+    "tokenTitle": "액세스 토큰 사용",
+    "tokenDescription": "고정 헤더만 설정할 수 있는 클라이언트라면 아래에서 토큰을 만들어 Bearer 토큰으로 보내세요.",
+    "copy": "복사",
+    "copied": "복사했습니다",
+    "copyFailed": "복사하지 못했습니다. 텍스트를 선택해 직접 복사하세요.",
+    "tokens": {
+      "title": "액세스 토큰",
+      "description": "토큰은 만료되거나 취소할 때까지 서재를 읽을 수 있습니다. 비밀번호처럼 안전하게 보관하세요.",
+      "new": "새 토큰",
+      "emptyTitle": "액세스 토큰이 없습니다",
+      "emptyDescription": "MCP 로그인을 지원하지 않는 클라이언트를 연결하려면 토큰을 만드세요.",
+      "columns": {
+        "name": "이름",
+        "token": "토큰",
+        "lastUsed": "마지막 사용",
+        "expires": "만료",
+        "actions": "작업"
+      },
+      "never": "없음",
+      "noExpiry": "만료 없음",
+      "revoke": "취소",
+      "revokeTitle": "이 토큰을 취소할까요?",
+      "revokeDescription": "\"{{name}}\"을(를) 사용하는 클라이언트는 즉시 접근 권한을 잃습니다.",
+      "confirmRevoke": "토큰 취소",
+      "cancel": "닫기",
+      "revoked": "토큰을 취소했습니다",
+      "revokeFailed": "토큰을 취소하지 못했습니다. 다시 시도하세요."
+    },
+    "create": {
+      "title": "새 액세스 토큰",
+      "name": "이름",
+      "namePlaceholder": "노트북의 Claude Code",
+      "nameRequired": "토큰 이름을 입력하세요.",
+      "nameTooLong": "이름은 64자 이하로 입력하세요.",
+      "expiry": "만료",
+      "expiry30": "30일",
+      "expiry90": "90일",
+      "expiry365": "1년",
+      "expiryNever": "만료 없음",
+      "submit": "토큰 만들기",
+      "failed": "토큰을 만들지 못했습니다. 다시 시도하세요.",
+      "createdTitle": "지금 토큰을 복사하세요",
+      "createdDescription": "토큰은 지금 한 번만 표시됩니다. 잃어버렸다면 취소하고 새로 만드세요.",
+      "done": "완료"
     }
   },
   "exports": {

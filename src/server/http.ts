@@ -41,24 +41,35 @@ export function errorJson(error: unknown) {
   return Response.json(payload, { status })
 }
 
-function corsHeaders(request: Request) {
+/** Extra CORS headers for routes whose clients send or read more than the defaults. */
+export interface RouteCors {
+  allowHeaders?: readonly string[]
+  exposeHeaders?: readonly string[]
+}
+
+function corsHeaders(request: Request, cors?: RouteCors) {
   const env = getServerEnv()
   const origin = request.headers.get('origin')
   const allowed =
     origin && env.corsAllowedOrigins.has(origin) ? origin : env.APP_ORIGIN
-  return {
+  const headers: Record<string, string> = {
     'Access-Control-Allow-Origin': allowed,
     'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Headers':
+    'Access-Control-Allow-Headers': [
       'Authorization, Content-Type, X-Basic, X-Accept-Language, Sentry-Trace, Baggage',
+      ...(cors?.allowHeaders ?? []),
+    ].join(', '),
     'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
     Vary: 'Origin',
   }
+  if (cors?.exposeHeaders?.length)
+    headers['Access-Control-Expose-Headers'] = cors.exposeHeaders.join(', ')
+  return headers
 }
 
-function withCors(response: Response, request: Request) {
+function withCors(response: Response, request: Request, cors?: RouteCors) {
   const headers = new Headers(response.headers)
-  for (const [key, value] of Object.entries(corsHeaders(request))) {
+  for (const [key, value] of Object.entries(corsHeaders(request, cors))) {
     headers.set(key, value)
   }
   return new Response(response.body, {
@@ -68,7 +79,11 @@ function withCors(response: Response, request: Request) {
   })
 }
 
-export function route(handler: Handler, operation = 'http.route'): Handler {
+export function route(
+  handler: Handler,
+  operation = 'http.route',
+  cors?: RouteCors
+): Handler {
   return async (request, context) => {
     await connection()
     return withSpan(
@@ -77,7 +92,11 @@ export function route(handler: Handler, operation = 'http.route'): Handler {
         const startedAt = performance.now()
         const method = request.method
         try {
-          const response = withCors(await handler(request, context), request)
+          const response = withCors(
+            await handler(request, context),
+            request,
+            cors
+          )
           const outcome = response.ok ? 'success' : 'error'
           const attributes = {
             operation,
@@ -98,7 +117,7 @@ export function route(handler: Handler, operation = 'http.route'): Handler {
           })
           return response
         } catch (error) {
-          const response = withCors(errorJson(error), request)
+          const response = withCors(errorJson(error), request, cors)
           const errorType = error instanceof ApiError ? 'api_error' : 'internal'
           const attributes = {
             operation,
