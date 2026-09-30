@@ -269,8 +269,8 @@ The UI is built on **`@annatarhe/lake-ui`** (the maintainer's component library)
   `bg-lake-canvas|surface|surface-raised|surface-muted`, `text-lake-fg|fg-muted|fg-subtle`,
   `border-lake-line|line-strong`, `bg-lake-accent` + `text-lake-accent-fg`, `text-lake-accent-text`
   for links, `bg-lake-accent-soft`, `text-lake-danger|success|warning`, `bg-marker` (highlighter).
-- The accent is blue-400. Text on the accent uses dark ink (`text-lake-accent-fg`); white on
-  blue-400 fails contrast.
+- The solid accent is blue-600 (hover blue-700) in both themes, with white text on it
+  (`text-lake-accent-fg`). Links use `text-lake-accent-text` (blue-600 light, blue-400 dark).
 - Tokens switch with the theme, so no `dark:` variants are needed.
 - Radius: `rounded-lake-control` (controls) and `rounded-lake-panel` (cards, dialogs).
   Shadows: `shadow-lake-card`, `shadow-lake-overlay`.

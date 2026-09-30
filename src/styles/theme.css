@@ -19,13 +19,14 @@
   --lake-fg-subtle: #736c63;
   --lake-line: #e4dfd5;
   --lake-line-strong: #d1cbbf;
-  --lake-accent: #60a5fa;
-  --lake-accent-hover: #3b82f6;
-  /* white on blue-400 fails AA, so text on the accent uses dark ink */
-  --lake-accent-fg: #0b1526;
+  /* solid accent: white on blue-600 is 5.2:1 and on the blue-700 hover
+     6.7:1, both AA; lighter blues need dark ink, which reads muddy */
+  --lake-accent: #2563eb;
+  --lake-accent-hover: #1d4ed8;
+  --lake-accent-fg: #ffffff;
   --lake-accent-text: #2563eb;
   --lake-accent-soft: rgb(96 165 250 / 0.14);
-  --lake-ring: rgb(96 165 250 / 0.45);
+  --lake-ring: rgb(37 99 235 / 0.45);
   --lake-danger: #c2412d;
   --lake-danger-fg: #ffffff;
   --lake-danger-soft: rgb(194 65 45 / 0.1);
@@ -74,9 +75,11 @@
   --lake-fg-subtle: #8a8378;
   --lake-line: #302d29;
   --lake-line-strong: #3f3b35;
-  --lake-accent: #60a5fa;
-  --lake-accent-hover: #93c5fd;
-  --lake-accent-fg: #0b1526;
+  /* same solid as light, so white text keeps AA; hover darkens, since a
+     lighter blue would drop white below 4.5:1 */
+  --lake-accent: #2563eb;
+  --lake-accent-hover: #1d4ed8;
+  --lake-accent-fg: #ffffff;
   --lake-accent-text: #60a5fa;
   --lake-accent-soft: rgb(96 165 250 / 0.18);
   --lake-ring: rgb(96 165 250 / 0.5);

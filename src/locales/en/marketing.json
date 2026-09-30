@@ -10,7 +10,11 @@
     "start": "Start your library",
     "open": "Open your library",
     "pricing": "See pricing",
-    "note": "Free to start. No card needed."
+    "note": "Free to start. No card needed.",
+    "quote": {
+      "own": "From your library",
+      "public": "Highlighted by {{name}}"
+    }
   },
   "specimen": {
     "label": "Highlighted on Kindle",

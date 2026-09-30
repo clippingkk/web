@@ -17,9 +17,37 @@ export type ShelfBook = {
 
 const QUOTE_MIN = 24
 const QUOTE_MAX = 360
+/** The hero card sits beside the headline, so it wants a shorter quote. */
+const HERO_MAX = 240
 
-function quoteLength(clipping: PublicClipping) {
+function quoteLength(clipping: { content: string }) {
   return clipping.content.trim().length
+}
+
+/** The highlight in the hero card, with whoever made it. */
+export type HeroClipping = {
+  id: number
+  content: string
+  bookID: string
+  title?: string | null
+  creator: SlugUser & { name: string; avatar?: string | null }
+  /** The signed-in reader's own highlight rather than a public one. */
+  own: boolean
+}
+
+/**
+ * The quote for the hero card: the first one short enough to sit beside the
+ * headline, else the first readable one. Null when nothing reads well, so the
+ * caller can try another source.
+ */
+export function pickHeroClipping<T extends { content: string }>(
+  clippings: readonly T[]
+): T | null {
+  const readable = clippings.filter((c) => {
+    const length = quoteLength(c)
+    return length >= QUOTE_MIN && length <= QUOTE_MAX
+  })
+  return readable.find((c) => quoteLength(c) <= HERO_MAX) ?? readable[0] ?? null
 }
 
 /**

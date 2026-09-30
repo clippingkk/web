@@ -27,7 +27,7 @@ function Prose({ as: Tag = 'div', lang, className, children }: ProseProps) {
         '[&_p]:my-4',
         '[&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:my-1.5 [&_li]:pl-1 [&_li]:marker:text-lake-fg-subtle',
         '[&_strong]:text-lake-fg [&_strong]:font-semibold',
-        '[&_a]:text-lake-accent-text [&_a]:decoration-lake-accent/40 [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:decoration-current',
+        '[&_a]:text-lake-accent-text [&_a]:decoration-lake-accent-text/40 [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:decoration-current',
         className
       )}
     >

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
   pickFeaturedClippings,
+  pickHeroClipping,
   pickReaders,
   pickShelfBooks,
   type PublicClipping,
@@ -102,5 +103,36 @@ describe('pickReaders', () => {
       10
     )
     expect(picked.map((r) => r.id)).toEqual([3, 1, 4])
+  })
+})
+
+describe('pickHeroClipping', () => {
+  const long = 'A longer passage that keeps going. '.repeat(9)
+
+  it('prefers a quote short enough to sit beside the headline', () => {
+    const picked = pickHeroClipping([
+      clipping(1, 1, '10001', 'Too short'),
+      clipping(2, 1, '10002', long),
+      clipping(3, 2),
+    ])
+    expect(picked?.id).toBe(3)
+  })
+
+  it('takes a longer readable quote when no short one exists', () => {
+    const picked = pickHeroClipping([
+      clipping(1, 1, '10001', 'Too short'),
+      clipping(2, 1, '10002', long),
+    ])
+    expect(picked?.id).toBe(2)
+  })
+
+  it('returns null when nothing reads well', () => {
+    expect(pickHeroClipping([])).toBeNull()
+    expect(
+      pickHeroClipping([
+        clipping(1, 1, '10001', 'Too short'),
+        clipping(2, 1, '10002', 'x'.repeat(400)),
+      ])
+    ).toBeNull()
   })
 })
