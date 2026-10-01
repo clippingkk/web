@@ -2,6 +2,7 @@ import { metrics, SpanStatusCode, trace } from '@opentelemetry/api'
 import { logs, SeverityNumber } from '@opentelemetry/api-logs'
 import { withSpan } from '@superlog/otel-helpers'
 import { connection } from 'next/server'
+import type { z } from 'zod'
 
 import type { ApiErrorResponse, ApiSuccessResponse } from '@/contracts/http'
 
@@ -37,6 +38,7 @@ export function errorJson(error: unknown) {
     status,
     msg: message,
     error: message,
+    ...(error instanceof ApiError ? { code: error.code } : {}),
   }
   return Response.json(payload, { status })
 }
@@ -164,5 +166,41 @@ export async function body<T>(request: Request): Promise<T> {
     return (await request.json()) as T
   } catch {
     throw new ApiError('invalid JSON body')
+  }
+}
+
+/**
+ * A JSON body validated by `schema`, refusing anything over `maxBytes`. Bounds
+ * even a chunked body instead of trusting Content-Length.
+ */
+export async function boundedJson<T>(
+  request: Request,
+  schema: z.ZodType<T>,
+  maxBytes: number
+): Promise<T> {
+  if (!request.headers.get('content-type')?.startsWith('application/json'))
+    throw new ApiError('Expected JSON.', 415)
+  const reader = request.body?.getReader()
+  if (!reader) throw new ApiError('Missing request body.', 400)
+  const chunks: Uint8Array[] = []
+  let size = 0
+  try {
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      size += value.length
+      if (size > maxBytes) {
+        await reader.cancel()
+        throw new ApiError('Request is too large.', 413)
+      }
+      chunks.push(value)
+    }
+  } finally {
+    reader.releaseLock()
+  }
+  try {
+    return schema.parse(JSON.parse(Buffer.concat(chunks).toString('utf8')))
+  } catch {
+    throw new ApiError('Invalid request.', 400)
   }
 }

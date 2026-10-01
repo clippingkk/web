@@ -30,6 +30,7 @@ import {
   issueToken,
   verifyToken,
 } from '../auth'
+import { userPremiumEndAt } from '../billing/premium-loader'
 import {
   activeClipping,
   booksForUser,
@@ -64,7 +65,6 @@ import {
 import { getServerEnv } from '../env'
 import { ApiError, assertFound } from '../errors'
 import { canAdmin } from '../gate/authz'
-import { userPremiumEndAt } from '../gate/premium-loader'
 import {
   fetchGithubIdentity,
   resolveEnsAvatar,
@@ -1232,6 +1232,7 @@ export const resolvers: Record<string, Record<string, any>> = {
     },
     createWebHook: async (_: unknown, args: Args, context: GraphQLContext) => {
       const owner = requiredUser(context)
+      await requirePremium(owner)
       let parsed: URL
       try {
         parsed = new URL(args.hookUrl)

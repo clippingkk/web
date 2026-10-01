@@ -26,7 +26,7 @@
   },
   "orders": {
     "title": "订阅",
-    "description": "你的 ClippingKK 高级会员订阅，通过 Gate 计费。",
+    "description": "你的 ClippingKK 高级会员订阅，来自网页或 App Store。",
     "empty": "你还没有订阅。",
     "premium": "高级会员",
     "renews": "{{date}} 续费",
@@ -40,7 +40,12 @@
       "unpaid": "未支付"
     },
     "upgrade": "了解高级会员",
-    "manage": "管理账单"
+    "manage": "管理账单",
+    "appStore": "在 App Store 中管理",
+    "provider": {
+      "stripe": "网页 · Stripe",
+      "apple": "App Store"
+    }
   },
   "webhooks": {
     "title": "Webhook",

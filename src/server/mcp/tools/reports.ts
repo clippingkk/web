@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { isValidDoubanId } from '@/services/wenqu'
 import { dashHref } from '@/utils/profile.utils'
 
-import { entitlements } from '../../gate/authz'
+import { isPremium } from '../../billing/premium'
 import { booksByDoubanIds } from '../books'
 import { profile, readingStats, yearlyReport } from '../queries'
 import {
@@ -39,7 +39,7 @@ export function registerReportTools(server: McpServer, context: ToolContext) {
         premium: z
           .boolean()
           .nullable()
-          .describe('Null when entitlements could not be loaded'),
+          .describe('Null when Premium status could not be loaded'),
         clippingsCount: z.number(),
         booksCount: z.number(),
         firstClippingAt: z.string().nullable(),
@@ -51,10 +51,7 @@ export function registerReportTools(server: McpServer, context: ToolContext) {
     async () => {
       const [{ user, ...stats }, premium] = await Promise.all([
         profile(context.userId),
-        entitlements(context.userId).then(
-          (found) => found.premium === true,
-          () => null
-        ),
+        isPremium(context.userId).catch(() => null),
       ])
       return result({
         id: user.id,

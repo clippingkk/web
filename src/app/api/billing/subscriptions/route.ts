@@ -1,14 +1,10 @@
 import { requireUserId } from '@/server/auth'
-import { subjectBillingPath } from '@/server/gate/billing'
-import { gateRequest } from '@/server/gate/client'
-import { gateConfig } from '@/server/gate/config'
-import { json, route } from '@/server/http'
-export const GET = route(
-  async (request) =>
-    json(
-      await gateRequest(
-        `${await subjectBillingPath(await requireUserId(request))}?environmentId=${gateConfig().environmentId}`
-      )
-    ),
-  'payment.gate.subscriptions'
-)
+import { billingState } from '@/server/billing/state'
+import { json, options, route } from '@/server/http'
+
+export const GET = route(async (request) => {
+  const response = json(await billingState(await requireUserId(request)))
+  response.headers.set('Cache-Control', 'no-store')
+  return response
+}, 'payment.gate.subscriptions')
+export const OPTIONS = options

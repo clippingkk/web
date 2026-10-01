@@ -136,6 +136,11 @@ export async function processPendingDeletions() {
       .update(tables.orders)
       .set({ userOrders: null })
       .where(eq(tables.orders.userOrders, uid))
+    // Apple keeps billing until the reader cancels in the App Store; later
+    // notifications for these subscriptions find no account and are ignored.
+    await tx
+      .delete(tables.appleSubscriptions)
+      .where(eq(tables.appleSubscriptions.userId, uid))
     await tx.delete(tables.users).where(eq(tables.users.id, uid))
     await tx
       .update(tables.accountDeletions)

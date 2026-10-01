@@ -1,9 +1,9 @@
 import { and, eq, isNull, or } from 'drizzle-orm'
 
+import { isPremium } from '../billing/premium'
 import { getDatabase } from '../db'
 import { clippings, users } from '../db/schema'
 import { ApiError, assertFound } from '../errors'
-import { entitlements } from '../gate/authz'
 
 export async function requirePremium(userId: number) {
   if (!userId)
@@ -13,7 +13,7 @@ export async function requirePremium(userId: number) {
   })
   if (!user)
     throw new ApiError('Sign in to use AI features.', 401, 'UNAUTHORIZED')
-  if ((await entitlements(userId)).premium !== true) {
+  if (!(await isPremium(userId))) {
     throw new ApiError(
       'An active Premium subscription is required. Visit Pricing to upgrade.',
       403,

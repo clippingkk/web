@@ -54,6 +54,10 @@ A native session is an ordinary Gate session (`src/server/gate/session.ts`) with
 
 Keep these distinct. An outage reported as 401 would sign out every iOS user and blank every widget. That is why a Gate 401 on the service key is mapped to 503 in `requireProductPermission`.
 
+## Premium and in-app purchases
+
+The app sells Premium as App Store subscriptions (StoreKit 2) and reads its state from `GET /api/billing/subscriptions`. It passes the returned `appAccountToken` to StoreKit and reports each verified transaction's JWS to `POST /api/billing/apple/transactions`, finishing the transaction only after that call succeeds. Readers who subscribed on the web keep Premium in the app and manage it through the Stripe portal. See [billing.md](billing.md).
+
 ## Account deletion
 
 iOS deletes through the GraphQL `removeMyAccount` mutation, like web. Disabling the account fails the next session read; the worker's `destroyUserSessions` then removes every remaining session, native ones included, through the shared per-user index.

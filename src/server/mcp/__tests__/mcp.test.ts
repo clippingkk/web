@@ -33,10 +33,8 @@ vi.mock('../../redis', () => ({
   cacheGet: vi.fn(async () => undefined),
   cacheSet: vi.fn(async () => {}),
 }))
-vi.mock('../../gate/authz', () => ({
-  requireProductRead,
-  entitlements: vi.fn(async () => ({ premium: true })),
-}))
+vi.mock('../../gate/authz', () => ({ requireProductRead }))
+vi.mock('../../billing/premium', () => ({ isPremium: vi.fn(async () => true) }))
 vi.mock('@/services/wenqu', async (actual) => ({
   ...(await actual<typeof import('@/services/wenqu')>()),
   wenquRequest,

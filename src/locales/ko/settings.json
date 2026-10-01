@@ -26,7 +26,7 @@
   },
   "orders": {
     "title": "구독",
-    "description": "Gate를 통해 결제되는 ClippingKK 프리미엄 구독.",
+    "description": "웹 또는 App Store에서 결제한 ClippingKK 프리미엄 구독.",
     "empty": "아직 구독이 없어요.",
     "premium": "프리미엄",
     "renews": "{{date}} 갱신",
@@ -40,7 +40,12 @@
       "unpaid": "미결제"
     },
     "upgrade": "프리미엄 보기",
-    "manage": "결제 관리"
+    "manage": "결제 관리",
+    "appStore": "App Store에서 관리",
+    "provider": {
+      "stripe": "웹 · Stripe",
+      "apple": "App Store"
+    }
   },
   "webhooks": {
     "title": "웹훅",

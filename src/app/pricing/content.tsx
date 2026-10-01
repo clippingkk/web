@@ -4,12 +4,14 @@ import Link from 'next/link'
 import type React from 'react'
 
 import Page from '@/components/layout/page'
+import AppStoreLink from '@/components/pricing/app-store-link'
 import CheckoutButton from '@/components/pricing/checkout-button'
 import PlanCard from '@/components/pricing/plan-card'
 import { SUPPORT_EMAIL } from '@/constants/config'
 import { getTranslation } from '@/i18n'
 import { authHref } from '@/lib/auth-href'
 import { withLink } from '@/lib/with-link'
+import type { BillingProvider } from '@/server/billing/state'
 import type { Viewer } from '@/server/data/viewer'
 import { dashHref } from '@/utils/profile.utils'
 
@@ -40,11 +42,14 @@ type PricingContentProps = {
   viewer: Viewer | null
   /** Whether Gate has an active `premium` plan to check out. */
   premiumAvailable: boolean
+  /** Who bills a Premium reader; null for Free readers and manual grants. */
+  provider: BillingProvider | null
 }
 
 async function PricingContent({
   viewer,
   premiumAvailable,
+  provider,
 }: PricingContentProps) {
   const { t } = await getTranslation(undefined, 'pricing')
   const isPremium = viewer?.isPremium ?? false
@@ -80,7 +85,14 @@ async function PricingContent({
     premiumAction = (
       <>
         <p className="text-lake-success text-sm">{t('plan.premium.active')}</p>
-        <CheckoutButton signedIn portal size="lg" fullWidth />
+        {provider === 'apple' ? (
+          <>
+            <p className="type-meta">{t('plan.premium.appStore')}</p>
+            <AppStoreLink label={t('checkout.appStore')} size="lg" fullWidth />
+          </>
+        ) : provider === 'stripe' ? (
+          <CheckoutButton signedIn portal size="lg" fullWidth />
+        ) : null}
       </>
     )
   } else if (premiumAvailable) {

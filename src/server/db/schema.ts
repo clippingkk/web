@@ -10,6 +10,7 @@ import {
   text,
   timestamp,
   uniqueIndex,
+  uuid,
   varchar,
 } from 'drizzle-orm/pg-core'
 
@@ -38,6 +39,8 @@ export const users = pgTable(
       .notNull()
       .default(''),
     premiumEndAt: timestamp('premium_end_at', { withTimezone: true }),
+    // StoreKit's `appAccountToken`: ties an App Store purchase to this account.
+    appAccountToken: uuid('app_account_token'),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
     deletedAt: timestamp('deleted_at', { withTimezone: true }),
@@ -45,6 +48,7 @@ export const users = pgTable(
   (table) => [
     uniqueIndex('users_email_key').on(table.email),
     uniqueIndex('users_gate_user_id_key').on(table.gateUserId),
+    uniqueIndex('users_app_account_token_key').on(table.appAccountToken),
   ]
 )
 
@@ -322,3 +326,36 @@ export const mcpTokens = pgTable(
 )
 
 export type McpToken = typeof mcpTokens.$inferSelect
+
+// One row per App Store subscription (its `originalTransactionId`), holding the
+// latest state Apple has signed. The reader's Gate grant is derived from these.
+export const appleSubscriptions = pgTable(
+  'apple_subscriptions',
+  {
+    originalTransactionId: varchar('original_transaction_id', {
+      length: 64,
+    }).primaryKey(),
+    userId: int('user_id').notNull(),
+    productId: varchar('product_id', { length: 255 }).notNull(),
+    environment: varchar('environment', { length: 16 }).notNull(),
+    latestTransactionId: varchar('latest_transaction_id', {
+      length: 64,
+    }).notNull(),
+    appAccountToken: uuid('app_account_token'),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    gracePeriodExpiresAt: timestamp('grace_period_expires_at', {
+      withTimezone: true,
+    }),
+    revokedAt: timestamp('revoked_at', { withTimezone: true }),
+    autoRenew: boolean('auto_renew').notNull().default(true),
+    transactionSignedAt: timestamp('transaction_signed_at', {
+      withTimezone: true,
+    }).notNull(),
+    renewalSignedAt: timestamp('renewal_signed_at', { withTimezone: true }),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (table) => [index('apple_subscriptions_user_id_idx').on(table.userId)]
+)
+
+export type AppleSubscription = typeof appleSubscriptions.$inferSelect

@@ -119,7 +119,9 @@ docker logs --tail 200 clippingkk-web
 ```
 
 Also smoke-test sign-in, `/api/v2/graphql`, uploads, and any enabled payment or
-export integrations. A `503` from `/probe` means at least one required data
+export integrations. For Premium, sign in as an administrator and open
+`/api/billing/diagnostics`; every check should be `ok` (see
+[`docs/billing.md`](./docs/billing.md)). A `503` from `/probe` means at least one required data
 service is unavailable, or that the database schema has drifted from
 `src/server/db/schema.ts`; the response body names which.
 

@@ -1,11 +1,11 @@
 import { and, desc, eq, isNull } from 'drizzle-orm'
 import { connection } from 'next/server'
 
+import { isPremium } from '@/server/billing/premium'
 import { getDatabase } from '@/server/db'
 import { clippings, users } from '@/server/db/schema'
 import { getServerEnv } from '@/server/env'
 import { ApiError } from '@/server/errors'
-import { entitlements } from '@/server/gate/authz'
 
 function escapeXml(value: string) {
   return value
@@ -28,7 +28,10 @@ export async function GET(
     where: eq(users.id, uid),
   })
   if (!user || user.deletedAt) throw new ApiError('user not found', 404)
-  const limit = (await entitlements(uid)).premium === true ? 100 : 30
+  // A feed reader polls unattended: during a Gate outage serve the free-size
+  // feed rather than an error.
+  const premium = await isPremium(uid).catch(() => false)
+  const limit = premium ? 100 : 30
   const rows = await getDatabase()
     .db.select()
     .from(clippings)

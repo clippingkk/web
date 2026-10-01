@@ -4,8 +4,13 @@ import { connection } from 'next/server'
 
 import { getTranslation } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
+import { listPlans } from '@/server/billing/gate'
+import {
+  activeProvider,
+  billingState,
+  type BillingProvider,
+} from '@/server/billing/state'
 import { getViewer } from '@/server/data/viewer'
-import { listPlans } from '@/server/gate/billing'
 import { gateConfig } from '@/server/gate/config'
 
 import PricingContent from './content'
@@ -35,12 +40,32 @@ async function isPremiumAvailable() {
   }
 }
 
+/** Where a Premium reader is billed, so we can send them to the right place. */
+async function billingProvider(
+  userId: number
+): Promise<BillingProvider | null> {
+  try {
+    return activeProvider(await billingState(userId))
+  } catch (error) {
+    unstable_rethrow(error)
+    console.error('pricing: could not load billing state', error)
+    return null
+  }
+}
+
 async function PricingPage() {
   const [viewer, premiumAvailable] = await Promise.all([
     getViewer(),
     isPremiumAvailable(),
   ])
-  return <PricingContent viewer={viewer} premiumAvailable={premiumAvailable} />
+  const provider = viewer?.isPremium ? await billingProvider(viewer.id) : null
+  return (
+    <PricingContent
+      viewer={viewer}
+      premiumAvailable={premiumAvailable}
+      provider={provider}
+    />
+  )
 }
 
 export default PricingPage

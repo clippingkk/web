@@ -200,6 +200,14 @@ function ClientComponent() {
 - Chinese variants (`zh`, `zh-CN`, etc.) are normalized to `zhCN` for file loading
 - Cookie value determines default language, falls back to `en`
 
+## Billing and Premium
+
+Gate owns Stripe (checkout, portal, webhook); the iOS app sells App Store subscriptions that
+ClippingKK verifies (`src/server/billing/apple/`) and writes to Gate as one `apple_iap` grant per
+reader. Premium is decided only by `isPremium(userId)` (`src/server/billing/premium.ts`), which reads
+Gate's `premiumEndAt`; badges use the lenient `userPremiumEndAt` loader. Never read
+`users.premium_end_at` or the `orders` table (legacy). See `docs/billing.md`.
+
 ## MCP Server
 
 `/api/v3/mcp` is a read-only MCP server (protocol 2026-07-28, `@modelcontextprotocol/server` v2)

@@ -1,7 +1,10 @@
-import { json, options, route } from '@/server/http'
+import { receiveAppleNotification } from '@/server/billing/apple/handlers'
+import { options, route } from '@/server/http'
 
+// The URL App Store Connect may still point at; same handler as
+// /api/billing/apple/notifications.
 export const POST = route(
-  async () => json({ ok: true }),
+  receiveAppleNotification,
   'apple.notification.process'
 )
 export const OPTIONS = options
