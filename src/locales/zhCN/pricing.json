@@ -23,7 +23,8 @@
       "description": "写给书房很大的读者，也写给想在书摘之上做点什么的人。",
       "price": "通过 Stripe 付款 · 随时取消",
       "active": "你的账户已开通高级会员。",
-      "unavailable": "高级会员暂时无法购买，请稍后再来看看。"
+      "unavailable": "高级会员暂时无法购买，请稍后再来看看。",
+      "appStore": "你的高级会员通过 App Store 计费，请在那里修改或取消。"
     }
   },
   "features": {
@@ -48,7 +49,8 @@
     "signIn": "登录后升级",
     "opening": "正在打开…",
     "unavailable": "暂时无法结账，请再试一次。",
-    "failed": "出了点问题，请再试一次。"
+    "failed": "出了点问题，请再试一次。",
+    "appStore": "在 App Store 中管理"
   },
   "help": {
     "title": "对方案或付款有疑问？",

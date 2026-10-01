@@ -3,6 +3,7 @@ import EmptyState from '@annatarhe/lake-ui/empty-state'
 import { Crown } from 'lucide-react'
 import type { Metadata } from 'next'
 
+import AppStoreLink from '@/components/pricing/app-store-link'
 import CheckoutButton from '@/components/pricing/checkout-button'
 import {
   SettingsCard,
@@ -10,18 +11,9 @@ import {
 } from '@/components/settings/settings-section'
 import { getTranslation } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
+import { activeProvider, billingState } from '@/server/billing/state'
 import { requireViewer } from '@/server/data/viewer'
-import { subjectBillingPath } from '@/server/gate/billing'
-import { gateRequest } from '@/server/gate/client'
-import { gateConfig } from '@/server/gate/config'
 import { formatDate } from '@/utils/format-date'
-
-type Subscription = {
-  id: string
-  status: string
-  currentPeriodEnd: string | null
-  cancelAtPeriodEnd?: boolean
-}
 
 const STATUS_TONE: Record<
   string,
@@ -45,17 +37,21 @@ export default async function OrdersPage() {
     requireViewer(),
     getTranslation(undefined, 'settings'),
   ])
-  const billing = await gateRequest<{ subscriptions: Subscription[] }>(
-    `${await subjectBillingPath(viewer.id)}?environmentId=${gateConfig().environmentId}`
-  )
+  const billing = await billingState(viewer.id)
   const subscriptions = billing.subscriptions
+  const provider = activeProvider(billing)
+  const hasStripe = subscriptions.some((s) => s.provider === 'stripe')
 
   return (
     <SettingsSection
       title={t('orders.title')}
       description={t('orders.description')}
       actions={
-        subscriptions.length ? <CheckoutButton signedIn portal /> : undefined
+        provider === 'apple' ? (
+          <AppStoreLink label={t('orders.appStore')} size="sm" />
+        ) : hasStripe ? (
+          <CheckoutButton signedIn portal />
+        ) : undefined
       }
     >
       {subscriptions.length ? (
@@ -83,6 +79,9 @@ export default async function OrdersPage() {
                     />
                     <span className="text-lake-fg font-medium">
                       {t('orders.premium')}
+                    </span>
+                    <span className="type-meta">
+                      {t(`orders.provider.${subscription.provider}`)}
                     </span>
                     <Badge
                       tone={STATUS_TONE[subscription.status] ?? 'neutral'}

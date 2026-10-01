@@ -3,7 +3,14 @@ import type { NextConfig } from 'next'
 const deploymentId = process.env.GIT_COMMIT?.trim() || undefined
 
 const config: NextConfig = {
-  serverExternalPackages: ['bullmq', 'ioredis', 'pg', 'redis'],
+  // Apple's library verifies JWS with jsrsasign and node:crypto; keep it out of the bundle.
+  serverExternalPackages: [
+    '@apple/app-store-server-library',
+    'bullmq',
+    'ioredis',
+    'pg',
+    'redis',
+  ],
   // enablePrerenderSourceMaps: false,
   // productionBrowserSourceMaps: false,
   deploymentId,

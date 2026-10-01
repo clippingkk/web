@@ -45,7 +45,3 @@ export const APP_URL_ORIGIN = __DEV__
 export const CF_TURNSTILE_SITE_KEY = __DEV__
   ? '1x00000000000000000000AA'
   : '0x4AAAAAAAA361EJRDzUhf_b'
-
-export const StripePremiumPriceId = __DEV__
-  ? 'price_1Md7IUBkj5y79CYsLpkamBZm'
-  : 'price_1MkRHVBkj5y79CYsWxE2X4LH'

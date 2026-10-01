@@ -1,17 +1,17 @@
 import { requireUserId } from '@/server/auth'
+import { checkoutStatus } from '@/server/billing/gate'
+import { isPremium } from '@/server/billing/premium'
 import { ApiError } from '@/server/errors'
-import { entitlements } from '@/server/gate/authz'
-import { checkoutStatus } from '@/server/gate/billing'
 import { json, options, route } from '@/server/http'
+
 export const GET = route(async (request) => {
   const uid = await requireUserId(request),
     sessionId = new URL(request.url).searchParams.get('sessionId')
   if (!sessionId) throw new ApiError('sessionId required')
-  const status = await checkoutStatus(uid, sessionId)
-  return json({
-    uid,
-    ...status,
-    premiumActive: (await entitlements(uid)).premium === true,
-  })
+  const [status, premiumActive] = await Promise.all([
+    checkoutStatus(uid, sessionId),
+    isPremium(uid),
+  ])
+  return json({ uid, ...status, premiumActive })
 }, 'payment.gate.status')
 export const OPTIONS = options

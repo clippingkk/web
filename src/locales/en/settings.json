@@ -26,7 +26,7 @@
   },
   "orders": {
     "title": "Subscription",
-    "description": "Your ClippingKK Premium subscription, billed through Gate.",
+    "description": "Your ClippingKK Premium subscription, on the web or through the App Store.",
     "empty": "You don't have a subscription yet.",
     "premium": "Premium",
     "renews": "Renews {{date}}",
@@ -40,7 +40,12 @@
       "unpaid": "Unpaid"
     },
     "upgrade": "See Premium",
-    "manage": "Manage billing"
+    "manage": "Manage billing",
+    "appStore": "Manage in the App Store",
+    "provider": {
+      "stripe": "Web · Stripe",
+      "apple": "App Store"
+    }
   },
   "webhooks": {
     "title": "Webhooks",

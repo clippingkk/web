@@ -51,6 +51,7 @@ describe('HTTP response helpers', () => {
       status: 403,
       msg: 'not allowed',
       error: 'not allowed',
+      code: 'FORBIDDEN',
     })
   })
 

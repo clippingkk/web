@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { ApiError } from '@/server/errors'
 import { nativeCredential } from '@/server/gate/native'
-import { json } from '@/server/http'
+import { boundedJson, json } from '@/server/http'
 
 /** Credentials and one-time codes pass through these routes; none may be cached. */
 export function noStore<T>(data: T, status = 200) {
@@ -17,34 +17,7 @@ export function credential(request: Request) {
   return token
 }
 
-/** Bounds even a chunked body instead of trusting Content-Length. */
-export async function body<T>(
-  request: Request,
-  schema: z.ZodType<T>
-): Promise<T> {
-  if (!request.headers.get('content-type')?.startsWith('application/json'))
-    throw new ApiError('Expected JSON.', 415)
-  const reader = request.body?.getReader()
-  if (!reader) throw new ApiError('Missing request body.', 400)
-  const chunks: Uint8Array[] = []
-  let size = 0
-  try {
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-      size += value.length
-      if (size > 8192) {
-        await reader.cancel()
-        throw new ApiError('Request is too large.', 413)
-      }
-      chunks.push(value)
-    }
-  } finally {
-    reader.releaseLock()
-  }
-  try {
-    return schema.parse(JSON.parse(Buffer.concat(chunks).toString('utf8')))
-  } catch {
-    throw new ApiError('Invalid request.', 400)
-  }
+/** Native auth bodies are tiny: 8 KiB is plenty and caps abuse. */
+export function body<T>(request: Request, schema: z.ZodType<T>): Promise<T> {
+  return boundedJson(request, schema, 8192)
 }

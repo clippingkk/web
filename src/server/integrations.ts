@@ -2,7 +2,6 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { Client as NotionClient } from '@notionhq/client'
 import { createRemoteJWKSet, jwtVerify } from 'jose'
 import { Resend } from 'resend'
-import Stripe from 'stripe'
 import { createPublicClient, http, verifyMessage } from 'viem'
 import { mainnet } from 'viem/chains'
 
@@ -127,12 +126,6 @@ export async function resolveEnsAvatar(address: string) {
   } catch {
     return ''
   }
-}
-
-let stripeClient: Stripe | undefined
-export function getStripe() {
-  stripeClient ??= new Stripe(requireEnv('STRIPE_SECRET'))
-  return stripeClient
 }
 
 let s3Client: S3Client | undefined

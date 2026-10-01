@@ -1,18 +1,13 @@
 import { eq } from 'drizzle-orm'
 
-import type {
-  AuthorizeResponse,
-  GetSubjectEntitlementsResponse,
-  GetSubjectBillingResponse,
-} from '@/gate/generated/types.gen'
+import type { AuthorizeResponse } from '@/gate/generated/types.gen'
 
 import { getDatabase } from '../db'
 import { users } from '../db/schema'
 import { getServerEnv } from '../env'
 import { ApiError } from '../errors'
-import { gateRequest, projectPath } from './client'
+import { gateRequest } from './client'
 import { gateConfig } from './config'
-export type Entitlements = Record<string, boolean | string | number>
 export async function subjectForUser(userId: number) {
   const user = await getDatabase().db.query.users.findFirst({
     where: eq(users.id, userId),
@@ -30,14 +25,6 @@ export async function requireSubject(userId: number) {
       'GATE_LINK_REQUIRED'
     )
   return subject
-}
-export async function entitlements(userId: number): Promise<Entitlements> {
-  const subject = await subjectForUser(userId)
-  if (!subject) return {}
-  const response = await gateRequest<GetSubjectEntitlementsResponse['data']>(
-    `${projectPath()}/subjects/${encodeURIComponent(subject)}/entitlements?environmentId=${gateConfig().environmentId}`
-  )
-  return response.entitlements
 }
 export async function canAdmin(userId: number) {
   const subject = await subjectForUser(userId)
@@ -57,15 +44,6 @@ export async function canAdmin(userId: number) {
   })
   return result.allowed
 }
-export async function premiumEndAt(userId: number) {
-  const subject = await subjectForUser(userId)
-  if (!subject) return ''
-  const state = await gateRequest<GetSubjectBillingResponse['data']>(
-    `${projectPath()}/subjects/${encodeURIComponent(subject)}/billing?environmentId=${encodeURIComponent(gateConfig().environmentId)}`
-  )
-  return state.premiumEndAt ?? ''
-}
-
 export async function requireProductRead(userId: number) {
   return requireProductPermission(userId, 'profile:read')
 }
@@ -83,13 +61,6 @@ async function requireProductPermission(userId: number, permission: string) {
       principalId: subject,
       permission,
     }),
-  }).catch((error: unknown) => {
-    // A 401 here is Gate rejecting OUR service key, not the caller's session.
-    // Passed through, every client would read it as "sign in again" and the
-    // native apps would wipe their credentials over a server misconfiguration.
-    if (error instanceof ApiError && error.status === 401)
-      throw new ApiError('Gate is temporarily unavailable. Retry shortly.', 503)
-    throw error
   })
   if (!result.allowed)
     throw new ApiError('Product access denied', 403, 'FORBIDDEN')

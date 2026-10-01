@@ -53,8 +53,22 @@ const envSchema = z.object({
   APPLE_AUTH_APP_PKG: z.string().optional(),
   APPLE_AUTH_PRIVATE_KEY_BASE64: z.string().optional(),
 
-  STRIPE_SECRET: z.string().optional(),
-  STRIPE_WEBHOOK_ENDPOINT_SECRET: z.string().optional(),
+  // App Store subscriptions sold by the iOS app (see docs/billing.md).
+  APPLE_IAP_BUNDLE_ID: z
+    .string()
+    .min(1)
+    .default('com.annatarhe.clippingkk.ClippingKK-N1'),
+  // The app's numeric Apple ID; required to verify production purchases.
+  APPLE_IAP_APP_APPLE_ID: z.string().regex(/^\d*$/).default(''),
+  APPLE_IAP_PRODUCT_IDS: z
+    .string()
+    .default(
+      'com.annatarhe.clippingkk.premium.monthly,com.annatarhe.clippingkk.premium.yearly'
+    ),
+  // App Review and TestFlight buy in the sandbox against production servers.
+  APPLE_IAP_ALLOW_SANDBOX: z.enum(['0', '1']).default('1'),
+  // Xcode StoreKit testing is unsigned; never honoured in production.
+  APPLE_IAP_ALLOW_XCODE: z.enum(['0', '1']).default('0'),
   WENQU_ENDPOINT: z.string().url().default('https://wenqu.annatarhe.cn/api/v1'),
   WENQU_TOKEN: z.string().optional(),
   OPENAI_API_KEY: z.string().optional(),

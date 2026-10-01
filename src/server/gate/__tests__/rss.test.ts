@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, it, vi } from 'vitest'
 const state = vi.hoisted(() => ({
-  premium: false,
+  premium: false as boolean | Error,
   limit: vi.fn(async () => []),
   legacyEnd: new Date('2099-01-01'),
 }))
@@ -9,8 +9,11 @@ vi.mock('next/server', () => ({ connection: vi.fn() }))
 vi.mock('../../env', () => ({
   getServerEnv: () => ({ APP_ORIGIN: 'https://example.com' }),
 }))
-vi.mock('../authz', () => ({
-  entitlements: async () => ({ premium: state.premium }),
+vi.mock('../../billing/premium', () => ({
+  isPremium: async () => {
+    if (state.premium instanceof Error) throw state.premium
+    return state.premium
+  },
 }))
 vi.mock('../../db', () => ({
   getDatabase: () => ({
@@ -44,4 +47,10 @@ it('uses Gate Premium for RSS limits, ignoring stale local accounting values', a
   state.premium = true
   await GET(new Request('https://example.com/rss'), context)
   expect(state.limit).toHaveBeenLastCalledWith(100)
+})
+it('serves the free-size feed while Gate is unavailable', async () => {
+  const context = { params: Promise.resolve({ uid: '1' }) }
+  state.premium = new Error('Gate unavailable')
+  await GET(new Request('https://example.com/rss'), context)
+  expect(state.limit).toHaveBeenLastCalledWith(30)
 })

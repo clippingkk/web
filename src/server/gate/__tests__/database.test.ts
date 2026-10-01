@@ -37,7 +37,7 @@ beforeAll(async () => {
 beforeEach(async () => {
   const { pg } = await storage
   await pg.exec(
-    'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions RESTART IDENTITY'
+    'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions, apple_subscriptions RESTART IDENTITY'
   )
   upstream.request.mockReset()
   upstream.request.mockResolvedValue({ removed: true })
@@ -121,6 +121,15 @@ it('durably disables access, retries upstream failure, removes dependent data an
   await db
     .insert(schema.comments)
     .values({ belongsTo: clip.id, createdBy: other.id, content: 'Comment' })
+  await db.insert(schema.appleSubscriptions).values({
+    originalTransactionId: '2000000000000001',
+    userId: user.id,
+    productId: 'com.annatarhe.clippingkk.premium.monthly',
+    environment: 'Sandbox',
+    latestTransactionId: '2000000000000001',
+    expiresAt: new Date(Date.now() + 86_400_000),
+    transactionSignedAt: new Date(),
+  })
   await scheduleDeletion(user.id)
   expect(
     (
@@ -137,6 +146,7 @@ it('durably disables access, retries upstream failure, removes dependent data an
   expect(await db.select().from(schema.clippings)).toHaveLength(0)
   expect(await db.select().from(schema.collections)).toHaveLength(0)
   expect(await db.select().from(schema.comments)).toHaveLength(0)
+  expect(await db.select().from(schema.appleSubscriptions)).toHaveLength(0)
   expect((await db.select().from(schema.users)).map((row) => row.id)).toEqual([
     other.id,
   ])

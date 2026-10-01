@@ -23,7 +23,8 @@
       "description": "For readers with big libraries, and for those who build on them.",
       "price": "Billed through Stripe · cancel anytime",
       "active": "Premium is active on your account.",
-      "unavailable": "Premium purchases are paused right now. Please check back soon."
+      "unavailable": "Premium purchases are paused right now. Please check back soon.",
+      "appStore": "Your Premium is billed through the App Store. Change or cancel it there."
     }
   },
   "features": {
@@ -48,7 +49,8 @@
     "signIn": "Sign in to upgrade",
     "opening": "Opening…",
     "unavailable": "Checkout is unavailable right now. Please try again.",
-    "failed": "Something went wrong. Please try again."
+    "failed": "Something went wrong. Please try again.",
+    "appStore": "Manage in the App Store"
   },
   "help": {
     "title": "Questions about plans or billing?",
