@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.2](https://github.com/clippingkk/web/compare/v5.19.1...v5.19.2) (2026-10-01)
+
+
+### Features
+
+* **billing:** one Premium source, loud Gate errors, App Store subscriptions ([91675df](https://github.com/clippingkk/web/commit/91675df32122ae2a9a8a8144297ca0c7f2818194))
+* **billing:** one Premium source, loud Gate errors, App Store subscriptions ([33e1922](https://github.com/clippingkk/web/commit/33e1922fe66f9a745dac9a61f8f10ba7aff3ae38))
+* **mcp:** add read-only MCP server at /api/v3/mcp ([5bd1a76](https://github.com/clippingkk/web/commit/5bd1a765128e9e5922014ce8844f2e5f89665332))
+* **mcp:** add read-only MCP server at /api/v3/mcp ([a84afb5](https://github.com/clippingkk/web/commit/a84afb53d9c4426923c008d03e58fac2e43b3c3e))
+
+
+### Bug Fixes
+
+* **app:** exclude the next-env.d.ts ([011da87](https://github.com/clippingkk/web/commit/011da87db6130971f42f1744f6081f4d787f6a98))
+
+
+### Documentation
+
+* **mcp:** configure the resource on the Gate project ([295ed45](https://github.com/clippingkk/web/commit/295ed45da640a4278a1fb47b57ab7e3e3f22dde1))
+
 ## [5.19.1](https://github.com/clippingkk/web/compare/v5.19.0...v5.19.1) (2026-09-30)
 
 
