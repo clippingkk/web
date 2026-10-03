@@ -86,13 +86,6 @@ describe('getViewer', () => {
     })
   })
 
-  it('treats a Gate outage as not admin rather than failing the page', async () => {
-    signedInAs(me)
-    mocks.canAdmin.mockRejectedValue(new Error('gate down'))
-    vi.spyOn(console, 'error').mockImplementation(() => undefined)
-    await expect(getViewer()).resolves.toMatchObject({ isAdmin: false })
-  })
-
   it('is null when the API no longer knows the session', async () => {
     mocks.currentUserId.mockResolvedValue(42)
     mocks.serverQuery.mockResolvedValue(null)

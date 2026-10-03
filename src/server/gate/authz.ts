@@ -1,13 +1,9 @@
 import { eq } from 'drizzle-orm'
 
-import type { AuthorizeResponse } from '@/gate/generated/types.gen'
-
 import { getDatabase } from '../db'
 import { users } from '../db/schema'
 import { getServerEnv } from '../env'
 import { ApiError } from '../errors'
-import { gateRequest } from './client'
-import { gateConfig } from './config'
 export async function subjectForUser(userId: number) {
   const user = await getDatabase().db.query.users.findFirst({
     where: eq(users.id, userId),
@@ -26,42 +22,11 @@ export async function requireSubject(userId: number) {
     )
   return subject
 }
+/**
+ * Gate stores no product roles (it removed /authorize and project role
+ * bindings), so ClippingKK's administrators are the local user ids in
+ * ROOT_USERS.
+ */
 export async function canAdmin(userId: number) {
-  const subject = await subjectForUser(userId)
-  if (!subject)
-    return (
-      getServerEnv().LEGACY_AUTH_ENABLED === '1' &&
-      getServerEnv().rootUsers.has(userId)
-    )
-  const result = await gateRequest<AuthorizeResponse['data']>('/authorize', {
-    method: 'POST',
-    body: JSON.stringify({
-      projectId: gateConfig().projectId,
-      principalType: 'user',
-      principalId: subject,
-      permission: 'clippingkk:admin',
-    }),
-  })
-  return result.allowed
-}
-export async function requireProductRead(userId: number) {
-  return requireProductPermission(userId, 'profile:read')
-}
-export async function requireProductWrite(userId: number) {
-  return requireProductPermission(userId, 'clippingkk:write')
-}
-async function requireProductPermission(userId: number, permission: string) {
-  const subject = await subjectForUser(userId)
-  if (!subject) return
-  const result = await gateRequest<AuthorizeResponse['data']>('/authorize', {
-    method: 'POST',
-    body: JSON.stringify({
-      projectId: gateConfig().projectId,
-      principalType: 'user',
-      principalId: subject,
-      permission,
-    }),
-  })
-  if (!result.allowed)
-    throw new ApiError('Product access denied', 403, 'FORBIDDEN')
+  return getServerEnv().rootUsers.has(userId)
 }

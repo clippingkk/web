@@ -117,8 +117,6 @@ export async function optionalUserId(request: Request) {
     where: and(eq(users.id, id), isNull(users.deletedAt)),
   })
   if (!user) throw new ApiError('Sign in again', 401, 'UNAUTHORIZED')
-  if (user.gateUserId)
-    await (await import('./gate/authz')).requireProductRead(id)
   return id
 }
 async function legacyUserId(request: Request) {
@@ -149,10 +147,5 @@ async function legacyUserId(request: Request) {
 export async function requireUserId(request: Request) {
   const id = await optionalUserId(request)
   if (!id) throw new ApiError('unauthorized', 401, 'UNAUTHORIZED')
-  if (
-    !['GET', 'HEAD', 'OPTIONS'].includes(request.method) &&
-    new URL(request.url).pathname !== '/api/auth/delete-account'
-  )
-    await (await import('./gate/authz')).requireProductWrite(id)
   return id
 }

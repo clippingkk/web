@@ -5,7 +5,6 @@ import { getDatabase } from '../db'
 import { users } from '../db/schema'
 import { ApiError } from '../errors'
 import { cacheGet, cacheSet, cacheDelete, getRedis } from '../redis'
-import { requireProductRead } from './authz'
 import { randomToken, refreshTokens, revokeToken } from './oidc'
 export { SESSION_COOKIE } from './security'
 export const SESSION_TTL = 30 * 86400
@@ -68,7 +67,6 @@ export async function readSession(
     await destroySession(id)
     return null
   }
-  await requireProductRead(session.localUserId)
   if (session.accessTokenExpiresAt > Date.now() + 60000) return session
   const redis = await getRedis()
   const lockKey = `${key(id)}:refresh`

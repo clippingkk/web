@@ -69,7 +69,7 @@ REST errors now carry `code` (for example `PREMIUM_REQUIRED`, `ALREADY_PREMIUM`,
    - `customer.subscription.updated`
    - `customer.subscription.deleted`
    - `invoice.paid`
-4. **Service key.** Give the service key `billing:read` and `billing:manage` (see [gate-provisioning.md](gate-provisioning.md)). If the key is pinned to an environment, that environment must be `GATE_ENVIRONMENT_ID`; otherwise every billing call fails with 403.
+4. **Service key.** Give the service key `billing:read` and `billing:write` (see [gate-provisioning.md](gate-provisioning.md)). If the key is pinned to an environment, that environment must be `GATE_ENVIRONMENT_ID`; otherwise every billing call fails with 403.
 5. **Grant resolution.** Use a Gate release that resolves grants with the "latest end wins" rule (EvoniaAI/gate `fix(billing): resolve Premium and grants deterministically`). Earlier releases let an App Store grant *replace* a longer Stripe period.
 
 ### App Store Connect

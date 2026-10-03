@@ -38,7 +38,7 @@ A native session is an ordinary Gate session (`src/server/gate/session.ts`) with
 
 - Redis is keyed by the SHA-256 of the credential, so a Redis dump holds nothing usable.
 - A fixed 30-day lifetime. The Gate access token is refreshed within 60 seconds of expiry, serialized across instances by a Redis lock, and written back compare-and-set so a logout during refresh is never undone.
-- Every read revalidates the local account (exists, same Gate subject, not deleted) and the `profile:read` permission.
+- Every read revalidates the local account (exists, same Gate subject, not deleted).
 - Refresh and revocation are made as the native client, without a secret. A refresh token is bound to the client it was issued to.
 - The `kind` check keeps the two apart: a native session id never works as a `ck-session` cookie, nor the reverse.
 
@@ -50,9 +50,8 @@ A native session is an ordinary Gate session (`src/server/gate/session.ts`) with
 | --- | --- | --- |
 | 401 | The session ended, was revoked, or the account was deleted; also any malformed `ck_ios_` value | Clears the credential and shows sign-in |
 | 503 | Gate or Redis is unavailable, a refresh is in flight, or Gate rejected this server's service key | Keeps the credential; the request can be retried |
-| 403 | Gate denied the product permission | Keeps the credential |
 
-Keep these distinct. An outage reported as 401 would sign out every iOS user and blank every widget. That is why a Gate 401 on the service key is mapped to 503 in `requireProductPermission`.
+Keep these distinct. An outage reported as 401 would sign out every iOS user and blank every widget. That is why `gateRequest` (`src/server/gate/client.ts`) maps a Gate 401 on the service key to 503.
 
 ## Premium and in-app purchases
 

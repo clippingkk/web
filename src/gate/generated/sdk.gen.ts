@@ -74,8 +74,6 @@ import type {
   AuthGetOrganizationGetInvitationData,
   AuthGetOrganizationGetInvitationErrors,
   AuthGetOrganizationGetInvitationResponses,
-  AuthGetOrganizationGetRoleData,
-  AuthGetOrganizationGetRoleErrors,
   AuthGetOrganizationListData,
   AuthGetOrganizationListErrors,
   AuthGetOrganizationListInvitationsData,
@@ -83,8 +81,6 @@ import type {
   AuthGetOrganizationListMembersData,
   AuthGetOrganizationListMembersErrors,
   AuthGetOrganizationListResponses,
-  AuthGetOrganizationListRolesData,
-  AuthGetOrganizationListRolesErrors,
   AuthGetOrganizationListUserInvitationsData,
   AuthGetOrganizationListUserInvitationsErrors,
   AuthGetOrganizationListUserInvitationsResponses,
@@ -104,9 +100,6 @@ import type {
   AuthListUserSessionsData,
   AuthListUserSessionsErrors,
   AuthListUserSessionsResponses,
-  AuthorizeData,
-  AuthorizeErrors,
-  AuthorizeResponses,
   AuthPostCallbackByIdData,
   AuthPostCallbackByIdErrors,
   AuthPostGateSocialCallbackByProviderData,
@@ -159,13 +152,9 @@ import type {
   AuthPostOrganizationCreateData,
   AuthPostOrganizationCreateErrors,
   AuthPostOrganizationCreateResponses,
-  AuthPostOrganizationCreateRoleData,
-  AuthPostOrganizationCreateRoleErrors,
   AuthPostOrganizationDeleteData,
   AuthPostOrganizationDeleteErrors,
   AuthPostOrganizationDeleteResponses,
-  AuthPostOrganizationDeleteRoleData,
-  AuthPostOrganizationDeleteRoleErrors,
   AuthPostOrganizationHasPermissionData,
   AuthPostOrganizationHasPermissionErrors,
   AuthPostOrganizationHasPermissionResponses,
@@ -180,8 +169,6 @@ import type {
   AuthPostOrganizationUpdateData,
   AuthPostOrganizationUpdateErrors,
   AuthPostOrganizationUpdateResponses,
-  AuthPostOrganizationUpdateRoleData,
-  AuthPostOrganizationUpdateRoleErrors,
   AuthPostRevokeOtherSessionsData,
   AuthPostRevokeOtherSessionsErrors,
   AuthPostRevokeOtherSessionsResponses,
@@ -230,6 +217,9 @@ import type {
   CancelSubjectSubscriptionData,
   CancelSubjectSubscriptionErrors,
   CancelSubjectSubscriptionResponses,
+  CreateApiKeyData,
+  CreateApiKeyErrors,
+  CreateApiKeyResponses,
   CreateBillingPlanData,
   CreateBillingPlanErrors,
   CreateBillingPlanResponses,
@@ -245,15 +235,6 @@ import type {
   CreateProjectData,
   CreateProjectErrors,
   CreateProjectResponses,
-  CreateProjectRoleData,
-  CreateProjectRoleErrors,
-  CreateProjectRoleResponses,
-  CreateRoleBindingData,
-  CreateRoleBindingErrors,
-  CreateRoleBindingResponses,
-  CreateServiceAccountData,
-  CreateServiceAccountErrors,
-  CreateServiceAccountResponses,
   CreateSubjectBillingPortalData,
   CreateSubjectBillingPortalErrors,
   CreateSubjectBillingPortalResponses,
@@ -269,12 +250,12 @@ import type {
   DisableOidcClientData,
   DisableOidcClientErrors,
   DisableOidcClientResponses,
-  DisableServiceAccountData,
-  DisableServiceAccountErrors,
-  DisableServiceAccountResponses,
   GetAnalyticsSummaryData,
   GetAnalyticsSummaryErrors,
   GetAnalyticsSummaryResponses,
+  GetApiKeyData,
+  GetApiKeyErrors,
+  GetApiKeyResponses,
   GetClientLoginOptionsData,
   GetClientLoginOptionsErrors,
   GetClientLoginOptionsResponses,
@@ -314,6 +295,9 @@ import type {
   LinkMySocialAccountData,
   LinkMySocialAccountErrors,
   LinkMySocialAccountResponses,
+  ListApiKeysData,
+  ListApiKeysErrors,
+  ListApiKeysResponses,
   ListAuditLogsData,
   ListAuditLogsErrors,
   ListAuditLogsResponses,
@@ -335,9 +319,6 @@ import type {
   ListorganizationsSocialProvidersData,
   ListorganizationsSocialProvidersErrors,
   ListorganizationsSocialProvidersResponses,
-  ListProjectRolesData,
-  ListProjectRolesErrors,
-  ListProjectRolesResponses,
   ListProjectsData,
   ListProjectsErrors,
   ListProjectsResponses,
@@ -347,9 +328,6 @@ import type {
   ListProjectSubjectsData,
   ListProjectSubjectsErrors,
   ListProjectSubjectsResponses,
-  ListServiceAccountsData,
-  ListServiceAccountsErrors,
-  ListServiceAccountsResponses,
   ListSubjectSocialAccountsData,
   ListSubjectSocialAccountsErrors,
   ListSubjectSocialAccountsResponses,
@@ -377,6 +355,12 @@ import type {
   RestoreProjectData,
   RestoreProjectErrors,
   RestoreProjectResponses,
+  RestoreSubjectProjectAccessData,
+  RestoreSubjectProjectAccessErrors,
+  RestoreSubjectProjectAccessResponses,
+  RevokeApiKeyData,
+  RevokeApiKeyErrors,
+  RevokeApiKeyResponses,
   SetorganizationsSocialProviderData,
   SetorganizationsSocialProviderErrors,
   SetorganizationsSocialProviderResponses,
@@ -386,12 +370,18 @@ import type {
   UnlinkMySocialAccountData,
   UnlinkMySocialAccountErrors,
   UnlinkMySocialAccountResponses,
+  UpdateBillingPlanData,
+  UpdateBillingPlanErrors,
+  UpdateBillingPlanResponses,
   UpdateOrganizationData,
   UpdateOrganizationErrors,
   UpdateOrganizationResponses,
   UpdateProjectData,
   UpdateProjectErrors,
   UpdateProjectResponses,
+  UpdateStripeConnectionData,
+  UpdateStripeConnectionErrors,
+  UpdateStripeConnectionResponses,
   UpsertEntitlementGrantData,
   UpsertEntitlementGrantErrors,
   UpsertEntitlementGrantResponses,
@@ -737,89 +727,6 @@ export const restoreProject = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * List service accounts
- */
-export const listServiceAccounts = <ThrowOnError extends boolean = false>(
-  options: Options<ListServiceAccountsData, ThrowOnError>
-): RequestResult<
-  ListServiceAccountsResponses,
-  ListServiceAccountsErrors,
-  ThrowOnError
-> =>
-  (options.client ?? client).get<
-    ListServiceAccountsResponses,
-    ListServiceAccountsErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-      { name: 'X-API-Key', type: 'apiKey' },
-    ],
-    url: '/api/v1/projects/{projectId}/service-accounts',
-    ...options,
-  })
-
-/**
- * Create a service account and one-time API key
- */
-export const createServiceAccount = <ThrowOnError extends boolean = false>(
-  options: Options<CreateServiceAccountData, ThrowOnError>
-): RequestResult<
-  CreateServiceAccountResponses,
-  CreateServiceAccountErrors,
-  ThrowOnError
-> =>
-  (options.client ?? client).post<
-    CreateServiceAccountResponses,
-    CreateServiceAccountErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-    ],
-    url: '/api/v1/projects/{projectId}/service-accounts',
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  })
-
-/**
- * Disable a service account and all of its API keys
- */
-export const disableServiceAccount = <ThrowOnError extends boolean = false>(
-  options: Options<DisableServiceAccountData, ThrowOnError>
-): RequestResult<
-  DisableServiceAccountResponses,
-  DisableServiceAccountErrors,
-  ThrowOnError
-> =>
-  (options.client ?? client).post<
-    DisableServiceAccountResponses,
-    DisableServiceAccountErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-    ],
-    url: '/api/v1/projects/{projectId}/service-accounts/{accountId}/disable',
-    ...options,
-  })
-
-/**
  * List config entries; secret values remain masked
  */
 export const listConfigEntries = <ThrowOnError extends boolean = false>(
@@ -874,7 +781,7 @@ export const archiveConfigEntry = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Read one config value; secrets require reveal permission or a scoped service key
+ * Read one config value; secrets require reveal permission or an API key with config:read
  */
 export const getConfigValue = <ThrowOnError extends boolean = false>(
   options: Options<GetConfigValueData, ThrowOnError>
@@ -951,124 +858,6 @@ export const restoreConfigEntry = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * List project roles
- */
-export const listProjectRoles = <ThrowOnError extends boolean = false>(
-  options: Options<ListProjectRolesData, ThrowOnError>
-): RequestResult<
-  ListProjectRolesResponses,
-  ListProjectRolesErrors,
-  ThrowOnError
-> =>
-  (options.client ?? client).get<
-    ListProjectRolesResponses,
-    ListProjectRolesErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-      { name: 'X-API-Key', type: 'apiKey' },
-    ],
-    url: '/api/v1/projects/{projectId}/roles',
-    ...options,
-  })
-
-/**
- * Create a project role
- */
-export const createProjectRole = <ThrowOnError extends boolean = false>(
-  options: Options<CreateProjectRoleData, ThrowOnError>
-): RequestResult<
-  CreateProjectRoleResponses,
-  CreateProjectRoleErrors,
-  ThrowOnError
-> =>
-  (options.client ?? client).post<
-    CreateProjectRoleResponses,
-    CreateProjectRoleErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-      { name: 'X-API-Key', type: 'apiKey' },
-    ],
-    url: '/api/v1/projects/{projectId}/roles',
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  })
-
-/**
- * Bind a role to a user or service account
- *
- * Idempotently create or update a role/principal binding. Repeating the same binding returns its existing ID.
- */
-export const createRoleBinding = <ThrowOnError extends boolean = false>(
-  options: Options<CreateRoleBindingData, ThrowOnError>
-): RequestResult<
-  CreateRoleBindingResponses,
-  CreateRoleBindingErrors,
-  ThrowOnError
-> =>
-  (options.client ?? client).post<
-    CreateRoleBindingResponses,
-    CreateRoleBindingErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-      { name: 'X-API-Key', type: 'apiKey' },
-    ],
-    url: '/api/v1/projects/{projectId}/role-bindings',
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  })
-
-/**
- * Evaluate a project permission
- */
-export const authorize = <ThrowOnError extends boolean = false>(
-  options: Options<AuthorizeData, ThrowOnError>
-): RequestResult<AuthorizeResponses, AuthorizeErrors, ThrowOnError> =>
-  (options.client ?? client).post<
-    AuthorizeResponses,
-    AuthorizeErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-      { name: 'X-API-Key', type: 'apiKey' },
-    ],
-    url: '/api/v1/authorize',
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  })
-
-/**
  * Record an idempotent usage event
  */
 export const recordUsageEvent = <ThrowOnError extends boolean = false>(
@@ -1123,7 +912,7 @@ export const listAuditLogs = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * List project OIDC clients
+ * List project OAuth clients
  */
 export const listOidcClients = <ThrowOnError extends boolean = false>(
   options: Options<ListOidcClientsData, ThrowOnError>
@@ -1149,7 +938,7 @@ export const listOidcClients = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Create an OIDC client; the client secret is returned only once
+ * Create an OAuth client; the client secret is returned only once
  */
 export const createOidcClient = <ThrowOnError extends boolean = false>(
   options: Options<CreateOidcClientData, ThrowOnError>
@@ -1179,7 +968,7 @@ export const createOidcClient = <ThrowOnError extends boolean = false>(
   })
 
 /**
- * Disable an OIDC client and reject new grants
+ * Disable an OAuth client and reject new grants
  */
 export const disableOidcClient = <ThrowOnError extends boolean = false>(
   options: Options<DisableOidcClientData, ThrowOnError>
@@ -1232,6 +1021,36 @@ export const getStripeConnection = <ThrowOnError extends boolean = false>(
   })
 
 /**
+ * Update Stripe settings, preserving omitted secrets
+ */
+export const updateStripeConnection = <ThrowOnError extends boolean = false>(
+  options: Options<UpdateStripeConnectionData, ThrowOnError>
+): RequestResult<
+  UpdateStripeConnectionResponses,
+  UpdateStripeConnectionErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).patch<
+    UpdateStripeConnectionResponses,
+    UpdateStripeConnectionErrors,
+    ThrowOnError
+  >({
+    security: [
+      {
+        in: 'cookie',
+        name: 'better-auth.session_token',
+        type: 'apiKey',
+      },
+    ],
+    url: '/api/v1/environments/{environmentId}/stripe-connection',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  })
+
+/**
  * Configure Stripe for a project environment
  */
 export const putStripeConnection = <ThrowOnError extends boolean = false>(
@@ -1254,6 +1073,37 @@ export const putStripeConnection = <ThrowOnError extends boolean = false>(
       },
     ],
     url: '/api/v1/environments/{environmentId}/stripe-connection',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  })
+
+/**
+ * Update a billing plan without changing its key
+ */
+export const updateBillingPlan = <ThrowOnError extends boolean = false>(
+  options: Options<UpdateBillingPlanData, ThrowOnError>
+): RequestResult<
+  UpdateBillingPlanResponses,
+  UpdateBillingPlanErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).patch<
+    UpdateBillingPlanResponses,
+    UpdateBillingPlanErrors,
+    ThrowOnError
+  >({
+    security: [
+      {
+        in: 'cookie',
+        name: 'better-auth.session_token',
+        type: 'apiKey',
+      },
+      { name: 'X-API-Key', type: 'apiKey' },
+    ],
+    url: '/api/v1/projects/{projectId}/billing/plans/{planId}',
     ...options,
     headers: {
       'Content-Type': 'application/json',
@@ -1424,6 +1274,104 @@ export const receiveStripeWebhook = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({ url: '/api/v1/webhooks/stripe/{environmentId}', ...options })
 
+/**
+ * List a project's API keys
+ */
+export const listApiKeys = <ThrowOnError extends boolean = false>(
+  options: Options<ListApiKeysData, ThrowOnError>
+): RequestResult<ListApiKeysResponses, ListApiKeysErrors, ThrowOnError> =>
+  (options.client ?? client).get<
+    ListApiKeysResponses,
+    ListApiKeysErrors,
+    ThrowOnError
+  >({
+    security: [
+      {
+        in: 'cookie',
+        name: 'better-auth.session_token',
+        type: 'apiKey',
+      },
+      { name: 'X-API-Key', type: 'apiKey' },
+    ],
+    url: '/api/v1/projects/{projectId}/api-keys',
+    ...options,
+  })
+
+/**
+ * Create an API key
+ *
+ * The raw key is returned once, in `secret`. Gate stores only a digest.
+ */
+export const createApiKey = <ThrowOnError extends boolean = false>(
+  options: Options<CreateApiKeyData, ThrowOnError>
+): RequestResult<CreateApiKeyResponses, CreateApiKeyErrors, ThrowOnError> =>
+  (options.client ?? client).post<
+    CreateApiKeyResponses,
+    CreateApiKeyErrors,
+    ThrowOnError
+  >({
+    security: [
+      {
+        in: 'cookie',
+        name: 'better-auth.session_token',
+        type: 'apiKey',
+      },
+    ],
+    url: '/api/v1/projects/{projectId}/api-keys',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  })
+
+/**
+ * Read an API key
+ */
+export const getApiKey = <ThrowOnError extends boolean = false>(
+  options: Options<GetApiKeyData, ThrowOnError>
+): RequestResult<GetApiKeyResponses, GetApiKeyErrors, ThrowOnError> =>
+  (options.client ?? client).get<
+    GetApiKeyResponses,
+    GetApiKeyErrors,
+    ThrowOnError
+  >({
+    security: [
+      {
+        in: 'cookie',
+        name: 'better-auth.session_token',
+        type: 'apiKey',
+      },
+      { name: 'X-API-Key', type: 'apiKey' },
+    ],
+    url: '/api/v1/projects/{projectId}/api-keys/{keyId}',
+    ...options,
+  })
+
+/**
+ * Revoke an API key
+ *
+ * Takes effect immediately and cannot be undone. Repeating it is a no-op.
+ */
+export const revokeApiKey = <ThrowOnError extends boolean = false>(
+  options: Options<RevokeApiKeyData, ThrowOnError>
+): RequestResult<RevokeApiKeyResponses, RevokeApiKeyErrors, ThrowOnError> =>
+  (options.client ?? client).post<
+    RevokeApiKeyResponses,
+    RevokeApiKeyErrors,
+    ThrowOnError
+  >({
+    security: [
+      {
+        in: 'cookie',
+        name: 'better-auth.session_token',
+        type: 'apiKey',
+      },
+    ],
+    url: '/api/v1/projects/{projectId}/api-keys/{keyId}/revoke',
+    ...options,
+  })
+
 export const getSubjectsPremiumState = <ThrowOnError extends boolean = false>(
   options: Options<GetSubjectsPremiumStateData, ThrowOnError>
 ): RequestResult<
@@ -1570,6 +1518,37 @@ export const removeSubjectProjectAccess = <
   (options.client ?? client).delete<
     RemoveSubjectProjectAccessResponses,
     RemoveSubjectProjectAccessErrors,
+    ThrowOnError
+  >({
+    security: [
+      {
+        in: 'cookie',
+        name: 'better-auth.session_token',
+        type: 'apiKey',
+      },
+      { name: 'X-API-Key', type: 'apiKey' },
+    ],
+    url: '/api/v1/projects/{projectId}/subjects/{subjectId}/access',
+    ...options,
+  })
+
+/**
+ * Restore a subject's product access after removal
+ *
+ * Clears the marker left by removing a subject's access, so the subject can start checkout again. Idempotent.
+ */
+export const restoreSubjectProjectAccess = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<RestoreSubjectProjectAccessData, ThrowOnError>
+): RequestResult<
+  RestoreSubjectProjectAccessResponses,
+  RestoreSubjectProjectAccessErrors,
+  ThrowOnError
+> =>
+  (options.client ?? client).post<
+    RestoreSubjectProjectAccessResponses,
+    RestoreSubjectProjectAccessErrors,
     ThrowOnError
   >({
     security: [
@@ -3395,138 +3374,6 @@ export const authGetOrganizationGetActiveMemberRole = <
     ],
     url: '/api/auth/organization/get-active-member-role',
     ...options,
-  })
-
-/**
- * Create role
- */
-export const authPostOrganizationCreateRole = <
-  ThrowOnError extends boolean = false,
->(
-  options: Options<AuthPostOrganizationCreateRoleData, ThrowOnError>
-): RequestResult<unknown, AuthPostOrganizationCreateRoleErrors, ThrowOnError> =>
-  (options.client ?? client).post<
-    unknown,
-    AuthPostOrganizationCreateRoleErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-    ],
-    url: '/api/auth/organization/create-role',
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  })
-
-/**
- * Delete role
- */
-export const authPostOrganizationDeleteRole = <
-  ThrowOnError extends boolean = false,
->(
-  options: Options<AuthPostOrganizationDeleteRoleData, ThrowOnError>
-): RequestResult<unknown, AuthPostOrganizationDeleteRoleErrors, ThrowOnError> =>
-  (options.client ?? client).post<
-    unknown,
-    AuthPostOrganizationDeleteRoleErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-    ],
-    url: '/api/auth/organization/delete-role',
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  })
-
-/**
- * List roles
- */
-export const authGetOrganizationListRoles = <
-  ThrowOnError extends boolean = false,
->(
-  options?: Options<AuthGetOrganizationListRolesData, ThrowOnError>
-): RequestResult<unknown, AuthGetOrganizationListRolesErrors, ThrowOnError> =>
-  (options?.client ?? client).get<
-    unknown,
-    AuthGetOrganizationListRolesErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-    ],
-    url: '/api/auth/organization/list-roles',
-    ...options,
-  })
-
-/**
- * Get role
- */
-export const authGetOrganizationGetRole = <
-  ThrowOnError extends boolean = false,
->(
-  options?: Options<AuthGetOrganizationGetRoleData, ThrowOnError>
-): RequestResult<unknown, AuthGetOrganizationGetRoleErrors, ThrowOnError> =>
-  (options?.client ?? client).get<
-    unknown,
-    AuthGetOrganizationGetRoleErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-    ],
-    url: '/api/auth/organization/get-role',
-    ...options,
-  })
-
-/**
- * Update role
- */
-export const authPostOrganizationUpdateRole = <
-  ThrowOnError extends boolean = false,
->(
-  options: Options<AuthPostOrganizationUpdateRoleData, ThrowOnError>
-): RequestResult<unknown, AuthPostOrganizationUpdateRoleErrors, ThrowOnError> =>
-  (options.client ?? client).post<
-    unknown,
-    AuthPostOrganizationUpdateRoleErrors,
-    ThrowOnError
-  >({
-    security: [
-      {
-        in: 'cookie',
-        name: 'better-auth.session_token',
-        type: 'apiKey',
-      },
-    ],
-    url: '/api/auth/organization/update-role',
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
   })
 
 /**

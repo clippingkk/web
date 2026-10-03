@@ -6,9 +6,6 @@ const state = vi.hoisted(() => ({
   refresh: vi.fn(),
   active: true,
 }))
-vi.mock('../authz', () => ({
-  requireProductRead: vi.fn(async () => undefined),
-}))
 vi.mock('../../db', () => ({
   getDatabase: () => ({
     db: {

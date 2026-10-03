@@ -29,9 +29,6 @@ const user = {
   deletedAt: null,
 }
 vi.mock('../config', () => ({ gateConfig: () => state.config }))
-vi.mock('../authz', () => ({
-  requireProductRead: vi.fn(async () => undefined),
-}))
 vi.mock('../verify', () => ({ verifyIdToken: state.verify }))
 vi.mock('../user', () => ({
   ensureLocalUser: vi.fn(async () => user),
