@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.3](https://github.com/clippingkk/web/compare/v5.19.2...v5.19.3) (2026-10-03)
+
+
+### Bug Fixes
+
+* **gate:** own authorization after Gate removed /authorize ([b345c8a](https://github.com/clippingkk/web/commit/b345c8a9a8091865d5e6bab32a9f3366a987fc0e))
+* **gate:** own authorization after Gate removed /authorize ([0b8f635](https://github.com/clippingkk/web/commit/0b8f635e9b0d54a4e2dcec3425d7b20899966549))
+
 ## [5.19.2](https://github.com/clippingkk/web/compare/v5.19.1...v5.19.2) (2026-10-01)
 
 
