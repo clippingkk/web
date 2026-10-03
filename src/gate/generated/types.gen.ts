@@ -60,6 +60,7 @@ export type Project = {
   name: string
   slug: string
   description: string
+  mcpResource: string | null
   archivedAt: string | null
   createdAt: string
   updatedAt: string
@@ -75,38 +76,6 @@ export type Environment = {
   name: 'development' | 'staging' | 'production'
   createdAt: string
   updatedAt: string
-}
-
-export type ServiceAccount = {
-  id: string
-  projectId: string
-  /**
-   * Pins the account to a single environment
-   */
-  environmentId: string | null
-  name: string
-  description: string
-  disabledAt: string | null
-  createdAt: string
-  updatedAt: string
-}
-
-export type ServiceAccountCredential = {
-  account: ServiceAccount
-  key: {
-    id: string
-    prefix: string
-    expiresAt: string | null
-  }
-  /**
-   * Raw `gate_sk_…` key. Returned once and never recoverable.
-   */
-  apiKey: string
-}
-
-export type ServiceAccountDisabled = {
-  id: string
-  disabled: boolean
 }
 
 export type ConfigEntrySummary = {
@@ -149,41 +118,6 @@ export type ConfigValue = {
   kind: 'variable' | 'secret'
   version: number
   value: string
-}
-
-export type ProjectRole = {
-  id: string
-  projectId: string
-  name: string
-  slug: string
-  description: string
-  /**
-   * `resource:action` strings, or `*` for all
-   */
-  permissions: Array<string>
-  createdAt: string
-  updatedAt: string
-}
-
-export type RoleBinding = {
-  id: string
-  roleId: string
-  principalType: 'user' | 'service_account'
-  principalId: string
-  expiresAt: string | null
-  createdAt: string
-}
-
-export type AuthorizationDecision = {
-  allowed: boolean
-  /**
-   * Slugs of the roles bound to the principal
-   */
-  roles: Array<string>
-  /**
-   * Correlation id for this evaluation
-   */
-  decisionId: string
 }
 
 export type UsageEventReceipt = {
@@ -254,7 +188,7 @@ export type StripeConnection = {
   publishableKey: string | null
   livemode: boolean
   updatedAt: string
-} | null
+}
 
 export type BillingPlan = {
   id: string
@@ -303,6 +237,43 @@ export type EntitlementGrant = {
 export type WebhookReceipt = {
   received: boolean
   duplicate: boolean
+}
+
+export type ApiKey = {
+  id: string
+  projectId: string
+  name: string
+  description: string
+  /**
+   * Public part of the key: `gate_sk_{prefix}_…`
+   */
+  prefix: string
+  scopes: Array<
+    | 'config:read'
+    | 'config:write'
+    | 'usage:read'
+    | 'usage:write'
+    | 'billing:read'
+    | 'billing:write'
+    | 'users:write'
+    | '*'
+  >
+  /**
+   * Limits the key to one environment; null allows every environment
+   */
+  environmentId: string | null
+  expiresAt: string | null
+  lastUsedAt: string | null
+  revokedAt: string | null
+  createdAt: string
+}
+
+export type CreatedApiKey = {
+  apiKey: ApiKey
+  /**
+   * Raw `gate_sk_…` key. Returned once and never recoverable.
+   */
+  secret: string
 }
 
 export type AnalyticsSummary = {
@@ -591,15 +562,6 @@ export type AuthOrganization = {
   readonly archivedAt?: string
 }
 
-export type AuthOrganizationRole = {
-  readonly id: string
-  organizationId: string
-  role: string
-  permission: string
-  createdAt: string
-  updatedAt?: string
-}
-
 export type AuthMember = {
   readonly id: string
   organizationId: string
@@ -744,14 +706,6 @@ export type AuthOrganizationWritable = {
   logo?: string
   createdAt: string
   metadata?: string
-}
-
-export type AuthOrganizationRoleWritable = {
-  organizationId: string
-  role: string
-  permission: string
-  createdAt: string
-  updatedAt?: string
 }
 
 export type AuthMemberWritable = {
@@ -1398,6 +1352,10 @@ export type UpdateProjectData = {
     name?: string
     slug?: string
     description?: string
+    /**
+     * The project's MCP server URL (an OAuth protected resource). MCP clients registered through Client ID Metadata Documents may request tokens for it and sign in under this project. Null or empty clears it.
+     */
+    mcpResource?: string | null
   }
   path: {
     projectId: string
@@ -1497,166 +1455,6 @@ export type RestoreProjectResponses = {
 
 export type RestoreProjectResponse =
   RestoreProjectResponses[keyof RestoreProjectResponses]
-
-export type ListServiceAccountsData = {
-  body?: never
-  path: {
-    projectId: string
-  }
-  query?: never
-  url: '/api/v1/projects/{projectId}/service-accounts'
-}
-
-export type ListServiceAccountsErrors = {
-  /**
-   * Invalid request
-   */
-  400: ProblemDetails
-  /**
-   * Authentication required
-   */
-  401: ProblemDetails
-  /**
-   * Permission denied
-   */
-  403: ProblemDetails
-  /**
-   * Not found
-   */
-  404: ProblemDetails
-  /**
-   * Conflict
-   */
-  409: ProblemDetails
-  /**
-   * Internal error
-   */
-  500: ProblemDetails
-}
-
-export type ListServiceAccountsError =
-  ListServiceAccountsErrors[keyof ListServiceAccountsErrors]
-
-export type ListServiceAccountsResponses = {
-  /**
-   * Success
-   */
-  200: {
-    data: Array<ServiceAccount>
-  }
-}
-
-export type ListServiceAccountsResponse =
-  ListServiceAccountsResponses[keyof ListServiceAccountsResponses]
-
-export type CreateServiceAccountData = {
-  body: {
-    name: string
-    description?: string
-    environmentId?: string
-    scopes: Array<string>
-    expiresAt?: string
-  }
-  path: {
-    projectId: string
-  }
-  query?: never
-  url: '/api/v1/projects/{projectId}/service-accounts'
-}
-
-export type CreateServiceAccountErrors = {
-  /**
-   * Invalid request
-   */
-  400: ProblemDetails
-  /**
-   * Authentication required
-   */
-  401: ProblemDetails
-  /**
-   * Permission denied
-   */
-  403: ProblemDetails
-  /**
-   * Not found
-   */
-  404: ProblemDetails
-  /**
-   * Conflict
-   */
-  409: ProblemDetails
-  /**
-   * Internal error
-   */
-  500: ProblemDetails
-}
-
-export type CreateServiceAccountError =
-  CreateServiceAccountErrors[keyof CreateServiceAccountErrors]
-
-export type CreateServiceAccountResponses = {
-  /**
-   * Created
-   */
-  201: {
-    data: ServiceAccountCredential
-  }
-}
-
-export type CreateServiceAccountResponse =
-  CreateServiceAccountResponses[keyof CreateServiceAccountResponses]
-
-export type DisableServiceAccountData = {
-  body?: never
-  path: {
-    projectId: string
-    accountId: string
-  }
-  query?: never
-  url: '/api/v1/projects/{projectId}/service-accounts/{accountId}/disable'
-}
-
-export type DisableServiceAccountErrors = {
-  /**
-   * Invalid request
-   */
-  400: ProblemDetails
-  /**
-   * Authentication required
-   */
-  401: ProblemDetails
-  /**
-   * Permission denied
-   */
-  403: ProblemDetails
-  /**
-   * Not found
-   */
-  404: ProblemDetails
-  /**
-   * Conflict
-   */
-  409: ProblemDetails
-  /**
-   * Internal error
-   */
-  500: ProblemDetails
-}
-
-export type DisableServiceAccountError =
-  DisableServiceAccountErrors[keyof DisableServiceAccountErrors]
-
-export type DisableServiceAccountResponses = {
-  /**
-   * Success
-   */
-  200: {
-    data: ServiceAccountDisabled
-  }
-}
-
-export type DisableServiceAccountResponse =
-  DisableServiceAccountResponses[keyof DisableServiceAccountResponses]
 
 export type ListConfigEntriesData = {
   body?: never
@@ -1922,221 +1720,6 @@ export type RestoreConfigEntryResponses = {
 
 export type RestoreConfigEntryResponse =
   RestoreConfigEntryResponses[keyof RestoreConfigEntryResponses]
-
-export type ListProjectRolesData = {
-  body?: never
-  path: {
-    projectId: string
-  }
-  query?: never
-  url: '/api/v1/projects/{projectId}/roles'
-}
-
-export type ListProjectRolesErrors = {
-  /**
-   * Invalid request
-   */
-  400: ProblemDetails
-  /**
-   * Authentication required
-   */
-  401: ProblemDetails
-  /**
-   * Permission denied
-   */
-  403: ProblemDetails
-  /**
-   * Not found
-   */
-  404: ProblemDetails
-  /**
-   * Conflict
-   */
-  409: ProblemDetails
-  /**
-   * Internal error
-   */
-  500: ProblemDetails
-}
-
-export type ListProjectRolesError =
-  ListProjectRolesErrors[keyof ListProjectRolesErrors]
-
-export type ListProjectRolesResponses = {
-  /**
-   * Success
-   */
-  200: {
-    data: Array<ProjectRole>
-  }
-}
-
-export type ListProjectRolesResponse =
-  ListProjectRolesResponses[keyof ListProjectRolesResponses]
-
-export type CreateProjectRoleData = {
-  body: {
-    name: string
-    slug?: string
-    description?: string
-    permissions: Array<string>
-  }
-  path: {
-    projectId: string
-  }
-  query?: never
-  url: '/api/v1/projects/{projectId}/roles'
-}
-
-export type CreateProjectRoleErrors = {
-  /**
-   * Invalid request
-   */
-  400: ProblemDetails
-  /**
-   * Authentication required
-   */
-  401: ProblemDetails
-  /**
-   * Permission denied
-   */
-  403: ProblemDetails
-  /**
-   * Not found
-   */
-  404: ProblemDetails
-  /**
-   * Conflict
-   */
-  409: ProblemDetails
-  /**
-   * Internal error
-   */
-  500: ProblemDetails
-}
-
-export type CreateProjectRoleError =
-  CreateProjectRoleErrors[keyof CreateProjectRoleErrors]
-
-export type CreateProjectRoleResponses = {
-  /**
-   * Created
-   */
-  201: {
-    data: ProjectRole
-  }
-}
-
-export type CreateProjectRoleResponse =
-  CreateProjectRoleResponses[keyof CreateProjectRoleResponses]
-
-export type CreateRoleBindingData = {
-  body: {
-    roleId: string
-    principalType: 'user' | 'service_account'
-    principalId: string
-    expiresAt?: string
-  }
-  path: {
-    projectId: string
-  }
-  query?: never
-  url: '/api/v1/projects/{projectId}/role-bindings'
-}
-
-export type CreateRoleBindingErrors = {
-  /**
-   * Invalid request
-   */
-  400: ProblemDetails
-  /**
-   * Authentication required
-   */
-  401: ProblemDetails
-  /**
-   * Permission denied
-   */
-  403: ProblemDetails
-  /**
-   * Not found
-   */
-  404: ProblemDetails
-  /**
-   * Conflict
-   */
-  409: ProblemDetails
-  /**
-   * Internal error
-   */
-  500: ProblemDetails
-}
-
-export type CreateRoleBindingError =
-  CreateRoleBindingErrors[keyof CreateRoleBindingErrors]
-
-export type CreateRoleBindingResponses = {
-  /**
-   * Created
-   */
-  201: {
-    data: RoleBinding
-  }
-}
-
-export type CreateRoleBindingResponse =
-  CreateRoleBindingResponses[keyof CreateRoleBindingResponses]
-
-export type AuthorizeData = {
-  body: {
-    projectId: string
-    principalType: 'user' | 'service_account'
-    principalId: string
-    permission: string
-  }
-  path?: never
-  query?: never
-  url: '/api/v1/authorize'
-}
-
-export type AuthorizeErrors = {
-  /**
-   * Invalid request
-   */
-  400: ProblemDetails
-  /**
-   * Authentication required
-   */
-  401: ProblemDetails
-  /**
-   * Permission denied
-   */
-  403: ProblemDetails
-  /**
-   * Not found
-   */
-  404: ProblemDetails
-  /**
-   * Conflict
-   */
-  409: ProblemDetails
-  /**
-   * Internal error
-   */
-  500: ProblemDetails
-}
-
-export type AuthorizeError = AuthorizeErrors[keyof AuthorizeErrors]
-
-export type AuthorizeResponses = {
-  /**
-   * Success
-   */
-  200: {
-    data: AuthorizationDecision
-  }
-}
-
-export type AuthorizeResponse = AuthorizeResponses[keyof AuthorizeResponses]
 
 export type RecordUsageEventData = {
   body: {
@@ -2465,12 +2048,72 @@ export type GetStripeConnectionResponses = {
    * Connection, or null when unconfigured
    */
   200: {
-    data: StripeConnection
+    data: StripeConnection &
+      ({
+        [key: string]: unknown
+      } | null)
   }
 }
 
 export type GetStripeConnectionResponse =
   GetStripeConnectionResponses[keyof GetStripeConnectionResponses]
+
+export type UpdateStripeConnectionData = {
+  body: {
+    secretKey?: string
+    webhookSecret?: string
+    publishableKey?: string | null
+    accountId?: string | null
+    livemode?: boolean
+  }
+  path: {
+    environmentId: string
+  }
+  query?: never
+  url: '/api/v1/environments/{environmentId}/stripe-connection'
+}
+
+export type UpdateStripeConnectionErrors = {
+  /**
+   * Invalid request
+   */
+  400: ProblemDetails
+  /**
+   * Authentication required
+   */
+  401: ProblemDetails
+  /**
+   * Permission denied
+   */
+  403: ProblemDetails
+  /**
+   * Not found
+   */
+  404: ProblemDetails
+  /**
+   * Conflict
+   */
+  409: ProblemDetails
+  /**
+   * Internal error
+   */
+  500: ProblemDetails
+}
+
+export type UpdateStripeConnectionError =
+  UpdateStripeConnectionErrors[keyof UpdateStripeConnectionErrors]
+
+export type UpdateStripeConnectionResponses = {
+  /**
+   * Success
+   */
+  200: {
+    data: StripeConnection
+  }
+}
+
+export type UpdateStripeConnectionResponse =
+  UpdateStripeConnectionResponses[keyof UpdateStripeConnectionResponses]
 
 export type PutStripeConnectionData = {
   body: {
@@ -2528,6 +2171,66 @@ export type PutStripeConnectionResponses = {
 
 export type PutStripeConnectionResponse =
   PutStripeConnectionResponses[keyof PutStripeConnectionResponses]
+
+export type UpdateBillingPlanData = {
+  body: {
+    name?: string
+    description?: string
+    stripePriceId?: string | null
+    entitlements?: {
+      [key: string]: boolean | number | string
+    }
+    active?: boolean
+  }
+  path: {
+    projectId: string
+    planId: string
+  }
+  query?: never
+  url: '/api/v1/projects/{projectId}/billing/plans/{planId}'
+}
+
+export type UpdateBillingPlanErrors = {
+  /**
+   * Invalid request
+   */
+  400: ProblemDetails
+  /**
+   * Authentication required
+   */
+  401: ProblemDetails
+  /**
+   * Permission denied
+   */
+  403: ProblemDetails
+  /**
+   * Not found
+   */
+  404: ProblemDetails
+  /**
+   * Conflict
+   */
+  409: ProblemDetails
+  /**
+   * Internal error
+   */
+  500: ProblemDetails
+}
+
+export type UpdateBillingPlanError =
+  UpdateBillingPlanErrors[keyof UpdateBillingPlanErrors]
+
+export type UpdateBillingPlanResponses = {
+  /**
+   * Success
+   */
+  200: {
+    data: BillingPlan
+  }
+}
+
+export type UpdateBillingPlanResponse =
+  UpdateBillingPlanResponses[keyof UpdateBillingPlanResponses]
 
 export type ListBillingPlansData = {
   body?: never
@@ -2847,6 +2550,222 @@ export type ReceiveStripeWebhookResponses = {
 
 export type ReceiveStripeWebhookResponse =
   ReceiveStripeWebhookResponses[keyof ReceiveStripeWebhookResponses]
+
+export type ListApiKeysData = {
+  body?: never
+  path: {
+    projectId: string
+  }
+  query?: never
+  url: '/api/v1/projects/{projectId}/api-keys'
+}
+
+export type ListApiKeysErrors = {
+  /**
+   * Invalid request
+   */
+  400: ProblemDetails
+  /**
+   * Authentication required
+   */
+  401: ProblemDetails
+  /**
+   * Permission denied
+   */
+  403: ProblemDetails
+  /**
+   * Not found
+   */
+  404: ProblemDetails
+  /**
+   * Conflict
+   */
+  409: ProblemDetails
+  /**
+   * Internal error
+   */
+  500: ProblemDetails
+}
+
+export type ListApiKeysError = ListApiKeysErrors[keyof ListApiKeysErrors]
+
+export type ListApiKeysResponses = {
+  /**
+   * Success
+   */
+  200: {
+    data: Array<ApiKey>
+  }
+}
+
+export type ListApiKeysResponse =
+  ListApiKeysResponses[keyof ListApiKeysResponses]
+
+export type CreateApiKeyData = {
+  body: {
+    name: string
+    description?: string
+    environmentId?: string
+    scopes: Array<
+      | 'config:read'
+      | 'config:write'
+      | 'usage:read'
+      | 'usage:write'
+      | 'billing:read'
+      | 'billing:write'
+      | 'users:write'
+      | '*'
+    >
+    expiresAt?: string
+  }
+  path: {
+    projectId: string
+  }
+  query?: never
+  url: '/api/v1/projects/{projectId}/api-keys'
+}
+
+export type CreateApiKeyErrors = {
+  /**
+   * Invalid request
+   */
+  400: ProblemDetails
+  /**
+   * Authentication required
+   */
+  401: ProblemDetails
+  /**
+   * Permission denied
+   */
+  403: ProblemDetails
+  /**
+   * Not found
+   */
+  404: ProblemDetails
+  /**
+   * Conflict
+   */
+  409: ProblemDetails
+  /**
+   * Internal error
+   */
+  500: ProblemDetails
+}
+
+export type CreateApiKeyError = CreateApiKeyErrors[keyof CreateApiKeyErrors]
+
+export type CreateApiKeyResponses = {
+  /**
+   * Created
+   */
+  201: {
+    data: CreatedApiKey
+  }
+}
+
+export type CreateApiKeyResponse =
+  CreateApiKeyResponses[keyof CreateApiKeyResponses]
+
+export type GetApiKeyData = {
+  body?: never
+  path: {
+    projectId: string
+    keyId: string
+  }
+  query?: never
+  url: '/api/v1/projects/{projectId}/api-keys/{keyId}'
+}
+
+export type GetApiKeyErrors = {
+  /**
+   * Invalid request
+   */
+  400: ProblemDetails
+  /**
+   * Authentication required
+   */
+  401: ProblemDetails
+  /**
+   * Permission denied
+   */
+  403: ProblemDetails
+  /**
+   * Not found
+   */
+  404: ProblemDetails
+  /**
+   * Conflict
+   */
+  409: ProblemDetails
+  /**
+   * Internal error
+   */
+  500: ProblemDetails
+}
+
+export type GetApiKeyError = GetApiKeyErrors[keyof GetApiKeyErrors]
+
+export type GetApiKeyResponses = {
+  /**
+   * Success
+   */
+  200: {
+    data: ApiKey
+  }
+}
+
+export type GetApiKeyResponse = GetApiKeyResponses[keyof GetApiKeyResponses]
+
+export type RevokeApiKeyData = {
+  body?: never
+  path: {
+    projectId: string
+    keyId: string
+  }
+  query?: never
+  url: '/api/v1/projects/{projectId}/api-keys/{keyId}/revoke'
+}
+
+export type RevokeApiKeyErrors = {
+  /**
+   * Invalid request
+   */
+  400: ProblemDetails
+  /**
+   * Authentication required
+   */
+  401: ProblemDetails
+  /**
+   * Permission denied
+   */
+  403: ProblemDetails
+  /**
+   * Not found
+   */
+  404: ProblemDetails
+  /**
+   * Conflict
+   */
+  409: ProblemDetails
+  /**
+   * Internal error
+   */
+  500: ProblemDetails
+}
+
+export type RevokeApiKeyError = RevokeApiKeyErrors[keyof RevokeApiKeyErrors]
+
+export type RevokeApiKeyResponses = {
+  /**
+   * Success
+   */
+  200: {
+    data: ApiKey
+  }
+}
+
+export type RevokeApiKeyResponse =
+  RevokeApiKeyResponses[keyof RevokeApiKeyResponses]
 
 export type GetSubjectsPremiumStateData = {
   body: {
@@ -3193,6 +3112,60 @@ export type RemoveSubjectProjectAccessResponses = {
 
 export type RemoveSubjectProjectAccessResponse =
   RemoveSubjectProjectAccessResponses[keyof RemoveSubjectProjectAccessResponses]
+
+export type RestoreSubjectProjectAccessData = {
+  body?: never
+  path: {
+    projectId: string
+    subjectId: string
+  }
+  query?: never
+  url: '/api/v1/projects/{projectId}/subjects/{subjectId}/access'
+}
+
+export type RestoreSubjectProjectAccessErrors = {
+  /**
+   * Invalid request
+   */
+  400: ProblemDetails
+  /**
+   * Authentication required
+   */
+  401: ProblemDetails
+  /**
+   * Permission denied
+   */
+  403: ProblemDetails
+  /**
+   * Not found
+   */
+  404: ProblemDetails
+  /**
+   * Conflict
+   */
+  409: ProblemDetails
+  /**
+   * Internal error
+   */
+  500: ProblemDetails
+}
+
+export type RestoreSubjectProjectAccessError =
+  RestoreSubjectProjectAccessErrors[keyof RestoreSubjectProjectAccessErrors]
+
+export type RestoreSubjectProjectAccessResponses = {
+  /**
+   * Project access restored
+   */
+  200: {
+    data: {
+      restored: boolean
+    }
+  }
+}
+
+export type RestoreSubjectProjectAccessResponse =
+  RestoreSubjectProjectAccessResponses[keyof RestoreSubjectProjectAccessResponses]
 
 export type GetAnalyticsSummaryData = {
   body?: never
@@ -7274,302 +7247,6 @@ export type AuthGetOrganizationGetActiveMemberRoleErrors = {
 export type AuthGetOrganizationGetActiveMemberRoleError =
   AuthGetOrganizationGetActiveMemberRoleErrors[keyof AuthGetOrganizationGetActiveMemberRoleErrors]
 
-export type AuthPostOrganizationCreateRoleData = {
-  body: {
-    organizationId?: string
-    /**
-     * The name of the role to create
-     */
-    role: string
-    /**
-     * The permission to assign to the role
-     */
-    permission: {
-      [key: string]: Array<string>
-    }
-    additionalFields?: {
-      [key: string]: unknown
-    }
-  }
-  path?: never
-  query?: never
-  url: '/api/auth/organization/create-role'
-}
-
-export type AuthPostOrganizationCreateRoleErrors = {
-  /**
-   * Bad Request. Usually due to missing parameters, or invalid parameters.
-   */
-  400: {
-    message: string
-  }
-  /**
-   * Unauthorized. Due to missing or invalid authentication.
-   */
-  401: {
-    message: string
-  }
-  /**
-   * Forbidden. You do not have permission to access this resource or to perform this action.
-   */
-  403: {
-    message?: string
-  }
-  /**
-   * Not Found. The requested resource was not found.
-   */
-  404: {
-    message?: string
-  }
-  /**
-   * Too Many Requests. You have exceeded the rate limit. Try again later.
-   */
-  429: {
-    message?: string
-  }
-  /**
-   * Internal Server Error. This is a problem with the server that you cannot fix.
-   */
-  500: {
-    message?: string
-  }
-}
-
-export type AuthPostOrganizationCreateRoleError =
-  AuthPostOrganizationCreateRoleErrors[keyof AuthPostOrganizationCreateRoleErrors]
-
-export type AuthPostOrganizationDeleteRoleData = {
-  body: {
-    organizationId?: string
-  } & (
-    | {
-        /**
-         * The name of the role to delete
-         */
-        roleName: string
-      }
-    | {
-        /**
-         * The id of the role to delete
-         */
-        roleId: string
-      }
-  )
-  path?: never
-  query?: never
-  url: '/api/auth/organization/delete-role'
-}
-
-export type AuthPostOrganizationDeleteRoleErrors = {
-  /**
-   * Bad Request. Usually due to missing parameters, or invalid parameters.
-   */
-  400: {
-    message: string
-  }
-  /**
-   * Unauthorized. Due to missing or invalid authentication.
-   */
-  401: {
-    message: string
-  }
-  /**
-   * Forbidden. You do not have permission to access this resource or to perform this action.
-   */
-  403: {
-    message?: string
-  }
-  /**
-   * Not Found. The requested resource was not found.
-   */
-  404: {
-    message?: string
-  }
-  /**
-   * Too Many Requests. You have exceeded the rate limit. Try again later.
-   */
-  429: {
-    message?: string
-  }
-  /**
-   * Internal Server Error. This is a problem with the server that you cannot fix.
-   */
-  500: {
-    message?: string
-  }
-}
-
-export type AuthPostOrganizationDeleteRoleError =
-  AuthPostOrganizationDeleteRoleErrors[keyof AuthPostOrganizationDeleteRoleErrors]
-
-export type AuthGetOrganizationListRolesData = {
-  body?: never
-  path?: never
-  query?: never
-  url: '/api/auth/organization/list-roles'
-}
-
-export type AuthGetOrganizationListRolesErrors = {
-  /**
-   * Bad Request. Usually due to missing parameters, or invalid parameters.
-   */
-  400: {
-    message: string
-  }
-  /**
-   * Unauthorized. Due to missing or invalid authentication.
-   */
-  401: {
-    message: string
-  }
-  /**
-   * Forbidden. You do not have permission to access this resource or to perform this action.
-   */
-  403: {
-    message?: string
-  }
-  /**
-   * Not Found. The requested resource was not found.
-   */
-  404: {
-    message?: string
-  }
-  /**
-   * Too Many Requests. You have exceeded the rate limit. Try again later.
-   */
-  429: {
-    message?: string
-  }
-  /**
-   * Internal Server Error. This is a problem with the server that you cannot fix.
-   */
-  500: {
-    message?: string
-  }
-}
-
-export type AuthGetOrganizationListRolesError =
-  AuthGetOrganizationListRolesErrors[keyof AuthGetOrganizationListRolesErrors]
-
-export type AuthGetOrganizationGetRoleData = {
-  body?: never
-  path?: never
-  query?: never
-  url: '/api/auth/organization/get-role'
-}
-
-export type AuthGetOrganizationGetRoleErrors = {
-  /**
-   * Bad Request. Usually due to missing parameters, or invalid parameters.
-   */
-  400: {
-    message: string
-  }
-  /**
-   * Unauthorized. Due to missing or invalid authentication.
-   */
-  401: {
-    message: string
-  }
-  /**
-   * Forbidden. You do not have permission to access this resource or to perform this action.
-   */
-  403: {
-    message?: string
-  }
-  /**
-   * Not Found. The requested resource was not found.
-   */
-  404: {
-    message?: string
-  }
-  /**
-   * Too Many Requests. You have exceeded the rate limit. Try again later.
-   */
-  429: {
-    message?: string
-  }
-  /**
-   * Internal Server Error. This is a problem with the server that you cannot fix.
-   */
-  500: {
-    message?: string
-  }
-}
-
-export type AuthGetOrganizationGetRoleError =
-  AuthGetOrganizationGetRoleErrors[keyof AuthGetOrganizationGetRoleErrors]
-
-export type AuthPostOrganizationUpdateRoleData = {
-  body: {
-    organizationId?: string
-    data: {
-      permission?: {
-        [key: string]: Array<string>
-      }
-      roleName?: string
-    }
-  } & (
-    | {
-        /**
-         * The name of the role to update
-         */
-        roleName: string
-      }
-    | {
-        /**
-         * The id of the role to update
-         */
-        roleId: string
-      }
-  )
-  path?: never
-  query?: never
-  url: '/api/auth/organization/update-role'
-}
-
-export type AuthPostOrganizationUpdateRoleErrors = {
-  /**
-   * Bad Request. Usually due to missing parameters, or invalid parameters.
-   */
-  400: {
-    message: string
-  }
-  /**
-   * Unauthorized. Due to missing or invalid authentication.
-   */
-  401: {
-    message: string
-  }
-  /**
-   * Forbidden. You do not have permission to access this resource or to perform this action.
-   */
-  403: {
-    message?: string
-  }
-  /**
-   * Not Found. The requested resource was not found.
-   */
-  404: {
-    message?: string
-  }
-  /**
-   * Too Many Requests. You have exceeded the rate limit. Try again later.
-   */
-  429: {
-    message?: string
-  }
-  /**
-   * Internal Server Error. This is a problem with the server that you cannot fix.
-   */
-  500: {
-    message?: string
-  }
-}
-
-export type AuthPostOrganizationUpdateRoleError =
-  AuthPostOrganizationUpdateRoleErrors[keyof AuthPostOrganizationUpdateRoleErrors]
-
 export type AuthPostOrganizationHasPermissionData = {
   body?: {
     /**
@@ -7796,6 +7473,10 @@ export type AuthGetOauth2AuthorizeData = {
      * Preferred social provider: github, google, or apple. The provider must be enabled for this client’s project.
      */
     provider_hint?: string
+    /**
+     * RFC 8707 resource indicator. Required for clients identified by a Client ID Metadata Document, and must name a configured MCP server.
+     */
+    resource?: string
   }
   url: '/api/auth/oauth2/authorize'
 }

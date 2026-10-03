@@ -11,7 +11,6 @@ import { and, eq, isNull } from 'drizzle-orm'
 import { getDatabase } from '../db'
 import { users } from '../db/schema'
 import { ApiError } from '../errors'
-import { requireProductRead } from '../gate/authz'
 import { gateConfig } from '../gate/config'
 import { verifyGateAccessToken } from '../gate/verify'
 import { isMcpToken, resolveMcpToken } from './tokens'
@@ -85,7 +84,7 @@ export const mcpTokenVerifier: OAuthTokenVerifier = {
         extra: { userId: await userIdForGateSubject(access.gateUserId) },
       }
     }
-    await requireProductRead(mcpUserId(info))
+    mcpUserId(info)
     return info
   },
 }

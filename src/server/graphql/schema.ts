@@ -5,7 +5,6 @@ import introspection from '@/schema/schema.json'
 
 import { requireLegacyAuth } from '../auth'
 import { ApiError } from '../errors'
-import { requireProductWrite } from '../gate/authz'
 import { cookieValue, assertSameOrigin } from '../gate/security'
 import { resolvers } from './resolvers'
 
@@ -53,11 +52,11 @@ for (const type of [
             'LEGACY_AUTH_DISABLED'
           )
       }
-      if (type === graphQLSchema.getMutationType()) {
-        if (cookieValue(context.request)) assertSameOrigin(context.request)
-        if (context.userId && field.name !== 'removeMyAccount')
-          await requireProductWrite(context.userId)
-      }
+      if (
+        type === graphQLSchema.getMutationType() &&
+        cookieValue(context.request)
+      )
+        assertSameOrigin(context.request)
       return resolve(source, args, context, info)
     }
   }

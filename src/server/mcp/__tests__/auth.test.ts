@@ -8,16 +8,14 @@ const config = {
   resource: 'https://clippingkk.example',
   appOrigin: 'https://clippingkk.example',
 }
-const { findFirst, requireProductRead, resolveMcpToken } = vi.hoisted(() => ({
+const { findFirst, resolveMcpToken } = vi.hoisted(() => ({
   findFirst: vi.fn(),
-  requireProductRead: vi.fn(async () => {}),
   resolveMcpToken: vi.fn(),
 }))
 vi.mock('../../gate/config', () => ({ gateConfig: () => config }))
 vi.mock('../../db', () => ({
   getDatabase: () => ({ db: { query: { users: { findFirst } } } }),
 }))
-vi.mock('../../gate/authz', () => ({ requireProductRead }))
 vi.mock('../tokens', () => ({
   isMcpToken: (token: string) => token.startsWith('ck_mcp_'),
   resolveMcpToken,
@@ -69,7 +67,6 @@ describe('Gate access tokens', () => {
       resourceMetadataUrl:
         'https://clippingkk.example/.well-known/oauth-protected-resource',
     })
-    expect(requireProductRead).toHaveBeenCalledWith(7)
   })
 
   it.each([

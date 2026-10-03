@@ -18,14 +18,11 @@ const storage = vi.hoisted(async () => {
   const pg = new PGlite()
   return { pg, db: drizzle(pg, { schema }) }
 })
-const { connection, rateLimit, requireProductRead, wenquRequest } = vi.hoisted(
-  () => ({
-    connection: vi.fn(async () => {}),
-    rateLimit: vi.fn(async () => ({ allowed: true, count: 1 })),
-    requireProductRead: vi.fn(async () => {}),
-    wenquRequest: vi.fn(),
-  })
-)
+const { connection, rateLimit, wenquRequest } = vi.hoisted(() => ({
+  connection: vi.fn(async () => {}),
+  rateLimit: vi.fn(async () => ({ allowed: true, count: 1 })),
+  wenquRequest: vi.fn(),
+}))
 vi.mock('next/server', () => ({ connection }))
 vi.mock('../../db', () => ({ getDatabase: vi.fn() }))
 vi.mock('../../redis', () => ({
@@ -33,7 +30,6 @@ vi.mock('../../redis', () => ({
   cacheGet: vi.fn(async () => undefined),
   cacheSet: vi.fn(async () => {}),
 }))
-vi.mock('../../gate/authz', () => ({ requireProductRead }))
 vi.mock('../../billing/premium', () => ({ isPremium: vi.fn(async () => true) }))
 vi.mock('@/services/wenqu', async (actual) => ({
   ...(await actual<typeof import('@/services/wenqu')>()),
@@ -45,7 +41,6 @@ import { resetServerEnvForTests } from '@/server/env'
 
 import { getDatabase } from '../../db'
 import * as schema from '../../db/schema'
-import { ApiError } from '../../errors'
 import {
   createMcpToken,
   listMcpTokens,
@@ -244,14 +239,6 @@ describe('the endpoint', () => {
   it('answers 429 once the reader is rate limited', async () => {
     rateLimit.mockResolvedValueOnce({ allowed: false, count: 121 })
     expect((await rpc('tools/list')).status).toBe(429)
-  })
-
-  it('checks product access for the token owner', async () => {
-    requireProductRead.mockRejectedValueOnce(
-      new ApiError('Product access denied', 403)
-    )
-    expect((await rpc('tools/list')).status).toBe(403)
-    expect(requireProductRead).toHaveBeenCalledWith(OWNER)
   })
 
   it('serves discovery and a stable tool list on 2026-07-28', async () => {

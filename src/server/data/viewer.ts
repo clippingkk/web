@@ -20,22 +20,8 @@ export type Viewer = ViewerQuery['me'] & {
 }
 
 /**
- * Admin is a UI affordance only (the admin resolvers check again), so a Gate
- * outage degrades to "not admin" instead of failing every page.
- */
-async function adminOrFalse(id: number) {
-  try {
-    return await canAdmin(id)
-  } catch (error) {
-    console.error('viewer: admin check failed', error)
-    return false
-  }
-}
-
-/**
  * The signed-in reader, or null. Cached per request, so every component that
- * asks shares one lookup. The admin check (a Gate round-trip) runs alongside
- * the profile query rather than after it.
+ * asks shares one lookup.
  */
 export const getViewer = cache(async (): Promise<Viewer | null> => {
   const id = await currentUserId()
@@ -48,7 +34,7 @@ export const getViewer = cache(async (): Promise<Viewer | null> => {
       { id },
       { notFound: 'null', unauthorized: 'null' }
     ),
-    adminOrFalse(id),
+    canAdmin(id),
   ])
   if (!data) return null
   const { me } = data

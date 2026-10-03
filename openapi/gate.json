@@ -23,12 +23,8 @@
       "description": "Products inside an organization. Creating one seeds development, staging, and production environments."
     },
     {
-      "name": "Service accounts",
-      "description": "Machine identities bound to one project, and the `gate_sk_…` API keys they authenticate with."
-    },
-    {
-      "name": "RBAC",
-      "description": "Project roles, role bindings, and `POST /authorize` — the permission system your product asks about its own users. Separate from the control-plane roles that govern access to this API."
+      "name": "API keys",
+      "description": "Project `gate_sk_…` keys your backends send in `X-API-Key`. Each key has scopes and may be limited to one environment."
     },
     {
       "name": "Configuration",
@@ -108,7 +104,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-API-Key",
-        "description": "Service account key, `gate_sk_…`"
+        "description": "Project API key, `gate_sk_…`"
       },
       "oauth2": {
         "type": "oauth2",
@@ -119,30 +115,30 @@
             "tokenUrl": "https://evonia-gate.annatarhe.com/api/auth/oauth2/token",
             "refreshUrl": "https://evonia-gate.annatarhe.com/api/auth/oauth2/token",
             "scopes": {
-              "openid": "Issue an OpenID Connect ID token",
-              "profile": "Read the signed-in user's profile",
-              "email": "Read the signed-in user's email address",
-              "offline_access": "Issue a refresh token for long-lived access",
-              "project:read": "Read projects, environments, and roles",
-              "config:read": "Read configuration entries and secret values",
-              "usage:write": "Record usage events for accounting",
-              "billing:manage": "Manage plans, subscriptions, and entitlements",
-              "account:read": "List the signed-in user’s linked social accounts",
-              "account:manage": "List, link, and unlink the signed-in user’s shared social accounts"
+              "openid": "Identify the signed-in user.",
+              "profile": "Read basic profile details.",
+              "email": "Read the user’s email address.",
+              "offline_access": "Request refresh tokens.",
+              "project:read": "Product scope: your API decides what it allows. Gate does not check it.",
+              "config:read": "Product scope: your API decides what it allows. Gate does not check it.",
+              "usage:write": "Product scope: your API decides what it allows. Gate does not check it.",
+              "billing:manage": "Product scope: your API decides what it allows. Gate does not check it.",
+              "account:read": "List the user’s linked social accounts through Gate.",
+              "account:manage": "Link and unlink the user’s social accounts through Gate."
             }
           },
           "clientCredentials": {
             "tokenUrl": "https://evonia-gate.annatarhe.com/api/auth/oauth2/token",
             "refreshUrl": "https://evonia-gate.annatarhe.com/api/auth/oauth2/token",
             "scopes": {
-              "openid": "Issue an OpenID Connect ID token",
-              "profile": "Read the signed-in user's profile",
-              "email": "Read the signed-in user's email address",
-              "offline_access": "Issue a refresh token for long-lived access",
-              "project:read": "Read projects, environments, and roles",
-              "config:read": "Read configuration entries and secret values",
-              "usage:write": "Record usage events for accounting",
-              "billing:manage": "Manage plans, subscriptions, and entitlements"
+              "openid": "Identify the signed-in user.",
+              "profile": "Read basic profile details.",
+              "email": "Read the user’s email address.",
+              "offline_access": "Request refresh tokens.",
+              "project:read": "Product scope: your API decides what it allows. Gate does not check it.",
+              "config:read": "Product scope: your API decides what it allows. Gate does not check it.",
+              "usage:write": "Product scope: your API decides what it allows. Gate does not check it.",
+              "billing:manage": "Product scope: your API decides what it allows. Gate does not check it."
             }
           }
         }
@@ -313,6 +309,12 @@
           "description": {
             "type": "string"
           },
+          "mcpResource": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
           "archivedAt": {
             "type": [
               "string",
@@ -335,6 +337,7 @@
           "name",
           "slug",
           "description",
+          "mcpResource",
           "archivedAt",
           "createdAt",
           "updatedAt"
@@ -395,115 +398,6 @@
           "name",
           "createdAt",
           "updatedAt"
-        ]
-      },
-      "ServiceAccount": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "environmentId": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "uuid",
-            "description": "Pins the account to a single environment"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "disabledAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "projectId",
-          "environmentId",
-          "name",
-          "description",
-          "disabledAt",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "ServiceAccountCredential": {
-        "type": "object",
-        "properties": {
-          "account": {
-            "$ref": "#/components/schemas/ServiceAccount"
-          },
-          "key": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "prefix": {
-                "type": "string"
-              },
-              "expiresAt": {
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "format": "date-time"
-              }
-            },
-            "required": [
-              "id",
-              "prefix",
-              "expiresAt"
-            ]
-          },
-          "apiKey": {
-            "type": "string",
-            "description": "Raw `gate_sk_…` key. Returned once and never recoverable."
-          }
-        },
-        "required": [
-          "account",
-          "key",
-          "apiKey"
-        ]
-      },
-      "ServiceAccountDisabled": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "disabled": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "id",
-          "disabled"
         ]
       },
       "ConfigEntrySummary": {
@@ -674,120 +568,6 @@
           "kind",
           "version",
           "value"
-        ]
-      },
-      "ProjectRole": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "projectId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "slug": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "permissions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "`resource:action` strings, or `*` for all"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "projectId",
-          "name",
-          "slug",
-          "description",
-          "permissions",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "RoleBinding": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "roleId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "principalType": {
-            "type": "string",
-            "enum": [
-              "user",
-              "service_account"
-            ]
-          },
-          "principalId": {
-            "type": "string"
-          },
-          "expiresAt": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "roleId",
-          "principalType",
-          "principalId",
-          "expiresAt",
-          "createdAt"
-        ]
-      },
-      "AuthorizationDecision": {
-        "type": "object",
-        "properties": {
-          "allowed": {
-            "type": "boolean"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Slugs of the roles bound to the principal"
-          },
-          "decisionId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Correlation id for this evaluation"
-          }
-        },
-        "required": [
-          "allowed",
-          "roles",
-          "decisionId"
         ]
       },
       "UsageEventReceipt": {
@@ -1062,10 +842,7 @@
         ]
       },
       "StripeConnection": {
-        "type": [
-          "object",
-          "null"
-        ],
+        "type": "object",
         "properties": {
           "id": {
             "type": "string",
@@ -1304,6 +1081,107 @@
         "required": [
           "received",
           "duplicate"
+        ]
+      },
+      "APIKey": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "prefix": {
+            "type": "string",
+            "description": "Public part of the key: `gate_sk_{prefix}_…`"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "config:read",
+                "config:write",
+                "usage:read",
+                "usage:write",
+                "billing:read",
+                "billing:write",
+                "users:write",
+                "*"
+              ]
+            }
+          },
+          "environmentId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Limits the key to one environment; null allows every environment"
+          },
+          "expiresAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "lastUsedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "revokedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "name",
+          "description",
+          "prefix",
+          "scopes",
+          "environmentId",
+          "expiresAt",
+          "lastUsedAt",
+          "revokedAt",
+          "createdAt"
+        ]
+      },
+      "CreatedAPIKey": {
+        "type": "object",
+        "properties": {
+          "apiKey": {
+            "$ref": "#/components/schemas/APIKey"
+          },
+          "secret": {
+            "type": "string",
+            "description": "Raw `gate_sk_…` key. Returned once and never recoverable."
+          }
+        },
+        "required": [
+          "apiKey",
+          "secret"
         ]
       },
       "AnalyticsSummary": {
@@ -2228,39 +2106,6 @@
           "id",
           "name",
           "slug",
-          "createdAt"
-        ]
-      },
-      "AuthOrganizationRole": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
-          },
-          "organizationId": {
-            "type": "string"
-          },
-          "role": {
-            "type": "string"
-          },
-          "permission": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "organizationId",
-          "role",
-          "permission",
           "createdAt"
         ]
       },
@@ -3620,6 +3465,15 @@
                   "description": {
                     "type": "string",
                     "maxLength": 500
+                  },
+                  "mcpResource": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 2048,
+                    "description": "The project's MCP server URL (an OAuth protected resource). MCP clients registered through Client ID Metadata Documents may request tokens for it and sign in under this project. Null or empty clears it.",
+                    "example": "https://api.example.com/mcp"
                   }
                 }
               }
@@ -3932,369 +3786,6 @@
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Project"
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Permission denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/projects/{projectId}/service-accounts": {
-      "get": {
-        "operationId": "listServiceAccounts",
-        "tags": [
-          "Service accounts"
-        ],
-        "summary": "List service accounts",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true,
-            "name": "projectId",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ServiceAccount"
-                      }
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Permission denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "createServiceAccount",
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "tags": [
-          "Service accounts"
-        ],
-        "summary": "Create a service account and one-time API key",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true,
-            "name": "projectId",
-            "in": "path"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "minLength": 2,
-                    "maxLength": 80
-                  },
-                  "description": {
-                    "type": "string",
-                    "maxLength": 500,
-                    "default": ""
-                  },
-                  "environmentId": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "scopes": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^[a-z*][a-z0-9:*_-]*$"
-                    },
-                    "minItems": 1,
-                    "maxItems": 30
-                  },
-                  "expiresAt": {
-                    "type": "string",
-                    "format": "date-time"
-                  }
-                },
-                "required": [
-                  "name",
-                  "scopes"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/ServiceAccountCredential"
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Permission denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/projects/{projectId}/service-accounts/{accountId}/disable": {
-      "post": {
-        "operationId": "disableServiceAccount",
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "tags": [
-          "Service accounts"
-        ],
-        "summary": "Disable a service account and all of its API keys",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true,
-            "name": "projectId",
-            "in": "path"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true,
-            "name": "accountId",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/ServiceAccountDisabled"
                     }
                   },
                   "required": [
@@ -4736,7 +4227,7 @@
         "tags": [
           "Configuration"
         ],
-        "summary": "Read one config value; secrets require reveal permission or a scoped service key",
+        "summary": "Read one config value; secrets require reveal permission or an API key with config:read",
         "parameters": [
           {
             "schema": {
@@ -4875,507 +4366,6 @@
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/ConfigEntry"
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Permission denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/projects/{projectId}/roles": {
-      "get": {
-        "operationId": "listProjectRoles",
-        "tags": [
-          "RBAC"
-        ],
-        "summary": "List project roles",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true,
-            "name": "projectId",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ProjectRole"
-                      }
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Permission denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "createProjectRole",
-        "tags": [
-          "RBAC"
-        ],
-        "summary": "Create a project role",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true,
-            "name": "projectId",
-            "in": "path"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "minLength": 2,
-                    "maxLength": 80
-                  },
-                  "slug": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string",
-                    "maxLength": 500,
-                    "default": ""
-                  },
-                  "permissions": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "pattern": "^(\\*|[a-z][a-z0-9_-]*:[a-z][a-z0-9_-]*)$"
-                    },
-                    "maxItems": 100
-                  }
-                },
-                "required": [
-                  "name",
-                  "permissions"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/ProjectRole"
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Permission denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/projects/{projectId}/role-bindings": {
-      "post": {
-        "operationId": "createRoleBinding",
-        "description": "Idempotently create or update a role/principal binding. Repeating the same binding returns its existing ID.",
-        "tags": [
-          "RBAC"
-        ],
-        "summary": "Bind a role to a user or service account",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true,
-            "name": "projectId",
-            "in": "path"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "roleId": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "principalType": {
-                    "type": "string",
-                    "enum": [
-                      "user",
-                      "service_account"
-                    ]
-                  },
-                  "principalId": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "expiresAt": {
-                    "type": "string",
-                    "format": "date-time"
-                  }
-                },
-                "required": [
-                  "roleId",
-                  "principalType",
-                  "principalId"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/RoleBinding"
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Permission denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/authorize": {
-      "post": {
-        "operationId": "authorize",
-        "tags": [
-          "RBAC"
-        ],
-        "summary": "Evaluate a project permission",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "projectId": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "principalType": {
-                    "type": "string",
-                    "enum": [
-                      "user",
-                      "service_account"
-                    ]
-                  },
-                  "principalId": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "permission": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                },
-                "required": [
-                  "projectId",
-                  "principalType",
-                  "principalId",
-                  "permission"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AuthorizationDecision"
                     }
                   },
                   "required": [
@@ -5725,7 +4715,7 @@
             "cookieAuth": []
           }
         ],
-        "summary": "List project OIDC clients",
+        "summary": "List project OAuth clients",
         "parameters": [
           {
             "schema": {
@@ -5831,7 +4821,7 @@
             "cookieAuth": []
           }
         ],
-        "summary": "Create an OIDC client; the client secret is returned only once",
+        "summary": "Create an OAuth client; the client secret is returned only once",
         "parameters": [
           {
             "schema": {
@@ -6011,7 +5001,7 @@
             "cookieAuth": []
           }
         ],
-        "summary": "Disable an OIDC client and reject new grants",
+        "summary": "Disable an OAuth client and reject new grants",
         "parameters": [
           {
             "schema": {
@@ -6115,6 +5105,145 @@
       }
     },
     "/api/v1/environments/{environmentId}/stripe-connection": {
+      "patch": {
+        "tags": [
+          "Billing"
+        ],
+        "operationId": "updateStripeConnection",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "summary": "Update Stripe settings, preserving omitted secrets",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "environmentId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "secretKey": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "webhookSecret": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "publishableKey": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "accountId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "livemode": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/StripeConnection"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "Billing"
@@ -6141,7 +5270,17 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/StripeConnection"
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/StripeConnection"
+                        },
+                        {
+                          "type": [
+                            "object",
+                            "null"
+                          ]
+                        }
+                      ]
                     }
                   },
                   "required": [
@@ -6279,6 +5418,162 @@
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/StripeConnection"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/{projectId}/billing/plans/{planId}": {
+      "patch": {
+        "tags": [
+          "Billing"
+        ],
+        "operationId": "updateBillingPlan",
+        "summary": "Update a billing plan without changing its key",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "planId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 80
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "stripePriceId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "entitlements": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "active": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BillingPlan"
                     }
                   },
                   "required": [
@@ -7098,6 +6393,488 @@
         }
       }
     },
+    "/api/v1/projects/{projectId}/api-keys": {
+      "get": {
+        "operationId": "listAPIKeys",
+        "tags": [
+          "API keys"
+        ],
+        "summary": "List a project's API keys",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/APIKey"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createAPIKey",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "tags": [
+          "API keys"
+        ],
+        "summary": "Create an API key",
+        "description": "The raw key is returned once, in `secret`. Gate stores only a digest.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 80
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 500,
+                    "default": ""
+                  },
+                  "environmentId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "config:read",
+                        "config:write",
+                        "usage:read",
+                        "usage:write",
+                        "billing:read",
+                        "billing:write",
+                        "users:write",
+                        "*"
+                      ]
+                    },
+                    "minItems": 1
+                  },
+                  "expiresAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "name",
+                  "scopes"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CreatedAPIKey"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/{projectId}/api-keys/{keyId}": {
+      "get": {
+        "operationId": "getAPIKey",
+        "tags": [
+          "API keys"
+        ],
+        "summary": "Read an API key",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "keyId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APIKey"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/{projectId}/api-keys/{keyId}/revoke": {
+      "post": {
+        "operationId": "revokeAPIKey",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "tags": [
+          "API keys"
+        ],
+        "summary": "Revoke an API key",
+        "description": "Takes effect immediately and cannot be undone. Repeating it is a no-op.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "keyId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APIKey"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/projects/{projectId}/billing/subjects/state": {
       "post": {
         "operationId": "getSubjectsPremiumState",
@@ -7873,6 +7650,123 @@
                       },
                       "required": [
                         "removed"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Permission denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "restoreSubjectProjectAccess",
+        "tags": [
+          "Subjects"
+        ],
+        "summary": "Restore a subject's product access after removal",
+        "description": "Clears the marker left by removing a subject's access, so the subject can start checkout again. Idempotent.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "projectId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "required": true,
+            "name": "subjectId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project access restored",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "restored": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "restored"
                       ]
                     }
                   },
@@ -17256,737 +17150,6 @@
         "summary": "Get active member role"
       }
     },
-    "/api/auth/organization/create-role": {
-      "post": {
-        "tags": [
-          "Auth / Organization"
-        ],
-        "operationId": "authPostOrganizationCreateRole",
-        "security": [
-          {
-            "cookieAuth": []
-          },
-          {}
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "organizationId": {
-                    "type": "string"
-                  },
-                  "role": {
-                    "type": "string",
-                    "description": "The name of the role to create"
-                  },
-                  "permission": {
-                    "type": "object",
-                    "propertyNames": {
-                      "type": "string"
-                    },
-                    "additionalProperties": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "The permission to assign to the role"
-                  },
-                  "additionalFields": {
-                    "type": "object",
-                    "properties": {}
-                  }
-                },
-                "required": [
-                  "role",
-                  "permission"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Bad Request. Usually due to missing parameters, or invalid parameters."
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Unauthorized. Due to missing or invalid authentication."
-          },
-          "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Forbidden. You do not have permission to access this resource or to perform this action."
-          },
-          "404": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Not Found. The requested resource was not found."
-          },
-          "429": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Too Many Requests. You have exceeded the rate limit. Try again later."
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Internal Server Error. This is a problem with the server that you cannot fix."
-          }
-        },
-        "summary": "Create role"
-      }
-    },
-    "/api/auth/organization/delete-role": {
-      "post": {
-        "tags": [
-          "Auth / Organization"
-        ],
-        "operationId": "authPostOrganizationDeleteRole",
-        "security": [
-          {
-            "cookieAuth": []
-          },
-          {}
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "type": "object",
-                    "properties": {
-                      "organizationId": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  {
-                    "anyOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "roleName": {
-                            "type": "string",
-                            "minLength": 1,
-                            "description": "The name of the role to delete"
-                          }
-                        },
-                        "required": [
-                          "roleName"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "roleId": {
-                            "type": "string",
-                            "minLength": 1,
-                            "description": "The id of the role to delete"
-                          }
-                        },
-                        "required": [
-                          "roleId"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Bad Request. Usually due to missing parameters, or invalid parameters."
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Unauthorized. Due to missing or invalid authentication."
-          },
-          "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Forbidden. You do not have permission to access this resource or to perform this action."
-          },
-          "404": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Not Found. The requested resource was not found."
-          },
-          "429": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Too Many Requests. You have exceeded the rate limit. Try again later."
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Internal Server Error. This is a problem with the server that you cannot fix."
-          }
-        },
-        "summary": "Delete role"
-      }
-    },
-    "/api/auth/organization/list-roles": {
-      "get": {
-        "tags": [
-          "Auth / Organization"
-        ],
-        "operationId": "authGetOrganizationListRoles",
-        "security": [
-          {
-            "cookieAuth": []
-          },
-          {}
-        ],
-        "parameters": [],
-        "responses": {
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Bad Request. Usually due to missing parameters, or invalid parameters."
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Unauthorized. Due to missing or invalid authentication."
-          },
-          "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Forbidden. You do not have permission to access this resource or to perform this action."
-          },
-          "404": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Not Found. The requested resource was not found."
-          },
-          "429": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Too Many Requests. You have exceeded the rate limit. Try again later."
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Internal Server Error. This is a problem with the server that you cannot fix."
-          }
-        },
-        "summary": "List roles"
-      }
-    },
-    "/api/auth/organization/get-role": {
-      "get": {
-        "tags": [
-          "Auth / Organization"
-        ],
-        "operationId": "authGetOrganizationGetRole",
-        "security": [
-          {
-            "cookieAuth": []
-          },
-          {}
-        ],
-        "parameters": [],
-        "responses": {
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Bad Request. Usually due to missing parameters, or invalid parameters."
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Unauthorized. Due to missing or invalid authentication."
-          },
-          "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Forbidden. You do not have permission to access this resource or to perform this action."
-          },
-          "404": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Not Found. The requested resource was not found."
-          },
-          "429": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Too Many Requests. You have exceeded the rate limit. Try again later."
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Internal Server Error. This is a problem with the server that you cannot fix."
-          }
-        },
-        "summary": "Get role"
-      }
-    },
-    "/api/auth/organization/update-role": {
-      "post": {
-        "tags": [
-          "Auth / Organization"
-        ],
-        "operationId": "authPostOrganizationUpdateRole",
-        "security": [
-          {
-            "cookieAuth": []
-          },
-          {}
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "type": "object",
-                    "properties": {
-                      "organizationId": {
-                        "type": "string"
-                      },
-                      "data": {
-                        "type": "object",
-                        "properties": {
-                          "permission": {
-                            "type": "object",
-                            "propertyNames": {
-                              "type": "string"
-                            },
-                            "additionalProperties": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "roleName": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    "required": [
-                      "data"
-                    ]
-                  },
-                  {
-                    "anyOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "roleName": {
-                            "type": "string",
-                            "minLength": 1,
-                            "description": "The name of the role to update"
-                          }
-                        },
-                        "required": [
-                          "roleName"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "roleId": {
-                            "type": "string",
-                            "minLength": 1,
-                            "description": "The id of the role to update"
-                          }
-                        },
-                        "required": [
-                          "roleId"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Bad Request. Usually due to missing parameters, or invalid parameters."
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "message"
-                  ]
-                }
-              }
-            },
-            "description": "Unauthorized. Due to missing or invalid authentication."
-          },
-          "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Forbidden. You do not have permission to access this resource or to perform this action."
-          },
-          "404": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Not Found. The requested resource was not found."
-          },
-          "429": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Too Many Requests. You have exceeded the rate limit. Try again later."
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Internal Server Error. This is a problem with the server that you cannot fix."
-          }
-        },
-        "summary": "Update role"
-      }
-    },
     "/api/auth/organization/has-permission": {
       "post": {
         "tags": [
@@ -18460,6 +17623,16 @@
               "type": "string"
             },
             "description": "Preferred social provider: github, google, or apple. The provider must be enabled for this client’s project."
+          },
+          {
+            "name": "resource",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "RFC 8707 resource indicator. Required for clients identified by a Client ID Metadata Document, and must name a configured MCP server."
           }
         ],
         "responses": {

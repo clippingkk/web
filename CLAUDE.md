@@ -51,7 +51,8 @@ which stores the session in Redis and sets the HttpOnly `ck-session` cookie.
 
 - Server components: `getViewer()` / `requireViewer()` / `requireViewerRoute()` (`src/server/data/`)
 - Build sign-in links with `authHref(next)` so readers come back to where they were
-- Premium status and admin rights come from Gate (`premiumEndAt`, `isAdmin` on the viewer)
+- Premium status comes from Gate (`premiumEndAt`); administrators are the local user ids in
+  `ROOT_USERS` (`canAdmin`, `isAdmin` on the viewer). Gate keeps no product roles or permissions
 
 ## Key Patterns
 

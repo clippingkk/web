@@ -46,7 +46,7 @@ Every request needs `Authorization: Bearer <token>`. Two kinds of token are acce
      the request gets `403` rather than a new challenge, so the client doesn't loop through
      sign-in.
 
-Both paths also check Gate's `profile:read` permission. Requests are limited to 120 per minute
+Both paths refuse a deleted account. Requests are limited to 120 per minute
 per reader. A browser `Origin` must be `APP_ORIGIN` or one of `CORS_ALLOWED_ORIGINS`.
 
 ### OAuth discovery
