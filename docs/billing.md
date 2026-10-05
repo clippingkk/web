@@ -74,13 +74,15 @@ REST errors now carry `code` (for example `PREMIUM_REQUIRED`, `ALREADY_PREMIUM`,
 
 ### App Store Connect
 
+The iOS app is the update to the existing ClippingKK listing: Apple ID `1537830952`, bundle ID `com.annatarhe.clippingkk.clippingkk-ios`.
+
 1. **Subscription group.** Create an auto-renewable subscription group, "ClippingKK Premium", containing:
    - `com.annatarhe.clippingkk.premium.monthly`
    - `com.annatarhe.clippingkk.premium.yearly`
 
    Leave Family Sharing off.
 2. **Notification URLs.** Set App Store Server Notifications **Version 2** for both Production and Sandbox to `https://clippingkk.annatarhe.com/api/billing/apple/notifications`.
-3. **Apple ID.** Copy the app's Apple ID (App Information) into `APPLE_IAP_APP_APPLE_ID`.
+3. **Apple ID.** `APPLE_IAP_APP_APPLE_ID` is the app's Apple ID (App Information), `1537830952`. It is also the default.
 
 ### ClippingKK
 
@@ -88,8 +90,8 @@ REST errors now carry `code` (for example `PREMIUM_REQUIRED`, `ALREADY_PREMIUM`,
 GATE_PROJECT_ID=...
 GATE_ENVIRONMENT_ID=...            # a UUID; required for every billing call
 GATE_API_KEY=...
-APPLE_IAP_BUNDLE_ID=com.annatarhe.clippingkk.ClippingKK-N1
-APPLE_IAP_APP_APPLE_ID=...         # required to verify production purchases
+APPLE_IAP_BUNDLE_ID=com.annatarhe.clippingkk.clippingkk-ios
+APPLE_IAP_APP_APPLE_ID=1537830952  # required to verify production purchases
 APPLE_IAP_PRODUCT_IDS=com.annatarhe.clippingkk.premium.monthly,com.annatarhe.clippingkk.premium.yearly
 APPLE_IAP_ALLOW_SANDBOX=1
 ```

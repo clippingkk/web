@@ -56,7 +56,7 @@ const purchase = {
 beforeEach(() => {
   state.env = {
     NODE_ENV: 'production',
-    APPLE_IAP_BUNDLE_ID: 'com.annatarhe.clippingkk.ClippingKK-N1',
+    APPLE_IAP_BUNDLE_ID: 'com.annatarhe.clippingkk.clippingkk-ios',
     APPLE_IAP_APP_APPLE_ID: '1234567890',
     APPLE_IAP_PRODUCT_IDS:
       'com.annatarhe.clippingkk.premium.monthly, com.annatarhe.clippingkk.premium.yearly',
@@ -89,7 +89,7 @@ it('verifies a sandbox purchase of one of our products', async () => {
   expect([online, environment, bundle]).toEqual([
     true,
     'Sandbox',
-    'com.annatarhe.clippingkk.ClippingKK-N1',
+    'com.annatarhe.clippingkk.clippingkk-ios',
   ])
 })
 
