@@ -57,9 +57,9 @@ const envSchema = z.object({
   APPLE_IAP_BUNDLE_ID: z
     .string()
     .min(1)
-    .default('com.annatarhe.clippingkk.ClippingKK-N1'),
+    .default('com.annatarhe.clippingkk.clippingkk-ios'),
   // The app's numeric Apple ID; required to verify production purchases.
-  APPLE_IAP_APP_APPLE_ID: z.string().regex(/^\d*$/).default(''),
+  APPLE_IAP_APP_APPLE_ID: z.string().regex(/^\d*$/).default('1537830952'),
   APPLE_IAP_PRODUCT_IDS: z
     .string()
     .default(
