@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.4](https://github.com/clippingkk/web/compare/v5.19.3...v5.19.4) (2026-10-05)
+
+
+### Bug Fixes
+
+* **billing:** verify App Store purchases for the ClippingKK store app ([5149300](https://github.com/clippingkk/web/commit/514930017aa5ccd878d22d4b461165b6fe8e0dce))
+* **billing:** verify App Store purchases for the ClippingKK store app ([4b9d1e2](https://github.com/clippingkk/web/commit/4b9d1e2f5dcb80879f52e5c2fa7c50aab6da7538))
+
 ## [5.19.3](https://github.com/clippingkk/web/compare/v5.19.2...v5.19.3) (2026-10-03)
 
 
