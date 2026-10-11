@@ -5,15 +5,21 @@ import '@fontsource/literata/400-italic.css'
 import '@fontsource/literata/700.css'
 import 'lxgw-wenkai-webfont/lxgwwenkai-regular.css'
 import 'lxgw-wenkai-webfont/lxgwwenkai-bold.css'
+import Button from '@annatarhe/lake-ui/button'
+import TextareaField from '@annatarhe/lake-ui/form-textarea-field'
 import Modal from '@annatarhe/lake-ui/modal'
+import Skeleton from '@annatarhe/lake-ui/skeleton'
 import FileSaver from 'file-saver'
-import { useEffect, useRef, useState } from 'react'
+import { Download, Shuffle } from 'lucide-react'
+import { type ReactNode, useEffect, useId, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { APP_URL_ORIGIN } from '@/constants/config'
 import { useTranslation } from '@/i18n/client'
+import { cn } from '@/lib/utils'
 import { resolveMediaUrl } from '@/utils/image'
 
+import { NOTE_MAX_LENGTH } from './poster-text'
 import {
   capturePoster,
   decodeImages,
@@ -24,11 +30,51 @@ import {
 import SharePoster, { type PosterData } from './share-poster'
 import ThemePicker from './theme-picker'
 import { Theme } from './theme.config'
+import { useBookHighlights } from './use-book-highlights'
 
-function PosterSession({ data: initialData }: { data: PosterData }) {
+function PanelSection({
+  title,
+  titleId,
+  action,
+  children,
+}: {
+  title: string
+  titleId?: string
+  action?: ReactNode
+  children: ReactNode
+}) {
+  return (
+    <section className="flex flex-col gap-3">
+      <div className="flex min-h-8 items-center justify-between gap-3">
+        <h3 id={titleId} className="type-eyebrow">
+          {title}
+        </h3>
+        {action}
+      </div>
+      {children}
+    </section>
+  )
+}
+
+function PosterSession({
+  data: initialData,
+  note,
+  onNoteChange,
+}: {
+  data: PosterData
+  note: string
+  onNoteChange: (note: string) => void
+}) {
   // SharePreview remounts this session whenever its serialized content changes.
   const [data] = useState(initialData)
   const { t, i18n } = useTranslation()
+  const noteId = useId()
+  const highlights = useBookHighlights({
+    bookId: data.book.doubanId,
+    uid: data.uid,
+    total: data.clippingsCount ?? 0,
+    enabled: !data.clipping,
+  })
   const [theme, setTheme] = useState(Theme.young)
   const [images, setImages] = useState<Record<string, string>>({})
   const [ready, setReady] = useState(false)
@@ -114,8 +160,10 @@ function PosterSession({ data: initialData }: { data: PosterData }) {
     return () => observer.disconnect()
   }, [])
 
+  const canSave = ready && !error && highlights.status !== 'loading'
+
   async function save() {
-    if (busy.current || !ready || error || !poster.current) return
+    if (busy.current || !canSave || !poster.current) return
     busy.current = true
     setSaving(true)
     setError('')
@@ -174,43 +222,130 @@ function PosterSession({ data: initialData }: { data: PosterData }) {
                   ? 'app.sharePoster.clippingLabel'
                   : 'app.sharePoster.bookLabel'
               )}
+              note={note}
+              noteLabel={t('app.sharePoster.noteLabel')}
+              highlights={highlights.highlights}
+              highlightsLabel={t('app.sharePoster.highlightsLabel')}
             />
           </div>
         </div>
       </div>
-      <aside className="flex min-w-0 flex-1 flex-col gap-5 md:min-w-48">
-        <h3 className="text-lg font-bold">{t('app.sharePoster.theme')}</h3>
-        <ThemePicker current={theme} onChange={setTheme} disabled={saving} />
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          {t('app.sharePoster.hint')}
-        </p>
-        {!ready && !error && <output>{t('app.common.loading')}</output>}
-        {error && (
-          <div role="alert" className="text-sm text-red-600 dark:text-red-400">
-            <p>{t(`app.sharePoster.${error}`)}</p>
-            <button
-              type="button"
-              className="mt-3 underline"
-              onClick={() => {
-                setImages({})
-                setReady(false)
-                setError('')
-                setAttempt((value) => value + 1)
-              }}
-            >
-              {t('app.sharePoster.retry')}
-            </button>
-          </div>
+      {/* Sticky so Save stays in reach while a tall poster scrolls. */}
+      <aside className="flex min-w-0 flex-1 flex-col gap-7 md:sticky md:top-0 md:min-w-48 md:self-start">
+        <PanelSection title={t('app.sharePoster.theme')}>
+          <ThemePicker current={theme} onChange={setTheme} disabled={saving} />
+        </PanelSection>
+
+        {data.clipping ? null : (
+          <PanelSection
+            title={t('app.sharePoster.highlights')}
+            action={
+              highlights.status === 'ready' && highlights.canShuffle ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  leadingIcon={<Shuffle className="size-4" />}
+                  onClick={highlights.shuffle}
+                  disabled={saving}
+                >
+                  {t('app.sharePoster.shuffle')}
+                </Button>
+              ) : null
+            }
+          >
+            {highlights.status === 'loading' ? (
+              <Skeleton shape="text" lines={2} />
+            ) : highlights.status === 'error' ? (
+              <div
+                role="alert"
+                className="text-lake-danger flex flex-wrap items-center gap-x-3 gap-y-1 text-sm"
+              >
+                <span>{t('app.sharePoster.highlightsError')}</span>
+                <Button variant="ghost" size="sm" onClick={highlights.retry}>
+                  {t('app.sharePoster.retry')}
+                </Button>
+              </div>
+            ) : (
+              <p className="type-meta">
+                {t(
+                  highlights.highlights.length
+                    ? 'app.sharePoster.highlightsHint'
+                    : 'app.sharePoster.highlightsEmpty'
+                )}
+              </p>
+            )}
+          </PanelSection>
         )}
-        <button
-          type="button"
-          disabled={!ready || saving || !!error}
-          aria-busy={saving}
-          onClick={save}
-          className="rounded-xl bg-indigo-600 px-6 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {saving ? t('app.common.loading') : t('app.clipping.save')}
-        </button>
+
+        <PanelSection title={t('app.sharePoster.noteTitle')} titleId={noteId}>
+          <TextareaField
+            aria-labelledby={noteId}
+            aria-describedby={`${noteId}-hint`}
+            rows={4}
+            maxLength={NOTE_MAX_LENGTH}
+            value={note}
+            onChange={(event) => onNoteChange(event.target.value)}
+            disabled={saving}
+            placeholder={t(
+              data.clipping
+                ? 'app.sharePoster.notePlaceholderClipping'
+                : 'app.sharePoster.notePlaceholderBook'
+            )}
+            className="font-reading leading-relaxed"
+          />
+          <div
+            id={`${noteId}-hint`}
+            className="type-meta flex items-baseline justify-between gap-3"
+          >
+            <span>{t('app.sharePoster.noteHint')}</span>
+            <span
+              className={cn(
+                'tabular-nums transition-colors duration-150',
+                note.length >= NOTE_MAX_LENGTH - 20 && 'text-lake-warning'
+              )}
+            >
+              {note.length}/{NOTE_MAX_LENGTH}
+            </span>
+          </div>
+        </PanelSection>
+
+        <div className="border-lake-line flex flex-col gap-3 border-t pt-5">
+          {error ? (
+            <div
+              role="alert"
+              className="text-lake-danger flex flex-wrap items-center gap-x-3 gap-y-1 text-sm"
+            >
+              <p>{t(`app.sharePoster.${error}`)}</p>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setImages({})
+                  setReady(false)
+                  setError('')
+                  setAttempt((value) => value + 1)
+                }}
+              >
+                {t('app.sharePoster.retry')}
+              </Button>
+            </div>
+          ) : null}
+          <Button
+            variant="primary"
+            fullWidth
+            leadingIcon={<Download className="size-4" />}
+            disabled={!canSave}
+            loading={saving}
+            onClick={save}
+          >
+            {t('app.clipping.save')}
+          </Button>
+          {!ready && !error ? (
+            <output className="type-meta">{t('app.common.loading')}</output>
+          ) : (
+            <p className="type-meta">{t('app.sharePoster.hint')}</p>
+          )}
+        </div>
       </aside>
     </section>
   )
@@ -226,12 +361,17 @@ export default function SharePreview({
   data: PosterData
 }) {
   const { t, i18n } = useTranslation()
+  // Lives outside the session so a draft survives closing the modal and is
+  // not part of the session key: typing never remounts the poster.
+  const [note, setNote] = useState('')
   return (
     <Modal isOpen={opened} onClose={onCancel} title={t('app.clipping.preview')}>
       {opened && (
         <PosterSession
           key={JSON.stringify([data, i18n.resolvedLanguage])}
           data={data}
+          note={note}
+          onNoteChange={setNote}
         />
       )}
     </Modal>

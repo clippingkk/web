@@ -11,10 +11,17 @@ type BookShareButtonProps = {
   book: WenquBook
   /** Owner of the shelf; the poster's QR code links to their book page. */
   uid: number
+  /** Sizes the random sample of highlights shown on the poster. */
+  clippingsCount: number
   label: string
 }
 
-function BookShareButton({ book, uid, label }: BookShareButtonProps) {
+function BookShareButton({
+  book,
+  uid,
+  clippingsCount,
+  label,
+}: BookShareButtonProps) {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -31,6 +38,7 @@ function BookShareButton({ book, uid, label }: BookShareButtonProps) {
         onCancel={() => setOpen(false)}
         book={book}
         uid={uid}
+        clippingsCount={clippingsCount}
       />
     </>
   )

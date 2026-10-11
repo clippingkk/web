@@ -35,7 +35,18 @@
       "exportError": "포스터를 내보낼 수 없습니다. 다시 시도하세요.",
       "tooLarge": "포스터가 브라우저 이미지 크기 제한을 초과했습니다.",
       "retry": "다시 시도",
-      "success": "이미지 저장 완료"
+      "success": "이미지 저장 완료",
+      "highlights": "하이라이트",
+      "highlightsHint": "이 책의 하이라이트 세 개가 무작위로 포스터에 담깁니다. 섞기로 다른 조합을 고를 수 있어요.",
+      "highlightsEmpty": "이 책에는 아직 공개된 하이라이트가 없어 포스터에 책 정보만 표시됩니다.",
+      "highlightsError": "하이라이트를 불러오지 못했습니다.",
+      "highlightsLabel": "하이라이트",
+      "shuffle": "섞기",
+      "noteTitle": "나의 감상",
+      "notePlaceholderClipping": "이 문장이 마음에 남은 이유는 무엇인가요?",
+      "notePlaceholderBook": "친구에게 이 책을 어떻게 소개하고 싶나요?",
+      "noteHint": "선택 사항 · 포스터에 표시됩니다",
+      "noteLabel": "나의 감상"
     }
   }
 }

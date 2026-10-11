@@ -102,4 +102,85 @@ describe('share posters', () => {
       expect(render(data)).toContain(book.summary)
     })
   }
+  it('sets a non-blank note in the script it is written in', () => {
+    const render = (note: string, clipping = true) =>
+      renderToStaticMarkup(
+        <SharePoster
+          data={
+            clipping
+              ? {
+                  ...data,
+                  clipping: {
+                    id: 8,
+                    title: '',
+                    content: 'Quote',
+                    createdAt: 'invalid',
+                    creator: { id: 9, name: 'Reader', avatar: '' },
+                  },
+                }
+              : data
+          }
+          theme={themes[0].id}
+          images={{}}
+          origin="https://example.com"
+          locale="en"
+          label="READ"
+          note={note}
+          noteLabel="MY NOTE"
+        />
+      )
+    expect(render('  \n ')).not.toContain('MY NOTE')
+    const english = render('  Worth a second read.\n\n\n\nTruly.  ')
+    expect(english).toContain('MY NOTE')
+    expect(english).toContain('Worth a second read.\n\nTruly.')
+    expect(english).toMatch(/font-style:italic[^>]*>Worth a second read/)
+    const chinese = render('值得再读一遍。', false)
+    expect(chinese).toContain('值得再读一遍。')
+    expect(chinese).not.toMatch(/font-style:italic[^>]*>值得/)
+  })
+  it('shows highlights on book posters with the shelf count', () => {
+    const summary = 'A long summary. '.repeat(40)
+    const highlights = [
+      { id: 1, content: 'First highlight.' },
+      { id: 2, content: '第二条书摘。' },
+      { id: 3, content: 'A very long highlight. '.repeat(30) },
+    ]
+    const render = (value: PosterData) =>
+      renderToStaticMarkup(
+        <SharePoster
+          data={value}
+          theme={themes[2].id}
+          images={{}}
+          origin="https://example.com"
+          locale="en"
+          label="BOOK"
+          highlights={highlights}
+          highlightsLabel="HIGHLIGHTS"
+        />
+      )
+    const html = render({
+      ...data,
+      book: { ...book, summary },
+      clippingsCount: 42,
+    })
+    expect(html).toContain('HIGHLIGHTS')
+    expect(html).toContain('3 / 42')
+    expect(html).toContain('First highlight.')
+    expect(html).toContain('第二条书摘。')
+    expect(html).not.toContain(highlights[2].content.trim())
+    expect(html).not.toContain(summary.trim())
+    expect(html.match(/<figure/g)).toHaveLength(3)
+    // A clipping poster never shows the book's highlights.
+    const quote = render({
+      ...data,
+      clipping: {
+        id: 8,
+        title: '',
+        content: 'Quote',
+        createdAt: 'invalid',
+        creator: { id: 9, name: 'Reader', avatar: '' },
+      },
+    })
+    expect(quote).not.toContain('HIGHLIGHTS')
+  })
 })

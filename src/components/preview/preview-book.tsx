@@ -7,14 +7,20 @@ export default function BookSharePreview({
   onCancel,
   book,
   uid,
+  clippingsCount,
 }: {
   opened: boolean
   onCancel: () => void
   book: WenquBook | null
   uid: number | null
+  clippingsCount?: number
 }) {
   if (!book || uid === null) return null
   return (
-    <SharePreview opened={opened} onCancel={onCancel} data={{ book, uid }} />
+    <SharePreview
+      opened={opened}
+      onCancel={onCancel}
+      data={{ book, uid, clippingsCount }}
+    />
   )
 }
