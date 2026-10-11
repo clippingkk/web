@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.4](https://github.com/clippingkk/web/compare/v5.19.3...v5.19.4) (2026-10-11)
+
+
+### Features
+
+* **share:** add random highlights and reader notes to share posters ([6cae5ac](https://github.com/clippingkk/web/commit/6cae5ac8cf7783da8a5c0f61f9b3f670ad3fb3ed))
+* **share:** add random highlights and reader notes to share posters ([39d9351](https://github.com/clippingkk/web/commit/39d935117a9f82b4cb4d2795f1b80ebf86447554))
+
+
+### Bug Fixes
+
+* **billing:** verify App Store purchases for the ClippingKK store app ([5149300](https://github.com/clippingkk/web/commit/514930017aa5ccd878d22d4b461165b6fe8e0dce))
+* **billing:** verify App Store purchases for the ClippingKK store app ([4b9d1e2](https://github.com/clippingkk/web/commit/4b9d1e2f5dcb80879f52e5c2fa7c50aab6da7538))
+
 ## [5.19.3](https://github.com/clippingkk/web/compare/v5.19.2...v5.19.3) (2026-10-03)
 
 
