@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.5](https://github.com/clippingkk/web/compare/v5.19.4...v5.19.5) (2026-10-11)
+
+
+### Bug Fixes
+
+* **test:** stop PGlite setup from racing vitest module mocks ([244b2af](https://github.com/clippingkk/web/commit/244b2af6515a6aa48ba04216c6185657012b315c))
+* **test:** stop PGlite setup from racing vitest module mocks ([7907114](https://github.com/clippingkk/web/commit/7907114b84529ac077113101b6058f53a8d8fc51))
+
 ## [5.19.4](https://github.com/clippingkk/web/compare/v5.19.3...v5.19.4) (2026-10-11)
 
 
