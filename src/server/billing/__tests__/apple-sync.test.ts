@@ -1,15 +1,10 @@
 // @vitest-environment node
 import { readFile, readdir } from 'node:fs/promises'
 
+import { PGlite } from '@electric-sql/pglite'
 import { eq } from 'drizzle-orm'
+import { drizzle } from 'drizzle-orm/pglite'
 import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest'
-const storage = vi.hoisted(async () => {
-  const { PGlite } = await import('@electric-sql/pglite')
-  const { drizzle } = await import('drizzle-orm/pglite')
-  const schema = await import('../../db/schema')
-  const pg = new PGlite()
-  return { pg, db: drizzle(pg, { schema }) }
-})
 const gate = vi.hoisted(() => ({ grant: vi.fn() }))
 vi.mock('../../db', () => ({ getDatabase: vi.fn() }))
 vi.mock('../gate', () => ({ upsertAppleGrant: gate.grant }))
@@ -23,6 +18,9 @@ import {
   ensureAppAccountToken,
 } from '../state'
 
+const pg = new PGlite()
+const db = drizzle(pg, { schema })
+
 const DAY = 86_400_000
 const now = Date.now()
 let reader: number
@@ -30,7 +28,6 @@ let other: number
 let token: string
 
 beforeAll(async () => {
-  const { pg, db } = await storage
   for (const name of (await readdir('drizzle'))
     .filter((n) => n.endsWith('.sql'))
     .sort())
@@ -38,7 +35,6 @@ beforeAll(async () => {
   vi.mocked(getDatabase).mockReturnValue({ db } as never)
 }, 30000)
 beforeEach(async () => {
-  const { pg, db } = await storage
   await pg.exec('TRUNCATE users, apple_subscriptions RESTART IDENTITY')
   gate.grant.mockReset()
   gate.grant.mockResolvedValue({})
@@ -63,7 +59,7 @@ beforeEach(async () => {
     .returning()
   token = await ensureAppAccountToken(reader)
 })
-afterAll(async () => (await storage).pg.close())
+afterAll(() => pg.close())
 
 function transaction(
   overrides: Partial<AppleTransaction> = {}
@@ -79,8 +75,7 @@ function transaction(
     ...overrides,
   } as AppleTransaction
 }
-const rows = async () =>
-  (await storage).db.select().from(schema.appleSubscriptions)
+const rows = async () => db.select().from(schema.appleSubscriptions)
 const lastGrant = () => gate.grant.mock.calls.at(-1)
 
 it('records a purchase and grants Premium until it expires', async () => {
@@ -219,7 +214,6 @@ it('finds the reader of a notification by subscription, then by token', async ()
 })
 
 it('does not find a deleted reader', async () => {
-  const { db } = await storage
   await db
     .update(schema.users)
     .set({ deletedAt: new Date() })

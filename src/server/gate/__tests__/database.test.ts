@@ -1,14 +1,10 @@
 // @vitest-environment node
 import { readFile, readdir } from 'node:fs/promises'
 
+import { PGlite } from '@electric-sql/pglite'
 import { eq } from 'drizzle-orm'
+import { drizzle } from 'drizzle-orm/pglite'
 import { beforeAll, beforeEach, afterAll, expect, it, vi } from 'vitest'
-const storage = vi.hoisted(async () => {
-  const { PGlite } = await import('@electric-sql/pglite')
-  const { drizzle } = await import('drizzle-orm/pglite')
-  const pg = new PGlite()
-  return { pg, db: drizzle(pg) }
-})
 const upstream = vi.hoisted(() => ({ request: vi.fn(), destroy: vi.fn() }))
 vi.mock('../../db', async () => ({ getDatabase: vi.fn() }))
 vi.mock('../client', () => ({
@@ -20,6 +16,9 @@ import { getDatabase } from '../../db'
 import * as schema from '../../db/schema'
 import { scheduleDeletion, processPendingDeletions } from '../deletion'
 import { ensureLocalUser } from '../user'
+
+const pg = new PGlite()
+const db = drizzle(pg)
 const identity = {
   gateUserId: 'gate-person',
   email: 'person@example.com',
@@ -27,7 +26,6 @@ const identity = {
   emailVerified: true,
 }
 beforeAll(async () => {
-  const { pg, db } = await storage
   for (const name of (await readdir('drizzle'))
     .filter((n) => n.endsWith('.sql'))
     .sort())
@@ -35,7 +33,6 @@ beforeAll(async () => {
   vi.mocked(getDatabase).mockReturnValue({ db } as never)
 }, 30000)
 beforeEach(async () => {
-  const { pg } = await storage
   await pg.exec(
     'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions, apple_subscriptions RESTART IDENTITY'
   )
@@ -43,9 +40,8 @@ beforeEach(async () => {
   upstream.request.mockResolvedValue({ removed: true })
   upstream.destroy.mockReset()
 })
-afterAll(async () => (await storage).pg.close())
+afterAll(() => pg.close())
 it('preserves numeric IDs, profiles and clippings while linking case-insensitive verified email', async () => {
-  const { db } = await storage
   const [original] = await db
     .insert(schema.users)
     .values({
@@ -75,7 +71,6 @@ it('preserves numeric IDs, profiles and clippings while linking case-insensitive
   ).toBe(original.id)
 })
 it('rejects case-colliding emails and never transfers another subject binding', async () => {
-  const { db } = await storage
   await db.insert(schema.users).values([
     { name: 'One', email: identity.email, pwd: '', checked: true },
     { name: 'Two', email: 'Person@Example.com', pwd: '', checked: true },
@@ -95,7 +90,6 @@ it('rejects case-colliding emails and never transfers another subject binding', 
   })
 })
 it('durably disables access, retries upstream failure, removes dependent data and permits fresh registration', async () => {
-  const { db } = await storage
   const user = await ensureLocalUser(identity)
   const [other] = await db
     .insert(schema.users)
@@ -174,7 +168,6 @@ it('retries member provisioning after Gate accepted the binding but local work r
     }
   )
   await expect(provisionMember(user.id)).rejects.toThrow('Response lost')
-  const { db } = await storage
   expect((await db.select().from(schema.users))[0].gateProvisionedAt).toBeNull()
   await provisionMember(user.id)
   expect(bindings.size).toBe(1)

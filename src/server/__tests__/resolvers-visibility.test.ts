@@ -1,6 +1,8 @@
 // @vitest-environment node
 import { readFile, readdir } from 'node:fs/promises'
 
+import { PGlite } from '@electric-sql/pglite'
+import { drizzle } from 'drizzle-orm/pglite'
 import {
   afterAll,
   beforeAll,
@@ -11,16 +13,11 @@ import {
   vi,
 } from 'vitest'
 
-const storage = vi.hoisted(async () => {
-  const { PGlite } = await import('@electric-sql/pglite')
-  const { drizzle } = await import('drizzle-orm/pglite')
-  const schema = await import('../db/schema')
-  const pg = new PGlite()
-  return { pg, db: drizzle(pg, { schema }) }
-})
-vi.mock('../db', () => ({ getDatabase: vi.fn() }))
+// No imports inside vi.hoisted: a dynamic import racing the static ones can
+// drain Vitest's pending-mock queue first, so `../db` loads unmocked.
+const getDatabaseMock = vi.hoisted(() => vi.fn())
+vi.mock('../db', () => ({ getDatabase: getDatabaseMock }))
 
-import { getDatabase } from '../db'
 import * as schema from '../db/schema'
 import type { Clipping, Comment } from '../db/schema'
 import { ApiError } from '../errors'
@@ -37,8 +34,10 @@ const as = (userId: number) => ({ userId }) as GraphQLContext
 /** Rows seeded in id order; `ids` maps the names used below to their ids. */
 const ids: Record<string, number> = {}
 
+const pg = new PGlite()
+const db = drizzle(pg, { schema })
+
 async function seed() {
-  const { db } = await storage
   await db.insert(schema.users).values(
     [OWNER, OTHER, READER].map((id) => ({
       id,
@@ -86,25 +85,21 @@ async function seed() {
 }
 
 beforeAll(async () => {
-  const { pg, db } = await storage
   for (const name of (await readdir('drizzle'))
     .filter((n) => n.endsWith('.sql'))
     .sort())
     await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
-  vi.mocked(getDatabase).mockReturnValue({ db } as never)
 }, 30000)
 beforeEach(async () => {
-  const { pg } = await storage
   await pg.exec(
     'TRUNCATE users, clippings, comments RESTART IDENTITY; ALTER SEQUENCE users_id_seq RESTART WITH 100'
   )
-  vi.mocked(getDatabase).mockReturnValue({ db: (await storage).db } as never)
+  getDatabaseMock.mockReturnValue({ db })
   await seed()
 })
-afterAll(async () => (await storage).pg.close())
+afterAll(() => pg.close())
 
 async function clipping(name: string) {
-  const { db } = await storage
   return (await db.query.clippings.findFirst({
     where: (table, { eq }) => eq(table.id, ids[name]),
   })) as Clipping
@@ -190,7 +185,6 @@ describe('reportYearly', () => {
 
 describe('comments', () => {
   async function comment(name: string) {
-    const { db } = await storage
     return (await db.query.comments.findFirst({
       where: (table, { eq }) => eq(table.id, ids[name]),
     })) as Comment
@@ -289,7 +283,6 @@ describe('Noun.clipping', () => {
 
 describe('search', () => {
   async function add(content: string) {
-    const { db } = await storage
     await db.insert(schema.clippings).values({
       title: 'Search',
       content,
@@ -329,7 +322,6 @@ describe('search', () => {
 
 describe('book', () => {
   it('is NOT_FOUND when the viewer can see none of its clippings', async () => {
-    const { db } = await storage
     await db.insert(schema.clippings).values({
       title: 'Hidden',
       content: 'hidden',
