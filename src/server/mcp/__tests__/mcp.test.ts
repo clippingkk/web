@@ -1,6 +1,8 @@
 // @vitest-environment node
 import { readFile, readdir } from 'node:fs/promises'
 
+import { PGlite } from '@electric-sql/pglite'
+import { drizzle } from 'drizzle-orm/pglite'
 import {
   afterAll,
   beforeAll,
@@ -11,13 +13,6 @@ import {
   vi,
 } from 'vitest'
 
-const storage = vi.hoisted(async () => {
-  const { PGlite } = await import('@electric-sql/pglite')
-  const { drizzle } = await import('drizzle-orm/pglite')
-  const schema = await import('../../db/schema')
-  const pg = new PGlite()
-  return { pg, db: drizzle(pg, { schema }) }
-})
 const { connection, rateLimit, wenquRequest } = vi.hoisted(() => ({
   connection: vi.fn(async () => {}),
   rateLimit: vi.fn(async () => ({ allowed: true, count: 1 })),
@@ -49,6 +44,9 @@ import {
   revokeMcpToken,
 } from '../tokens'
 
+const pg = new PGlite()
+const db = drizzle(pg, { schema })
+
 const OWNER = 1
 const OTHER = 2
 const BOOK = '12345678'
@@ -57,7 +55,6 @@ const ids: Record<string, number> = {}
 let token = ''
 
 async function seed() {
-  const { db } = await storage
   await db.insert(schema.users).values([
     {
       id: OWNER,
@@ -119,7 +116,6 @@ async function seed() {
 }
 
 beforeAll(async () => {
-  const { pg, db } = await storage
   for (const name of (await readdir('drizzle'))
     .filter((n) => n.endsWith('.sql'))
     .sort())
@@ -134,7 +130,6 @@ beforeEach(async () => {
   process.env.GATE_RESOURCE = ORIGIN
   process.env.CORS_ALLOWED_ORIGINS = ''
   resetServerEnvForTests()
-  const { pg, db } = await storage
   await pg.exec('TRUNCATE users, clippings, mcp_tokens RESTART IDENTITY')
   vi.mocked(getDatabase).mockReturnValue({ db } as never)
   rateLimit.mockResolvedValue({ allowed: true, count: 1 })
@@ -153,7 +148,7 @@ beforeEach(async () => {
   await seed()
   ;({ token } = await createMcpToken(OWNER, 'test'))
 })
-afterAll(async () => (await storage).pg.close())
+afterAll(() => pg.close())
 
 const META = {
   'io.modelcontextprotocol/protocolVersion': '2026-07-28',
@@ -467,7 +462,6 @@ describe('the other tools', () => {
 
 describe('personal access tokens', () => {
   it('stores only a hash and resolves live tokens', async () => {
-    const { db } = await storage
     const [row] = await db.select().from(schema.mcpTokens)
     expect(token).toMatch(/^ck_mcp_[A-Za-z0-9_-]{43}$/)
     expect(row.tokenHash).not.toContain(token.slice(7))
@@ -478,7 +472,6 @@ describe('personal access tokens', () => {
   })
 
   it('does not resolve expired tokens or tokens of deleted readers', async () => {
-    const { db } = await storage
     await db
       .update(schema.mcpTokens)
       .set({ expiresAt: new Date(Date.now() - 1000) })
