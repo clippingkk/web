@@ -89,6 +89,7 @@ async function BookHeader(props: BookHeaderProps) {
             <BookShareButton
               book={book}
               uid={owner.id}
+              clippingsCount={clippingsCount}
               label={t('book.share')}
             />
           ) : null}

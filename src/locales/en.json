@@ -35,7 +35,18 @@
       "exportError": "The poster could not be exported. Please try again.",
       "tooLarge": "This poster exceeds the browser’s image size limit.",
       "retry": "Retry",
-      "success": "Image saved"
+      "success": "Image saved",
+      "highlights": "Highlights",
+      "highlightsHint": "Three random highlights from this book appear on the poster. Shuffle for another set.",
+      "highlightsEmpty": "This book has no public highlights yet, so the poster shows the book alone.",
+      "highlightsError": "Couldn't load highlights.",
+      "highlightsLabel": "HIGHLIGHTS",
+      "shuffle": "Shuffle",
+      "noteTitle": "Your note",
+      "notePlaceholderClipping": "Why does this line stay with you?",
+      "notePlaceholderBook": "What would you tell a friend about this book?",
+      "noteHint": "Optional · shown on the poster",
+      "noteLabel": "MY NOTE"
     }
   }
 }

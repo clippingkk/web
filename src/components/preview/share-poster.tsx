@@ -5,6 +5,7 @@ import type { Clipping, User } from '@/schema/generated'
 import type { WenquBook } from '@/services/wenqu'
 
 import { isLatin, LATIN_STACK, posterFontFamily } from './poster-fonts'
+import { excerpt, HIGHLIGHT_WIDTH, tidyNote } from './poster-text'
 import { Theme, themes } from './theme.config'
 
 export type ShareClipping = Pick<
@@ -17,6 +18,150 @@ export type PosterData = {
   book: WenquBook
   uid: number
   clipping?: ShareClipping
+  /** Highlights in this reader's copy of the book (book posters only). */
+  clippingsCount?: number
+}
+export type PosterHighlight = { id: number; content: string }
+const NO_HIGHLIGHTS: readonly PosterHighlight[] = []
+
+type Palette = (typeof themes)[number]
+
+const textStyle: CSSProperties = {
+  whiteSpace: 'pre-wrap',
+  overflowWrap: 'anywhere',
+  margin: 0,
+}
+
+function eyebrowStyle(text: string, palette: Palette): CSSProperties {
+  return {
+    fontFamily: posterFontFamily(text),
+    // CJK glyphs read smaller than capitals at the same size.
+    fontSize: isLatin(text) ? 10.5 : 12,
+    fontWeight: 700,
+    letterSpacing: 1.5,
+    color: palette.accent,
+  }
+}
+
+function PosterNote({
+  note,
+  label,
+  palette,
+  style,
+}: {
+  note: string
+  label: string
+  palette: Palette
+  style?: CSSProperties
+}) {
+  return (
+    <section
+      style={{
+        background: palette.surface,
+        borderRadius: 14,
+        padding: '16px 18px',
+        ...style,
+      }}
+    >
+      <div style={eyebrowStyle(label, palette)}>{label}</div>
+      <p
+        style={{
+          ...textStyle,
+          fontFamily: posterFontFamily(note),
+          fontStyle: isLatin(note) ? 'italic' : 'normal',
+          fontSize: 16,
+          lineHeight: 1.75,
+          marginTop: 8,
+        }}
+      >
+        {note}
+      </p>
+    </section>
+  )
+}
+
+function PosterHighlights({
+  highlights,
+  total,
+  label,
+  palette,
+}: {
+  highlights: readonly PosterHighlight[]
+  total?: number
+  label: string
+  palette: Palette
+}) {
+  return (
+    <section
+      style={{
+        marginTop: 28,
+        paddingTop: 16,
+        borderTop: `1px solid ${palette.line}`,
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          gap: 12,
+        }}
+      >
+        <span style={eyebrowStyle(label, palette)}>{label}</span>
+        {total && total > highlights.length ? (
+          <span
+            style={{
+              fontSize: 11,
+              fontVariantNumeric: 'tabular-nums',
+              opacity: 0.7,
+            }}
+          >
+            {highlights.length} / {total}
+          </span>
+        ) : null}
+      </div>
+      {highlights.map((highlight, index) => {
+        const text = excerpt(highlight.content, HIGHLIGHT_WIDTH)
+        return (
+          <figure
+            key={highlight.id}
+            style={{
+              display: 'flex',
+              gap: 10,
+              margin: 0,
+              padding: '14px 0',
+              borderTop: index ? `1px solid ${palette.line}` : 'none',
+            }}
+          >
+            <span
+              aria-hidden="true"
+              style={{
+                color: palette.accent,
+                fontSize: 30,
+                fontWeight: 700,
+                lineHeight: 1,
+                height: 18,
+                flexShrink: 0,
+              }}
+            >
+              “
+            </span>
+            <p
+              style={{
+                ...textStyle,
+                fontFamily: posterFontFamily(text),
+                fontSize: 15,
+                lineHeight: 1.7,
+                minWidth: 0,
+              }}
+            >
+              {text}
+            </p>
+          </figure>
+        )
+      })}
+    </section>
+  )
 }
 
 export function posterLink(
@@ -35,6 +180,10 @@ export default function SharePoster({
   origin,
   locale,
   label,
+  note = '',
+  noteLabel = '',
+  highlights = NO_HIGHLIGHTS,
+  highlightsLabel = '',
   ref,
 }: {
   data: PosterData
@@ -43,16 +192,21 @@ export default function SharePoster({
   origin: string
   locale: string
   label: string
+  /** The sharer's own words, set under the quote or the book. */
+  note?: string
+  noteLabel?: string
+  highlights?: readonly PosterHighlight[]
+  highlightsLabel?: string
   ref?: Ref<HTMLDivElement>
 }) {
   const palette = themes.find((item) => item.id === theme) ?? themes[3]
   const { book, clipping } = data
   const date = clipping ? new Date(clipping.createdAt) : null
-  const textStyle: CSSProperties = {
-    whiteSpace: 'pre-wrap',
-    overflowWrap: 'anywhere',
-    margin: 0,
-  }
+  const noteText = tidyNote(note)
+  const hasHighlights = !clipping && highlights.length > 0
+  // A trimmed summary leaves the highlights room on a phone-length poster.
+  const summary =
+    book.summary && hasHighlights ? excerpt(book.summary, 180) : book.summary
   const dateText =
     date && !Number.isNaN(date.getTime())
       ? new Intl.DateTimeFormat(locale).format(date)
@@ -152,6 +306,14 @@ export default function SharePoster({
               </p>
             )}
           </div>
+          {noteText && (
+            <PosterNote
+              note={noteText}
+              label={noteLabel}
+              palette={palette}
+              style={{ marginBottom: 28 }}
+            />
+          )}
           <div
             style={{
               display: 'flex',
@@ -200,11 +362,11 @@ export default function SharePoster({
             <img
               src={images.cover}
               alt={book.title}
-              width={180}
+              width={hasHighlights ? 140 : 180}
               style={{
                 display: 'block',
                 height: 'auto',
-                margin: '32px auto',
+                margin: hasHighlights ? '28px auto' : '32px auto',
                 boxShadow: '10px 12px 0 rgba(0,0,0,0.15)',
               }}
             />
@@ -235,18 +397,34 @@ export default function SharePoster({
               {book.author}
             </p>
           )}
-          {book.summary && (
+          {summary && (
             <p
               style={{
                 ...textStyle,
-                fontFamily: posterFontFamily(book.summary),
+                fontFamily: posterFontFamily(summary),
                 fontSize: 16,
                 lineHeight: 1.85,
                 marginTop: 24,
               }}
             >
-              {book.summary}
+              {summary}
             </p>
+          )}
+          {hasHighlights && (
+            <PosterHighlights
+              highlights={highlights}
+              total={data.clippingsCount}
+              label={highlightsLabel}
+              palette={palette}
+            />
+          )}
+          {noteText && (
+            <PosterNote
+              note={noteText}
+              label={noteLabel}
+              palette={palette}
+              style={{ marginTop: hasHighlights ? 8 : 28 }}
+            />
           )}
         </>
       )}

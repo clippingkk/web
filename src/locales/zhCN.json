@@ -35,7 +35,18 @@
       "exportError": "海报导出失败，请重试。",
       "tooLarge": "海报超出了浏览器的图片尺寸限制。",
       "retry": "重试",
-      "success": "图片已保存"
+      "success": "图片已保存",
+      "highlights": "书摘",
+      "highlightsHint": "海报会随机展示这本书的三条书摘，点击“换一组”可以重新挑选。",
+      "highlightsEmpty": "这本书还没有公开的书摘，海报将只展示书籍信息。",
+      "highlightsError": "书摘加载失败。",
+      "highlightsLabel": "书摘",
+      "shuffle": "换一组",
+      "noteTitle": "写下感想",
+      "notePlaceholderClipping": "这句话为什么打动了你？",
+      "notePlaceholderBook": "你会怎样向朋友推荐这本书？",
+      "noteHint": "选填，会显示在海报上",
+      "noteLabel": "我的感想"
     }
   }
 }
