@@ -17,6 +17,7 @@ import {
   JOB_QUEUE_NAME,
   pendingAccountRemovalKey,
   queueConnection,
+  type EmailImportJob,
   type ExportJob,
 } from './queues'
 
@@ -122,6 +123,11 @@ async function handleJob(job: Job) {
     throw new Error(
       `Unsupported export destination: ${String(payload.destination)}`
     )
+  }
+
+  if (job.name === 'import-email') {
+    const { importEmail } = await import('../email-import/import')
+    return importEmail(job.data as EmailImportJob)
   }
 
   if (job.name === 'noun-cleanup') {

@@ -80,3 +80,23 @@ export function enqueueDestroyUser(uid: number, delay = 24 * 60 * 60 * 1000) {
 export function enqueueRemoveAccount(uid: number, delay = 24 * 60 * 60 * 1000) {
   return getJobQueue().add('remove-account', { uid }, { delay })
 }
+
+/** An `email.received` event from Resend; see docs/email-import.md. */
+export type EmailImportJob = {
+  emailId: string
+  from: string
+  to: string[]
+  receivedFor: string[]
+  subject: string
+  receivedAt: string
+}
+
+export function enqueueEmailImport(payload: EmailImportJob) {
+  return getJobQueue().add('import-email', payload, {
+    // Resend redelivers an event until it is acknowledged; one job per email.
+    // BullMQ refuses ':' in custom ids.
+    jobId: `email-import-${payload.emailId}`,
+    attempts: 5,
+    backoff: { type: 'exponential', delay: 30_000 },
+  })
+}

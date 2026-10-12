@@ -31,6 +31,7 @@ import {
   verifyToken,
 } from '../auth'
 import { userPremiumEndAt } from '../billing/premium-loader'
+import { insertClippings } from '../clippings/create'
 import {
   activeClipping,
   booksForUser,
@@ -295,47 +296,6 @@ async function createOrUpdateExternal(
   await db()
     .insert(externalAccounts)
     .values({ userId, ...values })
-}
-
-async function webhookForClippings(userId: number, created: Clipping[]) {
-  if (!created.length) return
-  const hook = await db().query.webHooks.findFirst({
-    where: and(eq(webHooks.owner, userId), eq(webHooks.step, 0)),
-  })
-  if (!hook) return
-  const start = new Date()
-  let status = 0
-  let responseBody = ''
-  let responseHeaders = '{}'
-  let errorMessage = ''
-  try {
-    const response = await fetch(hook.hookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(created),
-      signal: AbortSignal.timeout(15_000),
-    })
-    status = response.status
-    responseBody = (await response.text()).slice(0, 64_000)
-    responseHeaders = JSON.stringify(Object.fromEntries(response.headers))
-  } catch (error) {
-    errorMessage = error instanceof Error ? error.message : String(error)
-  }
-  await db()
-    .insert(webHookRecords)
-    .values({
-      requestMethod: 'POST',
-      requestUrl: hook.hookUrl,
-      requestHeaders: { 'Content-Type': 'application/json' },
-      requestBody: JSON.stringify(created),
-      responseStatus: status,
-      responseHeaders,
-      responseBody,
-      startTime: start,
-      endTime: new Date(),
-      errorMessage,
-      webHookRecords: hook.id,
-    })
 }
 
 function htmlEscape(value: string) {
@@ -860,41 +820,18 @@ export const resolvers: Record<string, Record<string, any>> = {
       context: GraphQLContext
     ) => {
       const userId = requiredUser(context)
-      const visible = args.visible ?? true
-      const globalNouns = await db()
-        .select({ id: nouns.id, noun: nouns.noun })
-        .from(nouns)
-        .where(eq(nouns.scope, 0))
-      const updatedAt = new Date()
-      const values = args.payload.map((item: Args) => {
-        const createdAt = new Date(item.createdAt)
-        return {
-          title: String(item.title).replace(/^[，,\s]+|[，,\s]+$/g, ''),
-          content: String(item.content).replace(/^[，,\s]+|[，,\s]+$/g, ''),
-          bookId: String(item.bookID),
-          pageAt: String(item.pageAt),
-          dataId: hashPassword(`${item.content}${item.pageAt}${userId}`),
-          seq: -1,
-          createdBy: userId,
-          visible,
-          nouns: globalNouns
-            .filter((noun) => item.content.includes(noun.noun))
-            .map((noun) => noun.id),
+      return insertClippings(
+        userId,
+        args.payload.map((item: Args) => ({
+          title: item.title,
+          content: item.content,
+          bookId: item.bookID,
+          pageAt: item.pageAt,
+          createdAt: item.createdAt,
           source: sourceFromEnum(item.source),
-          createdAt: Number.isNaN(createdAt.getTime()) ? new Date() : createdAt,
-          updatedAt,
-        }
-      })
-      const created = values.length
-        ? await db()
-            .insert(clippings)
-            .values(values)
-            .onConflictDoNothing()
-            .returning()
-        : []
-      void webhookForClippings(userId, created).catch(console.error)
-      await cacheDelete(`ck:books:${userId}`)
-      return created
+        })),
+        { visible: args.visible ?? true }
+      )
     },
     editClipping: async (_: unknown, args: Args, context: GraphQLContext) => {
       const clipping = await clippingById(args.id)

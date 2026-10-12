@@ -2,6 +2,7 @@ import EmptyState from '@annatarhe/lake-ui/empty-state'
 import { KeyRound } from 'lucide-react'
 import type { Metadata } from 'next'
 
+import CopyBlock from '@/components/settings/copy-block'
 import { SettingsSection } from '@/components/settings/settings-section'
 import { getTranslation } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
@@ -9,7 +10,6 @@ import { requireViewer } from '@/server/data/viewer'
 import { getServerEnv } from '@/server/env'
 import { listMcpTokens } from '@/server/mcp/tokens'
 
-import CopyBlock from './copy-block'
 import CreateMcpToken from './create-mcp-token'
 import McpTokenList from './mcp-token-list'
 

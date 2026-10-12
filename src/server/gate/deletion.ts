@@ -116,6 +116,13 @@ export async function processPendingDeletions() {
         )
       )
     await tx.delete(tables.clippings).where(eq(tables.clippings.createdBy, uid))
+    await tx
+      .delete(tables.readerNotes)
+      .where(eq(tables.readerNotes.userId, uid))
+    // A verified address left behind could never be bound by anyone else.
+    await tx
+      .delete(tables.emailBindings)
+      .where(eq(tables.emailBindings.userId, uid))
     await tx.delete(tables.devices).where(eq(tables.devices.userId, uid))
     await tx
       .delete(tables.externalAccounts)

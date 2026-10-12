@@ -170,17 +170,15 @@ export async function body<T>(request: Request): Promise<T> {
 }
 
 /**
- * A JSON body validated by `schema`, refusing anything over `maxBytes`. Bounds
- * even a chunked body instead of trusting Content-Length.
+ * The raw body of a request (or a fetched response) as UTF-8 text, refusing
+ * anything over `maxBytes`. Bounds even a chunked body instead of trusting
+ * Content-Length.
  */
-export async function boundedJson<T>(
-  request: Request,
-  schema: z.ZodType<T>,
+export async function boundedText(
+  message: Request | Response,
   maxBytes: number
-): Promise<T> {
-  if (!request.headers.get('content-type')?.startsWith('application/json'))
-    throw new ApiError('Expected JSON.', 415)
-  const reader = request.body?.getReader()
+): Promise<string> {
+  const reader = message.body?.getReader()
   if (!reader) throw new ApiError('Missing request body.', 400)
   const chunks: Uint8Array[] = []
   let size = 0
@@ -198,8 +196,20 @@ export async function boundedJson<T>(
   } finally {
     reader.releaseLock()
   }
+  return Buffer.concat(chunks).toString('utf8')
+}
+
+/** A JSON body validated by `schema`, refusing anything over `maxBytes`. */
+export async function boundedJson<T>(
+  request: Request,
+  schema: z.ZodType<T>,
+  maxBytes: number
+): Promise<T> {
+  if (!request.headers.get('content-type')?.startsWith('application/json'))
+    throw new ApiError('Expected JSON.', 415)
+  const text = await boundedText(request, maxBytes)
   try {
-    return schema.parse(JSON.parse(Buffer.concat(chunks).toString('utf8')))
+    return schema.parse(JSON.parse(text))
   } catch {
     throw new ApiError('Invalid request.', 400)
   }

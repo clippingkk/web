@@ -10,8 +10,15 @@
     "orders": "Subscription",
     "webhooks": "Webhooks",
     "mcp": "AI & MCP",
+    "email": "Email import",
+    "notes": "Notes",
     "exports": "Exports",
     "account": "Account"
+  },
+  "copy": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "failed": "Couldn't copy. Select the text and copy it manually."
   },
   "general": {
     "title": "General",
@@ -109,9 +116,6 @@
     "oauthDescription": "Clients that support MCP sign-in (such as Claude) only need the server URL. You approve access in the browser.",
     "tokenTitle": "Use an access token",
     "tokenDescription": "For clients that take a fixed header, create a token below and send it as a Bearer token.",
-    "copy": "Copy",
-    "copied": "Copied",
-    "copyFailed": "Couldn't copy. Select the text and copy it manually.",
     "tokens": {
       "title": "Access tokens",
       "description": "Each token can read your library until it expires or you revoke it. Treat it like a password.",
@@ -152,6 +156,79 @@
       "createdDescription": "This is the only time it is shown. If you lose it, revoke it and create a new one.",
       "done": "Done"
     }
+  },
+  "email": {
+    "title": "Import by email",
+    "description": "Email a Kindle notebook export to ClippingKK and its highlights are added to your library. Notes you typed in Kindle are kept under Notes.",
+    "address": "Send exports to",
+    "notConfiguredTitle": "Email import isn’t available yet",
+    "notConfiguredDescription": "This server has no import address configured.",
+    "stepsTitle": "From the Kindle app on iPhone or iPad",
+    "step1": "Open the book and go to its Notebook.",
+    "step2": "Export the notebook and choose to send it by email.",
+    "step3": "Send it to the address above from one of the verified addresses below. Highlights appear within a few minutes.",
+    "bindings": {
+      "title": "Your sending addresses",
+      "description": "Only mail from these addresses is imported. You can add up to {{max}}, and each one needs the code we email to it.",
+      "count": "{{count}} of {{max}}",
+      "add": "Add address",
+      "emptyTitle": "No sending addresses",
+      "emptyDescription": "Add the address your Kindle exports are sent from.",
+      "columns": {
+        "email": "Address",
+        "lastImport": "Last import",
+        "actions": "Actions"
+      },
+      "verified": "Verified",
+      "pending": "Waiting for code",
+      "never": "Never",
+      "verify": "Enter code",
+      "remove": "Remove",
+      "removeTitle": "Remove this address?",
+      "removeDescription": "Mail from {{email}} will no longer be imported.",
+      "confirmRemove": "Remove address",
+      "cancel": "Cancel",
+      "removed": "Address removed",
+      "removeFailed": "Couldn’t remove the address. Try again."
+    },
+    "add": {
+      "title": "Add a sending address",
+      "description": "We’ll email a 6-digit code to the address to confirm it’s yours.",
+      "email": "Email address",
+      "emailPlaceholder": "you@icloud.com",
+      "emailInvalid": "Enter a valid email address.",
+      "sendCode": "Send code",
+      "codeTitle": "Enter the code",
+      "codeDescription": "We sent a 6-digit code to {{email}}. It expires in 30 minutes.",
+      "code": "Code",
+      "codeInvalid": "Enter the 6 digits from the email.",
+      "submit": "Verify",
+      "resend": "Send a new code",
+      "resent": "New code sent",
+      "verified": "Address verified",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "INVALID_EMAIL": "Enter a valid email address.",
+      "ALREADY_VERIFIED": "This address is already verified.",
+      "EMAIL_ALREADY_BOUND": "This address is already used by another ClippingKK account.",
+      "TOO_MANY_EMAIL_BINDINGS": "You can add at most {{max}} addresses. Remove one first.",
+      "TOO_MANY_CODES": "Too many codes sent. Try again in an hour.",
+      "TOO_MANY_ATTEMPTS": "Too many wrong codes. Send a new one.",
+      "CODE_EXPIRED": "This code has expired. Send a new one.",
+      "INVALID_CODE": "That code isn’t right. Check the email and try again.",
+      "generic": "Something went wrong. Try again."
+    }
+  },
+  "notes": {
+    "title": "Notes",
+    "description": "Notes you typed in Kindle, imported with your notebook exports.",
+    "latest": "Showing your latest {{shown}} of {{total}} notes.",
+    "emptyTitle": "No notes yet",
+    "emptyDescription": "When you import a Kindle notebook by email, the notes you typed appear here.",
+    "location": "Location {{value}}",
+    "page": "Page {{value}}",
+    "viewHighlight": "View highlight"
   },
   "exports": {
     "title": "Exports",

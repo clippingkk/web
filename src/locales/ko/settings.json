@@ -10,8 +10,15 @@
     "orders": "구독",
     "webhooks": "웹훅",
     "mcp": "AI 및 MCP",
+    "email": "이메일 가져오기",
+    "notes": "메모",
     "exports": "내보내기",
     "account": "계정"
+  },
+  "copy": {
+    "copy": "복사",
+    "copied": "복사했습니다",
+    "failed": "복사하지 못했습니다. 텍스트를 선택해 직접 복사하세요."
   },
   "general": {
     "title": "일반",
@@ -108,9 +115,6 @@
     "oauthDescription": "MCP 로그인을 지원하는 클라이언트(예: Claude)는 서버 URL만 있으면 됩니다. 브라우저에서 접근을 승인하세요.",
     "tokenTitle": "액세스 토큰 사용",
     "tokenDescription": "고정 헤더만 설정할 수 있는 클라이언트라면 아래에서 토큰을 만들어 Bearer 토큰으로 보내세요.",
-    "copy": "복사",
-    "copied": "복사했습니다",
-    "copyFailed": "복사하지 못했습니다. 텍스트를 선택해 직접 복사하세요.",
     "tokens": {
       "title": "액세스 토큰",
       "description": "토큰은 만료되거나 취소할 때까지 서재를 읽을 수 있습니다. 비밀번호처럼 안전하게 보관하세요.",
@@ -151,6 +155,79 @@
       "createdDescription": "토큰은 지금 한 번만 표시됩니다. 잃어버렸다면 취소하고 새로 만드세요.",
       "done": "완료"
     }
+  },
+  "email": {
+    "title": "이메일로 가져오기",
+    "description": "Kindle 노트북 내보내기를 ClippingKK로 이메일로 보내면 하이라이트가 서재에 추가됩니다. Kindle에서 작성한 메모는 메모에 보관됩니다.",
+    "address": "내보내기를 보낼 주소",
+    "notConfiguredTitle": "이메일 가져오기를 아직 사용할 수 없습니다",
+    "notConfiguredDescription": "이 서버에 가져오기 주소가 설정되어 있지 않습니다.",
+    "stepsTitle": "iPhone 또는 iPad의 Kindle 앱에서",
+    "step1": "책을 열고 노트북으로 이동하세요.",
+    "step2": "노트북을 내보내고 이메일로 보내기를 선택하세요.",
+    "step3": "아래에서 인증한 주소로 위 주소에 보내세요. 몇 분 안에 하이라이트가 표시됩니다.",
+    "bindings": {
+      "title": "보내는 주소",
+      "description": "이 주소에서 온 메일만 가져옵니다. 최대 {{max}}개까지 추가할 수 있으며, 주소마다 이메일로 받은 코드를 입력해야 합니다.",
+      "count": "{{count}} / {{max}}",
+      "add": "주소 추가",
+      "emptyTitle": "보내는 주소가 없습니다",
+      "emptyDescription": "Kindle 내보내기를 보내는 이메일 주소를 추가하세요.",
+      "columns": {
+        "email": "주소",
+        "lastImport": "마지막 가져오기",
+        "actions": "작업"
+      },
+      "verified": "인증됨",
+      "pending": "코드 대기 중",
+      "never": "없음",
+      "verify": "코드 입력",
+      "remove": "삭제",
+      "removeTitle": "이 주소를 삭제할까요?",
+      "removeDescription": "{{email}}에서 온 메일은 더 이상 가져오지 않습니다.",
+      "confirmRemove": "주소 삭제",
+      "cancel": "취소",
+      "removed": "주소를 삭제했습니다",
+      "removeFailed": "주소를 삭제하지 못했습니다. 다시 시도하세요."
+    },
+    "add": {
+      "title": "보내는 주소 추가",
+      "description": "본인 주소인지 확인하기 위해 6자리 코드를 이메일로 보내드립니다.",
+      "email": "이메일 주소",
+      "emailPlaceholder": "you@icloud.com",
+      "emailInvalid": "올바른 이메일 주소를 입력하세요.",
+      "sendCode": "코드 보내기",
+      "codeTitle": "코드 입력",
+      "codeDescription": "{{email}}(으)로 6자리 코드를 보냈습니다. 30분 후 만료됩니다.",
+      "code": "코드",
+      "codeInvalid": "이메일에 있는 6자리 숫자를 입력하세요.",
+      "submit": "인증",
+      "resend": "새 코드 보내기",
+      "resent": "새 코드를 보냈습니다",
+      "verified": "주소를 인증했습니다",
+      "cancel": "취소"
+    },
+    "errors": {
+      "INVALID_EMAIL": "올바른 이메일 주소를 입력하세요.",
+      "ALREADY_VERIFIED": "이미 인증된 주소입니다.",
+      "EMAIL_ALREADY_BOUND": "이 주소는 다른 ClippingKK 계정에서 사용 중입니다.",
+      "TOO_MANY_EMAIL_BINDINGS": "주소는 최대 {{max}}개까지 추가할 수 있습니다. 먼저 하나를 삭제하세요.",
+      "TOO_MANY_CODES": "코드를 너무 많이 보냈습니다. 1시간 후에 다시 시도하세요.",
+      "TOO_MANY_ATTEMPTS": "잘못된 코드를 너무 많이 입력했습니다. 새 코드를 받으세요.",
+      "CODE_EXPIRED": "코드가 만료되었습니다. 새 코드를 받으세요.",
+      "INVALID_CODE": "코드가 올바르지 않습니다. 이메일을 확인하고 다시 시도하세요.",
+      "generic": "문제가 발생했습니다. 다시 시도하세요."
+    }
+  },
+  "notes": {
+    "title": "메모",
+    "description": "Kindle에서 작성한 메모로, 노트북 내보내기와 함께 가져왔습니다.",
+    "latest": "전체 {{total}}개 중 최근 {{shown}}개를 표시합니다.",
+    "emptyTitle": "아직 메모가 없습니다",
+    "emptyDescription": "Kindle 노트북을 이메일로 가져오면 작성한 메모가 여기에 표시됩니다.",
+    "location": "위치 {{value}}",
+    "page": "{{value}}페이지",
+    "viewHighlight": "하이라이트 보기"
   },
   "exports": {
     "title": "내보내기",
