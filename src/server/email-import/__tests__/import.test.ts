@@ -131,7 +131,7 @@ beforeEach(async () => {
   process.env.REDIS_URL = 'redis://localhost:6379/15'
   process.env.INBOUND_EMAIL_ADDRESS = INBOUND
   process.env.EMAIL_IMPORT_ALLOW_MISSING_DMARC = '0'
-  process.env.EMAIL_IMPORT_AUTHSERV_ID = ''
+  process.env.EMAIL_IMPORT_AUTHSERV_ID = 'mx.resend.com'
   resetServerEnvForTests()
   vi.restoreAllMocks()
   vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -401,8 +401,21 @@ describe('importEmail', () => {
     await expect(importEmail(job())).resolves.toBe('imported')
     expect(await readerClippings()).toHaveLength(22)
     expect(console.warn).toHaveBeenCalledWith(
-      expect.stringContaining('Accepted an email with no DMARC result')
+      expect.stringContaining('Accepted an email without a trusted DMARC pass')
     )
+  })
+
+  it('trusts no pass until EMAIL_IMPORT_AUTHSERV_ID names its server', async () => {
+    process.env.EMAIL_IMPORT_AUTHSERV_ID = ''
+    resetServerEnvForTests()
+    // Without a pinned server, a sender-written pass is indistinguishable.
+    serve({ 'Notebook.html': sample })
+
+    await expect(importEmail(job())).resolves.toBe('failed_authentication')
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining('set EMAIL_IMPORT_AUTHSERV_ID')
+    )
+    expect(await readerClippings()).toEqual([])
   })
 
   it('trusts only results from the pinned authserv-id', async () => {
