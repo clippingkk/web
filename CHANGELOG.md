@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.6](https://github.com/clippingkk/web/compare/v5.19.5...v5.19.6) (2026-10-12)
+
+
+### Features
+
+* **import:** import Kindle notebook exports by email ([cd041c6](https://github.com/clippingkk/web/commit/cd041c67fd615a9744b6bbf3e30849a881d6958b))
+* **import:** import Kindle notebook exports by email ([3398ebb](https://github.com/clippingkk/web/commit/3398ebbe5ac88f9c6d5eb7b2f1e0d1bc87325a29))
+* **import:** record inbound emails for readers and admins ([186350a](https://github.com/clippingkk/web/commit/186350acbaba02f91c205836a03431fac4f5b921))
+* **import:** record inbound emails for readers and admins ([be36a0d](https://github.com/clippingkk/web/commit/be36a0d69220d23fc16774aae83e03380515621c))
+* **import:** reply to unverified senders with the notebook as JSON ([c0dbd22](https://github.com/clippingkk/web/commit/c0dbd229caa09c541d9af8be9291a3bb8f22f65f))
+
+
+### Bug Fixes
+
+* **gate:** purge MCP tokens when an account is deleted ([085d14b](https://github.com/clippingkk/web/commit/085d14be154f4b8e776f50a906b8dd02b1fccd68))
+* **gate:** purge MCP tokens when an account is deleted ([e18d6fa](https://github.com/clippingkk/web/commit/e18d6fab9eb85ee3badbe27905812581375d30d3))
+* **import:** bound the work done for unverified senders ([e65d030](https://github.com/clippingkk/web/commit/e65d0305bc5ff2226bbcdb102d4dd4bf37df6dc8))
+* **import:** fail closed on missing DMARC and spend reply quota only on replies ([5caf273](https://github.com/clippingkk/web/commit/5caf273373bc1abafe37a6ad520c19f95f384752))
+* **import:** read Authentication-Results strictly ([38d8c7b](https://github.com/clippingkk/web/commit/38d8c7bf987e86ddaabb5015f7c6fc5d9f82abf4))
+* **import:** require a DMARC pass when Resend reports one ([8443c0d](https://github.com/clippingkk/web/commit/8443c0d86dee3371a5208fcfdc2064ccbf825184))
+* **import:** trust a DMARC pass only from the pinned authserv-id ([e7bdf1a](https://github.com/clippingkk/web/commit/e7bdf1a63150b4bc1d167da5a1368abb8971a9e9))
+* **import:** trust a DMARC pass only from the pinned authserv-id ([fee2d7f](https://github.com/clippingkk/web/commit/fee2d7fcd28a089132bd3131a916a5a69fcbc526))
+
 ## [5.19.5](https://github.com/clippingkk/web/compare/v5.19.4...v5.19.5) (2026-10-11)
 
 
