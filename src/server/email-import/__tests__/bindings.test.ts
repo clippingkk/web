@@ -7,7 +7,10 @@ import { drizzle } from 'drizzle-orm/pglite'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { rateLimit, sendEmailBindingCode } = vi.hoisted(() => ({
-  rateLimit: vi.fn(async () => ({ allowed: true, count: 1 })),
+  rateLimit: vi.fn(async (_key: string, _limit: number, _window: number) => ({
+    allowed: true,
+    count: 1,
+  })),
   sendEmailBindingCode: vi.fn(async (_email: string, _code: string) => {}),
 }))
 vi.mock('../../db', () => ({ getDatabase: vi.fn() }))
@@ -212,6 +215,25 @@ describe('email bindings', () => {
     await expect(
       verifyEmailBinding(READER, row.id, codeFor('kindle@example.com'))
     ).resolves.toMatchObject({ verified: true })
+  })
+
+  it('limits code sends per reader, so another reader can’t lock an address', async () => {
+    const counts = new Map<string, number>()
+    rateLimit.mockImplementation(async (key: string, limit: number) => {
+      const count = (counts.get(key) ?? 0) + 1
+      counts.set(key, count)
+      return { allowed: count <= limit, count }
+    })
+    for (let i = 0; i < 3; i++)
+      await requestEmailBinding(OTHER, 'kindle@example.com')
+    await expect(
+      requestEmailBinding(OTHER, 'kindle@example.com')
+    ).rejects.toMatchObject({ status: 429, code: 'TOO_MANY_CODES' })
+
+    // The address's owner can still ask for a code.
+    await expect(
+      requestEmailBinding(READER, 'kindle@example.com')
+    ).resolves.toMatchObject({ verified: false })
   })
 
   it('stops sending codes past the rate limit', async () => {

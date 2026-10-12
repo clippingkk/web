@@ -38,10 +38,13 @@ Settings → Notes.
         - every header differing only in case is read;
         - comments and quoted strings are ignored, and only a `dmarc=` that starts a result counts;
         - if several results are found, any one that isn't a pass wins;
-        - with `EMAIL_IMPORT_AUTHSERV_ID` set, results stamped by any other server are ignored.
-      - Only `dmarc=pass` goes on. Anything else (`fail`, `none`, `temperror`, …, or no result)
-        drops the mail: nothing is imported and nothing is answered. Setting
-        `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1` also lets through mail that has no result.
+        - a pass only counts when the server named by `EMAIL_IMPORT_AUTHSERV_ID` stamped it.
+          Anyone can write a header claiming one. A pass from any other server reads as
+          `unpinned`. Results from other servers can still make the verdict stricter.
+      - Only a trusted `dmarc=pass` goes on. Anything else (`fail`, `none`, `temperror`, …,
+        `unpinned`, or no result) drops the mail: nothing is imported and nothing is answered.
+        Setting `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1` also lets through mail with no result or an
+        `unpinned` pass, each logged as a WARN.
    4. It downloads the HTML attachments. If there are none, it reads the HTML body.
       - Verified sender: up to 5 attachments, 10 MB each.
       - Any other sender: 1 attachment, up to 5 MB.
@@ -151,10 +154,15 @@ session only).
   lowercased and exactly, so `you+kindle@…` is a different address from `you@…`.
 - **Adding:** adding an address mails a 6-digit code to it (`sendEmailBindingCode`).
   - Adding a pending address again sends a fresh code.
-  - Sending is limited to 5 per reader and 3 per address per hour.
+  - Sending is limited per hour: 5 per reader, 3 per reader for one address, and 10 per address
+    across all readers. One account asking for someone else's address therefore can't lock its
+    owner out.
 - **Codes:**
   - A code expires after 30 minutes and allows 5 attempts.
   - It is stored as a sha256. That hash is not what protects it; the expiry and the attempt cap are.
+  - Each new code resets the attempt count. A reader can try about 15 guesses an hour at one
+    address, against a million possible codes, and every new code also lands in the owner's
+    inbox.
 - **Ownership:** a verified address belongs to one reader. A partial unique index on
   `email_bindings(email) WHERE verified_at IS NOT NULL` enforces this. Adding an address someone
   else holds still mails a code. The `EMAIL_ALREADY_BOUND` refusal only comes at verify time, to
@@ -190,7 +198,7 @@ RESEND_API_KEY=re_...                       # also used to fetch received mail a
 RESEND_WEBHOOK_SECRET=whsec_...             # the webhook's signing secret
 INBOUND_EMAIL_ADDRESS=kindle@import.example # shown to readers; other recipients are ignored
 EMAIL_IMPORT_ALLOW_MISSING_DMARC=0          # 1 also imports mail with no DMARC result
-EMAIL_IMPORT_AUTHSERV_ID=mx.resend.com      # whatever Resend's own header starts with
+EMAIL_IMPORT_AUTHSERV_ID=mx.resend.com      # required: whatever Resend's own header starts with
 ```
 
 Without `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET` or `INBOUND_EMAIL_ADDRESS`, the webhook answers
@@ -201,8 +209,9 @@ After deploying, send yourself a notebook export and open the received email's h
 Resend dashboard:
 
 - **If it has an `Authentication-Results` header**, set `EMAIL_IMPORT_AUTHSERV_ID` to the first
-  word of its value (the server that stamped it). Results from any other server are then ignored,
-  including a fake header a sender wrote into their own message.
+  word of its value (the server that stamped it). Until you do, every pass reads as `unpinned` and
+  nothing imports. Once it's set, a pass from any other server is ignored, including a fake header
+  a sender wrote into their own message.
 - **If it has none**, nothing will import, and `app.email_import.authentication` shows
   `dmarc="absent"`. Imports only resume with `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`; read the limits
   below before you set it.
@@ -213,8 +222,8 @@ Resend dashboard:
   is accepted, which stops forgeries even from domains without a DMARC policy. The cost is that a
   reader whose own domain publishes no DMARC record can't import until it does. Major providers
   such as iCloud, Gmail and Outlook publish one.
-- With `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`, mail with no DMARC result is accepted and logged as
-  a WARN each time. A forger who knows a reader's bound address could then add highlights to their
+- With `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`, mail with no DMARC result, or with an `unpinned`
+  pass, is accepted and logged as a WARN each time. A forger who knows a reader's bound address could then add highlights to their
   library, and anyone could have a JSON reply sent to an address they type in, within the reply
   limits.
 - ClippingKK only sees the headers Resend chooses to expose. It can't tell a forged

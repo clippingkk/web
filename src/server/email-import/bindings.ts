@@ -106,11 +106,16 @@ export async function requestEmailBinding(userId: number, input: string) {
   }
 
   // Per reader, and per address so no one can use this to flood an inbox.
-  const [byReader, byAddress] = await Promise.all([
+  // The tight per-address limit is per reader too, so one account asking
+  // for someone else's address can't lock its owner out; the looser shared
+  // one still caps what several accounts can send to one inbox.
+  const address = sha256(email)
+  const limits = await Promise.all([
     rateLimit(`ck:email-binding:send:u:${userId}`, 5, HOUR),
-    rateLimit(`ck:email-binding:send:a:${sha256(email)}`, 3, HOUR),
+    rateLimit(`ck:email-binding:send:ua:${userId}:${address}`, 3, HOUR),
+    rateLimit(`ck:email-binding:send:a:${address}`, 10, HOUR),
   ])
-  if (!byReader.allowed || !byAddress.allowed)
+  if (limits.some((limit) => !limit.allowed))
     throw new ApiError(
       'Too many codes sent. Try again in an hour.',
       429,
