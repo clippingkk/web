@@ -19,7 +19,29 @@ describe('dmarcResult', () => {
     ['mx.resend.com; spf=pass smtp.mailfrom=x.com', 'absent'],
     ['mx.resend.com; none', 'absent'],
   ])('%j → %s', (value, verdict) => {
-    expect(dmarcResult(results(value))).toBe(verdict)
+    expect(dmarcResult(results(value), RESEND)).toBe(verdict)
+  })
+
+  it('trusts a pass only from the pinned authserv-id', () => {
+    const pass = results('mx.resend.com; dmarc=pass header.from=x.com')
+    expect(dmarcResult(pass)).toBe('unpinned')
+    expect(dmarcResult(pass, 'other.example')).toBe('unpinned')
+    expect(dmarcResult(pass, RESEND)).toBe('pass')
+    // Anyone's failure still counts, pinned or not.
+    expect(
+      dmarcResult(results('evil.example; dmarc=fail header.from=x.com'))
+    ).toBe('fail')
+  })
+
+  it('reads a header folded over several lines', () => {
+    expect(
+      dmarcResult(
+        results(
+          'mx.resend.com;\r\n\tspf=pass smtp.mailfrom=x.com;\r\n\tdmarc=pass header.from=x.com'
+        ),
+        RESEND
+      )
+    ).toBe('pass')
   })
 
   it('reads nothing when there is no header', () => {
@@ -29,16 +51,21 @@ describe('dmarcResult', () => {
 
   it('ignores a pass hidden in a comment or a quoted reason', () => {
     expect(
-      dmarcResult(results('mx.resend.com; spf=fail (reason: dmarc=pass)'))
-    ).toBe('absent')
-    expect(
       dmarcResult(
-        results('mx.resend.com; spf=fail reason="nope; dmarc=pass" smtp.x=y')
+        results('mx.resend.com; spf=fail (reason: dmarc=pass)'),
+        RESEND
       )
     ).toBe('absent')
     expect(
       dmarcResult(
-        results('mx.resend.com; dmarc=none (a (nested; dmarc=pass) comment)')
+        results('mx.resend.com; spf=fail reason="nope; dmarc=pass" smtp.x=y'),
+        RESEND
+      )
+    ).toBe('absent')
+    expect(
+      dmarcResult(
+        results('mx.resend.com; dmarc=none (a (nested; dmarc=pass) comment)'),
+        RESEND
       )
     ).toBe('none')
   })
@@ -46,10 +73,15 @@ describe('dmarcResult', () => {
   it("won't let a sender's own header shadow the receiver's", () => {
     // A second key differing only in case.
     expect(
-      dmarcResult({
-        'Authentication-Results': 'mx.resend.com; dmarc=none header.from=x.com',
-        'authentication-results': 'mx.resend.com; dmarc=pass header.from=x.com',
-      })
+      dmarcResult(
+        {
+          'Authentication-Results':
+            'mx.resend.com; dmarc=none header.from=x.com',
+          'authentication-results':
+            'mx.resend.com; dmarc=pass header.from=x.com',
+        },
+        RESEND
+      )
     ).toBe('none')
     // Repeated headers joined on one value.
     expect(
@@ -66,11 +98,20 @@ describe('dmarcResult', () => {
         )
       )
     ).toBe('none')
+    // A pass joined on by comma doesn't borrow the receiver's authserv-id.
+    expect(
+      dmarcResult(
+        results(
+          'mx.resend.com; spf=pass smtp.mailfrom=x.com, evil.example; dmarc=pass'
+        ),
+        RESEND
+      )
+    ).toBe('unpinned')
   })
 
   it('trusts only the configured authserv-id', () => {
     const forged = results('evil.example; dmarc=pass header.from=x.com')
-    expect(dmarcResult(forged, RESEND)).toBe('absent')
+    expect(dmarcResult(forged, RESEND)).toBe('unpinned')
     expect(
       dmarcResult(
         results('MX.Resend.com 1; dmarc=pass header.from=x.com'),

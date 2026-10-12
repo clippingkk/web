@@ -1,13 +1,5 @@
 import { metrics, trace } from '@opentelemetry/api'
-import { logs, SeverityNumber } from '@opentelemetry/api-logs'
-import { and, desc, eq } from 'drizzle-orm'
 
-import { wenquRequest, type WenquSearchResponse } from '@/services/wenqu'
-
-import { clippingDataId, insertClippings } from '../clippings/create'
-import { matchedBook } from '../clippings/queries'
-import { getDatabase } from '../db'
-import { clippings, readerNotes } from '../db/schema'
 import { getServerEnv } from '../env'
 import { ApiError } from '../errors'
 import { boundedText } from '../http'
@@ -21,11 +13,13 @@ import {
   parseEmailAddress,
 } from './bindings'
 import { parseKindleNotebook, type KindleNotebook } from './kindle-notebook'
+import { log, maskEmail } from './log'
 import {
   admitUnverifiedEmail,
   claimReplyQuota,
   replyWithNotebookJson,
 } from './reply'
+import { saveNotebook } from './save'
 
 /**
  * Imports the Kindle notebook exports attached to an email Resend received
@@ -37,7 +31,6 @@ import {
  */
 
 const meter = metrics.getMeter('clippingkk.web.email-import')
-const logger = logs.getLogger('clippingkk.web.email-import')
 const emailsProcessed = meter.createCounter('app.email_import.emails', {
   description: 'Inbound emails processed by the Kindle notebook import',
 })
@@ -56,9 +49,6 @@ const ATTACHMENT_LIMITS = {
 } as const
 type AttachmentLimit =
   (typeof ATTACHMENT_LIMITS)[keyof typeof ATTACHMENT_LIMITS]
-/** Keeps an insert well under Postgres' 65,535 bind parameters. */
-const INSERT_CHUNK = 200
-const KINDLE = 1
 
 type Outcome =
   | 'imported'
@@ -69,174 +59,6 @@ type Outcome =
   | 'failed_authentication'
   | 'missing'
   | 'no_notebook'
-
-const db = () => getDatabase().db
-
-function log(
-  severity: 'INFO' | 'WARN' | 'ERROR',
-  body: string,
-  attributes: Record<string, string | number>
-) {
-  logger.emit({
-    severityNumber: SeverityNumber[severity],
-    severityText: severity,
-    body,
-    attributes,
-  })
-  // Container logs stay useful when no collector is configured.
-  const line = `email-import: ${body} ${JSON.stringify(attributes)}`
-  if (severity === 'ERROR') console.error(line)
-  else if (severity === 'WARN') console.warn(line)
-}
-
-/** `reader@icloud.com` → `r***@icloud.com`: enough to trace, not to harvest. */
-function maskEmail(email: string) {
-  const at = email.lastIndexOf('@')
-  return at < 1 ? '***' : `${email[0]}***${email.slice(at)}`
-}
-
-/**
- * Highlights compare equal across the .txt and HTML exports when their text
- * does: the two disagree on whitespace and on how locations are written.
- */
-function sameText(content: string) {
-  return content
-    .replace(/\s+/g, '')
-    .replace(/^[，,。！@【】—]+|[，,。！@【】—]+$/g, '')
-}
-
-/** A title with case, spacing and punctuation folded away, for matching. */
-function bookKey(title: string) {
-  return title
-    .split(/[(（]/)[0]
-    .toLowerCase()
-    .replace(/[\s\p{P}\p{S}]+/gu, '')
-}
-
-async function resolveBookId(userId: number, title: string) {
-  const [known] = await db()
-    .select({ bookId: clippings.bookId })
-    .from(clippings)
-    .where(
-      and(
-        eq(clippings.createdBy, userId),
-        eq(clippings.title, title),
-        matchedBook
-      )
-    )
-    .orderBy(desc(clippings.id))
-    .limit(1)
-  if (known) return known.bookId
-  try {
-    const result = await wenquRequest<WenquSearchResponse>(
-      `/books/search?query=${encodeURIComponent(title)}&limit=50&offset=0`,
-      { signal: AbortSignal.timeout(8_000) }
-    )
-    // A loose search can rank another book first; leaving the clippings
-    // unmatched (fixable from the book page) beats filing them wrongly.
-    const wanted = bookKey(title)
-    const match = result.books.find((book) =>
-      [book.title, book.originTitle].some((name) => {
-        const key = bookKey(name ?? '')
-        // Kindle titles often carry a subtitle Douban files separately.
-        const [short, long] =
-          key.length < wanted.length ? [key, wanted] : [wanted, key]
-        return short.length >= 2 && long.includes(short)
-      })
-    )
-    return match ? String(match.doubanId) : '0'
-  } catch {
-    // Unmatched clippings can still be matched from the book page later.
-    return '0'
-  }
-}
-
-/**
- * Not one transaction: if the job dies between the clippings and the notes,
- * its retry skips the clippings already saved and adds the notes.
- */
-async function saveNotebook(
-  userId: number,
-  notebook: KindleNotebook,
-  receivedAt: number
-) {
-  const { title } = notebook
-  const bookId = await resolveBookId(userId, title)
-  // Deleted rows count too, so re-sending an export doesn't revive them.
-  const existing = await db()
-    .select({
-      id: clippings.id,
-      content: clippings.content,
-      deletedAt: clippings.deletedAt,
-    })
-    .from(clippings)
-    .where(and(eq(clippings.createdBy, userId), eq(clippings.title, title)))
-  // Matching on text alone also folds two identical highlights on different
-  // pages into one: rare, and the price of not doubling every .txt import.
-  const seen = new Set(existing.map((row) => sameText(row.content)))
-
-  const drafts = notebook.highlights.flatMap((highlight, index) => {
-    const key = sameText(highlight.content)
-    if (seen.has(key)) return []
-    seen.add(key)
-    return [
-      {
-        title,
-        content: highlight.content,
-        bookId,
-        pageAt: highlight.pageAt,
-        // One timestamp per email; the offset keeps the export's order.
-        createdAt: new Date(receivedAt + index),
-        source: KINDLE,
-      },
-    ]
-  })
-  // Notes link to live clippings: the ones already there and the new ones.
-  const idByText = new Map(
-    existing
-      .filter((row) => !row.deletedAt)
-      .map((row) => [sameText(row.content), row.id])
-  )
-  let created = 0
-  for (let i = 0; i < drafts.length; i += INSERT_CHUNK) {
-    const rows = await insertClippings(
-      userId,
-      drafts.slice(i, i + INSERT_CHUNK),
-      { visible: true }
-    )
-    created += rows.length
-    for (const row of rows) idByText.set(sameText(row.content), row.id)
-  }
-
-  let notes = 0
-  if (notebook.notes.length) {
-    const rows = notebook.notes.map((note, index) => ({
-      userId,
-      clippingId:
-        note.highlight === null
-          ? null
-          : (idByText.get(
-              sameText(notebook.highlights[note.highlight].content)
-            ) ?? null),
-      title,
-      pageAt: note.pageAt,
-      content: note.content,
-      // The same note typed twice at one spot is kept once.
-      dataId: clippingDataId(userId, note.content, note.pageAt),
-      createdAt: new Date(receivedAt + index),
-    }))
-    for (let i = 0; i < rows.length; i += INSERT_CHUNK)
-      notes += (
-        await db()
-          .insert(readerNotes)
-          .values(rows.slice(i, i + INSERT_CHUNK))
-          .onConflictDoNothing()
-          .returning({ id: readerNotes.id })
-      ).length
-  }
-
-  return { created, notes }
-}
 
 /** The notebook HTML attached to the email, or its body when nothing is. */
 async function notebookSources(
@@ -266,6 +88,9 @@ async function notebookSources(
       })
       continue
     }
+    // Resend hands out signed https links; refuse anything else.
+    if (new URL(attachment.download_url).protocol !== 'https:')
+      throw new Error('Attachment download link is not https')
     const response = await fetch(attachment.download_url, {
       signal: AbortSignal.timeout(15_000),
     })
@@ -342,11 +167,12 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     }
     throw new Error(`Resend receiving: ${error.message}`)
   }
-  // From is the only credential, so only a DMARC pass is imported or
-  // answered: that also stops forgeries from domains with no DMARC policy
-  // (`none`). Mail Resend reports no result for is refused too, unless
+  // From is the only credential, so only a DMARC pass stamped by the pinned
+  // EMAIL_IMPORT_AUTHSERV_ID is imported or answered: that also stops
+  // forgeries from domains with no DMARC policy (`none`). Mail with no
+  // result, or with a pass nobody pinned, is refused too unless
   // EMAIL_IMPORT_ALLOW_MISSING_DMARC says otherwise; the metric shows how
-  // often that happens.
+  // often each happens.
   const dmarc = dmarcResult(
     email.headers,
     env.EMAIL_IMPORT_AUTHSERV_ID || undefined
@@ -357,16 +183,21 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     sender: binding ? 'verified' : 'unverified',
   })
   const allowMissing = env.EMAIL_IMPORT_ALLOW_MISSING_DMARC === '1'
-  if (dmarc !== 'pass' && !(dmarc === 'absent' && allowMissing)) {
+  const unproven = dmarc === 'absent' || dmarc === 'unpinned'
+  if (dmarc !== 'pass' && !(unproven && allowMissing)) {
     log('ERROR', 'Email failed sender authentication', {
       ...who,
       'email.dmarc': dmarc,
+      ...(dmarc === 'unpinned'
+        ? { hint: 'set EMAIL_IMPORT_AUTHSERV_ID to trust this pass' }
+        : {}),
     })
     return 'failed_authentication'
   }
-  if (dmarc === 'absent')
-    log('WARN', 'Accepted an email with no DMARC result', {
+  if (unproven)
+    log('WARN', 'Accepted an email without a trusted DMARC pass', {
       ...who,
+      'email.dmarc': dmarc,
       reason: 'EMAIL_IMPORT_ALLOW_MISSING_DMARC=1',
     })
 

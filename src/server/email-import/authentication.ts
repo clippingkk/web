@@ -8,7 +8,9 @@
  * - comments and quoted strings are dropped first, so `spf=fail (dmarc=pass)`
  *   or `reason="dmarc=pass"` count for nothing;
  * - only a `dmarc=` that starts a result counts;
- * - with an `authservId`, results stamped by any other server are ignored;
+ * - a pass only counts when stamped by `authservId`, the receiving server:
+ *   anyone can write a header claiming one. Results from other servers can
+ *   still make the verdict stricter, never grant it;
  * - if several DMARC results are found, any one that isn't a pass wins.
  */
 
@@ -22,6 +24,8 @@ export type DmarcResult =
   | 'temperror'
   | 'permerror'
   | 'other'
+  /** A pass, but not from `authservId` (or none is configured to trust). */
+  | 'unpinned'
   | 'absent'
 
 function stripCommentsAndQuotes(value: string) {
@@ -42,24 +46,29 @@ export function dmarcResult(
   const values = Object.entries(headers ?? {})
     .filter(([name]) => name.toLowerCase() === 'authentication-results')
     .map(([, value]) => value)
-  const results: string[] = []
-  // Repeated headers may arrive joined on one value, one per line.
-  for (const line of values.flatMap((value) => value.split(/\r?\n/))) {
-    const [id, ...resinfo] = stripCommentsAndQuotes(line)
-      .split(';')
-      .map((part) => part.trim())
+  const results: { result: string; trusted: boolean }[] = []
+  // Repeated headers may arrive joined on one value, by line or by comma:
+  // RFC 8601 has no bare comma outside comments and quotes, so each one
+  // starts another header (and another authserv-id).
+  const headerValues = values
+    // A long header folds onto indented lines (RFC 5322); unfold it first.
+    .map((value) => value.replace(/\r?\n[ \t]+/g, ' '))
+    .flatMap((value) => value.split(/\r?\n/))
+    .flatMap((line) => stripCommentsAndQuotes(line).split(','))
+  for (const header of headerValues) {
+    const [id, ...resinfo] = header.split(';').map((part) => part.trim())
     if (!id) continue
-    if (
-      authservId &&
-      id.split(/\s+/)[0].toLowerCase() !== authservId.toLowerCase()
-    )
-      continue
+    const trusted =
+      !!authservId &&
+      id.split(/\s+/)[0].toLowerCase() === authservId.toLowerCase()
     for (const info of resinfo) {
       const match = info.match(/^dmarc\s*=\s*([a-z]+)/i)
-      if (match) results.push(match[1].toLowerCase())
+      if (match) results.push({ result: match[1].toLowerCase(), trusted })
     }
   }
   if (!results.length) return 'absent'
-  const verdict = results.find((result) => result !== 'pass') ?? 'pass'
-  return RESULTS.has(verdict) ? (verdict as DmarcResult) : 'other'
+  const failed = results.find(({ result }) => result !== 'pass')
+  if (failed)
+    return RESULTS.has(failed.result) ? (failed.result as DmarcResult) : 'other'
+  return results.some(({ trusted }) => trusted) ? 'pass' : 'unpinned'
 }
