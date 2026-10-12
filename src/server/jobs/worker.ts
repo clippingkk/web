@@ -14,6 +14,7 @@ import { getNotion } from '../integrations'
 import { cacheGet } from '../redis'
 import {
   AUDITING_EMAIL,
+  EMAIL_IMPORT_ATTEMPTS,
   JOB_QUEUE_NAME,
   pendingAccountRemovalKey,
   queueConnection,
@@ -127,7 +128,12 @@ async function handleJob(job: Job) {
 
   if (job.name === 'import-email') {
     const { importEmail } = await import('../email-import/import')
-    return importEmail(job.data as EmailImportJob)
+    // `attemptsMade` counts the attempts that already failed.
+    const attempt = job.attemptsMade + 1
+    return importEmail(job.data as EmailImportJob, {
+      attempt,
+      final: attempt >= (job.opts.attempts ?? EMAIL_IMPORT_ATTEMPTS),
+    })
   }
 
   if (job.name === 'noun-cleanup') {

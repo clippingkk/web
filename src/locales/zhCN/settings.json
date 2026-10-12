@@ -217,6 +217,35 @@
       "CODE_EXPIRED": "验证码已过期，请重新发送。",
       "INVALID_CODE": "验证码不正确，请检查邮件后重试。",
       "generic": "出了点问题，请重试。"
+    },
+    "status": {
+      "imported": "已导入",
+      "replied": "已回复 JSON",
+      "reply_limited": "已达回复上限",
+      "not_addressed": "收件地址不符",
+      "unreadable_sender": "无法识别发件人",
+      "failed_authentication": "未通过验证",
+      "missing": "已过期",
+      "no_notebook": "没有笔记本",
+      "retrying": "重试中",
+      "failed": "失败"
+    },
+    "history": {
+      "title": "最近的邮件",
+      "description": "你已验证的地址发往导入邮箱的邮件，以及每封邮件的处理结果。",
+      "latest": "显示最近 {{shown}} 封，共 {{total}} 封。",
+      "emptyTitle": "还没有邮件",
+      "emptyDescription": "从已验证的地址发送笔记本导出后，会显示在这里。",
+      "noSubject": "（无主题）",
+      "summary": "划线 {{highlights}} · 新增 {{created}} · 笔记 {{notes}}",
+      "replied": "已发回划线：{{value}}",
+      "hint": {
+        "failed_authentication": "无法确认这封邮件来自你的地址，所以没有导入任何内容。请直接从邮件应用发送导出，不要经过转发服务。",
+        "no_notebook": "这封邮件里没有找到 Kindle 笔记本。请附上 Kindle 应用导出的 HTML 文件。",
+        "missing": "这封邮件在读取前已过期，请重新发送。",
+        "retrying": "处理时出了点问题，几分钟后会自动重试。",
+        "failed": "这封邮件没能导入。请重新发送，如果问题持续，请联系我们。"
+      }
     }
   },
   "notes": {
@@ -295,6 +324,27 @@
     "synced": "已关联《{{title}}》",
     "failed": "关联失败。",
     "invalidId": "豆瓣 ID 是至少四位的数字。",
-    "placeholder": "豆瓣 ID"
+    "placeholder": "豆瓣 ID",
+    "nav": {
+      "label": "管理分区",
+      "books": "书籍",
+      "inbound": "收到的邮件"
+    },
+    "inbound": {
+      "meta": {
+        "title": "收到的邮件"
+      },
+      "title": "未验证发件人的邮件",
+      "description": "导入邮箱收到的、来自未被任何读者验证的发件人的邮件，按时间倒序排列。",
+      "empty": "没有来自未验证发件人的邮件。",
+      "dmarc": "DMARC：{{value}}",
+      "attempts": "尝试次数：{{value}}",
+      "limit": {
+        "sender_day": "发件人每日回复上限",
+        "sender_month": "发件人每月回复上限",
+        "global": "所有发件人每日回复上限",
+        "fetches": "未验证邮件每日读取上限"
+      }
+    }
   }
 }

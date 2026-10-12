@@ -225,7 +225,9 @@ Readers email Kindle notebook exports (HTML) to `INBOUND_EMAIL_ADDRESS`. Resend 
 import (`email_bindings`, at most 10 per reader). Any other sender is logged and gets the notebook
 back as a JSON file (`reply.ts`): at most 5 a day and 30 a month per sender, 500 a day in all.
 Highlights go through `insertClippings` (`src/server/clippings/create.ts`, shared with
-`createClippings`), and notes go to `reader_notes`. See `docs/email-import.md`.
+`createClippings`), and notes go to `reader_notes`. Every attempt is recorded in `inbound_emails`
+(`records.ts`): readers see their own under Settings → Email import, and administrators see mail no
+verified address sent at `admin/inbound-emails`. See `docs/email-import.md`.
 
 ## Rich Text Editor
 

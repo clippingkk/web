@@ -45,6 +45,7 @@ export type DashSection =
   | 'unchecked'
   | 'comments'
   | 'admin'
+  | 'admin/inbound-emails'
   | 'settings/web'
   | 'settings/account'
   | 'settings/exports'

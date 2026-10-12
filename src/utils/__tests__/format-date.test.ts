@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { formatDate } from '../format-date'
+import { formatDate, formatDateTime } from '../format-date'
 
 describe('formatDate', () => {
   it('formats in UTC so server and client agree', () => {
@@ -15,5 +15,22 @@ describe('formatDate', () => {
   it('returns an empty string for missing or invalid dates', () => {
     expect(formatDate(null, 'en')).toBe('')
     expect(formatDate('not a date', 'en')).toBe('')
+  })
+})
+
+describe('formatDateTime', () => {
+  it('shows the time in UTC and says so', () => {
+    expect(formatDateTime('2026-10-12T08:05:00Z', 'en')).toMatch(
+      /^Oct 12, 2026, 8:05\sAM UTC$/
+    )
+  })
+
+  it('uses the UI language', () => {
+    expect(formatDateTime('2026-10-12T08:05:00Z', 'zh')).toContain('2026')
+  })
+
+  it('returns an empty string for missing or invalid dates', () => {
+    expect(formatDateTime(null, 'en')).toBe('')
+    expect(formatDateTime('not a date', 'en')).toBe('')
   })
 })

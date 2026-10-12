@@ -91,12 +91,15 @@ export type EmailImportJob = {
   receivedAt: string
 }
 
+/** How many times the worker tries an email before recording it as failed. */
+export const EMAIL_IMPORT_ATTEMPTS = 5
+
 export function enqueueEmailImport(payload: EmailImportJob) {
   return getJobQueue().add('import-email', payload, {
     // Resend redelivers an event until it is acknowledged; one job per email.
     // BullMQ refuses ':' in custom ids.
     jobId: `email-import-${payload.emailId}`,
-    attempts: 5,
+    attempts: EMAIL_IMPORT_ATTEMPTS,
     backoff: { type: 'exponential', delay: 30_000 },
   })
 }

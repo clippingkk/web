@@ -13,6 +13,9 @@ Settings → Notes.
 - **Any other sender** gets nothing imported. The unbound sender is logged as an error, and the
   sender gets a reply with the notebook attached as a JSON file
   ([Replies to unverified senders](#replies-to-unverified-senders)).
+- **Every email the worker handles is recorded** in `inbound_emails`, with what became of it
+  ([Email history](#email-history)). An event the webhook can't read never reaches the worker and
+  is only logged.
 
 ## Flow
 
@@ -51,6 +54,7 @@ Settings → Notes.
 3. Permanent problems (no notebook, failed DMARC, a reply limit) end the job. Transient ones
    (Resend or download errors, database) throw, and the job retries 5 times with exponential
    backoff starting at 30s.
+4. Every attempt, finished or thrown, is written to `inbound_emails` (below).
 
 ### Replies to unverified senders
 
@@ -113,6 +117,31 @@ Settings → Notes.
 - **Linking a note:** a note is linked (`clipping_id`) to the highlight directly before it, unless
   a chapter heading or a bookmark comes between. This is a heuristic.
 
+## Email history
+
+`src/server/email-import/records.ts`. `importEmail` keeps one row per Resend `email_id` in
+`inbound_emails`, updated after every attempt:
+
+- **What a row holds:** the sender (the full normalized address, or the raw From header when it
+  holds none), the subject, when Resend received it, the status, the DMARC result, the notebook
+  titles, the highlight count, and how many clippings and notes were created.
+- **Status:** the attempt's outcome (`imported`, `replied`, `reply_limited`, `not_addressed`,
+  `unreadable_sender`, `failed_authentication`, `missing`, `no_notebook`). A thrown attempt is
+  `retrying`, or `failed` on the last of the 5; `detail` then holds the error's first line.
+  `detail` also names the reply limit that stopped a stranger.
+- **Retries:** a later attempt overwrites the status, and its created counts add to the earlier
+  ones, since saving a notebook isn't one transaction.
+- **Best effort:** a failure to write the row is logged as a WARN and never fails or repeats an
+  import.
+- **`user_id`** is the reader whose **verified** address sent the email, found when the attempt
+  ran. Mail from a pending address has none, since anyone can claim an address.
+- **Readers** see their latest 50 under Settings → Email import, without `detail`. Mail forged in
+  their name that failed DMARC shows up there too, which is how they learn why it wasn't imported.
+- **Administrators** see every row without a reader, with the details, at
+  `/dash/<you>/admin/inbound-emails`.
+- **Retention:** rows are kept until account deletion. Deleting an account deletes its rows and
+  the reader-less rows from its verified addresses. Strangers' rows are never purged.
+
 ## Sender addresses
 
 `src/server/email-import/bindings.ts`, with REST routes under `/api/v3/email-bindings` (cookie
@@ -131,7 +160,8 @@ session only).
   else holds still mails a code. The `EMAIL_ALREADY_BOUND` refusal only comes at verify time, to
   someone who proved they own the address, so the add step can't be used to probe which addresses
   are bound.
-- **Account deletion:** deleting an account deletes its bindings and notes.
+- **Account deletion:** deleting an account deletes its bindings, its notes and its email history
+  ([Email history](#email-history)).
 
 | Route | Purpose |
 |---|---|
@@ -145,9 +175,9 @@ settings page maps each code to a translated message.
 
 ## Setup
 
-1. Run the migration **before** deploying: `pnpm db:migrate`, which adds
-   `drizzle/0006_email_import.sql`. The startup schema check exits when `email_bindings` or
-   `reader_notes` is missing.
+1. Run the migrations **before** deploying: `pnpm db:migrate`, which adds
+   `drizzle/0006_email_import.sql` and `drizzle/0007_inbound_emails.sql`. The startup schema check
+   exits when `email_bindings`, `reader_notes` or `inbound_emails` is missing.
 2. In Resend, set up receiving:
    - Use a receiving domain, ideally a dedicated subdomain rather than the sending
      `no-reply-clippingkk` one, or the `<id>.resend.app` address Resend gives you.

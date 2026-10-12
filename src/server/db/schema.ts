@@ -411,3 +411,44 @@ export const readerNotes = pgTable(
 )
 
 export type ReaderNote = typeof readerNotes.$inferSelect
+
+// Every email the import address received and what became of it (see
+// docs/email-import.md). `userId` is the reader whose verified address sent
+// it; mail from anyone else has none and only administrators see it. Rows are
+// kept until the reader deletes their account.
+export const inboundEmails = pgTable(
+  'inbound_emails',
+  {
+    id: id(),
+    emailId: varchar('email_id', { length: 128 }).notNull(),
+    userId: int('user_id'),
+    sender: varchar('sender', { length: 255 }).notNull().default(''),
+    subject: varchar('subject', { length: 512 }).notNull().default(''),
+    status: varchar('status', { length: 32 }).notNull(),
+    detail: varchar('detail', { length: 255 }),
+    dmarc: varchar('dmarc', { length: 16 }),
+    books: jsonb('books').$type<string[]>().notNull().default([]),
+    highlights: int('highlights').notNull().default(0),
+    clippingsCreated: int('clippings_created').notNull().default(0),
+    notesCreated: int('notes_created').notNull().default(0),
+    attempts: int('attempts').notNull().default(1),
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (table) => [
+    uniqueIndex('inbound_emails_email_id_key').on(table.emailId),
+    index('inbound_emails_user_id_received_at_idx').on(
+      table.userId,
+      table.receivedAt
+    ),
+    index('inbound_emails_unverified_received_at_idx')
+      .on(table.receivedAt)
+      .where(sql`${table.userId} is null`),
+    index('inbound_emails_unverified_sender_idx')
+      .on(table.sender)
+      .where(sql`${table.userId} is null`),
+  ]
+)
+
+export type InboundEmail = typeof inboundEmails.$inferSelect

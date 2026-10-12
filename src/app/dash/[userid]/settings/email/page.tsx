@@ -1,9 +1,10 @@
 import EmptyState from '@annatarhe/lake-ui/empty-state'
-import { Mail, MailWarning } from 'lucide-react'
+import { Inbox, Mail, MailWarning } from 'lucide-react'
 import type { Metadata } from 'next'
 
 import Callout from '@/components/layout/callout'
 import CopyBlock from '@/components/settings/copy-block'
+import InboundEmailList from '@/components/settings/inbound-email-list'
 import { SettingsSection } from '@/components/settings/settings-section'
 import { getTranslation } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
@@ -12,10 +13,13 @@ import {
   listEmailBindings,
   MAX_EMAIL_BINDINGS,
 } from '@/server/email-import/bindings'
+import { listInboundEmails } from '@/server/email-import/records'
 import { getServerEnv } from '@/server/env'
 
 import AddEmailBinding from './add-email-binding'
 import EmailBindingList from './email-binding-list'
+
+const HISTORY_LIMIT = 50
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslation(undefined, 'settings')
@@ -27,7 +31,10 @@ export default async function EmailImportSettingsPage() {
     requireViewer(),
     getTranslation(undefined, 'settings'),
   ])
-  const bindings = await listEmailBindings(viewer.id)
+  const [bindings, history] = await Promise.all([
+    listEmailBindings(viewer.id),
+    listInboundEmails(viewer.id, HISTORY_LIMIT),
+  ])
   const inbound = getServerEnv().INBOUND_EMAIL_ADDRESS
 
   return (
@@ -86,6 +93,27 @@ export default async function EmailImportSettingsPage() {
             icon={<Mail className="size-6" />}
             title={t('email.bindings.emptyTitle')}
             description={t('email.bindings.emptyDescription')}
+          />
+        )}
+      </SettingsSection>
+      <SettingsSection
+        title={t('email.history.title')}
+        description={
+          history.total > history.emails.length
+            ? `${t('email.history.description')} ${t('email.history.latest', {
+                shown: history.emails.length,
+                total: history.total,
+              })}`
+            : t('email.history.description')
+        }
+      >
+        {history.emails.length ? (
+          <InboundEmailList emails={history.emails} audience="reader" />
+        ) : (
+          <EmptyState
+            icon={<Inbox className="size-6" />}
+            title={t('email.history.emptyTitle')}
+            description={t('email.history.emptyDescription')}
           />
         )}
       </SettingsSection>
