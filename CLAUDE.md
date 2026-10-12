@@ -222,9 +222,10 @@ over the caller's own library. Tools live in `src/server/mcp/tools/`, their SQL 
 Readers email Kindle notebook exports (HTML) to `INBOUND_EMAIL_ADDRESS`. Resend calls
 `/api/v3/inbound/resend` (`email.received`), which queues an `import-email` job. The worker
 (`src/server/email-import/import.ts`) imports only for a sender verified under Settings → Email
-import (`email_bindings`, at most 10 per reader). Unbound senders are only logged. Highlights go
-through `insertClippings` (`src/server/clippings/create.ts`, shared with `createClippings`), and
-notes go to `reader_notes`. See `docs/email-import.md`.
+import (`email_bindings`, at most 10 per reader). Any other sender is logged and gets the notebook
+back as a JSON file (`reply.ts`): at most 5 a day and 30 a month per sender, 500 a day in all.
+Highlights go through `insertClippings` (`src/server/clippings/create.ts`, shared with
+`createClippings`), and notes go to `reader_notes`. See `docs/email-import.md`.
 
 ## Rich Text Editor
 

@@ -7,17 +7,30 @@ import { asc, eq } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/pglite'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-const { receiving, wenquRequest } = vi.hoisted(() => ({
+const { receiving, send, redis, wenquRequest } = vi.hoisted(() => ({
   receiving: {
     get: vi.fn(),
     attachments: { list: vi.fn() },
   },
+  send: vi.fn(),
+  redis: new Map<string, unknown>(),
   wenquRequest: vi.fn(),
 }))
 vi.mock('../../db', () => ({ getDatabase: vi.fn() }))
-vi.mock('../../redis', () => ({ cacheDelete: vi.fn(async () => {}) }))
+vi.mock('../../redis', () => ({
+  cacheDelete: vi.fn(async () => {}),
+  cacheGet: async (key: string) => redis.get(key),
+  cacheSet: async (key: string, value: unknown) => {
+    redis.set(key, value)
+  },
+  rateLimit: async (key: string, limit: number) => {
+    const count = Number(redis.get(key) ?? 0) + 1
+    redis.set(key, count)
+    return { allowed: count <= limit, count }
+  },
+}))
 vi.mock('../../integrations', () => ({
-  getResend: () => ({ emails: { receiving } }),
+  getResend: () => ({ emails: { receiving, send } }),
 }))
 vi.mock('@/services/wenqu', () => ({ wenquRequest }))
 
@@ -34,6 +47,8 @@ const READER = 1
 const TITLE = '经略幽燕：宋辽战争军事灾难的战略分析'
 const BOOK = '26936532'
 const INBOUND = 'kindle@import.clippingkk.example'
+const MESSAGE_ID = '<notebook-export@icloud.com>'
+const STRANGER = 'Stranger <Stranger@example.com>'
 const RECEIVED_AT = '2026-10-12T08:00:00.000Z'
 let sample = ''
 
@@ -53,7 +68,13 @@ function serve(
   { headers = {}, html = null }: { headers?: object; html?: string | null } = {}
 ) {
   receiving.get.mockResolvedValue({
-    data: { id: job().emailId, headers, html, attachments: [] },
+    data: {
+      id: job().emailId,
+      message_id: MESSAGE_ID,
+      headers,
+      html,
+      attachments: [],
+    },
     error: null,
   })
   receiving.attachments.list.mockResolvedValue({
@@ -110,6 +131,9 @@ beforeEach(async () => {
     'TRUNCATE users, clippings, nouns, web_hooks, email_bindings, reader_notes RESTART IDENTITY'
   )
   vi.mocked(getDatabase).mockReturnValue({ db } as never)
+  redis.clear()
+  send.mockReset()
+  send.mockResolvedValue({ data: { id: 'reply' }, error: null })
   wenquRequest.mockReset()
   wenquRequest.mockResolvedValue({ count: 1, books: [{ doubanId: BOOK }] })
   await db.insert(schema.users).values({
@@ -208,21 +232,139 @@ describe('importEmail', () => {
     expect(await db.select().from(schema.readerNotes)).toHaveLength(1)
   })
 
-  it('only logs mail from an address no reader has verified', async () => {
+  it('replies to an unverified sender with the notebook as JSON', async () => {
     serve({ 'Notebook.html': sample })
 
-    await expect(
-      importEmail(job({ from: 'Stranger <stranger@example.com>' }))
-    ).resolves.toBe('unbound_sender')
+    await expect(importEmail(job({ from: STRANGER }))).resolves.toBe('replied')
 
     expect(await readerClippings()).toEqual([])
-    expect(receiving.get).not.toHaveBeenCalled()
+    expect(send).toHaveBeenCalledOnce()
+    const [message, options] = send.mock.calls[0]
+    expect(message).toMatchObject({
+      to: 'stranger@example.com',
+      subject: `Re: iPhone Notebook export for ${TITLE} (曾瑞龙)`,
+      headers: { 'In-Reply-To': MESSAGE_ID, References: MESSAGE_ID },
+    })
+    expect(options).toEqual({
+      idempotencyKey: `email-import-reply/${job().emailId}`,
+    })
+    const [attachment] = message.attachments
+    expect(attachment).toMatchObject({
+      filename: `${TITLE}.json`,
+      contentType: 'application/json',
+    })
+    const json = JSON.parse(attachment.content.toString('utf8'))
+    expect(json.clippings).toHaveLength(22)
+    expect(json.clippings[0]).toEqual({
+      title: TITLE,
+      author: '曾瑞龙',
+      content: expect.stringMatching(/^在日常用語中，和平常常被賦予/),
+      pageAt: '#197',
+      createdAt: RECEIVED_AT,
+    })
+    expect(json.notes).toEqual([])
+    // The unbound sender is still reported, masked.
     expect(console.error).toHaveBeenCalledWith(
       expect.stringContaining('sender is not bound')
     )
     expect(console.error).toHaveBeenCalledWith(
       expect.stringContaining('s***@example.com')
     )
+  })
+
+  it('treats an address still waiting for its code as unverified', async () => {
+    await db.insert(schema.emailBindings).values({
+      userId: READER,
+      email: 'pending@example.com',
+      codeHash: 'pending',
+    })
+    serve({ 'Notebook.html': sample })
+
+    await expect(
+      importEmail(job({ from: 'pending@example.com' }))
+    ).resolves.toBe('replied')
+    expect(await readerClippings()).toEqual([])
+  })
+
+  it('replies to one sender at most five times a day', async () => {
+    serve({ 'Notebook.html': sample })
+    for (let i = 0; i < 5; i++)
+      await expect(
+        importEmail(job({ emailId: `email-${i}`, from: STRANGER }))
+      ).resolves.toBe('replied')
+
+    await expect(
+      importEmail(job({ emailId: 'email-5', from: STRANGER }))
+    ).resolves.toBe('reply_limited')
+    expect(send).toHaveBeenCalledTimes(5)
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining('"reply.limit":"sender_day"')
+    )
+    await expect(
+      importEmail(job({ emailId: 'email-6', from: 'other@example.com' }))
+    ).resolves.toBe('replied')
+  })
+
+  it('retries a failed reply with the same idempotency key, counting it once', async () => {
+    serve({ 'Notebook.html': sample })
+    send.mockResolvedValueOnce({
+      data: null,
+      error: { name: 'internal_server_error', message: 'unavailable' },
+    })
+
+    await expect(importEmail(job({ from: STRANGER }))).rejects.toThrow(
+      'Resend send: unavailable'
+    )
+    await expect(importEmail(job({ from: STRANGER }))).resolves.toBe('replied')
+    expect(send.mock.calls[1][1]).toEqual(send.mock.calls[0][1])
+
+    for (let i = 0; i < 4; i++)
+      await expect(
+        importEmail(job({ emailId: `more-${i}`, from: STRANGER }))
+      ).resolves.toBe('replied')
+    await expect(
+      importEmail(job({ emailId: 'more-4', from: STRANGER }))
+    ).resolves.toBe('reply_limited')
+  })
+
+  it('never answers forged mail or mail without a notebook', async () => {
+    serve(
+      { 'Notebook.html': sample },
+      {
+        headers: {
+          'Authentication-Results':
+            'mx.resend.com; spf=fail smtp.mailfrom=example.com; dmarc=fail header.from=example.com',
+        },
+      }
+    )
+    await expect(importEmail(job({ from: STRANGER }))).resolves.toBe(
+      'failed_authentication'
+    )
+
+    serve({ 'Receipt.html': '<p>Thanks for your order</p>' })
+    await expect(importEmail(job({ from: STRANGER }))).resolves.toBe(
+      'no_notebook'
+    )
+
+    await expect(importEmail(job({ from: 'Nobody' }))).resolves.toBe(
+      'unreadable_sender'
+    )
+    expect(send).not.toHaveBeenCalled()
+    // Every unbound sender is still reported, notebook or not.
+    expect(
+      vi
+        .mocked(console.error)
+        .mock.calls.filter(([line]) =>
+          String(line).includes('sender is not bound')
+        )
+    ).toHaveLength(2)
+  })
+
+  it('imports for a verified sender without replying', async () => {
+    serve({ 'Notebook.html': sample })
+
+    await expect(importEmail(job())).resolves.toBe('imported')
+    expect(send).not.toHaveBeenCalled()
   })
 
   it('drops mail that fails DMARC', async () => {

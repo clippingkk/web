@@ -9,8 +9,10 @@ Settings → Notes.
 - **Inbound mail:** [Resend receiving](https://resend.com/docs/dashboard/receiving/create-receiving-webhook).
   Resend accepts the mail and calls `POST /api/v3/inbound/resend` with an `email.received` event.
 - **Who it imports for:** only a sender address the reader has bound and verified under
-  Settings → Email import (`/dash/<you>/settings/email`). Mail from any other address is logged as
-  an error and dropped. Nothing is ever sent back to the sender.
+  Settings → Email import (`/dash/<you>/settings/email`).
+- **Any other sender** gets nothing imported. The unbound sender is logged as an error, and the
+  sender gets a reply with the notebook attached as a JSON file
+  ([Replies to unverified senders](#replies-to-unverified-senders)).
 
 ## Flow
 
@@ -22,16 +24,49 @@ Settings → Notes.
 2. The worker runs `importEmail` (`src/server/email-import/import.ts`):
    1. It ignores mail not addressed to `INBOUND_EMAIL_ADDRESS`, when that is set.
    2. It looks up the sender with `findVerifiedBinding`. With no verified binding it logs
-      `Email import sender is not bound to any reader` (ERROR, sender masked) and stops.
+      `Email import sender is not bound to any reader` (ERROR, sender masked).
    3. It loads the email from Resend. If the `Authentication-Results` header says `dmarc=fail`, it
-      drops the mail.
+      drops the mail and answers nothing.
    4. It downloads up to 5 HTML attachments (10 MB each). If there are none, it reads the HTML body.
-   5. It parses each one with `parseKindleNotebook` (`kindle-notebook.ts`).
-   6. It saves the highlights through `insertClippings` (`src/server/clippings/create.ts`), the
-      same path as the `createClippings` mutation, and saves the notes to `reader_notes`.
-3. Permanent problems (unbound sender, no notebook, failed DMARC) end the job. Transient ones
+   5. It parses each one with `parseKindleNotebook` (`kindle-notebook.ts`). An email with no
+      notebook is dropped and answered with nothing.
+   6. **Verified sender:** it saves the highlights through `insertClippings`
+      (`src/server/clippings/create.ts`), the same path as the `createClippings` mutation, and saves
+      the notes to `reader_notes`.
+   7. **Any other sender:** it replies with the notebook as JSON, within the limits below.
+3. Permanent problems (no notebook, failed DMARC, a reply limit) end the job. Transient ones
    (Resend or download errors, database) throw, and the job retries 5 times with exponential
    backoff starting at 30s.
+
+### Replies to unverified senders
+
+`src/server/email-import/reply.ts`. Pending (unverified) bindings count as unverified.
+
+- **The reply:**
+  - Sent from `MAIL_FROM`, threaded with `In-Reply-To` on the received message.
+  - A short English and Chinese note saying nothing was imported and how to bind the address.
+  - The attachment is `<book title>.json`, or `kindle-notebook.json` for several books:
+
+    ```json
+    {
+      "clippings": [{ "title", "author", "content", "pageAt", "createdAt" }],
+      "notes": [{ "title", "author", "content", "pageAt" }]
+    }
+    ```
+
+    The fields are the ones the import would store: `createdAt` is the email's receive time plus
+    the entry's index in milliseconds.
+- **Limits:** each email counts once, even when its job is retried. Counters are kept in Redis per
+  UTC day and month, under a hash of the sender's address. Over a limit, nothing is sent and a WARN
+  with `reply.limit` is logged.
+
+  | Limit | Value |
+  |---|---|
+  | Per sender address, per day | 5 |
+  | Per sender address, per month | 30 |
+  | All senders together, per day | 500 |
+- **Duplicates:** a retried job resends with the same Resend idempotency key, so the reader gets one
+  reply.
 
 ### How a notebook becomes clippings
 
@@ -105,8 +140,10 @@ retries. Without `INBOUND_EMAIL_ADDRESS`, the settings page says email import is
 ## Limits
 
 - Anyone can forge a From header. The DMARC check stops mail whose own domain rejects it.
-  Otherwise, a forger who knows a reader's bound address can add highlights to that reader's
-  library.
+  Otherwise:
+  - a forger who knows a reader's bound address can add highlights to that reader's library;
+  - anyone can make ClippingKK send a JSON reply to an address they type in, with content they
+    choose. The per-sender and overall limits bound how often that can happen.
 - The worker shares one queue (default concurrency 1) with exports, so an import can wait behind
   a long Notion export.
 - Notes are listed, newest first, on a plain settings page for now (the latest 100).

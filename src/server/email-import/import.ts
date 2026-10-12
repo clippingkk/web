@@ -20,13 +20,15 @@ import {
   parseEmailAddress,
 } from './bindings'
 import { parseKindleNotebook, type KindleNotebook } from './kindle-notebook'
+import { claimReplyQuota, replyWithNotebookJson } from './reply'
 
 /**
  * Imports the Kindle notebook exports attached to an email Resend received
  * (queued by `webhook.ts`). Highlights become the sender's clippings and notes
- * go to `reader_notes`. Problems a retry cannot fix (an unbound sender, no
- * notebook) are logged and end the job; anything else throws so the queue
- * retries it.
+ * go to `reader_notes`. A sender no reader has verified gets the notebook back
+ * as JSON instead (`reply.ts`). Problems a retry cannot fix (no notebook, a
+ * forged sender, a reply limit) are logged and end the job; anything else
+ * throws so the queue retries it.
  */
 
 const meter = metrics.getMeter('clippingkk.web.email-import')
@@ -43,8 +45,10 @@ const KINDLE = 1
 
 type Outcome =
   | 'imported'
+  | 'replied'
+  | 'reply_limited'
   | 'not_addressed'
-  | 'unbound_sender'
+  | 'unreadable_sender'
   | 'failed_authentication'
   | 'missing'
   | 'no_notebook'
@@ -257,16 +261,18 @@ async function run(job: EmailImportJob): Promise<Outcome> {
   }
 
   const sender = parseEmailAddress(job.from)
-  const binding = sender ? await findVerifiedBinding(sender) : null
-  if (!binding) {
-    log('ERROR', 'Email import sender is not bound to any reader', {
-      ...context,
-      'email.sender': sender ? maskEmail(sender) : 'unreadable',
-      'email.sender_domain': sender?.split('@')[1] ?? '',
-    })
-    return 'unbound_sender'
+  if (!sender) {
+    log('WARN', 'Email has no readable sender address', context)
+    return 'unreadable_sender'
   }
-  span?.setAttribute('user.id', binding.userId)
+  const binding = await findVerifiedBinding(sender)
+  const who = {
+    ...context,
+    'email.sender': maskEmail(sender),
+    'email.sender_domain': sender.split('@')[1] ?? '',
+  }
+  if (binding) span?.setAttribute('user.id', binding.userId)
+  else log('ERROR', 'Email import sender is not bound to any reader', who)
 
   const { data: email, error } = await getResend().emails.receiving.get(
     job.emailId
@@ -278,43 +284,68 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     }
     throw new Error(`Resend receiving: ${error.message}`)
   }
-  // From is easy to forge; refuse mail its own domain says is not genuine.
+  // From is easy to forge; refuse mail its own domain says is not genuine,
+  // and never answer it.
   const authentication = header(email.headers, 'authentication-results') ?? ''
   span?.setAttribute(
     'email.authentication',
     authentication ? authentication.slice(0, 256) : 'unknown'
   )
   if (/\bdmarc=fail\b/i.test(authentication)) {
-    log('ERROR', 'Email failed sender authentication', {
-      ...context,
-      'email.sender': maskEmail(sender!),
-    })
+    log('ERROR', 'Email failed sender authentication', who)
     return 'failed_authentication'
+  }
+
+  const notebooks: KindleNotebook[] = []
+  for (const source of await notebookSources(job.emailId, email.html)) {
+    const notebook = parseKindleNotebook(source.html)
+    if (notebook) notebooks.push(notebook)
+  }
+  if (!notebooks.some((item) => item.highlights.length || item.notes.length)) {
+    // Mail without a notebook is never answered, so spam gets no reply.
+    log('WARN', 'Email has no Kindle notebook to import', {
+      ...context,
+      ...(binding ? { 'user.id': binding.userId } : {}),
+    })
+    return 'no_notebook'
+  }
+  const receivedAt = Number.isNaN(Date.parse(job.receivedAt))
+    ? Date.now()
+    : Date.parse(job.receivedAt)
+
+  if (!binding) {
+    const quota = await claimReplyQuota(sender, job.emailId)
+    if (quota !== 'allowed') {
+      log('WARN', 'Notebook JSON reply limit reached', {
+        ...who,
+        'reply.limit': quota,
+      })
+      return 'reply_limited'
+    }
+    const sent = await replyWithNotebookJson({
+      to: sender,
+      subject: job.subject,
+      messageId: email.message_id ?? null,
+      emailId: job.emailId,
+      notebooks,
+      receivedAt,
+    })
+    log('INFO', 'Replied to an unbound sender with the notebook as JSON', {
+      ...who,
+      'reply.clippings': sent.clippings,
+      'reply.notes': sent.notes,
+    })
+    return 'replied'
   }
 
   let highlights = 0
   let created = 0
   let notes = 0
-  for (const source of await notebookSources(job.emailId, email.html)) {
-    const notebook = parseKindleNotebook(source.html)
-    if (!notebook) continue
-    const saved = await saveNotebook(
-      binding.userId,
-      notebook,
-      Number.isNaN(Date.parse(job.receivedAt))
-        ? Date.now()
-        : Date.parse(job.receivedAt)
-    )
+  for (const notebook of notebooks) {
+    const saved = await saveNotebook(binding.userId, notebook, receivedAt)
     highlights += notebook.highlights.length
     created += saved.created
     notes += saved.notes
-  }
-  if (!highlights && !notes) {
-    log('WARN', 'Email has no Kindle notebook to import', {
-      ...context,
-      'user.id': binding.userId,
-    })
-    return 'no_notebook'
   }
 
   await markEmailImported(binding.id)
