@@ -43,6 +43,13 @@
       "when": 1790827186101,
       "tag": "0005_apple_subscriptions",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791794606798,
+      "tag": "0006_email_import",
+      "breakpoints": true
     }
   ]
 }

@@ -23,7 +23,7 @@ function CopyBlock({ value, label }: CopyBlockProps) {
       setCopied(true)
       setTimeout(() => setCopied(false), 1500)
     } catch {
-      toast.error(t('mcp.copyFailed'))
+      toast.error(t('copy.failed'))
     }
   }
 
@@ -37,7 +37,7 @@ function CopyBlock({ value, label }: CopyBlockProps) {
         <IconButton
           variant="ghost"
           size="sm"
-          label={copied ? t('mcp.copied') : t('mcp.copy')}
+          label={copied ? t('copy.copied') : t('copy.copy')}
           icon={
             copied ? (
               <Check className="size-4" aria-hidden="true" />

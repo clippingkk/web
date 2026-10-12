@@ -12,9 +12,8 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { z } from 'zod'
 
+import CopyBlock from '@/components/settings/copy-block'
 import { useTranslation } from '@/i18n/client'
-
-import CopyBlock from './copy-block'
 
 type Expiry = '30' | '90' | '365' | 'never'
 

@@ -217,6 +217,15 @@ over the caller's own library. Tools live in `src/server/mcp/tools/`, their SQL 
 `ck_mcp_` personal access tokens (Settings → AI & MCP) or Gate OAuth tokens audienced at
 `GATE_RESOURCE`. See `docs/mcp.md`.
 
+## Email Import
+
+Readers email Kindle notebook exports (HTML) to `INBOUND_EMAIL_ADDRESS`. Resend calls
+`/api/v3/inbound/resend` (`email.received`), which queues an `import-email` job. The worker
+(`src/server/email-import/import.ts`) imports only for a sender verified under Settings → Email
+import (`email_bindings`, at most 10 per reader). Unbound senders are only logged. Highlights go
+through `insertClippings` (`src/server/clippings/create.ts`, shared with `createClippings`), and
+notes go to `reader_notes`. See `docs/email-import.md`.
+
 ## Rich Text Editor
 
 The application uses **Tiptap** (a headless editor built on ProseMirror) for rich text editing, replacing the legacy Lexical editor.

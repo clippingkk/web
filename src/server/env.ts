@@ -75,6 +75,10 @@ const envSchema = z.object({
   OPENAI_MODEL: z.string().optional(),
   MORALIS_KEY: z.string().optional(),
   RESEND_API_KEY: z.string().optional(),
+  // Signing secret of the Resend `email.received` webhook (see docs/email-import.md).
+  RESEND_WEBHOOK_SECRET: z.string().optional(),
+  // The address readers send Kindle notebook exports to; shown in Settings.
+  INBOUND_EMAIL_ADDRESS: z.email().optional().or(z.literal('')),
   S3_ENDPOINT: z.string().url().default('https://s3.bitiful.net'),
   S3_REGION: z.string().default('cn-east-1'),
   S3_BUCKET: z.string().optional(),

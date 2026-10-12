@@ -1,6 +1,6 @@
 import { resetServerEnvForTests } from '@/server/env'
 import { ApiError } from '@/server/errors'
-import { errorJson, json, route } from '@/server/http'
+import { boundedText, errorJson, json, route } from '@/server/http'
 
 const { connection } = vi.hoisted(() => ({
   connection: vi.fn<() => Promise<void>>(),
@@ -71,5 +71,31 @@ describe('HTTP response helpers', () => {
     expect(response.headers.get('access-control-allow-origin')).toBe(
       'https://clippingkk.example'
     )
+  })
+})
+
+describe('boundedText', () => {
+  const chunked = (parts: string[]) =>
+    new Request('https://clippingkk.example/api/v3/inbound/resend', {
+      method: 'POST',
+      body: new ReadableStream({
+        start(controller) {
+          for (const part of parts)
+            controller.enqueue(new TextEncoder().encode(part))
+          controller.close()
+        },
+      }),
+      duplex: 'half',
+    } as RequestInit)
+
+  it('returns the raw body exactly as sent', async () => {
+    const payload = '{"type":"email.received", "data":{"subject":"经略幽燕"}}'
+    await expect(boundedText(chunked([payload]), 1024)).resolves.toBe(payload)
+  })
+
+  it('refuses a chunked body over the limit', async () => {
+    await expect(
+      boundedText(chunked(['a'.repeat(600), 'b'.repeat(600)]), 1024)
+    ).rejects.toMatchObject({ status: 413 })
   })
 })

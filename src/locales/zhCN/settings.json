@@ -10,8 +10,15 @@
     "orders": "订阅",
     "webhooks": "Webhook",
     "mcp": "AI 与 MCP",
+    "email": "邮件导入",
+    "notes": "笔记",
     "exports": "导出",
     "account": "账户"
+  },
+  "copy": {
+    "copy": "复制",
+    "copied": "已复制",
+    "failed": "复制失败，请手动选中文本复制。"
   },
   "general": {
     "title": "通用",
@@ -108,9 +115,6 @@
     "oauthDescription": "支持 MCP 登录的客户端（例如 Claude）只需要服务器地址，在浏览器中确认授权即可。",
     "tokenTitle": "使用访问令牌",
     "tokenDescription": "对于只能配置固定请求头的客户端，请在下方创建令牌，并以 Bearer 令牌的形式发送。",
-    "copy": "复制",
-    "copied": "已复制",
-    "copyFailed": "复制失败，请手动选中文本复制。",
     "tokens": {
       "title": "访问令牌",
       "description": "令牌在过期或被撤销之前都可以读取你的书库，请像密码一样妥善保管。",
@@ -151,6 +155,79 @@
       "createdDescription": "令牌只会显示这一次。如果丢失，请撤销后重新创建。",
       "done": "完成"
     }
+  },
+  "email": {
+    "title": "通过邮件导入",
+    "description": "把 Kindle 的笔记导出邮件发给 ClippingKK，其中的划线会加入你的书摘。你在 Kindle 里写的笔记会保存在「笔记」中。",
+    "address": "导出发送至",
+    "notConfiguredTitle": "邮件导入暂不可用",
+    "notConfiguredDescription": "此服务器尚未配置导入邮箱地址。",
+    "stepsTitle": "在 iPhone 或 iPad 的 Kindle 应用中",
+    "step1": "打开这本书，进入笔记本。",
+    "step2": "导出笔记本，并选择通过邮件发送。",
+    "step3": "用下方已验证的地址发送到上面的邮箱。几分钟内划线就会出现。",
+    "bindings": {
+      "title": "你的发件地址",
+      "description": "只有来自这些地址的邮件会被导入。最多可添加 {{max}} 个，每个地址都需要输入我们发送的验证码。",
+      "count": "{{count}} / {{max}}",
+      "add": "添加地址",
+      "emptyTitle": "还没有发件地址",
+      "emptyDescription": "添加你用来发送 Kindle 导出的邮箱地址。",
+      "columns": {
+        "email": "地址",
+        "lastImport": "最近导入",
+        "actions": "操作"
+      },
+      "verified": "已验证",
+      "pending": "等待验证码",
+      "never": "从未",
+      "verify": "输入验证码",
+      "remove": "移除",
+      "removeTitle": "移除这个地址？",
+      "removeDescription": "来自 {{email}} 的邮件将不再被导入。",
+      "confirmRemove": "移除地址",
+      "cancel": "取消",
+      "removed": "地址已移除",
+      "removeFailed": "无法移除地址，请重试。"
+    },
+    "add": {
+      "title": "添加发件地址",
+      "description": "我们会向该地址发送一个 6 位验证码，以确认它属于你。",
+      "email": "邮箱地址",
+      "emailPlaceholder": "you@icloud.com",
+      "emailInvalid": "请输入有效的邮箱地址。",
+      "sendCode": "发送验证码",
+      "codeTitle": "输入验证码",
+      "codeDescription": "我们已向 {{email}} 发送了 6 位验证码，30 分钟内有效。",
+      "code": "验证码",
+      "codeInvalid": "请输入邮件中的 6 位数字。",
+      "submit": "验证",
+      "resend": "重新发送验证码",
+      "resent": "已发送新的验证码",
+      "verified": "地址已验证",
+      "cancel": "取消"
+    },
+    "errors": {
+      "INVALID_EMAIL": "请输入有效的邮箱地址。",
+      "ALREADY_VERIFIED": "这个地址已经验证过了。",
+      "EMAIL_ALREADY_BOUND": "这个地址已被另一个 ClippingKK 账户使用。",
+      "TOO_MANY_EMAIL_BINDINGS": "最多只能添加 {{max}} 个地址，请先移除一个。",
+      "TOO_MANY_CODES": "验证码发送次数过多，请一小时后再试。",
+      "TOO_MANY_ATTEMPTS": "错误次数过多，请重新发送验证码。",
+      "CODE_EXPIRED": "验证码已过期，请重新发送。",
+      "INVALID_CODE": "验证码不正确，请检查邮件后重试。",
+      "generic": "出了点问题，请重试。"
+    }
+  },
+  "notes": {
+    "title": "笔记",
+    "description": "你在 Kindle 里写的笔记，随笔记本导出一起导入。",
+    "latest": "显示最近 {{shown}} 条，共 {{total}} 条笔记。",
+    "emptyTitle": "还没有笔记",
+    "emptyDescription": "通过邮件导入 Kindle 笔记本后，你写的笔记会出现在这里。",
+    "location": "位置 {{value}}",
+    "page": "第 {{value}} 页",
+    "viewHighlight": "查看划线"
   },
   "exports": {
     "title": "导出",

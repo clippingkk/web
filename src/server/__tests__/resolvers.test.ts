@@ -136,6 +136,9 @@ test('selects only legacy-compatible noun fields when creating clippings', async
   expect(values).toHaveBeenCalledWith([
     expect.objectContaining({
       content: 'A global noun appears here',
+      // sha256(content + pageAt + userId): existing rows depend on this key.
+      dataId:
+        '95e610a4d253182bd66947a0eae2ffb613ed28e2c2e69e0a6909f2f8a16371ed',
       createdAt: new Date('2026-01-01T00:00:00.000Z'),
       nouns: [7],
       updatedAt: uploadedAt,

@@ -359,3 +359,55 @@ export const appleSubscriptions = pgTable(
 )
 
 export type AppleSubscription = typeof appleSubscriptions.$inferSelect
+
+// Sender addresses a reader receives Kindle notebook exports from (see
+// docs/email-import.md). A row is pending until the reader enters the code
+// mailed to the address; only verified rows import, and only one reader can
+// hold a verified address. The code is stored as its sha256.
+export const emailBindings = pgTable(
+  'email_bindings',
+  {
+    id: id(),
+    userId: int('user_id').notNull(),
+    email: varchar('email', { length: 255 }).notNull(),
+    verifiedAt: timestamp('verified_at', { withTimezone: true }),
+    codeHash: varchar('code_hash', { length: 64 }),
+    codeExpiresAt: timestamp('code_expires_at', { withTimezone: true }),
+    codeAttempts: int('code_attempts').notNull().default(0),
+    lastImportedAt: timestamp('last_imported_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    uniqueIndex('email_bindings_user_id_email_key').on(
+      table.userId,
+      table.email
+    ),
+    uniqueIndex('email_bindings_verified_email_key')
+      .on(table.email)
+      .where(sql`${table.verifiedAt} is not null`),
+  ]
+)
+
+export type EmailBinding = typeof emailBindings.$inferSelect
+
+// Notes a reader typed in Kindle, imported from notebook exports. `clippingId`
+// is the highlight the note follows in the export, when there is one.
+export const readerNotes = pgTable(
+  'reader_notes',
+  {
+    id: id(),
+    userId: int('user_id').notNull(),
+    clippingId: int('clipping_id'),
+    title: varchar('title', { length: 1024 }).notNull(),
+    pageAt: varchar('page_at', { length: 255 }).notNull().default(''),
+    content: text('content').notNull(),
+    dataId: varchar('data_id', { length: 64 }).notNull(),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    uniqueIndex('reader_notes_data_id_key').on(table.dataId),
+    index('reader_notes_user_id_idx').on(table.userId),
+  ]
+)
+
+export type ReaderNote = typeof readerNotes.$inferSelect

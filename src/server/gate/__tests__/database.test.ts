@@ -34,7 +34,7 @@ beforeAll(async () => {
 }, 30000)
 beforeEach(async () => {
   await pg.exec(
-    'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions, apple_subscriptions RESTART IDENTITY'
+    'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions, apple_subscriptions, email_bindings, reader_notes RESTART IDENTITY'
   )
   upstream.request.mockReset()
   upstream.request.mockResolvedValue({ removed: true })
@@ -124,6 +124,18 @@ it('durably disables access, retries upstream failure, removes dependent data an
     expiresAt: new Date(Date.now() + 86_400_000),
     transactionSignedAt: new Date(),
   })
+  await db.insert(schema.emailBindings).values({
+    userId: user.id,
+    email: 'reader@example.com',
+    verifiedAt: new Date(),
+  })
+  await db.insert(schema.readerNotes).values({
+    userId: user.id,
+    clippingId: clip.id,
+    title: 'Private',
+    content: 'A note',
+    dataId: 'note',
+  })
   await scheduleDeletion(user.id)
   expect(
     (
@@ -141,6 +153,8 @@ it('durably disables access, retries upstream failure, removes dependent data an
   expect(await db.select().from(schema.collections)).toHaveLength(0)
   expect(await db.select().from(schema.comments)).toHaveLength(0)
   expect(await db.select().from(schema.appleSubscriptions)).toHaveLength(0)
+  expect(await db.select().from(schema.emailBindings)).toHaveLength(0)
+  expect(await db.select().from(schema.readerNotes)).toHaveLength(0)
   expect((await db.select().from(schema.users)).map((row) => row.id)).toEqual([
     other.id,
   ])
