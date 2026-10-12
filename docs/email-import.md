@@ -22,17 +22,18 @@ Settings → Notes.
    - It queues a BullMQ job `import-email` with the id `email-import-<email_id>`, so a redelivery
      doesn't import twice, then answers `200`.
 2. The worker runs `importEmail` (`src/server/email-import/import.ts`):
-   1. It ignores mail not addressed to `INBOUND_EMAIL_ADDRESS`, when that is set.
+   1. It ignores mail not addressed to `INBOUND_EMAIL_ADDRESS`, and all mail while that is unset.
    2. It looks up the sender with `findVerifiedBinding`. With no verified binding:
       - it logs `Email import sender is not bound to any reader` (ERROR, sender masked);
-      - it counts the email against the reply limits below. Over a limit, it stops there, before
-        any call to Resend or any download.
+      - it stops there, before any call to Resend or any download, when the sender has used up its
+        replies (a read-only check, so it spends nothing) or the day's 1,000 fetches of strangers'
+        mail are spent.
    3. It loads the email from Resend.
       - It counts the DMARC result from the `Authentication-Results` header (`pass`, `fail`,
         `none`, …, or `absent`) in the `app.email_import.authentication` metric.
-      - When Resend reports a result, anything but `dmarc=pass` (`fail`, `none`, `temperror`, …)
-        drops the mail: nothing is imported and nothing is answered. Mail with no result at all
-        goes through.
+      - Only `dmarc=pass` goes on. Anything else (`fail`, `none`, `temperror`, …, or no result)
+        drops the mail: nothing is imported and nothing is answered. Setting
+        `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1` also lets through mail that has no result.
    4. It downloads the HTML attachments. If there are none, it reads the HTML body.
       - Verified sender: up to 5 attachments, 10 MB each.
       - Any other sender: 1 attachment, up to 5 MB.
@@ -64,8 +65,10 @@ Settings → Notes.
 
     The fields are the ones the import would store: `createdAt` is the email's receive time plus
     the entry's index in milliseconds.
-- **Limits:** every email from an unverified address counts, notebook or not.
-  - It is counted before anything is fetched, so the work done for strangers stays bounded.
+- **Limits:** only an email that is actually answered counts, so forged and notebook-less mail
+  spend nobody's allowance. That means it passed DMARC and held a notebook.
+  - Before fetching, a sender that has used up its replies is turned away by a read-only check.
+  - A separate cap of 1,000 fetches a day of strangers' mail bounds the work done for them.
   - An email counts once, even when its job is retried.
   - All three counters are checked before any is bumped. A full global allowance therefore doesn't
     use up a sender's own, and a sender at its limit doesn't use up the global one.
@@ -77,6 +80,7 @@ Settings → Notes.
   | Per sender address, per day | 5 |
   | Per sender address, per month | 30 |
   | All senders together, per day | 500 |
+  | Strangers' emails fetched, per day | 1,000 |
 - **Duplicates:** a retried job resends with the same Resend idempotency key, so the reader gets one
   reply.
 
@@ -95,7 +99,8 @@ Settings → Notes.
   - the same content and `pageAt` already exist (the `data_id` unique index), or
   - a same-title clipping with the same text already exists, deleted ones included. The .txt
     export writes location ranges (`#197-199`) where the HTML has only the start (`#197`), so this
-    second check is what stops a .txt import followed by an email import from doubling up.
+    second check is what stops a .txt import followed by an email import from doubling up. It
+    also means a highlight whose exact text recurs on another page of the same book is kept once.
 - **Highlight or note:** a heading with a colour span (`annotation_*`/`highlight_*`) is a highlight.
   A heading without one is a note. A heading with no text after it is a bookmark, and is skipped.
 - **Linking a note:** a note is linked (`clipping_id`) to the highlight directly before it, unless
@@ -147,25 +152,29 @@ settings page maps each code to a translated message.
 RESEND_API_KEY=re_...                       # also used to fetch received mail and attachments
 RESEND_WEBHOOK_SECRET=whsec_...             # the webhook's signing secret
 INBOUND_EMAIL_ADDRESS=kindle@import.example # shown to readers; other recipients are ignored
+EMAIL_IMPORT_ALLOW_MISSING_DMARC=0          # 1 also imports mail with no DMARC result
 ```
 
-Without `RESEND_API_KEY` or `RESEND_WEBHOOK_SECRET`, the webhook answers `503` and Resend
-retries. Without `INBOUND_EMAIL_ADDRESS`, the settings page says email import isn't available.
+Without `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET` or `INBOUND_EMAIL_ADDRESS`, the webhook answers
+`503` and Resend retries. Without `INBOUND_EMAIL_ADDRESS`, the settings page also says email import
+isn't available.
+
+After deploying, check `app.email_import.authentication`. If imports fail with
+`dmarc="absent"`, Resend isn't reporting DMARC results for your receiving domain, and nothing will
+import until you set `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`. Read the first limit below before you
+do.
 
 ## Limits
 
-- Anyone can forge a From header, and the From address is the only credential. When Resend reports
-  a DMARC result, only `pass` is accepted, which stops forgeries even from domains without a
-  DMARC policy. The cost is that a reader whose own domain publishes no DMARC record can't import
-  until it does. Major providers such as iCloud, Gmail and Outlook publish one.
-- Mail Resend reports no DMARC result for is accepted, so imports keep working if the header is
-  missing. The `app.email_import.authentication` metric (`dmarc="absent"`) shows how often that
-  happens. If it's common, a forger who knows a reader's bound address could add highlights to
-  their library, and anyone could have a JSON reply sent to an address they type in. The reply
-  limits bound how often.
-- An unverified email is counted against the sender's reply limits before it is fetched, so before
-  its DMARC result is known. A forger can therefore use up another address's 5 a day. The
-  trade-off avoids fetching mail for senders over the limit.
+- Anyone can forge a From header, and the From address is the only credential. Only a DMARC pass
+  is accepted, which stops forgeries even from domains without a DMARC policy. The cost is that a
+  reader whose own domain publishes no DMARC record can't import until it does. Major providers
+  such as iCloud, Gmail and Outlook publish one.
+- With `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`, mail with no DMARC result is accepted. A forger who
+  knows a reader's bound address could then add highlights to their library, and anyone could
+  have a JSON reply sent to an address they type in, within the reply limits.
+- A spam wave from many addresses can use up the day's 1,000 fetches of strangers' mail. After
+  that, unverified senders get no reply that day. Verified readers are unaffected.
 - The worker shares one queue (default concurrency 1) with exports, so an import can wait behind
   a long Notion export.
 - Notes are listed, newest first, on a plain settings page for now (the latest 100).

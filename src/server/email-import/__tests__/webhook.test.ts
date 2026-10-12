@@ -67,6 +67,7 @@ beforeEach(() => {
   process.env.REDIS_URL = 'redis://localhost:6379/15'
   process.env.RESEND_API_KEY = 're_test'
   process.env.RESEND_WEBHOOK_SECRET = SECRET
+  process.env.INBOUND_EMAIL_ADDRESS = 'kindle@import.clippingkk.example'
   resetServerEnvForTests()
   enqueueEmailImport.mockClear()
 })
@@ -113,12 +114,16 @@ describe('receiveResendWebhook', () => {
     expect(enqueueEmailImport).not.toHaveBeenCalled()
   })
 
-  it('answers 503 until the webhook secret is configured', async () => {
-    process.env.RESEND_WEBHOOK_SECRET = ''
-    resetServerEnvForTests()
+  it.each(['RESEND_WEBHOOK_SECRET', 'INBOUND_EMAIL_ADDRESS'])(
+    'answers 503 until %s is configured',
+    async (name) => {
+      process.env[name] = ''
+      resetServerEnvForTests()
 
-    await expect(
-      receiveResendWebhook(delivery(received))
-    ).rejects.toMatchObject({ status: 503 })
-  })
+      await expect(
+        receiveResendWebhook(delivery(received))
+      ).rejects.toMatchObject({ status: 503 })
+      expect(enqueueEmailImport).not.toHaveBeenCalled()
+    }
+  )
 })

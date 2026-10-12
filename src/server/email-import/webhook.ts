@@ -37,7 +37,11 @@ function signatureHeader(request: Request, name: string) {
 
 export async function receiveResendWebhook(request: Request) {
   const env = getServerEnv()
-  if (!env.RESEND_API_KEY || !env.RESEND_WEBHOOK_SECRET)
+  if (
+    !env.RESEND_API_KEY ||
+    !env.RESEND_WEBHOOK_SECRET ||
+    !env.INBOUND_EMAIL_ADDRESS
+  )
     throw new ApiError('Email import is not configured.', 503)
   const payload = await boundedText(request, MAX_BODY_BYTES)
 

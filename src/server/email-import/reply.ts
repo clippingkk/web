@@ -17,6 +17,8 @@ export const REPLY_LIMITS = {
   senderPerDay: 5,
   senderPerMonth: 30,
   perDay: 500,
+  /** Emails from unverified senders the worker fetches at all, per day. */
+  fetchesPerDay: 1000,
 } as const
 
 const DAY = 24 * 60 * 60
@@ -63,48 +65,86 @@ export function notebookJson(
   }
 }
 
-export type ReplyQuota = 'allowed' | 'sender_day' | 'sender_month' | 'global'
+export type ReplyQuota =
+  | 'allowed'
+  | 'sender_day'
+  | 'sender_month'
+  | 'global'
+  | 'fetches'
+
+const PREFIX = 'ck:email-import:reply'
+const claimedKey = (emailId: string) => `ck:email-import:replied:${emailId}`
+
+/** The sender's daily and monthly counters and the overall daily one (UTC). */
+function replyCounters(sender: string, now: Date) {
+  const who = createHash('sha256').update(sender).digest('hex')
+  const day = now.toISOString().slice(0, 10)
+  return [
+    [
+      'sender_day',
+      `${PREFIX}:d:${who}:${day}`,
+      REPLY_LIMITS.senderPerDay,
+      2 * DAY,
+    ],
+    [
+      'sender_month',
+      `${PREFIX}:m:${who}:${day.slice(0, 7)}`,
+      REPLY_LIMITS.senderPerMonth,
+      32 * DAY,
+    ],
+    ['global', `${PREFIX}:all:${day}`, REPLY_LIMITS.perDay, 2 * DAY],
+  ] as const
+}
+
+async function fullCounter(sender: string, now: Date) {
+  for (const [limit, key, max] of replyCounters(sender, now))
+    if (Number((await cacheGet<number>(key)) ?? 0) >= max) return limit
+  return null
+}
 
 /**
- * Counts this email against the sender's daily and monthly allowance and the
- * overall daily one (UTC calendar days and months). Every email from an
- * unverified address counts, whether or not it turns out to hold a notebook,
- * so the work done for strangers is bounded too. All three counters are read
- * first and only bumped when every one has room: a full global allowance
- * doesn't eat into senders' own, nor a sender at its limit into the global
- * one. A retry of an email already allowed is not counted again.
+ * Whether an email from an unverified sender is worth fetching, before its
+ * DMARC result or contents are known. It only reads the reply counters, so a
+ * forged From can't spend the real sender's allowance, and counts the fetch
+ * against a separate daily cap that bounds the work done for strangers.
+ */
+export async function admitUnverifiedEmail(
+  sender: string,
+  emailId: string,
+  now = new Date()
+): Promise<ReplyQuota> {
+  if (await cacheGet(claimedKey(emailId))) return 'allowed'
+  const full = await fullCounter(sender, now)
+  if (full) return full
+  const day = now.toISOString().slice(0, 10)
+  const fetches = await rateLimit(
+    `${PREFIX}:fetch:${day}`,
+    REPLY_LIMITS.fetchesPerDay,
+    2 * DAY
+  )
+  return fetches.allowed ? 'allowed' : 'fetches'
+}
+
+/**
+ * Counts a reply against the sender's daily and monthly allowance and the
+ * overall daily one. It runs only once the email has passed DMARC and holds a
+ * notebook, so mail that is never answered spends nobody's allowance. All
+ * three counters are read first and only bumped when every one has room: a
+ * full global allowance doesn't eat into senders' own, nor the reverse. A
+ * retry of an email already allowed is not counted again.
  */
 export async function claimReplyQuota(
   sender: string,
   emailId: string,
   now = new Date()
 ): Promise<ReplyQuota> {
-  const claimed = `ck:email-import:replied:${emailId}`
-  if (await cacheGet(claimed)) return 'allowed'
-  const who = createHash('sha256').update(sender).digest('hex')
-  const day = now.toISOString().slice(0, 10)
-  const prefix = 'ck:email-import:reply'
-  const counters: [Exclude<ReplyQuota, 'allowed'>, string, number, number][] = [
-    [
-      'sender_day',
-      `${prefix}:d:${who}:${day}`,
-      REPLY_LIMITS.senderPerDay,
-      2 * DAY,
-    ],
-    [
-      'sender_month',
-      `${prefix}:m:${who}:${day.slice(0, 7)}`,
-      REPLY_LIMITS.senderPerMonth,
-      32 * DAY,
-    ],
-    ['global', `${prefix}:all:${day}`, REPLY_LIMITS.perDay, 2 * DAY],
-  ]
-  for (const [limit, key, max] of counters)
-    if (Number((await cacheGet<number>(key)) ?? 0) >= max) return limit
-  for (const [limit, key, max, ttl] of counters)
+  if (await cacheGet(claimedKey(emailId))) return 'allowed'
+  const full = await fullCounter(sender, now)
+  if (full) return full
+  for (const [limit, key, max, ttl] of replyCounters(sender, now))
     // Another job may have taken the last slot since the read above.
     if (!(await rateLimit(key, max, ttl)).allowed) return limit
-  await cacheSet(claimed, 1, 7 * DAY)
+  await cacheSet(claimedKey(emailId), 1, 7 * DAY)
   return 'allowed'
 }
 

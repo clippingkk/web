@@ -20,7 +20,11 @@ import {
   parseEmailAddress,
 } from './bindings'
 import { parseKindleNotebook, type KindleNotebook } from './kindle-notebook'
-import { claimReplyQuota, replyWithNotebookJson } from './reply'
+import {
+  admitUnverifiedEmail,
+  claimReplyQuota,
+  replyWithNotebookJson,
+} from './reply'
 
 /**
  * Imports the Kindle notebook exports attached to an email Resend received
@@ -144,6 +148,10 @@ async function resolveBookId(userId: number, title: string) {
   }
 }
 
+/**
+ * Not one transaction: if the job dies between the clippings and the notes,
+ * its retry skips the clippings already saved and adds the notes.
+ */
 async function saveNotebook(
   userId: number,
   notebook: KindleNotebook,
@@ -281,13 +289,18 @@ async function run(job: EmailImportJob): Promise<Outcome> {
   const context = { 'resend.email_id': job.emailId }
   span?.setAttributes(context)
 
-  const inbound = getServerEnv().INBOUND_EMAIL_ADDRESS
-  if (inbound) {
-    const recipients = [...job.to, ...job.receivedFor].map(parseEmailAddress)
-    if (!recipients.includes(normalizeEmail(inbound))) {
-      log('WARN', 'Email is not addressed to the import address', context)
-      return 'not_addressed'
-    }
+  const env = getServerEnv()
+  const inbound = env.INBOUND_EMAIL_ADDRESS
+  // Without the import address there's no telling import mail from anything
+  // else the receiving domain gets (the webhook refuses it too).
+  if (!inbound) {
+    log('WARN', 'Email import has no INBOUND_EMAIL_ADDRESS', context)
+    return 'not_addressed'
+  }
+  const recipients = [...job.to, ...job.receivedFor].map(parseEmailAddress)
+  if (!recipients.includes(normalizeEmail(inbound))) {
+    log('WARN', 'Email is not addressed to the import address', context)
+    return 'not_addressed'
   }
 
   const sender = parseEmailAddress(job.from)
@@ -304,9 +317,9 @@ async function run(job: EmailImportJob): Promise<Outcome> {
   if (binding) span?.setAttribute('user.id', binding.userId)
   else {
     log('ERROR', 'Email import sender is not bound to any reader', who)
-    // Strangers are counted before any download, so their mail costs little
-    // once they are over the limit, notebook or not.
-    const quota = await claimReplyQuota(sender, job.emailId)
+    // Nothing is fetched for a sender already at its reply limit, nor past
+    // the daily cap on strangers' mail.
+    const quota = await admitUnverifiedEmail(sender, job.emailId)
     if (quota !== 'allowed') {
       log('WARN', 'Notebook JSON reply limit reached', {
         ...who,
@@ -326,10 +339,11 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     }
     throw new Error(`Resend receiving: ${error.message}`)
   }
-  // From is the only credential, so when Resend reports a DMARC result,
-  // anything but a pass is neither imported nor answered: that also stops
-  // forgeries from domains with no DMARC policy (`none`). Mail Resend reports
-  // nothing for is let through; the metric shows how often that happens.
+  // From is the only credential, so only a DMARC pass is imported or
+  // answered: that also stops forgeries from domains with no DMARC policy
+  // (`none`). Mail Resend reports no result for is refused too, unless
+  // EMAIL_IMPORT_ALLOW_MISSING_DMARC says otherwise; the metric shows how
+  // often that happens.
   const authentication = header(email.headers, 'authentication-results') ?? ''
   const reported = authentication.match(/\bdmarc=(\w+)/i)?.[1]?.toLowerCase()
   const dmarc = !reported
@@ -342,7 +356,8 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     dmarc,
     sender: binding ? 'verified' : 'unverified',
   })
-  if (dmarc !== 'pass' && dmarc !== 'absent') {
+  const allowMissing = env.EMAIL_IMPORT_ALLOW_MISSING_DMARC === '1'
+  if (dmarc !== 'pass' && !(dmarc === 'absent' && allowMissing)) {
     log('ERROR', 'Email failed sender authentication', {
       ...who,
       'email.dmarc': dmarc,
@@ -373,6 +388,14 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     : Date.parse(job.receivedAt)
 
   if (!binding) {
+    const quota = await claimReplyQuota(sender, job.emailId)
+    if (quota !== 'allowed') {
+      log('WARN', 'Notebook JSON reply limit reached', {
+        ...who,
+        'reply.limit': quota,
+      })
+      return 'reply_limited'
+    }
     const sent = await replyWithNotebookJson({
       to: sender,
       subject: job.subject,

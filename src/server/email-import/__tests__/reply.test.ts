@@ -16,7 +16,12 @@ vi.mock('../../redis', () => ({
 vi.mock('../../integrations', () => ({ getResend: vi.fn() }))
 
 import type { KindleNotebook } from '../kindle-notebook'
-import { claimReplyQuota, notebookJson, REPLY_LIMITS } from '../reply'
+import {
+  admitUnverifiedEmail,
+  claimReplyQuota,
+  notebookJson,
+  REPLY_LIMITS,
+} from '../reply'
 
 const day = (date: string) => new Date(`${date}T12:00:00.000Z`)
 
@@ -84,6 +89,49 @@ describe('claimReplyQuota', () => {
       await expect(
         claimReplyQuota('reader@icloud.com', 'same-email', at)
       ).resolves.toBe('allowed')
+  })
+})
+
+describe('admitUnverifiedEmail', () => {
+  it('only reads the reply counters, so a forged From spends nothing', async () => {
+    const at = day('2026-10-12')
+    for (let i = 0; i < 20; i++)
+      await expect(
+        admitUnverifiedEmail('reader@icloud.com', `email-${i}`, at)
+      ).resolves.toBe('allowed')
+
+    await expect(
+      claimReplyQuota('reader@icloud.com', 'genuine', at)
+    ).resolves.toBe('allowed')
+  })
+
+  it('turns a sender away once its replies are used up', async () => {
+    const at = day('2026-10-12')
+    for (let i = 0; i < REPLY_LIMITS.senderPerDay; i++)
+      await claimReplyQuota('reader@icloud.com', `email-${i}`, at)
+
+    await expect(
+      admitUnverifiedEmail('reader@icloud.com', 'email-5', at)
+    ).resolves.toBe('sender_day')
+    // A retry of an email that was already answered still goes through.
+    await expect(
+      admitUnverifiedEmail('reader@icloud.com', 'email-0', at)
+    ).resolves.toBe('allowed')
+  })
+
+  it(`caps strangers' mail at ${REPLY_LIMITS.fetchesPerDay} fetches a day`, async () => {
+    const at = day('2026-10-12')
+    redis.set(
+      'ck:email-import:reply:fetch:2026-10-12',
+      REPLY_LIMITS.fetchesPerDay
+    )
+
+    await expect(
+      admitUnverifiedEmail('reader@icloud.com', 'email', at)
+    ).resolves.toBe('fetches')
+    await expect(
+      admitUnverifiedEmail('reader@icloud.com', 'email', day('2026-10-13'))
+    ).resolves.toBe('allowed')
   })
 })
 

@@ -13,9 +13,11 @@ const verifySchema = z.object({
     .regex(/^\d{6}$/),
 })
 
-export const POST = route(async (request) => {
+type Context = { params: Promise<{ id: string }> }
+
+export const POST = route(async (request, context) => {
   const userId = await requireUserId(request)
-  const id = Number(new URL(request.url).pathname.split('/').at(-2))
+  const id = Number((await (context as Context).params).id)
   if (!Number.isSafeInteger(id) || id <= 0)
     throw new ApiError('address not found', 404)
   const { code } = await body(request, verifySchema)

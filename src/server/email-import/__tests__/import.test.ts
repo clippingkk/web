@@ -49,6 +49,10 @@ const BOOK = '26936532'
 const INBOUND = 'kindle@import.clippingkk.example'
 const MESSAGE_ID = '<notebook-export@icloud.com>'
 const STRANGER = 'Stranger <Stranger@example.com>'
+const DMARC_PASS = {
+  'Authentication-Results':
+    'mx.resend.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass; dmarc=pass header.from=icloud.com',
+}
 const RECEIVED_AT = '2026-10-12T08:00:00.000Z'
 let sample = ''
 
@@ -65,7 +69,10 @@ const job = (overrides: Partial<EmailImportJob> = {}): EmailImportJob => ({
 /** Resend serving one email with `attachments` (name → HTML). */
 function serve(
   attachments: Record<string, string>,
-  { headers = {}, html = null }: { headers?: object; html?: string | null } = {}
+  {
+    headers = DMARC_PASS,
+    html = null,
+  }: { headers?: object; html?: string | null } = {}
 ) {
   receiving.get.mockResolvedValue({
     data: {
@@ -123,6 +130,7 @@ beforeEach(async () => {
   process.env.DATABASE_URL = 'postgresql://postgres:admin@localhost:5432/test'
   process.env.REDIS_URL = 'redis://localhost:6379/15'
   process.env.INBOUND_EMAIL_ADDRESS = INBOUND
+  process.env.EMAIL_IMPORT_ALLOW_MISSING_DMARC = '0'
   resetServerEnvForTests()
   vi.restoreAllMocks()
   vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -305,22 +313,69 @@ describe('importEmail', () => {
     ).resolves.toBe('replied')
   })
 
-  it('does no work for a stranger over the limit, notebook or not', async () => {
-    serve({ 'Receipt.html': '<p>Not a notebook</p>' })
+  it('fetches nothing for a stranger already at the reply limit', async () => {
+    serve({ 'Notebook.html': sample })
     for (let i = 0; i < 5; i++)
-      await expect(
-        importEmail(job({ emailId: `junk-${i}`, from: STRANGER }))
-      ).resolves.toBe('no_notebook')
+      await importEmail(job({ emailId: `email-${i}`, from: STRANGER }))
     receiving.get.mockClear()
     receiving.attachments.list.mockClear()
     vi.mocked(fetch).mockClear()
 
     await expect(
-      importEmail(job({ emailId: 'junk-5', from: STRANGER }))
+      importEmail(job({ emailId: 'email-5', from: STRANGER }))
     ).resolves.toBe('reply_limited')
     expect(receiving.get).not.toHaveBeenCalled()
     expect(receiving.attachments.list).not.toHaveBeenCalled()
     expect(fetch).not.toHaveBeenCalled()
+  })
+
+  it('spends no reply allowance on forged or notebook-less mail', async () => {
+    serve({ 'Receipt.html': '<p>Not a notebook</p>' })
+    for (let i = 0; i < 5; i++)
+      await expect(
+        importEmail(job({ emailId: `junk-${i}`, from: STRANGER }))
+      ).resolves.toBe('no_notebook')
+    serve(
+      { 'Notebook.html': sample },
+      {
+        headers: {
+          'Authentication-Results':
+            'mx.resend.com; dmarc=none header.from=example.com',
+        },
+      }
+    )
+    for (let i = 0; i < 5; i++)
+      await expect(
+        importEmail(job({ emailId: `forged-${i}`, from: STRANGER }))
+      ).resolves.toBe('failed_authentication')
+
+    serve({ 'Notebook.html': sample })
+    await expect(
+      importEmail(job({ emailId: 'genuine', from: STRANGER }))
+    ).resolves.toBe('replied')
+  })
+
+  it('refuses mail with no DMARC result unless told to accept it', async () => {
+    serve({ 'Notebook.html': sample }, { headers: {} })
+    await expect(importEmail(job())).resolves.toBe('failed_authentication')
+    await expect(importEmail(job({ from: STRANGER }))).resolves.toBe(
+      'failed_authentication'
+    )
+    expect(await readerClippings()).toEqual([])
+
+    process.env.EMAIL_IMPORT_ALLOW_MISSING_DMARC = '1'
+    resetServerEnvForTests()
+    await expect(importEmail(job())).resolves.toBe('imported')
+    expect(await readerClippings()).toHaveLength(22)
+  })
+
+  it('imports nothing while INBOUND_EMAIL_ADDRESS is unset', async () => {
+    process.env.INBOUND_EMAIL_ADDRESS = ''
+    resetServerEnvForTests()
+    serve({ 'Notebook.html': sample })
+
+    await expect(importEmail(job())).resolves.toBe('not_addressed')
+    expect(receiving.get).not.toHaveBeenCalled()
   })
 
   it('downloads a single attachment for a stranger', async () => {
