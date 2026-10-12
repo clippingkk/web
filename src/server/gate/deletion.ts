@@ -141,6 +141,7 @@ export async function processPendingDeletions() {
     await tx
       .delete(tables.appleSubscriptions)
       .where(eq(tables.appleSubscriptions.userId, uid))
+    await tx.delete(tables.mcpTokens).where(eq(tables.mcpTokens.userId, uid))
     await tx.delete(tables.users).where(eq(tables.users.id, uid))
     await tx
       .update(tables.accountDeletions)
