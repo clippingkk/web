@@ -34,7 +34,7 @@ beforeAll(async () => {
 }, 30000)
 beforeEach(async () => {
   await pg.exec(
-    'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions, apple_subscriptions, mcp_tokens, email_bindings, reader_notes RESTART IDENTITY'
+    'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions, apple_subscriptions, mcp_tokens, email_bindings, reader_notes, inbound_emails RESTART IDENTITY'
   )
   upstream.request.mockReset()
   upstream.request.mockResolvedValue({ removed: true })
@@ -124,11 +124,27 @@ it('durably disables access, retries upstream failure, removes dependent data an
     expiresAt: new Date(Date.now() + 86_400_000),
     transactionSignedAt: new Date(),
   })
-  await db.insert(schema.emailBindings).values({
-    userId: user.id,
-    email: 'reader@example.com',
-    verifiedAt: new Date(),
+  await db.insert(schema.emailBindings).values([
+    { userId: user.id, email: 'reader@example.com', verifiedAt: new Date() },
+    // Anyone can claim an address; only a verified one makes its mail theirs.
+    { userId: user.id, email: 'claimed@example.com', codeHash: 'pending' },
+  ])
+  const inbound = (emailId: string, userId: number | null, sender: string) => ({
+    emailId,
+    userId,
+    sender,
+    status: 'imported',
+    receivedAt: new Date(),
   })
+  await db
+    .insert(schema.inboundEmails)
+    .values([
+      inbound('mine', user.id, 'reader@example.com'),
+      inbound('before-binding', null, 'reader@example.com'),
+      inbound('claimed', null, 'claimed@example.com'),
+      inbound('stranger', null, 'stranger@example.com'),
+      inbound('theirs', other.id, 'other@example.com'),
+    ])
   await db.insert(schema.readerNotes).values({
     userId: user.id,
     clippingId: clip.id,
@@ -169,6 +185,9 @@ it('durably disables access, retries upstream failure, removes dependent data an
   expect(await db.select().from(schema.appleSubscriptions)).toHaveLength(0)
   expect(await db.select().from(schema.emailBindings)).toHaveLength(0)
   expect(await db.select().from(schema.readerNotes)).toHaveLength(0)
+  expect(
+    (await db.select().from(schema.inboundEmails)).map((row) => row.emailId)
+  ).toEqual(['claimed', 'stranger', 'theirs'])
   expect(
     (await db.select().from(schema.mcpTokens)).map((row) => row.userId)
   ).toEqual([other.id])

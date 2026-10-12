@@ -1,4 +1,4 @@
-import { and, eq, inArray, isNull, or, sql } from 'drizzle-orm'
+import { and, eq, inArray, isNotNull, isNull, or, sql } from 'drizzle-orm'
 
 import { getDatabase } from '../db'
 import * as tables from '../db/schema'
@@ -119,6 +119,28 @@ export async function processPendingDeletions() {
     await tx
       .delete(tables.readerNotes)
       .where(eq(tables.readerNotes.userId, uid))
+    // The reader's email history, and mail their verified addresses sent
+    // before being bound. Pending addresses don't count: anyone can claim one.
+    await tx.delete(tables.inboundEmails).where(
+      or(
+        eq(tables.inboundEmails.userId, uid),
+        and(
+          isNull(tables.inboundEmails.userId),
+          inArray(
+            tables.inboundEmails.sender,
+            tx
+              .select({ email: tables.emailBindings.email })
+              .from(tables.emailBindings)
+              .where(
+                and(
+                  eq(tables.emailBindings.userId, uid),
+                  isNotNull(tables.emailBindings.verifiedAt)
+                )
+              )
+          )
+        )
+      )
+    )
     // A verified address left behind could never be bound by anyone else.
     await tx
       .delete(tables.emailBindings)

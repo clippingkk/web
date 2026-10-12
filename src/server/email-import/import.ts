@@ -15,6 +15,15 @@ import {
 import { parseKindleNotebook, type KindleNotebook } from './kindle-notebook'
 import { log, maskEmail } from './log'
 import {
+  clipText,
+  emptyFacts,
+  receivedAtOf,
+  recordInboundEmail,
+  type ImportOutcome,
+  type InboundEmailFacts,
+  type InboundEmailStatus,
+} from './records'
+import {
   admitUnverifiedEmail,
   claimReplyQuota,
   replyWithNotebookJson,
@@ -27,7 +36,8 @@ import { saveNotebook } from './save'
  * go to `reader_notes`. A sender no reader has verified gets the notebook back
  * as JSON instead (`reply.ts`). Problems a retry cannot fix (no notebook, a
  * forged sender, a reply limit) are logged and end the job; anything else
- * throws so the queue retries it.
+ * throws so the queue retries it. Every attempt is recorded in
+ * `inbound_emails` (`records.ts`).
  */
 
 const meter = metrics.getMeter('clippingkk.web.email-import')
@@ -49,16 +59,6 @@ const ATTACHMENT_LIMITS = {
 } as const
 type AttachmentLimit =
   (typeof ATTACHMENT_LIMITS)[keyof typeof ATTACHMENT_LIMITS]
-
-type Outcome =
-  | 'imported'
-  | 'replied'
-  | 'reply_limited'
-  | 'not_addressed'
-  | 'unreadable_sender'
-  | 'failed_authentication'
-  | 'missing'
-  | 'no_notebook'
 
 /** The notebook HTML attached to the email, or its body when nothing is. */
 async function notebookSources(
@@ -112,7 +112,10 @@ async function notebookSources(
   return sources
 }
 
-async function run(job: EmailImportJob): Promise<Outcome> {
+async function run(
+  job: EmailImportJob,
+  facts: InboundEmailFacts
+): Promise<ImportOutcome> {
   const span = trace.getActiveSpan()
   const context = { 'resend.email_id': job.emailId }
   span?.setAttributes(context)
@@ -137,6 +140,7 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     return 'unreadable_sender'
   }
   const binding = await findVerifiedBinding(sender)
+  facts.userId = binding?.userId ?? null
   const who = {
     ...context,
     'email.sender': maskEmail(sender),
@@ -153,6 +157,7 @@ async function run(job: EmailImportJob): Promise<Outcome> {
         ...who,
         'reply.limit': quota,
       })
+      facts.detail = quota
       return 'reply_limited'
     }
   }
@@ -178,6 +183,7 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     env.EMAIL_IMPORT_AUTHSERV_ID || undefined
   )
   span?.setAttribute('email.dmarc', dmarc)
+  facts.dmarc = dmarc
   authenticationResults.add(1, {
     dmarc,
     sender: binding ? 'verified' : 'unverified',
@@ -219,9 +225,12 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     })
     return 'no_notebook'
   }
-  const receivedAt = Number.isNaN(Date.parse(job.receivedAt))
-    ? Date.now()
-    : Date.parse(job.receivedAt)
+  facts.books = notebooks.map((notebook) => clipText(notebook.title, 255))
+  facts.highlights = notebooks.reduce(
+    (sum, notebook) => sum + notebook.highlights.length,
+    0
+  )
+  const receivedAt = receivedAtOf(job)
 
   if (!binding) {
     const quota = await claimReplyQuota(sender, job.emailId)
@@ -230,6 +239,7 @@ async function run(job: EmailImportJob): Promise<Outcome> {
         ...who,
         'reply.limit': quota,
       })
+      facts.detail = quota
       return 'reply_limited'
     }
     const sent = await replyWithNotebookJson({
@@ -248,29 +258,57 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     return 'replied'
   }
 
-  let highlights = 0
-  let created = 0
-  let notes = 0
-  for (const notebook of notebooks) {
-    const saved = await saveNotebook(binding.userId, notebook, receivedAt)
-    highlights += notebook.highlights.length
-    created += saved.created
-    notes += saved.notes
-  }
+  for (const notebook of notebooks)
+    await saveNotebook(binding.userId, notebook, receivedAt, facts)
 
   await markEmailImported(binding.id)
   log('INFO', 'Kindle notebook imported from email', {
     ...context,
     'user.id': binding.userId,
-    'import.highlights': highlights,
-    'import.clippings_created': created,
-    'import.notes_created': notes,
+    'import.highlights': facts.highlights,
+    'import.clippings_created': facts.clippingsCreated,
+    'import.notes_created': facts.notesCreated,
   })
   return 'imported'
 }
 
-export async function importEmail(job: EmailImportJob) {
-  const outcome = await run(job)
+/** The history is for people; losing a row must not fail or redo an import. */
+async function record(
+  job: EmailImportJob,
+  status: InboundEmailStatus,
+  facts: InboundEmailFacts,
+  attempt: number
+) {
+  try {
+    await recordInboundEmail(job, status, facts, attempt)
+  } catch (error) {
+    log('WARN', 'Could not record the inbound email', {
+      'resend.email_id': job.emailId,
+      'error.message': error instanceof Error ? error.message : String(error),
+    })
+  }
+}
+
+/**
+ * `attempt` counts from 1; `final` says the queue won't try again, so a throw
+ * is recorded as `failed` rather than `retrying`.
+ */
+export async function importEmail(
+  job: EmailImportJob,
+  { attempt = 1, final = false }: { attempt?: number; final?: boolean } = {}
+) {
+  const facts = emptyFacts()
+  let outcome: ImportOutcome
+  try {
+    outcome = await run(job, facts)
+  } catch (error) {
+    // The first line only: database errors list the query's values after it.
+    const message = error instanceof Error ? error.message : String(error)
+    facts.detail = message.split('\n')[0]
+    await record(job, final ? 'failed' : 'retrying', facts, attempt)
+    throw error
+  }
+  await record(job, outcome, facts, attempt)
   emailsProcessed.add(1, { outcome })
   return outcome
 }

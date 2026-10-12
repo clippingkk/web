@@ -218,6 +218,35 @@
       "CODE_EXPIRED": "This code has expired. Send a new one.",
       "INVALID_CODE": "That code isn’t right. Check the email and try again.",
       "generic": "Something went wrong. Try again."
+    },
+    "status": {
+      "imported": "Imported",
+      "replied": "Sent back as JSON",
+      "reply_limited": "Reply limit reached",
+      "not_addressed": "Wrong address",
+      "unreadable_sender": "Unreadable sender",
+      "failed_authentication": "Not authenticated",
+      "missing": "Expired",
+      "no_notebook": "No notebook",
+      "retrying": "Retrying",
+      "failed": "Failed"
+    },
+    "history": {
+      "title": "Recent emails",
+      "description": "Email your verified addresses sent to the import address, and what became of each one.",
+      "latest": "Showing your latest {{shown}} of {{total}}.",
+      "emptyTitle": "No emails yet",
+      "emptyDescription": "When you send a notebook export from a verified address, it appears here.",
+      "noSubject": "(no subject)",
+      "summary": "Highlights {{highlights}} · New {{created}} · Notes {{notes}}",
+      "replied": "Highlights sent back: {{value}}",
+      "hint": {
+        "failed_authentication": "We couldn’t confirm this email came from your address, so nothing was imported. Send exports straight from your mail app rather than through a forwarding service.",
+        "no_notebook": "We found no Kindle notebook in this email. Attach the HTML export from the Kindle app.",
+        "missing": "This email expired before we could read it. Send it again.",
+        "retrying": "Something went wrong. We’ll try again in a few minutes.",
+        "failed": "We couldn’t import this email. Send it again, and contact us if it keeps happening."
+      }
     }
   },
   "notes": {
@@ -296,6 +325,27 @@
     "synced": "Synced {{title}}",
     "failed": "Couldn't sync this title.",
     "invalidId": "A Douban id is a number of at least four digits.",
-    "placeholder": "Douban id"
+    "placeholder": "Douban id",
+    "nav": {
+      "label": "Admin sections",
+      "books": "Books",
+      "inbound": "Inbound email"
+    },
+    "inbound": {
+      "meta": {
+        "title": "Inbound email"
+      },
+      "title": "Mail from unverified senders",
+      "description": "Email the import address received from senders no reader has verified, newest first.",
+      "empty": "No mail from unverified senders.",
+      "dmarc": "DMARC: {{value}}",
+      "attempts": "Attempts: {{value}}",
+      "limit": {
+        "sender_day": "Sender’s daily reply limit",
+        "sender_month": "Sender’s monthly reply limit",
+        "global": "Daily reply limit for all senders",
+        "fetches": "Daily fetch limit for unverified mail"
+      }
+    }
   }
 }

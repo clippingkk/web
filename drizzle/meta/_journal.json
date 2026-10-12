@@ -50,6 +50,13 @@
       "when": 1791794606798,
       "tag": "0006_email_import",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791804719974,
+      "tag": "0007_inbound_emails",
+      "breakpoints": true
     }
   ]
 }

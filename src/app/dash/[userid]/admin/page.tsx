@@ -14,6 +14,7 @@ import { requireViewerRoute } from '@/server/data/path-user'
 import { serverQuery } from '@/server/data/query'
 import { dashHref } from '@/utils/profile.utils'
 
+import AdminNav from './admin-nav'
 import HomelessBookSyncInput from './sync-input'
 
 const PAGE_SIZE = 50
@@ -54,6 +55,7 @@ async function AdminPage(props: PageProps) {
         title={t('admin.title')}
         description={t('admin.description')}
       />
+      <AdminNav slug={viewer.slug} active="books" />
       {books.length === 0 ? (
         <EmptyState
           icon={<BookCheck className="size-6" />}

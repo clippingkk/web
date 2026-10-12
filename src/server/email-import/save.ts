@@ -8,6 +8,7 @@ import { getDatabase } from '../db'
 import { clippings, readerNotes } from '../db/schema'
 import type { KindleNotebook } from './kindle-notebook'
 import { log } from './log'
+import type { InboundEmailFacts } from './records'
 
 /**
  * Saves a parsed notebook to a verified reader's library: highlights as
@@ -82,12 +83,14 @@ async function resolveBookId(userId: number, title: string) {
 
 /**
  * Not one transaction: if the job dies between the clippings and the notes,
- * its retry skips the clippings already saved and adds the notes.
+ * its retry skips the clippings already saved and adds the notes. What each
+ * chunk saved is added to `saved` at once, so a failed attempt reports it.
  */
 export async function saveNotebook(
   userId: number,
   notebook: KindleNotebook,
-  receivedAt: number
+  receivedAt: number,
+  saved: Pick<InboundEmailFacts, 'clippingsCreated' | 'notesCreated'>
 ) {
   const { title } = notebook
   const bookId = await resolveBookId(userId, title)
@@ -126,18 +129,16 @@ export async function saveNotebook(
       .filter((row) => !row.deletedAt)
       .map((row) => [sameText(row.content), row.id])
   )
-  let created = 0
   for (let i = 0; i < drafts.length; i += INSERT_CHUNK) {
     const rows = await insertClippings(
       userId,
       drafts.slice(i, i + INSERT_CHUNK),
       { visible: true }
     )
-    created += rows.length
+    saved.clippingsCreated += rows.length
     for (const row of rows) idByText.set(sameText(row.content), row.id)
   }
 
-  let notes = 0
   if (notebook.notes.length) {
     const rows = notebook.notes.map((note, index) => ({
       userId,
@@ -155,7 +156,7 @@ export async function saveNotebook(
       createdAt: new Date(receivedAt + index),
     }))
     for (let i = 0; i < rows.length; i += INSERT_CHUNK)
-      notes += (
+      saved.notesCreated += (
         await db()
           .insert(readerNotes)
           .values(rows.slice(i, i + INSERT_CHUNK))
@@ -163,6 +164,4 @@ export async function saveNotebook(
           .returning({ id: readerNotes.id })
       ).length
   }
-
-  return { created, notes }
 }

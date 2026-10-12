@@ -30,6 +30,33 @@ export function formatDate(
   return formatter.format(date)
 }
 
+/** Date and time, in UTC and labelled so: the server can't know the reader's zone. */
+export function formatDateTime(
+  value: string | number | Date | null | undefined,
+  language?: string | null
+): string {
+  if (value === null || value === undefined || value === '') return ''
+  const date = value instanceof Date ? value : new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  const locale = toHtmlLang(language)
+  const key = `${locale}:datetime`
+  let formatter = formatters.get(key)
+  if (!formatter) {
+    // `dateStyle` can't be combined with `timeZoneName`, so list the parts.
+    formatter = new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: 'UTC',
+      timeZoneName: 'short',
+    })
+    formatters.set(key, formatter)
+  }
+  return formatter.format(date)
+}
+
 export function toIsoString(value: string | number | Date | null | undefined) {
   if (value === null || value === undefined || value === '') return undefined
   const date = value instanceof Date ? value : new Date(value)

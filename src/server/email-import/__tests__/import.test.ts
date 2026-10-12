@@ -115,6 +115,9 @@ const readerClippings = () =>
     .where(eq(schema.clippings.createdBy, READER))
     .orderBy(asc(schema.clippings.createdAt))
 
+const records = () =>
+  db.select().from(schema.inboundEmails).orderBy(asc(schema.inboundEmails.id))
+
 beforeAll(async () => {
   for (const name of (await readdir('drizzle'))
     .filter((n) => n.endsWith('.sql'))
@@ -137,7 +140,7 @@ beforeEach(async () => {
   vi.spyOn(console, 'error').mockImplementation(() => {})
   vi.spyOn(console, 'warn').mockImplementation(() => {})
   await pg.exec(
-    'TRUNCATE users, clippings, nouns, web_hooks, email_bindings, reader_notes RESTART IDENTITY'
+    'TRUNCATE users, clippings, nouns, web_hooks, email_bindings, reader_notes, inbound_emails RESTART IDENTITY'
   )
   vi.mocked(getDatabase).mockReturnValue({ db } as never)
   redis.clear()
@@ -604,5 +607,178 @@ describe('importEmail', () => {
     await expect(importEmail(job())).resolves.toBe('no_notebook')
     const [binding] = await db.select().from(schema.emailBindings)
     expect(binding.lastImportedAt).toBeNull()
+  })
+})
+
+describe('inbound email records', () => {
+  it('records an import with its reader, books and counts', async () => {
+    serve({ 'Notebook.html': sample })
+    await importEmail(job())
+
+    expect(await records()).toEqual([
+      expect.objectContaining({
+        emailId: job().emailId,
+        userId: READER,
+        sender: 'reader@icloud.com',
+        subject: job().subject,
+        status: 'imported',
+        detail: null,
+        dmarc: 'pass',
+        books: [TITLE],
+        highlights: 22,
+        clippingsCreated: 22,
+        notesCreated: 0,
+        attempts: 1,
+        receivedAt: new Date(RECEIVED_AT),
+      }),
+    ])
+  })
+
+  it('counts nothing new when the same export is sent again', async () => {
+    serve({ 'Notebook.html': sample })
+    await importEmail(job())
+    await importEmail(job({ emailId: 'b2b6f0d4-another-email' }))
+    // A redelivered email is still one record.
+    await importEmail(job())
+
+    const rows = await records()
+    expect(rows).toHaveLength(2)
+    expect(rows[0]).toMatchObject({ highlights: 22, clippingsCreated: 22 })
+    expect(rows[1]).toMatchObject({ highlights: 22, clippingsCreated: 0 })
+  })
+
+  it('records a stranger’s mail with the full address and no reader', async () => {
+    serve({ 'Notebook.html': sample })
+    await importEmail(job({ from: STRANGER }))
+
+    expect(await records()).toEqual([
+      expect.objectContaining({
+        userId: null,
+        sender: 'stranger@example.com',
+        status: 'replied',
+        highlights: 22,
+        clippingsCreated: 0,
+      }),
+    ])
+  })
+
+  it('keeps mail from an address still waiting for its code from its claimant', async () => {
+    await db.insert(schema.emailBindings).values({
+      userId: READER,
+      email: 'pending@example.com',
+      codeHash: 'pending',
+    })
+    serve({ 'Notebook.html': sample })
+    await importEmail(job({ from: 'pending@example.com' }))
+
+    const [row] = await records()
+    expect(row).toMatchObject({ userId: null, status: 'replied' })
+  })
+
+  it('records which reply limit stopped a stranger', async () => {
+    serve({ 'Notebook.html': sample })
+    for (let i = 0; i < 6; i++)
+      await importEmail(job({ emailId: `email-${i}`, from: STRANGER }))
+
+    const last = (await records()).at(-1)
+    expect(last).toMatchObject({
+      emailId: 'email-5',
+      status: 'reply_limited',
+      detail: 'sender_day',
+    })
+  })
+
+  it('shows a reader the mail forged in their name', async () => {
+    serve(
+      { 'Notebook.html': sample },
+      {
+        headers: {
+          'Authentication-Results':
+            'mx.resend.com; spf=fail smtp.mailfrom=icloud.com; dmarc=fail header.from=icloud.com',
+        },
+      }
+    )
+    await importEmail(job())
+
+    const [row] = await records()
+    expect(row).toMatchObject({
+      userId: READER,
+      status: 'failed_authentication',
+      dmarc: 'fail',
+      books: [],
+    })
+  })
+
+  it('keeps the raw From header when it holds no address', async () => {
+    await importEmail(job({ from: 'Nobody' }))
+
+    const [row] = await records()
+    expect(row).toMatchObject({
+      userId: null,
+      sender: 'Nobody',
+      status: 'unreadable_sender',
+    })
+  })
+
+  it('records mail sent to another address of the receiving domain', async () => {
+    await importEmail(
+      job({
+        to: ['support@import.clippingkk.example'],
+        receivedFor: ['support@import.clippingkk.example'],
+      })
+    )
+
+    const [row] = await records()
+    expect(row).toMatchObject({ userId: null, status: 'not_addressed' })
+  })
+
+  it('records a failed attempt, then the retry that succeeds', async () => {
+    serve({ 'Notebook.html': sample })
+    send.mockResolvedValueOnce({
+      data: null,
+      error: { name: 'internal_server_error', message: 'unavailable' },
+    })
+
+    await expect(importEmail(job({ from: STRANGER }))).rejects.toThrow()
+    expect(await records()).toEqual([
+      expect.objectContaining({
+        status: 'retrying',
+        detail: 'Resend send: unavailable',
+        attempts: 1,
+      }),
+    ])
+
+    await importEmail(job({ from: STRANGER }), { attempt: 2 })
+    expect(await records()).toEqual([
+      expect.objectContaining({ status: 'replied', detail: null, attempts: 2 }),
+    ])
+  })
+
+  it('records the last attempt’s failure as final', async () => {
+    serve({ 'Notebook.html': sample })
+    send.mockResolvedValueOnce({
+      data: null,
+      error: { name: 'internal_server_error', message: 'unavailable' },
+    })
+
+    await expect(
+      importEmail(job({ from: STRANGER }), { attempt: 5, final: true })
+    ).rejects.toThrow('Resend send: unavailable')
+    const [row] = await records()
+    expect(row).toMatchObject({ status: 'failed', attempts: 5 })
+  })
+
+  it('still imports when the record can’t be written', async () => {
+    serve({ 'Notebook.html': sample })
+    await pg.exec('ALTER TABLE inbound_emails RENAME TO inbound_emails_off')
+    try {
+      await expect(importEmail(job())).resolves.toBe('imported')
+    } finally {
+      await pg.exec('ALTER TABLE inbound_emails_off RENAME TO inbound_emails')
+    }
+    expect(await readerClippings()).toHaveLength(22)
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining('Could not record the inbound email')
+    )
   })
 })

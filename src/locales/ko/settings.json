@@ -217,6 +217,35 @@
       "CODE_EXPIRED": "코드가 만료되었습니다. 새 코드를 받으세요.",
       "INVALID_CODE": "코드가 올바르지 않습니다. 이메일을 확인하고 다시 시도하세요.",
       "generic": "문제가 발생했습니다. 다시 시도하세요."
+    },
+    "status": {
+      "imported": "가져옴",
+      "replied": "JSON으로 회신함",
+      "reply_limited": "회신 한도 도달",
+      "not_addressed": "받는 주소 다름",
+      "unreadable_sender": "보낸 사람 확인 불가",
+      "failed_authentication": "인증 실패",
+      "missing": "만료됨",
+      "no_notebook": "노트북 없음",
+      "retrying": "재시도 중",
+      "failed": "실패"
+    },
+    "history": {
+      "title": "최근 이메일",
+      "description": "인증한 주소에서 가져오기 주소로 보낸 이메일과 각 이메일의 처리 결과입니다.",
+      "latest": "전체 {{total}}개 중 최근 {{shown}}개를 표시합니다.",
+      "emptyTitle": "아직 이메일이 없습니다",
+      "emptyDescription": "인증한 주소에서 노트북 내보내기를 보내면 여기에 표시됩니다.",
+      "noSubject": "(제목 없음)",
+      "summary": "하이라이트 {{highlights}} · 새로 추가 {{created}} · 메모 {{notes}}",
+      "replied": "회신한 하이라이트: {{value}}",
+      "hint": {
+        "failed_authentication": "이 이메일이 내 주소에서 보낸 것인지 확인할 수 없어 아무것도 가져오지 않았습니다. 전달 서비스를 거치지 말고 메일 앱에서 바로 보내세요.",
+        "no_notebook": "이 이메일에서 Kindle 노트북을 찾지 못했습니다. Kindle 앱에서 내보낸 HTML 파일을 첨부하세요.",
+        "missing": "이메일을 읽기 전에 만료되었습니다. 다시 보내 주세요.",
+        "retrying": "처리 중 문제가 생겼습니다. 몇 분 후 다시 시도합니다.",
+        "failed": "이 이메일을 가져오지 못했습니다. 다시 보내 주시고, 계속 실패하면 문의해 주세요."
+      }
     }
   },
   "notes": {
@@ -295,6 +324,27 @@
     "synced": "{{title}}을(를) 연결했어요",
     "failed": "이 제목을 연결하지 못했어요.",
     "invalidId": "Douban ID는 네 자리 이상의 숫자예요.",
-    "placeholder": "Douban ID"
+    "placeholder": "Douban ID",
+    "nav": {
+      "label": "관리자 메뉴",
+      "books": "책",
+      "inbound": "받은 이메일"
+    },
+    "inbound": {
+      "meta": {
+        "title": "받은 이메일"
+      },
+      "title": "인증되지 않은 발신자의 메일",
+      "description": "어떤 독자도 인증하지 않은 발신자가 가져오기 주소로 보낸 메일입니다. 최신순으로 표시됩니다.",
+      "empty": "인증되지 않은 발신자의 메일이 없습니다.",
+      "dmarc": "DMARC: {{value}}",
+      "attempts": "시도 횟수: {{value}}",
+      "limit": {
+        "sender_day": "발신자 일일 회신 한도",
+        "sender_month": "발신자 월간 회신 한도",
+        "global": "전체 발신자 일일 회신 한도",
+        "fetches": "미인증 메일 일일 조회 한도"
+      }
+    }
   }
 }
