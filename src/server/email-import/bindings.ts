@@ -140,7 +140,17 @@ export async function requestEmailBinding(userId: number, input: string) {
       set: pending,
     })
     .returning()
-  await sendEmailBindingCode(email, code)
+  try {
+    await sendEmailBindingCode(email, code)
+  } catch (error) {
+    // Don't leave a live code the reader never received; asking again sends
+    // a fresh one.
+    await db()
+      .update(emailBindings)
+      .set({ codeHash: null, codeExpiresAt: null })
+      .where(eq(emailBindings.id, row.id))
+    throw error
+  }
   return summary(row)
 }
 

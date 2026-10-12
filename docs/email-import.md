@@ -23,11 +23,17 @@ Settings → Notes.
      doesn't import twice, then answers `200`.
 2. The worker runs `importEmail` (`src/server/email-import/import.ts`):
    1. It ignores mail not addressed to `INBOUND_EMAIL_ADDRESS`, when that is set.
-   2. It looks up the sender with `findVerifiedBinding`. With no verified binding it logs
-      `Email import sender is not bound to any reader` (ERROR, sender masked).
-   3. It loads the email from Resend. If the `Authentication-Results` header says `dmarc=fail`, it
-      drops the mail and answers nothing.
-   4. It downloads up to 5 HTML attachments (10 MB each). If there are none, it reads the HTML body.
+   2. It looks up the sender with `findVerifiedBinding`. With no verified binding:
+      - it logs `Email import sender is not bound to any reader` (ERROR, sender masked);
+      - it counts the email against the reply limits below. Over a limit, it stops there, before
+        any call to Resend or any download.
+   3. It loads the email from Resend.
+      - It counts the DMARC result from the `Authentication-Results` header (`pass`, `fail`,
+        `none`, …, or `absent`) in the `app.email_import.authentication` metric.
+      - On `dmarc=fail` it drops the mail and answers nothing.
+   4. It downloads the HTML attachments. If there are none, it reads the HTML body.
+      - Verified sender: up to 5 attachments, 10 MB each.
+      - Any other sender: 1 attachment, up to 5 MB.
    5. It parses each one with `parseKindleNotebook` (`kindle-notebook.ts`). An email with no
       notebook is dropped and answered with nothing.
    6. **Verified sender:** it saves the highlights through `insertClippings`
@@ -56,9 +62,13 @@ Settings → Notes.
 
     The fields are the ones the import would store: `createdAt` is the email's receive time plus
     the entry's index in milliseconds.
-- **Limits:** each email counts once, even when its job is retried. Counters are kept in Redis per
-  UTC day and month, under a hash of the sender's address. Over a limit, nothing is sent and a WARN
-  with `reply.limit` is logged.
+- **Limits:** every email from an unverified address counts, notebook or not.
+  - It is counted before anything is fetched, so the work done for strangers stays bounded.
+  - An email counts once, even when its job is retried.
+  - All three counters are checked before any is bumped. A full global allowance therefore doesn't
+    use up a sender's own, and a sender at its limit doesn't use up the global one.
+  - Counters are kept in Redis per UTC day and month, under a hash of the sender's address.
+  - Over a limit, nothing is fetched or sent, and a WARN with `reply.limit` is logged.
 
   | Limit | Value |
   |---|---|
@@ -139,8 +149,10 @@ retries. Without `INBOUND_EMAIL_ADDRESS`, the settings page says email import is
 
 ## Limits
 
-- Anyone can forge a From header. The DMARC check stops mail whose own domain rejects it.
-  Otherwise:
+- Anyone can forge a From header. The DMARC check stops mail whose own domain rejects it. Mail
+  with `dmarc=none`, or with no `Authentication-Results` header, still goes through. The
+  `app.email_import.authentication` metric shows how often each happens, which tells you whether
+  requiring `dmarc=pass` for imports is safe. Until then:
   - a forger who knows a reader's bound address can add highlights to that reader's library;
   - anyone can make ClippingKK send a JSON reply to an address they type in, with content they
     choose. The per-sender and overall limits bound how often that can happen.

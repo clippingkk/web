@@ -36,9 +36,30 @@ const logger = logs.getLogger('clippingkk.web.email-import')
 const emailsProcessed = meter.createCounter('app.email_import.emails', {
   description: 'Inbound emails processed by the Kindle notebook import',
 })
+const authenticationResults = meter.createCounter(
+  'app.email_import.authentication',
+  {
+    description:
+      'DMARC results Resend reported for inbound emails (absent when it reported none)',
+  }
+)
 
-const MAX_ATTACHMENTS = 5
-const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024
+/** RFC 8601 DMARC results; anything else is reported as `other`. */
+const DMARC_RESULTS = new Set([
+  'pass',
+  'fail',
+  'none',
+  'temperror',
+  'permerror',
+])
+
+/** What a sender may make the worker download: verified readers get more. */
+const ATTACHMENT_LIMITS = {
+  verified: { count: 5, bytes: 10 * 1024 * 1024 },
+  unverified: { count: 1, bytes: 5 * 1024 * 1024 },
+} as const
+type AttachmentLimit =
+  (typeof ATTACHMENT_LIMITS)[keyof typeof ATTACHMENT_LIMITS]
 /** Keeps an insert well under Postgres' 65,535 bind parameters. */
 const INSERT_CHUNK = 200
 const KINDLE = 1
@@ -135,6 +156,8 @@ async function saveNotebook(
     .select({ content: clippings.content })
     .from(clippings)
     .where(and(eq(clippings.createdBy, userId), eq(clippings.title, title)))
+  // Matching on text alone also folds two identical highlights on different
+  // pages into one: rare, and the price of not doubling every .txt import.
   const seen = new Set(existing.map((row) => sameText(row.content)))
 
   const drafts = notebook.highlights.flatMap((highlight, index) => {
@@ -185,6 +208,7 @@ async function saveNotebook(
       title,
       pageAt: note.pageAt,
       content: note.content,
+      // The same note typed twice at one spot is kept once.
       dataId: clippingDataId(userId, note.content, note.pageAt),
       createdAt: new Date(receivedAt + index),
     }))
@@ -202,7 +226,11 @@ async function saveNotebook(
 }
 
 /** The notebook HTML attached to the email, or its body when nothing is. */
-async function notebookSources(emailId: string, body: string | null) {
+async function notebookSources(
+  emailId: string,
+  body: string | null,
+  limit: AttachmentLimit
+) {
   const { data, error } = await getResend().emails.receiving.attachments.list({
     emailId,
     limit: 100,
@@ -214,11 +242,11 @@ async function notebookSources(emailId: string, body: string | null) {
         item.content_type.toLowerCase().startsWith('text/html') ||
         /\.html?$/i.test(item.filename ?? '')
     )
-    .slice(0, MAX_ATTACHMENTS)
+    .slice(0, limit.count)
   const sources: { name: string; html: string }[] = []
   for (const attachment of html) {
     const name = attachment.filename ?? attachment.id
-    if (attachment.size > MAX_ATTACHMENT_BYTES) {
+    if (attachment.size > limit.bytes) {
       log('WARN', 'Attachment is too large to import', {
         'resend.email_id': emailId,
         'attachment.size': attachment.size,
@@ -233,7 +261,7 @@ async function notebookSources(emailId: string, body: string | null) {
     try {
       sources.push({
         name,
-        html: await boundedText(response, MAX_ATTACHMENT_BYTES),
+        html: await boundedText(response, limit.bytes),
       })
     } catch (error) {
       if (!(error instanceof ApiError)) throw error
@@ -272,7 +300,19 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     'email.sender_domain': sender.split('@')[1] ?? '',
   }
   if (binding) span?.setAttribute('user.id', binding.userId)
-  else log('ERROR', 'Email import sender is not bound to any reader', who)
+  else {
+    log('ERROR', 'Email import sender is not bound to any reader', who)
+    // Strangers are counted before any download, so their mail costs little
+    // once they are over the limit, notebook or not.
+    const quota = await claimReplyQuota(sender, job.emailId)
+    if (quota !== 'allowed') {
+      log('WARN', 'Notebook JSON reply limit reached', {
+        ...who,
+        'reply.limit': quota,
+      })
+      return 'reply_limited'
+    }
+  }
 
   const { data: email, error } = await getResend().emails.receiving.get(
     job.emailId
@@ -287,17 +327,29 @@ async function run(job: EmailImportJob): Promise<Outcome> {
   // From is easy to forge; refuse mail its own domain says is not genuine,
   // and never answer it.
   const authentication = header(email.headers, 'authentication-results') ?? ''
-  span?.setAttribute(
-    'email.authentication',
-    authentication ? authentication.slice(0, 256) : 'unknown'
-  )
-  if (/\bdmarc=fail\b/i.test(authentication)) {
+  const reported = authentication.match(/\bdmarc=(\w+)/i)?.[1]?.toLowerCase()
+  const dmarc = !reported
+    ? 'absent'
+    : DMARC_RESULTS.has(reported)
+      ? reported
+      : 'other'
+  span?.setAttribute('email.dmarc', dmarc)
+  authenticationResults.add(1, {
+    dmarc,
+    sender: binding ? 'verified' : 'unverified',
+  })
+  if (dmarc === 'fail') {
     log('ERROR', 'Email failed sender authentication', who)
     return 'failed_authentication'
   }
 
   const notebooks: KindleNotebook[] = []
-  for (const source of await notebookSources(job.emailId, email.html)) {
+  const sources = await notebookSources(
+    job.emailId,
+    email.html,
+    binding ? ATTACHMENT_LIMITS.verified : ATTACHMENT_LIMITS.unverified
+  )
+  for (const source of sources) {
     const notebook = parseKindleNotebook(source.html)
     if (notebook) notebooks.push(notebook)
   }
@@ -314,14 +366,6 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     : Date.parse(job.receivedAt)
 
   if (!binding) {
-    const quota = await claimReplyQuota(sender, job.emailId)
-    if (quota !== 'allowed') {
-      log('WARN', 'Notebook JSON reply limit reached', {
-        ...who,
-        'reply.limit': quota,
-      })
-      return 'reply_limited'
-    }
     const sent = await replyWithNotebookJson({
       to: sender,
       subject: job.subject,

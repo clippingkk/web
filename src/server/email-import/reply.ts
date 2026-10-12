@@ -67,9 +67,12 @@ export type ReplyQuota = 'allowed' | 'sender_day' | 'sender_month' | 'global'
 
 /**
  * Counts this email against the sender's daily and monthly allowance and the
- * overall daily one (UTC calendar days and months). The sender's own limits go
- * first, so an address over them can't use up everyone else's allowance. A
- * retry of an email already allowed is not counted again.
+ * overall daily one (UTC calendar days and months). Every email from an
+ * unverified address counts, whether or not it turns out to hold a notebook,
+ * so the work done for strangers is bounded too. All three counters are read
+ * first and only bumped when every one has room: a full global allowance
+ * doesn't eat into senders' own, nor a sender at its limit into the global
+ * one. A retry of an email already allowed is not counted again.
  */
 export async function claimReplyQuota(
   sender: string,
@@ -80,33 +83,27 @@ export async function claimReplyQuota(
   if (await cacheGet(claimed)) return 'allowed'
   const who = createHash('sha256').update(sender).digest('hex')
   const day = now.toISOString().slice(0, 10)
-  const month = day.slice(0, 7)
   const prefix = 'ck:email-import:reply'
-  if (
-    !(
-      await rateLimit(
-        `${prefix}:d:${who}:${day}`,
-        REPLY_LIMITS.senderPerDay,
-        2 * DAY
-      )
-    ).allowed
-  )
-    return 'sender_day'
-  if (
-    !(
-      await rateLimit(
-        `${prefix}:m:${who}:${month}`,
-        REPLY_LIMITS.senderPerMonth,
-        32 * DAY
-      )
-    ).allowed
-  )
-    return 'sender_month'
-  if (
-    !(await rateLimit(`${prefix}:all:${day}`, REPLY_LIMITS.perDay, 2 * DAY))
-      .allowed
-  )
-    return 'global'
+  const counters: [Exclude<ReplyQuota, 'allowed'>, string, number, number][] = [
+    [
+      'sender_day',
+      `${prefix}:d:${who}:${day}`,
+      REPLY_LIMITS.senderPerDay,
+      2 * DAY,
+    ],
+    [
+      'sender_month',
+      `${prefix}:m:${who}:${day.slice(0, 7)}`,
+      REPLY_LIMITS.senderPerMonth,
+      32 * DAY,
+    ],
+    ['global', `${prefix}:all:${day}`, REPLY_LIMITS.perDay, 2 * DAY],
+  ]
+  for (const [limit, key, max] of counters)
+    if (Number((await cacheGet<number>(key)) ?? 0) >= max) return limit
+  for (const [limit, key, max, ttl] of counters)
+    // Another job may have taken the last slot since the read above.
+    if (!(await rateLimit(key, max, ttl)).allowed) return limit
   await cacheSet(claimed, 1, 7 * DAY)
   return 'allowed'
 }
@@ -130,8 +127,16 @@ function replyText(origin: string, clippings: number, notes: number) {
   ].join('\n')
 }
 
+const escapeHtml = (value: string) =>
+  value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+
 function replyHtml(origin: string, clippings: number, notes: number) {
-  const link = `<a href="${origin}">${origin.replace(/^https?:\/\//, '')}</a>`
+  const href = escapeHtml(origin)
+  const link = `<a href="${href}">${escapeHtml(origin.replace(/^https?:\/\//, ''))}</a>`
   return `<main style="font-family:system-ui;max-width:560px;margin:auto"><h1>ClippingKK</h1><p>Your Kindle notebook is attached as JSON: ${clippings} highlights and ${notes} notes.</p><p>This address isn't linked to a ClippingKK account, so nothing was imported. To import notebooks straight into your library, sign in at ${link}, add this address under Settings → Email import, and send the export again.</p><hr><p>你的 Kindle 笔记本已转换为 JSON 附在邮件中：${clippings} 条划线，${notes} 条笔记。</p><p>这个邮箱地址尚未关联 ClippingKK 账户，所以没有导入任何内容。登录 ${link}，在「设置 → 邮件导入」中添加并验证这个地址后再发送一次，即可直接导入到你的书摘。</p></main>`
 }
 

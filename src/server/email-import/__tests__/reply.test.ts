@@ -70,6 +70,12 @@ describe('claimReplyQuota', () => {
     await expect(
       claimReplyQuota('fresh@example.com', 'email-over', at)
     ).resolves.toBe('global')
+    // Refused by the global limit, the sender keeps its own allowance.
+    expect(
+      [...redis.keys()].filter(
+        (key) => key.includes(':d:') && redis.get(key) === 1
+      )
+    ).toHaveLength(REPLY_LIMITS.perDay)
   })
 
   it('does not count a retried email twice', async () => {

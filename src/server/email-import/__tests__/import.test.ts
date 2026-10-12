@@ -305,6 +305,31 @@ describe('importEmail', () => {
     ).resolves.toBe('replied')
   })
 
+  it('does no work for a stranger over the limit, notebook or not', async () => {
+    serve({ 'Receipt.html': '<p>Not a notebook</p>' })
+    for (let i = 0; i < 5; i++)
+      await expect(
+        importEmail(job({ emailId: `junk-${i}`, from: STRANGER }))
+      ).resolves.toBe('no_notebook')
+    receiving.get.mockClear()
+    receiving.attachments.list.mockClear()
+    vi.mocked(fetch).mockClear()
+
+    await expect(
+      importEmail(job({ emailId: 'junk-5', from: STRANGER }))
+    ).resolves.toBe('reply_limited')
+    expect(receiving.get).not.toHaveBeenCalled()
+    expect(receiving.attachments.list).not.toHaveBeenCalled()
+    expect(fetch).not.toHaveBeenCalled()
+  })
+
+  it('downloads a single attachment for a stranger', async () => {
+    serve({ 'Notebook.html': sample, 'Second.html': sample })
+
+    await expect(importEmail(job({ from: STRANGER }))).resolves.toBe('replied')
+    expect(fetch).toHaveBeenCalledOnce()
+  })
+
   it('retries a failed reply with the same idempotency key, counting it once', async () => {
     serve({ 'Notebook.html': sample })
     send.mockResolvedValueOnce({

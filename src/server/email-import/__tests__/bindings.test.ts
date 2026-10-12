@@ -190,6 +190,23 @@ describe('email bindings', () => {
     })
   })
 
+  it('withdraws a code that could not be sent', async () => {
+    sendEmailBindingCode.mockRejectedValueOnce(new Error('Resend is down'))
+    await expect(
+      requestEmailBinding(READER, 'kindle@example.com')
+    ).rejects.toThrow('Resend is down')
+    const lost = sendEmailBindingCode.mock.calls[0][1]
+    const [row] = await db.select().from(schema.emailBindings)
+
+    await expect(
+      verifyEmailBinding(READER, row.id, lost)
+    ).rejects.toMatchObject({ code: 'CODE_EXPIRED' })
+    await requestEmailBinding(READER, 'kindle@example.com')
+    await expect(
+      verifyEmailBinding(READER, row.id, codeFor('kindle@example.com'))
+    ).resolves.toMatchObject({ verified: true })
+  })
+
   it('stops sending codes past the rate limit', async () => {
     rateLimit.mockResolvedValueOnce({ allowed: true, count: 1 })
     rateLimit.mockResolvedValueOnce({ allowed: false, count: 4 })
