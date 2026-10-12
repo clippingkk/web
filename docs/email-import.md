@@ -29,8 +29,13 @@ Settings → Notes.
         replies (a read-only check, so it spends nothing) or the day's 1,000 fetches of strangers'
         mail are spent.
    3. It loads the email from Resend.
-      - It counts the DMARC result from the `Authentication-Results` header (`pass`, `fail`,
-        `none`, …, or `absent`) in the `app.email_import.authentication` metric.
+      - It reads the DMARC result from the `Authentication-Results` headers
+        (`src/server/email-import/authentication.ts`) and counts it (`pass`, `fail`, `none`, …,
+        or `absent`) in the `app.email_import.authentication` metric. The parsing is strict:
+        - every header differing only in case is read;
+        - comments and quoted strings are ignored, and only a `dmarc=` that starts a result counts;
+        - if several results are found, any one that isn't a pass wins;
+        - with `EMAIL_IMPORT_AUTHSERV_ID` set, results stamped by any other server are ignored.
       - Only `dmarc=pass` goes on. Anything else (`fail`, `none`, `temperror`, …, or no result)
         drops the mail: nothing is imported and nothing is answered. Setting
         `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1` also lets through mail that has no result.
@@ -89,7 +94,9 @@ Settings → Notes.
 - **Title:** the export's `bookTitle`, cut at the first `(` like the My Clippings.txt importer, so
   both name a book the same way.
 - **Book:** the reader's most recent same-title clipping that matched a book. Failing that, the
-  first Wenqu search hit. Failing that, `'0'` (unmatched).
+  first Wenqu search hit whose title contains the notebook's title, or the other way round
+  (ignoring case, spacing and punctuation). Failing that, `'0'` (unmatched, fixable from the book
+  page): leaving clippings unmatched is better than filing them under the wrong book.
 - **`pageAt`:** the page number when the heading has one, else `#<location>`, the same format as
   the .txt importer.
 - **`createdAt`:** the time Resend received the email, plus the entry's index in milliseconds, so
@@ -153,16 +160,22 @@ RESEND_API_KEY=re_...                       # also used to fetch received mail a
 RESEND_WEBHOOK_SECRET=whsec_...             # the webhook's signing secret
 INBOUND_EMAIL_ADDRESS=kindle@import.example # shown to readers; other recipients are ignored
 EMAIL_IMPORT_ALLOW_MISSING_DMARC=0          # 1 also imports mail with no DMARC result
+EMAIL_IMPORT_AUTHSERV_ID=mx.resend.com      # whatever Resend's own header starts with
 ```
 
 Without `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET` or `INBOUND_EMAIL_ADDRESS`, the webhook answers
 `503` and Resend retries. Without `INBOUND_EMAIL_ADDRESS`, the settings page also says email import
 isn't available.
 
-After deploying, check `app.email_import.authentication`. If imports fail with
-`dmarc="absent"`, Resend isn't reporting DMARC results for your receiving domain, and nothing will
-import until you set `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`. Read the first limit below before you
-do.
+After deploying, send yourself a notebook export and open the received email's headers in the
+Resend dashboard:
+
+- **If it has an `Authentication-Results` header**, set `EMAIL_IMPORT_AUTHSERV_ID` to the first
+  word of its value (the server that stamped it). Results from any other server are then ignored,
+  including a fake header a sender wrote into their own message.
+- **If it has none**, nothing will import, and `app.email_import.authentication` shows
+  `dmarc="absent"`. Imports only resume with `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`; read the limits
+  below before you set it.
 
 ## Limits
 
@@ -170,9 +183,14 @@ do.
   is accepted, which stops forgeries even from domains without a DMARC policy. The cost is that a
   reader whose own domain publishes no DMARC record can't import until it does. Major providers
   such as iCloud, Gmail and Outlook publish one.
-- With `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`, mail with no DMARC result is accepted. A forger who
-  knows a reader's bound address could then add highlights to their library, and anyone could
-  have a JSON reply sent to an address they type in, within the reply limits.
+- With `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`, mail with no DMARC result is accepted and logged as
+  a WARN each time. A forger who knows a reader's bound address could then add highlights to their
+  library, and anyone could have a JSON reply sent to an address they type in, within the reply
+  limits.
+- ClippingKK only sees the headers Resend chooses to expose. It can't tell a forged
+  `Authentication-Results` header from a real one if Resend drops its own header and keeps only
+  the sender's. Pinning `EMAIL_IMPORT_AUTHSERV_ID` closes that gap as long as Resend removes
+  sender-written headers that claim its own name, which RFC 8601 requires of receiving servers.
 - A spam wave from many addresses can use up the day's 1,000 fetches of strangers' mail. After
   that, unverified senders get no reply that day. Verified readers are unaffected.
 - The worker shares one queue (default concurrency 1) with exports, so an import can wait behind

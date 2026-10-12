@@ -113,7 +113,10 @@ export async function admitUnverifiedEmail(
   emailId: string,
   now = new Date()
 ): Promise<ReplyQuota> {
-  if (await cacheGet(claimedKey(emailId))) return 'allowed'
+  // A retry of an email already admitted spends no second fetch.
+  const admitted = `ck:email-import:admitted:${emailId}`
+  if ((await cacheGet(claimedKey(emailId))) || (await cacheGet(admitted)))
+    return 'allowed'
   const full = await fullCounter(sender, now)
   if (full) return full
   const day = now.toISOString().slice(0, 10)
@@ -122,7 +125,9 @@ export async function admitUnverifiedEmail(
     REPLY_LIMITS.fetchesPerDay,
     2 * DAY
   )
-  return fetches.allowed ? 'allowed' : 'fetches'
+  if (!fetches.allowed) return 'fetches'
+  await cacheSet(admitted, 1, 7 * DAY)
+  return 'allowed'
 }
 
 /**

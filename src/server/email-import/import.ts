@@ -13,6 +13,7 @@ import { ApiError } from '../errors'
 import { boundedText } from '../http'
 import { getResend } from '../integrations'
 import type { EmailImportJob } from '../jobs/queues'
+import { dmarcResult } from './authentication'
 import {
   findVerifiedBinding,
   markEmailImported,
@@ -47,15 +48,6 @@ const authenticationResults = meter.createCounter(
       'DMARC results Resend reported for inbound emails (absent when it reported none)',
   }
 )
-
-/** RFC 8601 DMARC results; anything else is reported as `other`. */
-const DMARC_RESULTS = new Set([
-  'pass',
-  'fail',
-  'none',
-  'temperror',
-  'permerror',
-])
 
 /** What a sender may make the worker download: verified readers get more. */
 const ATTACHMENT_LIMITS = {
@@ -103,13 +95,6 @@ function maskEmail(email: string) {
   return at < 1 ? '***' : `${email[0]}***${email.slice(at)}`
 }
 
-function header(headers: Record<string, string> | null, name: string) {
-  const key = Object.keys(headers ?? {}).find(
-    (item) => item.toLowerCase() === name
-  )
-  return key ? headers![key] : undefined
-}
-
 /**
  * Highlights compare equal across the .txt and HTML exports when their text
  * does: the two disagree on whitespace and on how locations are written.
@@ -118,6 +103,14 @@ function sameText(content: string) {
   return content
     .replace(/\s+/g, '')
     .replace(/^[，,。！@【】—]+|[，,。！@【】—]+$/g, '')
+}
+
+/** A title with case, spacing and punctuation folded away, for matching. */
+function bookKey(title: string) {
+  return title
+    .split(/[(（]/)[0]
+    .toLowerCase()
+    .replace(/[\s\p{P}\p{S}]+/gu, '')
 }
 
 async function resolveBookId(userId: number, title: string) {
@@ -139,9 +132,19 @@ async function resolveBookId(userId: number, title: string) {
       `/books/search?query=${encodeURIComponent(title)}&limit=50&offset=0`,
       { signal: AbortSignal.timeout(8_000) }
     )
-    return result.count > 0 && result.books[0]
-      ? String(result.books[0].doubanId)
-      : '0'
+    // A loose search can rank another book first; leaving the clippings
+    // unmatched (fixable from the book page) beats filing them wrongly.
+    const wanted = bookKey(title)
+    const match = result.books.find((book) =>
+      [book.title, book.originTitle].some((name) => {
+        const key = bookKey(name ?? '')
+        // Kindle titles often carry a subtitle Douban files separately.
+        const [short, long] =
+          key.length < wanted.length ? [key, wanted] : [wanted, key]
+        return short.length >= 2 && long.includes(short)
+      })
+    )
+    return match ? String(match.doubanId) : '0'
   } catch {
     // Unmatched clippings can still be matched from the book page later.
     return '0'
@@ -344,13 +347,10 @@ async function run(job: EmailImportJob): Promise<Outcome> {
   // (`none`). Mail Resend reports no result for is refused too, unless
   // EMAIL_IMPORT_ALLOW_MISSING_DMARC says otherwise; the metric shows how
   // often that happens.
-  const authentication = header(email.headers, 'authentication-results') ?? ''
-  const reported = authentication.match(/\bdmarc=(\w+)/i)?.[1]?.toLowerCase()
-  const dmarc = !reported
-    ? 'absent'
-    : DMARC_RESULTS.has(reported)
-      ? reported
-      : 'other'
+  const dmarc = dmarcResult(
+    email.headers,
+    env.EMAIL_IMPORT_AUTHSERV_ID || undefined
+  )
   span?.setAttribute('email.dmarc', dmarc)
   authenticationResults.add(1, {
     dmarc,
@@ -364,6 +364,11 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     })
     return 'failed_authentication'
   }
+  if (dmarc === 'absent')
+    log('WARN', 'Accepted an email with no DMARC result', {
+      ...who,
+      reason: 'EMAIL_IMPORT_ALLOW_MISSING_DMARC=1',
+    })
 
   const notebooks: KindleNotebook[] = []
   const sources = await notebookSources(

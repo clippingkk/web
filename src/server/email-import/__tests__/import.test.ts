@@ -131,6 +131,7 @@ beforeEach(async () => {
   process.env.REDIS_URL = 'redis://localhost:6379/15'
   process.env.INBOUND_EMAIL_ADDRESS = INBOUND
   process.env.EMAIL_IMPORT_ALLOW_MISSING_DMARC = '0'
+  process.env.EMAIL_IMPORT_AUTHSERV_ID = ''
   resetServerEnvForTests()
   vi.restoreAllMocks()
   vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -143,7 +144,10 @@ beforeEach(async () => {
   send.mockReset()
   send.mockResolvedValue({ data: { id: 'reply' }, error: null })
   wenquRequest.mockReset()
-  wenquRequest.mockResolvedValue({ count: 1, books: [{ doubanId: BOOK }] })
+  wenquRequest.mockResolvedValue({
+    count: 1,
+    books: [{ doubanId: BOOK, title: TITLE, originTitle: '' }],
+  })
   await db.insert(schema.users).values({
     id: READER,
     name: 'Reader',
@@ -181,6 +185,35 @@ describe('importEmail', () => {
     )
     const [binding] = await db.select().from(schema.emailBindings)
     expect(binding.lastImportedAt).toBeInstanceOf(Date)
+  })
+
+  it('files highlights under the search hit whose title matches', async () => {
+    wenquRequest.mockResolvedValue({
+      count: 2,
+      books: [
+        { doubanId: '111', title: '宋辽战争史', originTitle: '' },
+        { doubanId: '222', title: '燕', originTitle: '' },
+        // Douban files the subtitle apart from the title.
+        { doubanId: BOOK, title: '经略幽燕', originTitle: '' },
+      ],
+    })
+    serve({ 'Notebook.html': sample })
+
+    await importEmail(job())
+
+    expect((await readerClippings())[0].bookId).toBe(BOOK)
+  })
+
+  it('leaves highlights unmatched when no search hit has the title', async () => {
+    wenquRequest.mockResolvedValue({
+      count: 1,
+      books: [{ doubanId: '111', title: '宋辽战争史', originTitle: '' }],
+    })
+    serve({ 'Notebook.html': sample })
+
+    await importEmail(job())
+
+    expect((await readerClippings())[0].bookId).toBe('0')
   })
 
   it('imports nothing twice when the same export is sent again', async () => {
@@ -367,6 +400,36 @@ describe('importEmail', () => {
     resetServerEnvForTests()
     await expect(importEmail(job())).resolves.toBe('imported')
     expect(await readerClippings()).toHaveLength(22)
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining('Accepted an email with no DMARC result')
+    )
+  })
+
+  it('trusts only results from the pinned authserv-id', async () => {
+    // A pass stamped by some other server, e.g. one the sender wrote.
+    const forged = {
+      headers: {
+        'Authentication-Results':
+          'evil.example; dmarc=pass header.from=icloud.com',
+      },
+    }
+    serve({ 'Notebook.html': sample }, forged)
+    process.env.EMAIL_IMPORT_AUTHSERV_ID = 'mx.resend.com'
+    resetServerEnvForTests()
+
+    await expect(importEmail(job())).resolves.toBe('failed_authentication')
+    expect(await readerClippings()).toEqual([])
+
+    serve(
+      { 'Notebook.html': sample },
+      {
+        headers: {
+          'Authentication-Results':
+            'mx.resend.com; dmarc=pass header.from=icloud.com',
+        },
+      }
+    )
+    await expect(importEmail(job())).resolves.toBe('imported')
   })
 
   it('imports nothing while INBOUND_EMAIL_ADDRESS is unset', async () => {

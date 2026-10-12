@@ -82,6 +82,9 @@ const envSchema = z.object({
   // 1 accepts inbound mail Resend reports no DMARC result for. Off by default:
   // a forged From could otherwise import into a reader's library.
   EMAIL_IMPORT_ALLOW_MISSING_DMARC: z.enum(['0', '1']).default('0'),
+  // The authserv-id Resend stamps on Authentication-Results (see a received
+  // email's headers); when set, results from any other server are ignored.
+  EMAIL_IMPORT_AUTHSERV_ID: z.string().optional(),
   S3_ENDPOINT: z.string().url().default('https://s3.bitiful.net'),
   S3_REGION: z.string().default('cn-east-1'),
   S3_BUCKET: z.string().optional(),

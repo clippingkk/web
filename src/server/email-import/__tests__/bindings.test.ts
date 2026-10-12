@@ -251,6 +251,8 @@ describe('parseEmailAddress', () => {
   it.each([
     ['Reader <Reader@iCloud.com>', 'reader@icloud.com'],
     ['"Smith, <J>" <j.smith@example.com>', 'j.smith@example.com'],
+    // The display name never stands in for the address.
+    ['"reader@victim.example" <evil@example.com>', 'evil@example.com'],
     ['plain@example.com', 'plain@example.com'],
     ['Nobody', null],
     ['', null],

@@ -119,6 +119,14 @@ describe('admitUnverifiedEmail', () => {
     ).resolves.toBe('allowed')
   })
 
+  it('spends one fetch per email, however often its job retries', async () => {
+    const at = day('2026-10-12')
+    for (let i = 0; i < 3; i++)
+      await admitUnverifiedEmail('reader@icloud.com', 'same-email', at)
+
+    expect(redis.get('ck:email-import:reply:fetch:2026-10-12')).toBe(1)
+  })
+
   it(`caps strangers' mail at ${REPLY_LIMITS.fetchesPerDay} fetches a day`, async () => {
     const at = day('2026-10-12')
     redis.set(
