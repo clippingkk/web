@@ -89,18 +89,9 @@ export async function requestEmailBinding(userId: number, input: string) {
       409,
       'ALREADY_VERIFIED'
     )
-  const [taken] = await db()
-    .select({ id: emailBindings.id })
-    .from(emailBindings)
-    .where(
-      and(eq(emailBindings.email, email), isNotNull(emailBindings.verifiedAt))
-    )
-  if (taken)
-    throw new ApiError(
-      'This address is bound to another account.',
-      409,
-      'EMAIL_ALREADY_BOUND'
-    )
+  // Whether another reader holds the address is only revealed at verify
+  // time, to someone who proved they own it; asking here would let any
+  // signed-in reader probe which addresses are bound.
   if (!own) {
     const [{ total }] = await db()
       .select({ total: count() })
@@ -160,8 +151,8 @@ function isUniqueViolation(error: unknown) {
 }
 
 function sameHash(a: string, b: string) {
-  const x = Buffer.from(a),
-    y = Buffer.from(b)
+  const x = Buffer.from(a)
+  const y = Buffer.from(b)
   return x.length === y.length && timingSafeEqual(x, y)
 }
 

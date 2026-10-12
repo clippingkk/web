@@ -143,6 +143,20 @@ describe('email bindings', () => {
   })
 
   it('gives a verified address to one reader only', async () => {
+    await bind(READER, 'shared@example.com')
+
+    // Asking reveals nothing; only proving ownership of the address does.
+    const pending = await requestEmailBinding(OTHER, 'shared@example.com')
+    expect(pending).toMatchObject({ verified: false })
+    await expect(
+      verifyEmailBinding(OTHER, pending.id, codeFor('shared@example.com'))
+    ).rejects.toMatchObject({ status: 409, code: 'EMAIL_ALREADY_BOUND' })
+    expect(await findVerifiedBinding('shared@example.com')).toMatchObject({
+      userId: READER,
+    })
+  })
+
+  it('keeps the address with whoever verifies it first', async () => {
     await requestEmailBinding(OTHER, 'shared@example.com')
     const otherCode = codeFor('shared@example.com')
     const [otherRow] = await db
@@ -152,15 +166,8 @@ describe('email bindings', () => {
     await bind(READER, 'shared@example.com')
 
     await expect(
-      requestEmailBinding(OTHER, 'shared@example.com')
-    ).rejects.toMatchObject({ status: 409, code: 'EMAIL_ALREADY_BOUND' })
-    // The other reader's earlier pending code lost the race.
-    await expect(
       verifyEmailBinding(OTHER, otherRow.id, otherCode)
     ).rejects.toMatchObject({ status: 409, code: 'EMAIL_ALREADY_BOUND' })
-    expect(await findVerifiedBinding('shared@example.com')).toMatchObject({
-      userId: READER,
-    })
   })
 
   it('refuses an expired code', async () => {

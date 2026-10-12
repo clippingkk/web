@@ -30,7 +30,9 @@ Settings → Notes.
    3. It loads the email from Resend.
       - It counts the DMARC result from the `Authentication-Results` header (`pass`, `fail`,
         `none`, …, or `absent`) in the `app.email_import.authentication` metric.
-      - On `dmarc=fail` it drops the mail and answers nothing.
+      - When Resend reports a result, anything but `dmarc=pass` (`fail`, `none`, `temperror`, …)
+        drops the mail: nothing is imported and nothing is answered. Mail with no result at all
+        goes through.
    4. It downloads the HTML attachments. If there are none, it reads the HTML body.
       - Verified sender: up to 5 attachments, 10 MB each.
       - Any other sender: 1 attachment, up to 5 MB.
@@ -113,7 +115,10 @@ session only).
   - A code expires after 30 minutes and allows 5 attempts.
   - It is stored as a sha256. That hash is not what protects it; the expiry and the attempt cap are.
 - **Ownership:** a verified address belongs to one reader. A partial unique index on
-  `email_bindings(email) WHERE verified_at IS NOT NULL` enforces this.
+  `email_bindings(email) WHERE verified_at IS NOT NULL` enforces this. Adding an address someone
+  else holds still mails a code. The `EMAIL_ALREADY_BOUND` refusal only comes at verify time, to
+  someone who proved they own the address, so the add step can't be used to probe which addresses
+  are bound.
 - **Account deletion:** deleting an account deletes its bindings and notes.
 
 | Route | Purpose |
@@ -149,13 +154,18 @@ retries. Without `INBOUND_EMAIL_ADDRESS`, the settings page says email import is
 
 ## Limits
 
-- Anyone can forge a From header. The DMARC check stops mail whose own domain rejects it. Mail
-  with `dmarc=none`, or with no `Authentication-Results` header, still goes through. The
-  `app.email_import.authentication` metric shows how often each happens, which tells you whether
-  requiring `dmarc=pass` for imports is safe. Until then:
-  - a forger who knows a reader's bound address can add highlights to that reader's library;
-  - anyone can make ClippingKK send a JSON reply to an address they type in, with content they
-    choose. The per-sender and overall limits bound how often that can happen.
+- Anyone can forge a From header, and the From address is the only credential. When Resend reports
+  a DMARC result, only `pass` is accepted, which stops forgeries even from domains without a
+  DMARC policy. The cost is that a reader whose own domain publishes no DMARC record can't import
+  until it does. Major providers such as iCloud, Gmail and Outlook publish one.
+- Mail Resend reports no DMARC result for is accepted, so imports keep working if the header is
+  missing. The `app.email_import.authentication` metric (`dmarc="absent"`) shows how often that
+  happens. If it's common, a forger who knows a reader's bound address could add highlights to
+  their library, and anyone could have a JSON reply sent to an address they type in. The reply
+  limits bound how often.
+- An unverified email is counted against the sender's reply limits before it is fetched, so before
+  its DMARC result is known. A forger can therefore use up another address's 5 a day. The
+  trade-off avoids fetching mail for senders over the limit.
 - The worker shares one queue (default concurrency 1) with exports, so an import can wait behind
   a long Notion export.
 - Notes are listed, newest first, on a plain settings page for now (the latest 100).

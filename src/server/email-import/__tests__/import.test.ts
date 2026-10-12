@@ -407,6 +407,47 @@ describe('importEmail', () => {
     expect(await readerClippings()).toEqual([])
   })
 
+  it('imports only on a DMARC pass when Resend reports a result', async () => {
+    const results = (dmarc: string) => ({
+      headers: {
+        'Authentication-Results': `mx.resend.com; spf=pass smtp.mailfrom=icloud.com; dmarc=${dmarc} header.from=icloud.com`,
+      },
+    })
+    for (const dmarc of ['none', 'temperror']) {
+      serve({ 'Notebook.html': sample }, results(dmarc))
+      await expect(importEmail(job())).resolves.toBe('failed_authentication')
+      // Nor is a forgery from a domain without a DMARC policy answered.
+      await expect(importEmail(job({ from: STRANGER }))).resolves.toBe(
+        'failed_authentication'
+      )
+    }
+    expect(await readerClippings()).toEqual([])
+    expect(send).not.toHaveBeenCalled()
+
+    serve({ 'Notebook.html': sample }, results('pass'))
+    await expect(importEmail(job())).resolves.toBe('imported')
+    expect(await readerClippings()).toHaveLength(22)
+  })
+
+  it('keeps one copy of a highlight repeated on another page', async () => {
+    serve({
+      'Notebook.html': `<div class="bodyContainer"><div class="bookTitle">Walden (Henry David Thoreau)</div>
+<div class="noteHeading">Highlight(<span class="annotation_yellow">yellow</span>) - Location 10</div>
+<div class="noteText">Simplify, simplify.</div>
+<div class="noteHeading">Highlight(<span class="annotation_yellow">yellow</span>) - Location 900</div>
+<div class="noteText">Simplify,  simplify.</div></div>`,
+    })
+
+    await importEmail(job())
+
+    expect(await readerClippings()).toEqual([
+      expect.objectContaining({
+        content: 'Simplify, simplify.',
+        pageAt: '#10',
+      }),
+    ])
+  })
+
   it('ignores mail sent to another address of the receiving domain', async () => {
     await expect(
       importEmail(

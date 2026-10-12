@@ -5,7 +5,7 @@ import { and, desc, eq } from 'drizzle-orm'
 import { wenquRequest, type WenquSearchResponse } from '@/services/wenqu'
 
 import { clippingDataId, insertClippings } from '../clippings/create'
-import { activeClipping, matchedBook } from '../clippings/queries'
+import { matchedBook } from '../clippings/queries'
 import { getDatabase } from '../db'
 import { clippings, readerNotes } from '../db/schema'
 import { getServerEnv } from '../env'
@@ -153,7 +153,11 @@ async function saveNotebook(
   const bookId = await resolveBookId(userId, title)
   // Deleted rows count too, so re-sending an export doesn't revive them.
   const existing = await db()
-    .select({ content: clippings.content })
+    .select({
+      id: clippings.id,
+      content: clippings.content,
+      deletedAt: clippings.deletedAt,
+    })
     .from(clippings)
     .where(and(eq(clippings.createdBy, userId), eq(clippings.title, title)))
   // Matching on text alone also folds two identical highlights on different
@@ -176,27 +180,25 @@ async function saveNotebook(
       },
     ]
   })
+  // Notes link to live clippings: the ones already there and the new ones.
+  const idByText = new Map(
+    existing
+      .filter((row) => !row.deletedAt)
+      .map((row) => [sameText(row.content), row.id])
+  )
   let created = 0
-  for (let i = 0; i < drafts.length; i += INSERT_CHUNK)
-    created += (
-      await insertClippings(userId, drafts.slice(i, i + INSERT_CHUNK), {
-        visible: true,
-      })
-    ).length
+  for (let i = 0; i < drafts.length; i += INSERT_CHUNK) {
+    const rows = await insertClippings(
+      userId,
+      drafts.slice(i, i + INSERT_CHUNK),
+      { visible: true }
+    )
+    created += rows.length
+    for (const row of rows) idByText.set(sameText(row.content), row.id)
+  }
 
   let notes = 0
   if (notebook.notes.length) {
-    const live = await db()
-      .select({ id: clippings.id, content: clippings.content })
-      .from(clippings)
-      .where(
-        and(
-          eq(clippings.createdBy, userId),
-          eq(clippings.title, title),
-          activeClipping
-        )
-      )
-    const idByText = new Map(live.map((row) => [sameText(row.content), row.id]))
     const rows = notebook.notes.map((note, index) => ({
       userId,
       clippingId:
@@ -324,8 +326,10 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     }
     throw new Error(`Resend receiving: ${error.message}`)
   }
-  // From is easy to forge; refuse mail its own domain says is not genuine,
-  // and never answer it.
+  // From is the only credential, so when Resend reports a DMARC result,
+  // anything but a pass is neither imported nor answered: that also stops
+  // forgeries from domains with no DMARC policy (`none`). Mail Resend reports
+  // nothing for is let through; the metric shows how often that happens.
   const authentication = header(email.headers, 'authentication-results') ?? ''
   const reported = authentication.match(/\bdmarc=(\w+)/i)?.[1]?.toLowerCase()
   const dmarc = !reported
@@ -338,8 +342,11 @@ async function run(job: EmailImportJob): Promise<Outcome> {
     dmarc,
     sender: binding ? 'verified' : 'unverified',
   })
-  if (dmarc === 'fail') {
-    log('ERROR', 'Email failed sender authentication', who)
+  if (dmarc !== 'pass' && dmarc !== 'absent') {
+    log('ERROR', 'Email failed sender authentication', {
+      ...who,
+      'email.dmarc': dmarc,
+    })
     return 'failed_authentication'
   }
 
