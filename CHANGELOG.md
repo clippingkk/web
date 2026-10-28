@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.7](https://github.com/clippingkk/web/compare/v5.19.6...v5.19.7) (2026-10-28)
+
+
+### Bug Fixes
+
+* **import:** trust Resend's own DMARC verdict for inbound mail ([8fc643f](https://github.com/clippingkk/web/commit/8fc643fa805dd5e8ce934ec24ef046137d333b65))
+* **import:** trust Resend's own DMARC verdict for inbound mail ([9e00760](https://github.com/clippingkk/web/commit/9e0076081471fddaa30db0cb311f3853518f50af))
+
 ## [5.19.6](https://github.com/clippingkk/web/compare/v5.19.5...v5.19.6) (2026-10-12)
 
 
