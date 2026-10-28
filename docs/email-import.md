@@ -32,9 +32,16 @@ Settings → Notes.
         replies (a read-only check, so it spends nothing) or the day's 1,000 fetches of strangers'
         mail are spent.
    3. It loads the email from Resend.
-      - It reads the DMARC result from the `Authentication-Results` headers
-        (`src/server/email-import/authentication.ts`) and counts it (`pass`, `fail`, `none`, …,
-        or `absent`) in the `app.email_import.authentication` metric. The parsing is strict:
+      - It takes the DMARC verdict Resend computed on receipt, the email's `authentication.dmarc`
+        (`resendDmarcResult` in `src/server/email-import/authentication.ts`). Resend's receiving
+        server (Forge) adds no `Authentication-Results` header, and this field doesn't come from
+        the message, so a sender can't forge it. When it is present, the headers are ignored.
+        Its values map onto the RFC 8601 ones: `pass`, `fail`, `gray` → `none` (no DMARC policy,
+        or `p=none`), `processing_failed` → `temperror`, `unknown` → `absent`.
+      - Mail with no `authentication` (received before Resend added it) falls back to the
+        `Authentication-Results` headers (`dmarcResult`).
+      - Either way the result is counted (`pass`, `fail`, `none`, …, or `absent`) in the
+        `app.email_import.authentication` metric. The header parsing is strict:
         - every header differing only in case is read;
         - comments and quoted strings are ignored, and only a `dmarc=` that starts a result counts;
         - if several results are found, any one that isn't a pass wins;
@@ -198,21 +205,24 @@ RESEND_API_KEY=re_...                       # also used to fetch received mail a
 RESEND_WEBHOOK_SECRET=whsec_...             # the webhook's signing secret
 INBOUND_EMAIL_ADDRESS=kindle@import.example # shown to readers; other recipients are ignored
 EMAIL_IMPORT_ALLOW_MISSING_DMARC=0          # 1 also imports mail with no DMARC result
-EMAIL_IMPORT_AUTHSERV_ID=mx.resend.com      # required: whatever Resend's own header starts with
+EMAIL_IMPORT_AUTHSERV_ID=                   # leave empty while Resend reports `authentication`
 ```
 
 Without `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET` or `INBOUND_EMAIL_ADDRESS`, the webhook answers
 `503` and Resend retries. Without `INBOUND_EMAIL_ADDRESS`, the settings page also says email import
 isn't available.
 
-After deploying, send yourself a notebook export and open the received email's headers in the
-Resend dashboard:
+After deploying, send yourself a notebook export and fetch it from Resend
+(`GET /emails/receiving/<id>`):
 
-- **If it has an `Authentication-Results` header**, set `EMAIL_IMPORT_AUTHSERV_ID` to the first
-  word of its value (the server that stamped it). Until you do, every pass reads as `unpinned` and
-  nothing imports. Once it's set, a pass from any other server is ignored, including a fake header
-  a sender wrote into their own message.
-- **If it has none**, nothing will import, and `app.email_import.authentication` shows
+- **If it has an `authentication` object** (all mail received through Forge does), nothing else is
+  needed. Leave `EMAIL_IMPORT_AUTHSERV_ID` empty: it only pins the header fallback, and Forge
+  doesn't remove a header a sender wrote claiming that server's pass.
+- **If it has none but has an `Authentication-Results` header**, set `EMAIL_IMPORT_AUTHSERV_ID` to
+  the first word of its value (the server that stamped it). Until you do, every pass reads as
+  `unpinned` and nothing imports. Once it's set, a pass from any other server is ignored, including
+  a fake header a sender wrote into their own message.
+- **If it has neither**, nothing will import, and `app.email_import.authentication` shows
   `dmarc="absent"`. Imports only resume with `EMAIL_IMPORT_ALLOW_MISSING_DMARC=1`; read the limits
   below before you set it.
 
@@ -226,10 +236,13 @@ Resend dashboard:
   pass, is accepted and logged as a WARN each time. A forger who knows a reader's bound address could then add highlights to their
   library, and anyone could have a JSON reply sent to an address they type in, within the reply
   limits.
-- ClippingKK only sees the headers Resend chooses to expose. It can't tell a forged
-  `Authentication-Results` header from a real one if Resend drops its own header and keeps only
-  the sender's. Pinning `EMAIL_IMPORT_AUTHSERV_ID` closes that gap as long as Resend removes
+- Resend's `authentication` verdict is trusted as given; ClippingKK can't check it.
+- For mail without one, ClippingKK only sees the headers Resend chooses to expose. It can't tell a
+  forged `Authentication-Results` header from a real one if Resend drops its own header and keeps
+  only the sender's. Pinning `EMAIL_IMPORT_AUTHSERV_ID` closes that gap as long as Resend removes
   sender-written headers that claim its own name, which RFC 8601 requires of receiving servers.
+  Forge stamps no such header, so it removes none: a pin left over from before Forge would trust a
+  sender's own header whenever `authentication` is missing.
 - A spam wave from many addresses can use up the day's 1,000 fetches of strangers' mail. After
   that, unverified senders get no reply that day. Verified readers are unaffected.
 - The worker shares one queue (default concurrency 1) with exports, so an import can wait behind

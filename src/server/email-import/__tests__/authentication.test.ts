@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest'
 
-import { dmarcResult } from '../authentication'
+import { dmarcResult, resendDmarcResult } from '../authentication'
 
 const RESEND = 'mx.resend.com'
 const results = (value: string) => ({ 'Authentication-Results': value })
@@ -118,5 +118,32 @@ describe('dmarcResult', () => {
         RESEND
       )
     ).toBe('pass')
+  })
+})
+
+describe('resendDmarcResult', () => {
+  it.each([
+    ['pass', 'pass'],
+    ['fail', 'fail'],
+    ['gray', 'none'],
+    ['processing_failed', 'temperror'],
+    ['unknown', 'absent'],
+    ['PASS', 'pass'],
+    ['bestguesspass', 'other'],
+    ['constructor', 'other'],
+  ])('dmarc %j → %s', (dmarc, verdict) => {
+    expect(resendDmarcResult({ spf: 'pass', dkim: 'pass', dmarc })).toBe(
+      verdict
+    )
+  })
+
+  it('gives no verdict for mail received before Resend reported one', () => {
+    expect(resendDmarcResult(null)).toBeNull()
+    expect(resendDmarcResult(undefined)).toBeNull()
+  })
+
+  it('reads a reported verdict without a DMARC result as absent', () => {
+    expect(resendDmarcResult({ spf: 'pass' })).toBe('absent')
+    expect(resendDmarcResult({ dmarc: null })).toBe('absent')
   })
 })

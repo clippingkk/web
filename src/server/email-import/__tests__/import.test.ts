@@ -72,7 +72,13 @@ function serve(
   {
     headers = DMARC_PASS,
     html = null,
-  }: { headers?: object; html?: string | null } = {}
+    authentication,
+  }: {
+    headers?: object
+    html?: string | null
+    /** Resend's own verdict; left out, the email predates it. */
+    authentication?: object | null
+  } = {}
 ) {
   receiving.get.mockResolvedValue({
     data: {
@@ -81,6 +87,7 @@ function serve(
       headers,
       html,
       attachments: [],
+      ...(authentication === undefined ? {} : { authentication }),
     },
     error: null,
   })
@@ -561,6 +568,46 @@ describe('importEmail', () => {
     serve({ 'Notebook.html': sample }, results('pass'))
     await expect(importEmail(job())).resolves.toBe('imported')
     expect(await readerClippings()).toHaveLength(22)
+  })
+
+  it("imports on Resend's own DMARC pass when no header carries one", async () => {
+    // What Forge delivers: no Authentication-Results header at all.
+    serve(
+      { 'Notebook.html': sample },
+      {
+        headers: { from: 'Reader <Reader@iCloud.com>' },
+        authentication: { spf: 'pass', dkim: 'pass', dmarc: 'pass' },
+      }
+    )
+
+    await expect(importEmail(job())).resolves.toBe('imported')
+    expect(await readerClippings()).toHaveLength(22)
+    expect(await records()).toEqual([
+      expect.objectContaining({ status: 'imported', dmarc: 'pass' }),
+    ])
+  })
+
+  it('ignores the headers once Resend reports a verdict', async () => {
+    // A sender's own header claiming the pinned server's pass.
+    serve(
+      { 'Notebook.html': sample },
+      {
+        headers: DMARC_PASS,
+        authentication: { spf: 'fail', dkim: 'gray', dmarc: 'fail' },
+      }
+    )
+    await expect(importEmail(job())).resolves.toBe('failed_authentication')
+
+    for (const dmarc of ['gray', 'processing_failed', 'unknown']) {
+      serve(
+        { 'Notebook.html': sample },
+        { headers: DMARC_PASS, authentication: { dmarc } }
+      )
+      await expect(importEmail(job())).resolves.toBe('failed_authentication')
+    }
+    expect(await readerClippings()).toEqual([])
+    // One row per email, holding the last attempt's verdict (`unknown`).
+    expect((await records()).map(({ dmarc }) => dmarc)).toEqual(['absent'])
   })
 
   it('keeps one copy of a highlight repeated on another page', async () => {

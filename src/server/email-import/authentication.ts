@@ -72,3 +72,28 @@ export function dmarcResult(
     return RESULTS.has(failed.result) ? (failed.result as DmarcResult) : 'other'
   return results.some(({ trusted }) => trusted) ? 'pass' : 'unpinned'
 }
+
+/** Resend's verdicts, in the RFC 8601 terms above. */
+const RESEND_RESULTS = new Map<string, DmarcResult>([
+  ['pass', 'pass'],
+  ['fail', 'fail'],
+  // SPF or DKIM passed, but the domain has no DMARC policy or `p=none`.
+  ['gray', 'none'],
+  ['processing_failed', 'temperror'],
+  ['unknown', 'absent'],
+])
+
+/**
+ * The DMARC verdict Resend computed when it received the email (its
+ * `authentication` field), or null when it gave none: mail received before
+ * Resend added the field. Resend's receiving server (Forge) computes it and
+ * adds no `Authentication-Results` header, so this is the one a sender can't
+ * forge. When it is present it decides alone; reading the headers as well
+ * would let a sender's own header claiming a pinned server's pass count.
+ */
+export function resendDmarcResult(authentication: unknown): DmarcResult | null {
+  if (!authentication || typeof authentication !== 'object') return null
+  const { dmarc } = authentication as { dmarc?: unknown }
+  if (typeof dmarc !== 'string') return 'absent'
+  return RESEND_RESULTS.get(dmarc.toLowerCase()) ?? 'other'
+}

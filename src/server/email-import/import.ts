@@ -5,7 +5,7 @@ import { ApiError } from '../errors'
 import { boundedText } from '../http'
 import { getResend } from '../integrations'
 import type { EmailImportJob } from '../jobs/queues'
-import { dmarcResult } from './authentication'
+import { dmarcResult, resendDmarcResult } from './authentication'
 import {
   findVerifiedBinding,
   markEmailImported,
@@ -172,16 +172,17 @@ async function run(
     }
     throw new Error(`Resend receiving: ${error.message}`)
   }
-  // From is the only credential, so only a DMARC pass stamped by the pinned
-  // EMAIL_IMPORT_AUTHSERV_ID is imported or answered: that also stops
-  // forgeries from domains with no DMARC policy (`none`). Mail with no
-  // result, or with a pass nobody pinned, is refused too unless
-  // EMAIL_IMPORT_ALLOW_MISSING_DMARC says otherwise; the metric shows how
-  // often each happens.
-  const dmarc = dmarcResult(
-    email.headers,
-    env.EMAIL_IMPORT_AUTHSERV_ID || undefined
-  )
+  // From is the only credential, so only a DMARC pass is imported or
+  // answered: that also stops forgeries from domains with no DMARC policy
+  // (`none`). Resend's own verdict decides when it gives one. Older mail
+  // falls back to the headers, where only a pass stamped by the pinned
+  // EMAIL_IMPORT_AUTHSERV_ID counts. Mail with no result, or with a pass
+  // nobody pinned, is refused too unless EMAIL_IMPORT_ALLOW_MISSING_DMARC
+  // says otherwise; the metric shows how often each happens.
+  const dmarc =
+    // The API returns `authentication`; the SDK doesn't type it yet.
+    resendDmarcResult((email as { authentication?: unknown }).authentication) ??
+    dmarcResult(email.headers, env.EMAIL_IMPORT_AUTHSERV_ID || undefined)
   span?.setAttribute('email.dmarc', dmarc)
   facts.dmarc = dmarc
   authenticationResults.add(1, {
