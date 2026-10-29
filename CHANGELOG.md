@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.8](https://github.com/clippingkk/web/compare/v5.19.7...v5.19.8) (2026-10-29)
+
+
+### Features
+
+* **import:** expose email import to the iOS app ([8a016dc](https://github.com/clippingkk/web/commit/8a016dc7db7c28b1e7f56ce8670ea8450a0009af))
+* **import:** expose email import to the iOS app ([597c0fa](https://github.com/clippingkk/web/commit/597c0fa0a494f166733de2b19a8eece3d9bf5915))
+* new ClippingKK logo ([7454f15](https://github.com/clippingkk/web/commit/7454f159a8857770f60b40649a896bba4bf93280))
+* new ClippingKK logo ([a834793](https://github.com/clippingkk/web/commit/a83479346533c1f5a85877f032b1e4bfe29039df))
+
 ## [5.19.7](https://github.com/clippingkk/web/compare/v5.19.6...v5.19.7) (2026-10-28)
 
 
