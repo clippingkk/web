@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
 
-import logo from '../../assets/logo-light.svg'
+import logo from '../../assets/logo.png'
+import cover from '../../assets/og-cover.png'
 import { APP_URL_ORIGIN } from '../../constants/config'
 
 const metaTitle = 'Clippingkk - kindle 书摘管理'
 const desc =
   'ClippingKK 帮助用户整理 kindle 中的笔记到可控制，可展示的界面中，并且使得这些笔记可以在用户手机中展示，时常可以温故知新，时常想想之前的话语'
-
-// const logoLink = APP_URL_ORIGIN + logo.src
 
 export const metadata: Metadata = {
   title: metaTitle,
@@ -18,11 +17,17 @@ export const metadata: Metadata = {
     url: APP_URL_ORIGIN,
     type: 'website',
     title: metaTitle,
-    images: APP_URL_ORIGIN + logo.src,
+    images: {
+      url: APP_URL_ORIGIN + cover.src,
+      width: cover.width,
+      height: cover.height,
+      alt: 'ClippingKK',
+    },
     description: desc,
     siteName: 'clippingkk',
   },
   twitter: {
+    // a `summary` card shows a square, so it gets the app icon
     card: 'summary',
     site: 'AnnatarHe',
     creator: 'AnnatarHe',

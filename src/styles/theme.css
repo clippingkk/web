@@ -44,6 +44,8 @@
 
   /* highlighter-pen marker behind quoted passages */
   --app-marker: rgb(242 214 117 / 0.45);
+  /* the logo's band: the same marker, opaque */
+  --app-marker-solid: #f2d675;
 
   --app-font-latin:
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
@@ -96,10 +98,12 @@
   --lake-shadow-overlay: 0 16px 40px -12px rgb(0 0 0 / 0.6);
 
   --app-marker: rgb(217 182 78 / 0.22);
+  --app-marker-solid: #d9b64e;
 }
 
 @theme inline {
   --color-marker: var(--app-marker);
+  --color-marker-solid: var(--app-marker-solid);
 
   --font-sans: var(--app-font-latin), var(--app-font-cjk), sans-serif;
   --font-reading:
