@@ -145,7 +145,8 @@ Settings → Notes.
   import.
 - **`user_id`** is the reader whose **verified** address sent the email, found when the attempt
   ran. Mail from a pending address has none, since anyone can claim an address.
-- **Readers** see their latest 50 under Settings → Email import, without `detail`. Mail forged in
+- **Readers** see their latest 50 under Settings → Email import (and in the iOS app, through
+  `GET /api/v3/email-import`), without `detail`. Mail forged in
   their name that failed DMARC shows up there too, which is how they learn why it wasn't imported.
 - **Administrators** see every row without a reader, with the details, at
   `/dash/<you>/admin/inbound-emails`.
@@ -154,8 +155,8 @@ Settings → Notes.
 
 ## Sender addresses
 
-`src/server/email-import/bindings.ts`, with REST routes under `/api/v3/email-bindings` (cookie
-session only).
+`src/server/email-import/bindings.ts`, with REST routes under `/api/v3/email-bindings`. They take
+the browser session cookie or the iOS app's `ck_ios_` credential ([native-ios.md](native-ios.md)).
 
 - **Limit:** at most 10 addresses per reader, pending ones included. Addresses are compared
   lowercased and exactly, so `you+kindle@…` is a different address from `you@…`.
@@ -184,6 +185,8 @@ session only).
 | `POST /api/v3/email-bindings` `{ email }` | Add an address, or re-send its code |
 | `POST /api/v3/email-bindings/:id/verify` `{ code }` | Verify an address |
 | `DELETE /api/v3/email-bindings/:id` | Remove an address |
+| `GET /api/v3/email-import` | What the settings page shows, for the iOS app: `{ address, maxBindings, bindings, history }` |
+| `GET /api/v3/reader-notes` | The reader's latest 100 notes and how many there are: `{ total, notes }` |
 
 Errors carry a `code` (`EMAIL_ALREADY_BOUND`, `TOO_MANY_EMAIL_BINDINGS`, `INVALID_CODE`, …). The
 settings page maps each code to a translated message.

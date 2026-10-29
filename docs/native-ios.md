@@ -57,6 +57,10 @@ Keep these distinct. An outage reported as 401 would sign out every iOS user and
 
 The app sells Premium as App Store subscriptions (StoreKit 2) and reads its state from `GET /api/billing/subscriptions`. It passes the returned `appAccountToken` to StoreKit and reports each verified transaction's JWS to `POST /api/billing/apple/transactions`, finishing the transaction only after that call succeeds. Readers who subscribed on the web keep Premium in the app and manage it through the Stripe portal. See [billing.md](billing.md).
 
+## Email import
+
+Email import ([email-import.md](email-import.md)) uses the web's routes with the native bearer: `GET /api/v3/email-import` for the import address, the sending addresses and the latest emails, `/api/v3/email-bindings` to add, verify and remove an address, and `GET /api/v3/reader-notes` for the notes that came with the exports. `address` is `null` while the server has no `INBOUND_EMAIL_ADDRESS`. Binding errors carry the same `code`s the settings page translates.
+
 ## Account deletion
 
 iOS deletes through the GraphQL `removeMyAccount` mutation, like web. Disabling the account fails the next session read; the worker's `destroyUserSessions` then removes every remaining session, native ones included, through the shared per-user index.
