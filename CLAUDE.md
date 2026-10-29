@@ -227,7 +227,9 @@ back as a JSON file (`reply.ts`): at most 5 a day and 30 a month per sender, 500
 Highlights go through `insertClippings` (`src/server/clippings/create.ts`, shared with
 `createClippings`), and notes go to `reader_notes`. Every attempt is recorded in `inbound_emails`
 (`records.ts`): readers see their own under Settings → Email import, and administrators see mail no
-verified address sent at `admin/inbound-emails`. See `docs/email-import.md`.
+verified address sent at `admin/inbound-emails`. The iOS app reads the same through
+`GET /api/v3/email-import` and `GET /api/v3/reader-notes`, and manages addresses through
+`/api/v3/email-bindings`. See `docs/email-import.md`.
 
 ## Rich Text Editor
 
