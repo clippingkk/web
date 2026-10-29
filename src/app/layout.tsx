@@ -16,11 +16,9 @@ import I18nRoot from '@/i18n/root'
 import { bootScript, SERVER_THEME, THEME_COLORS } from '@/lib/theme'
 
 import { metadata as indexPageMetadata } from '../components/og/og-with-index'
-import { CDN_DEFAULT_DOMAIN } from '../constants/config'
 import Loading from './loading'
 import ClientOnlyProviders from './providers'
 
-const faviconPrefix = `${CDN_DEFAULT_DOMAIN}/favicon`
 type LayoutProps = {
   children: React.ReactNode
 }
@@ -33,17 +31,10 @@ export const viewport: Viewport = {
   ],
 }
 
+// Icons and the web manifest come from the file conventions next to this
+// layout: favicon.ico, icon.svg, apple-icon.png and manifest.ts.
 export const metadata: Metadata = {
   ...indexPageMetadata,
-  icons: {
-    apple: `${faviconPrefix}/apple-icon-180x180.png`,
-    icon: `${faviconPrefix}/android-icon-192x192.png`,
-  },
-  manifest: `${faviconPrefix}/manifest.json`,
-  other: {
-    'msapplication-TileColor': '#ffffff',
-    'msapplication-TileImage': `${faviconPrefix}/ms-icon-144x144.png`,
-  },
 }
 
 function Layout(props: LayoutProps) {

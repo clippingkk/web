@@ -1,5 +1,7 @@
 import Spinner from '@annatarhe/lake-ui/spinner'
 
+import LogoMark from '@/components/shell/logo-mark'
+
 /**
  * Also the root layout's Suspense fallback, so it renders before providers
  * and the language cookie are available: no copy beyond the brand mark and
@@ -8,12 +10,7 @@ import Spinner from '@annatarhe/lake-ui/spinner'
 function Loading() {
   return (
     <div className="bg-lake-canvas text-lake-fg flex min-h-dvh w-full flex-col items-center justify-center gap-6 px-6">
-      <span
-        aria-hidden="true"
-        className="rounded-lake-control bg-lake-fg font-reading text-lake-canvas flex size-10 items-center justify-center text-lg font-semibold"
-      >
-        K
-      </span>
+      <LogoMark className="h-9" />
       <Spinner size="md" label="Loading ClippingKK" />
     </div>
   )
