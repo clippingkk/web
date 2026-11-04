@@ -5,12 +5,14 @@ import Page from '@/components/layout/page'
 import { BookCommentsDocument, BookShelfDocument } from '@/gql/graphql'
 import { getTranslation } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
+import { cachedBookSummary } from '@/server/ai/book-summary'
 import { resolvePathUser } from '@/server/data/path-user'
 import { serverQuery } from '@/server/data/query'
 import { getViewer } from '@/server/data/viewer'
 import { getWenquBookByDbId } from '@/services/wenqu'
 import { bookHref, getUserSlug } from '@/utils/profile.utils'
 
+import BookAiSummary from './book-ai-summary'
 import BookClippings from './book-clippings'
 import BookCommentsLink from './book-comments-link'
 import BookTabs from './book-tabs'
@@ -72,6 +74,14 @@ async function BookPage(props: PageProps) {
   const fallbackTitle = shelf.clippings[0]?.title ?? bookid
   const bookTitle = book?.title ?? fallbackTitle
   const commentsCount = comments.bookComments.count
+  const author = book?.author ?? ''
+  const initialSummary =
+    isOwner && viewer?.isPremium && Number.isInteger(bookId)
+      ? await cachedBookSummary(viewer.id, String(bookId), {
+          title: bookTitle,
+          author,
+        })
+      : null
 
   return (
     <Page width="wide">
@@ -91,6 +101,15 @@ async function BookPage(props: PageProps) {
           ) : null
         }
       />
+      {isOwner && viewer && Number.isInteger(bookId) ? (
+        <BookAiSummary
+          bookId={String(bookId)}
+          title={bookTitle}
+          author={author}
+          access={viewer.isPremium ? 'premium' : 'free'}
+          initialSummary={initialSummary}
+        />
+      ) : null}
       <BookTabs
         doubanId={bookid}
         bookTitle={bookTitle}

@@ -181,7 +181,9 @@ const request = (kind: string) =>
               language: 'zh',
               book: { title: 'Book', author: 'Writer' },
             }
-          : { language: 'zh', books: [{ title: 'Book', author: 'Writer' }] },
+          : kind === 'book'
+            ? { bookId: '1', title: 'Book', author: 'Writer' }
+            : { language: 'zh', books: [{ title: 'Book', author: 'Writer' }] },
     }),
   })
 test.each(['passage', 'recommendations'] as const)(
@@ -208,6 +210,7 @@ test.each(['anonymous', 'free', 'expired'])(
     const calls = [
       () => aiStreamResponse(request('passage'), 'passage'),
       () => aiStreamResponse(request('recommendations'), 'recommendations'),
+      () => aiStreamResponse(request('book'), 'book'),
       () =>
         resolvers.Mutation.aiEnhanceComment(
           {},

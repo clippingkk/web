@@ -18,7 +18,7 @@ export const aiFetch: typeof fetch = async (input, init) => {
 }
 
 export function useAIGeneration(
-  kind: 'passage' | 'recommendations',
+  kind: 'passage' | 'recommendations' | 'book',
   input: Record<string, unknown>,
   enabled: boolean
 ) {

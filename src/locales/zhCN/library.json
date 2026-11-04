@@ -59,6 +59,17 @@
       "discussion": "讨论"
     },
     "commentsCount_other": "{{count}} 条评论",
+    "ai": {
+      "title": "书籍小结",
+      "description": "根据你在这本书里留下的书摘，写一段简短的小结。",
+      "generate": "根据我的书摘生成小结",
+      "regenerate": "重新生成",
+      "premiumTitle": "用你的书摘为这本书写小结",
+      "premiumDescription": "高级会员可以把一本书里的书摘整理成一段简短小结。",
+      "upgrade": "了解高级会员",
+      "error": "生成小结失败。",
+      "working": "正在写小结…"
+    },
     "order": {
       "label": "排序",
       "newest": "最新",
