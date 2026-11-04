@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "요금제",
-    "description": "ClippingKK는 일상적인 독서에 무료입니다. 프리미엄은 무제한 하이라이트, 더 많은 AI, RSS, 웹훅과 개발자 도구를 더합니다."
+    "description": "ClippingKK의 일상 독서는 무료이고 하이라이트 수에 제한이 없습니다. 프리미엄은 AI 해설, 웹훅, 더 긴 RSS를 더합니다."
   },
   "eyebrow": "요금제",
   "title": "독서와 함께 자라는 서재.",
-  "subtitle": "무료로 시작해 모든 하이라이트를 한곳에 간직하세요. 서가가 무료 플랜보다 커지면 그때 업그레이드하면 됩니다.",
+  "subtitle": "무료로 시작해 모든 하이라이트를 한곳에 간직하세요. AI, 웹훅, 더 긴 공개 피드가 필요하면 그때 업그레이드하면 됩니다.",
   "badge": {
     "current": "현재 플랜",
     "recommended": "추천"
@@ -20,7 +20,7 @@
     },
     "premium": {
       "name": "프리미엄",
-      "description": "서재가 큰 독자, 그리고 하이라이트로 무언가를 만들고 싶은 분을 위해.",
+      "description": "하이라이트를 AI로 읽고 싶은 분, 그리고 하이라이트를 자신의 도구에 연결하고 싶은 분을 위해.",
       "price": "Stripe로 결제 · 언제든 해지 가능",
       "active": "계정에 프리미엄이 활성화되어 있어요.",
       "unavailable": "지금은 프리미엄을 구매할 수 없어요. 잠시 후 다시 확인해 주세요.",
@@ -29,17 +29,16 @@
   },
   "features": {
     "label": "포함 내용",
-    "freeStorage": "하이라이트 최대 2,000개",
-    "premiumStorage": "무제한 하이라이트",
-    "freeAi": "처음 10회 AI 요청",
-    "premiumAi": "매월 AI 요청 1,000회",
+    "highlights": "무제한 하이라이트",
     "books": "책 수 제한 없음",
     "web": "웹에서 전체 서재 이용",
     "widget": "iOS 홈 화면 위젯",
     "privacy": "비공개 하이라이트와 안전한 보관",
-    "rss": "하이라이트 RSS 피드",
+    "rss": "공개 RSS, 최근 하이라이트 30개",
+    "rssExtended": "공개 RSS, 최근 하이라이트 100개",
+    "ai": "하이라이트 AI 해설",
     "webhooks": "새 하이라이트 웹훅",
-    "cli": "명령줄 업로드와 GitHub Actions",
+    "mcp": "AI 어시스턴트용 MCP",
     "support": "이메일 지원",
     "prioritySupport": "우선 이메일 지원"
   },

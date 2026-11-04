@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "价格",
-    "description": "ClippingKK 的日常阅读功能免费。高级会员提供无限书摘、更多 AI 次数、RSS、Webhook 和开发者工具。"
+    "description": "ClippingKK 的日常阅读免费，书摘数量不限。高级会员增加 AI 解读、Webhook 和更长的 RSS。"
   },
   "eyebrow": "价格",
   "title": "一座随阅读一起生长的书房。",
-  "subtitle": "免费开始，把每一处划线收在一个地方。书架放不下了，再升级也不迟。",
+  "subtitle": "免费开始，把每一处划线收在一个地方。想要 AI、Webhook 或更长的公开订阅，再升级也不迟。",
   "badge": {
     "current": "当前方案",
     "recommended": "推荐"
@@ -20,7 +20,7 @@
     },
     "premium": {
       "name": "高级版",
-      "description": "写给书房很大的读者，也写给想在书摘之上做点什么的人。",
+      "description": "写给想用 AI 读懂划线的人，也写给想把书摘接到自己工具上的人。",
       "price": "通过 Stripe 付款 · 随时取消",
       "active": "你的账户已开通高级会员。",
       "unavailable": "高级会员暂时无法购买，请稍后再来看看。",
@@ -29,17 +29,16 @@
   },
   "features": {
     "label": "包含内容",
-    "freeStorage": "最多 2,000 条书摘",
-    "premiumStorage": "无限书摘",
-    "freeAi": "前 10 次 AI 请求",
-    "premiumAi": "每月 1,000 次 AI 请求",
+    "highlights": "无限书摘",
     "books": "不限书籍数量",
     "web": "网页端完整书房",
     "widget": "iOS 桌面小组件",
     "privacy": "私密书摘与安全存储",
-    "rss": "书摘 RSS 订阅",
+    "rss": "公开 RSS，最近 30 条书摘",
+    "rssExtended": "公开 RSS，最近 100 条书摘",
+    "ai": "书摘的 AI 解读",
     "webhooks": "新书摘 Webhook 推送",
-    "cli": "命令行上传与 GitHub Actions",
+    "mcp": "供 AI 助手使用的 MCP",
     "support": "邮件支持",
     "prioritySupport": "优先邮件支持"
   },

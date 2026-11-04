@@ -20,11 +20,12 @@ import { getViewer } from '@/server/data/viewer'
 import { prefetchWenquBooks } from '@/server/data/wenqu'
 import { isValidDoubanId } from '@/services/wenqu'
 import { resolveMediaUrl } from '@/utils/image'
-import { dashHref, getUserSlug, isUsableDomain } from '@/utils/profile.utils'
+import { dashHref, getUserSlug } from '@/utils/profile.utils'
 
 import LibraryShelf from './library-shelf'
 import NowReading from './now-reading'
 import ProfileCallout from './profile-callout'
+import { profileNeedsSetup } from './profile-setup'
 
 const SHELF_PAGE_SIZE = 18
 
@@ -79,12 +80,7 @@ async function LibraryPage(props: PageProps) {
   ])
 
   const uncheckedCount = unchecked?.book.clippingsCount ?? 0
-  const needsProfile =
-    isOwner &&
-    (pathUser.name.startsWith('user.') ||
-      !pathUser.avatar ||
-      !pathUser.bio ||
-      !isUsableDomain(pathUser.domain))
+  const needsProfile = isOwner && profileNeedsSetup(pathUser)
 
   const summary = t('home.summary', {
     books: pathUser.booksCount,
