@@ -1,9 +1,22 @@
+import {
+  BOOK_HIGHLIGHT_CHARS,
+  BOOK_SUMMARY_CHARS,
+  BOOK_SUMMARY_SAMPLE,
+  clipChars,
+} from './book-highlights'
+
 export type AIPrompt =
   | {
       kind: 'passage'
       language: string
       passage: string
       book: Record<string, unknown>
+    }
+  | {
+      kind: 'book'
+      language: string
+      book: { title: string; author: string }
+      highlights: string[]
     }
   | {
       kind: 'recommendations'
@@ -35,6 +48,34 @@ export function buildPrompt(input: AIPrompt) {
         system: `${base} Explain the passage clearly, including its meaning and relevant context. Distinguish interpretation from facts.`,
         data: { book: input.book, passage: input.passage },
       }
+    case 'book': {
+      const highlights: string[] = []
+      let used = 0
+      for (const item of input.highlights) {
+        if (
+          highlights.length >= BOOK_SUMMARY_SAMPLE ||
+          used >= BOOK_SUMMARY_CHARS
+        )
+          break
+        const next = clipChars(
+          item.trim(),
+          Math.min(BOOK_HIGHLIGHT_CHARS, BOOK_SUMMARY_CHARS - used)
+        )
+        if (!next) continue
+        highlights.push(next)
+        used += next.length
+      }
+      return {
+        system: `${base} Write a book summary grounded only in the reader's own highlights. These highlights are a sample spread across the book when the reader kept more than will fit. Capture the through-line and the ideas the reader chose to keep. Do not invent plot, characters, quotations, or sources. Keep it to a few short paragraphs. Respond in the language of the highlights.`,
+        data: {
+          book: {
+            title: clipChars(input.book.title, 300),
+            author: clipChars(input.book.author, 300),
+          },
+          highlights,
+        },
+      }
+    }
     case 'recommendations':
       return {
         system: `${base} Recommend five real books based on the reading list, with title, author, and a concise reason for each. Avoid books already in the list.`,

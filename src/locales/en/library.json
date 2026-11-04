@@ -61,6 +61,17 @@
     },
     "commentsCount_one": "{{count}} comment",
     "commentsCount_other": "{{count}} comments",
+    "ai": {
+      "title": "Book summary",
+      "description": "A short summary of this book, written from the highlights you kept.",
+      "generate": "Summarize my highlights",
+      "regenerate": "Summarize again",
+      "premiumTitle": "Summarize this book from your highlights",
+      "premiumDescription": "Premium turns the highlights you kept in a book into a short summary.",
+      "upgrade": "See Premium",
+      "error": "Couldn't write a summary.",
+      "working": "Writing the summary…"
+    },
     "order": {
       "label": "Order",
       "newest": "Newest",

@@ -113,6 +113,16 @@ test('subscription errors remain actionable', async () => {
     expect(result.current.error?.message).toContain('Premium subscription')
   )
 })
+test('book summaries post to the book stream', async () => {
+  renderHook(() =>
+    useAIGeneration('book', { bookId: '9', title: 'Walden' }, true)
+  )
+  await waitFor(() => expect(requests).toHaveLength(1))
+  expect(vi.mocked(fetch).mock.calls[0]?.[0]).toBe('/api/v2/ai/book')
+  expect((requests[0].body.forwardedProps as { bookId: string }).bookId).toBe(
+    '9'
+  )
+})
 test('partial stream errors end loading and expose an error', async () => {
   const { result } = renderHook(() =>
     useAIGeneration('passage', initial.input, true)

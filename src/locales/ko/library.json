@@ -59,6 +59,17 @@
       "discussion": "대화"
     },
     "commentsCount_other": "댓글 {{count}}개",
+    "ai": {
+      "title": "책 요약",
+      "description": "이 책에 남긴 하이라이트로 짧은 요약을 씁니다.",
+      "generate": "내 하이라이트로 요약하기",
+      "regenerate": "다시 요약하기",
+      "premiumTitle": "하이라이트로 이 책을 요약하기",
+      "premiumDescription": "프리미엄은 한 권에 남긴 하이라이트를 짧은 요약으로 묶어 줍니다.",
+      "upgrade": "프리미엄 보기",
+      "error": "요약을 쓰지 못했어요.",
+      "working": "요약을 쓰는 중…"
+    },
     "order": {
       "label": "정렬",
       "newest": "최신순",
