@@ -47,6 +47,33 @@ describe('useCommentPages', () => {
     expect(result.current.hasMore).toBe(true)
   })
 
+  it('pages a book discussion through bookComments', async () => {
+    query.mockResolvedValue({
+      data: { bookComments: { items: comments(5, 4), count: 4 } },
+    })
+    const { result } = renderHook(() =>
+      useCommentPages({
+        doubanId: '6082808',
+        initialItems: comments(7, 6),
+        initialCount: 4,
+        pageSize: 2,
+      })
+    )
+
+    await act(() => result.current.loadMore())
+
+    expect(query).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variables: {
+          doubanId: '6082808',
+          pagination: { limit: 2, lastId: 6 },
+        },
+      })
+    )
+    expect(result.current.items.map((c) => c.id)).toEqual([7, 6, 5, 4])
+    expect(result.current.hasMore).toBe(false)
+  })
+
   it('stops offering more once a short page ends the list', async () => {
     query.mockResolvedValue(page(comments(3)))
     const { result } = renderHook(() =>

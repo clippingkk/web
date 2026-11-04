@@ -1,0 +1,5 @@
+mutation createBookComment($doubanId: String!, $content: String!) {
+  createBookComment(doubanId: $doubanId, content: $content) {
+    id
+  }
+}

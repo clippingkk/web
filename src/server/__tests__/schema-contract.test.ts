@@ -17,13 +17,23 @@ const mutationFields = new Set(
 )
 
 test('keeps the legacy GraphQL entry points', () => {
-  for (const field of ['auth', 'books', 'clipping', 'me', 'public', 'search']) {
+  for (const field of [
+    'auth',
+    'books',
+    'bookComments',
+    'clipping',
+    'me',
+    'public',
+    'search',
+  ]) {
     expect(queryFields).toContain(field)
   }
   for (const field of [
     'signup',
     'createClippings',
     'createComment',
+    'createBookComment',
+    'deleteBookComment',
     'exportData',
     'claimAPIKey',
   ]) {

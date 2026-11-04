@@ -1,0 +1,3 @@
+mutation deleteBookComment($id: Int!) {
+  deleteBookComment(id: $id)
+}

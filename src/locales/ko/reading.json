@@ -88,6 +88,16 @@
     "viewClipping": "하이라이트 보기",
     "placeholder": "이 문장이 당신에게 어떤 의미인가요?"
   },
+  "bookComments": {
+    "placeholder": "이 책은 당신에게 무엇을 남겼나요?",
+    "publicNote": "공개 댓글이에요. 이 책을 읽은 모든 독자의 페이지에 표시돼요.",
+    "empty": "아직 이 책에 대해 이야기한 사람이 없어요.",
+    "signInDescription": "로그인하고 이 책이 어떤 의미였는지 나눠 보세요.",
+    "readerBadge_other": "하이라이트 {{count}}개",
+    "readerBadgeLabel_other": "{{name}}님이 이 책에서 남긴 하이라이트 {{count}}개",
+    "tooLong": "{{max}}자 이내로 써 주세요.",
+    "slowDown": "지난 한 시간 동안 댓글을 많이 남겼어요. 잠시 후 다시 시도해 주세요."
+  },
   "notFound": {
     "title": "볼 수 없는 하이라이트예요",
     "description": "작성자가 비공개로 바꾸었거나 삭제했을 수 있어요.",

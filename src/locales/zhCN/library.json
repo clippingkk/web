@@ -53,6 +53,12 @@
     "showMore": "展开",
     "showLess": "收起",
     "highlightsTitle": "书摘",
+    "tabs": {
+      "label": "本书内容",
+      "highlights": "书摘",
+      "discussion": "讨论"
+    },
+    "commentsCount_other": "{{count}} 条评论",
     "order": {
       "label": "排序",
       "newest": "最新",

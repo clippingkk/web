@@ -57,6 +57,13 @@
       "when": 1791804719974,
       "tag": "0007_inbound_emails",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1793754286474,
+      "tag": "0008_book_comments",
+      "breakpoints": true
     }
   ]
 }

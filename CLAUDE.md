@@ -231,6 +231,15 @@ verified address sent at `admin/inbound-emails`. The iOS app reads the same thro
 `GET /api/v3/email-import` and `GET /api/v3/reader-notes`, and manages addresses through
 `/api/v3/email-bindings`. See `docs/email-import.md`.
 
+## Book Comments
+
+A book has one discussion, keyed by its Douban id and shown on every reader's page for it
+(`?tab=discussion` on `/dash/[userid]/book/[bookid]`). Rows live in `book_comments`, apart from
+highlight comments (`comments`), behind `bookComments` / `createBookComment` / `deleteBookComment`
+(`src/server/book-comments/`). Posting needs a highlight from the book the poster can see; 40–5,000
+characters; 20 an hour; the author or an administrator deletes. The web reuses
+`src/components/comment/*` with a `CommentTarget`. See `docs/book-comments.md`.
+
 ## Rich Text Editor
 
 The application uses **Tiptap** (a headless editor built on ProseMirror) for rich text editing, replacing the legacy Lexical editor.

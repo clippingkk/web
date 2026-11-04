@@ -3,28 +3,33 @@
 import Avatar from '@annatarhe/lake-ui/avatar'
 import Button from '@annatarhe/lake-ui/button'
 import { useMutation } from '@apollo/client/react'
-import { Send } from 'lucide-react'
+import { Globe, Send } from 'lucide-react'
 import { useId, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import AICommentEnhancer from '@/components/ai/enhance-comment'
 import CKBaseEditor from '@/components/RichTextEditor'
-import { CreateCommentDocument } from '@/gql/graphql'
+import { CreateBookCommentDocument, CreateCommentDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { cn } from '@/lib/utils'
+import { isRateLimited } from '@/services/apollo-errors'
 import { resolveMediaUrl } from '@/utils/image'
 
-export const COMMENT_MIN_LENGTH = 40
+import {
+  BOOK_COMMENT_MAX_LENGTH,
+  COMMENT_MIN_LENGTH,
+  type CommentTarget,
+} from './target'
 
 type CommentComposerProps = {
-  clippingId: number
+  target: CommentTarget
   bookTitle?: string | null
   viewer: { name: string; avatar?: string | null; isPremium: boolean }
   onPosted: () => void
 }
 
 function CommentComposer(props: CommentComposerProps) {
-  const { clippingId, bookTitle, viewer, onPosted } = props
+  const { target, bookTitle, viewer, onPosted } = props
   const { t } = useTranslation(undefined, 'reading')
   const labelId = useId()
   const editor = useRef<{
@@ -32,23 +37,44 @@ function CommentComposer(props: CommentComposerProps) {
     clear: () => void
   }>(null)
   const [content, setContent] = useState('')
-  const [createComment, { loading }] = useMutation(CreateCommentDocument)
+  const [createComment, { loading: postingComment }] = useMutation(
+    CreateCommentDocument
+  )
+  const [createBookComment, { loading: postingBookComment }] = useMutation(
+    CreateBookCommentDocument
+  )
+  const loading = postingComment || postingBookComment
+  const isBook = target.kind === 'book'
   const length = content.trim().length
-  const ready = length >= COMMENT_MIN_LENGTH
+  const tooLong = isBook && length > BOOK_COMMENT_MAX_LENGTH
+  const ready = length >= COMMENT_MIN_LENGTH && !tooLong
 
   const onSubmit = async () => {
-    if (!ready) {
+    if (length < COMMENT_MIN_LENGTH) {
       toast.error(t('comments.tooShort', { min: COMMENT_MIN_LENGTH }))
       return
     }
+    if (tooLong) {
+      toast.error(t('bookComments.tooLong', { max: BOOK_COMMENT_MAX_LENGTH }))
+      return
+    }
     try {
-      await createComment({ variables: { cid: clippingId, content } })
+      if (target.kind === 'book')
+        await createBookComment({
+          variables: { doubanId: target.doubanId, content },
+        })
+      else
+        await createComment({
+          variables: { cid: target.clippingId, content },
+        })
       editor.current?.clear()
       setContent('')
       toast.success(t('comments.posted'))
       onPosted()
-    } catch {
-      toast.error(t('comments.failed'))
+    } catch (error) {
+      toast.error(
+        isRateLimited(error) ? t('bookComments.slowDown') : t('comments.failed')
+      )
     }
   }
 
@@ -72,24 +98,37 @@ function CommentComposer(props: CommentComposerProps) {
             className="min-h-28 w-full px-3.5 py-3 outline-none"
             markdown={content}
             onContentChange={setContent}
-            placeholder={t('comments.placeholder')}
+            placeholder={
+              isBook ? t('bookComments.placeholder') : t('comments.placeholder')
+            }
             ref={editor}
           />
         </div>
+        {isBook ? (
+          <p className="rounded-lake-control bg-lake-surface-muted text-lake-fg-muted flex items-start gap-2 px-3 py-2 text-[0.8125rem] leading-snug">
+            <Globe
+              className="text-lake-fg-subtle mt-0.5 size-3.5 shrink-0"
+              aria-hidden="true"
+            />
+            {t('bookComments.publicNote')}
+          </p>
+        ) : null}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p
             className={cn(
               'type-meta',
-              !ready && length > 0 && 'text-lake-warning'
+              ((!ready && length > 0) || tooLong) && 'text-lake-warning'
             )}
             aria-live="polite"
           >
-            {ready
-              ? t('comments.ready', { count: length })
-              : t('comments.progress', {
-                  count: length,
-                  min: COMMENT_MIN_LENGTH,
-                })}
+            {tooLong
+              ? t('bookComments.tooLong', { max: BOOK_COMMENT_MAX_LENGTH })
+              : ready
+                ? t('comments.ready', { count: length })
+                : t('comments.progress', {
+                    count: length,
+                    min: COMMENT_MIN_LENGTH,
+                  })}
             <span className="mx-2" aria-hidden="true">
               ·
             </span>
@@ -99,7 +138,9 @@ function CommentComposer(props: CommentComposerProps) {
             {viewer.isPremium && ready ? (
               <AICommentEnhancer
                 bookName={bookTitle ?? undefined}
-                clippingId={clippingId}
+                clippingId={
+                  target.kind === 'clipping' ? target.clippingId : undefined
+                }
                 comment={content}
                 onAccept={setContent}
               />
