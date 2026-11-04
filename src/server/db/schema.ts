@@ -14,6 +14,13 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core'
 
+/**
+ * PGroonga full-text index options (docs/database.md). Bigrams for every script,
+ * Latin letters and digits included, so every search term matches as a substring,
+ * the way the `ILIKE '%term%'` search it replaced did.
+ */
+const PGROONGA_SEARCH = { tokenizer: "'TokenBigramSplitSymbolAlphaDigit'" }
+
 const id = () => bigserial('id', { mode: 'number' }).primaryKey()
 const createdAt = () =>
   timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
@@ -49,6 +56,13 @@ export const users = pgTable(
     uniqueIndex('users_email_key').on(table.email),
     uniqueIndex('users_gate_user_id_key').on(table.gateUserId),
     uniqueIndex('users_app_account_token_key').on(table.appAccountToken),
+    // Serves `userMatches` (src/server/db/search.ts); keep the expressions identical.
+    index('users_search_pgroonga')
+      .using(
+        'pgroonga',
+        sql`(array[${table.name}::text, ${table.domain}::text])`
+      )
+      .with(PGROONGA_SEARCH),
   ]
 )
 
@@ -74,6 +88,10 @@ export const clippings = pgTable(
     uniqueIndex('clipping_data_iduq').on(table.dataId),
     index('clippings_created_by_idx').on(table.createdBy),
     index('clippings_book_id_idx').on(table.bookId),
+    // Serves `clippingMatches` (src/server/db/search.ts); keep the expressions identical.
+    index('clippings_search_pgroonga')
+      .using('pgroonga', sql`(array[${table.title}::text, ${table.content}])`)
+      .with(PGROONGA_SEARCH),
   ]
 )
 

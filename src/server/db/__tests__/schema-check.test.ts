@@ -1,10 +1,11 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
+import { readFile } from 'node:fs/promises'
 
 import { afterAll, beforeAll, expect, it } from 'vitest'
 
 import { expectedTableColumns } from '../expected-schema'
 import { checkDatabaseSchema } from '../schema-check'
+import { migratePglite } from './pglite'
 
 const storage = await (async () => {
   const { PGlite } = await import('@electric-sql/pglite')
@@ -17,10 +18,7 @@ const query = (text: string, params: string[][]) =>
   }>
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((n) => n.endsWith('.sql'))
-    .sort())
-    await storage.pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(storage.pg)
 }, 30000)
 
 afterAll(async () => storage.pg.close())

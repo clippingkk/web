@@ -1,5 +1,4 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
 
 import { PGlite } from '@electric-sql/pglite'
 import { drizzle } from 'drizzle-orm/pglite'
@@ -35,6 +34,7 @@ import { DELETE, GET, POST } from '@/app/api/v3/mcp/route'
 import { resetServerEnvForTests } from '@/server/env'
 
 import { getDatabase } from '../../db'
+import { migratePglite } from '../../db/__tests__/pglite'
 import * as schema from '../../db/schema'
 import {
   createMcpToken,
@@ -116,10 +116,7 @@ async function seed() {
 }
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((n) => n.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(pg)
   vi.mocked(getDatabase).mockReturnValue({ db } as never)
 }, 30000)
 

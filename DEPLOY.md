@@ -11,7 +11,9 @@ production configuration.
 
 ## Prerequisites
 
-- A Docker host with access to PostgreSQL 16 or a compatible managed service
+- A Docker host with access to PostgreSQL 18 with the PGroonga extension. Production runs
+  `ghcr.io/rawback-app/db:18-3.6`; a managed service without PGroonga cannot serve search (see
+  [`docs/database.md`](./docs/database.md))
 - Redis 7.2 or a compatible managed service, with persistence enabled
 - A hostname and TLS-capable reverse proxy
 - A checkout matching the deployed release for migrations and preflight checks
@@ -78,7 +80,12 @@ pnpm db:migrate
 pnpm db:preflight
 ```
 
-Migrations are not run automatically by the application container. For a
+Migrations are not run automatically by the application container. Migration
+`0009` creates the PGroonga extension and search indexes; it needs a superuser
+unless the database already has the extension, and it blocks writes to
+`clippings` while the index builds. For a large table, build the indexes
+concurrently first, as [`docs/database.md`](./docs/database.md#migration-0009)
+describes. `pnpm db:preflight` fails while either is missing. For a
 legacy Go-backend cutover, follow the ordering and queue-drain instructions in
 [`docs/backend-migration.md`](./docs/backend-migration.md) instead.
 

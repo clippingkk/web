@@ -24,6 +24,7 @@ import {
 } from '../clippings/queries'
 import { getDatabase } from '../db'
 import { clippings } from '../db/schema'
+import { clippingMatches } from '../db/search'
 import { assertFound } from '../errors'
 
 /**
@@ -66,12 +67,7 @@ export interface ClippingFilter {
 
 function filterConditions(userId: number, filter: ClippingFilter) {
   const conditions: (SQL | undefined)[] = [own(userId)]
-  if (filter.query) {
-    const pattern = containsPattern(filter.query)
-    conditions.push(
-      or(ilike(clippings.content, pattern), ilike(clippings.title, pattern))
-    )
-  }
+  if (filter.query) conditions.push(clippingMatches(filter.query))
   if (filter.doubanId) conditions.push(eq(clippings.bookId, filter.doubanId))
   if (filter.bookTitle)
     conditions.push(ilike(clippings.title, containsPattern(filter.bookTitle)))

@@ -9,11 +9,9 @@ import {
   eq,
   getTableColumns,
   gte,
-  ilike,
   inArray,
   isNull,
   lt,
-  or,
   sql,
 } from 'drizzle-orm'
 
@@ -43,7 +41,6 @@ import {
   activeClipping,
   booksForUser,
   clippingVisibleTo,
-  containsPattern,
   legacyPage,
   page,
   sourceFromEnum,
@@ -70,6 +67,7 @@ import {
   type Reaction,
   type User,
 } from '../db/schema'
+import { clippingMatches, userMatches } from '../db/search'
 import { getServerEnv } from '../env'
 import { ApiError, assertFound } from '../errors'
 import { canAdmin } from '../gate/authz'
@@ -598,19 +596,14 @@ export const resolvers: Record<string, Record<string, any>> = {
     },
     search: async (_: unknown, args: Args, context: GraphQLContext) => {
       const scopeUser = args.scope === 'Me' ? requiredUser(context) : 0
-      const q = containsPattern(args.query)
+      const query = String(args.query)
       const foundUsers =
         args.type === 'BookName'
           ? []
           : await db()
               .select()
               .from(users)
-              .where(
-                and(
-                  activeUser,
-                  or(ilike(users.name, q), ilike(users.domain, q))
-                )
-              )
+              .where(and(activeUser, userMatches(query)))
               .limit(10)
       const foundClippings =
         args.type === 'User'
@@ -624,7 +617,7 @@ export const resolvers: Record<string, Record<string, any>> = {
                   scopeUser
                     ? eq(clippings.createdBy, scopeUser)
                     : eq(clippings.visible, true),
-                  or(ilike(clippings.title, q), ilike(clippings.content, q))
+                  clippingMatches(query)
                 )
               )
               .limit(10)

@@ -1,6 +1,4 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
-
 import { PGlite } from '@electric-sql/pglite'
 import { drizzle } from 'drizzle-orm/pglite'
 import {
@@ -23,6 +21,7 @@ vi.mock('../gate/authz', () => ({ canAdmin: canAdminMock }))
 
 import { BOOK_COMMENTS_PER_HOUR } from '../book-comments'
 import type { BookCommentRow } from '../book-comments'
+import { migratePglite } from '../db/__tests__/pglite'
 import * as schema from '../db/schema'
 import type { GraphQLContext } from '../graphql/context'
 import { resolvers } from '../graphql/resolvers'
@@ -92,10 +91,7 @@ function list(viewer: number, pagination?: object, doubanId = BOOK) {
 }
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((n) => n.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(pg)
 }, 30000)
 beforeEach(async () => {
   await pg.exec('TRUNCATE users, clippings, book_comments RESTART IDENTITY')

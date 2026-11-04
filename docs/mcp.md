@@ -21,7 +21,7 @@ assistants (Claude, Claude Code, Cursor, …) can read a reader's own library.
 | `get_reading_stats` | Highlight counts per day, month or year, plus the years that have any highlights |
 | `list_books` | Books with Wenqu titles and authors, highlight counts and reading dates. It can also list highlights that never matched a book, grouped by their Kindle title |
 | `get_book` | Wenqu metadata for one book, plus the reader's count and dates for it |
-| `search_clippings` | Highlights filtered by text, book (`doubanId` or Kindle title), source, visibility and date range. Paged by cursor |
+| `search_clippings` | Highlights filtered by a full-text query (PGroonga; see [`database.md`](./database.md#search)), book (`doubanId` or Kindle title), source, visibility and date range. Paged by cursor |
 | `get_clipping` | One highlight by id |
 
 The queries live in `src/server/mcp/queries.ts` and build on the helpers the GraphQL resolvers use
