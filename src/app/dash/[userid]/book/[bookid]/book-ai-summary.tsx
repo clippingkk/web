@@ -32,6 +32,8 @@ function BookAiSummary(props: BookAiSummaryProps) {
       bookId,
       title,
       author,
+      // Included so each click changes the request. The route ignores it.
+      run,
       // The first request replays a stored summary. Asking again writes a new one.
       force: cached ? run > 0 : run > 1,
     },

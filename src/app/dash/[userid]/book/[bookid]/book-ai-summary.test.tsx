@@ -61,13 +61,25 @@ function renderSummary(
   initialSummary: string | null = null
 ) {
   generation.useAIGeneration.mockImplementation(() => generation.state)
-  return render(
+  const view = render(
     <BookAiSummary {...props} access={access} initialSummary={initialSummary} />
   )
+  return {
+    ...view,
+    rerenderSummary() {
+      view.rerender(
+        <BookAiSummary
+          {...props}
+          access={access}
+          initialSummary={initialSummary}
+        />
+      )
+    },
+  }
 }
 
 it('shows a Premium reader a generate button and then the streamed summary', () => {
-  renderSummary('premium')
+  const view = renderSummary('premium')
   expect(document.querySelector('details')?.open).toBe(true)
   expect(screen.getByText(library.book.ai.description)).toBeTruthy()
   expect(generation.useAIGeneration).toHaveBeenLastCalledWith(
@@ -89,13 +101,36 @@ it('shows a Premium reader a generate button and then the streamed summary', () 
   ).toBeTruthy()
   expect(generation.useAIGeneration).toHaveBeenLastCalledWith(
     'book',
-    expect.objectContaining({ bookId: '42', title: 'Walden', force: false }),
+    expect.objectContaining({
+      bookId: '42',
+      title: 'Walden',
+      run: 1,
+      force: false,
+    }),
+    true
+  )
+
+  generation.state = {
+    text: 'A quiet book about living deliberately.',
+    isLoading: false,
+    error: undefined,
+  }
+  view.rerenderSummary()
+  fireEvent.click(
+    screen.getByRole('button', { name: library.book.ai.regenerate })
+  )
+  fireEvent.click(
+    screen.getByRole('button', { name: library.book.ai.regenerate })
+  )
+  expect(generation.useAIGeneration).toHaveBeenLastCalledWith(
+    'book',
+    expect.objectContaining({ run: 3, force: true }),
     true
   )
 })
 
 it('shows a stored summary without starting a request, and bills only when asked again', () => {
-  renderSummary('premium', 'Cached summary of the highlights.')
+  const view = renderSummary('premium', 'Cached summary of the highlights.')
   expect(screen.getByText('Cached summary of the highlights.')).toBeTruthy()
   expect(generation.useAIGeneration).toHaveBeenLastCalledWith(
     'book',
@@ -107,7 +142,21 @@ it('shows a stored summary without starting a request, and bills only when asked
   )
   expect(generation.useAIGeneration).toHaveBeenLastCalledWith(
     'book',
-    expect.objectContaining({ force: true }),
+    expect.objectContaining({ run: 1, force: true }),
+    true
+  )
+  generation.state = {
+    text: 'A second draft.',
+    isLoading: false,
+    error: undefined,
+  }
+  view.rerenderSummary()
+  fireEvent.click(
+    screen.getByRole('button', { name: library.book.ai.regenerate })
+  )
+  expect(generation.useAIGeneration).toHaveBeenLastCalledWith(
+    'book',
+    expect.objectContaining({ run: 2, force: true }),
     true
   )
 })

@@ -34,6 +34,8 @@ const bookSummarySchema = z.object({
   title: z.string().trim().max(1000).optional().default(''),
   author: z.string().trim().max(1000).optional().default(''),
   force: z.boolean().optional().default(false),
+  // Bumped by the client on every click so the generator runs again. Not used.
+  run: z.number().int().nonnegative().optional(),
 })
 
 export async function aiStreamResponse(
@@ -65,9 +67,12 @@ export async function aiStreamResponse(
   try {
     let stream: AsyncGenerator<StreamChunk>
     if (kind === 'book') {
+      const { bookId, title, author, force } = bookSummarySchema.parse(
+        parsed.data
+      )
       stream = await streamBookSummary(
         userId,
-        bookSummarySchema.parse(parsed.data),
+        { bookId, title, author, force },
         controller.signal
       )
     } else if (kind === 'passage') {

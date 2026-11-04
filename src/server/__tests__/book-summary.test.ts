@@ -295,7 +295,10 @@ describe('book summary stream', () => {
     mocks.chat.mockClear()
     expect(
       await (
-        await aiStreamResponse(request({ ...body, force: true }), 'book')
+        await aiStreamResponse(
+          request({ ...body, force: true, run: 4 }),
+          'book'
+        )
       ).text()
     ).toContain('Hello')
     expect(mocks.chat).toHaveBeenCalledTimes(1)
