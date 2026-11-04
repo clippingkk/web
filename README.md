@@ -9,7 +9,9 @@ worker.
 
 - Node.js 26
 - pnpm 10.25 (the version pinned in `package.json`)
-- Docker with Compose for local PostgreSQL and Redis
+- Docker with Compose for local PostgreSQL and Redis. PostgreSQL is
+  `ghcr.io/rawback-app/db` (PostgreSQL 18 with PGroonga), the image production runs; see
+  [`docs/database.md`](./docs/database.md)
 - An OpenAI API key and model for AI features (optional for builds)
 
 ## Local development

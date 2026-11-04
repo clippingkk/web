@@ -23,7 +23,7 @@ Follow the existing TypeScript + React style: 2-space indentation, single quotes
 
 ## Testing Guidelines
 
-Vitest collects V8 coverage from `src/**/*.{js,ts,jsx,tsx}` except generated schema output and runs in happy-dom. Name tests `*.test.ts` or place them in `__tests__/`. Keep fast unit tests close to the code when practical, and use `test/setup.ts` plus `test/mocks/` for shared setup. Run `pnpm test` before opening a PR; run `pnpm test:update` only when snapshot changes are intentional.
+Vitest collects V8 coverage from `src/**/*.{js,ts,jsx,tsx}` except generated schema output and runs in happy-dom. Name tests `*.test.ts` or place them in `__tests__/`. Keep fast unit tests close to the code when practical, and use `test/setup.ts` plus `test/mocks/` for shared setup. Run `pnpm test` before opening a PR; run `pnpm test:update` only when snapshot changes are intentional. Server tests that need PostgreSQL use PGlite through `migratePglite` (`src/server/db/__tests__/pglite.ts`); search runs on PGroonga, which only `src/server/db/__tests__/pgroonga.test.ts` exercises, against `ghcr.io/rawback-app/db` when `TEST_DATABASE_URL` is set (see `docs/database.md`).
 
 ## Commit & Pull Request Guidelines
 

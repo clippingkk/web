@@ -1,5 +1,4 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
 
 import { PGlite } from '@electric-sql/pglite'
 import { eq } from 'drizzle-orm'
@@ -9,6 +8,7 @@ const gate = vi.hoisted(() => ({ grant: vi.fn() }))
 vi.mock('../../db', () => ({ getDatabase: vi.fn() }))
 vi.mock('../gate', () => ({ upsertAppleGrant: gate.grant }))
 import { getDatabase } from '../../db'
+import { migratePglite } from '../../db/__tests__/pglite'
 import * as schema from '../../db/schema'
 import { applyAppleUpdate, ownerOf } from '../apple/sync'
 import type { AppleRenewalInfo, AppleTransaction } from '../apple/verify'
@@ -28,10 +28,7 @@ let other: number
 let token: string
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((n) => n.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(pg)
   vi.mocked(getDatabase).mockReturnValue({ db } as never)
 }, 30000)
 beforeEach(async () => {

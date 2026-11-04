@@ -1,5 +1,4 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
 
 import { PGlite } from '@electric-sql/pglite'
 import { drizzle } from 'drizzle-orm/pglite'
@@ -18,6 +17,7 @@ import {
 const getDatabaseMock = vi.hoisted(() => vi.fn())
 vi.mock('../db', () => ({ getDatabase: getDatabaseMock }))
 
+import { migratePglite } from '../db/__tests__/pglite'
 import * as schema from '../db/schema'
 import type { Clipping, Comment } from '../db/schema'
 import { ApiError } from '../errors'
@@ -85,10 +85,7 @@ async function seed() {
 }
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((n) => n.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(pg)
 }, 30000)
 beforeEach(async () => {
   await pg.exec(
@@ -300,19 +297,25 @@ describe('search', () => {
     return result.clippings.map((row: Clipping) => row.content).sort()
   }
 
+  // PGlite runs a stand-in for PGroonga's `&@~` (db/__tests__/pglite.ts);
+  // db/__tests__/pgroonga.test.ts covers the real operator.
   it.each([
     ['%', ['100% sure']],
     ['_', ['snake_case']],
-    ['\\', ['back\\slash']],
     ['0%', ['100% sure']],
-  ])('matches %j literally', async (query, expected) => {
-    await Promise.all(['100% sure', 'snake_case', 'back\\slash'].map(add))
+  ])('matches %j literally, never as a wildcard', async (query, expected) => {
+    await Promise.all(['100% sure', 'snake_case'].map(add))
     expect(await found(query)).toEqual(expected)
   })
 
   it('still matches case-insensitive substrings', async () => {
     await add('Snake_Case')
-    expect(await found('snake')).toEqual(['Snake_Case'])
+    expect(await found('nake')).toEqual(['Snake_Case'])
+  })
+
+  it('requires every term, in any order', async () => {
+    await Promise.all(['a narrow road', 'a wide road', 'wide open'].map(add))
+    expect(await found('road wide')).toEqual(['a wide road'])
   })
 
   it('never returns a private clipping', async () => {

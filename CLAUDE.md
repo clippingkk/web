@@ -201,6 +201,17 @@ function ClientComponent() {
 - Chinese variants (`zh`, `zh-CN`, etc.) are normalized to `zhCN` for file loading
 - Cookie value determines default language, falls back to `en`
 
+## Database
+
+PostgreSQL is `ghcr.io/rawback-app/db:18-3.6` (PostgreSQL 18 with PGroonga) in production and in
+`compose.yaml`. The schema is `src/server/db/schema.ts`; `pnpm db:generate` writes
+migrations to `drizzle/`. Search (GraphQL `search`, MCP `search_clippings`) uses PGroonga only through
+`clippingMatches` / `userMatches` in `src/server/db/search.ts`, never a table-wide `ILIKE`. Keep each
+expression identical to its index and keep the `pgroonga_condition(..., index_name)`, or matching
+changes with the query plan. Tests that need a database run on PGlite through `migratePglite(pg)`
+(`src/server/db/__tests__/pglite.ts`, a stand-in for PGroonga); `pgroonga.test.ts` runs against the
+real image when `TEST_DATABASE_URL` is set. See `docs/database.md`.
+
 ## Billing and Premium
 
 Gate owns Stripe (checkout, portal, webhook); the iOS app sells App Store subscriptions that

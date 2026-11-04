@@ -72,7 +72,7 @@ export function registerClippingTools(server: McpServer, context: ToolContext) {
           .max(200)
           .optional()
           .describe(
-            'Case-insensitive substring matched against the highlight text and the book title'
+            'Full-text query over the highlight text and the Kindle book title. Each term matches as a case-insensitive substring in any language, Chinese, Japanese and Korean included. Terms separated by spaces must all match; `OR` between terms matches either, `-term` excludes one and double quotes match a phrase'
           ),
         doubanId: z
           .string()

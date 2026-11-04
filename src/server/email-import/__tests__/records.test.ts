@@ -1,5 +1,4 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
 
 import { PGlite } from '@electric-sql/pglite'
 import { drizzle } from 'drizzle-orm/pglite'
@@ -8,6 +7,7 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 vi.mock('../../db', () => ({ getDatabase: vi.fn() }))
 
 import { getDatabase } from '../../db'
+import { migratePglite } from '../../db/__tests__/pglite'
 import * as schema from '../../db/schema'
 import type { EmailImportJob } from '../../jobs/queues'
 import {
@@ -35,10 +35,7 @@ const job = (overrides: Partial<EmailImportJob> = {}): EmailImportJob => ({
 })
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((n) => n.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(pg)
 }, 30000)
 
 beforeEach(async () => {
