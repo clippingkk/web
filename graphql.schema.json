@@ -853,6 +853,12 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "obsidian",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -1458,7 +1464,7 @@
           },
           {
             "name": "exportData",
-            "description": "flomo.args: https:/xxxxxxx\nnotion args: token | page id",
+            "description": "flomo args: https://flomoapp.com/...\nnotion args: token | page or database id\nmail and obsidian args: email address",
             "args": [
               {
                 "name": "args",

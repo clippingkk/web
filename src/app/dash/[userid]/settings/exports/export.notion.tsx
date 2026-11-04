@@ -107,9 +107,9 @@ function ExportToNotion() {
               render={({ field }) => (
                 <InputField
                   {...field}
-                  label="Notion Token"
+                  label={t('exports.notionTokenLabel')}
                   className="flex w-full items-center"
-                  placeholder="Notion Token"
+                  placeholder={t('exports.notionTokenLabel')}
                   error={errors.notionToken?.message}
                 />
               )}
@@ -120,9 +120,9 @@ function ExportToNotion() {
               render={({ field }) => (
                 <InputField
                   {...field}
-                  label="Notion Page ID"
+                  label={t('exports.notionTargetLabel')}
                   className="mt-4 flex w-full items-center"
-                  placeholder="Notion Page ID"
+                  placeholder={t('exports.notionTargetPlaceholder')}
                   error={errors.notionPageId?.message}
                 />
               )}

@@ -248,6 +248,6 @@ After deploying, send yourself a notebook export and fetch it from Resend
   sender's own header whenever `authentication` is missing.
 - A spam wave from many addresses can use up the day's 1,000 fetches of strangers' mail. After
   that, unverified senders get no reply that day. Verified readers are unaffected.
-- The worker shares one queue (default concurrency 1) with exports, so an import can wait behind
-  a long Notion export.
+- Exports run on their own queue (`clippingkk-exports`), so a long Notion or vault export does not
+  block email import. Jobs already waiting on the main queue still finish there.
 - Notes are listed, newest first, on a plain settings page for now (the latest 100).

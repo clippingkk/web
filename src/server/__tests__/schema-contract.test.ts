@@ -41,6 +41,13 @@ test('keeps the legacy GraphQL entry points', () => {
   }
 })
 
+test('offers obsidian alongside the other export destinations', () => {
+  const destinations = schema.__schema.types
+    .find((type) => type.name === 'ExportDestination')
+    ?.enumValues?.map((value) => value.name)
+  expect(destinations).toEqual(['flomo', 'mail', 'notion', 'obsidian'])
+})
+
 test('builds an executable GraphQL schema', async () => {
   const result = await graphql({
     schema: graphQLSchema,

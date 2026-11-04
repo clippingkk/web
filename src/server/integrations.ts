@@ -176,7 +176,12 @@ export async function uploadObject(
 }
 
 export function getNotion(token: string) {
-  return new NotionClient({ auth: token })
+  return new NotionClient({
+    auth: token,
+    // Export jobs pace themselves and retry POST 429/5xx. The SDK retries
+    // rate limits, but it will not retry a failed page create.
+    retry: false,
+  })
 }
 
 export async function fetchGithubIdentity(code: string) {

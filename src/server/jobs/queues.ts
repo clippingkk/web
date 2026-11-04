@@ -3,6 +3,8 @@ import { Queue } from 'bullmq'
 import { getServerEnv } from '../env'
 
 export const JOB_QUEUE_NAME = 'clippingkk-node'
+/** Library exports. Kept off the main queue so a long export cannot block email import. */
+export const EXPORT_QUEUE_NAME = 'clippingkk-exports'
 export const AUDITING_EMAIL = 'wechat.mp.aduiting@annatarhe.com'
 
 export function pendingAccountRemovalKey(uid: number) {
@@ -10,7 +12,7 @@ export function pendingAccountRemovalKey(uid: number) {
 }
 
 export type ExportJob = {
-  destination: 'flomo' | 'notion' | 'mail'
+  destination: 'flomo' | 'notion' | 'mail' | 'obsidian'
   args: string
   uid: number
 }
@@ -33,25 +35,36 @@ export function queueConnection() {
   }
 }
 
+const defaultJobOptions = {
+  attempts: 3,
+  backoff: { type: 'exponential' as const, delay: 5_000 },
+  removeOnComplete: { age: 24 * 60 * 60, count: 1_000 },
+  removeOnFail: { age: 7 * 24 * 60 * 60, count: 5_000 },
+}
+
 const globalForQueue = globalThis as typeof globalThis & {
   clippingkkQueue?: Queue
+  clippingkkExportQueue?: Queue
 }
 
 export function getJobQueue() {
   globalForQueue.clippingkkQueue ??= new Queue(JOB_QUEUE_NAME, {
     connection: queueConnection(),
-    defaultJobOptions: {
-      attempts: 3,
-      backoff: { type: 'exponential', delay: 5_000 },
-      removeOnComplete: { age: 24 * 60 * 60, count: 1_000 },
-      removeOnFail: { age: 7 * 24 * 60 * 60, count: 5_000 },
-    },
+    defaultJobOptions,
   })
   return globalForQueue.clippingkkQueue
 }
 
+export function getExportQueue() {
+  globalForQueue.clippingkkExportQueue ??= new Queue(EXPORT_QUEUE_NAME, {
+    connection: queueConnection(),
+    defaultJobOptions,
+  })
+  return globalForQueue.clippingkkExportQueue
+}
+
 export function enqueueExport(payload: ExportJob) {
-  return getJobQueue().add('export-data', payload)
+  return getExportQueue().add('export-data', payload)
 }
 
 export function enqueueNounCleanup(nounId: number) {
