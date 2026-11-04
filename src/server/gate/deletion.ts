@@ -87,6 +87,9 @@ export async function processPendingDeletions() {
           inArray(tables.comments.belongsTo, clips)
         )
       )
+    await tx
+      .delete(tables.bookComments)
+      .where(eq(tables.bookComments.createdBy, uid))
     const hooks = tx
       .select({ id: tables.webHooks.id })
       .from(tables.webHooks)

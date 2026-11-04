@@ -89,6 +89,18 @@
     "viewClipping": "View highlight",
     "placeholder": "What does this passage mean to you?"
   },
+  "bookComments": {
+    "placeholder": "What did this book leave you with?",
+    "publicNote": "Public. Shows on every reader's page for this book.",
+    "empty": "No one has written about this book yet.",
+    "signInDescription": "Sign in to share what this book meant to you.",
+    "readerBadge_one": "{{count}} highlight",
+    "readerBadge_other": "{{count}} highlights",
+    "readerBadgeLabel_one": "{{name}}'s {{count}} highlight from this book",
+    "readerBadgeLabel_other": "{{name}}'s {{count}} highlights from this book",
+    "tooLong": "Keep it under {{max}} characters.",
+    "slowDown": "You've posted a lot in the last hour. Try again later."
+  },
   "notFound": {
     "title": "This highlight isn't available",
     "description": "Its owner may have made it private, or it was removed.",

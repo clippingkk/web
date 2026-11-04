@@ -18,6 +18,17 @@ function kindOf(extensions?: Record<string, unknown>): ApolloErrorKind | null {
   return null
 }
 
+/** Whether the server refused the operation with a 429 (too many requests). */
+export function isRateLimited(error: unknown) {
+  if (ServerError.is(error)) return error.statusCode === 429
+  if (!CombinedGraphQLErrors.is(error)) return false
+  return error.errors.some(
+    (item) =>
+      (item.extensions?.http as { status?: unknown } | undefined)?.status ===
+      429
+  )
+}
+
 /**
  * What a failed Apollo operation means for the page, read from the resolver's
  * `extensions.code` or `extensions.http.status` (src/server/graphql/yoga.ts

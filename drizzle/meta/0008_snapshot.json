@@ -1,5 +1,5 @@
 {
-  "id": "b3153d80-a4f4-4dca-b95f-cfd8b1205994",
+  "id": "35253452-8a0a-40aa-8174-62f3596f9b04",
   "prevId": "e50cb708-1b06-4ab6-974e-ab99712fc40b",
   "version": "7",
   "dialect": "postgresql",
@@ -208,6 +208,100 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.book_comments": {
+      "name": "book_comments",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigserial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "book_id": {
+          "name": "book_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "book_comments_book_id_id_idx": {
+          "name": "book_comments_book_id_id_idx",
+          "columns": [
+            {
+              "expression": "book_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "book_comments_created_by_idx": {
+          "name": "book_comments_created_by_idx",
+          "columns": [
+            {
+              "expression": "created_by",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.clippings": {
       "name": "clippings",
       "schema": "",
@@ -350,23 +444,6 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
-        },
-        "clippings_search_pgroonga": {
-          "name": "clippings_search_pgroonga",
-          "columns": [
-            {
-              "expression": "(array[\"title\"::text, \"content\"])",
-              "asc": true,
-              "isExpression": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "pgroonga",
-          "with": {
-            "tokenizer": "'TokenBigramSplitSymbolAlphaDigit'"
-          }
         }
       },
       "foreignKeys": {},
@@ -1693,23 +1770,6 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
-        },
-        "users_search_pgroonga": {
-          "name": "users_search_pgroonga",
-          "columns": [
-            {
-              "expression": "(array[\"name\"::text, \"domain\"::text])",
-              "asc": true,
-              "isExpression": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "pgroonga",
-          "with": {
-            "tokenizer": "'TokenBigramSplitSymbolAlphaDigit'"
-          }
         }
       },
       "foreignKeys": {},

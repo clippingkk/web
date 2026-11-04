@@ -33,7 +33,7 @@ which would break the palette's search-as-you-type and change what `ILIKE '%term
 Two rules keep that behavior in every query plan:
 
 - **Each helper's expression must stay identical to its index's** in `schema.ts` (and migration
-  0008). If they differ, Postgres cannot use the index and scans the whole table.
+  0009). If they differ, Postgres cannot use the index and scans the whole table.
 - **Each helper passes `pgroonga_condition(query, index_name => ...)`.** When Postgres checks a row
   outside the index, as in a sequential scan or a filter after the `created_by` btree, PGroonga
   tokenizes it with that index's settings. A bare `&@~ query` would fall back to the default
@@ -42,9 +42,9 @@ Two rules keep that behavior in every query plan:
 `src/server/db/__tests__/pgroonga.test.ts` checks both rules and the behavior above against the real
 extension.
 
-## Migration 0008
+## Migration 0009
 
-`drizzle/0008_pgroonga_search.sql` runs `CREATE EXTENSION IF NOT EXISTS pgroonga` and creates the two
+`drizzle/0009_pgroonga_search.sql` runs `CREATE EXTENSION IF NOT EXISTS pgroonga` and creates the two
 indexes.
 
 - **The extension.** The image's first start creates `pgroonga` in `POSTGRES_DB`. On a database that

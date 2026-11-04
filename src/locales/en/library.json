@@ -54,6 +54,13 @@
     "showMore": "Show more",
     "showLess": "Show less",
     "highlightsTitle": "Highlights",
+    "tabs": {
+      "label": "Book sections",
+      "highlights": "Highlights",
+      "discussion": "Discussion"
+    },
+    "commentsCount_one": "{{count}} comment",
+    "commentsCount_other": "{{count}} comments",
     "order": {
       "label": "Order",
       "newest": "Newest",

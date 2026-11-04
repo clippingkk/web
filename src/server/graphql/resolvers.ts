@@ -29,6 +29,13 @@ import {
   verifyToken,
 } from '../auth'
 import { userPremiumEndAt } from '../billing/premium-loader'
+import {
+  bookCommentPage,
+  createBookComment,
+  creatorClippingsCount,
+  deleteBookComment,
+  type BookCommentRow,
+} from '../book-comments'
 import { insertClippings } from '../clippings/create'
 import {
   activeClipping,
@@ -659,6 +666,8 @@ export const resolvers: Record<string, Record<string, any>> = {
         ),
       }
     },
+    bookComments: (_: unknown, args: Args, context: GraphQLContext) =>
+      bookCommentPage(args.doubanId, args.pagination, context.userId),
   },
   Mutation: {
     signup: async (_: unknown, args: Args) => {
@@ -963,6 +972,16 @@ export const resolvers: Record<string, Record<string, any>> = {
         .returning()
       return created
     },
+    createBookComment: async (
+      _: unknown,
+      args: Args,
+      context: GraphQLContext
+    ) => createBookComment(requiredUser(context), args.doubanId, args.content),
+    deleteBookComment: async (
+      _: unknown,
+      args: Args,
+      context: GraphQLContext
+    ) => deleteBookComment(requiredUser(context), args.id),
     deleteComment: async (_: unknown, args: Args, context: GraphQLContext) => {
       const comment = assertFound(
         await db().query.comments.findFirst({
@@ -1808,6 +1827,19 @@ export const resolvers: Record<string, Record<string, any>> = {
     createdAt: (comment: Comment) => date(comment.createdAt),
     updatedAt: (comment: Comment) => date(comment.updatedAt),
     deletedAt: (comment: Comment) => date(comment.deletedAt),
+  },
+  BookComment: {
+    doubanId: (comment: BookCommentRow) => comment.bookId,
+    creator: (comment: BookCommentRow) => userById(comment.createdBy),
+    creatorClippingsCount: (
+      comment: BookCommentRow,
+      _args: Args,
+      context: GraphQLContext
+    ) =>
+      comment.creatorClippingsCount ??
+      creatorClippingsCount(comment, context.userId),
+    createdAt: (comment: BookCommentRow) => date(comment.createdAt),
+    updatedAt: (comment: BookCommentRow) => date(comment.updatedAt),
   },
   Reaction: {
     creator: (reaction: Reaction) => userById(reaction.creator),

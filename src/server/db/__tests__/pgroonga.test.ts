@@ -25,7 +25,7 @@ import { clippingMatches, userMatches } from '../search'
  *   TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/postgres
  *
  * Each run migrates a throwaway database with `drizzle/` exactly as
- * `pnpm db:migrate` does, so it also proves that migration 0008 creates the
+ * `pnpm db:migrate` does, so it also proves that migration 0009 creates the
  * extension and that search.ts still matches the indexes' expressions.
  */
 const url = process.env.TEST_DATABASE_URL

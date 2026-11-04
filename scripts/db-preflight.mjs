@@ -63,7 +63,7 @@ try {
       `Database is missing required columns: ${missing.join(', ')}`
     )
 
-  // Search runs on PGroonga (docs/database.md); migration 0008 creates the
+  // Search runs on PGroonga (docs/database.md); migration 0009 creates the
   // extension and its indexes, so their absence means it has not run.
   const search = await pool.query(`
     select current_setting('server_version') as server,

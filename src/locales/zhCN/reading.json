@@ -88,6 +88,16 @@
     "viewClipping": "查看书摘",
     "placeholder": "这段话对你意味着什么？"
   },
+  "bookComments": {
+    "placeholder": "这本书给你留下了什么？",
+    "publicNote": "公开评论，会显示在每位读者这本书的页面上。",
+    "empty": "还没有人聊过这本书。",
+    "signInDescription": "登录后，说说这本书对你意味着什么。",
+    "readerBadge_other": "{{count}} 条书摘",
+    "readerBadgeLabel_other": "{{name}} 在这本书里的 {{count}} 条书摘",
+    "tooLong": "请控制在 {{max}} 字以内。",
+    "slowDown": "你在过去一小时里发了很多评论，请稍后再试。"
+  },
   "notFound": {
     "title": "这条书摘无法查看",
     "description": "它可能被作者设为了仅自己可见，或已经删除。",

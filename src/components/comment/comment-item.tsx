@@ -3,17 +3,17 @@
 import ConfirmDialog from '@annatarhe/lake-ui/confirm-dialog'
 import IconButton from '@annatarhe/lake-ui/icon-button'
 import { useMutation } from '@apollo/client/react'
-import { Trash2 } from 'lucide-react'
+import { BookOpen, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import CKBaseEditor from '@/components/RichTextEditor'
 import UserChip from '@/components/user/user-chip'
-import { DeleteCommentDocument } from '@/gql/graphql'
+import { DeleteBookCommentDocument, DeleteCommentDocument } from '@/gql/graphql'
 import { useTranslation } from '@/i18n/client'
 import { formatDate } from '@/utils/format-date'
-import { clippingHref, dashHref } from '@/utils/profile.utils'
+import { bookHref, clippingHref, dashHref } from '@/utils/profile.utils'
 
 import { splitClippingLines } from '../clipping/clipping-text'
 
@@ -28,6 +28,8 @@ export type CommentItemData = {
     domain?: string | null
   }
   belongsTo?: { id: number; title: string; content: string } | null
+  /** Book comments only: the author's highlights in the book you may see. */
+  creatorClippingsCount?: number
 }
 
 type CommentItemProps = {
@@ -35,22 +37,38 @@ type CommentItemProps = {
   viewerId?: number | null
   /** `with-context` quotes the highlight the comment belongs to. */
   variant?: 'thread' | 'with-context'
+  /** Set for a comment on a whole book (its Douban id). */
+  doubanId?: string
+  /** Administrators may remove anyone's book comment. */
+  canModerate?: boolean
   onDeleted?: (id: number) => void
 }
 
 function CommentItem(props: CommentItemProps) {
-  const { comment, viewerId, variant = 'thread', onDeleted } = props
+  const {
+    comment,
+    viewerId,
+    variant = 'thread',
+    doubanId,
+    canModerate,
+    onDeleted,
+  } = props
   const { t, i18n } = useTranslation(undefined, 'reading')
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [deleteComment] = useMutation(DeleteCommentDocument)
-  const canDelete = !!viewerId && viewerId === comment.creator.id
+  const [deleteBookComment] = useMutation(DeleteBookCommentDocument)
+  const canDelete =
+    (!!viewerId && viewerId === comment.creator.id) ||
+    (!!doubanId && !!canModerate)
+  const highlights = doubanId ? (comment.creatorClippingsCount ?? 0) : 0
   const excerpt = comment.belongsTo
     ? (splitClippingLines(comment.belongsTo.content, 1)[0] ?? '')
     : ''
 
   const onDelete = async () => {
     try {
-      await deleteComment({ variables: { id: comment.id } })
+      if (doubanId) await deleteBookComment({ variables: { id: comment.id } })
+      else await deleteComment({ variables: { id: comment.id } })
       toast.success(t('comments.deleted'))
       onDeleted?.(comment.id)
     } catch (error) {
@@ -62,16 +80,31 @@ function CommentItem(props: CommentItemProps) {
   return (
     <article className="border-lake-line flex flex-col gap-3 border-b py-6 last:border-b-0">
       <header className="flex items-start justify-between gap-3">
-        <UserChip
-          href={dashHref(comment.creator, 'profile')}
-          name={comment.creator.name}
-          avatar={comment.creator.avatar}
-          detail={
-            <time dateTime={comment.createdAt}>
-              {formatDate(comment.createdAt, i18n.language)}
-            </time>
-          }
-        />
+        <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5">
+          <UserChip
+            href={dashHref(comment.creator, 'profile')}
+            name={comment.creator.name}
+            avatar={comment.creator.avatar}
+            detail={
+              <time dateTime={comment.createdAt}>
+                {formatDate(comment.createdAt, i18n.language)}
+              </time>
+            }
+          />
+          {doubanId && highlights > 0 ? (
+            <Link
+              href={bookHref(comment.creator, doubanId)}
+              aria-label={t('bookComments.readerBadgeLabel', {
+                count: highlights,
+                name: comment.creator.name,
+              })}
+              className="bg-marker text-lake-fg-muted hover:text-lake-fg focus-visible:ring-lake-ring inline-flex items-center gap-1.5 rounded-full py-0.5 pr-2.5 pl-2 text-xs font-medium transition-colors duration-150 outline-none focus-visible:ring-2"
+            >
+              <BookOpen className="size-3.5" aria-hidden="true" />
+              {t('bookComments.readerBadge', { count: highlights })}
+            </Link>
+          ) : null}
+        </div>
         {canDelete ? (
           <IconButton
             variant="ghost"

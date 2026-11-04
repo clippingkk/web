@@ -125,8 +125,9 @@ function BookClippings(props: BookClippingsProps) {
 
   return (
     <section aria-labelledby="book-highlights" className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 id="book-highlights" className="type-heading text-lake-fg">
+      <div className="flex flex-wrap items-center justify-end gap-3">
+        {/* the Highlights tab above names this section on screen */}
+        <h2 id="book-highlights" className="sr-only">
           {t('book.highlightsTitle')}
         </h2>
         <div className="flex flex-wrap items-center gap-2">

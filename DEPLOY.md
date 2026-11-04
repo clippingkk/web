@@ -81,10 +81,10 @@ pnpm db:preflight
 ```
 
 Migrations are not run automatically by the application container. Migration
-`0008` creates the PGroonga extension and search indexes; it needs a superuser
+`0009` creates the PGroonga extension and search indexes; it needs a superuser
 unless the database already has the extension, and it blocks writes to
 `clippings` while the index builds. For a large table, build the indexes
-concurrently first, as [`docs/database.md`](./docs/database.md#migration-0008)
+concurrently first, as [`docs/database.md`](./docs/database.md#migration-0009)
 describes. `pnpm db:preflight` fails while either is missing. For a
 legacy Go-backend cutover, follow the ordering and queue-drain instructions in
 [`docs/backend-migration.md`](./docs/backend-migration.md) instead.
