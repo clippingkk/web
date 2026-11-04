@@ -11,6 +11,7 @@ import { getDatabase } from '../db'
 import { clippings, externalAccounts, users } from '../db/schema'
 import { requireEnv } from '../env'
 import { getNotion } from '../integrations'
+import { outboundFetch } from '../outbound/url'
 import { cacheGet } from '../redis'
 import {
   AUDITING_EMAIL,
@@ -50,14 +51,15 @@ async function exportRows(uid: number) {
 async function exportToFlomo(endpoint: string, uid: number) {
   const rows = await exportRows(uid)
   for (const row of rows) {
-    const response = await fetch(endpoint, {
+    const response = await outboundFetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         content: `# ${row.title}\n\n${row.content}\n\n${row.pageAt}`,
       }),
     })
-    if (!response.ok) throw new Error(`Flomo returned ${response.status}`)
+    if (response.status < 200 || response.status >= 300)
+      throw new Error(`Flomo returned ${response.status}`)
   }
 }
 

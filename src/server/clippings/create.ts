@@ -10,6 +10,7 @@ import {
   webHooks,
   type Clipping,
 } from '../db/schema'
+import { outboundFetch } from '../outbound/url'
 import { cacheDelete } from '../redis'
 
 /**
@@ -104,14 +105,13 @@ async function webhookForClippings(userId: number, created: Clipping[]) {
   let responseHeaders = '{}'
   let errorMessage = ''
   try {
-    const response = await fetch(hook.hookUrl, {
+    const response = await outboundFetch(hook.hookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(created),
-      signal: AbortSignal.timeout(15_000),
     })
     status = response.status
-    responseBody = (await response.text()).slice(0, 64_000)
+    responseBody = response.body
     responseHeaders = JSON.stringify(Object.fromEntries(response.headers))
   } catch (error) {
     errorMessage = error instanceof Error ? error.message : String(error)
