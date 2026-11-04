@@ -1,6 +1,4 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
-
 import { PGlite } from '@electric-sql/pglite'
 import { eq } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/pglite'
@@ -48,6 +46,7 @@ import { highlightLanguage, sampleHighlights } from '../ai/book-highlights'
 import { cachedBookSummary } from '../ai/book-summary'
 import { buildPrompt } from '../ai/prompts'
 import { aiStreamResponse } from '../ai/routes'
+import { migratePglite } from '../db/__tests__/pglite'
 import * as schema from '../db/schema'
 
 const READER = 7
@@ -92,10 +91,8 @@ function promptOf() {
 }
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((file) => file.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  // PGlite cannot load PGroonga; the shared helper skips those statements.
+  await migratePglite(pg)
 }, 30_000)
 
 beforeEach(async () => {
