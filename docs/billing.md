@@ -62,7 +62,7 @@ REST errors now carry `code` (for example `PREMIUM_REQUIRED`, `ALREADY_PREMIUM`,
 
 ### Gate (per environment)
 
-1. **Premium plan.** Create an active plan with key `premium`, entitlements `{ "premium": true }` (a boolean), and the environment's Stripe price.
+1. **Premium plan.** Create an active plan with key `premium`, entitlements `{ "premium": true }` (a boolean), and the environment's Stripe price. The pricing page offers checkout only while that plan is active. There is no pause switch in this repo: a missing `GATE_API_KEY`, a failed plan list, or `active: false` all show "Premium purchases are paused." `GET /api/billing/diagnostics` (administrators) names which one it is, under `gate.config` and `gate.plan`.
 2. **Stripe connection.** Configure the environment's Stripe connection, and enable Stripe's customer portal.
 3. **Stripe webhook.** In Stripe, send these events to `https://<gate>/api/v1/webhooks/stripe/{environmentId}`:
    - `customer.subscription.created`

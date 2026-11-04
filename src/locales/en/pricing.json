@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "Pricing",
-    "description": "ClippingKK is free for everyday reading. Premium adds unlimited highlights, more AI, RSS, webhooks and developer tools."
+    "description": "ClippingKK is free for everyday reading, with unlimited highlights. Premium adds AI, webhooks and a longer RSS feed."
   },
   "eyebrow": "Pricing",
   "title": "A library that grows with your reading.",
-  "subtitle": "Start free and keep every highlight in one place. Upgrade when your shelves outgrow the free plan.",
+  "subtitle": "Start free and keep every highlight in one place. Upgrade for AI, webhooks and a longer public feed.",
   "badge": {
     "current": "Your plan",
     "recommended": "Recommended"
@@ -20,7 +20,7 @@
     },
     "premium": {
       "name": "Premium",
-      "description": "For readers with big libraries, and for those who build on them.",
+      "description": "For readers who want AI on their highlights, and for those who build on them.",
       "price": "Billed through Stripe · cancel anytime",
       "active": "Premium is active on your account.",
       "unavailable": "Premium purchases are paused right now. Please check back soon.",
@@ -29,17 +29,16 @@
   },
   "features": {
     "label": "What's included",
-    "freeStorage": "Up to 2,000 highlights",
-    "premiumStorage": "Unlimited highlights",
-    "freeAi": "Your first 10 AI requests",
-    "premiumAi": "1,000 AI requests every month",
+    "highlights": "Unlimited highlights",
     "books": "Unlimited books",
     "web": "Full library on the web",
     "widget": "iOS home-screen widget",
     "privacy": "Private highlights and secure storage",
-    "rss": "RSS feed of your highlights",
+    "rss": "Public RSS feed of your latest 30 highlights",
+    "rssExtended": "Public RSS feed of your latest 100 highlights",
+    "ai": "AI explanations of your highlights",
     "webhooks": "Webhooks for new highlights",
-    "cli": "Command-line uploads and GitHub Actions",
+    "mcp": "MCP access for AI assistants",
     "support": "Email support",
     "prioritySupport": "Priority email support"
   },

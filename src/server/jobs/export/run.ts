@@ -7,6 +7,7 @@ import { isValidDoubanId } from '@/services/wenqu'
 
 import { getResend } from '../../integrations'
 import { booksByDoubanIds } from '../../mcp/books'
+import { outboundFetch, OutboundUrlError } from '../../outbound/url'
 import {
   renderBookMarkdown,
   renderMailMarkdown,
@@ -95,8 +96,27 @@ export type ExportResult = {
 const sleep = (ms: number) =>
   new Promise<void>((resolve) => setTimeout(resolve, ms))
 
-function responseRetryAfter(response: Response, now: number) {
+function responseRetryAfter(
+  response: { headers: { get(name: string): string | null } },
+  now: number
+) {
   return retryAfterMs(response.headers.get('retry-after'), now)
+}
+
+/** Flomo's inbox URL is reader-supplied, so production posts go through the SSRF guard. */
+async function postFlomo(url: string, body: string, fetchImpl?: typeof fetch) {
+  if (fetchImpl) {
+    return fetchImpl(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+    })
+  }
+  return outboundFetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+  })
 }
 
 async function defaultSendMail(input: {
@@ -187,12 +207,9 @@ async function exportToFlomo(
   endpoint: string,
   uid: number,
   runtime: Required<
-    Pick<
-      ExportRuntime,
-      'batchSize' | 'flomoConcurrency' | 'sleep' | 'now' | 'fetch'
-    >
+    Pick<ExportRuntime, 'batchSize' | 'flomoConcurrency' | 'sleep' | 'now'>
   > &
-    Pick<ExportRuntime, 'checkpoint'>
+    Pick<ExportRuntime, 'checkpoint' | 'fetch'>
 ) {
   const url = assertFlomo(endpoint)
   const state: ExportCheckpoint = {
@@ -206,12 +223,8 @@ async function exportToFlomo(
   const post = async (row: HighlightRow) => {
     await withBackoff(
       async () => {
-        const response = await runtime.fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: flomoBody(row),
-        })
-        if (!response.ok) {
+        const response = await postFlomo(url, flomoBody(row), runtime.fetch)
+        if (response.status < 200 || response.status >= 300) {
           throw new FlomoHttpError(
             response.status,
             responseRetryAfter(response, runtime.now())
@@ -221,6 +234,7 @@ async function exportToFlomo(
       {
         sleep: runtime.sleep,
         isRetryable: (error) => {
+          if (error instanceof OutboundUrlError) return null
           if (!(error instanceof FlomoHttpError)) return {}
           if (!transientStatus(error.status)) return null
           return { retryAfterMs: error.retryAfterMs }
@@ -427,7 +441,7 @@ function resolved(runtime: ExportRuntime) {
     notionBlocksPerPage: runtime.notionBlocksPerPage ?? NOTION_BLOCKS_PER_PAGE,
     sleep: runtime.sleep ?? sleep,
     now: runtime.now ?? Date.now,
-    fetch: runtime.fetch ?? fetch,
+    fetch: runtime.fetch,
     checkpoint: runtime.checkpoint,
     sendMail: runtime.sendMail ?? defaultSendMail,
     openNotion: runtime.openNotion,

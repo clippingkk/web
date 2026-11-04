@@ -33,8 +33,8 @@ function ImportPanel({ libraryHref }: ImportPanelProps) {
   const { step, at, count, errors, result, failedStep, start, reset } =
     useClippingsImport()
   const [file, setFile] = useState<File | null>(null)
-  // Public is the default for every import; it isn't remembered.
-  const [visibility, setVisibility] = useState<ImportVisibility>('public')
+  // Private is the default. The choice isn't remembered between visits.
+  const [visibility, setVisibility] = useState<ImportVisibility>('private')
   const [dragging, setDragging] = useState(false)
 
   const pick = (candidate?: File | null) => {

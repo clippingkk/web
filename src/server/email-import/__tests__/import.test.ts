@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
+import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import { PGlite } from '@electric-sql/pglite'
@@ -35,6 +35,7 @@ vi.mock('../../integrations', () => ({
 vi.mock('@/services/wenqu', () => ({ wenquRequest }))
 
 import { getDatabase } from '../../db'
+import { migratePglite } from '../../db/__tests__/pglite'
 import * as schema from '../../db/schema'
 import { resetServerEnvForTests } from '../../env'
 import type { EmailImportJob } from '../../jobs/queues'
@@ -126,10 +127,7 @@ const records = () =>
   db.select().from(schema.inboundEmails).orderBy(asc(schema.inboundEmails.id))
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((n) => n.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(pg)
   sample = await readFile(
     join(__dirname, '__fixtures__', 'notebook.html'),
     'utf8'

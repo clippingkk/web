@@ -1,5 +1,4 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
 
 import { PGlite } from '@electric-sql/pglite'
 import { eq } from 'drizzle-orm'
@@ -18,6 +17,7 @@ vi.mock('../../redis', () => ({ rateLimit }))
 vi.mock('../../integrations', () => ({ sendEmailBindingCode }))
 
 import { getDatabase } from '../../db'
+import { migratePglite } from '../../db/__tests__/pglite'
 import * as schema from '../../db/schema'
 import {
   findVerifiedBinding,
@@ -48,10 +48,7 @@ async function bind(userId: number, email: string) {
 }
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((n) => n.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(pg)
 }, 30000)
 
 beforeEach(async () => {

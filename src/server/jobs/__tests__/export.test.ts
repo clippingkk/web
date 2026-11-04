@@ -1,6 +1,4 @@
 // @vitest-environment node
-import { readFile, readdir } from 'node:fs/promises'
-
 import { PGlite } from '@electric-sql/pglite'
 import { APIErrorCode, APIResponseError, type Client } from '@notionhq/client'
 import type { Job } from 'bullmq'
@@ -8,13 +6,23 @@ import { drizzle } from 'drizzle-orm/pglite'
 
 import { resetServerEnvForTests } from '@/server/env'
 
-const bull = vi.hoisted(() => ({
-  queues: [] as { name: string; jobs: { name: string; data: unknown }[] }[],
-  workers: [] as {
-    name: string
-    concurrency?: number
-    closed: Array<() => void>
-  }[],
+import { migratePglite } from '../../db/__tests__/pglite'
+
+const { outboundFetch, bull } = vi.hoisted(() => ({
+  outboundFetch: vi.fn(),
+  bull: {
+    queues: [] as { name: string; jobs: { name: string; data: unknown }[] }[],
+    workers: [] as {
+      name: string
+      concurrency?: number
+      closed: Array<() => void>
+    }[],
+  },
+}))
+
+vi.mock('../../outbound/url', () => ({
+  outboundFetch,
+  OutboundUrlError: class OutboundUrlError extends Error {},
 }))
 
 vi.mock('bullmq', () => ({
@@ -203,10 +211,7 @@ function exportJob(data: unknown) {
 }
 
 beforeAll(async () => {
-  for (const name of (await readdir('drizzle'))
-    .filter((entry) => entry.endsWith('.sql'))
-    .sort())
-    await pg.exec(await readFile(`drizzle/${name}`, 'utf8'))
+  await migratePglite(pg)
 }, 30_000)
 
 beforeEach(async () => {
@@ -651,16 +656,26 @@ describe('worker exports', () => {
         createdAt: '2026-01-01T00:00:00.000Z',
       },
     ])
-    const fetchMock = vi
-      .spyOn(globalThis, 'fetch')
-      .mockResolvedValue(new Response('ok', { status: 200 }))
+    outboundFetch.mockResolvedValue({
+      status: 200,
+      headers: new Headers(),
+      body: 'ok',
+      url: 'https://flomoapp.com/iwh/test',
+    })
     const job = exportJob({
       destination: 'flomo',
       args: 'https://flomoapp.com/iwh/test',
       uid: 1,
     })
     await expect(processJob(job)).resolves.toEqual({ highlights: 1, books: 1 })
-    expect(fetchMock).toHaveBeenCalledOnce()
+    expect(outboundFetch).toHaveBeenCalledOnce()
+    expect(outboundFetch).toHaveBeenCalledWith(
+      'https://flomoapp.com/iwh/test',
+      expect.objectContaining({
+        method: 'POST',
+        body: expect.stringContaining('# A'),
+      })
+    )
     expect(job.progress).toMatchObject({ flomo: { id: 1 } })
   })
 

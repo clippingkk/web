@@ -9,11 +9,9 @@ import {
   eq,
   getTableColumns,
   gte,
-  ilike,
   inArray,
   isNull,
   lt,
-  or,
   sql,
 } from 'drizzle-orm'
 
@@ -43,7 +41,6 @@ import {
   activeClipping,
   booksForUser,
   clippingVisibleTo,
-  containsPattern,
   legacyPage,
   page,
   sourceFromEnum,
@@ -70,6 +67,7 @@ import {
   type Reaction,
   type User,
 } from '../db/schema'
+import { clippingMatches, userMatches } from '../db/search'
 import { getServerEnv } from '../env'
 import { ApiError, assertFound } from '../errors'
 import { canAdmin } from '../gate/authz'
@@ -83,6 +81,7 @@ import {
   verifyWeb3Signature,
   verifyAppleIdentityToken,
 } from '../integrations'
+import { assertOutboundUrl, OutboundUrlError } from '../outbound/url'
 import {
   cacheDelete,
   cacheGet,
@@ -114,6 +113,15 @@ const activeComment = and(
 function requiredUser(context: GraphQLContext) {
   if (!context.userId) throw new ApiError('Unauthorized', 401, 'UNAUTHORIZED')
   return context.userId
+}
+
+function rethrowOutbound(error: unknown, invalidMessage: string): never {
+  if (
+    error instanceof OutboundUrlError &&
+    error.message !== 'URL host could not be resolved'
+  )
+    throw new ApiError(invalidMessage)
+  throw error instanceof OutboundUrlError ? new ApiError(error.message) : error
 }
 
 function date(value?: Date | string | null) {
@@ -598,19 +606,14 @@ export const resolvers: Record<string, Record<string, any>> = {
     },
     search: async (_: unknown, args: Args, context: GraphQLContext) => {
       const scopeUser = args.scope === 'Me' ? requiredUser(context) : 0
-      const q = containsPattern(args.query)
+      const query = String(args.query)
       const foundUsers =
         args.type === 'BookName'
           ? []
           : await db()
               .select()
               .from(users)
-              .where(
-                and(
-                  activeUser,
-                  or(ilike(users.name, q), ilike(users.domain, q))
-                )
-              )
+              .where(and(activeUser, userMatches(query)))
               .limit(10)
       const foundClippings =
         args.type === 'User'
@@ -624,7 +627,7 @@ export const resolvers: Record<string, Record<string, any>> = {
                   scopeUser
                     ? eq(clippings.createdBy, scopeUser)
                     : eq(clippings.visible, true),
-                  or(ilike(clippings.title, q), ilike(clippings.content, q))
+                  clippingMatches(query)
                 )
               )
               .limit(10)
@@ -1129,6 +1132,14 @@ export const resolvers: Record<string, Record<string, any>> = {
     },
     exportData: async (_: unknown, args: Args, context: GraphQLContext) => {
       const uid = requiredUser(context)
+      let exportArgs = String(args.args ?? '')
+      if (String(args.destination) === 'flomo') {
+        try {
+          exportArgs = (await assertOutboundUrl(exportArgs)).url.href
+        } catch (error) {
+          rethrowOutbound(error, 'Flomo endpoint must be a public https URL')
+        }
+      }
       const key = `admin:export:id:${uid}`
       if (await cacheGet(key))
         throw new ApiError(
@@ -1139,7 +1150,7 @@ export const resolvers: Record<string, Record<string, any>> = {
       const { enqueueExport } = await import('../jobs/queues')
       await enqueueExport({
         destination: args.destination,
-        args: args.args,
+        args: exportArgs,
         uid,
       })
       return true
@@ -1189,20 +1200,18 @@ export const resolvers: Record<string, Record<string, any>> = {
     createWebHook: async (_: unknown, args: Args, context: GraphQLContext) => {
       const owner = requiredUser(context)
       await requirePremium(owner)
-      let parsed: URL
+      let hookUrl: string
       try {
-        parsed = new URL(args.hookUrl)
-      } catch {
-        throw new ApiError('invalid hook URL')
+        hookUrl = (await assertOutboundUrl(String(args.hookUrl ?? ''))).url.href
+      } catch (error) {
+        rethrowOutbound(error, 'invalid hook URL')
       }
-      if (!['http:', 'https:'].includes(parsed.protocol))
-        throw new ApiError('invalid hook URL')
       const [hook] = await db()
         .insert(webHooks)
-        .values({ owner, step: 0, hookUrl: parsed.toString() })
+        .values({ owner, step: 0, hookUrl })
         .onConflictDoUpdate({
           target: [webHooks.owner, webHooks.step],
-          set: { hookUrl: parsed.toString() },
+          set: { hookUrl },
         })
         .returning()
       return hook

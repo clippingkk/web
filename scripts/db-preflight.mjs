@@ -63,6 +63,22 @@ try {
       `Database is missing required columns: ${missing.join(', ')}`
     )
 
+  // Search runs on PGroonga (docs/database.md); migration 0009 creates the
+  // extension and its indexes, so their absence means it has not run.
+  const search = await pool.query(`
+    select current_setting('server_version') as server,
+      (select extversion from pg_extension where extname = 'pgroonga') as pgroonga,
+      array(select indexname::text from pg_indexes
+             where schemaname = current_schema()
+               and indexname in ('clippings_search_pgroonga', 'users_search_pgroonga')
+             order by indexname) as indexes
+  `)
+  const { server, pgroonga, indexes } = search.rows[0]
+  if (!pgroonga || indexes.length !== 2)
+    throw new Error(
+      `PGroonga search is not set up (extension ${pgroonga ?? 'missing'}, indexes: ${indexes.join(', ') || 'none'}); run pnpm db:migrate`
+    )
+
   const invariants = await pool.query(`
     select
       (select count(*) from users) as users,
@@ -70,7 +86,7 @@ try {
       (select count(*) from comments) as comments,
       (select count(*) from orders) as orders
   `)
-  console.log('PostgreSQL OK', invariants.rows[0])
+  console.log('PostgreSQL OK', { server, pgroonga, ...invariants.rows[0] })
 } finally {
   await pool.end()
 }

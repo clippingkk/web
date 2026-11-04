@@ -64,6 +64,13 @@
       "when": 1793754286474,
       "tag": "0008_book_comments",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1793756513529,
+      "tag": "0009_pgroonga_search",
+      "breakpoints": true
     }
   ]
 }

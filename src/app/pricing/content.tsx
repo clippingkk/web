@@ -15,28 +15,7 @@ import type { BillingProvider } from '@/server/billing/state'
 import type { Viewer } from '@/server/data/viewer'
 import { dashHref } from '@/utils/profile.utils'
 
-const FREE_FEATURES = [
-  'freeStorage',
-  'freeAi',
-  'books',
-  'web',
-  'widget',
-  'privacy',
-  'support',
-] as const
-
-const PREMIUM_FEATURES = [
-  'premiumStorage',
-  'premiumAi',
-  'books',
-  'web',
-  'widget',
-  'privacy',
-  'rss',
-  'webhooks',
-  'cli',
-  'prioritySupport',
-] as const
+import { FREE_FEATURES, PREMIUM_FEATURES } from './features'
 
 type PricingContentProps = {
   viewer: Viewer | null

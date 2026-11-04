@@ -6,6 +6,7 @@ import { getDatabase } from '@/server/db'
 import { clippings, users } from '@/server/db/schema'
 import { getServerEnv } from '@/server/env'
 import { ApiError } from '@/server/errors'
+import { RSS_FEED_LIMIT } from '@/server/rss/limits'
 
 function escapeXml(value: string) {
   return value
@@ -31,7 +32,7 @@ export async function GET(
   // A feed reader polls unattended: during a Gate outage serve the free-size
   // feed rather than an error.
   const premium = await isPremium(uid).catch(() => false)
-  const limit = premium ? 100 : 30
+  const limit = premium ? RSS_FEED_LIMIT.premium : RSS_FEED_LIMIT.free
   const rows = await getDatabase()
     .db.select()
     .from(clippings)
