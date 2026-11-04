@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import type { Route } from 'next'
 import { describe, expect, it, vi } from 'vitest'
 
 import { UploadStep } from '@/services/uploader'
@@ -26,7 +27,7 @@ vi.mock('@/hooks/use-clippings-import', () => ({
 
 describe('ImportPanel', () => {
   it('defaults visibility to Only me', () => {
-    render(<ImportPanel libraryHref="/dash/1/home" />)
+    render(<ImportPanel libraryHref={'/dash/1/home' as Route} />)
 
     expect(
       screen
