@@ -97,6 +97,26 @@ export const comments = pgTable('comments', {
   deletedAt: timestamp('deleted_at', { withTimezone: true }),
 })
 
+// One discussion per book, shared by every reader's page for it. `bookId` is
+// the Douban id, the same value as `clippings.book_id`. See
+// docs/book-comments.md.
+export const bookComments = pgTable(
+  'book_comments',
+  {
+    id: id(),
+    bookId: varchar('book_id', { length: 255 }).notNull(),
+    createdBy: int('created_by').notNull(),
+    content: text('content').notNull(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => [
+    index('book_comments_book_id_id_idx').on(table.bookId, table.id),
+    index('book_comments_created_by_idx').on(table.createdBy),
+  ]
+)
+
 export const devices = pgTable('devices', {
   id: id(),
   deviceId: varchar('device_id', { length: 255 }).notNull(),
@@ -284,6 +304,7 @@ export const webHookRecords = pgTable('web_hook_records', {
 export type User = typeof users.$inferSelect
 export type Clipping = typeof clippings.$inferSelect
 export type Comment = typeof comments.$inferSelect
+export type BookComment = typeof bookComments.$inferSelect
 export type Noun = typeof nouns.$inferSelect
 export type Reaction = typeof reactions.$inferSelect
 

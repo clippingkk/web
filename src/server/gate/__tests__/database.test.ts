@@ -34,7 +34,7 @@ beforeAll(async () => {
 }, 30000)
 beforeEach(async () => {
   await pg.exec(
-    'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions, apple_subscriptions, mcp_tokens, email_bindings, reader_notes, inbound_emails RESTART IDENTITY'
+    'TRUNCATE users, clippings, collections, comments, devices, external_accounts, nfts, nouns, orders, reactions, user_connects, web3_addresses, web_hooks, web_hook_records, account_deletions, apple_subscriptions, mcp_tokens, email_bindings, reader_notes, inbound_emails, book_comments RESTART IDENTITY'
   )
   upstream.request.mockReset()
   upstream.request.mockResolvedValue({ removed: true })
@@ -115,6 +115,10 @@ it('durably disables access, retries upstream failure, removes dependent data an
   await db
     .insert(schema.comments)
     .values({ belongsTo: clip.id, createdBy: other.id, content: 'Comment' })
+  await db.insert(schema.bookComments).values([
+    { bookId: '6082808', createdBy: user.id, content: 'Mine' },
+    { bookId: '6082808', createdBy: other.id, content: 'Theirs' },
+  ])
   await db.insert(schema.appleSubscriptions).values({
     originalTransactionId: '2000000000000001',
     userId: user.id,
@@ -185,6 +189,9 @@ it('durably disables access, retries upstream failure, removes dependent data an
   expect(await db.select().from(schema.appleSubscriptions)).toHaveLength(0)
   expect(await db.select().from(schema.emailBindings)).toHaveLength(0)
   expect(await db.select().from(schema.readerNotes)).toHaveLength(0)
+  expect(
+    (await db.select().from(schema.bookComments)).map((row) => row.content)
+  ).toEqual(['Theirs'])
   expect(
     (await db.select().from(schema.inboundEmails)).map((row) => row.emailId)
   ).toEqual(['claimed', 'stranger', 'theirs'])

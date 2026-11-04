@@ -19,7 +19,7 @@ async function CommentsSection(props: CommentsSectionProps) {
   })
   return (
     <CommentThread
-      clippingId={clippingId}
+      target={{ kind: 'clipping', clippingId }}
       bookTitle={bookTitle}
       initialItems={data.getCommentList.items}
       initialCount={data.getCommentList.count}

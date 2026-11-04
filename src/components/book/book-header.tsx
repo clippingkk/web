@@ -1,5 +1,6 @@
 import { buttonStyles } from '@annatarhe/lake-ui/button'
 import { ExternalLink } from 'lucide-react'
+import type React from 'react'
 
 import UserChip from '@/components/user/user-chip'
 import { getTranslation } from '@/i18n'
@@ -26,6 +27,8 @@ type BookHeaderProps = {
   clippingsCount: number
   startReadingAt?: string | null
   lastReadingAt?: string | null
+  /** More facts for the meta line, e.g. a link to the discussion. */
+  extraMeta?: React.ReactNode
 }
 
 async function BookHeader(props: BookHeaderProps) {
@@ -37,6 +40,7 @@ async function BookHeader(props: BookHeaderProps) {
     clippingsCount,
     startReadingAt,
     lastReadingAt,
+    extraMeta,
   } = props
   const [{ t, i18n }, { t: tc }] = await Promise.all([
     getTranslation(undefined, 'library'),
@@ -82,6 +86,7 @@ async function BookHeader(props: BookHeaderProps) {
             {from && to ? (
               <span>{t('book.readSpan', { from, to })}</span>
             ) : null}
+            {extraMeta ? <span>{extraMeta}</span> : null}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

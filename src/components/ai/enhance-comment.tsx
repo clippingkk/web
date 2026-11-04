@@ -14,7 +14,8 @@ import { useTranslation } from '@/i18n/client'
 
 type AICommentEnhancerProps = {
   bookName?: string
-  clippingId: number
+  /** The highlight being discussed; absent for a comment on a whole book. */
+  clippingId?: number
   comment: string
   onAccept: (nextComment: string) => void
 }

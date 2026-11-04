@@ -3,38 +3,51 @@
 import { useApolloClient } from '@apollo/client/react'
 import { useCallback, useState } from 'react'
 
-import { GetCommentListDocument } from '@/gql/graphql'
+import { BookCommentsDocument, GetCommentListDocument } from '@/gql/graphql'
 
 import type { CommentItemData } from './comment-item'
 
 type UseCommentPagesOptions = {
   /** Comments on one clipping… */
   cid?: number
-  /** …or everything one reader has written. */
+  /** …everything one reader has written… */
   uid?: number
+  /** …or one book's discussion. */
+  doubanId?: string
   initialItems: CommentItemData[]
   initialCount: number
   pageSize: number
 }
 
-/** Cursor paging over getCommentList, shared by every comment list. */
+/** Cursor paging over getCommentList or bookComments, shared by every comment list. */
 export function useCommentPages(options: UseCommentPagesOptions) {
-  const { cid, uid, initialItems, initialCount, pageSize } = options
+  const { cid, uid, doubanId, initialItems, initialCount, pageSize } = options
   const client = useApolloClient()
   const [items, setItems] = useState(initialItems)
   const [count, setCount] = useState(initialCount)
   const [loading, setLoading] = useState(false)
 
   const fetchPage = useCallback(
-    async (lastId?: number) => {
+    async (
+      lastId?: number
+    ): Promise<{ items: CommentItemData[]; count: number } | undefined> => {
+      const pagination = { limit: pageSize, lastId }
+      if (doubanId) {
+        const { data } = await client.query({
+          query: BookCommentsDocument,
+          variables: { doubanId, pagination },
+          fetchPolicy: 'network-only',
+        })
+        return data?.bookComments
+      }
       const { data } = await client.query({
         query: GetCommentListDocument,
-        variables: { cid, uid, pagination: { limit: pageSize, lastId } },
+        variables: { cid, uid, pagination },
         fetchPolicy: 'network-only',
       })
       return data?.getCommentList
     },
-    [client, cid, uid, pageSize]
+    [client, cid, uid, doubanId, pageSize]
   )
 
   const reload = useCallback(async () => {

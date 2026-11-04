@@ -1,0 +1,17 @@
+query bookComments($doubanId: String!, $pagination: Pagination) {
+  bookComments(doubanId: $doubanId, pagination: $pagination) {
+    count
+    items {
+      id
+      content
+      createdAt
+      creatorClippingsCount
+      creator {
+        id
+        name
+        avatar
+        domain
+      }
+    }
+  }
+}
