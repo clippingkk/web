@@ -24,7 +24,14 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-/** A Gate outage shows "purchases are paused" instead of failing the page. */
+/**
+ * Checkout is offered only when Gate lists an active plan with key `premium`.
+ * There is no pause flag in this repo. This is false when `GATE_API_KEY` is
+ * unset, when listing plans fails (a Gate outage shows the paused copy
+ * instead of failing the page), or when that plan is missing or inactive.
+ * Turn purchases back on by activating the plan in Gate. Administrators can
+ * see which of those it is at `GET /api/billing/diagnostics`.
+ */
 async function isPremiumAvailable() {
   // Plans are live data, and Gate config needs the server env, which a build
   // doesn't have: never prerender this.
