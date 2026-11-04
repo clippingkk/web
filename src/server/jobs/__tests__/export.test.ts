@@ -75,7 +75,7 @@ import {
   type CheckpointStore,
   type ExportCheckpoint,
 } from '../export/run'
-import { readZip } from '../export/zip'
+import { readZip, zipFiles } from '../export/zip'
 import {
   EXPORT_QUEUE_NAME,
   JOB_QUEUE_NAME,
@@ -243,6 +243,28 @@ async function insertHighlights(
     }))
   )
 }
+
+describe('vault zip', () => {
+  test('declares entry names as UTF-8 so CJK titles survive unzip', () => {
+    const archive = zipFiles([
+      { name: 'clippingkk/三体.md', data: 'highlight' },
+    ])
+    expect(archive.readUInt16LE(6)).toBe(0x0800)
+    let centralFlags: number | undefined
+    let offset = 0
+    while (offset + 4 <= archive.length) {
+      if (archive.readUInt32LE(offset) === 0x02014b50) {
+        centralFlags = archive.readUInt16LE(offset + 8)
+        break
+      }
+      offset += 1
+    }
+    expect(centralFlags).toBe(0x0800)
+    expect(readZip(archive).map((entry) => entry.name)).toEqual([
+      'clippingkk/三体.md',
+    ])
+  })
+})
 
 describe('highlight cursor', () => {
   test('pages through one reader and skips deleted rows and other readers', async () => {

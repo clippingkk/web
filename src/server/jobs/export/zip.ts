@@ -6,6 +6,12 @@ export type ZipEntry = {
 }
 
 /**
+ * APPNOTE general-purpose bit 11. Entry names are UTF-8. Without it,
+ * extractors treat names as CP437 and CJK book titles are garbled.
+ */
+const UTF8_NAME_FLAG = 0x0800
+
+/**
  * A deflated ZIP of the given files. Paths are stored as given, so callers
  * pass vault-relative names such as `clippingkk/Title.md`.
  */
@@ -24,7 +30,7 @@ export function zipFiles(
     const local = Buffer.alloc(30)
     local.writeUInt32LE(0x04034b50, 0)
     local.writeUInt16LE(20, 4)
-    local.writeUInt16LE(0, 6)
+    local.writeUInt16LE(UTF8_NAME_FLAG, 6)
     local.writeUInt16LE(8, 8)
     local.writeUInt16LE(0, 10)
     local.writeUInt16LE(0, 12)
@@ -40,7 +46,7 @@ export function zipFiles(
     central.writeUInt32LE(0x02014b50, 0)
     central.writeUInt16LE(20, 4)
     central.writeUInt16LE(20, 6)
-    central.writeUInt16LE(0, 8)
+    central.writeUInt16LE(UTF8_NAME_FLAG, 8)
     central.writeUInt16LE(8, 10)
     central.writeUInt16LE(0, 12)
     central.writeUInt16LE(0, 14)
