@@ -2,20 +2,16 @@ import { metrics, trace } from '@opentelemetry/api'
 import { logs, SeverityNumber } from '@opentelemetry/api-logs'
 import { withSpan } from '@superlog/otel-helpers'
 import { Worker, type Job } from 'bullmq'
-import { and, asc, eq, isNull, sql } from 'drizzle-orm'
-import { Resend } from 'resend'
-
-import { MAIL_FROM } from '@/constants/config'
+import { and, eq, isNull, sql } from 'drizzle-orm'
 
 import { getDatabase } from '../db'
-import { clippings, externalAccounts, users } from '../db/schema'
-import { requireEnv } from '../env'
-import { getNotion } from '../integrations'
-import { outboundFetch } from '../outbound/url'
+import { externalAccounts, users } from '../db/schema'
 import { cacheGet } from '../redis'
+import { runExport, type ExportCheckpoint } from './export/run'
 import {
   AUDITING_EMAIL,
   EMAIL_IMPORT_ATTEMPTS,
+  EXPORT_QUEUE_NAME,
   JOB_QUEUE_NAME,
   pendingAccountRemovalKey,
   queueConnection,
@@ -34,98 +30,24 @@ const jobDuration = meter.createHistogram('app.jobs.duration', {
   unit: 'ms',
 })
 
-async function exportRows(uid: number) {
-  return getDatabase()
-    .db.select({
-      title: clippings.title,
-      content: clippings.content,
-      pageAt: clippings.pageAt,
-      bookId: clippings.bookId,
-      createdAt: clippings.createdAt,
-    })
-    .from(clippings)
-    .where(and(eq(clippings.createdBy, uid), isNull(clippings.deletedAt)))
-    .orderBy(asc(clippings.createdAt))
-}
-
-async function exportToFlomo(endpoint: string, uid: number) {
-  const rows = await exportRows(uid)
-  for (const row of rows) {
-    const response = await outboundFetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        content: `# ${row.title}\n\n${row.content}\n\n${row.pageAt}`,
-      }),
-    })
-    if (response.status < 200 || response.status >= 300)
-      throw new Error(`Flomo returned ${response.status}`)
+function exportCheckpoint(job: Job) {
+  return {
+    async read(): Promise<ExportCheckpoint | null> {
+      const progress = job.progress
+      if (!progress || typeof progress !== 'object') return null
+      return progress as ExportCheckpoint
+    },
+    async write(value: ExportCheckpoint) {
+      await job.updateProgress(value)
+    },
   }
-}
-
-async function exportToNotion(value: string, uid: number) {
-  const [token, pageId] = value.split('|').map((item) => item.trim())
-  if (!token || !pageId)
-    throw new Error('Notion args must be "token | page id"')
-  const notion = getNotion(token)
-  const rows = await exportRows(uid)
-  for (const row of rows) {
-    await notion.blocks.children.append({
-      block_id: pageId,
-      children: [
-        {
-          object: 'block',
-          type: 'heading_2',
-          heading_2: {
-            rich_text: [
-              { type: 'text', text: { content: row.title.slice(0, 2_000) } },
-            ],
-          },
-        },
-        {
-          object: 'block',
-          type: 'quote',
-          quote: {
-            rich_text: [
-              { type: 'text', text: { content: row.content.slice(0, 2_000) } },
-            ],
-          },
-        },
-      ],
-    })
-  }
-}
-
-async function exportToMail(email: string, uid: number) {
-  const rows = await exportRows(uid)
-  const payload = rows
-    .map((row) => `# ${row.title}\n\n${row.content}\n\n${row.pageAt}\n`)
-    .join('\n---\n\n')
-  const resend = new Resend(requireEnv('RESEND_API_KEY'))
-  const result = await resend.emails.send({
-    from: MAIL_FROM,
-    to: email,
-    subject: 'Your ClippingKK export',
-    html: '<p>Your ClippingKK export is attached.</p>',
-    attachments: [
-      { filename: 'clippingkk-export.md', content: Buffer.from(payload) },
-    ],
-  })
-  if (result.error) throw new Error(result.error.message)
 }
 
 async function handleJob(job: Job) {
   if (job.name === 'export-data') {
-    const payload = job.data as ExportJob
-    if (payload.destination === 'flomo')
-      return exportToFlomo(payload.args, payload.uid)
-    if (payload.destination === 'notion')
-      return exportToNotion(payload.args, payload.uid)
-    if (payload.destination === 'mail')
-      return exportToMail(payload.args, payload.uid)
-    throw new Error(
-      `Unsupported export destination: ${String(payload.destination)}`
-    )
+    return runExport(job.data as ExportJob, {
+      checkpoint: exportCheckpoint(job),
+    })
   }
 
   if (job.name === 'import-email') {
@@ -206,7 +128,7 @@ async function handleJob(job: Job) {
   throw new Error(`Unknown job: ${job.name}`)
 }
 
-async function processJob(job: Job) {
+export async function processJob(job: Job) {
   const operation = `job.${job.name}`
   return withSpan(
     operation,
@@ -252,13 +174,19 @@ async function processJob(job: Job) {
 
 const globalForWorker = globalThis as typeof globalThis & {
   clippingkkWorker?: Worker
+  clippingkkExportWorker?: Worker
 }
 
-export function startWorker() {
-  if (globalForWorker.clippingkkWorker) return globalForWorker.clippingkkWorker
-  const worker = new Worker(JOB_QUEUE_NAME, processJob, {
+function listen(
+  name: string,
+  concurrency: number,
+  holder: 'clippingkkWorker' | 'clippingkkExportWorker'
+) {
+  const existing = globalForWorker[holder]
+  if (existing) return existing
+  const worker = new Worker(name, processJob, {
     connection: queueConnection(),
-    concurrency: Number.parseInt(process.env.WORKER_CONCURRENCY ?? '1', 10),
+    concurrency,
   })
   // Every web process runs the worker, so a Redis outage must only be logged.
   worker.on('error', (error) =>
@@ -266,9 +194,26 @@ export function startWorker() {
       severityNumber: SeverityNumber.ERROR,
       severityText: 'ERROR',
       body: 'Background worker error',
-      attributes: { 'error.message': error.message },
+      attributes: { 'queue.name': name, 'error.message': error.message },
     })
   )
+  globalForWorker[holder] = worker
+  return worker
+}
+
+export function startWorker() {
+  const alreadyStarted = Boolean(globalForWorker.clippingkkWorker)
+  const worker = listen(
+    JOB_QUEUE_NAME,
+    Number.parseInt(process.env.WORKER_CONCURRENCY ?? '1', 10),
+    'clippingkkWorker'
+  )
+  listen(
+    EXPORT_QUEUE_NAME,
+    Number.parseInt(process.env.EXPORT_WORKER_CONCURRENCY ?? '2', 10),
+    'clippingkkExportWorker'
+  )
+  if (alreadyStarted) return worker
   let deleting = false
   const deletionTimer = setInterval(async () => {
     if (deleting) return
@@ -292,6 +237,5 @@ export function startWorker() {
   }, 15000)
   deletionTimer.unref()
   worker.on('closed', () => clearInterval(deletionTimer))
-  globalForWorker.clippingkkWorker = worker
   return worker
 }

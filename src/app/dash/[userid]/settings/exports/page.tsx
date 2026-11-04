@@ -8,6 +8,7 @@ import { requireViewer } from '@/server/data/viewer'
 import ExportToFlomo from './export.flomo'
 import ExportToMail from './export.mail'
 import ExportToNotion from './export.notion'
+import ExportToObsidian from './export.obsidian'
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTranslation(undefined, 'settings')
@@ -24,10 +25,11 @@ async function ExportsPage() {
       title={t('exports.title')}
       description={t('exports.description')}
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <ExportToFlomo />
         <ExportToNotion />
         <ExportToMail email={viewer.email ?? ''} />
+        <ExportToObsidian email={viewer.email ?? ''} />
       </div>
     </SettingsSection>
   )
