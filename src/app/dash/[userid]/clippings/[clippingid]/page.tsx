@@ -3,13 +3,14 @@ import Button from '@annatarhe/lake-ui/button'
 import Skeleton from '@annatarhe/lake-ui/skeleton'
 import { ArrowLeft, ArrowRight, Lock } from 'lucide-react'
 import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
 import BookCover from '@/components/book/book-cover'
-import AISummaryPanel from '@/components/clipping/ai-summary-panel'
 import ClippingActions from '@/components/clipping/clipping-actions'
 import { splitClippingLines } from '@/components/clipping/clipping-text'
+import PassageNotePanel from '@/components/clipping/passage-note-panel'
 import {
   getSiblingLinks,
   parseChannel,
@@ -18,8 +19,10 @@ import Page from '@/components/layout/page'
 import ReactionBar from '@/components/reaction/reaction-bar'
 import UserChip from '@/components/user/user-chip'
 import { checkIsPremium } from '@/compute/user'
+import { STORAGE_LANG_KEY } from '@/constants/storage'
 import { getTranslation } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
+import { cachedPassageNote } from '@/server/ai/passage-note'
 import { getViewer } from '@/server/data/viewer'
 import { isValidDoubanId } from '@/services/wenqu'
 import { formatDate } from '@/utils/format-date'
@@ -88,6 +91,14 @@ async function ClippingPage(props: PageProps) {
     clipping.nextClipping
   )
   const access = !viewer ? 'anonymous' : viewer.isPremium ? 'premium' : 'free'
+  const initialNote =
+    viewer?.isPremium && clipping.content
+      ? await cachedPassageNote(
+          viewer.id,
+          { id: clipping.id, content: clipping.content },
+          (await cookies()).get(STORAGE_LANG_KEY)?.value
+        )
+      : null
 
   return (
     <Page width="wide">
@@ -224,10 +235,10 @@ async function ClippingPage(props: PageProps) {
               </span>
             </Link>
           ) : null}
-          <AISummaryPanel
+          <PassageNotePanel
             clippingId={clipping.id}
-            book={book}
             access={access}
+            initial={initialNote}
           />
         </aside>
       </div>

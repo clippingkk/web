@@ -19,28 +19,23 @@ import {
   SimpleSpanProcessor,
 } from '@opentelemetry/sdk-trace-base'
 
+import { fakeAdapter, providerError, reply } from './fake-ai-adapter'
+
 const state = vi.hoisted(() => ({
   phase: 0,
-  cache: new Map<string, { fingerprint: string; text: string }>(),
+  cache: new Map<string, unknown>(),
+  createAdapter: vi.fn(),
 }))
 vi.mock('../env', () => ({
   getServerEnv: () => ({ OPENAI_API_KEY: 'test', OPENAI_MODEL: 'test-model' }),
 }))
 vi.mock('@tanstack/ai-openai', () => ({
   OPENAI_CHAT_MODELS: ['test-model'],
-  createOpenaiChat: vi.fn(),
+  createOpenaiChat: state.createAdapter,
 }))
-vi.mock('@tanstack/ai', async (original) => ({
-  ...(await original<typeof import('@tanstack/ai')>()),
-  chat: async function* () {
-    yield { type: 'TEXT_MESSAGE_CONTENT', messageId: 'm', delta: 'hello' }
-    yield {
-      type: 'RUN_FINISHED',
-      threadId: 't',
-      runId: 'r',
-      usage: [{ inputTokens: 4, outputTokens: 2 }],
-    }
-  },
+vi.mock('@/services/wenqu', async (original) => ({
+  ...(await original<typeof import('@/services/wenqu')>()),
+  wenquRequest: async () => ({ books: [] }),
 }))
 vi.mock('../db', () => ({
   getDatabase: () => ({
@@ -53,16 +48,18 @@ vi.mock('../db', () => ({
               const rows = [
                 {
                   id: 1,
+                  title: 'Walden',
                   content: 'private highlight text that must not leak',
                 },
                 {
                   id: 2,
+                  title: 'Walden',
                   content: 'second private highlight about the same book',
                 },
               ]
               return state.phase % 2 === 1
                 ? rows.map(({ id }) => ({ id }))
-                : rows.map(({ content }) => ({ content }))
+                : rows
             },
           }),
         }),
@@ -72,15 +69,18 @@ vi.mock('../db', () => ({
 }))
 vi.mock('../redis', () => ({
   cacheGet: async (key: string) => state.cache.get(key),
-  cacheSet: async (
-    key: string,
-    value: { fingerprint: string; text: string }
-  ) => {
+  cacheSet: async (key: string, value: unknown) => {
     state.cache.set(key, value)
   },
 }))
 
-test('generation exports real OTLP spans, metrics, and correlated logs without prompt content', async () => {
+const SUMMARY = {
+  thesis: 'private model reply that must not leak',
+  themes: [{ title: 'A theme', insight: 'An insight.', highlightRef: 1 }],
+  question: 'A question?',
+}
+
+test('generation exports real OTLP spans, metrics, and correlated logs without reader text', async () => {
   const received: Record<string, string[]> = {}
   const server = createServer(async (request, response) => {
     const chunks = []
@@ -122,31 +122,42 @@ test('generation exports real OTLP spans, metrics, and correlated logs without p
   metrics.setGlobalMeterProvider(metering)
   logs.setGlobalLoggerProvider(logging)
   try {
+    const { streamBookSummary } = await import('../ai/book-summary')
     const { generateAIText } = await import('../ai/generate')
+    const { readingPortraitPrompt } = await import('../ai/prompts')
+    let script = reply('hello')
+    state.createAdapter.mockImplementation(
+      () => fakeAdapter(() => script).adapter
+    )
     await expect(
       generateAIText({
-        kind: 'passage',
-        language: 'en',
-        book: {},
-        passage: 'private smoke-test passage',
+        useCase: 'reading_portrait',
+        prompt: readingPortraitPrompt('English', [
+          'private smoke-test passage',
+        ]),
       })
     ).resolves.toBe('hello')
-    const { streamBookSummary } = await import('../ai/book-summary')
-    const book = {
-      bookId: '24601',
-      title: 'Walden',
-      author: 'Thoreau',
-      force: false,
+
+    script = reply(SUMMARY)
+    const summarize = async () => {
+      const types: string[] = []
+      for await (const chunk of await streamBookSummary(
+        7,
+        { bookId: '24601', force: false },
+        { threadId: 't', runId: 'r' },
+        new AbortController().signal
+      ))
+        types.push(chunk.type === 'CUSTOM' ? chunk.name : chunk.type)
+      return types
     }
-    const read = async () => {
-      let text = ''
-      for await (const chunk of await streamBookSummary(7, book)) {
-        if (chunk.type === 'TEXT_MESSAGE_CONTENT') text += chunk.delta
-      }
-      return text
-    }
-    await expect(read()).resolves.toBe('hello')
-    await expect(read()).resolves.toBe('hello')
+    await expect(summarize()).resolves.toContain('structured-output.complete')
+    // The second request replays from the cache.
+    await expect(summarize()).resolves.toContain('structured-output.complete')
+
+    state.cache.clear()
+    script = providerError('private provider error text')
+    await expect(summarize()).resolves.toContain('RUN_ERROR')
+
     await Promise.all([
       tracing.forceFlush(),
       metering.forceFlush(),
@@ -156,20 +167,28 @@ test('generation exports real OTLP spans, metrics, and correlated logs without p
     const metricsBody = (received['/v1/metrics'] ?? []).join('\n')
     const logBody = (received['/v1/logs'] ?? []).join('\n')
     expect(traces).toContain('ai.generate')
-    expect(traces).toContain('ai.book_summary')
+    expect(traces).toContain('ai.result')
     expect(metricsBody).toContain('llm.tokens.input')
+    expect(metricsBody).toContain('llm.tokens.output')
+    expect(metricsBody).toContain('app.ai.generations')
     expect(metricsBody).toContain('app.ai.duration')
-    expect(metricsBody).toContain('app.ai.book_summaries')
-    expect(metricsBody).toContain('app.ai.book_summary.duration')
+    expect(metricsBody).toContain('app.ai.results')
+    expect(metricsBody).toContain('app.ai.result.duration')
     expect(metricsBody).toContain('cache_hit')
+    expect(metricsBody).toContain('generated')
     expect(logBody).toContain('AI generation completed')
-    expect(logBody).toContain('book summary finished')
+    expect(logBody).toContain('AI result finished')
+    // An expired key must be findable in the logs, without the provider's text.
+    expect(logBody).toContain('AI provider returned an error')
+    expect(logBody).toContain('invalid_api_key')
+
     const spans = (received['/v1/traces'] ?? []).flatMap(
       (body) =>
         JSON.parse(body).resourceSpans[0].scopeSpans[0].spans as {
           name?: string
           traceId?: string
           spanId?: string
+          parentSpanId?: string
         }[]
     )
     const records = (received['/v1/logs'] ?? []).flatMap(
@@ -179,17 +198,23 @@ test('generation exports real OTLP spans, metrics, and correlated logs without p
           spanId?: string
         }[]
     )
-    const generateSpan = spans.find((span) => span.name === 'ai.generate')
-    const generateLog = records.find(
-      (record) => record.spanId === generateSpan?.spanId
+    const resultSpan = spans.find((span) => span.name === 'ai.result')
+    const resultLog = records.find(
+      (record) => record.spanId === resultSpan?.spanId
     )
-    expect(generateLog?.traceId).toBe(generateSpan?.traceId)
-    const bookSpan = spans.find((span) => span.name === 'ai.book_summary')
-    const bookLog = records.find((record) => record.spanId === bookSpan?.spanId)
-    expect(bookLog?.traceId).toBe(bookSpan?.traceId)
+    expect(resultLog?.traceId).toBe(resultSpan?.traceId)
+    const children = spans.filter(
+      (span) =>
+        span.name === 'ai.generate' && span.traceId === resultSpan?.traceId
+    )
+    expect(children.length).toBeGreaterThan(0)
+    expect(children[0].parentSpanId).toBe(resultSpan?.spanId)
+
     const exported = JSON.stringify(received)
     expect(exported).not.toContain('private smoke-test passage')
     expect(exported).not.toContain('private highlight text that must not leak')
+    expect(exported).not.toContain('private model reply that must not leak')
+    expect(exported).not.toContain('private provider error text')
   } finally {
     await Promise.all([
       tracing.shutdown(),

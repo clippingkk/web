@@ -8,9 +8,16 @@ export const BOOK_SUMMARY_SAMPLE = 40
 export const BOOK_HIGHLIGHT_CHARS = 400
 export const BOOK_SUMMARY_CHARS = 12_000
 
-/** Cut by code point so a trimmed emoji is never a lone surrogate. */
+const graphemes = new Intl.Segmenter(undefined, { granularity: 'grapheme' })
+
+/** Cuts by what a reader sees as one character, so no emoji or accent is ever split. */
 export function clipChars(value: string, max: number) {
-  return Array.from(value).slice(0, max).join('')
+  if (value.length <= max) return value
+  return Iterator.from(graphemes.segment(value))
+    .take(max)
+    .map(({ segment }) => segment)
+    .toArray()
+    .join('')
 }
 
 /**
@@ -18,99 +25,67 @@ export function clipChars(value: string, max: number) {
  * contributes its beginning, middle, and end rather than only the latest page.
  */
 export function evenIndexes(length: number, limit: number) {
-  if (length <= 0) return []
-  if (length <= limit) return Array.from({ length }, (_, index) => index)
-  const indexes: number[] = []
-  const seen = new Set<number>()
-  const step = (length - 1) / (limit - 1)
-  for (let i = 0; i < limit; i++) {
-    const index = Math.round(i * step)
-    if (seen.has(index)) continue
-    seen.add(index)
-    indexes.push(index)
-  }
-  return indexes
+  const count = Math.min(Math.max(length, 0), limit)
+  const step = count > 1 ? (length - 1) / (count - 1) : 0
+  return Array.from({ length: count }, (_, index) => Math.round(index * step))
 }
 
-export function sampleHighlights(contents: readonly string[]) {
-  const cleaned = contents.map((item) => item.trim()).filter(Boolean)
+export type SampledHighlight = {
+  /** What the model cites. Short, so it cannot miscopy a database id. */
+  ref: number
+  id: number
+  text: string
+}
+
+export function sampleHighlights(
+  rows: readonly { id: number; content: string }[]
+): SampledHighlight[] {
+  const cleaned = rows
+    .map(({ id, content }) => ({ id, text: content.trim() }))
+    .filter(({ text }) => text)
   const indexes = evenIndexes(cleaned.length, BOOK_SUMMARY_SAMPLE)
   if (indexes.length === 0) return []
   const per = Math.min(
     BOOK_HIGHLIGHT_CHARS,
     Math.floor(BOOK_SUMMARY_CHARS / indexes.length)
   )
-  return indexes.map((index) => clipChars(cleaned[index], per)).filter(Boolean)
+  return indexes.map((index, position) => ({
+    ref: position + 1,
+    id: cleaned[index].id,
+    text: clipChars(cleaned[index].text, per),
+  }))
+}
+
+function countMatches(text: string, pattern: RegExp) {
+  return text.match(pattern)?.length ?? 0
 }
 
 /**
- * A name the shared prompt can drop into "Respond in …". Latin text stays
- * unnamed: English, French, and German share a script, and the model is told
- * to follow the highlights themselves.
+ * A name the prompt can drop into "Write in …". Latin text stays unnamed:
+ * English, French, and German share a script, and the model is told to follow
+ * the highlights themselves.
  */
 export function highlightLanguage(highlights: readonly string[]) {
-  let hangul = 0
-  let kana = 0
-  let han = 0
-  let cyrillic = 0
-  let arabic = 0
-  let latin = 0
-  for (const text of highlights) {
-    for (const char of text) {
-      const code = char.codePointAt(0)!
-      if (code >= 0xac00 && code <= 0xd7af) hangul++
-      else if (
-        (code >= 0x3040 && code <= 0x30ff) ||
-        (code >= 0x31f0 && code <= 0x31ff)
-      )
-        kana++
-      else if (code >= 0x4e00 && code <= 0x9fff) han++
-      else if (code >= 0x0400 && code <= 0x04ff) cyrillic++
-      else if (
-        (code >= 0x0600 && code <= 0x06ff) ||
-        (code >= 0x0750 && code <= 0x077f)
-      )
-        arabic++
-      else if (
-        (code >= 0x41 && code <= 0x5a) ||
-        (code >= 0x61 && code <= 0x7a) ||
-        (code >= 0xc0 && code <= 0x24f)
-      )
-        latin++
-    }
-  }
+  const text = highlights.join('\n')
+  const hangul = countMatches(text, /\p{Script=Hangul}/gu)
+  const kana = countMatches(text, /[\p{Script=Hiragana}\p{Script=Katakana}]/gu)
+  const han = countMatches(text, /\p{Script=Han}/gu)
+  const cyrillic = countMatches(text, /\p{Script=Cyrillic}/gu)
+  const arabic = countMatches(text, /\p{Script=Arabic}/gu)
+  const latin = countMatches(text, /\p{Script=Latin}/gu)
   // A little kana is a name or a quotation. Enough kana beside kanji is Japanese.
   const japanese = kana >= 2 && kana * 5 >= han
-  const ranked = [
-    ['Korean', hangul],
-    ['Japanese', japanese ? kana + han : kana],
-    ['Chinese', japanese ? 0 : han],
-    ['Russian', cyrillic],
-    ['Arabic', arabic],
-  ] as const
-  let name: (typeof ranked)[number][0] | '' = ''
-  let count = 0
-  for (const [script, scriptCount] of ranked) {
-    if (scriptCount > count) {
-      name = script
-      count = scriptCount
-    }
-  }
+  const [top] = (
+    [
+      ['Korean', hangul],
+      ['Japanese', japanese ? kana + han : kana],
+      ['Chinese', japanese ? 0 : han],
+      ['Russian', cyrillic],
+      ['Arabic', arabic],
+    ] as const
+  ).toSorted((a, b) => b[1] - a[1])
   const identified = hangul + kana + han + cyrillic + arabic
-  if (!name || count * 2 < identified + latin)
+  if (top[1] === 0 || top[1] * 2 < identified + latin)
     return 'the language of the highlights'
-  return name
-}
-
-export function summaryFingerprint(input: {
-  title: string
-  author: string
-  highlights: readonly string[]
-}) {
-  return JSON.stringify({
-    v: 1,
-    title: input.title,
-    author: input.author,
-    highlights: input.highlights,
-  })
+  return top[0]
 }

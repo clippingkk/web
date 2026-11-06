@@ -4,20 +4,30 @@ import { eq } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/pglite'
 import { beforeAll, beforeEach, describe, expect, test, vi } from 'vitest'
 
+import { AI_CONTEXT_EVENT, type BookSummaryContext } from '@/lib/ai/schemas'
+
+import {
+  aiRequest,
+  fakeAdapter,
+  promptData,
+  promptSystem,
+  providerError,
+  reply,
+  sseEvents,
+  type FakeReply,
+} from './fake-ai-adapter'
+
 const mocks = vi.hoisted(() => ({
-  chat: vi.fn(),
+  createAdapter: vi.fn(),
   auth: vi.fn(),
   isPremium: vi.fn(),
-  cache: new Map<string, { fingerprint: string; text: string }>(),
+  wenqu: vi.fn(),
+  cache: new Map<string, unknown>(),
 }))
 const getDatabase = vi.hoisted(() => vi.fn())
 
-vi.mock('@tanstack/ai', async (original) => ({
-  ...(await original<typeof import('@tanstack/ai')>()),
-  chat: mocks.chat,
-}))
 vi.mock('@tanstack/ai-openai', () => ({
-  createOpenaiChat: vi.fn(),
+  createOpenaiChat: mocks.createAdapter,
   OPENAI_CHAT_MODELS: ['test-model'],
 }))
 vi.mock('../env', () => ({
@@ -34,17 +44,22 @@ vi.mock('../auth', async (original) => ({
 vi.mock('../db', () => ({ getDatabase }))
 vi.mock('../redis', () => ({
   cacheGet: async (key: string) => mocks.cache.get(key),
-  cacheSet: async (
-    key: string,
-    value: { fingerprint: string; text: string }
-  ) => {
+  cacheSet: async (key: string, value: unknown) => {
     mocks.cache.set(key, value)
   },
 }))
+vi.mock('@/services/wenqu', async (original) => ({
+  ...(await original<typeof import('@/services/wenqu')>()),
+  wenquRequest: mocks.wenqu,
+}))
 
-import { highlightLanguage, sampleHighlights } from '../ai/book-highlights'
+import {
+  clipChars,
+  evenIndexes,
+  highlightLanguage,
+  sampleHighlights,
+} from '../ai/book-highlights'
 import { cachedBookSummary } from '../ai/book-summary'
-import { buildPrompt } from '../ai/prompts'
 import { aiStreamResponse } from '../ai/routes'
 import { migratePglite } from '../db/__tests__/pglite'
 import * as schema from '../db/schema'
@@ -52,43 +67,28 @@ import * as schema from '../db/schema'
 const READER = 7
 const OTHER = 8
 const BOOK = '24601'
+const SUMMARY = {
+  thesis: 'A deliberate life begins with subtraction.',
+  themes: [
+    { title: 'Subtraction', insight: 'Less is the method.', highlightRef: 1 },
+  ],
+  question: 'What would you give up first?',
+}
 
 const pg = new PGlite()
 const db = drizzle(pg, { schema })
 
-function succeed() {
-  return (async function* () {
-    yield { type: 'RUN_STARTED', threadId: 't', runId: 'r' }
-    yield { type: 'TEXT_MESSAGE_START', messageId: 'm', role: 'assistant' }
-    yield { type: 'TEXT_MESSAGE_CONTENT', messageId: 'm', delta: 'Hello' }
-    yield { type: 'TEXT_MESSAGE_CONTENT', messageId: 'm', delta: ' world' }
-    yield { type: 'TEXT_MESSAGE_END', messageId: 'm' }
-    yield {
-      type: 'RUN_FINISHED',
-      threadId: 't',
-      runId: 'r',
-      usage: [{ inputTokens: 4, outputTokens: 2 }],
-    }
-  })()
+let scripted: FakeReply
+let harness: ReturnType<typeof fakeAdapter>
+
+type PromptData = {
+  title: string
+  author: string
+  highlights: { ref: number; text: string }[]
 }
 
-function request(body: unknown) {
-  return new Request('http://localhost/api/v2/ai/book', {
-    method: 'POST',
-    body: JSON.stringify({ forwardedProps: body }),
-  })
-}
-
-function promptOf() {
-  const call = mocks.chat.mock.calls.at(-1)?.[0]
-  return {
-    system: String(call.systemPrompts[0]),
-    data: JSON.parse(String(call.messages[0].content)) as {
-      highlights: string[]
-      book: { title: string; author: string }
-    },
-  }
-}
+const request = (body: unknown) => aiRequest('book', body)
+const lastPrompt = () => promptData<PromptData>(harness.calls.at(-1)!)
 
 beforeAll(async () => {
   // PGlite cannot load PGroonga; the shared helper skips those statements.
@@ -99,10 +99,14 @@ beforeEach(async () => {
   await pg.exec('TRUNCATE users, clippings RESTART IDENTITY')
   getDatabase.mockReturnValue({ db })
   mocks.cache.clear()
-  mocks.chat.mockReset()
-  mocks.chat.mockImplementation(succeed)
+  scripted = reply(SUMMARY)
+  harness = fakeAdapter(() => scripted)
+  mocks.createAdapter.mockImplementation(() => harness.adapter)
   mocks.auth.mockResolvedValue(READER)
   mocks.isPremium.mockResolvedValue(true)
+  mocks.wenqu.mockResolvedValue({
+    books: [{ doubanId: Number(BOOK), title: '瓦尔登湖', author: '梭罗' }],
+  })
   await db.insert(schema.users).values([
     {
       id: READER,
@@ -124,15 +128,33 @@ beforeEach(async () => {
 describe('highlight shaping', () => {
   test('spreads a long book from the first highlight to the last and trims each one', () => {
     const sampled = sampleHighlights(
-      Array.from({ length: 100 }, (_, index) =>
-        index === 0 ? `start ${'📚'.repeat(500)}` : `h${index}`
-      )
+      Array.from({ length: 100 }, (_, index) => ({
+        id: index + 1000,
+        content: index === 0 ? `start ${'📚'.repeat(500)}` : `h${index}`,
+      }))
     )
     expect(sampled).toHaveLength(40)
-    expect(sampled[0]?.startsWith('start ')).toBe(true)
-    expect(Array.from(sampled[0] ?? '')).toHaveLength(300)
-    expect(sampled.at(-1)).toBe('h99')
-    expect(sampled.join('').length).toBeLessThanOrEqual(12_000)
+    expect(sampled[0]).toMatchObject({ ref: 1, id: 1000 })
+    expect(sampled[0].text.startsWith('start ')).toBe(true)
+    expect(Array.from(sampled[0].text)).toHaveLength(300)
+    expect(sampled.at(-1)).toMatchObject({ ref: 40, id: 1099, text: 'h99' })
+    expect(sampled.map(({ text }) => text).join('').length).toBeLessThanOrEqual(
+      12_000
+    )
+  })
+
+  test('never splits a character a reader sees as one', () => {
+    expect(clipChars('👍🏽👨‍👩‍👧é', 2)).toBe('👍🏽👨‍👩‍👧')
+    expect(clipChars('short', 100)).toBe('short')
+  })
+
+  test('picks evenly and never repeats', () => {
+    expect(evenIndexes(0, 3)).toEqual([])
+    expect(evenIndexes(2, 3)).toEqual([0, 1])
+    expect(evenIndexes(9, 1)).toEqual([0])
+    expect(evenIndexes(100, 3)).toEqual([0, 50, 99])
+    const many = evenIndexes(1000, 40)
+    expect(new Set(many).size).toBe(40)
   })
 
   test('names the highlight language and leaves Latin text to the model', () => {
@@ -149,31 +171,9 @@ describe('highlight shaping', () => {
       highlightLanguage(['A quiet sentence kept from the middle of the book'])
     ).toBe('the language of the highlights')
     expect(highlightLanguage(['读者の句子'])).toBe('Chinese')
-  })
-
-  test('caps book prompt input and asks for the highlights language', () => {
-    const result = buildPrompt({
-      kind: 'book',
-      language: 'Chinese',
-      book: { title: 'T'.repeat(500), author: 'A'.repeat(500) },
-      highlights: Array.from({ length: 80 }, () => '字'.repeat(1000)),
-    })
-    expect(result.system).toContain('Respond in Chinese')
-    expect(result.system).toContain('language of the highlights')
-    const data = result.data as {
-      highlights: string[]
-      book: { title: string; author: string }
-    }
-    expect(data.highlights.length).toBeGreaterThan(0)
-    expect(data.highlights.length).toBeLessThanOrEqual(40)
-    expect(
-      data.highlights.every((item) => Array.from(item).length <= 400)
-    ).toBe(true)
-    expect(data.highlights.join('').length).toBeLessThanOrEqual(12_000)
-    expect(data.book).toEqual({
-      title: 'T'.repeat(300),
-      author: 'A'.repeat(300),
-    })
+    expect(highlightLanguage(['12345 !!!'])).toBe(
+      'the language of the highlights'
+    )
   })
 })
 
@@ -217,45 +217,8 @@ describe('book summary stream', () => {
     ])
   }
 
-  test('samples the signed-in reader’s own highlights and answers in their language', async () => {
-    await seedLongBook()
-    const response = await aiStreamResponse(
-      request({
-        bookId: BOOK,
-        title: '瓦尔登湖',
-        author: '梭罗',
-        language: 'en',
-      }),
-      'book'
-    )
-    expect(response.headers.get('content-type')).toContain('text/event-stream')
-    expect(await response.text()).toContain('Hello')
-    const { system, data } = promptOf()
-    expect(system).toContain('Respond in Chinese')
-    expect(system).not.toContain('Respond in en')
-    expect(data.highlights.length).toBeLessThanOrEqual(40)
-    expect(data.highlights[0]).toContain('H000-START')
-    expect(Array.from(data.highlights[0] ?? '')).toHaveLength(300)
-    expect(data.highlights.at(-1)).toBe('H079-END')
-    expect(data.highlights.join('')).not.toContain('SECRET-OTHER')
-    expect(data.highlights.join('')).not.toContain('DELETED-SECRET')
-    expect(data.highlights.join('')).not.toContain('OTHER-BOOK')
-    const serialized = JSON.stringify(data)
-    expect(serialized.length).toBeLessThanOrEqual(20_000)
-
-    mocks.chat.mockClear()
-    mocks.auth.mockResolvedValue(OTHER)
-    await (
-      await aiStreamResponse(
-        request({ bookId: BOOK, title: '瓦尔登湖', author: '梭罗' }),
-        'book'
-      )
-    ).text()
-    expect(promptOf().data.highlights).toEqual(['SECRET-OTHER'])
-  })
-
-  test('replays a stored summary until the highlights change, unless asked again', async () => {
-    const [row] = await db
+  async function seedShortBook() {
+    return db
       .insert(schema.clippings)
       .values([
         {
@@ -274,100 +237,162 @@ describe('book summary stream', () => {
         },
       ])
       .returning()
-    const body = { bookId: BOOK, title: 'Walden', author: 'Thoreau' }
-    const first = await (await aiStreamResponse(request(body), 'book')).text()
-    expect(first).toContain('"delta":"Hello"')
-    expect(first).toContain('"delta":" world"')
-    await expect(
-      cachedBookSummary(READER, BOOK, { title: 'Walden', author: 'Thoreau' })
-    ).resolves.toBe('Hello world')
-    expect(mocks.chat).toHaveBeenCalledTimes(1)
+  }
 
-    mocks.chat.mockClear()
-    expect(
-      await (await aiStreamResponse(request(body), 'book')).text()
-    ).toContain('Hello world')
-    expect(mocks.chat).not.toHaveBeenCalled()
+  test('samples the signed-in reader’s own highlights, numbered, in their language', async () => {
+    await seedLongBook()
+    const response = await aiStreamResponse(
+      request({ bookId: BOOK, title: 'INJECTED', language: 'en' }),
+      'book'
+    )
+    expect(response.headers.get('content-type')).toContain('text/event-stream')
+    await response.text()
 
-    mocks.chat.mockClear()
+    const prompt = lastPrompt()
+    const texts = prompt.highlights.map(({ text }) => text)
+    expect(prompt.title).toBe('瓦尔登湖')
+    expect(prompt.author).toBe('梭罗')
+    expect(texts.length).toBeLessThanOrEqual(40)
+    expect(prompt.highlights[0].ref).toBe(1)
+    expect(texts[0]).toContain('H000-START')
+    expect(Array.from(texts[0])).toHaveLength(300)
+    expect(texts.at(-1)).toBe('H079-END')
+    const joined = texts.join('')
+    expect(joined).not.toContain('SECRET-OTHER')
+    expect(joined).not.toContain('DELETED-SECRET')
+    expect(joined).not.toContain('OTHER-BOOK')
+    expect(JSON.stringify(prompt)).not.toContain('INJECTED')
+    expect(JSON.stringify(prompt).length).toBeLessThanOrEqual(20_000)
+    // The sample is mostly the Chinese of H000, whatever language the UI is in.
+    expect(promptSystem(harness.calls.at(-1)!)).toContain(
+      'Write every value in Chinese'
+    )
+
+    mocks.auth.mockResolvedValue(OTHER)
+    await (await aiStreamResponse(request({ bookId: BOOK }), 'book')).text()
+    expect(lastPrompt().highlights).toEqual([{ ref: 1, text: 'SECRET-OTHER' }])
+  })
+
+  test('falls back to the clipping title when Wenqu is down', async () => {
+    await seedShortBook()
+    mocks.wenqu.mockRejectedValue(new Error('offline'))
+    await (await aiStreamResponse(request({ bookId: BOOK }), 'book')).text()
+    expect(lastPrompt()).toMatchObject({ title: 'Walden', author: '' })
+  })
+
+  test('sends the highlights behind each ref before the model’s first word', async () => {
+    const [first] = await seedShortBook()
+    const events = await sseEvents(
+      await aiStreamResponse(request({ bookId: BOOK }), 'book')
+    )
+    expect(events[0].type).toBe('RUN_STARTED')
+    expect(events[1].name).toBe(AI_CONTEXT_EVENT)
+    const context = events[1].value as BookSummaryContext
+    expect(context.total).toBe(2)
+    expect(context.highlights[0]).toEqual({
+      ref: 1,
+      id: first.id,
+      text: first.content,
+    })
+  })
+
+  test('replays a stored summary until the highlights change, unless asked again', async () => {
+    const [row] = await seedShortBook()
+    const body = { bookId: BOOK }
+    const events = await sseEvents(
+      await aiStreamResponse(request(body), 'book')
+    )
     expect(
-      await (
-        await aiStreamResponse(
-          request({ ...body, force: true, run: 4 }),
-          'book'
-        )
-      ).text()
-    ).toContain('Hello')
-    expect(mocks.chat).toHaveBeenCalledTimes(1)
+      events.some(({ type }) => type === 'TEXT_MESSAGE_CONTENT')
+    ).toBeTruthy()
+    const stored = await cachedBookSummary(READER, BOOK)
+    expect(stored?.object).toEqual(SUMMARY)
+    expect(stored?.context.total).toBe(2)
+    expect(harness.calls).toHaveLength(1)
+
+    const replayed = await sseEvents(
+      await aiStreamResponse(request(body), 'book')
+    )
+    expect(harness.calls).toHaveLength(1)
+    expect(replayed.map(({ type, name }) => name ?? type)).toEqual([
+      'RUN_STARTED',
+      AI_CONTEXT_EVENT,
+      'structured-output.start',
+      'structured-output.complete',
+      'RUN_FINISHED',
+    ])
+
+    await (
+      await aiStreamResponse(request({ ...body, force: true }), 'book')
+    ).text()
+    expect(harness.calls).toHaveLength(2)
 
     await db
       .update(schema.clippings)
       .set({ content: 'A different sentence about the rain.' })
       .where(eq(schema.clippings.id, row.id))
-    mocks.chat.mockClear()
+    await expect(cachedBookSummary(READER, BOOK)).resolves.toBeNull()
     await (await aiStreamResponse(request(body), 'book')).text()
-    expect(mocks.chat).toHaveBeenCalledTimes(1)
-    await expect(
-      cachedBookSummary(READER, BOOK, { title: 'Walden', author: 'Someone' })
-    ).resolves.toBeNull()
+    expect(harness.calls).toHaveLength(3)
   })
 
-  test('a failed generation is not cached and hides provider details', async () => {
-    await db.insert(schema.clippings).values({
-      title: 'Walden',
-      content: 'I wished to live deliberately.',
-      bookId: BOOK,
-      dataId: 'a',
-      createdBy: READER,
+  test('a result that no longer fits the schema counts as a miss', async () => {
+    await seedShortBook()
+    await (await aiStreamResponse(request({ bookId: BOOK }), 'book')).text()
+    const [key] = mocks.cache.keys()
+    mocks.cache.set(key, {
+      ...(mocks.cache.get(key) as object),
+      object: { thesis: 'An old shape' },
     })
-    mocks.chat.mockImplementation(async function* () {
-      yield { type: 'TEXT_MESSAGE_CONTENT', messageId: 'm', delta: 'partial' }
-      throw new Error('upstream private details')
-    })
+    await expect(cachedBookSummary(READER, BOOK)).resolves.toBeNull()
+  })
+
+  test('a failed generation is not stored and hides provider details', async () => {
+    await seedShortBook()
+    scripted = providerError('upstream private details')
     const body = await (
-      await aiStreamResponse(
-        request({ bookId: BOOK, title: 'Walden', author: 'Thoreau' }),
-        'book'
-      )
+      await aiStreamResponse(request({ bookId: BOOK }), 'book')
     ).text()
     expect(body).toContain('RUN_ERROR')
     expect(body).not.toContain('upstream private details')
+    expect(mocks.cache.size).toBe(0)
 
-    mocks.chat.mockImplementation(succeed)
-    mocks.chat.mockClear()
-    expect(
-      await (
-        await aiStreamResponse(
-          request({ bookId: BOOK, title: 'Walden', author: 'Thoreau' }),
-          'book'
-        )
-      ).text()
-    ).toContain('Hello')
-    expect(mocks.chat).toHaveBeenCalledTimes(1)
+    scripted = reply(SUMMARY)
+    await (await aiStreamResponse(request({ bookId: BOOK }), 'book')).text()
+    expect(harness.calls).toHaveLength(2)
+    expect(mocks.cache.size).toBe(1)
+  })
+
+  test('a broken cache costs a regeneration, never the result', async () => {
+    await seedShortBook()
+    const redis = await import('../redis')
+    const read = vi
+      .spyOn(redis, 'cacheGet')
+      .mockRejectedValue(new Error('down'))
+    const write = vi
+      .spyOn(redis, 'cacheSet')
+      .mockRejectedValue(new Error('down'))
+    const body = await (
+      await aiStreamResponse(request({ bookId: BOOK }), 'book')
+    ).text()
+    expect(body).toContain('structured-output.complete')
+    read.mockRestore()
+    write.mockRestore()
   })
 
   test('an empty book and a rejected reader never call the model', async () => {
     await expect(
-      aiStreamResponse(
-        request({ bookId: BOOK, title: 'Walden', author: 'Thoreau' }),
-        'book'
-      )
+      aiStreamResponse(request({ bookId: BOOK }), 'book')
     ).rejects.toMatchObject({ status: 404 })
 
     mocks.isPremium.mockResolvedValue(false)
     await expect(
-      aiStreamResponse(
-        request({ bookId: BOOK, title: 'Walden', author: 'Thoreau' }),
-        'book'
-      )
+      aiStreamResponse(request({ bookId: BOOK }), 'book')
     ).rejects.toMatchObject({ status: 403, code: 'PREMIUM_REQUIRED' })
 
     mocks.auth.mockResolvedValue(0)
     await expect(
-      aiStreamResponse(
-        request({ bookId: BOOK, title: 'Walden', author: 'Thoreau' }),
-        'book'
-      )
+      aiStreamResponse(request({ bookId: BOOK }), 'book')
     ).rejects.toMatchObject({ status: 401 })
 
     mocks.auth.mockResolvedValue(READER)
@@ -384,6 +409,6 @@ describe('book summary stream', () => {
         'book'
       )
     ).rejects.toMatchObject({ status: 400 })
-    expect(mocks.chat).not.toHaveBeenCalled()
+    expect(harness.calls).toHaveLength(0)
   })
 })

@@ -41,15 +41,6 @@
     "highlightsBy": "{{name}} 的全部书摘"
   },
   "ai": {
-    "title": "阅读笔记",
-    "description": "结合整本书，由 AI 解读这段文字。",
-    "generate": "解读这段话",
-    "regenerate": "重新解读",
-    "premiumTitle": "读懂一段话的上下文",
-    "premiumDescription": "高级会员可以让 AI 解读任意一条书摘。",
-    "upgrade": "了解高级会员",
-    "noBook": "先为这条书摘匹配书籍，才能生成解读。",
-    "error": "生成解读失败。",
     "enhance": {
       "label": "用 AI 润色",
       "professional": "更得体",

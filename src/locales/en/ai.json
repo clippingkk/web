@@ -1,0 +1,59 @@
+{
+  "actions": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFailed": "Couldn't copy that.",
+    "rewrite": "Write again",
+    "stop": "Stop",
+    "retry": "Try again",
+    "upgrade": "See Premium",
+    "disclaimer": "Written by AI, so check anything that matters."
+  },
+  "errors": {
+    "generic": "That didn't work. Please try again.",
+    "UNAUTHORIZED": "Sign in to use this.",
+    "PREMIUM_REQUIRED": "This needs an active Premium subscription.",
+    "AI_UNAVAILABLE": "AI isn't available right now. Please try again later.",
+    "NOT_FOUND": "There are no highlights to work from yet."
+  },
+  "bookSummary": {
+    "title": "What you kept from this book",
+    "premiumTitle": "See what you kept from this book",
+    "description": "One click turns your highlights into a short portrait of this book: the idea running through them, the threads around it, and a question to take with you.",
+    "premiumDescription": "Premium turns the passages you kept into a short portrait of this book, with your own highlights as the evidence.",
+    "generate": "Summarize my highlights",
+    "working": "Reading your highlights…",
+    "question": "A question to carry",
+    "provenance": "From {{sampled}} of your {{total}} highlights. Written by AI.",
+    "provenanceAll_one": "From your {{count}} highlight. Written by AI.",
+    "provenanceAll_other": "From all {{count}} of your highlights. Written by AI.",
+    "openHighlight": "Open this highlight"
+  },
+  "passageNote": {
+    "title": "Margin note",
+    "premiumTitle": "Understand this passage",
+    "description": "A short note on what this passage says, what is going on beneath it, and a question to think over.",
+    "premiumDescription": "Premium adds a short margin note to any highlight.",
+    "generate": "Explain this passage",
+    "working": "Reading the passage…",
+    "reading": "Beneath the surface",
+    "context": "In context",
+    "terms": "Names and references",
+    "question": "Ask yourself"
+  },
+  "recommendations": {
+    "open": "What to read next",
+    "title": "Picked for you",
+    "premiumTitle": "Books picked from your highlights",
+    "premiumDescription": "Premium reads the passages you keep and suggests what to read next, with a reason for each book.",
+    "working": "Reading your shelf…",
+    "because": "Because you read {{title}}",
+    "viewBook": "See this book",
+    "kinds": {
+      "deeper": "Go deeper",
+      "adjacent": "Next door",
+      "counterpoint": "A different view",
+      "wildcard": "A surprise"
+    }
+  }
+}

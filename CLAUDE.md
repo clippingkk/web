@@ -251,6 +251,16 @@ highlight comments (`comments`), behind `bookComments` / `createBookComment` / `
 characters; 20 an hour; the author or an administrator deletes. The web reuses
 `src/components/comment/*` with a `CommentTarget`. See `docs/book-comments.md`.
 
+## AI Features
+
+Book summaries, passage notes and recommendations stream as structured objects through TanStack AI:
+`chat({ outputSchema, stream: true })` on the server (`src/server/ai/`), `useAIObject` on the client
+(`partial` while writing, then the finished result). Schemas shared by both are in
+`src/lib/ai/schemas.ts`. Prompts are Markdown in `src/server/ai/prompts/`, inlined by the bundler;
+never write prompt text in TypeScript, and try an edit with `pnpm ai:eval`. Results are cached per
+reader; a prompt edit invalidates them on its own. The model cites highlights and shelf books by
+`ref`, resolved against the context event, so it can never invent a quotation. See `docs/ai.md`.
+
 ## Rich Text Editor
 
 The application uses **Tiptap** (a headless editor built on ProseMirror) for rich text editing, replacing the legacy Lexical editor.

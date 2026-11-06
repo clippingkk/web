@@ -1,0 +1,58 @@
+{
+  "actions": {
+    "copy": "복사",
+    "copied": "복사했어요",
+    "copyFailed": "복사하지 못했어요.",
+    "rewrite": "다시 쓰기",
+    "stop": "중지",
+    "retry": "다시 시도",
+    "upgrade": "Premium 알아보기",
+    "disclaimer": "AI가 쓴 글이니 중요한 내용은 직접 확인해 주세요."
+  },
+  "errors": {
+    "generic": "잘 되지 않았어요. 다시 시도해 주세요.",
+    "UNAUTHORIZED": "로그인이 필요해요.",
+    "PREMIUM_REQUIRED": "Premium 구독이 필요한 기능이에요.",
+    "AI_UNAVAILABLE": "지금은 AI를 사용할 수 없어요. 잠시 후 다시 시도해 주세요.",
+    "NOT_FOUND": "아직 참고할 하이라이트가 없어요."
+  },
+  "bookSummary": {
+    "title": "이 책에서 당신이 간직한 것",
+    "premiumTitle": "이 책에서 간직한 것 살펴보기",
+    "description": "한 번의 클릭으로 하이라이트가 이 책의 짧은 초상이 됩니다. 하이라이트를 관통하는 생각, 그 주변의 갈래, 그리고 가져갈 질문 하나까지요.",
+    "premiumDescription": "Premium은 당신이 간직한 문장을 근거로 이 책의 짧은 초상을 써 드려요.",
+    "generate": "내 하이라이트 요약하기",
+    "working": "하이라이트를 읽는 중…",
+    "question": "가져갈 질문",
+    "provenance": "하이라이트 {{total}}개 중 {{sampled}}개를 바탕으로 AI가 썼어요.",
+    "provenanceAll_other": "하이라이트 {{count}}개 전체를 바탕으로 AI가 썼어요.",
+    "openHighlight": "이 하이라이트 열기"
+  },
+  "passageNote": {
+    "title": "여백 노트",
+    "premiumTitle": "이 문장 이해하기",
+    "description": "이 문장이 무슨 말인지, 그 밑에 무엇이 있는지, 그리고 생각해 볼 질문 하나를 짧게 적어 드려요.",
+    "premiumDescription": "Premium은 어떤 하이라이트에든 짧은 여백 노트를 더해 드려요.",
+    "generate": "이 문장 풀이하기",
+    "working": "문장을 읽는 중…",
+    "reading": "행간 읽기",
+    "context": "책 속의 맥락",
+    "terms": "이름과 인용",
+    "question": "스스로에게 묻기"
+  },
+  "recommendations": {
+    "open": "다음에 읽을 책",
+    "title": "당신을 위해 고른 책",
+    "premiumTitle": "하이라이트에서 고른 책",
+    "premiumDescription": "Premium은 당신이 간직한 문장을 읽고, 이유와 함께 다음에 읽을 책을 제안해요.",
+    "working": "책장을 살펴보는 중…",
+    "because": "《{{title}}》을(를) 읽으셨으니까요",
+    "viewBook": "이 책 보기",
+    "kinds": {
+      "deeper": "더 깊이",
+      "adjacent": "옆 책장",
+      "counterpoint": "다른 시각",
+      "wildcard": "뜻밖의 한 권"
+    }
+  }
+}
