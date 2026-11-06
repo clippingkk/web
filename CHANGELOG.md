@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.10](https://github.com/clippingkk/web/compare/v5.19.9...v5.19.10) (2026-11-06)
+
+
+### Features
+
+* **ai:** redesign summaries and recommendations with structured output ([87afac5](https://github.com/clippingkk/web/commit/87afac5a95077cdd5a8ed329806cbc27335387c2))
+* **ai:** redesign summaries and recommendations with structured output ([b684dcf](https://github.com/clippingkk/web/commit/b684dcf71255bf8ebf6c9f36f2f4e431b4d645df))
+
 ## [5.19.9](https://github.com/clippingkk/web/compare/v5.19.8...v5.19.9) (2026-11-04)
 
 
