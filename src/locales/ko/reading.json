@@ -41,15 +41,6 @@
     "highlightsBy": "{{name}}님의 모든 하이라이트"
   },
   "ai": {
-    "title": "읽기 노트",
-    "description": "책의 맥락에서 AI가 이 문장을 풀이해요.",
-    "generate": "이 문장 풀이하기",
-    "regenerate": "다시 풀이하기",
-    "premiumTitle": "문장을 맥락 속에서 이해하기",
-    "premiumDescription": "프리미엄 회원은 어떤 하이라이트든 AI 풀이를 받을 수 있어요.",
-    "upgrade": "프리미엄 보기",
-    "noBook": "풀이를 받으려면 먼저 이 하이라이트에 책을 지정하세요.",
-    "error": "풀이를 만들지 못했어요.",
     "enhance": {
       "label": "AI로 다듬기",
       "professional": "더 매끄럽게",

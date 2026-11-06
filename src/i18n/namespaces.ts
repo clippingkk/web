@@ -4,6 +4,7 @@
  * folder; a test fails when they drift.
  */
 export const NAMESPACES = [
+  'ai',
   'auth',
   'common',
   'error',

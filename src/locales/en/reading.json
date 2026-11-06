@@ -41,15 +41,6 @@
     "highlightsBy": "All highlights by {{name}}"
   },
   "ai": {
-    "title": "Reading note",
-    "description": "An AI explanation of this passage, in context of the book.",
-    "generate": "Explain this passage",
-    "regenerate": "Explain again",
-    "premiumTitle": "Understand a passage in context",
-    "premiumDescription": "Premium members can ask AI to explain any highlight.",
-    "upgrade": "See Premium",
-    "noBook": "Match this highlight to a book to get an explanation.",
-    "error": "Couldn't generate an explanation.",
     "enhance": {
       "label": "Improve with AI",
       "professional": "More polished",

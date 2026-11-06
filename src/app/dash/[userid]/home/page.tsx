@@ -112,7 +112,10 @@ async function LibraryPage(props: PageProps) {
           isOwner ? (
             <>
               {books.length > 0 ? (
-                <AIBookRecommendationButton uid={pathUser.id} books={books} />
+                <AIBookRecommendationButton
+                  owner={pathUser}
+                  isPremium={Boolean(viewer?.isPremium)}
+                />
               ) : null}
               <Button
                 variant="primary"

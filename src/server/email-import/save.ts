@@ -1,5 +1,6 @@
 import { and, desc, eq } from 'drizzle-orm'
 
+import { findBookByTitle } from '@/lib/book-match'
 import { wenquRequest, type WenquSearchResponse } from '@/services/wenqu'
 
 import { clippingDataId, insertClippings } from '../clippings/create'
@@ -31,14 +32,6 @@ function sameText(content: string) {
     .replace(/^[，,。！@【】—]+|[，,。！@【】—]+$/g, '')
 }
 
-/** A title with case, spacing and punctuation folded away, for matching. */
-function bookKey(title: string) {
-  return title
-    .split(/[(（]/)[0]
-    .toLowerCase()
-    .replace(/[\s\p{P}\p{S}]+/gu, '')
-}
-
 async function resolveBookId(userId: number, title: string) {
   const [known] = await db()
     .select({ bookId: clippings.bookId })
@@ -60,16 +53,7 @@ async function resolveBookId(userId: number, title: string) {
     )
     // A loose search can rank another book first; leaving the clippings
     // unmatched (fixable from the book page) beats filing them wrongly.
-    const wanted = bookKey(title)
-    const match = result.books.find((book) =>
-      [book.title, book.originTitle].some((name) => {
-        const key = bookKey(name ?? '')
-        // Kindle titles often carry a subtitle Douban files separately.
-        const [short, long] =
-          key.length < wanted.length ? [key, wanted] : [wanted, key]
-        return short.length >= 2 && long.includes(short)
-      })
-    )
+    const match = findBookByTitle(title, result.books)
     return match ? String(match.doubanId) : '0'
   } catch (error) {
     // Unmatched clippings can still be matched from the book page later.

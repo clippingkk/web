@@ -1,61 +1,48 @@
-import { createHash } from 'node:crypto'
-
-import { context, metrics, SpanStatusCode, trace } from '@opentelemetry/api'
-import { logs, SeverityNumber } from '@opentelemetry/api-logs'
-import { EventType, type StreamChunk } from '@tanstack/ai'
 import { and, asc, eq, inArray, isNull } from 'drizzle-orm'
+
+import {
+  bookSummarySchema,
+  type BookSummary,
+  type BookSummaryContext,
+} from '@/lib/ai/schemas'
+import { shortBookTitle } from '@/lib/book-match'
 
 import { getDatabase } from '../db'
 import { clippings } from '../db/schema'
 import { ApiError } from '../errors'
-import { cacheGet, cacheSet } from '../redis'
+import { loadBooks } from './book-facts'
 import {
   BOOK_SUMMARY_SAMPLE,
+  clipChars,
   evenIndexes,
   highlightLanguage,
   sampleHighlights,
-  summaryFingerprint,
+  type SampledHighlight,
 } from './book-highlights'
-import { generateAI } from './generate'
+import { bookSummaryPrompt, promptVersions } from './prompts'
+import {
+  fingerprintOf,
+  resultStream,
+  storedResult,
+  type AIResult,
+  type ResultTask,
+} from './results'
+import { logResultWarning } from './telemetry'
 
-const tracer = trace.getTracer('clippingkk.web.ai')
-const meter = metrics.getMeter('clippingkk.web.ai')
-const logger = logs.getLogger('clippingkk.web.ai')
-const bookSummaries = meter.createCounter('app.ai.book_summaries')
-const duration = meter.createHistogram('app.ai.book_summary.duration', {
-  unit: 'ms',
-})
-
-/** A month. The same highlights replay from here, so a return visit is not billed. */
-const BOOK_SUMMARY_TTL_SECONDS = 30 * 24 * 60 * 60
-
-type BookSummaryRequest = {
-  bookId: string
-  title: string
-  author: string
-  force: boolean
-}
-
-type CachedBookSummary = {
-  fingerprint: string
-  text: string
-}
+const USE_CASE = 'book_summary'
 
 export type BookHighlightSource = {
   total: number
-  highlights: string[]
+  title: string
+  highlights: SampledHighlight[]
 }
 
 function cacheKey(userId: number, bookId: string) {
-  return `ai:book-summary:v1:${userId}:${bookId}`
+  return `ai:book-summary:v2:${userId}:${bookId}`
 }
 
-function fingerprintOf(input: {
-  title: string
-  author: string
-  highlights: readonly string[]
-}) {
-  return createHash('sha256').update(summaryFingerprint(input)).digest('hex')
+function fingerprintFor(highlights: readonly SampledHighlight[]) {
+  return fingerprintOf(promptVersions.bookSummary, highlights)
 }
 
 /**
@@ -79,85 +66,20 @@ export async function loadBookHighlights(
   const picked = evenIndexes(rows.length, BOOK_SUMMARY_SAMPLE).map(
     (index) => rows[index]!.id
   )
-  if (picked.length === 0) return { total: 0, highlights: [] }
+  if (picked.length === 0) return { total: 0, title: '', highlights: [] }
   const contents = await getDatabase()
-    .db.select({ content: clippings.content })
+    .db.select({
+      id: clippings.id,
+      title: clippings.title,
+      content: clippings.content,
+    })
     .from(clippings)
     .where(and(where, inArray(clippings.id, picked)))
     .orderBy(asc(clippings.id))
   return {
     total: rows.length,
-    highlights: sampleHighlights(contents.map((row) => row.content)),
-  }
-}
-
-async function readCached(key: string) {
-  try {
-    const value = await cacheGet<CachedBookSummary>(key)
-    if (
-      !value ||
-      typeof value.fingerprint !== 'string' ||
-      typeof value.text !== 'string' ||
-      !value.text.trim()
-    )
-      return null
-    return value
-  } catch {
-    logger.emit({
-      severityNumber: SeverityNumber.WARN,
-      severityText: 'WARN',
-      body: 'book summary cache read failed',
-      attributes: { outcome: 'error' },
-    })
-    return null
-  }
-}
-
-async function writeCached(key: string, value: CachedBookSummary) {
-  try {
-    await cacheSet(key, value, BOOK_SUMMARY_TTL_SECONDS)
-    return true
-  } catch {
-    return false
-  }
-}
-
-function finishSpan(
-  span: ReturnType<typeof tracer.startSpan>,
-  started: number,
-  outcome: string,
-  cache: string
-) {
-  span.setAttribute('outcome', outcome)
-  span.setAttribute('cache', cache)
-  if (outcome === 'error') span.setStatus({ code: SpanStatusCode.ERROR })
-  bookSummaries.add(1, { outcome })
-  duration.record(performance.now() - started, { outcome })
-  logger.emit({
-    context: trace.setSpan(context.active(), span),
-    severityNumber:
-      outcome === 'error' ? SeverityNumber.WARN : SeverityNumber.INFO,
-    severityText: outcome === 'error' ? 'WARN' : 'INFO',
-    body: 'book summary finished',
-    attributes: { outcome, cache },
-  })
-  span.end()
-}
-
-function* replayCachedSummary(text: string): Generator<StreamChunk> {
-  const messageId = 'book-summary'
-  yield {
-    type: EventType.RUN_STARTED,
-    threadId: 'book-summary',
-    runId: 'cache',
-  }
-  yield { type: EventType.TEXT_MESSAGE_START, messageId, role: 'assistant' }
-  yield { type: EventType.TEXT_MESSAGE_CONTENT, messageId, delta: text }
-  yield { type: EventType.TEXT_MESSAGE_END, messageId }
-  yield {
-    type: EventType.RUN_FINISHED,
-    threadId: 'book-summary',
-    runId: 'cache',
+    title: contents[0]?.title ?? '',
+    highlights: sampleHighlights(contents),
   }
 }
 
@@ -167,127 +89,66 @@ function* replayCachedSummary(text: string): Generator<StreamChunk> {
  */
 export async function cachedBookSummary(
   userId: number,
-  bookId: string,
-  book: { title: string; author: string }
-) {
+  bookId: string
+): Promise<AIResult<BookSummary, BookSummaryContext> | null> {
   try {
     const source = await loadBookHighlights(userId, bookId)
     if (source.highlights.length === 0) return null
-    const fingerprint = fingerprintOf({
-      title: book.title.trim(),
-      author: book.author.trim(),
-      highlights: source.highlights,
-    })
-    const cached = await readCached(cacheKey(userId, bookId))
-    return cached?.fingerprint === fingerprint ? cached.text : null
+    return await storedResult(
+      USE_CASE,
+      cacheKey(userId, bookId),
+      bookSummarySchema,
+      fingerprintFor(source.highlights)
+    )
   } catch {
-    logger.emit({
-      severityNumber: SeverityNumber.WARN,
-      severityText: 'WARN',
-      body: 'book summary cache lookup failed',
-      attributes: { outcome: 'error' },
-    })
+    logResultWarning('book summary cache lookup failed', USE_CASE)
     return null
   }
 }
 
 export async function streamBookSummary(
   userId: number,
-  input: BookSummaryRequest,
-  signal?: AbortSignal
-): Promise<AsyncGenerator<StreamChunk>> {
-  const title = input.title.trim()
-  const author = input.author.trim()
+  input: { bookId: string; force: boolean },
+  run: { threadId: string; runId: string },
+  signal: AbortSignal
+) {
   const source = await loadBookHighlights(userId, input.bookId)
-  if (source.highlights.length === 0) {
-    const span = tracer.startSpan('ai.book_summary', {
-      attributes: {
-        'user.id': userId,
-        'book.id': input.bookId,
-        'highlights.count': source.total,
-        'highlights.sampled': 0,
-      },
-    })
-    finishSpan(span, performance.now(), 'empty', 'none')
+  if (source.highlights.length === 0)
     throw new ApiError(
       'This book has no highlights to summarize.',
       404,
       'NOT_FOUND'
     )
-  }
-  const language = highlightLanguage(source.highlights)
-  const fingerprint = fingerprintOf({
-    title,
-    author,
-    highlights: source.highlights,
-  })
-  const key = cacheKey(userId, input.bookId)
-  const cached = input.force ? null : await readCached(key)
-  const cachedText = cached?.fingerprint === fingerprint ? cached.text : null
-  const cache = cachedText ? 'hit' : input.force ? 'bypass' : 'miss'
-
-  return (async function* () {
-    const span = tracer.startSpan('ai.book_summary', {
-      attributes: {
-        'user.id': userId,
-        'book.id': input.bookId,
-        'highlights.count': source.total,
-        'highlights.sampled': source.highlights.length,
-        'highlights.chars': source.highlights.reduce(
-          (sum, item) => sum + item.length,
-          0
-        ),
-        cache,
-      },
-    })
-    const started = performance.now()
-    let outcome = 'cancelled'
-    try {
-      if (signal?.aborted) return
-      if (cachedText) {
-        outcome = 'cache_hit'
-        yield* replayCachedSummary(cachedText)
-        return
-      }
-      let text = ''
-      for await (const chunk of generateAI(
-        {
-          kind: 'book',
-          language,
-          book: { title, author },
-          highlights: source.highlights,
-        },
-        signal
-      )) {
-        if (chunk.type === 'TEXT_MESSAGE_CONTENT') text += chunk.delta
-        if (chunk.type === 'RUN_FINISHED' && !signal?.aborted && text.trim()) {
-          const saved = await writeCached(key, {
-            fingerprint,
-            text: text.trim(),
-          })
-          if (!saved) {
-            logger.emit({
-              context: trace.setSpan(context.active(), span),
-              severityNumber: SeverityNumber.WARN,
-              severityText: 'WARN',
-              body: 'book summary cache write failed',
-              attributes: { outcome: 'error' },
-            })
+  const task: ResultTask<typeof bookSummarySchema, BookSummaryContext> = {
+    useCase: USE_CASE,
+    key: cacheKey(userId, input.bookId),
+    schema: bookSummarySchema,
+    fingerprint: fingerprintFor(source.highlights),
+    force: input.force,
+    signal,
+    attributes: {
+      'user.id': userId,
+      'book.id': input.bookId,
+      'highlights.count': source.total,
+      'highlights.sampled': source.highlights.length,
+    },
+    prepare: async () => {
+      const book = (await loadBooks([input.bookId])).get(input.bookId)
+      return {
+        prompt: bookSummaryPrompt(
+          highlightLanguage(source.highlights.map(({ text }) => text)),
+          {
+            title: clipChars(shortBookTitle(book?.title || source.title), 300),
+            author: clipChars(book?.author ?? '', 300),
+            highlights: source.highlights.map(({ ref, text }) => ({
+              ref,
+              text,
+            })),
           }
-        }
-        yield chunk
+        ),
+        context: { total: source.total, highlights: source.highlights },
       }
-      outcome = 'generated'
-    } catch (error) {
-      outcome = signal?.aborted ? 'cancelled' : 'error'
-      if (outcome === 'error') {
-        span.recordException(
-          error instanceof ApiError ? error : new Error('book summary failed')
-        )
-      }
-      throw error
-    } finally {
-      finishSpan(span, started, outcome, cache)
-    }
-  })()
+    },
+  }
+  return resultStream(task, run)
 }

@@ -19,7 +19,13 @@ import { DOMAIN_PATTERN } from '@/utils/profile.utils'
 
 import { requirePremium, aiClipping } from '../ai/access'
 import { generateAIText } from '../ai/generate'
-import { commentModes } from '../ai/prompts'
+import { outputLanguage } from '../ai/language'
+import { passageNoteText } from '../ai/passage-note'
+import {
+  commentRewritePrompt,
+  commentStyles,
+  readingPortraitPrompt,
+} from '../ai/prompts'
 import { requireLegacyAuth } from '../auth'
 import {
   decodeLegacyValue,
@@ -1297,22 +1303,24 @@ export const resolvers: Record<string, Record<string, any>> = {
       context: GraphQLContext
     ) => {
       await requirePremium(context.userId)
-      if (!(args.promptId in commentModes))
-        throw new ApiError('prompt not found')
+      const style = commentStyles[args.promptId]
+      if (!style) throw new ApiError('prompt not found')
       const clipping = args.clippingId
         ? await aiClipping(args.clippingId, context.userId)
         : undefined
-      const content = await generateAIText(
-        {
-          kind: 'comment',
-          mode: args.promptId,
-          language: context.language,
-          book: args.bookName ?? clipping?.title ?? '',
-          passage: clipping?.content ?? '',
-          comment: args.content,
-        },
-        context.request.signal
-      )
+      const content = await generateAIText({
+        useCase: 'comment_rewrite',
+        prompt: commentRewritePrompt(
+          outputLanguage(context.language).name,
+          style,
+          {
+            comment: args.content,
+            book: args.bookName ?? clipping?.title ?? '',
+            passage: clipping?.content ?? '',
+          }
+        ),
+        signal: context.request.signal,
+      })
       return { content }
     },
     createNoun: async (_: unknown, args: Args, context: GraphQLContext) => {
@@ -1614,14 +1622,14 @@ export const resolvers: Record<string, Record<string, any>> = {
         .limit(30)
       if (!recent.length) return ''
       try {
-        return await generateAIText(
-          {
-            kind: 'personality',
-            language: context.language,
-            clippings: recent.map((row) => row.content),
-          },
-          context.request.signal
-        )
+        return await generateAIText({
+          useCase: 'reading_portrait',
+          prompt: readingPortraitPrompt(
+            outputLanguage(context.language).name,
+            recent.map((row) => row.content)
+          ),
+          signal: context.request.signal,
+        })
       } catch {
         return ''
       }
@@ -1813,13 +1821,10 @@ export const resolvers: Record<string, Record<string, any>> = {
       await requirePremium(context.userId)
       await aiClipping(clipping.id, context.userId)
       try {
-        return await generateAIText(
-          {
-            kind: 'passage',
-            language: context.language,
-            book: { title: clipping.title },
-            passage: clipping.content,
-          },
+        return await passageNoteText(
+          context.userId,
+          clipping,
+          context.language,
           context.request.signal
         )
       } catch {

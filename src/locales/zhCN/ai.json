@@ -1,0 +1,58 @@
+{
+  "actions": {
+    "copy": "复制",
+    "copied": "已复制",
+    "copyFailed": "复制失败。",
+    "rewrite": "重新写一版",
+    "stop": "停止",
+    "retry": "重试",
+    "upgrade": "了解 Premium",
+    "disclaimer": "由 AI 撰写，重要内容请自行核对。"
+  },
+  "errors": {
+    "generic": "没有成功，请重试。",
+    "UNAUTHORIZED": "请先登录。",
+    "PREMIUM_REQUIRED": "此功能需要有效的 Premium 订阅。",
+    "AI_UNAVAILABLE": "AI 暂时不可用，请稍后再试。",
+    "NOT_FOUND": "还没有可以参考的划线。"
+  },
+  "bookSummary": {
+    "title": "这本书，你留下了什么",
+    "premiumTitle": "看看这本书你留下了什么",
+    "description": "点一下，把你的划线写成这本书的一幅小像：贯穿其中的想法、围绕它的几条线索，还有一个可以带走的问题。",
+    "premiumDescription": "Premium 会把你留下的段落写成这本书的一幅小像，每个判断都以你自己的划线为依据。",
+    "generate": "总结我的划线",
+    "working": "正在读你的划线…",
+    "question": "带走一个问题",
+    "provenance": "来自你 {{total}} 条划线中的 {{sampled}} 条，由 AI 撰写。",
+    "provenanceAll_other": "来自你的全部 {{count}} 条划线，由 AI 撰写。",
+    "openHighlight": "打开这条划线"
+  },
+  "passageNote": {
+    "title": "页边笔记",
+    "premiumTitle": "读懂这段话",
+    "description": "一则简短的笔记：这段话在说什么，背后是什么，以及一个值得想想的问题。",
+    "premiumDescription": "Premium 可以为任意一条划线写一则页边笔记。",
+    "generate": "解读这段话",
+    "working": "正在读这段话…",
+    "reading": "字里行间",
+    "context": "放回书中",
+    "terms": "人名与典故",
+    "question": "问问自己"
+  },
+  "recommendations": {
+    "open": "接下来读什么",
+    "title": "为你挑选",
+    "premiumTitle": "从你的划线里挑出来的书",
+    "premiumDescription": "Premium 会读你留下的段落，告诉你接下来可以读什么，并说明每一本的理由。",
+    "working": "正在看你的书架…",
+    "because": "因为你读过《{{title}}》",
+    "viewBook": "查看这本书",
+    "kinds": {
+      "deeper": "再往深处",
+      "adjacent": "隔壁书架",
+      "counterpoint": "另一种看法",
+      "wildcard": "一点意外"
+    }
+  }
+}

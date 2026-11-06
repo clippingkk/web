@@ -74,13 +74,9 @@ async function BookPage(props: PageProps) {
   const fallbackTitle = shelf.clippings[0]?.title ?? bookid
   const bookTitle = book?.title ?? fallbackTitle
   const commentsCount = comments.bookComments.count
-  const author = book?.author ?? ''
   const initialSummary =
     isOwner && viewer?.isPremium && Number.isInteger(bookId)
-      ? await cachedBookSummary(viewer.id, String(bookId), {
-          title: bookTitle,
-          author,
-        })
+      ? await cachedBookSummary(viewer.id, String(bookId))
       : null
 
   return (
@@ -105,9 +101,9 @@ async function BookPage(props: PageProps) {
         <BookAiSummary
           bookId={String(bookId)}
           title={bookTitle}
-          author={author}
+          owner={pathUser}
           access={viewer.isPremium ? 'premium' : 'free'}
-          initialSummary={initialSummary}
+          initial={initialSummary}
         />
       ) : null}
       <BookTabs

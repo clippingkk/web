@@ -3,6 +3,17 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
+  plugins: [
+    {
+      // Next inlines `import x from './x.md' with { type: 'text' }`. Do the same here.
+      name: 'markdown-as-text',
+      enforce: 'pre',
+      transform(code, id) {
+        if (!id.endsWith('.md')) return null
+        return { code: `export default ${JSON.stringify(code)}`, map: null }
+      },
+    },
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
