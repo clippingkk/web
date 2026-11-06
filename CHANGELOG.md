@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.9](https://github.com/clippingkk/web/compare/v5.19.8...v5.19.9) (2026-11-04)
+
+
+### Features
+
+* **books:** one shared discussion per book ([74d566b](https://github.com/clippingkk/web/commit/74d566b62fdd6e02724e4b9491a0ee9a3d97237c))
+* **books:** one shared discussion per book ([00337a2](https://github.com/clippingkk/web/commit/00337a23e96e27744f749d109a031dda4e46ae73))
+* **search:** full-text search on PGroonga, for the rawback-app/db image ([9f9029f](https://github.com/clippingkk/web/commit/9f9029f33e46caba0ae7985b7a56c97dcbb9d6d1))
+* **search:** full-text search on PGroonga, for the rawback-app/db image ([772b2fc](https://github.com/clippingkk/web/commit/772b2fc70e9e1b0ff70ddb225436d5cbdcc7ffb8))
+
+
+### Bug Fixes
+
+* **security:** block SSRF on webhook and Flomo URLs ([#261](https://github.com/clippingkk/web/issues/261)) ([bbded30](https://github.com/clippingkk/web/commit/bbded3000f11e40cb9a083417970aef6ad685ea4))
+
+
+### Continuous Integration
+
+* **test:** run PGroonga search tests against the rawback-app/db image ([5defb42](https://github.com/clippingkk/web/commit/5defb42384907eb6d9b3d0f4bc3dfec9b03eb5cf))
+
 ## [5.19.8](https://github.com/clippingkk/web/compare/v5.19.7...v5.19.8) (2026-10-29)
 
 
